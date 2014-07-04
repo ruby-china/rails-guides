@@ -77,7 +77,7 @@ if yes? 'Do you want to change default base path? (~/docs/rails-guides-translati
     BASE_PATH = Pathname(new_base_path)
   end
 else
-  BASE_PATH = Pathname('~/docs/rails-guides-translation')
+  BASE_PATH = Pathname('~/docs/rails-guides-translation-cn')
 end
 
 unless File.exist? BASE_PATH
