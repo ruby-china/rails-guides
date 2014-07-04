@@ -117,6 +117,9 @@ FileUtils.cd(BASE_PATH.expand_path) do
 
     puts 'Writing new base path.....'
     IO.write((BASE_PATH + 'guides' + 'BASE_PATH').expand_path, BASE_PATH.to_s)
+  else
+    puts 'cp guides/BASE_PATH.example guides/BASE_PATH'
+    `cp guides/BASE_PATH.example guides/BASE_PATH`
   end
 end
 
