@@ -21,7 +21,6 @@ end
 task :sanity_checks do
   abort("Abort. please clone the rails/rails repo under #{BASE_PATH}") if !File.exist? RAILS_PATH.expand_path
   abort("Abort. please clone the ruby-china/guides repo under #{BASE_PATH}") if !File.exist? GUIDES_PATH.expand_path
-  abort("Abort. please clone the ruby-china/ruby-china.github.io repo under #{BASE_PATH}") if !File.exist? PAGES_PATH.expand_path
 end
 
 namespace :guides do
