@@ -52,36 +52,32 @@ T> 文中的示例代码使用 `$` 表示命令行提示符，你的提示符可
 
 T> 有很多工具可以帮助你快速在系统中安装 Ruby 和 Ruby on Rails。Windows 用户可以使用 [Rails Installer](http://railsinstaller.org)，Mac OS X 用户可以使用 [Rails One Click](http://railsoneclick.com)。
 
-{:lang="bash"}
-~~~
+```bash
 $ ruby -v
 ruby 2.0.0p353
-~~~
+```
 
 如果你还没安装 Ruby，请访问 [ruby-lang.org](https://www.ruby-lang.org/en/downloads/)，找到针对所用系统的安装方法。
 
 很多类 Unix 系统都自带了版本尚新的 SQLite3。Windows 等其他操作系统的用户可以在 [SQLite3 的网站](http://www.sqlite.org)上找到安装说明。然后，确认是否在 PATH 中：
 
-{:lang="bash"}
-~~~
+```bash
 $ sqlite3 --version
-~~~
+```
 
 命令行应该回显版本才对。
 
 安装 Rails，请使用 RubyGems 提供的 `gem install` 命令：
 
-{:lang="bash"}
-~~~
+```bash
 $ gem install rails
-~~~
+```
 
 要检查所有软件是否都正确安装了，可以执行下面的命令：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails --version
-~~~
+```
 
 如果显示的结果类似“Rails 4.1.0”，那么就可以继续往下读了。
 
@@ -91,10 +87,9 @@ Rails 提供了多个被称为“生成器”的脚本，可以简化开发，�
 
 打开终端，进入有写权限的文件夹，执行以下命令生成一个新程序：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails new blog
-~~~
+```
 
 这个命令会在文件夹 `blog` 中新建一个 Rails 程序，然后执行 `bundle install` 命令安装 `Gemfile` 中列出的 gem。
 
@@ -102,10 +97,9 @@ T> 执行 `rails new -h` 可以查看新程序生成器的所有命令行选项�
 
 生成 `blog` 程序后，进入该文件夹：
 
-{:lang="bash"}
-~~~
+```bash
 $ cd blog
-~~~
+```
 
 `blog` 文件夹中有很多自动生成的文件和文件夹，组成一个 Rails 程序。本文大部分时间都花在 `app` 文件夹上。下面简单介绍默认生成的文件和文件夹的作用：
 
@@ -134,10 +128,9 @@ $ cd blog
 
 现在，新建的 Rails 程序已经可以正常运行。要访问网站，需要在开发电脑上启动服务器。请在 `blog` 文件夹中执行下面的命令：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails server
-~~~
+```
 
 T> 把 CoffeeScript 编译成 JavaScript 需要 JavaScript 运行时，如果没有运行时，会报错，提示没有 `execjs`。Mac OS X 和 Windows 一般都提供了 JavaScript 运行时。Rails 生成的 `Gemfile` 中，安装 `therubyracer` gem 的代码被注释掉了，如果需要使用这个 gem，请把前面的注释去掉。在 JRuby 中推荐使用 `therubyracer`。在 JRuby 中生成的 `Gemfile` 已经包含了这个 gem。所有支持的运行时参见 [ExecJS](https://github.com/sstephenson/execjs#readme)。
 
@@ -159,15 +152,13 @@ T> 要想停止服务器，请在命令行中按 Ctrl+C 键。服务器成功停
 
 控制器可用控制器生成器创建，你要告诉生成器，我想要个名为“welcome”的控制器和一个名为“index”的动作，如下所示：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate controller welcome index
-~~~
+```
 
 运行上述命令后，Rails 会生成很多文件，以及一个路由。
 
-{:lang="bash"}
-~~~
+```bash
 create  app/controllers/welcome_controller.rb
  route  get 'welcome/index'
 invoke  erb
@@ -184,16 +175,15 @@ invoke    coffee
 create      app/assets/javascripts/welcome.js.coffee
 invoke    scss
 create      app/assets/stylesheets/welcome.css.scss
-~~~
+```
 
 在这些文件中，最重要的当然是控制器，位于 `app/controllers/welcome_controller.rb`，以及视图，位于 `app/views/welcome/index.html.erb`。
 
 使用文本编辑器打开 `app/views/welcome/index.html.erb` 文件，删除全部内容，写入下面这行代码：
 
-{:lang="html"}
-~~~
+```html
 <h1>Hello, Rails!</h1>
-~~~
+```
 
 ### 设置程序的首页
 
@@ -203,8 +193,7 @@ create      app/assets/stylesheets/welcome.css.scss
 
 在编辑器中打开 `config/routes.rb` 文件。
 
-{:lang="ruby"}
-~~~
+```ruby
 Rails.application.routes.draw do
   get 'welcome/index'
 
@@ -215,14 +204,13 @@ Rails.application.routes.draw do
   # root 'welcome#index'
   #
   # ...
-~~~
+```
 
 这是程序的路由文件，使用特殊的 DSL（domain-specific language，领域专属语言）编写，告知 Rails 请求应该发往哪个控制器和动作。文件中有很多注释，举例说明如何定义路由。其中有一行说明了如何指定控制器和动作设置网站的根路由。找到以 `root` 开头的代码行，去掉注释，变成这样：
 
-{:lang="ruby"}
-~~~
+```ruby
 root 'welcome#index'
-~~~
+```
 
 `root 'welcome#index'` 告知 Rails，访问程序的根路径时，交给 `welcome` 控制器中的 `index` 动作处理。`get 'welcome/index'` 告知 Rails，访问 <http://localhost:3000/welcome/index> 时，交给 `welcome` 控制器中的 `index` 动作处理。`get 'welcome/index'` 是运行 `rails generate controller welcome index` 时生成的。
 
@@ -240,20 +228,18 @@ T> 关于路由的详细介绍，请阅读“[Rails 路由全解]({{ site.baseur
 
 Rails 提供了一个 `resources` 方法，可以声明一个符合 REST 架构的资源。创建文章资源后，`config/routes.rb` 文件的内容如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 Blog::Application.routes.draw do
 
   resources :articles
 
   root 'welcome#index'
 end
-~~~
+```
 
 执行 `rake routes` 任务，会看到定义了所有标准的 REST 动作。输出结果中各列的意义稍后会说明，现在只要留意 `article` 的单复数形式，这在 Rails 中有特殊的含义。
 
-{:lang="bash"}
-~~~
+```bash
 $ rake routes
       Prefix Verb   URI Pattern                  Controller#Action
     articles GET    /articles(.:format)          articles#index
@@ -265,7 +251,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
              PUT    /articles/:id(.:format)      articles#update
              DELETE /articles/:id(.:format)      articles#destroy
         root GET    /                            welcome#index
-~~~
+```
 
 下一节，我们会加入新建文章和查看文章的功能。这两个操作分别对应于 CRUD 的 C 和 R，即创建和读取。新建文章的表单如下所示：
 
@@ -281,18 +267,16 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 
 产生这个错误的原因是，没有定义用来处理该请求的控制器。解决这个问题的方法很简单：创建名为 `ArticlesController` 的控制器。执行下面的命令即可：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails g controller articles
-~~~
+```
 
 打开刚生成的 `app/controllers/articles_controller.rb` 文件，会看到一个几乎没什么内容的控制器：
 
-{:lang="ruby"}
-~~~
+```ruby
 class ArticlesController < ApplicationController
 end
-~~~
+```
 
 控制器就是一个类，继承自 `ApplicationController`。在这个类中定义的方法就是控制器的动作。动作的作用是处理文章的 CRUD 操作。
 
@@ -306,11 +290,10 @@ I> 在 Ruby 中，方法分为 `public`、`private` 和 `protected` 三种，只
 
 手动创建动作只需在控制器中定义一个新方法。打开 `app/controllers/articles_controller.rb` 文件，在 `ArticlesController` 类中，定义 `new` 方法，如下所示：
 
-{:lang="ruby"}
-~~~
+```ruby
 def new
 end
-~~~
+```
 
 在 `ArticlesController` 中定义 `new` 方法后，再刷新 <http://localhost:3000/articles/new>，看到的还是个错误：
 
@@ -320,9 +303,9 @@ end
 
 在上图中，最后一行被截断了，我们来看一下完整的信息：
 
-~~~
+```
 Missing template articles/new, application/new with {locale:[:en], formats:[:html], handlers:[:erb, :builder, :coffee]}. Searched in: * "/path/to/blog/app/views"
-~~~
+```
 
 这行信息还挺长，我们来看一下到底是什么意思。
 
@@ -336,10 +319,9 @@ Missing template articles/new, application/new with {locale:[:en], formats:[:htm
 
 新建文件 `app/views/articles/new.html.erb`，写入如下代码：
 
-{:lang="html"}
-~~~
+```html
 <h1>New Article</h1>
-~~~
+```
 
 再次刷新 <http://localhost:3000/articles/new>，可以看到页面中显示了一个标头。现在路由、控制器、动作和视图都能正常运行了。接下来要编写新建文章的表单了。
 
@@ -347,8 +329,7 @@ Missing template articles/new, application/new with {locale:[:en], formats:[:htm
 
 要在模板中编写表单，可以使用“表单构造器”。Rails 中常用的表单构造器是 `form_for`。在 `app/views/articles/new.html.erb` 文件中加入以下代码：
 
-{:lang="erb"}
-~~~
+```erb
 <%= form_for :article do |f| %>
   <p>
     <%= f.label :title %><br>
@@ -364,7 +345,7 @@ Missing template articles/new, application/new with {locale:[:en], formats:[:htm
     <%= f.submit %>
   </p>
 <% end %>
-~~~
+```
 
 现在刷新页面，会看到上述代码生成的表单。在 Rails 中编写表单就是这么简单！
 
@@ -376,15 +357,13 @@ Missing template articles/new, application/new with {locale:[:en], formats:[:htm
 
 修改 `app/views/articles/new.html.erb` 文件中的 `form_for`，改成这样：
 
-{:lang="erb"}
-~~~
+```erb
 <%= form_for :article, url: articles_path do |f| %>
-~~~
+```
 
 这里，我们把 `:url` 选项的值设为 `articles_path` 帮助方法。要想知道这个方法有什么作用，我们要回过头再看一下 `rake routes` 的输出：
 
-{:lang="bash"}
-~~~
+```bash
 $ rake routes
       Prefix Verb   URI Pattern                  Controller#Action
     articles GET    /articles(.:format)          articles#index
@@ -396,7 +375,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
              PUT    /articles/:id(.:format)      articles#update
              DELETE /articles/:id(.:format)      articles#destroy
         root GET    /                            welcome#index
-~~~
+```
 
 `articles_path` 帮助方法告诉 Rails，对应的地址是 `/articels`，默认情况下，这个表单会向这个路由发起 `POST` 请求。这个路由对应于 `ArticlesController` 控制器的 `create` 动作。
 
@@ -410,8 +389,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 
 要解决前一节出现的错误，可以在 `ArticlesController` 类中定义 `create` 方法。在 `app/controllers/articles_controller.rb` 文件中 `new` 方法后面添加以下代码：
 
-{:lang="ruby"}
-~~~
+```ruby
 class ArticlesController < ApplicationController
   def new
   end
@@ -419,27 +397,25 @@ class ArticlesController < ApplicationController
   def create
   end
 end
-~~~
+```
 
 然后再次提交表单，会看到另一个熟悉的错误：找不到模板。现在暂且不管这个错误。`create` 动作的作用是把新文章保存到数据库中。
 
 提交表单后，其中的字段以参数的形式传递给 Rails。这些参数可以在控制器的动作中使用，完成指定的操作。要想查看这些参数的内容，可以把 `create` 动作改成：
 
-{:lang="ruby"}
-~~~
+```ruby
 def create
   render plain: params[:article].inspect
 end
-~~~
+```
 
 `render` 方法接受一个简单的 Hash 为参数，这个 Hash 的键是 `plain`，对应的值为 `params[:article].inspect`。`params` 方法表示通过表单提交的参数，返回 `ActiveSupport::HashWithIndifferentAccess` 对象，可以使用字符串或者 Symbol 获取键对应的值。现在，我们只关注通过表单提交的参数。
 
 如果现在再次提交表单，不会再看到找不到模板错误，而是会看到类似下面的文字：
 
-{:lang="ruby"}
-~~~
+```ruby
 {"title"=>"First article!", "text"=>"This is my first article."}
-~~~
+```
 
 `create` 动作把表单提交的参数显示出来了。不过这么做没什么用，看到了参数又怎样，什么都没发生。
 
@@ -447,10 +423,9 @@ end
 
 在 Rails 中，模型的名字使用单数，对应的数据表名使用复数。Rails 提供了一个生成器用来创建模型，大多数 Rails 开发者创建模型时都会使用。创建模型，请在终端里执行下面的命令：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate model Article title:string text:text
-~~~
+```
 
 这个命令告知 Rails，我们要创建 `Article` 模型，以及一个字符串属性 `title` 和文本属性 `text`。这两个属性会自动添加到 `articles` 数据表中，映射到 `Article` 模型。
 
@@ -464,8 +439,7 @@ T> Active Record 很智能，能自动把数据表中的字段映射到模型的
 
 `db/migrate/20140120191729_create_articles.rb`（还记得吗，你的迁移文件名可能有点不一样）文件的内容如下所示：
 
-{:lang="ruby"}
-~~~
+```ruby
 class CreateArticles < ActiveRecord::Migration
   def change
     create_table :articles do |t|
@@ -476,7 +450,7 @@ class CreateArticles < ActiveRecord::Migration
     end
   end
 end
-~~~
+```
 
 在这个迁移中定义了一个名为 `change` 的方法，在运行迁移时执行。`change` 方法中定义的操作都是可逆的，Rails 知道如何撤销这次迁移操作。运行迁移后，会创建 `articles` 表，以及一个字符串字段和文本字段。同时还会创建两个时间戳字段，用来跟踪记录的创建时间和更新时间。
 
@@ -484,20 +458,18 @@ T> 关于迁移的详细说明，请参阅“[Active Record 数据库迁移]({{ 
 
 然后，使用 rake 命令运行迁移：
 
-{:lang="bash"}
-~~~
+```bash
 $ rake db:migrate
-~~~
+```
 
 Rails 会执行迁移操作，告诉你创建了 `articles` 表。
 
-{:lang="bash"}
-~~~
+```bash
 ==  CreateArticles: migrating ==================================================
 -- create_table(:articles)
    -> 0.0019s
 ==  CreateArticles: migrated (0.0020s) =========================================
-~~~
+```
 
 I> 因为默认情况下，程序运行在开发环境中，所以相关的操作应用于 `config/database.yml` 文件中 `development` 区域设置的数据库上。如果想在其他环境中运行迁移，必须在命令中指明：`rake db:migrate RAILS_ENV=production`。
 
@@ -505,15 +477,14 @@ I> 因为默认情况下，程序运行在开发环境中，所以相关的操�
 
 再回到 `ArticlesController` 控制器，我们要修改 `create` 动作，使用 `Article` 模型把数据保存到数据库中。打开 `app/controllers/articles_controller.rb` 文件，把 `create` 动作修改成这样：
 
-{:lang="ruby"}
-~~~
+```ruby
 def create
   @article = Article.new(params[:article])
 
   @article.save
   redirect_to @article
 end
-~~~
+```
 
 在 Rails 中，每个模型可以使用各自的属性初始化，自动映射到数据库字段上。`create` 动作中的第一行就是这个目的（还记得吗，`params[:article]` 就是我们要获取的属性）。`@article.save` 的作用是把模型保存到数据库中。保存完后转向 `show` 动作。稍后再编写 `show` 动作。
 
@@ -525,8 +496,7 @@ T> 后文会看到，`@article.save` 返回一个布尔值，表示保存是否�
 
 Rails 提供了很多安全防范措施保证程序的安全，你所看到的错误就是因为违反了其中一个措施。这个防范措施叫做“健壮参数”，我们要明确地告知 Rails 哪些参数可在控制器中使用。这里，我们想使用 `title` 和 `text` 参数。请把 `create` 动作修成成：
 
-{:lang="ruby"}
-~~~
+```ruby
 def create
   @article = Article.new(article_params)
 
@@ -538,7 +508,7 @@ private
   def article_params
     params.require(:article).permit(:title, :text)
   end
-~~~
+```
 
 看到 `permit` 方法了吗？这个方法允许在动作中使用 `title` 和 `text` 属性。
 
@@ -550,27 +520,25 @@ T> 注意，`article_params` 是私有方法。这种用法可以防止攻击者
 
 我们在 `rake routes` 的输出中看到，`show` 动作的路由是：
 
-~~~
+```
 article GET    /articles/:id(.:format)      articles#show
-~~~
+```
 
 `:id` 的意思是，路由期望接收一个名为 `id` 的参数，在这个例子中，就是文章的 ID。
 
 和前面一样，我们要在 `app/controllers/articles_controller.rb` 文件中添加 `show` 动作，以及相应的视图文件。
 
-{:lang="ruby"}
-~~~
+```ruby
 def show
   @article = Article.find(params[:id])
 end
-~~~
+```
 
 有几点要注意。我们调用 `Article.find` 方法查找想查看的文章，传入的参数 `params[:id]` 会从请求中获取 `:id` 参数。我们还把文章对象存储在一个实例变量中（以 `@` 开头的变量），只有这样，变量才能在视图中使用。
 
 然后，新建 `app/views/articles/show.html.erb` 文件，写入下面的代码：
 
-{:lang="erb"}
-~~~
+```erb
 <p>
   <strong>Title:</strong>
   <%= @article.title %>
@@ -580,7 +548,7 @@ end
   <strong>Text:</strong>
   <%= @article.text %>
 </p>
-~~~
+```
 
 做了以上修改后，就能真正的新建文章了。访问 <http://localhost:3000/articles/new>，自己试试。
 
@@ -590,23 +558,21 @@ end
 
 我们还要列出所有文章，对应的路由是：
 
-~~~
+```
 articles GET    /articles(.:format)          articles#index
-~~~
+```
 
 在 `app/controllers/articles_controller.rb` 文件中，为 `ArticlesController` 控制器添加 `index` 动作：
 
-{:lang="ruby"}
-~~~
+```ruby
 def index
   @articles = Article.all
 end
-~~~
+```
 
 然后编写这个动作的视图，保存为 `app/views/articles/index.html.erb`：
 
-{:lang="erb"}
-~~~
+```erb
 <h1>Listing articles</h1>
 
 <table>
@@ -622,7 +588,7 @@ end
     </tr>
   <% end %>
 </table>
-~~~
+```
 
 现在访问 <http://localhost:3000/articles>，会看到已经发布的文章列表。
 
@@ -632,38 +598,34 @@ end
 
 打开 `app/views/welcome/index.html.erb` 文件，改成这样：
 
-{:lang="erb"}
-~~~
+```erb
 <h1>Hello, Rails!</h1>
 <%= link_to 'My Blog', controller: 'articles' %>
-~~~
+```
 
 `link_to` 是 Rails 内置的视图帮助方法之一，根据提供的文本和地址创建超链接。这上面这段代码中，地址是文章列表页面。
 
 接下来添加到其他页面的链接。先在 `app/views/articles/index.html.erb` 中添加“New Article”链接，放在 `<table>` 标签之前：
 
-{:lang="erb"}
-~~~
+```erb
 <%= link_to 'New article', new_article_path %>
-~~~
+```
 
 点击这个链接后，会转向新建文章的表单页面。
 
 然后在 `app/views/articles/new.html.erb` 中添加一个链接，位于表单下面，返回到 `index` 动作：
 
-{:lang="erb"}
-~~~
+```erb
 <%= form_for :article do |f| %>
   ...
 <% end %>
 
 <%= link_to 'Back', articles_path %>
-~~~
+```
 
 最后，在 `app/views/articles/show.html.erb` 模板中添加一个链接，返回 `index` 动作，这样用户查看某篇文章后就可以返回文章列表页面了：
 
-{:lang="erb"}
-~~~
+```erb
 <p>
   <strong>Title:</strong>
   <%= @article.title %>
@@ -675,7 +637,7 @@ end
 </p>
 
 <%= link_to 'Back', articles_path %>
-~~~
+```
 
 T> 如果要链接到同一个控制器中的动作，不用指定 `:controller` 选项，因为默认情况下使用的就是当前控制器。
 
@@ -685,30 +647,27 @@ T> 在开发模式下（默认），每次请求 Rails 都会重新加载程序�
 
 模型文件，比如 `app/models/article.rb`，可以简单到只有这两行代码：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Article < ActiveRecord::Base
 end
-~~~
+```
 
 文件中没有多少代码，不过请注意，`Article` 类继承自 `ActiveRecord::Base`。Active Record 提供了很多功能，包括：基本的数据库 CRUD 操作，数据验证，复杂的搜索功能，以及多个模型之间的关联。
 
 Rails 为模型提供了很多方法，用来验证传入的数据。打开 `app/models/article.rb` 文件，修改成：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Article < ActiveRecord::Base
   validates :title, presence: true,
                     length: { minimum: 5 }
 end
-~~~
+```
 
 添加的这段代码可以确保每篇文章都有一个标题，而且至少有五个字符。在模型中可以验证数据是否满足多种条件，包括：字段是否存在、是否唯一，数据类型，以及关联对象是否存在。“[Active Record 数据验证]({{ site.baseurl }}/active_record_validations.html)”一文会详细介绍数据验证。
 
 添加数据验证后，如果把不满足验证条件的文章传递给 `@article.save`，会返回 `false`。打开 `app/controllers/articles_controller.rb` 文件，会发现，我们还没在 `create` 动作中检查 `@article.save` 的返回结果。如果保存失败，应该再次显示表单。为了实现这种功能，请打开 `app/controllers/articles_controller.rb` 文件，把 `new` 和 `create` 动作改成：
 
-{:lang="ruby"}
-~~~
+```ruby
 def new
   @article = Article.new
 end
@@ -727,7 +686,7 @@ private
   def article_params
     params.require(:article).permit(:title, :text)
   end
-~~~
+```
 
 在 `new` 动作中添加了一个实例变量 `@article`。稍后你会知道为什么要这么做。
 
@@ -735,8 +694,7 @@ private
 
 刷新 <http://localhost:3000/articles/new>，提交一个没有标题的文章，Rails 会退回这个页面，但这种处理方法没多少用，你要告诉用户哪儿出错了。为了实现这种功能，请在 `app/views/articles/new.html.erb` 文件中检测错误消息：
 
-{:lang="erb"}
-~~~
+```erb
 <%= form_for :article, url: articles_path do |f| %>
   <% if @article.errors.any? %>
   <div id="error_explanation">
@@ -765,7 +723,7 @@ private
 <% end %>
 
 <%= link_to 'Back', articles_path %>
-~~~
+```
 
 我们添加了很多代码，使用 `@article.errors.any?` 检查是否有错误，如果有错误，使用 `@article.errors.full_messages` 显示错误。
 
@@ -785,17 +743,15 @@ T> Rails 会自动把出错的表单字段包含在一个 `div` 中，并为其�
 
 首先，要在 `ArticlesController` 中添加 `edit` 动作：
 
-{:lang="ruby"}
-~~~
+```ruby
 def edit
   @article = Article.find(params[:id])
 end
-~~~
+```
 
 视图中要添加一个类似新建文章的表单。新建 `app/views/articles/edit.html.erb` 文件，写入下面的代码：
 
-{:lang="erb"}
-~~~
+```erb
 <h1>Editing article</h1>
 
 <%= form_for :article, url: article_path(@article), method: :patch do |f| %>
@@ -826,7 +782,7 @@ end
 <% end %>
 
 <%= link_to 'Back', articles_path %>
-~~~
+```
 
 这里的表单指向 `update` 动作，现在还没定义，稍后会添加。
 
@@ -836,8 +792,7 @@ end
 
 然后，要在 `app/controllers/articles_controller.rb` 中添加 `update` 动作：
 
-{:lang="ruby"}
-~~~
+```ruby
 def update
   @article = Article.find(params[:id])
 
@@ -852,7 +807,7 @@ private
   def article_params
     params.require(:article).permit(:title, :text)
   end
-~~~
+```
 
 新定义的 `update` 方法用来处理对现有文章的更新操作，接收一个 Hash，包含想要修改的属性。和之前一样，如果更新文章出错了，要再次显示表单。
 
@@ -862,8 +817,7 @@ T> 不用把所有的属性都提供给 `update` 动作。例如，如果使用 
 
 最后，我们想在文章列表页面，在每篇文章后面都加上一个链接，指向 `edit` 动作。打开 `app/views/articles/index.html.erb` 文件，在“Show”链接后面添加“Edit”链接：
 
-{:lang="erb"}
-~~~
+```erb
 <table>
   <tr>
     <th>Title</th>
@@ -880,17 +834,16 @@ T> 不用把所有的属性都提供给 `update` 动作。例如，如果使用 
   </tr>
 <% end %>
 </table>
-~~~
+```
 
 我们还要在 `app/views/articles/show.html.erb` 模板的底部加上“Edit”链接：
 
-{:lang="erb"}
-~~~
+```erb
 ...
 
 <%= link_to 'Back', articles_path %>
 | <%= link_to 'Edit', edit_article_path(@article) %>
-~~~
+```
 
 下图是文章列表页面现在的样子：
 
@@ -904,8 +857,7 @@ T> 关于局部视图的详细介绍参阅“[Layouts and Rendering in Rails]({{
 
 新建 `app/views/articles/_form.html.erb` 文件，写入以下代码：
 
-{:lang="erb"}
-~~~
+```erb
 <%= form_for @article do |f| %>
   <% if @article.errors.any? %>
   <div id="error_explanation">
@@ -932,7 +884,7 @@ T> 关于局部视图的详细介绍参阅“[Layouts and Rendering in Rails]({{
     <%= f.submit %>
   </p>
 <% end %>
-~~~
+```
 
 除了第一行 `form_for` 的用法变了之外，其他代码都和之前一样。之所以能在两个动作中共用一个 `form_for`，是因为 `@article` 是一个资源，对应于符合 REST 架构的路由，Rails 能自动分辨使用哪个地址和请求方法。
 
@@ -940,60 +892,54 @@ T> 关于局部视图的详细介绍参阅“[Layouts and Rendering in Rails]({{
 
 下面来修改 `app/views/articles/new.html.erb` 视图，使用新建的局部视图，把其中的代码全删掉，替换成：
 
-{:lang="erb"}
-~~~
+```erb
 <h1>New article</h1>
 
 <%= render 'form' %>
 
 <%= link_to 'Back', articles_path %>
-~~~
+```
 
 然后按照同样地方法修改 `app/views/articles/edit.html.erb` 视图：
 
-{:lang="erb"}
-~~~
+```erb
 <h1>Edit article</h1>
 
 <%= render 'form' %>
 
 <%= link_to 'Back', articles_path %>
-~~~
+```
 
 ### 删除文章
 
 现在介绍 CRUD 中的 D，从数据库中删除文章。按照 REST 架构的约定，删除文章的路由是：
 
-{:lang="ruby"}
-~~~
+```ruby
 DELETE /articles/:id(.:format)      articles#destroy
-~~~
+```
 
 删除资源时使用 DELETE 请求。如果还使用 GET 请求，可以构建如下所示的恶意地址：
 
-{:lang="html"}
-~~~
+```html
 <a href='http://example.com/articles/1/destroy'>look at this cat!</a>
-~~~
+```
 
 删除资源使用 DELETE 方法，路由会把请求发往 `app/controllers/articles_controller.rb` 中的 `destroy` 动作。`destroy` 动作现在还不存在，下面来添加：
 
-{:lang="ruby"}
-~~~
+```ruby
 def destroy
   @article = Article.find(params[:id])
   @article.destroy
 
   redirect_to articles_path
 end
-~~~
+```
 
 想把记录从数据库删除，可以在 Active Record 对象上调用 `destroy` 方法。注意，我们无需为这个动作编写视图，因为它会转向 `index` 动作。
 
 最后，在 `index` 动作的模板（`app/views/articles/index.html.erb`）中加上“Destroy”链接：
 
-{:lang="erb"}
-~~~
+```erb
 <h1>Listing Articles</h1>
 <%= link_to 'New article', new_article_path %>
 <table>
@@ -1014,7 +960,7 @@ end
   </tr>
 <% end %>
 </table>
-~~~
+```
 
 生成“Destroy”链接的 `link_to` 用法有点不一样，第二个参数是具名路由，随后还传入了几个参数。`:method` 和 `:'data-confirm'` 选项设置链接的 HTML5 属性，点击链接后，首先会显示一个对话框，然后发起 DELETE 请求。这两个操作通过 `jquery_ujs` 这个 JavaScript 脚本实现。生成程序骨架时，会自动把 `jquery_ujs` 加入程序的布局中（`app/views/layouts/application.html.erb`）。没有这个脚本，就不会显示确认对话框。
 
@@ -1032,10 +978,9 @@ T> 一般情况下，Rails 建议使用资源对象，而不手动设置路由�
 
 下面要用到的生成器，和之前生成 `Article` 模型的一样。我们要创建一个 `Comment` 模型，表示文章的评论。在终端执行下面的命令：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate model Comment commenter:string body:text article:references
-~~~
+```
 
 这个命令生成四个文件：
 
@@ -1048,19 +993,17 @@ $ rails generate model Comment commenter:string body:text article:references
 
 首先来看一下 `app/models/comment.rb` 文件：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Comment < ActiveRecord::Base
   belongs_to :article
 end
-~~~
+```
 
 文件的内容和前面的 `Article` 模型差不多，不过多了一行代码：`belongs_to :article`。这行代码用来建立 Active Record 关联。下文会简单介绍关联。
 
 除了模型文件，Rails 还生成了一个迁移文件，用来创建对应的数据表：
 
-{:lang="ruby"}
-~~~
+```ruby
 class CreateComments < ActiveRecord::Migration
   def change
     create_table :comments do |t|
@@ -1074,24 +1017,22 @@ class CreateComments < ActiveRecord::Migration
     end
   end
 end
-~~~
+```
 
 `t.references` 这行代码为两个模型的关联创建一个外键字段，同时还为这个字段创建了索引。下面运行这个迁移：
 
-{:lang="bash"}
-~~~
+```bash
 $ rake db:migrate
-~~~
+```
 
 Rails 相当智能，只会执行还没有运行的迁移，在命令行中会看到以下输出：
 
-{:lang="bash"}
-~~~
+```bash
 ==  CreateComments: migrating =================================================
 -- create_table(:comments)
    -> 0.0115s
 ==  CreateComments: migrated (0.0119s) ========================================
-~~~
+```
 
 ### 模型关联
 
@@ -1102,23 +1043,21 @@ Rails 相当智能，只会执行还没有运行的迁移，在命令行中会�
 
 这种关系和 Rails 用来声明关联的句法具有相同的逻辑。我们已经看过 `Comment` 模型中那行代码，声明评论属于文章：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Comment < ActiveRecord::Base
   belongs_to :article
 end
-~~~
+```
 
 我们要编辑 `app/models/article.rb` 文件，加入这层关系的另一端：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Article < ActiveRecord::Base
   has_many :comments
   validates :title, presence: true,
                     length: { minimum: 5 }
 end
-~~~
+```
 
 这两行声明能自动完成很多操作。例如，如果实例变量 `@article` 是一个文章对象，可以使用 `@article.comments` 取回一个数组，其元素是这篇文章的评论。
 
@@ -1128,12 +1067,11 @@ T> 关于 Active Record 关联的详细介绍，参阅“[Active Record 关联](
 
 和 `article` 控制器一样，添加路由后 Rails 才知道在哪个地址上查看评论。打开 `config/routes.rb` 文件，按照下面的方式修改：
 
-{:lang="ruby"}
-~~~
+```ruby
 resources :articles do
   resources :comments
 end
-~~~
+```
 
 我们把 `comments` 放在 `articles` 中，这叫做嵌套资源，表明了文章和评论间的层级关系。
 
@@ -1143,10 +1081,9 @@ T> 关于路由的详细介绍，参阅“[Rails 路由全解]({{ site.baseurl }
 
 有了模型，下面要创建控制器了，还是使用前面用过的生成器：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate controller Comments
-~~~
+```
 
 这个命令生成六个文件和一个空文件夹：
 
@@ -1164,8 +1101,7 @@ $ rails generate controller Comments
 
 首先，修改显示文章的模板（`app/views/articles/show.html.erb`），允许读者发布评论：
 
-{:lang="erb"}
-~~~
+```erb
 <p>
   <strong>Title:</strong>
   <%= @article.title %>
@@ -1193,14 +1129,13 @@ $ rails generate controller Comments
 
 <%= link_to 'Back', articles_path %>
 | <%= link_to 'Edit', edit_article_path(@article) %>
-~~~
+```
 
 上面的代码在显示文章的页面添加了一个表单，调用 `CommentsController` 控制器的 `create` 动作发布评论。`form_for` 的参数是个数组，构建嵌套路由，例如 `/articles/1/comments`。
 
 下面在 `app/controllers/comments_controller.rb` 文件中定义 `create` 方法：
 
-{:lang="ruby"}
-~~~
+```ruby
 class CommentsController < ApplicationController
   def create
     @article = Article.find(params[:article_id])
@@ -1213,7 +1148,7 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:commenter, :body)
     end
 end
-~~~
+```
 
 这里使用的代码要比文章的控制器复杂得多，因为设置了嵌套关系，必须这么做评论功能才能使用。发布评论时要知道这个评论属于哪篇文章，所以要在 `Article` 模型上调用 `find` 方法查找文章对象。
 
@@ -1221,8 +1156,7 @@ end
 
 添加评论后，调用 `article_path(@article)` 帮助方法，转向原来的文章页面。前面说过，这个帮助函数调用 `ArticlesController` 的 `show` 动作，渲染 `show.html.erb` 模板。我们要在这个模板中显示评论，所以要修改一下 `app/views/articles/show.html.erb`：
 
-{:lang="erb"}
-~~~
+```erb
 <p>
   <strong>Title:</strong>
   <%= @article.title %>
@@ -1263,7 +1197,7 @@ end
 
 <%= link_to 'Edit Article', edit_article_path(@article) %> |
 <%= link_to 'Back to Articles', articles_path %>
-~~~
+```
 
 现在，可以为文章添加评论了，成功添加后，评论会在正确的位置显示。
 
@@ -1277,8 +1211,7 @@ end
 
 首先，把显示文章评论的代码抽出来，写入局部视图中。新建 `app/views/comments/_comment.html.erb` 文件，写入下面的代码：
 
-{:lang="erb"}
-~~~
+```erb
 <p>
   <strong>Commenter:</strong>
   <%= comment.commenter %>
@@ -1288,12 +1221,11 @@ end
   <strong>Comment:</strong>
   <%= comment.body %>
 </p>
-~~~
+```
 
 然后把 `app/views/articles/show.html.erb` 修改成：
 
-{:lang="erb"}
-~~~
+```erb
 <p>
   <strong>Title:</strong>
   <%= @article.title %>
@@ -1324,7 +1256,7 @@ end
 
 <%= link_to 'Edit Article', edit_article_path(@article) %> |
 <%= link_to 'Back to Articles', articles_path %>
-~~~
+```
 
 这个视图会使用局部视图 `app/views/comments/_comment.html.erb` 渲染 `@article.comments` 集合中的每个评论。`render` 方法会遍历 `@article.comments` 集合，把每个评论赋值给一个和局部视图同名的本地变量，在这个例子中本地变量是 `comment`，这个本地变量可以在局部视图中使用。
 
@@ -1332,8 +1264,7 @@ end
 
 我们把添加评论的代码也移到局部视图中。新建 `app/views/comments/_form.html.erb` 文件，写入：
 
-{:lang="erb"}
-~~~
+```erb
 <%= form_for([@article, @article.comments.build]) do |f| %>
   <p>
     <%= f.label :commenter %><br>
@@ -1347,12 +1278,11 @@ end
     <%= f.submit %>
   </p>
 <% end %>
-~~~
+```
 
 然后把 `app/views/articles/show.html.erb` 改成：
 
-{:lang="erb"}
-~~~
+```erb
 <p>
   <strong>Title:</strong>
   <%= @article.title %>
@@ -1371,7 +1301,7 @@ end
 
 <%= link_to 'Edit Article', edit_article_path(@article) %> |
 <%= link_to 'Back to Articles', articles_path %>
-~~~
+```
 
 第二个 `render` 方法的参数就是要渲染的局部视图，即 `comments/form`。Rails 很智能，能解析其中的斜线，知道要渲染 `app/views/comments` 文件夹中的 `_form.html.erb` 模板。
 
@@ -1383,8 +1313,7 @@ end
 
 先在 `app/views/comments/_comment.html.erb` 局部视图中加入删除评论的链接：
 
-{:lang="erb"}
-~~~
+```erb
 <p>
   <strong>Commenter:</strong>
   <%= comment.commenter %>
@@ -1400,12 +1329,11 @@ end
                method: :delete,
                data: { confirm: 'Are you sure?' } %>
 </p>
-~~~
+```
 
 点击“Destroy Comment”链接后，会向 `CommentsController` 控制器发起 `DELETE /articles/:article_id/comments/:id` 请求。我们可以从这个请求中找到要删除的评论。下面在控制器中加入 `destroy` 动作（`app/controllers/comments_controller.rb`）：
 
-{:lang="ruby"}
-~~~
+```ruby
 class CommentsController < ApplicationController
   def create
     @article = Article.find(params[:article_id])
@@ -1425,7 +1353,7 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:commenter, :body)
     end
 end
-~~~
+```
 
 `destroy` 动作先查找当前文章，然后在 `@article.comments` 集合中找到对应的评论，将其从数据库中删掉，最后转向显示文章的页面。
 
@@ -1433,14 +1361,13 @@ end
 
 如果删除一篇文章，也要删除文章中的评论，不然这些评论会占用数据库空间。在 Rails 中可以在关联中指定 `dependent` 选项达到这一目的。把 `Article` 模型（`app/models/article.rb`）修改成：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Article < ActiveRecord::Base
   has_many :comments, dependent: :destroy
   validates :title, presence: true,
                     length: { minimum: 5 }
 end
-~~~
+```
 
 ## 安全
 
@@ -1454,8 +1381,7 @@ Rails 提供了一种简单的 HTTP 身份认证机制可以避免出现这种�
 
 要使用这个身份认证机制，需要在 `ArticlesController` 控制器的顶部调用 `http_basic_authenticate_with` 方法。除了 `index` 和 `show` 动作，访问其他动作都要通过认证，所以在 `app/controllers/articles_controller.rb` 中，要这么做：
 
-{:lang="ruby"}
-~~~
+```ruby
 class ArticlesController < ApplicationController
 
   http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
@@ -1465,12 +1391,11 @@ class ArticlesController < ApplicationController
   end
 
   # snipped for brevity
-~~~
+```
 
 同时，我们还希望只有通过认证的用户才能删除评论。修改 `CommentsController` 控制器（`app/controllers/comments_controller.rb`）：
 
-{:lang="ruby"}
-~~~
+```ruby
 class CommentsController < ApplicationController
 
   http_basic_authenticate_with name: "dhh", password: "secret", only: :destroy
@@ -1481,7 +1406,7 @@ class CommentsController < ApplicationController
   end
 
   # snipped for brevity
-~~~
+```
 
 现在，如果想新建文章，会看到一个 HTTP 基本认证对话框。
 
