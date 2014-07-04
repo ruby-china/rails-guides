@@ -1,8 +1,5 @@
----
-layout: docs
-title: Rails 入门
-next_section: active_record_basics
----
+Rails 入门
+==========
 
 本文介绍如何开始使用 Ruby on Rails。
 
