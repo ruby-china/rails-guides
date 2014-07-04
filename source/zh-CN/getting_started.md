@@ -110,7 +110,7 @@ $ cd blog
 | ----------- | ------- |
 |app/|存放程序的控制器、模型、视图、帮助方法、邮件和静态资源文件。本文主要关注的是这个文件夹。|
 |bin/|存放运行程序的 `rails` 脚本，以及其他用来部署或运行程序的脚本。|
-|config/|设置程序的路由，数据库等。详情参阅“[设置 Rails 程序]({{ site.baseurl }}/configuring.html)”一文。|
+|config/|设置程序的路由，数据库等。详情参阅“[设置 Rails 程序](/configuring.html)”一文。|
 |config.ru|基于 Rack 服务器的程序设置，用来启动程序。|
 |db/|存放当前数据库的模式，以及数据库迁移文件。|
 |Gemfile, Gemfile.lock|这两个文件用来指定程序所需的 gem 依赖件，用于 Bundler gem。关于 Bundler 的详细介绍，请访问 [Bundler 官网](http://gembundler.com)。|
@@ -119,7 +119,7 @@ $ cd blog
 |public/|唯一对外开放的文件夹，存放静态文件和编译后的资源文件。|
 |Rakefile|保存并加载可在命令行中执行的任务。任务在 Rails 的各组件中定义。如果想添加自己的任务，不要修改这个文件，把任务保存在 `lib/tasks` 文件夹中。|
 |README.rdoc|程序的简单说明。你应该修改这个文件，告诉其他人这个程序的作用，如何安装等。|
-|test/|单元测试，固件等测试用文件。详情参阅“[测试 Rails 程序]({{ site.baseurl }}/testing.html)”一文。|
+|test/|单元测试，固件等测试用文件。详情参阅“[测试 Rails 程序](/testing.html)”一文。|
 |tmp/|临时文件，例如缓存，PID，会话文件。|
 |vendor/|存放第三方代码。经常用来放第三方 gem。|
 
@@ -140,7 +140,7 @@ T> 把 CoffeeScript 编译成 JavaScript 需要 JavaScript 运行时，如果没
 
 上述命令会启动 WEBrick，这是 Ruby 内置的服务器。要查看程序，请打开一个浏览器窗口，访问 <http://localhost:3000>。应该会看到默认的 Rails 信息页面：
 
-![欢迎使用页面]({{ site.baseurl }}/images/getting_started/rails_welcome.png)
+![欢迎使用页面](/images/getting_started/rails_welcome.png)
 
 T> 要想停止服务器，请在命令行中按 Ctrl+C 键。服务器成功停止后回重新看到命令行提示符。在大多数类 Unix 系统中，包括 Mac OS X，命令行提示符是 `$` 符号。在开发模式中，一般情况下无需重启服务器，修改文件后，服务器会自动重新加载。
 
@@ -220,7 +220,7 @@ root 'welcome#index'
 
 如果生成控制器时停止了服务器，请再次启动（`rails server`），然后在浏览器中访问 <http://localhost:3000>。你会看到之前写入 `app/views/welcome/index.html.erb` 文件的“Hello, Rails!”，说明新定义的路由把根目录交给 `WelcomeController` 的 `index` 动作处理了，而且也正确的渲染了视图。
 
-T> 关于路由的详细介绍，请阅读“[Rails 路由全解]({{ site.baseurl }}/routing.html)”一文。
+T> 关于路由的详细介绍，请阅读“[Rails 路由全解](/routing.html)”一文。
 
 开始使用
 -------
@@ -268,7 +268,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 
 首先，程序中要有个页面用来新建文章。一个比较好的选择是 `/articles/new`。这个路由前面已经定义了，可以访问。打开 <http://localhost:3000/articles/new> ，会看到如下的路由错误：
 
-![路由错误，常量 ArticlesController 未初始化]({{ site.baseurl }}/images/getting_started/routing_error_no_controller.png)
+![路由错误，常量 ArticlesController 未初始化](/images/getting_started/routing_error_no_controller.png)
 
 产生这个错误的原因是，没有定义用来处理该请求的控制器。解决这个问题的方法很简单：创建名为 `ArticlesController` 的控制器。执行下面的命令即可：
 
@@ -289,7 +289,7 @@ I> 在 Ruby 中，方法分为 `public`、`private` 和 `protected` 三种，只
 
 现在刷新 <http://localhost:3000/articles/new>，会看到一个新错误：
 
-![ArticlesController 控制器不知如何处理 new 动作]({{ site.baseurl }}/images/getting_started/unknown_action_new_for_articles.png)
+![ArticlesController 控制器不知如何处理 new 动作](/images/getting_started/unknown_action_new_for_articles.png)
 
 这个错误的意思是，在刚生成的 `ArticlesController` 控制器中找不到 `new` 动作。因为在生成控制器时，除非指定要哪些动作，否则不会生成，控制器是空的。
 
@@ -302,7 +302,7 @@ end
 
 在 `ArticlesController` 中定义 `new` 方法后，再刷新 <http://localhost:3000/articles/new>，看到的还是个错误：
 
-![找不到 articles/new 所用模板]({{ site.baseurl }}/images/getting_started/template_is_missing_articles_new.png)
+![找不到 articles/new 所用模板](/images/getting_started/template_is_missing_articles_new.png)
 
 产生这个错误的原因是，Rails 希望这样的常规动作有对应的视图，用来显示内容。没有视图可用，Rails 就报错了。
 
@@ -386,7 +386,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 
 表单写好了，路由也定义了，现在可以填写表单，然后点击提交按钮新建文章了。请实际操作一下。提交表单后，会看到一个熟悉的错误：
 
-![ArticlesController 控制器不知如何处理 create 动作]({{ site.baseurl }}/images/getting_started/unknown_action_create_for_articles.png)
+![ArticlesController 控制器不知如何处理 create 动作](/images/getting_started/unknown_action_create_for_articles.png)
 
 解决这个错误，要在 `ArticlesController` 控制器中定义 `create` 动作。
 
@@ -459,7 +459,7 @@ end
 
 在这个迁移中定义了一个名为 `change` 的方法，在运行迁移时执行。`change` 方法中定义的操作都是可逆的，Rails 知道如何撤销这次迁移操作。运行迁移后，会创建 `articles` 表，以及一个字符串字段和文本字段。同时还会创建两个时间戳字段，用来跟踪记录的创建时间和更新时间。
 
-T> 关于迁移的详细说明，请参阅“[Active Record 数据库迁移]({{ site.baseurl }}/migrations.html)”一文。
+T> 关于迁移的详细说明，请参阅“[Active Record 数据库迁移](/migrations.html)”一文。
 
 然后，使用 rake 命令运行迁移：
 
@@ -497,7 +497,7 @@ T> 后文会看到，`@article.save` 返回一个布尔值，表示保存是否�
 
 再次访问 <http://localhost:3000/articles/new>，填写表单，还差一步就能创建文章了，会看到一个错误页面：
 
-![新建文章时禁止使用属性]({{ site.baseurl }}/images/getting_started/forbidden_attributes_for_new_article.png)
+![新建文章时禁止使用属性](/images/getting_started/forbidden_attributes_for_new_article.png)
 
 Rails 提供了很多安全防范措施保证程序的安全，你所看到的错误就是因为违反了其中一个措施。这个防范措施叫做“健壮参数”，我们要明确地告知 Rails 哪些参数可在控制器中使用。这里，我们想使用 `title` 和 `text` 参数。请把 `create` 动作修成成：
 
@@ -557,7 +557,7 @@ end
 
 做了以上修改后，就能真正的新建文章了。访问 <http://localhost:3000/articles/new>，自己试试。
 
-![显示文章]({{ site.baseurl }}/images/getting_started/show_action_for_articles.png)
+![显示文章](/images/getting_started/show_action_for_articles.png)
 
 ### 列出所有文章
 
@@ -668,7 +668,7 @@ class Article < ActiveRecord::Base
 end
 ```
 
-添加的这段代码可以确保每篇文章都有一个标题，而且至少有五个字符。在模型中可以验证数据是否满足多种条件，包括：字段是否存在、是否唯一，数据类型，以及关联对象是否存在。“[Active Record 数据验证]({{ site.baseurl }}/active_record_validations.html)”一文会详细介绍数据验证。
+添加的这段代码可以确保每篇文章都有一个标题，而且至少有五个字符。在模型中可以验证数据是否满足多种条件，包括：字段是否存在、是否唯一，数据类型，以及关联对象是否存在。“[Active Record 数据验证](/active_record_validations.html)”一文会详细介绍数据验证。
 
 添加数据验证后，如果把不满足验证条件的文章传递给 `@article.save`，会返回 `false`。打开 `app/controllers/articles_controller.rb` 文件，会发现，我们还没在 `create` 动作中检查 `@article.save` 的返回结果。如果保存失败，应该再次显示表单。为了实现这种功能，请打开 `app/controllers/articles_controller.rb` 文件，把 `new` 和 `create` 动作改成：
 
@@ -740,7 +740,7 @@ T> Rails 会自动把出错的表单字段包含在一个 `div` 中，并为其�
 
 再次访问 <http://localhost:3000/articles/new>，尝试发布一篇没有标题的文章，会看到一个很有用的错误提示。
 
-![出错的表单]({{ site.baseurl }}/images/getting_started/form_with_errors.png)
+![出错的表单](/images/getting_started/form_with_errors.png)
 
 ### 更新文章
 
@@ -852,13 +852,13 @@ T> 不用把所有的属性都提供给 `update` 动作。例如，如果使用 
 
 下图是文章列表页面现在的样子：
 
-![在文章列表页面显示了编辑链接]({{ site.baseurl }}/images/getting_started/index_action_with_edit_link.png)
+![在文章列表页面显示了编辑链接](/images/getting_started/index_action_with_edit_link.png)
 
 ### 使用局部视图去掉视图中的重复代码
 
 编辑文章页面和新建文章页面很相似，显示表单的代码是相同的。下面使用局部视图去掉两个视图中的重复代码。按照约定，局部视图的文件名以下划线开头。
 
-T> 关于局部视图的详细介绍参阅“[Layouts and Rendering in Rails]({{ site.baseurl }}/layouts_and_rendering.html)”一文。
+T> 关于局部视图的详细介绍参阅“[Layouts and Rendering in Rails](/layouts_and_rendering.html)”一文。
 
 新建 `app/views/articles/_form.html.erb` 文件，写入以下代码：
 
@@ -969,11 +969,11 @@ end
 
 生成“Destroy”链接的 `link_to` 用法有点不一样，第二个参数是具名路由，随后还传入了几个参数。`:method` 和 `:'data-confirm'` 选项设置链接的 HTML5 属性，点击链接后，首先会显示一个对话框，然后发起 DELETE 请求。这两个操作通过 `jquery_ujs` 这个 JavaScript 脚本实现。生成程序骨架时，会自动把 `jquery_ujs` 加入程序的布局中（`app/views/layouts/application.html.erb`）。没有这个脚本，就不会显示确认对话框。
 
-![确认对话框]({{ site.baseurl }}/images/getting_started/confirm_dialog.png)
+![确认对话框](/images/getting_started/confirm_dialog.png)
 
 恭喜，现在你可以新建、显示、列出、更新、删除文章了。
 
-T> 一般情况下，Rails 建议使用资源对象，而不手动设置路由。关于路由的详细介绍参阅“[Rails 路由全解]({{ site.baseurl }}/routing.html)”一文。
+T> 一般情况下，Rails 建议使用资源对象，而不手动设置路由。关于路由的详细介绍参阅“[Rails 路由全解](/routing.html)”一文。
 
 添加第二个模型
 ------------
@@ -1067,7 +1067,7 @@ end
 
 这两行声明能自动完成很多操作。例如，如果实例变量 `@article` 是一个文章对象，可以使用 `@article.comments` 取回一个数组，其元素是这篇文章的评论。
 
-T> 关于 Active Record 关联的详细介绍，参阅“[Active Record 关联]({{ site.baseurl }}/association_basics.html)”一文。
+T> 关于 Active Record 关联的详细介绍，参阅“[Active Record 关联](/association_basics.html)”一文。
 
 ### 添加评论的路由
 
@@ -1081,7 +1081,7 @@ end
 
 我们把 `comments` 放在 `articles` 中，这叫做嵌套资源，表明了文章和评论间的层级关系。
 
-T> 关于路由的详细介绍，参阅“[Rails 路由全解]({{ site.baseurl }}/routing.html)”一文。
+T> 关于路由的详细介绍，参阅“[Rails 路由全解](/routing.html)”一文。
 
 ### 生成控制器
 
@@ -1207,7 +1207,7 @@ end
 
 现在，可以为文章添加评论了，成功添加后，评论会在正确的位置显示。
 
-![文章的评论]({{ site.baseurl }}/images/getting_started/article_with_comments.png)
+![文章的评论](/images/getting_started/article_with_comments.png)
 
 重构
 ----
@@ -1425,7 +1425,7 @@ class CommentsController < ApplicationController
 
 ### 其他安全注意事项
 
-安全，尤其是在网页程序中，是个很宽泛和值得深入研究的领域。Rails 程序的安全措施，在“[Ruby on Rails 安全指南]({{ site.baseurl }}/security.html)”中有更深入的说明。
+安全，尤其是在网页程序中，是个很宽泛和值得深入研究的领域。Rails 程序的安全措施，在“[Ruby on Rails 安全指南](/security.html)”中有更深入的说明。
 
 接下来做什么
 -----------
