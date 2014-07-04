@@ -37,7 +37,7 @@ ruby <(wget --no-check-certificate https://rawgithub.com/ruby-china/guides/maste
 
 比如 `getting_started.md`：
 
-```ruby
+```bash
 $ rake guides:update_guide getting_started.md
 ```
 
@@ -47,7 +47,7 @@ $ rake guides:update_guide getting_started.md
 
 ### 预览
 
-```ruby
+```bash
 $ GUIDES_LANGUAGE=zh-CN rake guides:generate
 ```
 
@@ -126,7 +126,7 @@ $ git checkout -b new-branch-name
 部署
 ----
 
-```ruby
+```bash
 $ rake guides:deploy
 ```
 
@@ -135,14 +135,14 @@ $ rake guides:deploy
 建议
 ----
 
-[欢迎提意见](https://github.com/ruby-china/guides/issues/new)
+[欢迎提意见](https://github.com/ruby-china/guides/issues/new)。
 
 其它格式
 -------
 
 > PDF, MOBI, EPUB 格式
 
-请支持安道所翻译的 [Rails 指南](https://selfstore.io/products/13)
+请支持安道所翻译的 [Rails 指南](https://selfstore.io/products/13)。
 
 协议
 ----
