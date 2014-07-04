@@ -1,0 +1,10 @@
+language: ruby
+cache: bundler
+install: bundle install --jobs 4
+before_script: cp BASE_PATH.example BASE_PATH
+env:
+  - GUIDES_LANGUAGE=zh-CN
+rvm:
+  - 2.1.2
+notifications:
+  email: false
