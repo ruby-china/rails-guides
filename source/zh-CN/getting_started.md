@@ -140,7 +140,7 @@ T> 把 CoffeeScript 编译成 JavaScript 需要 JavaScript 运行时，如果没
 
 上述命令会启动 WEBrick，这是 Ruby 内置的服务器。要查看程序，请打开一个浏览器窗口，访问 <http://localhost:3000>。应该会看到默认的 Rails 信息页面：
 
-![欢迎使用页面](/images/getting_started/rails_welcome.png)
+![欢迎使用页面](images/getting_started/rails_welcome.png)
 
 T> 要想停止服务器，请在命令行中按 Ctrl+C 键。服务器成功停止后回重新看到命令行提示符。在大多数类 Unix 系统中，包括 Mac OS X，命令行提示符是 `$` 符号。在开发模式中，一般情况下无需重启服务器，修改文件后，服务器会自动重新加载。
 
@@ -268,7 +268,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 
 首先，程序中要有个页面用来新建文章。一个比较好的选择是 `/articles/new`。这个路由前面已经定义了，可以访问。打开 <http://localhost:3000/articles/new> ，会看到如下的路由错误：
 
-![路由错误，常量 ArticlesController 未初始化](/images/getting_started/routing_error_no_controller.png)
+![路由错误，常量 ArticlesController 未初始化](images/getting_started/routing_error_no_controller.png)
 
 产生这个错误的原因是，没有定义用来处理该请求的控制器。解决这个问题的方法很简单：创建名为 `ArticlesController` 的控制器。执行下面的命令即可：
 
@@ -289,7 +289,7 @@ I> 在 Ruby 中，方法分为 `public`、`private` 和 `protected` 三种，只
 
 现在刷新 <http://localhost:3000/articles/new>，会看到一个新错误：
 
-![ArticlesController 控制器不知如何处理 new 动作](/images/getting_started/unknown_action_new_for_articles.png)
+![ArticlesController 控制器不知如何处理 new 动作](images/getting_started/unknown_action_new_for_articles.png)
 
 这个错误的意思是，在刚生成的 `ArticlesController` 控制器中找不到 `new` 动作。因为在生成控制器时，除非指定要哪些动作，否则不会生成，控制器是空的。
 
@@ -302,7 +302,7 @@ end
 
 在 `ArticlesController` 中定义 `new` 方法后，再刷新 <http://localhost:3000/articles/new>，看到的还是个错误：
 
-![找不到 articles/new 所用模板](/images/getting_started/template_is_missing_articles_new.png)
+![找不到 articles/new 所用模板](images/getting_started/template_is_missing_articles_new.png)
 
 产生这个错误的原因是，Rails 希望这样的常规动作有对应的视图，用来显示内容。没有视图可用，Rails 就报错了。
 
@@ -386,7 +386,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 
 表单写好了，路由也定义了，现在可以填写表单，然后点击提交按钮新建文章了。请实际操作一下。提交表单后，会看到一个熟悉的错误：
 
-![ArticlesController 控制器不知如何处理 create 动作](/images/getting_started/unknown_action_create_for_articles.png)
+![ArticlesController 控制器不知如何处理 create 动作](images/getting_started/unknown_action_create_for_articles.png)
 
 解决这个错误，要在 `ArticlesController` 控制器中定义 `create` 动作。
 
@@ -497,7 +497,7 @@ T> 后文会看到，`@article.save` 返回一个布尔值，表示保存是否�
 
 再次访问 <http://localhost:3000/articles/new>，填写表单，还差一步就能创建文章了，会看到一个错误页面：
 
-![新建文章时禁止使用属性](/images/getting_started/forbidden_attributes_for_new_article.png)
+![新建文章时禁止使用属性](images/getting_started/forbidden_attributes_for_new_article.png)
 
 Rails 提供了很多安全防范措施保证程序的安全，你所看到的错误就是因为违反了其中一个措施。这个防范措施叫做“健壮参数”，我们要明确地告知 Rails 哪些参数可在控制器中使用。这里，我们想使用 `title` 和 `text` 参数。请把 `create` 动作修成成：
 
@@ -557,7 +557,7 @@ end
 
 做了以上修改后，就能真正的新建文章了。访问 <http://localhost:3000/articles/new>，自己试试。
 
-![显示文章](/images/getting_started/show_action_for_articles.png)
+![显示文章](images/getting_started/show_action_for_articles.png)
 
 ### 列出所有文章
 
@@ -740,7 +740,7 @@ T> Rails 会自动把出错的表单字段包含在一个 `div` 中，并为其�
 
 再次访问 <http://localhost:3000/articles/new>，尝试发布一篇没有标题的文章，会看到一个很有用的错误提示。
 
-![出错的表单](/images/getting_started/form_with_errors.png)
+![出错的表单](images/getting_started/form_with_errors.png)
 
 ### 更新文章
 
@@ -852,7 +852,7 @@ T> 不用把所有的属性都提供给 `update` 动作。例如，如果使用 
 
 下图是文章列表页面现在的样子：
 
-![在文章列表页面显示了编辑链接](/images/getting_started/index_action_with_edit_link.png)
+![在文章列表页面显示了编辑链接](images/getting_started/index_action_with_edit_link.png)
 
 ### 使用局部视图去掉视图中的重复代码
 
@@ -969,7 +969,7 @@ end
 
 生成“Destroy”链接的 `link_to` 用法有点不一样，第二个参数是具名路由，随后还传入了几个参数。`:method` 和 `:'data-confirm'` 选项设置链接的 HTML5 属性，点击链接后，首先会显示一个对话框，然后发起 DELETE 请求。这两个操作通过 `jquery_ujs` 这个 JavaScript 脚本实现。生成程序骨架时，会自动把 `jquery_ujs` 加入程序的布局中（`app/views/layouts/application.html.erb`）。没有这个脚本，就不会显示确认对话框。
 
-![确认对话框](/images/getting_started/confirm_dialog.png)
+![确认对话框](images/getting_started/confirm_dialog.png)
 
 恭喜，现在你可以新建、显示、列出、更新、删除文章了。
 
@@ -1207,7 +1207,7 @@ end
 
 现在，可以为文章添加评论了，成功添加后，评论会在正确的位置显示。
 
-![文章的评论](/images/getting_started/article_with_comments.png)
+![文章的评论](images/getting_started/article_with_comments.png)
 
 重构
 ----
