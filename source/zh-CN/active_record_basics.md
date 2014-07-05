@@ -15,7 +15,7 @@ Active Record 基础
 
 ## Active Record 是什么？
 
-Active Record 是 [MVC]({{ site.baseurl }}/getting_started.html#the-mvc-architecture) 中的 M（模型），处理数据和业务逻辑。Active Record 负责创建和使用需要持久存入数据库中的数据。Active Record 实现了 Active Record 模式，是一种对象关系映射系统。
+Active Record 是 [MVC](getting_started.html#the-mvc-architecture) 中的 M（模型），处理数据和业务逻辑。Active Record 负责创建和使用需要持久存入数据库中的数据。Active Record 实现了 Active Record 模式，是一种对象关系映射系统。
 
 ### Active Record 模式
 
@@ -68,7 +68,7 @@ Active Record 提供了很多功能，其中最重要的几个如下：
 * `updated_at` - 更新记录时，自动设为当前的时间戳；
 * `lock_version` - 在模型中添加[乐观锁定](http://api.rubyonrails.org/classes/ActiveRecord/Locking.html)功能；
 * `type` - 让模型使用[单表集成](http://api.rubyonrails.org/classes/ActiveRecord/Base.html#label-Single+table+inheritance)；
-* `(association_name)_type` - [多态关联]({{ site.baseurl }}/association_basics.html#polymorphic-associations)的类型；
+* `(association_name)_type` - [多态关联](association_basics.html#polymorphic-associations)的类型；
 * `(table_name)_count` - 缓存关联对象的数量。例如，`posts` 表中的 `comments_count` 字段，缓存每篇文章的评论数；
 
 I> 虽然这些字段是可选的，但在 Active Record 中是被保留的。如果想使用相应的功能，就不要把这些保留字段用作其他用途。例如，`type` 这个保留字段是用来指定数据表使用“单表继承”（STI）的，如果不用 STI，请使用其他的名字，例如“context”，这也能表明该字段的作用。
@@ -188,7 +188,7 @@ david = User.find_by(name: 'David')
 users = User.where(name: 'David', occupation: 'Code Artist').order('created_at DESC')
 ```
 
-[Active Record 查询]({{ site.baseurl }}/active_record_querying.html)一文会详细介绍查询 Active Record 模型的方法。
+[Active Record 查询](active_record_querying.html)一文会详细介绍查询 Active Record 模型的方法。
 
 ### 更新
 
@@ -237,11 +237,11 @@ User.create  # => false
 User.create! # => ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
 ```
 
-[Active Record 数据验证]({{ site.baseurl }}/active_record_validations.html)一文会详细介绍数据验证。
+[Active Record 数据验证](active_record_validations.html)一文会详细介绍数据验证。
 
 ## 回调
 
-Active Record 回调可以在模型声明周期的特定事件上绑定代码，相应的事件发生时，执行这些代码。例如创建新纪录时，更新记录时，删除记录时，等等。[Active Record 回调]({{ site.baseurl }}/active_record_callbacks.html)一文会详细介绍回调。
+Active Record 回调可以在模型声明周期的特定事件上绑定代码，相应的事件发生时，执行这些代码。例如创建新纪录时，更新记录时，删除记录时，等等。[Active Record 回调](active_record_callbacks.html)一文会详细介绍回调。
 
 ## 迁移
 
@@ -267,4 +267,4 @@ end
 
 Rails 会跟踪哪些迁移已经应用到数据库中，还提供了回滚功能。创建数据表要执行 `rake db:migrate` 命令；回滚操作要执行 `rake db:rollback` 命令。
 
-注意，上面的代码和具体的数据库种类无关，可用于 MySQL、PostgreSQL、Oracle 等数据库。关于迁移的详细介绍，参阅 [Active Record 迁移]({{ site.baseurl }}/migrations.html)一文。
+注意，上面的代码和具体的数据库种类无关，可用于 MySQL、PostgreSQL、Oracle 等数据库。关于迁移的详细介绍，参阅 [Active Record 迁移](migrations.html)一文。

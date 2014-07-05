@@ -88,7 +88,7 @@ class Order < ActiveRecord::Base
 end
 ```
 
-![belongs_to 关联]({{ site.baseurl }}/images/belongs_to.png)
+![belongs_to 关联](images/belongs_to.png)
 
 I> 在 `belongs_to` 关联声明中必须使用单数形式。如果在上面的代码中使用复数形式，程序会报错，提示未初始化常量 `Order::Customers`。因为 Rails 自动使用关联中的名字引用类名。如果关联中的名字错误的使用复数，引用的类也就变成了复数。
 
@@ -121,7 +121,7 @@ class Supplier < ActiveRecord::Base
 end
 ```
 
-![has_one 关联]({{ site.baseurl }}/images/has_one.png)
+![has_one 关联](images/has_one.png)
 
 相应的迁移如下：
 
@@ -154,7 +154,7 @@ end
 
 I> 声明 `has_many` 关联时，另一个模型使用复数形式。
 
-![has_many 关联]({{ site.baseurl }}/images/has_many.png)
+![has_many 关联](images/has_many.png)
 
 相应的迁移如下：
 
@@ -196,7 +196,7 @@ class Patient < ActiveRecord::Base
 end
 ```
 
-![has_many :through 关联]({{ site.baseurl }}/images/has_many_through.png)
+![has_many :through 关联](images/has_many_through.png)
 
 相应的迁移如下：
 
@@ -278,7 +278,7 @@ class AccountHistory < ActiveRecord::Base
 end
 ```
 
-![has_one :through 关联]({{ site.baseurl }}/images/has_one_through.png)
+![has_one :through 关联](images/has_one_through.png)
 
 相应的迁移如下：
 
@@ -319,7 +319,7 @@ class Part < ActiveRecord::Base
 end
 ```
 
-![has_and_belongs_to_many 关联]({{ site.baseurl }}/images/habtm.png)
+![has_and_belongs_to_many 关联](images/habtm.png)
 
 相应的迁移如下：
 
@@ -467,7 +467,7 @@ class CreatePictures < ActiveRecord::Migration
 end
 ```
 
-![多态关联]({{ site.baseurl }}/images/polymorphic.png)
+![多态关联](images/polymorphic.png)
 
 ### 自连接
 
@@ -940,7 +940,7 @@ class Order < ActiveRecord::Base
 end
 ```
 
-在作用域代码块中可以使用任何一个标准的[查询方法]({{ site.baseurl }}/active_record_querying.html)。下面分别介绍这几个方法：
+在作用域代码块中可以使用任何一个标准的[查询方法](active_record_querying.html)。下面分别介绍这几个方法：
 
 * `where`
 * `includes`
@@ -1201,7 +1201,7 @@ class Supplier < ActiveRecord::Base
 end
 ```
 
-在作用域代码块中可以使用任何一个标准的[查询方法]({{ site.baseurl }}/active_record_querying.html)。下面分别介绍这几个方法：
+在作用域代码块中可以使用任何一个标准的[查询方法](active_record_querying.html)。下面分别介绍这几个方法：
 
 * `where`
 * `includes`
@@ -1573,7 +1573,7 @@ class Customer < ActiveRecord::Base
 end
 ```
 
-在作用域代码块中可以使用任何一个标准的[查询方法]({{ site.baseurl }}/active_record_querying.html)。下面分别介绍这几个方法：
+在作用域代码块中可以使用任何一个标准的[查询方法](active_record_querying.html)。下面分别介绍这几个方法：
 
 * `where`
 * `extending`
@@ -2010,7 +2010,7 @@ class Parts < ActiveRecord::Base
 end
 ```
 
-在作用域代码块中可以使用任何一个标准的[查询方法]({{ site.baseurl }}/active_record_querying.html)。下面分别介绍这几个方法：
+在作用域代码块中可以使用任何一个标准的[查询方法](active_record_querying.html)。下面分别介绍这几个方法：
 
 * `where`
 * `extending`
