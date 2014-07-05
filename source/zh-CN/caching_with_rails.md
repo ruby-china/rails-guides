@@ -12,16 +12,16 @@ Rails 缓存简介
 
 --------------------------------------------------------------------------------
 
-## 缓存基础
+缓存基础
+-------
 
 本节介绍三种缓存技术：页面，动作和片段。Rails 默认支持片段缓存。如果想使用页面缓存和动作缓存，要在 `Gemfile` 中加入 `actionpack-page_caching` 和 `actionpack-action_caching`。
 
 在开发环境中若想使用缓存，要把 `config.action_controller.perform_caching` 选项设为 `true`。这个选项一般都在各环境的设置文件（`config/environments/*.rb`）中设置，在开发环境和测试环境默认是禁用的，在生产环境中默认是开启的。
 
-{:lang="ruby"}
-~~~
+```ruby
 config.action_controller.perform_caching = true
-~~~
+```
 
 ### 页面缓存
 
@@ -43,8 +43,7 @@ NOTE: Rails 4 删除了对动作缓存的支持，如想使用就得安装 [acti
 
 例如，如果想实时显示网站的订单，而且不想缓存这部分内容，但想缓存显示所有可选商品的部分，就可以使用下面这段代码：
 
-{:lang="erb"}
-~~~
+```erb
 <% Order.find_recent.each do |o| %>
   <%= o.buyer.name %> bought <%= o.product.name %>
 <% end %>
@@ -55,43 +54,38 @@ NOTE: Rails 4 删除了对动作缓存的支持，如想使用就得安装 [acti
     <%= link_to p.name, product_url(p) %>
   <% end %>
 <% end %>
-~~~
+```
 
 上述代码中的 `cache` 块会绑定到调用它的动作上，输出到动作缓存的所在位置。因此，如果要在动作中使用多个片段缓存，就要使用 `action_suffix` 为 `cache` 块指定前缀：
 
-{:lang="erb"}
-~~~
+```erb
 <% cache(action: 'recent', action_suffix: 'all_products') do %>
   All available products:
-~~~
+```
 
 `expire_fragment` 方法可以把缓存设为过期，例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 expire_fragment(controller: 'products', action: 'recent', action_suffix: 'all_products')
-~~~
+```
 
 如果不想把缓存绑定到调用它的动作上，调用 `cahce` 方法时可以使用全局片段名：
 
-{:lang="erb"}
-~~~
+```erb
 <% cache('all_available_products') do %>
   All available products:
 <% end %>
-~~~
+```
 
 在 `ProductsController` 的所有动作中都可以使用片段名调用这个片段缓存，而且过期的设置方式不变：
 
-{:lang="ruby"}
-~~~
+```ruby
 expire_fragment('all_available_products')
-~~~
+```
 
 如果不想手动设置片段缓存过期，而想每次更新商品后自动过期，可以定义一个帮助方法：
 
-{:lang="ruby"}
-~~~
+```ruby
 module ProductsHelper
   def cache_key_for_products
     count          = Product.count
@@ -99,43 +93,39 @@ module ProductsHelper
     "products/all-#{count}-#{max_updated_at}"
   end
 end
-~~~
+```
 
 这个方法生成一个缓存键，用于所有商品的缓存。在视图中可以这么做：
 
-{:lang="erb"}
-~~~
+```erb
 <% cache(cache_key_for_products) do %>
   All available products:
 <% end %>
-~~~
+```
 
 如果想在满足某个条件时缓存片段，可以使用 `cache_if` 或 `cache_unless` 方法：
 
-{:lang="erb"}
-~~~
+```erb
 <% cache_if (condition, cache_key_for_products) do %>
   All available products:
 <% end %>
-~~~
+```
 
 缓存的键名还可使用 Active Record 模型：
 
-{:lang="erb"}
-~~~
+```erb
 <% Product.all.each do |p| %>
   <% cache(p) do %>
     <%= link_to p.name, product_url(p) %>
   <% end %>
 <% end %>
-~~~
+```
 
 Rails 会在模型上调用 `cache_key` 方法，返回一个字符串，例如 `products/23-20130109142513`。键名中包含模型名，ID 以及 `updated_at` 字段的时间戳。所以更新商品后会自动生成一个新片段缓存，因为键名变了。
 
 上述两种缓存机制还可以结合在一起使用，这叫做“俄罗斯套娃缓存”（Russian Doll Caching）：
 
-{:lang="erb"}
-~~~
+```erb
 <% cache(cache_key_for_products) do %>
   All available products:
   <% Product.all.each do |p| %>
@@ -144,7 +134,7 @@ Rails 会在模型上调用 `cache_key` 方法，返回一个字符串，例如 
     <% end %>
   <% end %>
 <% end %>
-~~~
+```
 
 之所以叫“俄罗斯套娃缓存”，是因为嵌套了多个片段缓存。这种缓存的优点是，更新单个商品后，重新生成外层片段缓存时可以继续使用内层片段缓存。
 
@@ -156,8 +146,7 @@ Rails 会在模型上调用 `cache_key` 方法，返回一个字符串，例如 
 
 以下面的代码为例。程序中有个 `Product` 模型，其中定义了一个实例方法，用来查询竞争对手网站上的商品价格。这个方法的返回结果最好使用底层缓存：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Product < ActiveRecord::Base
   def competing_price
     Rails.cache.fetch("#{cache_key}/competing_price", expires_in: 12.hours) do
@@ -165,7 +154,7 @@ class Product < ActiveRecord::Base
     end
   end
 end
-~~~
+```
 
 NOTE: 注意，在这个例子中使用了 `cache_key` 方法，所以得到的缓存键名是这种形式：`products/233-20140225082222765838000/competing_price`。`cache_key` 方法根据模型的 `id` 和 `updated_at` 属性生成键名。这是最常见的做法，因为商品更新后，缓存就失效了。一般情况下，使用底层缓存保存实例的相关信息时，都要生成缓存键。
 
@@ -175,8 +164,7 @@ NOTE: 注意，在这个例子中使用了 `cache_key` 方法，所以得到的�
 
 例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 class ProductsController < ApplicationController
 
   def index
@@ -190,9 +178,10 @@ class ProductsController < ApplicationController
   end
 
 end
-~~~
+```
 
-## 缓存的存储方式
+缓存的存储方式
+------------
 
 Rails 为动作缓存和片段缓存提供了不同的存储方式。
 
@@ -202,10 +191,9 @@ TIP: 页面缓存全部存储在硬盘中。
 
 程序默认使用的缓存存储方式可以在文件 `config/application.rb` 的 `Application` 类中或者环境设置文件（`config/environments/*.rb`）的 `Application.configure` 代码块中调用 `config.cache_store=` 方法设置。该方法的第一个参数是存储方式，后续参数都是传给对应存储方式构造器的参数。
 
-{:lang="ruby"}
-~~~
+```ruby
 config.cache_store = :memory_store
-~~~
+```
 
 NOTE: 在设置代码块外部可以调用 `ActionController::Base.cache_store` 方法设置存储方式。
 
@@ -233,10 +221,9 @@ Rails 实现的所有存储方式都共用了下面几个选项。这些选项�
 
 这种存储方式在 Ruby 进程中把缓存保存在内存中。存储空间的大小由 `:size` 选项指定，默认为 32MB。如果超出分配的大小，系统会清理缓存，把最不常使用的记录删除。
 
-{:lang="ruby"}
-~~~
+```ruby
 config.cache_store = :memory_store, { size: 64.megabytes }
-~~~
+```
 
 如果运行多个 Rails 服务器进程（使用 mongrel_cluster 或 Phusion Passenger 时），进程间无法共用缓存数据。这种存储方式不适合在大型程序中使用，不过很适合只有几个服务器进程的小型、低流量网站，也可在开发环境和测试环境中使用。
 
@@ -244,10 +231,9 @@ config.cache_store = :memory_store, { size: 64.megabytes }
 
 这种存储方式使用文件系统保存缓存。缓存文件的存储位置必须在初始化时指定。
 
-{:lang="ruby"}
-~~~
+```ruby
 config.cache_store = :file_store, "/path/to/cache/directory"
-~~~
+```
 
 使用这种存储方式，同一主机上的服务器进程之间可以共用缓存。运行在不同主机上的服务器进程之间也可以通过共享的文件系统共用缓存，但这种用法不是最好的方式，因此不推荐使用。这种存储方式适合在只用了一到两台主机的中低流量网站中使用。
 
@@ -263,19 +249,17 @@ config.cache_store = :file_store, "/path/to/cache/directory"
 
 在这种缓存存储中使用 `write` 和 `fetch` 方法还可指定两个额外的选项，充分利用 memcached 的特有功能。指定 `:raw` 选项可以直接把没有序列化的数据传给 memcached 服务器。在这种类型的数据上可以使用 memcached 的原生操作，例如 `increment` 和 `decrement`。如果不想让 memcached 覆盖已经存在的记录，可以指定 `:unless_exist` 选项。
 
-{:lang="ruby"}
-~~~
+```ruby
 config.cache_store = :mem_cache_store, "cache-1.example.com", "cache-2.example.com"
-~~~
+```
 
 ### ActiveSupport::Cache::EhcacheStore
 
 如果在 JRuby 平台上运行程序，可以使用 Terracotta 开发的 Ehcache 存储缓存。Ehcache 是使用 Java 开发的开源缓存存储，同时也提供企业版，增强了稳定性、操作便利性，以及商用支持。使用这种存储方式要先安装 `jruby-ehcache-rails3` gem（1.1.0 及以上版本）。
 
-{:lang="ruby"}
-~~~
+```ruby
 config.cache_store = :ehcache_store
-~~~
+```
 
 初始化时，可以使用 `:ehcache_config` 选项指定 Ehcache 设置文件的位置（默认为 Rails 程序根目录中的 `ehcache.xml`），还可使用 `:cache_name` 选项定制缓存名（默认为 `rails_cache`）。
 
@@ -291,11 +275,10 @@ config.cache_store = :ehcache_store
 
 这些选项通过 Hash 传给 `write` 方法，可以使用驼峰式或者下划线分隔形式。例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 Rails.cache.write('key', 'value', time_to_idle: 60.seconds, timeToLive: 600.seconds)
 caches_action :index, expires_in: 60.seconds, unless_exist: true
-~~~
+```
 
 关于 Ehcache 更多的介绍，请访问 <http://ehcache.org/>。关于如何在运行于 JRuby 平台之上的 Rails 中使用 Ehcache，请访问 <http://ehcache.org/documentation/jruby.html>。
 
@@ -303,10 +286,9 @@ caches_action :index, expires_in: 60.seconds, unless_exist: true
 
 这种存储方式只可在开发环境和测试环境中使用，并不会存储任何数据。如果在开发过程中必须和 `Rails.cache` 交互，而且会影响到修改代码后的效果，使用这种存储方式尤其方便。使用这种存储方式时调用 `fetch` 和 `read` 方法没有实际作用。
 
-{:lang="ruby"}
-~~~
+```ruby
 config.cache_store = :null_store
-~~~
+```
 
 ### 自建存储方式
 
@@ -314,10 +296,9 @@ config.cache_store = :null_store
 
 使用自建的存储方式，把 `cache_store` 设为类的新实例即可。
 
-{:lang="ruby"}
-~~~
+```ruby
 config.cache_store = MyCacheStore.new
-~~~
+```
 
 ### 缓存键
 
@@ -325,15 +306,15 @@ config.cache_store = MyCacheStore.new
 
 缓存键也可使用 Hash 或者数组。
 
-{:lang="ruby"}
-~~~
+```ruby
 # This is a legal cache key
 Rails.cache.read(site: "mysite", owners: [owner_1, owner_2])
-~~~
+```
 
 `Rails.cache` 方法中使用的键和保存到存储引擎中的键并不一样。保存时，可能会根据命名空间或引擎的限制做修改。也就是说，不能使用 `memcache-client` gem 调用 `Rails.cache` 方法保存缓存再尝试读取缓存。不过，无需担心会超出 memcached 的大小限制，或者违反句法规则。
 
-## 支持条件 GET 请求
+支持条件 GET 请求
+---------------
 
 条件请求是 HTTP 规范的一个特性，网页服务器告诉浏览器 GET 请求的响应自上次请求以来没有发生变化，可以直接读取浏览器缓存中的副本。
 
@@ -341,8 +322,7 @@ Rails.cache.read(site: "mysite", owners: [owner_1, owner_2])
 
 服务器负责查看上次修改时间戳和 `If-None-Match` 报头的值，决定是否返回完整的响应。在 Rails 中使用条件 GET 请求很简单：
 
-{:lang="ruby"}
-~~~
+```ruby
 class ProductsController < ApplicationController
 
   def show
@@ -362,24 +342,22 @@ class ProductsController < ApplicationController
     # :not_modified. So that's it, you're done.
   end
 end
-~~~
+```
 
 如果不想使用 Hash，还可直接传入模型实例，Rails 会调用 `updated_at` 和 `cache_key` 方法分别设置 `last_modified` 和 `etag`：
 
-{:lang="ruby"}
-~~~
+```ruby
 class ProductsController < ApplicationController
   def show
     @product = Product.find(params[:id])
     respond_with(@product) if stale?(@product)
   end
 end
-~~~
+```
 
 如果没有使用特殊的方式处理响应，使用默认的渲染机制（例如，没有使用 `respond_to` 代码块，或者没有手动调用 `render` 方法），还可使用十分便利的 `fresh_when` 方法：
 
-{:lang="ruby"}
-~~~
+```ruby
 class ProductsController < ApplicationController
 
   # This will automatically send back a :not_modified if the request is fresh,
@@ -390,4 +368,4 @@ class ProductsController < ApplicationController
     fresh_when last_modified: @product.published_at.utc, etag: @product
   end
 end
-~~~
+```
