@@ -32,11 +32,6 @@
       name: Active Record 查询
       url: active_record_querying.html
       description: 本篇介绍如何使用 Active Record 的数据库查询功能。
-    -
-      name: Active Record PostgreSQL
-      url: active_record_postgresql.html
-      description: 本篇讲解如何使用 Active Record 搭配 PostgreSQL 数据库。
-      work_in_progress: true
 -
   name: 视图
   documents:
