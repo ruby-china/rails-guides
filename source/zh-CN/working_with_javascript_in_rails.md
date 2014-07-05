@@ -1,9 +1,5 @@
----
-layout: docs
-title: 在 Rails 中使用 JavaScript
-prev_section: asset_pipeline
-next_section: engines
----
+在 Rails 中使用 JavaScript
+=========================
 
 本文介绍 Rails 内建对 Ajax 和 JavaScript 等的支持，使用这些功能可以轻易的开发强大的 Ajax 程序。
 
@@ -15,9 +11,9 @@ next_section: engines
 * 如何在服务器端处理 Ajax；
 * Turbolinks 简介；
 
----
+--------------------------------------------------------------------------------
 
-## Ajax 简介 {#an-introduction-to-ajax}
+## Ajax 简介
 
 在理解 Ajax 之前，要先知道网页浏览器常规的工作原理。
 
@@ -39,7 +35,7 @@ $.ajax(url: "/test").done (html) ->
 
 Rails 内建了很多使用这种技术开发程序的功能，基本上无需自己动手编写上述代码。后文介绍 Rails 如何为开发这种程序提供帮助，不过都构建在这种简单的技术之上。
 
-## 剥离式 JavaScript {#unobtrusive-javaScript}
+## 剥离式 JavaScript
 
 Rails 使用一种叫做“剥离式 JavaScript”（Unobtrusive JavaScript）的技术把 JavaScript 应用到 DOM 上。剥离式 JavaScript 是前端开发社区推荐使用的方法，但有些教程可能会使用其他方式。
 
@@ -110,7 +106,7 @@ $ ->
 
 Rails 团队极力推荐使用这种方式编写 CoffeeScript 和 JavaScript，而且你会发现很多代码库都沿用了这种方式。
 
-## 内建的帮助方法 {#built-in-helpers}
+## 内建的帮助方法
 
 Rails 提供了很多视图帮助方法协助你生成 HTML，如果想在元素上实现 Ajax 效果也没问题。
 
@@ -118,7 +114,7 @@ Rails 提供了很多视图帮助方法协助你生成 HTML，如果想在元素
 
 [rails.js](https://github.com/rails/jquery-ujs/blob/master/src/rails.js) 提供 JavaScript 代码，常规的 Ruby 视图帮助方法用来生成 DOM 标签。rails.js 中的 CoffeeScript 会监听这些属性，执行相应的处理程序。
 
-### `form_for` {#form_for}
+### `form_for`
 
 [`form_for`](http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_for) 方法协助编写表单，可指定 `:remote` 选项，用法如下：
 
@@ -153,7 +149,7 @@ $(document).ready ->
 
 显然你需要的功能比这要复杂，上面的例子只是个入门。关于事件的更多内容请阅读 [jquery-ujs 的维基](https://github.com/rails/jquery-ujs/wiki/ajax)。
 
-### `form_tag` {#form-tag}
+### `form_tag`
 
 [`form_tag`](http://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-form_tag) 方法的功能和 `form_for` 类似，也可指定 `:remote` 选项，如下所示：
 
@@ -175,7 +171,7 @@ $(document).ready ->
 
 其他用法都和 `form_for` 一样。详细介绍参见文档。
 
-### `link_to` {#link-to}
+### `link_to`
 
 [`link_to`](http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to) 方法用来生成链接，可以指定 `:remote`，用法如下：
 
@@ -207,7 +203,7 @@ $ ->
     alert "The post was deleted."
 ~~~
 
-### `button_to` {#button-to}
+### `button_to`
 
 [`button_to`](http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to) 方法用来生成按钮，可以指定 `:remote` 选项，用法如下：
 
@@ -227,11 +223,11 @@ $ ->
 
 因为生成的就是一个表单，所以 `form_for` 的全部信息否可使用。
 
-## 服务器端处理 {#server-side-concerns}
+## 服务器端处理
 
 Ajax 不仅需要编写客户端代码，服务器端也要做处理。Ajax 请求一般不返回 HTML，而是 JSON。下面详细介绍处理过程。
 
-### 一个简单的例子 {#a-simple-example}
+### 一个简单的例子
 
 假设在网页中要显示一系列用户，还有一个新建用户的表单，控制器的 `index` 动作如下所示：
 
@@ -302,11 +298,11 @@ class UsersController < ApplicationController
 $("<%= escape_javascript(render @user) %>").appendTo("#users");
 ~~~
 
-## Turbolinks {#turbolinks}
+## Turbolinks
 
 Rails 4 提供了 [Turbolinks gem](https://github.com/rails/turbolinks)，这个 gem 可用于大多数程序，加速页面渲染。
 
-### Turbolinks 的工作原理 {#how-turbolinks-works}
+### Turbolinks 的工作原理
 
 Turbolinks 为页面中所有的 `<a>` 元素添加了一个点击事件处理程序。如果浏览器支持 [PushState](http://dwz.cn/pushstate)，Turbolinks 会发起 Ajax 请求，处理响应，然后使用响应主体替换原始页面的整个 `<body>` 元素。最后，使用 PushState 技术更改页面的 URL，让新页面可刷新，并且有个精美的 URL。
 
@@ -319,7 +315,7 @@ Turbolinks 为页面中所有的 `<a>` 元素添加了一个点击事件处理�
 <a href="..." data-no-turbolink>No turbolinks here</a>.
 ~~~
 
-### 页面内容变更事件 {#page-change-events}
+### 页面内容变更事件
 
 编写 CoffeeScript 代码时，经常需要在页面加载时做一些事情。在 jQuery 中，我们可以这么写：
 
@@ -339,7 +335,7 @@ $(document).on "page:change", ->
 
 其他可用事件等详细信息，请参阅 [Turbolinks 的说明文件](https://github.com/rails/turbolinks/blob/master/README.md)。
 
-## 其他资源 {#other-resources}
+## 其他资源
 
 下面列出一些链接，可以帮助你进一步学习：
 

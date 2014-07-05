@@ -1,9 +1,5 @@
----
-layout: docs
-title: 调试 Rails 程序
-prev_section: security
-next_section: configuring
----
+调试 Rails 程序
+==============
 
 本文介绍如何调试 Rails 程序。
 
@@ -14,9 +10,9 @@ next_section: configuring
 * 不同的调试方法；
 * 如何分析调用堆栈；
 
----
+--------------------------------------------------------------------------------
 
-## 调试相关的视图帮助方法 {#view-helpers-for-debugging}
+## 调试相关的视图帮助方法
 
 调试一个常见的需求是查看变量的值。在 Rails 中，可以使用下面这三个方法：
 
@@ -24,7 +20,7 @@ next_section: configuring
 * `to_yaml`
 * `inspect`
 
-### `debug` {#debug}
+### `debug`
 
 `debug` 方法使用 YAML 格式渲染对象，把结果包含在 `<pre>` 标签中，可以把任何对象转换成人类可读的数据格式。例如，在视图中有以下代码：
 
@@ -55,7 +51,7 @@ attributes_cache: {}
 Title: Rails debugging guide
 ~~~
 
-### `to_yaml` {#to-yaml}
+### `to_yaml`
 
 使用 YAML 格式显示实例变量、对象的值或者方法的返回值，可以这么做：
 
@@ -87,7 +83,7 @@ attributes_cache: {}
 Title: Rails debugging guide
 ~~~
 
-### `inspect` {#inspect}
+### `inspect`
 
 另一个用于显示对象值的方法是 `inspect`，显示数组和 Hash 时使用这个方法特别方便。`inspect` 方法以字符串的形式显示对象的值。例如：
 
@@ -108,11 +104,11 @@ Title: Rails debugging guide
 Title: Rails debugging guide
 ~~~
 
-## Logger {#the-logger}
+## Logger
 
 运行时把信息写入日志文件也很有用。Rails 分别为各运行环境都维护着单独的日志文件。
 
-### Logger 是什么 {#what-is-the-logger-questionmark}
+### Logger 是什么
 
 Rails 使用 `ActiveSupport::Logger` 类把信息写入日志。当然也可换用其他代码库，比如 `Log4r`。
 
@@ -126,7 +122,7 @@ Rails.logger = Log4r::Logger.new("Application Log")
 
 T> 默认情况下，日志文件都保存在 `Rails.root/log/` 文件夹中，日志文件名为 `environment_name.log`。
 
-### 日志等级 {#log-levels}
+### 日志等级
 
 如果消息的日志等级等于或高于设定的等级，就会写入对应的日志文件中。如果想知道当前的日志等级，可以调用 `Rails.logger.level` 方法。
 
@@ -142,7 +138,7 @@ Rails.logger.level = 0 # at any time
 
 T> Rails 为生产环境设置的默认日志等级是 `info`，生产环境和测试环境的默认日志等级是 `debug`。
 
-### 写日志 {#sending-messages}
+### 写日志
 
 把消息写入日志文件可以在控制器、模型或邮件发送程序中调用 `logger.(debug|info|warn|error|fatal)` 方法。
 
@@ -200,7 +196,7 @@ Completed in 0.01224 (81 reqs/sec) | DB: 0.00044 (3%) | 302 Found [http://localh
 
 加入这种日志信息有助于发现异常现象。如果添加了额外的日志消息，记得要合理设定日志等级，免得把大量无用的消息写入生产环境的日志文件。
 
-### 日志标签 {#tagged-logging}
+### 日志标签
 
 运行多用户/多账户的程序时，使用自定义的规则筛选日志信息能节省很多时间。Active Support 中的 `TaggedLogging` 模块可以实现这种功能，可以在日志消息中加入二级域名、请求 ID 等有助于调试的信息。
 
@@ -212,7 +208,7 @@ logger.tagged("BCX", "Jason") { logger.info "Stuff" }                   # Logs "
 logger.tagged("BCX") { logger.tagged("Jason") { logger.info "Stuff" } } # Logs "[BCX] [Jason] Stuff"
 ~~~
 
-### 日志对性能的影响 {#impact-of-logs-on-performance}
+### 日志对性能的影响
 
 如果把日志写入硬盘，肯定会对程序有点小的性能影响。不过可以做些小调整：`:debug` 等级比 `:fatal` 等级对性能的影响更大，因为写入的日志消息量更多。
 
@@ -232,13 +228,13 @@ logger.debug {"Person attributes hash: #{@person.attributes.inspect}"}
 
 代码块中的内容，即字符串插值，仅当允许 `:debug` 日志等级时才会执行。这种降低性能的方式只有在日志量比较大时才能体现出来，但却是个好的编程习惯。
 
-## 使用 `debugger` gem 调试 {#debugging-with-the-debugger-gem}
+## 使用 `debugger` gem 调试
 
 如果代码表现异常，可以在日志文件或者控制台查找原因。但有时使用这种方法效率不高，无法找到导致问题的根源。如果需要检查源码，`debugger` gem 可以助你一臂之力。
 
 如果想学习 Rails 源码但却无从下手，也可使用 `debugger` gem。随便找个请求，然后按照这里介绍的方法，从你编写的代码一直研究到 Rails 框架的代码。
 
-### 安装 {#setup}
+### 安装
 
 `debugger` gem 可以设置断点，实时查看执行的 Rails 代码。安装方法如下：
 
@@ -280,7 +276,7 @@ $ rails server --debugger
 
 T> 在开发环境中，如果启动服务器时没有指定 `--debugger` 选项，不用重启服务器，加入 `require "debugger"` 即可。
 
-### Shell {#the-shell}
+### Shell
 
 在程序中调用 `debugger` 方法后，会在启动程序所在的终端窗口中启用调试器 shell，并进入调试器的终端 `(rdb:n)` 中。其中 `n` 是线程编号。在调试器的终端中会显示接下来要执行哪行代码。
 
@@ -388,7 +384,7 @@ T> 要想查看某个命令的帮助信息，可以在终端里输入 `help <com
    10        format.json { render json: @posts }
 ~~~
 
-### 上下文 {#the-context}
+### 上下文
 
 开始调试程序时，会进入堆栈中不同部分对应的不同上下文。
 
@@ -423,7 +419,7 @@ T> 要想查看某个命令的帮助信息，可以在终端里输入 `help <com
 
 向前或向后移动调用帧可以执行 `up [n]`（简写形式为 `u`）和 `down [n]` 命令，分别向前或向后移动 n 帧。n 的默认值为 1。向前移动是指向更高的帧数移动，向下移动是指向更低的帧数移动。
 
-### 线程 {#threads}
+### 线程
 
 `thread` 命令（缩略形式为 `th`）可以列出所有线程，停止线程，恢复线程，或者在线程之间切换。其选项如下：
 
@@ -435,7 +431,7 @@ T> 要想查看某个命令的帮助信息，可以在终端里输入 `help <com
 
 `thread` 命令有很多作用。调试并发线程时，如果想确认代码中没有条件竞争，使用这个命令十分方便。
 
-### 审查变量 {#inspecting-variables}
+### 审查变量
 
 任何表达式都可在当前上下文中运行。如果想计算表达式的值，直接输入表达式即可。
 
@@ -506,7 +502,7 @@ T> 命令 `p`（print，打印）和 `pp`(pretty print，精美格式化打印)�
 
 `display` 命令后跟的变量值会随着执行堆栈的推移而变化。如果想停止显示变量值，可以执行 `undisplay n` 命令，其中 `n` 是变量的代号，在上例中是 `1`。
 
-### 逐步执行 {#step-by-step}
+### 逐步执行
 
 现在你知道在运行代码的什么位置，以及如何查看变量的值。下面我们继续执行程序。
 
@@ -591,7 +587,7 @@ Loading development environment (Rails 4.0.0)
 
 如果想深入方法和 Rails 代码执行堆栈，可以使用 `step` 命令，一步一步执行。这是发现代码问题（或者 Rails 框架问题）最好的方式。
 
-### 断点 {#breakpoints}
+### 断点
 
 断点设置在何处终止执行代码。调试器会在断点设定行调用。
 
@@ -630,33 +626,33 @@ No breakpoints.
 * `enable breakpoints`：允许使用指定的断点列表或者所有断点终止执行程序。这是创建断点后的默认状态。
 * `disable breakpoints`：指定的断点 `breakpoints` 在程序中不起作用。
 
-### 捕获异常 {#catching-exceptions}
+### 捕获异常
 
 `catch exception-name` 命令（或 `cat exception-name`）可捕获 `exception-name` 类型的异常，源码很有可能没有处理这个异常。
 
 执行 `catch` 命令可以列出所有可用的捕获点。
 
-### 恢复执行 {#resuming-execution}
+### 恢复执行
 
 有两种方法可以恢复被调试器终止执行的程序：
 
 * `continue [line-specification]`（或 `c`）：从停止的地方恢复执行程序，设置的断点失效。可选的参数 `line-specification` 指定一个代码行数，设定一个一次性断点，程序执行到这一行时，断点会被删除。
 * `finish [frame-number]`（或 `fin`）：一直执行程序，直到指定的堆栈帧结束为止。如果没有指定 `frame-number` 参数，程序会一直执行，直到当前堆栈帧结束为止。当前堆栈帧就是最近刚使用过的帧，如果之前没有移动帧的位置（执行 `up`，`down` 或 `frame` 命令），就是第 0 帧。如果指定了帧数，则运行到指定的帧结束为止。
 
-### 编辑 {#editing}
+### 编辑
 
 下面两种方法可以从调试器中使用编辑器打开源码：
 
 * `edit [file:line]`：使用环境变量 `EDITOR` 指定的编辑器打开文件 `file`。还可指定文件的行数（`line`）。
 * `tmate n`（简写形式为 `tm`）：在 TextMate 中打开当前文件。如果指定了参数 `n`，则使用第 n 帧。
 
-### 退出 {#quitting}
+### 退出
 
 要想退出调试器，请执行 `quit` 命令（缩写形式为 `q`），或者别名 `exit`。
 
 退出后会终止所有线程，所以服务器也会被停止，因此需要重启。
 
-### 设置 {#settings}
+### 设置
 
 `debugger` gem 能自动显示你正在分析的代码，在编辑器中修改代码后，还会重新加载源码。下面是可用的选项：
 
@@ -678,13 +674,13 @@ set forcestep
 set listsize 25
 ~~~
 
-## 调试内存泄露 {#debugging-memory-leaks}
+## 调试内存泄露
 
 Ruby 程序（Rails 或其他）可能会导致内存泄露，泄露可能由 Ruby 代码引起，也可能由 C 代码引起。
 
 本节介绍如何使用 Valgrind 等工具查找并修正内存泄露问题。
 
-### Valgrind {#valgrind}
+### Valgrind
 
 [Valgrind](http://valgrind.org/) 这个程序只能在 Linux 系统中使用，用于侦察 C 语言层的内存泄露和条件竞争。
 
@@ -692,7 +688,7 @@ Valgrind 提供了很多工具，可用来侦察内存管理和线程问题，�
 
 关于如何安装 Valgrind 及在 Ruby 中使用，请阅读 Evan Weaver 编写的 [Valgrind and Ruby](http://blog.evanweaver.com/articles/2008/02/05/valgrind-and-ruby/) 一文。
 
-## 用于调试的插件 {#plugins-for-debugging}
+## 用于调试的插件
 
 有很多 Rails 插件可以帮助你查找问题和调试程序。下面列出一些常用的调试插件：
 
@@ -703,7 +699,7 @@ Valgrind 提供了很多工具，可用来侦察内存管理和线程问题，�
 * [Better Errors](https://github.com/charliesome/better_errors)：使用全新的页面替换 Rails 默认的错误页面，显示更多的上下文信息，例如源码和变量的值；
 * [RailsPanel](https://github.com/dejan/rails_panel)：一个 Chrome 插件，在浏览器的开发者工具中显示 `development.log` 文件的内容，显示的内容包括：数据库查询时间，渲染时间，总时间，参数列表，渲染的视图等。
 
-## 参考资源 {#references}
+## 参考资源
 
 * [ruby-debug 首页](http://bashdb.sourceforge.net/ruby-debug/home-page.html)
 * [debugger 首页](https://github.com/cldwalker/debugger)

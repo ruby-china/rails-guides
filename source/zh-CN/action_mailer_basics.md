@@ -1,9 +1,5 @@
----
-layout: docs
-title: Action Mailer 基础
-prev_section: i18n
-next_section: testing
----
+Action Mailer 基础
+==================
 
 本文全面介绍如何在程序中收发邮件，Action Mailer 的内部机理，以及如何测试“邮件程序”（mailer）。
 
@@ -14,19 +10,19 @@ next_section: testing
 * 如何设置 Action Mailer；
 * 如何测试 Action Mailer 类；
 
----
+--------------------------------------------------------------------------------
 
-## 简介 {#introduction}
+## 简介
 
 Rails 使用 Action Mailer 实现发送邮件功能，邮件由邮件程序和视图控制。邮件程序继承自 `ActionMailer::Base`，作用和控制器类似，保存在文件夹 `app/mailers` 中，对应的视图保存在文件夹 `app/views` 中。
 
-## 发送邮件 {#sending-emails}
+## 发送邮件
 
 本节详细介绍如何创建邮件程序及对应的视图。
 
-### 生成邮件程序的步骤 {#walkthrough-to-generating-a-mailer}
+### 生成邮件程序的步骤
 
-#### 创建邮件程序 {#create-the-mailer}
+#### 创建邮件程序
 
 {:lang="bash"}
 ~~~
@@ -48,7 +44,7 @@ class MyMailer < ActionMailer::Base
 end
 ~~~
 
-#### 编辑邮件程序 {#edit-the-mailer}
+#### 编辑邮件程序
 
 邮件程序和控制器类似，也有称为“动作”的方法，以及组织内容的视图。控制器生成的内容，例如 HTML，发送给客户端；邮件程序生成的消息则通过电子邮件发送。
 
@@ -83,7 +79,7 @@ end
 
 和控制器一样，动作中定义的实例变量可以在视图中使用。
 
-#### 创建邮件程序的视图 {#create-a-mailer-view}
+#### 创建邮件程序的视图
 
 在文件夹 `app/views/user_mailer/` 中新建文件 `welcome_email.html.erb`。这个视图是邮件的模板，使用 HTML 编写：
 
@@ -125,7 +121,7 @@ Thanks for joining and have a great day!
 
 调用 `mail` 方法后，Action Mailer 会检测到这两个模板（纯文本和 HTML），自动生成一个类型为 `multipart/alternative` 的邮件。
 
-#### 调用邮件程序 {#calling-the-mailer}
+#### 调用邮件程序
 
 其实，邮件程序就是渲染视图的另一种方式，只不过渲染的视图不通过 HTTP 协议发送，而是通过 Email 协议发送。因此，应该由控制器调用邮件程序，在成功注册用户后给用户发送一封邮件。过程相当简单。
 
@@ -165,13 +161,13 @@ end
 
 `welcome_email` 方法返回 `Mail::Message` 对象，在其上调用 `deliver` 方法发送邮件。
 
-### 自动编码邮件头 {#auto-encoding-header-values}
+### 自动编码邮件头
 
 Action Mailer 会自动编码邮件头和邮件主体中的多字节字符。
 
 更复杂的需求，例如使用其他字符集和自编码文字，请参考 [Mail](https://github.com/mikel/mail) 库的用法。
 
-### Action Mailer 方法 {#complete-list-of-action-mailer-methods}
+### Action Mailer 方法
 
 下面这三个方法是邮件程序中最重要的方法：
 
@@ -179,7 +175,7 @@ Action Mailer 会自动编码邮件头和邮件主体中的多字节字符。
 * `attachments`：添加邮件的附件，例如，`attachments['file-name.jpg'] = File.read('file-name.jpg')`；
 * `mail`：发送邮件，传入的值为 Hash 形式的邮件头，`mail` 方法负责创建邮件内容，纯文本或多种格式，取决于定义了哪种邮件模板；
 
-#### 添加附件 {#adding-attachments}
+#### 添加附件
 
 在 Action Mailer 中添加附件十分方便。
 
@@ -206,7 +202,7 @@ I> Mail gem 会自动使用 Base64 编码附件。如果想使用其他编码方
 
 I> 如果指定了 `encoding` 键，Mail 会认为附件已经编码了，不会再使用 Base64 编码附件。
 
-#### 使用行间附件 {#making-inline-attachments}
+#### 使用行间附件
 
 在 Action Mailer 3.0 中使用行间附件比之前版本简单得多。
 
@@ -238,7 +234,7 @@ I> 如果指定了 `encoding` 键，Mail 会认为附件已经编码了，不会
                                                 class: 'photos' %>
     ~~~
 
-#### 发给多个收件人 {#sending-email-to-multiple-recipients}
+#### 发给多个收件人
 
 要想把一封邮件发送给多个收件人，例如通知所有管理员有新用户注册网站，可以把 `:to` 键的值设为一组邮件地址。这一组邮件地址可以是一个数组；也可以是一个字符串，使用逗号分隔各个地址。
 
@@ -257,7 +253,7 @@ end
 
 使用类似的方式还可添加抄送和密送，分别设置 `:cc` 和 `:bcc` 键即可。
 
-#### 在邮件中显示名字 {#sending-email-with-name}
+#### 在邮件中显示名字
 
 有时希望收件人在邮件中看到自己的名字，而不只是邮件地址。实现这种需求的方法是把邮件地址写成 `"Full Name <email>"` 格式。
 
@@ -270,7 +266,7 @@ def welcome_email(user)
 end
 ~~~
 
-### 邮件程序的视图 {#mailer-views}
+### 邮件程序的视图
 
 邮件程序的视图保存在文件夹 `app/views/name_of_mailer_class` 中。邮件程序之所以知道使用哪个视图，是因为视图文件名和邮件程序的方法名一致。如前例，`welcome_email` 方法的 HTML 格式视图是 `app/views/user_mailer/welcome_email.html.erb`，纯文本格式视图是 `welcome_email.text.erb`。
 
@@ -315,7 +311,7 @@ end
 
 上述代码会使用 `another_template.html.erb` 渲染 HTML，使用 `'Render text'` 渲染纯文本。这里用到的 `render` 方法和控制器中的一样，所以选项也都是一样的，例如 `:text`、`:inline` 等。
 
-### Action Mailer 布局 {#action-mailer-layouts}
+### Action Mailer 布局
 
 和控制器一样，邮件程序也可以使用布局。布局的名字必须和邮件程序类一样，例如 `user_mailer.html.erb` 和 `user_mailer.text.erb` 会自动识别为邮件程序的布局。
 
@@ -346,7 +342,7 @@ end
 
 上述代码会使用文件 `my_layout.html.erb` 渲染 HTML 格式；如果文件 `user_mailer.text.erb` 存在，会用来渲染纯文本格式。
 
-### 在 Action Mailer 视图中生成 URL {#generating-urls-in-action-mailer-views}
+### 在 Action Mailer 视图中生成 URL
 
 和控制器不同，邮件程序不知道请求的上下文，因此要自己提供 `:host` 参数。
 
@@ -357,7 +353,7 @@ end
 config.action_mailer.default_url_options = { host: 'example.com' }
 ~~~
 
-#### 使用 `url_for` 方法生成 URL {#generating-urls-with-url-for}
+#### 使用 `url_for` 方法生成 URL
 
 使用 `url_for` 方法时必须指定 `only_path: false` 选项，这样才能确保生成绝对 URL，因为默认情况下如果不指定 `:host` 选项，`url_for` 帮助方法生成的是相对 URL。
 
@@ -379,7 +375,7 @@ config.action_mailer.default_url_options = { host: 'example.com' }
 
 I> 如果指定了 `:host` 选项，Rails 会生成绝对 URL，没必要再指定 `only_path: false`。
 
-#### 使用具名路由生成 URL {#generating-urls-with-named-routes}
+#### 使用具名路由生成 URL
 
 邮件客户端不能理解网页中的上下文，没有生成完整地址的基地址，所以使用具名路由帮助方法时一定要使用 `_url` 形式。
 
@@ -390,13 +386,13 @@ I> 如果指定了 `:host` 选项，Rails 会生成绝对 URL，没必要再指�
 <%= user_url(@user, host: 'example.com') %>
 ~~~
 
-### 发送多种格式邮件 {#sending-multipart-emails}
+### 发送多种格式邮件
 
 如果同一动作有多个模板，Action Mailer 会自动发送多种格式的邮件。例如前面的 `UserMailer`，如果在 `app/views/user_mailer` 文件夹中有 `welcome_email.text.erb` 和 `welcome_email.html.erb` 两个模板，Action Mailer 会自动发送 HTML 和纯文本格式的邮件。
 
 格式的顺序由 `ActionMailer::Base.default` 方法的 `:parts_order` 参数决定。
 
-### 发送邮件时动态设置发送选项 {#sending-emails-with-dynamic-delivery-options}
+### 发送邮件时动态设置发送选项
 
 如果在发送邮件时想重设发送选项（例如，SMTP 密令），可以在邮件程序动作中使用 `delivery_method_options` 方法。
 
@@ -416,7 +412,7 @@ class UserMailer < ActionMailer::Base
 end
 ~~~
 
-### 不渲染模板 {#sending-emails-without-template-rendering}
+### 不渲染模板
 
 有时可能不想使用布局，直接使用字符串渲染邮件内容，可以使用 `:body` 选项。但别忘了指定 `:content_type` 选项，否则 Rails 会使用默认值 `text/plain`。
 
@@ -432,7 +428,7 @@ class UserMailer < ActionMailer::Base
 end
 ~~~
 
-## 接收邮件 {#receiving-emails}
+## 接收邮件
 
 使用 Action Mailer 接收和解析邮件做些额外设置。接收邮件之前，要先设置系统，把邮件转发给程序。所以，在 Rails 程序中接收邮件要完成以下步骤：
 
@@ -464,7 +460,7 @@ class UserMailer < ActionMailer::Base
 end
 ~~~
 
-## Action Mailer 回调 {#action-mailer-callbacks}
+## Action Mailer 回调
 
 在 Action Mailer 中也可设置 `before_action`、`after_action` 和 `around_action`。
 
@@ -518,11 +514,11 @@ end
 
 *   如果在回调中把邮件主体设为 `nil` 之外的值，会阻止执行后续操作；
 
-## 使用 Action Mailer 帮助方法 {#using-action-mailer-helpers}
+## 使用 Action Mailer 帮助方法
 
 Action Mailer 继承自 `AbstractController`，因此为控制器定义的帮助方法都可以在邮件程序中使用。
 
-## 设置 Action Mailer {#action-mailer-configuration}
+## 设置 Action Mailer
 
 下述设置选项最好在环境相关的文件（`environment.rb`，`production.rb` 等）中设置。
 
@@ -539,7 +535,7 @@ Action Mailer 继承自 `AbstractController`，因此为控制器定义的帮助
 
 完整的设置说明参见“设置 Rails 程序”一文中的“[设置 Action Mailer]({{ site.baseurl }}/configuring.html#configuring-action-mailer)”一节。
 
-### Action Mailer 设置示例 {#example-action-mailer-configuration}
+### Action Mailer 设置示例
 
 可以把下面的代码添加到文件 `config/environments/$RAILS_ENV.rb` 中：
 
@@ -556,7 +552,7 @@ config.action_mailer.raise_delivery_errors = true
 config.action_mailer.default_options = {from: 'no-reply@example.com'}
 ~~~
 
-### 设置 Action Mailer 使用 Gmail {#action-mailer-configuration-for-gmail}
+### 设置 Action Mailer 使用 Gmail
 
 Action Mailer 现在使用 [Mail](https://github.com/mikel/mail) gem，针对 Gmail 的设置更简单，把下面的代码添加到文件 `config/environments/$RAILS_ENV.rb`  中即可：
 
@@ -573,11 +569,11 @@ config.action_mailer.smtp_settings = {
   enable_starttls_auto: true  }
 ~~~
 
-## 测试邮件程序 {#mailer-testing}
+## 测试邮件程序
 
 邮件程序的测试参阅“[Rails 程序测试指南]({{ site.baseurl}}、testing.html#testing-your-mailers)”。
 
-## 拦截邮件 {#intercepting-emails}
+## 拦截邮件
 
 有时，在邮件发送之前需要做些修改。Action Mailer 提供了相应的钩子，可以拦截每封邮件。你可以注册一个拦截器，在交给发送程序之前修改邮件。
 

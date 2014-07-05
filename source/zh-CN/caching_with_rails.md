@@ -1,9 +1,5 @@
----
-layout: docs
-title: Rails 缓存简介
-prev_section: command_line
-next_section: asset_pipeline
----
+Rails 缓存简介
+=============
 
 本文要教你如果避免频繁查询数据库，在最短的时间内把真正需要的内容返回给客户端。
 
@@ -14,9 +10,9 @@ next_section: asset_pipeline
 * 存储缓存的方法；
 * Rails 对条件 GET 请求的支持；
 
----
+--------------------------------------------------------------------------------
 
-## 缓存基础 {#basic-caching}
+## 缓存基础
 
 本节介绍三种缓存技术：页面，动作和片段。Rails 默认支持片段缓存。如果想使用页面缓存和动作缓存，要在 `Gemfile` 中加入 `actionpack-page_caching` 和 `actionpack-action_caching`。
 
@@ -27,19 +23,19 @@ next_section: asset_pipeline
 config.action_controller.perform_caching = true
 ~~~
 
-### 页面缓存 {#page-caching}
+### 页面缓存
 
 页面缓存机制允许网页服务器（Apache 或 Nginx 等）直接处理请求，不经 Rails 处理。这么做显然速度超快，但并不适用于所有情况（例如需要身份认证的页面）。服务器直接从文件系统上伺服文件，所以缓存过期是一个很棘手的问题。
 
 I> Rails 4 删除了对页面缓存的支持，如想使用就得安装 [actionpack-page_caching gem](https://github.com/rails/actionpack-page_caching)。最新推荐的缓存方法参见 [DHH 对键基缓存过期的介绍](http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works)。
 
-### 动作缓存 {#action-caching}
+### 动作缓存
 
 如果动作上有前置过滤器就不能使用页面缓存，例如需要身份认证的页面，这时需要使用动作缓存。动作缓存和页面缓存的工作方式差不多，但请求还是会经由 Rails 处理，所以在伺服缓存之前会执行前置过滤器。使用动作缓存可以执行身份认证等限制，然后再从缓存中取出结果返回客户端。
 
 I> Rails 4 删除了对动作缓存的支持，如想使用就得安装 [actionpack-action_caching gem](https://github.com/rails/actionpack-action_caching)。最新推荐的缓存方法参见 [DHH 对键基缓存过期的介绍](http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works)。
 
-### 片段缓存 {#fragment-caching}
+### 片段缓存
 
 如果能缓存整个页面或动作的内容，再伺服给客户端，这个世界就完美了。但是，动态网页程序的页面一般都由很多部分组成，使用的缓存机制也不尽相同。在动态生成的页面中，不同的内容要使用不同的缓存方式和过期日期。为此，Rails 提供了一种缓存机制叫做“片段缓存”。
 
@@ -152,7 +148,7 @@ Rails 会在模型上调用 `cache_key` 方法，返回一个字符串，例如 
 
 之所以叫“俄罗斯套娃缓存”，是因为嵌套了多个片段缓存。这种缓存的优点是，更新单个商品后，重新生成外层片段缓存时可以继续使用内层片段缓存。
 
-### 底层缓存 {#low-level-caching}
+### 底层缓存
 
 有时不想缓存视图片段，只想缓存特定的值或者查询结果。Rails 中的缓存机制可以存储各种信息。
 
@@ -173,7 +169,7 @@ end
 
 I> 注意，在这个例子中使用了 `cache_key` 方法，所以得到的缓存键名是这种形式：`products/233-20140225082222765838000/competing_price`。`cache_key` 方法根据模型的 `id` 和 `updated_at` 属性生成键名。这是最常见的做法，因为商品更新后，缓存就失效了。一般情况下，使用底层缓存保存实例的相关信息时，都要生成缓存键。
 
-### SQL 缓存 {#sql-caching}
+### SQL 缓存
 
 查询缓存是 Rails 的一个特性，把每次查询的结果缓存起来，如果在同一次请求中遇到相同的查询，直接从缓存中读取结果，不用再次查询数据库。
 
@@ -196,13 +192,13 @@ class ProductsController < ApplicationController
 end
 ~~~
 
-## 缓存的存储方式 {#cache-stores}
+## 缓存的存储方式
 
 Rails 为动作缓存和片段缓存提供了不同的存储方式。
 
 T> 页面缓存全部存储在硬盘中。
 
-### 设置 {#configuration}
+### 设置
 
 程序默认使用的缓存存储方式可以在文件 `config/application.rb` 的 `Application` 类中或者环境设置文件（`config/environments/*.rb`）的 `Application.configure` 代码块中调用 `config.cache_store=` 方法设置。该方法的第一个参数是存储方式，后续参数都是传给对应存储方式构造器的参数。
 
@@ -215,7 +211,7 @@ I> 在设置代码块外部可以调用 `ActionController::Base.cache_store` 方
 
 缓存中的数据通过 `Rails.cache` 方法获取。
 
-### ActiveSupport::Cache::Store {#activesupport-cache-store}
+### ActiveSupport::Cache::Store
 
 这个类提供了在 Rails 中和缓存交互的基本方法。这是个抽象类，不能直接使用，应该使用针对各存储引擎的具体实现。Rails 实现了几种存储方式，介绍参见后几节。
 
@@ -233,7 +229,7 @@ Rails 实现的所有存储方式都共用了下面几个选项。这些选项�
 
 * `:race_condition_ttl`：结合 `:expires_in` 选项使用。缓存过期后，禁止多个进程同时重新生成同一个缓存记录（叫做 dog pile effect），从而避免条件竞争。这个选项设置一个秒数，在这个时间之后才能再次使用重新生成的新值。如果设置了 `:expires_in` 选项，最好也设置这个选项。
 
-### ActiveSupport::Cache::MemoryStore {#activesupport-cache-memorystore}
+### ActiveSupport::Cache::MemoryStore
 
 这种存储方式在 Ruby 进程中把缓存保存在内存中。存储空间的大小由 `:size` 选项指定，默认为 32MB。如果超出分配的大小，系统会清理缓存，把最不常使用的记录删除。
 
@@ -244,7 +240,7 @@ config.cache_store = :memory_store, { size: 64.megabytes }
 
 如果运行多个 Rails 服务器进程（使用 mongrel_cluster 或 Phusion Passenger 时），进程间无法共用缓存数据。这种存储方式不适合在大型程序中使用，不过很适合只有几个服务器进程的小型、低流量网站，也可在开发环境和测试环境中使用。
 
-### ActiveSupport::Cache::FileStore {#activesupport-cache-filestore}
+### ActiveSupport::Cache::FileStore
 
 这种存储方式使用文件系统保存缓存。缓存文件的存储位置必须在初始化时指定。
 
@@ -259,7 +255,7 @@ config.cache_store = :file_store, "/path/to/cache/directory"
 
 这是默认使用的缓存存储方式。
 
-### ActiveSupport::Cache::MemCacheStore {#activesupport-cache-memcachestore}
+### ActiveSupport::Cache::MemCacheStore
 
 这种存储方式使用 Danga 开发的 `memcached` 服务器，为程序提供一个中心化的缓存存储。Rails 默认使用附带安装的 `dalli` gem 实现这种存储方式。这是目前在生产环境中使用最广泛的缓存存储方式，可以提供单个缓存存储，或者共享的缓存集群，性能高，冗余度低。
 
@@ -272,7 +268,7 @@ config.cache_store = :file_store, "/path/to/cache/directory"
 config.cache_store = :mem_cache_store, "cache-1.example.com", "cache-2.example.com"
 ~~~
 
-### ActiveSupport::Cache::EhcacheStore {#activesupport-cache-ehcachestore}
+### ActiveSupport::Cache::EhcacheStore
 
 如果在 JRuby 平台上运行程序，可以使用 Terracotta 开发的 Ehcache 存储缓存。Ehcache 是使用 Java 开发的开源缓存存储，同时也提供企业版，增强了稳定性、操作便利性，以及商用支持。使用这种存储方式要先安装 `jruby-ehcache-rails3` gem（1.1.0 及以上版本）。
 
@@ -303,7 +299,7 @@ caches_action :index, expires_in: 60.seconds, unless_exist: true
 
 关于 Ehcache 更多的介绍，请访问 <http://ehcache.org/>。关于如何在运行于 JRuby 平台之上的 Rails 中使用 Ehcache，请访问 <http://ehcache.org/documentation/jruby.html>。
 
-### ActiveSupport::Cache::NullStore {#activesupport-cache-nullstore}
+### ActiveSupport::Cache::NullStore
 
 这种存储方式只可在开发环境和测试环境中使用，并不会存储任何数据。如果在开发过程中必须和 `Rails.cache` 交互，而且会影响到修改代码后的效果，使用这种存储方式尤其方便。使用这种存储方式时调用 `fetch` 和 `read` 方法没有实际作用。
 
@@ -312,7 +308,7 @@ caches_action :index, expires_in: 60.seconds, unless_exist: true
 config.cache_store = :null_store
 ~~~
 
-### 自建存储方式 {#custom-cache-stores}
+### 自建存储方式
 
 要想自建缓存存储方式，可以继承 `ActiveSupport::Cache::Store` 类，并实现相应的方法。自建存储方式时，可以使用任何缓存技术。
 
@@ -323,7 +319,7 @@ config.cache_store = :null_store
 config.cache_store = MyCacheStore.new
 ~~~
 
-### 缓存键 {#cache-keys}
+### 缓存键
 
 缓存中使用的键可以是任意对象，只要能响应 `:cache_key` 或 `:to_param` 方法即可。如果想生成自定义键，可以在类中定义 `:cache_key` 方法。Active Record 根据类名和记录的 ID 生成缓存键。
 
@@ -337,7 +333,7 @@ Rails.cache.read(site: "mysite", owners: [owner_1, owner_2])
 
 `Rails.cache` 方法中使用的键和保存到存储引擎中的键并不一样。保存时，可能会根据命名空间或引擎的限制做修改。也就是说，不能使用 `memcache-client` gem 调用 `Rails.cache` 方法保存缓存再尝试读取缓存。不过，无需担心会超出 memcached 的大小限制，或者违反句法规则。
 
-## 支持条件 GET 请求 {#conditional-get-support}
+## 支持条件 GET 请求
 
 条件请求是 HTTP 规范的一个特性，网页服务器告诉浏览器 GET 请求的响应自上次请求以来没有发生变化，可以直接读取浏览器缓存中的副本。
 
