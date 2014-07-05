@@ -12,7 +12,8 @@
 
 --------------------------------------------------------------------------------
 
-## 调试相关的视图帮助方法
+调试相关的视图帮助方法
+-------------------
 
 调试一个常见的需求是查看变量的值。在 Rails 中，可以使用下面这三个方法：
 
@@ -24,19 +25,17 @@
 
 `debug` 方法使用 YAML 格式渲染对象，把结果包含在 `<pre>` 标签中，可以把任何对象转换成人类可读的数据格式。例如，在视图中有以下代码：
 
-{:lang="erb"}
-~~~
+```erb
 <%= debug @post %>
 <p>
   <b>Title:</b>
   <%= @post.title %>
 </p>
-~~~
+```
 
 渲染后会看到如下结果：
 
-{:lang="yaml"}
-~~~
+```yaml
 --- !ruby/object:Post
 attributes:
   updated_at: 2008-09-05 22:55:47
@@ -49,27 +48,25 @@ attributes_cache: {}
 
 
 Title: Rails debugging guide
-~~~
+```
 
 ### `to_yaml`
 
 使用 YAML 格式显示实例变量、对象的值或者方法的返回值，可以这么做：
 
-{:lang="erb"}
-~~~
+```erb
 <%= simple_format @post.to_yaml %>
 <p>
   <b>Title:</b>
   <%= @post.title %>
 </p>
-~~~
+```
 
 `to_yaml` 方法把对象转换成可读性较好地 YAML 格式，`simple_format` 方法按照终端中的方式渲染每一行。`debug` 方法就是包装了这两个步骤。
 
 上述代码在渲染后的页面中会显示如下内容：
 
-{:lang="yaml"}
-~~~
+```yaml
 --- !ruby/object:Post
 attributes:
 updated_at: 2008-09-05 22:55:47
@@ -81,30 +78,30 @@ created_at: 2008-09-05 22:55:47
 attributes_cache: {}
 
 Title: Rails debugging guide
-~~~
+```
 
 ### `inspect`
 
 另一个用于显示对象值的方法是 `inspect`，显示数组和 Hash 时使用这个方法特别方便。`inspect` 方法以字符串的形式显示对象的值。例如：
 
-{:lang="erb"}
-~~~
+```erb
 <%= [1, 2, 3, 4, 5].inspect %>
 <p>
   <b>Title:</b>
   <%= @post.title %>
 </p>
-~~~
+```
 
 渲染后得到的结果如下：
 
-~~~
+```
 [1, 2, 3, 4, 5]
 
 Title: Rails debugging guide
-~~~
+```
 
-## Logger
+Logger
+------
 
 运行时把信息写入日志文件也很有用。Rails 分别为各运行环境都维护着单独的日志文件。
 
@@ -114,11 +111,10 @@ Rails 使用 `ActiveSupport::Logger` 类把信息写入日志。当然也可换�
 
 替换日志代码库可以在 `environment.rb` 或其他环境文件中设置：
 
-{:lang="ruby"}
-~~~
+```ruby
 Rails.logger = Logger.new(STDOUT)
 Rails.logger = Log4r::Logger.new("Application Log")
-~~~
+```
 
 TIP: 默认情况下，日志文件都保存在 `Rails.root/log/` 文件夹中，日志文件名为 `environment_name.log`。
 
@@ -128,11 +124,10 @@ TIP: 默认情况下，日志文件都保存在 `Rails.root/log/` 文件夹中�
 
 可用的日志等级包括：`:debug`，`:info`，`:warn`，`:error`，`:fatal` 和 `:unknown`，分别对应数字 0-5。修改默认日志等级的方式如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.log_level = :warn # In any environment initializer, or
 Rails.logger.level = 0 # at any time
-~~~
+```
 
 这么设置在开发环境和交付准备环境中很有用，在生产环境中则不会写入大量不必要的信息。
 
@@ -142,17 +137,15 @@ TIP: Rails 为生产环境设置的默认日志等级是 `info`，生产环境�
 
 把消息写入日志文件可以在控制器、模型或邮件发送程序中调用 `logger.(debug|info|warn|error|fatal)` 方法。
 
-{:lang="ruby"}
-~~~
+```ruby
 logger.debug "Person attributes hash: #{@person.attributes.inspect}"
 logger.info "Processing the request..."
 logger.fatal "Terminating application, raised unrecoverable error!!!"
-~~~
+```
 
 下面这个例子增加了额外的写日志功能：
 
-{:lang="ruby"}
-~~~
+```ruby
 class PostsController < ApplicationController
   # ...
 
@@ -172,11 +165,11 @@ class PostsController < ApplicationController
 
   # ...
 end
-~~~
+```
 
 执行上述动作后得到的日志如下：
 
-~~~
+```
 Processing PostsController#create (for 127.0.0.1 at 2008-09-08 11:52:54) [POST]
   Session ID: BAh7BzoMY3NyZl9pZCIlMDY5MWU1M2I1ZDRjODBlMzkyMWI1OTg2NWQyNzViZjYiCmZsYXNoSUM6J0FjdGl
 vbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--b18cd92fba90eacf8137e5f6b3b06c4d724596a4
@@ -192,7 +185,7 @@ Post should be valid: true
 The post was saved and now the user is going to be redirected...
 Redirected to #<Post:0x20af760>
 Completed in 0.01224 (81 reqs/sec) | DB: 0.00044 (3%) | 302 Found [http://localhost/posts]
-~~~
+```
 
 加入这种日志信息有助于发现异常现象。如果添加了额外的日志消息，记得要合理设定日志等级，免得把大量无用的消息写入生产环境的日志文件。
 
@@ -200,13 +193,12 @@ Completed in 0.01224 (81 reqs/sec) | DB: 0.00044 (3%) | 302 Found [http://localh
 
 运行多用户/多账户的程序时，使用自定义的规则筛选日志信息能节省很多时间。Active Support 中的 `TaggedLogging` 模块可以实现这种功能，可以在日志消息中加入二级域名、请求 ID 等有助于调试的信息。
 
-{:lang="ruby"}
-~~~
+```ruby
 logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
 logger.tagged("BCX") { logger.info "Stuff" }                            # Logs "[BCX] Stuff"
 logger.tagged("BCX", "Jason") { logger.info "Stuff" }                   # Logs "[BCX] [Jason] Stuff"
 logger.tagged("BCX") { logger.tagged("Jason") { logger.info "Stuff" } } # Logs "[BCX] [Jason] Stuff"
-~~~
+```
 
 ### 日志对性能的影响
 
@@ -214,21 +206,20 @@ logger.tagged("BCX") { logger.tagged("Jason") { logger.info "Stuff" } } # Logs "
 
 如果按照下面的方式大量调用 `Logger`，也有潜在的问题：
 
-{:lang="ruby"}
-~~~
+```ruby
 logger.debug "Person attributes hash: #{@person.attributes.inspect}"
-~~~
+```
 
 在上述代码中，即使日志等级不包含 `:debug` 也会对性能产生影响。因为 Ruby 要初始化字符串，再花时间做插值。因此推荐把代码块传给 `logger` 方法，只有等于或大于设定的日志等级时才会执行其中的代码。重写后的代码如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 logger.debug {"Person attributes hash: #{@person.attributes.inspect}"}
-~~~
+```
 
 代码块中的内容，即字符串插值，仅当允许 `:debug` 日志等级时才会执行。这种降低性能的方式只有在日志量比较大时才能体现出来，但却是个好的编程习惯。
 
-## 使用 `debugger` gem 调试
+使用 `debugger` gem 调试
+-----------------------
 
 如果代码表现异常，可以在日志文件或者控制台查找原因。但有时使用这种方法效率不高，无法找到导致问题的根源。如果需要检查源码，`debugger` gem 可以助你一臂之力。
 
@@ -238,41 +229,38 @@ logger.debug {"Person attributes hash: #{@person.attributes.inspect}"}
 
 `debugger` gem 可以设置断点，实时查看执行的 Rails 代码。安装方法如下：
 
-{:lang="bash"}
-~~~
+```bash
 $ gem install debugger
-~~~
+```
 
 从 2.0 版本开始，Rails 内置了调试功能。在任何 Rails 程序中都可以使用 `debugger` 方法调出调试器。
 
 下面举个例子：
 
-{:lang="ruby"}
-~~~
+```ruby
 class PeopleController < ApplicationController
   def new
     debugger
     @person = Person.new
   end
 end
-~~~
+```
 
 然后就能在控制台或者日志中看到如下信息：
 
-~~~
+```
 ***** Debugger requested, but was not available: Start server with --debugger to enable *****
-~~~
+```
 
 记得启动服务器时要加上 `--debugger` 选项：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails server --debugger
 => Booting WEBrick
 => Rails 4.0.0 application starting on http://0.0.0.0:3000
 => Debugger enabled
 ...
-~~~
+```
 
 TIP: 在开发环境中，如果启动服务器时没有指定 `--debugger` 选项，不用重启服务器，加入 `require "debugger"` 即可。
 
@@ -284,16 +272,14 @@ TIP: 在开发环境中，如果启动服务器时没有指定 `--debugger` 选�
 
 例如：
 
-{:lang="bash"}
-~~~
+```bash
 @posts = Post.all
 (rdb:7)
-~~~
+```
 
 现在可以深入分析程序的代码了。首先我们来查看一下调试器的帮助信息，输入 `help`：
 
-{:lang="bash"}
-~~~
+```bash
 (rdb:7) help
 ruby-debug help v0.10.2
 Type 'help <command-name>' for help on a specific command
@@ -304,7 +290,7 @@ break      disable  eval    info    p     reload   source  undisplay
 catch      display  exit    irb     pp    restart  step    up
 condition  down     finish  list    ps    save     thread  var
 continue   edit     frame   method  putl  set      tmate   where
-~~~
+```
 
 TIP: 要想查看某个命令的帮助信息，可以在终端里输入 `help <command-name>`，例如 `help var`。
 
@@ -312,8 +298,7 @@ TIP: 要想查看某个命令的帮助信息，可以在终端里输入 `help <c
 
 `list` 命令输出当前执行代码的前后 5 行代码。下面的例子中，当前行是第 6 行，前面用 `=>` 符号标记。
 
-{:lang="bash"}
-~~~
+```bash
 (rdb:7) list
 [1, 10] in /PathTo/project/app/controllers/posts_controller.rb
    1  class PostsController < ApplicationController
@@ -326,12 +311,11 @@ TIP: 要想查看某个命令的帮助信息，可以在终端里输入 `help <c
    8      respond_to do |format|
    9        format.html # index.html.erb
    10        format.json { render json: @posts }
-~~~
+```
 
 如果再次执行 `list` 命令，请用 `l` 试试。接下来要执行的 10 行代码会显示出来：
 
-{:lang="bash"}
-~~~
+```bash
 (rdb:7) l
 [11, 20] in /PathTo/project/app/controllers/posts_controller.rb
    11      end
@@ -344,14 +328,13 @@ TIP: 要想查看某个命令的帮助信息，可以在终端里输入 `help <c
    18
    19      respond_to do |format|
    20        format.html # show.html.erb
-~~~
+```
 
 可以一直这么执行下去，直到文件的末尾。如果到文件末尾了，`list` 命令会回到该文件的开头，再次从头开始执行一遍，把文件视为一个环形缓冲。
 
 如果想查看前面 10 行代码，可以输入 `list-`（或者 `l-`）：
 
-{:lang="bash"}
-~~~
+```bash
 (rdb:7) l-
 [1, 10] in /PathTo/project/app/controllers/posts_controller.rb
    1  class PostsController < ApplicationController
@@ -364,12 +347,11 @@ TIP: 要想查看某个命令的帮助信息，可以在终端里输入 `help <c
    8      respond_to do |format|
    9        format.html # index.html.erb
    10        format.json { render json: @posts }
-~~~
+```
 
 使用 `list` 命令可以在文件中来回移动，查看 `debugger` 方法所在位置前后的代码。如果想知道 `debugger` 方法在文件的什么位置，可以输入 `list=`：
 
-{:lang="bash"}
-~~~
+```bash
 (rdb:7) list=
 [1, 10] in /PathTo/project/app/controllers/posts_controller.rb
    1  class PostsController < ApplicationController
@@ -382,7 +364,7 @@ TIP: 要想查看某个命令的帮助信息，可以在终端里输入 `help <c
    8      respond_to do |format|
    9        format.html # index.html.erb
    10        format.json { render json: @posts }
-~~~
+```
 
 ### 上下文
 
@@ -392,8 +374,7 @@ TIP: 要想查看某个命令的帮助信息，可以在终端里输入 `help <c
 
 任何时候都可执行 `backtrace` 命令（简写形式为 `where`）显示程序的调用堆栈。这有助于理解如何执行到当前位置。只要你想知道程序是怎么执行到当前代码的，就可以通过 `backtrace` 命令获得答案。
 
-{:lang="bash"}
-~~~
+```bash
 (rdb:5) where
     #0 PostsController.index
        at line /PathTo/project/app/controllers/posts_controller.rb:6
@@ -404,16 +385,15 @@ TIP: 要想查看某个命令的帮助信息，可以在终端里输入 `help <c
     #3 ActionController::Filters::InstanceMethods.call_filters(chain#ActionController::Fil...,...)
        at line /PathTo/project/vendor/rails/actionpack/lib/action_controller/filters.rb:617
 ...
-~~~
+```
 
 执行 `frame n` 命令可以进入指定的调用帧，其中 `n` 为帧序号。
 
-{:lang="bash"}
-~~~
+```bash
 (rdb:5) frame 2
 #2 ActionController::Base.perform_action_without_filters
        at line /PathTo/project/vendor/rails/actionpack/lib/action_controller/base.rb:1175
-~~~
+```
 
 可用的变量和逐行执行代码时一样。毕竟，这就是调试的目的。
 
@@ -437,29 +417,29 @@ TIP: 要想查看某个命令的帮助信息，可以在终端里输入 `help <c
 
 下面这个例子说明如何查看在当前上下文中 `instance_variables` 的值：
 
-~~~
+```
 @posts = Post.all
 (rdb:11) instance_variables
 ["@_response", "@action_name", "@url", "@_session", "@_cookies", "@performed_render", "@_flash", "@template", "@_params", "@before_filter_chain_aborted", "@request_origin", "@_headers", "@performed_redirect", "@_request"]
-~~~
+```
 
 你可能已经看出来了，在控制器中可使用的所有实例变量都显示出来了。这个列表随着代码的执行会动态更新。例如，使用 `next` 命令执行下一行代码：
 
-~~~
+```
 (rdb:11) next
 Processing PostsController#index (for 127.0.0.1 at 2008-09-04 19:51:34) [GET]
   Session ID: BAh7BiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNoSGFzaHsABjoKQHVzZWR7AA==--b16e91b992453a8cc201694d660147bba8b0fd0e
   Parameters: {"action"=>"index", "controller"=>"posts"}
 /PathToProject/posts_controller.rb:8
 respond_to do |format|
-~~~
+```
 
 然后再查看 `instance_variables` 的值：
 
-~~~
+```
 (rdb:11) instance_variables.include? "@posts"
 true
-~~~
+```
 
 实例变量中出现了 `@posts`，因为执行了定义这个变量的代码。
 
@@ -467,38 +447,38 @@ TIP: 执行 `irb` 命令可进入 **irb** 模式，irb 会话使用当前上下�
 
 `var` 命令是显示变量值最便捷的方式：
 
-~~~
+```
 var
 (rdb:1) v[ar] const <object>            show constants of object
 (rdb:1) v[ar] g[lobal]                  show global variables
 (rdb:1) v[ar] i[nstance] <object>       show instance variables of object
 (rdb:1) v[ar] l[ocal]                   show local variables
-~~~
+```
 
 上述方法可以很轻易的查看当前上下文中的变量值。例如：
 
-~~~
+```
 (rdb:9) var local
   __dbg_verbose_save => false
-~~~
+```
 
 审查对象的方法可以使用下述方式：
 
-~~~
+```
 (rdb:9) var instance Post.new
 @attributes = {"updated_at"=>nil, "body"=>nil, "title"=>nil, "published"=>nil, "created_at"...
 @attributes_cache = {}
 @new_record = true
-~~~
+```
 
 TIP: 命令 `p`（print，打印）和 `pp`(pretty print，精美格式化打印)可用来执行 Ruby 表达式并把结果显示在终端里。
 
 `display` 命令可用来监视变量，查看在代码执行过程中变量值的变化：
 
-~~~
+```
 (rdb:1) display @recent_comments
 1: @recent_comments =
-~~~
+```
 
 `display` 命令后跟的变量值会随着执行堆栈的推移而变化。如果想停止显示变量值，可以执行 `undisplay n` 命令，其中 `n` 是变量的代号，在上例中是 `1`。
 
@@ -516,8 +496,7 @@ TIP: `step+ n` 和 `step- n` 可以相应的向前或向后 `n` 步。
 
 例如，下面这段代码调用了 `debugger` 方法：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Author < ActiveRecord::Base
   has_one :editorial
   has_many :comments
@@ -527,12 +506,11 @@ class Author < ActiveRecord::Base
     @recent_comments ||= comments.where("created_at > ?", 1.week.ago).limit(limit)
   end
 end
-~~~
+```
 
 TIP: 在控制台中也可启用调试器，但要记得在调用 `debugger` 方法之前先 `require "debugger"`。
 
-{:lang="sh"}
-~~~
+```bash
 $ rails console
 Loading development environment (Rails 4.0.0)
 >> require "debugger"
@@ -542,12 +520,11 @@ Loading development environment (Rails 4.0.0)
 >> author.find_recent_comments
 /PathTo/project/app/models/author.rb:11
 )
-~~~
+```
 
 停止执行代码时，看一下输出：
 
-{:lang="sh"}
-~~~
+```bash
 (rdb:1) list
 [2, 9] in /PathTo/project/app/models/author.rb
    2    has_one :editorial
@@ -558,21 +535,19 @@ Loading development environment (Rails 4.0.0)
 => 7      @recent_comments ||= comments.where("created_at > ?", 1.week.ago).limit(limit)
    8    end
    9  end
-~~~
+```
 
 在方法内的最后一行停止了。但是这行代码执行了吗？你可以审查一下实例变量。
 
-{:lang="sh"}
-~~~
+```bash
 (rdb:1) var instance
 @attributes = {"updated_at"=>"2008-07-31 12:46:10", "id"=>"1", "first_name"=>"Bob", "las...
 @attributes_cache = {}
-~~~
+```
 
 `@recent_comments` 还未定义，所以这行代码还没执行。执行 `next` 命令执行这行代码：
 
-{:lang="sh"}
-~~~
+```bash
 (rdb:1) next
 /PathTo/project/app/models/author.rb:12
 @recent_comments
@@ -581,7 +556,7 @@ Loading development environment (Rails 4.0.0)
 @attributes_cache = {}
 @comments = []
 @recent_comments = []
-~~~
+```
 
 现在看以看到，因为执行了这行代码，所以加载了 `@comments` 关联，也定义了 `@recent_comments`。
 
@@ -597,29 +572,26 @@ Loading development environment (Rails 4.0.0)
 * `break file:line [if expression]`：在文件 `file` 的第 `line` 行设置断点。如果指定了表达式 `expression`，其返回结果必须为 `true` 才会启动调试器；
 * `break class(.|\#)method [if expression]`：在 `class` 类的 `method` 方法中设置断点，`.` 和 `\#` 分别表示类和实例方法。表达式 `expression` 的作用和上个命令一样；
 
-{:lang="sh"}
-~~~
+```bash
 (rdb:5) break 10
 Breakpoint 1 file /PathTo/project/vendor/rails/actionpack/lib/action_controller/filters.rb, line 10
-~~~
+```
 
 `info breakpoints n` 或 `info break n` 命令可以列出断点。如果指定了数字 `n`，只会列出对应的断点，否则列出所有断点。
 
-{:lang="sh"}
-~~~
+```bash
 (rdb:5) info breakpoints
 Num Enb What
   1 y   at filters.rb:10
-~~~
+```
 
 如果想删除断点，可以执行 `delete n` 命令，删除编号为 `n` 的断点。如果不指定数字 `n`，则删除所有在用的断点。
 
-{:lang="sh"}
-~~~
+```bash
 (rdb:5) delete 1
 (rdb:5) info breakpoints
 No breakpoints.
-~~~
+```
 
 启用和禁用断点的方法如下：
 
@@ -667,14 +639,14 @@ TIP: 设置可以保存到家目录中的 `.rdebugrc` 文件中。启动调试�
 
 下面是 `.rdebugrc` 文件示例：
 
-{:lang="bash"}
-~~~
+```bash
 set autolist
 set forcestep
 set listsize 25
-~~~
+```
 
-## 调试内存泄露
+调试内存泄露
+-----------
 
 Ruby 程序（Rails 或其他）可能会导致内存泄露，泄露可能由 Ruby 代码引起，也可能由 C 代码引起。
 
@@ -688,7 +660,8 @@ Valgrind 提供了很多工具，可用来侦察内存管理和线程问题，�
 
 关于如何安装 Valgrind 及在 Ruby 中使用，请阅读 Evan Weaver 编写的 [Valgrind and Ruby](http://blog.evanweaver.com/articles/2008/02/05/valgrind-and-ruby/) 一文。
 
-## 用于调试的插件
+用于调试的插件
+------------
 
 有很多 Rails 插件可以帮助你查找问题和调试程序。下面列出一些常用的调试插件：
 
@@ -699,7 +672,8 @@ Valgrind 提供了很多工具，可用来侦察内存管理和线程问题，�
 * [Better Errors](https://github.com/charliesome/better_errors)：使用全新的页面替换 Rails 默认的错误页面，显示更多的上下文信息，例如源码和变量的值；
 * [RailsPanel](https://github.com/dejan/rails_panel)：一个 Chrome 插件，在浏览器的开发者工具中显示 `development.log` 文件的内容，显示的内容包括：数据库查询时间，渲染时间，总时间，参数列表，渲染的视图等。
 
-## 参考资源
+参考资源
+-------
 
 * [ruby-debug 首页](http://bashdb.sourceforge.net/ruby-debug/home-page.html)
 * [debugger 首页](https://github.com/cldwalker/debugger)
