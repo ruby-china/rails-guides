@@ -11,7 +11,7 @@ Rails 命令行
 
 --------------------------------------------------------------------------------
 
-NOTE: 阅读本文前要具备一些 Rails 基础知识，可以阅读“[Rails 入门]({{ site.baseurl }}/getting_started.html)”一文。
+NOTE: 阅读本文前要具备一些 Rails 基础知识，可以阅读“[Rails 入门](getting_started.html)”一文。
 
 命令行基础
 ---------
@@ -400,7 +400,7 @@ Database schema version   20110805173523
 
 Rake 命名空间 `db:` 中最常用的任务是 `migrate` 和 `create`，这两个任务会尝试运行所有迁移相关的 Rake 任务（`up`，`down`，`redo`，`reset`）。`rake db:version` 在排查问题时很有用，会输出数据库的当前版本。
 
-关于数据库迁移的更多介绍，参阅“[Active Record 数据库迁移]({{ site.baseurl }}/migrations.html)”一文。
+关于数据库迁移的更多介绍，参阅“[Active Record 数据库迁移](migrations.html)”一文。
 
 ### `doc`
 
@@ -467,7 +467,7 @@ spec/models/user_spec.rb:
 
 ### `test`
 
-NOTE: Rails 中的单元测试详情，参见“[Rails 程序测试指南]({{ site.baseurl }}/testing.html)”一文。
+NOTE: Rails 中的单元测试详情，参见“[Rails 程序测试指南](testing.html)”一文。
 
 Rails 提供了一个名为 Minitest 的测试组件。Rails 的稳定性也由测试决定。`test:` 命名空间中的任务可用于运行各种测试。
 

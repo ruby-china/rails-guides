@@ -347,7 +347,7 @@ MySQL 适配器添加了一项额外设置：
 
 *  `config.action_dispatch.encrypted_signed_cookie_salt`：设置签名加密 cookie 的加盐值，默认为 `'signed encrypted cookie'`。
 
-*   `config.action_dispatch.perform_deep_munge`：设置是否在参数上调用 `deep_munge` 方法。详情参阅“[Rails 安全指南]({{ site.baseurl }}/security.html#unsafe-query-generation)”一文。默认值为 `true`。
+*   `config.action_dispatch.perform_deep_munge`：设置是否在参数上调用 `deep_munge` 方法。详情参阅“[Rails 安全指南](security.html#unsafe-query-generation)”一文。默认值为 `true`。
 
 *   `ActionDispatch::Callbacks.before`：设置在处理请求前运行的代码块。
 
@@ -405,7 +405,7 @@ MySQL 适配器添加了一项额外设置：
 
 *   `config.action_mailer.raise_delivery_errors`：如果无法发送邮件，是否抛出异常。默认为 `true`。
 
-*   `config.action_mailer.delivery_method`：设置发送方式，默认为 `:smtp`。详情参阅“Action Mailer 基础”一文中的“[设置]({{ site.baseurl }}/action_mailer_basics.html#action-mailer-configuration)”一节。。
+*   `config.action_mailer.delivery_method`：设置发送方式，默认为 `:smtp`。详情参阅“Action Mailer 基础”一文中的“[设置](action_mailer_basics.html#action-mailer-configuration)”一节。。
 
 *   `config.action_mailer.perform_deliveries`：设置是否真的发送邮件，默认为 `true`。测试时可设为 `false`。
 

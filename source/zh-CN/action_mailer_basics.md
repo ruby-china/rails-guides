@@ -512,7 +512,7 @@ Action Mailer 继承自 `AbstractController`，因此为控制器定义的帮助
 | `deliveries` | 把通过 Action Mailer 使用 `:test` 方式发送的邮件保存到一个数组中，协助单元测试和功能测试。 |
 | `default_options` | 为 `mail` 方法设置默认选项值（`:from`，`:reply_to` 等）。 |
 
-完整的设置说明参见“设置 Rails 程序”一文中的“[设置 Action Mailer]({{ site.baseurl }}/configuring.html#configuring-action-mailer)”一节。
+完整的设置说明参见“设置 Rails 程序”一文中的“[设置 Action Mailer](configuring.html#configuring-action-mailer)”一节。
 
 ### Action Mailer 设置示例
 
@@ -570,4 +570,4 @@ end
 ActionMailer::Base.register_interceptor(SandboxEmailInterceptor) if Rails.env.staging?
 ```
 
-NOTE: 上述代码中使用的是自定义环境，名为“staging”。这个环境和生产环境一样，但只做测试之用。关于自定义环境的详细介绍，参阅“[新建 Rails 环境]({{ site.baseurl }}/configuring.html#creating-rails-environments)”一节。
+NOTE: 上述代码中使用的是自定义环境，名为“staging”。这个环境和生产环境一样，但只做测试之用。关于自定义环境的详细介绍，参阅“[新建 Rails 环境](configuring.html#creating-rails-environments)”一节。

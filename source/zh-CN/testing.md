@@ -134,7 +134,7 @@ email(david.girlfriend.email, david.location_tonight)
 
 本文会使用 Rails 脚手架生成模型、迁移、控制器、视图和遵守 Rails 最佳实践的完整测试组件。我们会使用自动生成的代码，也会按需添加其他代码。
 
-NOTE: 关于 Rails 脚手架的详细介绍，请阅读“[Rails 入门]({{ site.baseurl }}/getting_started.html)”一文。
+NOTE: 关于 Rails 脚手架的详细介绍，请阅读“[Rails 入门](getting_started.html)”一文。
 
 执行 `rails generate scaffold` 命令生成资源时，也会在 `test/models` 文件夹中生成单元测试文件：
 
