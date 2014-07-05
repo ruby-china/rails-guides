@@ -109,7 +109,7 @@ end
 * `around_destroy`
 * `after_destroy`
 
-W> 创建和更新对象时都会触发 `after_save`，但不管注册的顺序，总在 `after_create` 和 `after_update` 之后执行。
+WARNING: 创建和更新对象时都会触发 `after_save`，但不管注册的顺序，总在 `after_create` 和 `after_update` 之后执行。
 
 ### `after_initialize` 和 `after_find`
 
@@ -252,7 +252,7 @@ I> `find_by_*` 和 `find_by_*!` 是为每个属性生成的动态查询方法，
 
 整个回调链包含在一个事务中。如果任何一个 `before_*` 回调方法返回 `false` 或抛出异常，整个回调链都会终止执行，撤销事务；而 `after_*` 回调只有抛出异常才能达到相同的效果。
 
-W> `ActiveRecord::Rollback` 之外的异常在回调链终止之后，还会由 Rails 再次抛出。抛出 `ActiveRecord::Rollback` 之外的异常，可能导致不应该抛出异常的方法（例如 `save` 和 `update_attributes`，应该返回 `true` 或 `false`）无法执行。
+WARNING: `ActiveRecord::Rollback` 之外的异常在回调链终止之后，还会由 Rails 再次抛出。抛出 `ActiveRecord::Rollback` 之外的异常，可能导致不应该抛出异常的方法（例如 `save` 和 `update_attributes`，应该返回 `true` 或 `false`）无法执行。
 
 关联回调
 -------
@@ -405,4 +405,4 @@ end
 
 I> `:on` 选项指定什么时候出发回调。如果不设置 `:on` 选项，每各个操作都会触发回调。
 
-W> `after_commit` 和 `after_rollback` 回调确保模型的创建、更新和销毁等操作在事务中完成。如果这两个回调抛出了异常，会被忽略，因此不会干扰其他回调。因此，如果回调可能抛出异常，就要做适当的补救和处理。
+WARNING: `after_commit` 和 `after_rollback` 回调确保模型的创建、更新和销毁等操作在事务中完成。如果这两个回调抛出了异常，会被忽略，因此不会干扰其他回调。因此，如果回调可能抛出异常，就要做适当的补救和处理。

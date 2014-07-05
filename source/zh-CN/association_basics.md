@@ -234,7 +234,7 @@ physician.patients = patients
 会为新建立的关联对象创建连接模型实例，如果其中一个对象删除了，相应的记录也会删除。
 
 
-W> 自动删除连接模型的操作直接执行，不会触发 `*_destroy` 回调。
+WARNING: 自动删除连接模型的操作直接执行，不会触发 `*_destroy` 回调。
 
 `has_many :through` 还可用来简化嵌套的 `has_many` 关联。例如，一个文档分为多个部分，每一部分又有多个段落，如果想使用简单的方式获取文档中的所有段落，可以这么做：
 
@@ -567,7 +567,7 @@ end
 
 声明 `has_and_belongs_to_many` 关联后，必须手动创建连接数据表。除非在 `:join_table` 选项中指定了连接数据表的名字，否则 Active Record 会按照类名出现在字典中的顺序为数据表起名字。那么，顾客和订单模型使用的连接数据表默认名为“customers_orders”，因为在字典中，“c”在“o”前面。
 
-W> 模型名的顺序使用字符串的 `<` 操作符确定。所以，如果两个字符串的长度不同，比较最短长度时，两个字符串是相等的，但长字符串的排序比短字符串靠前。例如，你可能以为“"paper\_boxes”和“papers”这两个表生成的连接表名为“papers\_paper\_boxes”，因为“paper\_boxes”比“papers”长。其实生成的连接表名为“paper\_boxes\_papers”，因为在一般的编码方式中，“\_”比“s”靠前。
+WARNING: 模型名的顺序使用字符串的 `<` 操作符确定。所以，如果两个字符串的长度不同，比较最短长度时，两个字符串是相等的，但长字符串的排序比短字符串靠前。例如，你可能以为“"paper\_boxes”和“papers”这两个表生成的连接表名为“papers\_paper\_boxes”，因为“paper\_boxes”比“papers”长。其实生成的连接表名为“paper\_boxes\_papers”，因为在一般的编码方式中，“\_”比“s”靠前。
 
 不管名字是什么，你都要在迁移中手动创建连接数据表。例如下面的关联声明：
 
@@ -874,7 +874,7 @@ end
 * `:destroy`：销毁对象时，也会在关联对象上调用 `destroy` 方法；
 * `:delete`：销毁对象时，关联的对象不会调用 `destroy` 方法，而是直接从数据库中删除；
 
-W> 在 `belongs_to` 关联和 `has_many` 关联配对时，不应该设置这个选项，否则会导致数据库中出现孤儿记录。
+WARNING: 在 `belongs_to` 关联和 `has_many` 关联配对时，不应该设置这个选项，否则会导致数据库中出现孤儿记录。
 
 ##### `:foreign_key`
 
@@ -1364,7 +1364,7 @@ orders.create!(attributes = {})
 @customer.orders.delete(@order1)
 ```
 
-W> 如果关联设置了 `dependent: :destroy`，还会销毁关联对象；如果关联设置了 `dependent: :delete_all`，还会删除关联对象。
+WARNING: 如果关联设置了 `dependent: :destroy`，还会销毁关联对象；如果关联设置了 `dependent: :delete_all`，还会删除关联对象。
 
 ##### `collection.destroy(object, ...)`
 
@@ -1374,7 +1374,7 @@ W> 如果关联设置了 `dependent: :destroy`，还会销毁关联对象；如�
 @customer.orders.destroy(@order1)
 ```
 
-W> 对象会从数据库中删除，忽略 `:dependent` 选项。
+WARNING: 对象会从数据库中删除，忽略 `:dependent` 选项。
 
 ##### `collection=objects`
 
@@ -1697,7 +1697,7 @@ end
 
 `select` 方法用来覆盖获取关联对象数据的 SQL `SELECT` 子句。默认情况下，Rails 会读取所有字段。
 
-W> 如果设置了 `select`，记得要包含主键和关联模型的外键。否则，Rails 会抛出异常。
+WARNING: 如果设置了 `select`，记得要包含主键和关联模型的外键。否则，Rails 会抛出异常。
 
 ##### `distinct`
 
@@ -1817,7 +1817,7 @@ assemblies.create!(attributes = {})
 
 如果 `has_and_belongs_to_many` 关联使用的连接数据表中，除了两个外键之外还有其他字段，通过关联获取的记录中会包含这些字段，但是只读字段，因为 Rails 不知道如何保存对这些字段的改动。
 
-W> 在 `has_and_belongs_to_many` 关联的连接数据表中使用其他字段的功能已经废弃。如果在多对多关联中需要使用这么复杂的数据表，可以用 `has_many :through` 关联代替 `has_and_belongs_to_many` 关联。
+WARNING: 在 `has_and_belongs_to_many` 关联的连接数据表中使用其他字段的功能已经废弃。如果在多对多关联中需要使用这么复杂的数据表，可以用 `has_many :through` 关联代替 `has_and_belongs_to_many` 关联。
 
 ##### `collection(force_reload = false)`
 
@@ -1845,7 +1845,7 @@ I> 这个方法与 `collection.concat` 和 `collection.push` 是同名方法。
 @part.assemblies.delete(@assembly1)
 ```
 
-W> 这个方法不会触发连接记录上的回调。
+WARNING: 这个方法不会触发连接记录上的回调。
 
 ##### `collection.destroy(object, ...)`
 
