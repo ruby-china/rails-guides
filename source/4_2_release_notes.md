@@ -262,6 +262,10 @@ for detailed changes.
 * Added support for user-created range types in PostgreSQL adapter.
   ([Commit](https://github.com/rails/rails/commit/4cb47167e747e8f9dc12b0ddaf82bdb68c03e032))
 
+* Added a `:required` option to singular associations, which defines a
+  presence validation on the association.
+  ([Pull Request](https://github.com/rails/rails/pull/16056))
+
 Active Model
 ------------
 
@@ -314,6 +318,11 @@ for detailed changes.
 * Introduce `Concern#class_methods` as an alternative to `module ClassMethods`,
   as well as `Kernel#concern` to avoid the `module Foo; extend ActiveSupport::Concern; end`
   boilerplate. ([Commit](https://github.com/rails/rails/commit/b16c36e688970df2f96f793a759365b248b582ad))
+
+* Added `Hash#transform_values` and `Hash#transform_values!` to simplify a
+  common pattern where the values of a hash must change, but the keys are left
+  the same.
+  ([Pull Request](https://github.com/rails/rails/pull/15819))
 
 Credits
 -------
