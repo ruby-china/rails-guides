@@ -11,7 +11,8 @@ Rails 程序测试指南
 
 --------------------------------------------------------------------------------
 
-## 为什么要为 Rails 程序编写测试？
+为什么要为 Rails 程序编写测试？
+--------------------------
 
 在 Rails 中编写测试非常简单，生成模型和控制器时，已经生成了测试代码骨架。
 
@@ -19,7 +20,8 @@ Rails 程序测试指南
 
 Rails 中的测试还可以模拟浏览器请求，无需打开浏览器就能测试程序的响应。
 
-## 测试简介
+测试简介
+-------
 
 测试是 Rails 程序的重要组成部分，不是处于尝鲜和好奇才编写测试。基本上每个 Rails 程序都要频繁和数据库交互，所以测试时也要和数据库交互。为了能够编写高效率的测试，必须要了解如何设置数据库以及导入示例数据。
 
@@ -33,12 +35,11 @@ Rails 中的测试还可以模拟浏览器请求，无需打开浏览器就能�
 
 执行 `rails new` 命令生成新程序时，Rails 会创建一个名为 `test` 的文件夹。这个文件夹中的内容如下：
 
-{:lang="bash"}
-~~~
+```bash
 $ ls -F test
 controllers/    helpers/        mailers/        test_helper.rb
 fixtures/       integration/    models/
-~~~
+```
 
 `modles` 文件夹存放模型测试，`controllers` 文件夹存放控制器测试，`integration` 文件夹存放多个控制器之间交互的测试。
 
@@ -62,8 +63,7 @@ fixtures/       integration/    models/
 
 下面举个例子：
 
-{:lang="yaml"}
-~~~
+```yaml
 # lo & behold! I am a YAML comment!
 david:
   name: David Heinemeier Hansson
@@ -74,14 +74,13 @@ steve:
   name: Steve Ross Kellock
   birthday: 1974-09-27
   profession: guy with keyboard
-~~~
+```
 
 每个附件都有名字，后面跟着一个缩进后的键值对列表。记录之间往往使用空行分开。在固件中可以使用注释，在行首加上 `#` 符号即可。如果键名使用了 YAML 中的关键字，必须使用引号，例如 `'yes'` 和 `'no'`，这样 YAML 解析程序才能正确解析。
 
 如果涉及到关联，定义一个指向其他固件的引用即可。例如，下面的固件针对 `belongs_to/has_many` 关联：
 
-{:lang="yaml"}
-~~~
+```yaml
 # In fixtures/categories.yml
 about:
   name: About
@@ -91,20 +90,19 @@ one:
   title: Welcome to Rails!
   body: Hello world!
   category: about
-~~~
+```
 
 #### 使用 ERB 增强固件
 
 ERB 允许在模板中嵌入 Ruby 代码。Rails 加载 YAML 格式的固件时，会先使用 ERB 进行预处理，因此可使用 Ruby 代码协助生成示例数据。例如，下面的代码会生成一千个用户：
 
-{:lang="erb"}
-~~~
+```erb
 <% 1000.times do |n| %>
 user_<%= n %>:
   username: <%= "user#{n}" %>
   email: <%= "user#{n}@example.com" %>
 <% end %>
-~~~
+```
 
 #### 固件实战
 
@@ -118,8 +116,7 @@ user_<%= n %>:
 
 固件是 Active Record 实例，如前一节的第 3 点所述，在测试用例中可以直接访问这个对象，因为固件中的数据会赋值给一个本地变量。例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 # this will return the User object for the fixture named david
 users(:david)
 
@@ -128,9 +125,10 @@ users(:david).id
 
 # one can also access methods available on the User class
 email(david.girlfriend.email, david.location_tonight)
-~~~
+```
 
-## 为模型编写单元测试
+为模型编写单元测试
+----------------
 
 在 Rails 中，单元测试用来测试模型。
 
@@ -140,20 +138,18 @@ NOTE: 关于 Rails 脚手架的详细介绍，请阅读“[Rails 入门]({{ site
 
 执行 `rails generate scaffold` 命令生成资源时，也会在 `test/models` 文件夹中生成单元测试文件：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate scaffold post title:string body:text
 ...
 create  app/models/post.rb
 create  test/models/post_test.rb
 create  test/fixtures/posts.yml
 ...
-~~~
+```
 
 `test/models/post_test.rb` 文件中默认的测试代码如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 require 'test_helper'
 
 class PostTest < ActiveSupport::TestCase
@@ -161,21 +157,19 @@ class PostTest < ActiveSupport::TestCase
   #   assert true
   # end
 end
-~~~
+```
 
 下面逐行分析这段代码，熟悉 Rails 测试的代码和相关术语。
 
-{:lang="ruby"}
-~~~
+```ruby
 require 'test_helper'
-~~~
+```
 
 现在你已经知道，`test_helper.rb` 文件是测试的默认设置，会载入所有测试，因此在所有测试中都可使用其中定义的方法。
 
-{:lang="ruby"}
-~~~
+```ruby
 class PostTest < ActiveSupport::TestCase
-~~~
+```
 
 `PostTest` 继承自 `ActiveSupport::TestCase`，定义了一个测试用例，因此可以使用 `ActiveSupport::TestCase` 中的所有方法。后文会介绍其中一些方法。
 
@@ -183,30 +177,27 @@ class PostTest < ActiveSupport::TestCase
 
 Rails 还提供了 `test` 方法，接受一个测试名作为参数，然后跟着一个代码块。`test` 方法会生成一个 `MiniTest::Unit` 测试，方法名以 `test_` 开头。例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 test "the truth" do
   assert true
 end
-~~~
+```
 
 和下面的代码是等效的
 
-{:lang="ruby"}
-~~~
+```ruby
 def test_the_truth
   assert true
 end
-~~~
+```
 
 不过前者的测试名可读性更高。当然，使用方法定义的方式也没什么问题。
 
 NOTE: 生成的方法名会把空格替换成下划线。最终得到的结果可以不是合法的 Ruby 标示符，名字中可以包含标点符号等。因为在 Ruby 中，任何字符串都可以作为方法名，奇怪的方法名需要调用 `define_method` 或 `send` 方法，所以没有限制。
 
-{:lang="ruby"}
-~~~
+```ruby
 assert true
-~~~
+```
 
 这行代码叫做“断言”（assertion）。断言只有一行代码，把指定对象或表达式和期望的结果进行对比。例如，断言可以检查：
 
@@ -225,46 +216,42 @@ assert true
 
 运行测试执行 `rake test` 命令即可，在这个命令中还要指定要运行的测试文件。
 
-{:lang="bash"}
-~~~
+```bash
 $ rake test test/models/post_test.rb
 .
 
 Finished tests in 0.009262s, 107.9680 tests/s, 107.9680 assertions/s.
 
 1 tests, 1 assertions, 0 failures, 0 errors, 0 skips
-~~~
+```
 
 上述命令会运行指定文件中的所有测试方法。注意，`test_helper.rb` 在 `test` 文件夹中，因此这个文件夹要使用 `-I` 旗标添加到加载路径中。
 
 还可以指定测试方法名，只运行相应的测试。
 
-{:lang="bash"}
-~~~
+```bash
 $ rake test test/models/post_test.rb test_the_truth
 .
 
 Finished tests in 0.009064s, 110.3266 tests/s, 110.3266 assertions/s.
 
 1 tests, 1 assertions, 0 failures, 0 errors, 0 skips
-~~~
+```
 
 上述代码中的点号（`.`）表示一个通过的测试。如果测试失败，会看到一个 `F`。如果测试抛出异常，会看到一个 `E`。输出的最后一行是测试总结。
 
 要想查看失败测试的输出，可以在 `post_test.rb` 中添加一个失败测试。
 
-{:lang="ruby"}
-~~~
+```ruby
 test "should not save post without title" do
   post = Post.new
   assert_not post.save
 end
-~~~
+```
 
 我们来运行新添加的测试：
 
-{:lang="bash"}
-~~~
+```bash
 $ rake test test/models/post_test.rb test_should_not_save_post_without_title
 F
 
@@ -275,47 +262,43 @@ test_should_not_save_post_without_title(PostTest) [test/models/post_test.rb:6]:
 Failed assertion, no message given.
 
 1 tests, 1 assertions, 1 failures, 0 errors, 0 skips
-~~~
+```
 
 在输出中，`F` 表示失败测试。你会看到相应的调用栈和测试名。随后还会显示断言实际得到的值和期望得到的值。默认的断言消息提供了足够的信息，可以帮助你找到错误所在。要想让断言失败的消息更具可读性，可以使用断言可选的消息参数，例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 test "should not save post without title" do
   post = Post.new
   assert_not post.save, "Saved the post without a title"
 end
-~~~
+```
 
 运行这个测试后，会显示一个更友好的断言失败消息：
 
-{:lang="bash"}
-~~~
+```bash
   1) Failure:
 test_should_not_save_post_without_title(PostTest) [test/models/post_test.rb:6]:
 Saved the post without a title
-~~~
+```
 
 如果想让这个测试通过，可以在模型中为 `title` 字段添加一个数据验证：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Post < ActiveRecord::Base
   validates :title, presence: true
 end
-~~~
+```
 
 现在测试应该可以通过了，再次运行这个测试来验证一下：
 
-{:lang="bash"}
-~~~
+```bash
 $ rake test test/models/post_test.rb test_should_not_save_post_without_title
 .
 
 Finished tests in 0.047721s, 20.9551 tests/s, 20.9551 assertions/s.
 
 1 tests, 1 assertions, 0 failures, 0 errors, 0 skips
-~~~
+```
 
 你可能注意到了，我们首先编写一个检测所需功能的测试，这个测试会失败，然后编写代码，实现所需功能，最后再运行测试，确保测试可以通过。这一过程，在软件开发中称为“测试驱动开发”（Test-Driven Development，TDD）。
 
@@ -323,19 +306,17 @@ TIP: 很多 Rails 开发者都会使用 TDD，这种开发方式可以确保程�
 
 要想查看错误的输出，可以在测试中加入一处错误：
 
-{:lang="ruby"}
-~~~
+```ruby
 test "should report error" do
   # some_undefined_variable is not defined elsewhere in the test case
   some_undefined_variable
   assert true
 end
-~~~
+```
 
 运行测试，很看到以下输出：
 
-{:lang="bash"}
-~~~
+```bash
 $ rake test test/models/post_test.rb test_should_report_error
 E
 
@@ -347,7 +328,7 @@ NameError: undefined local variable or method `some_undefined_variable' for #<Po
     test/models/post_test.rb:10:in `block in <class:PostTest>'
 
 1 tests, 0 assertions, 0 failures, 1 errors, 0 skips
-~~~
+```
 
 注意上面输出中的 `E`，表示测试出错了。
 
@@ -355,10 +336,9 @@ NOTE: 如果测试方法出现错误或者断言检测失败就会终止运行�
 
 测试失败后会看到相应的调用栈。默认情况下，Rails 会过滤调用栈，只显示和程序有关的调用栈。这样可以减少输出的内容，集中精力关注程序的代码。如果想查看完整的调用栈，可以设置 `BACKTRACE` 环境变量：
 
-{:lang="bash"}
-~~~
+```bash
 $ BACKTRACE=1 rake test test/models/post_test.rb
-~~~
+```
 
 ### 单元测试要测试什么
 
@@ -419,7 +399,8 @@ Rails adds some custom assertions of its own to the `test/unit` framework:
 
 下一节会介绍部分断言的用法。
 
-## 为控制器编写功能测试
+为控制器编写功能测试
+-----------------
 
 在 Rails 中，测试控制器各动作需要编写功能测试。控制器负责处理程序接收的请求，然后使用视图渲染响应。
 
@@ -437,8 +418,7 @@ Rails adds some custom assertions of its own to the `test/unit` framework:
 
 我们来看一下这个文件中的测试，首先是 `test_should_get_index`。
 
-{:lang="ruby"}
-~~~
+```ruby
 class PostsControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
@@ -446,7 +426,7 @@ class PostsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:posts)
   end
 end
-~~~
+```
 
 在 `test_should_get_index` 测试中，Rails 模拟了一个发给 `index` 动作的请求，确保请求成功，而且赋值了一个合法的 `posts` 实例变量。
 
@@ -459,24 +439,21 @@ end
 
 举个例子，请求 `:show` 动作，请求参数为 `'id' => "12"`，会话参数为 `'user_id' => 5`：
 
-{:lang="ruby"}
-~~~
+```ruby
 get(:show, {'id' => "12"}, {'user_id' => 5})
-~~~
+```
 
 再举个例子：请求 `:view` 动作，请求参数为 `'id' => '12'`，这次没有会话参数，但指定了 Flash 消息：
 
-{:lang="ruby"}
-~~~
+```ruby
 get(:view, {'id' => '12'}, nil, {'message' => 'booya!'})
-~~~
+```
 
 NOTE: 如果现在运行 `posts_controller_test.rb` 文件中的 `test_should_create_post` 测试会失败，因为前文在模型中添加了数据验证。
 
 我们来修改 `posts_controller_test.rb` 文件中的 `test_should_create_post` 测试，让所有测试都通过：
 
-{:lang="ruby"}
-~~~
+```ruby
 test "should create post" do
   assert_difference('Post.count') do
     post :create, post: {title: 'Some title'}
@@ -484,7 +461,7 @@ test "should create post" do
 
   assert_redirected_to post_path(assigns(:post))
 end
-~~~
+```
 
 现在你可以运行所有测试，都应该通过。
 
@@ -514,15 +491,14 @@ NOTE: 功能测试不检测动作是否能接受指定类型的请求。如果�
 
 和普通的 Hash 对象一样，可以使用字符串形式的键获取相应的值。除了 `assigns` 之外，另外三个 Hash 还可使用 Symbol 形式的键。例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 flash["gordon"]               flash[:gordon]
 session["shmession"]          session[:shmession]
 cookies["are_good_for_u"]     cookies[:are_good_for_u]
 
 # Because you can't use assigns[:something] for historical reasons:
 assigns["something"]          assigns(:something)
-~~~
+```
 
 ### 可用的实例变量
 
@@ -536,8 +512,7 @@ assigns["something"]          assigns(:something)
 
 [HTTP 报头](http://tools.ietf.org/search/rfc2616#section-5.3) 和 [CGI 变量](http://tools.ietf.org/search/rfc3875#section-4.1)可以通过 `@request` 实例变量设置：
 
-{:lang="ruby"}
-~~~
+```ruby
 # setting a HTTP Header
 @request.headers["Accept"] = "text/plain, text/html"
 get :index # simulate the request with custom header
@@ -545,32 +520,30 @@ get :index # simulate the request with custom header
 # setting a CGI variable
 @request.headers["HTTP_REFERER"] = "http://example.com/home"
 post :create # simulate the request with custom env variable
-~~~
+```
 
 ### 测试模板和布局
 
 如果想测试响应是否使用正确的模板和布局渲染，可以使用 `assert_template` 方法：
 
-{:lang="ruby"}
-~~~
+```ruby
 test "index should render correct template and layout" do
   get :index
   assert_template :index
   assert_template layout: "layouts/application"
 end
-~~~
+```
 
 注意，不能在 `assert_template` 方法中同时测试模板和布局。测试布局时，可以使用正则表达式代替字符串，不过字符串的意思更明了。即使布局保存在标准位置，也要包含文件夹的名字，所以 `assert_template layout: "application"` 不是正确的写法。
 
 如果视图中用到了局部视图，测试布局时必须指定局部视图，否则测试会失败。所以，如果用到了 `_form` 局部视图，下面的断言写法才是正确的：
 
-{:lang="ruby"}
-~~~
+```ruby
 test "new should render correct layout" do
   get :new
   assert_template layout: "layouts/application", partial: "_form"
 end
-~~~
+```
 
 如果没有指定 `:partial`，`assert_template` 会报错。
 
@@ -578,8 +551,7 @@ end
 
 下面这个例子用到了 `flash`、`assert_redirected_to` 和 `assert_difference`：
 
-{:lang="ruby"}
-~~~
+```ruby
 test "should create post" do
   assert_difference('Post.count') do
     post :create, post: {title: 'Hi', body: 'This is my first post.'}
@@ -587,7 +559,7 @@ test "should create post" do
   assert_redirected_to post_path(assigns(:post))
   assert_equal 'Post was successfully created.', flash[:notice]
 end
-~~~
+```
 
 ### 测试视图
 
@@ -603,24 +575,21 @@ NOTE: 你可能在其他文档中见到过 `assert_tag`，因为 `assert_select`
 
 例如，可以使用下面的断言检测 `title` 元素的内容：
 
-{:lang="ruby"}
-~~~
+```ruby
 assert_select 'title', "Welcome to Rails Testing Guide"
-~~~
+```
 
 `assert_select` 的代码块还可嵌套使用。这时内层的 `assert_select` 会在外层 `assert_select` 块选中的元素集合上运行断言：
 
-{:lang="ruby"}
-~~~
+```ruby
 assert_select 'ul.navigation' do
   assert_select 'li.menu_item'
 end
-~~~
+```
 
 除此之外，还可以遍历外层 `assert_select` 选中的元素集合，这样就可以在集合的每个元素上运行内层 `assert_select` 了。假如响应中有两个有序列表，每个列表中都有 4 各列表项，那么下面这两个测试都会通过：
 
-{:lang="ruby"}
-~~~
+```ruby
 assert_select "ol" do |elements|
   elements.each do |element|
     assert_select element, "li", 4
@@ -630,7 +599,7 @@ end
 assert_select "ol" do
   assert_select "li", 8
 end
-~~~
+```
 
 `assert_select` 断言很强大，高级用法请参阅[文档](http://api.rubyonrails.org/classes/ActionDispatch/Assertions/SelectorAssertions.html)。
 
@@ -646,30 +615,28 @@ There are more assertions that are primarily used in testing views:
 
 下面是 `assert_select_email` 断言的用法举例：
 
-{:lang="ruby"}
-~~~
+```ruby
 assert_select_email do
   assert_select 'small', 'Please click the "Unsubscribe" link if you want to opt-out.'
 end
-~~~
+```
 
-## 集成测试
+集成测试
+-------
 
 继承测试用来测试多个控制器之间的交互，一般用来测试程序中重要的工作流程。
 
 与单元测试和功能测试不同，集成测试必须单独生成，保存在 `test/integration` 文件夹中。Rails 提供了一个生成器用来生成集成测试骨架。
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate integration_test user_flows
       exists  test/integration/
       create  test/integration/user_flows_test.rb
-~~~
+```
 
 新生成的集成测试如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 require 'test_helper'
 
 class UserFlowsTest < ActionDispatch::IntegrationTest
@@ -677,7 +644,7 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
   #   assert true
   # end
 end
-~~~
+```
 
 集成测试继承自 `ActionDispatch::IntegrationTest`，因此可在测试中使用一些额外的帮助方法。在集成测试中还要自行引入固件，这样才能在测试中使用。
 
@@ -704,8 +671,7 @@ end
 
 下面是个简单的集成测试，涉及多个控制器：
 
-{:lang="ruby"}
-~~~
+```ruby
 require 'test_helper'
 
 class UserFlowsTest < ActionDispatch::IntegrationTest
@@ -727,14 +693,13 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
     assert assigns(:products)
   end
 end
-~~~
+```
 
 如上所述，集成测试涉及多个控制器，而且用到整个程序的各种组件，从数据库到调度程序都有。而且，在同一个测试中还可以创建多个会话实例，还可以使用断言方法创建一种强大的测试 DSL。
 
 下面这个例子用到了多个会话和 DSL：
 
-{:lang="ruby"}
-~~~
+```ruby
 require 'test_helper'
 
 class UserFlowsTest < ActionDispatch::IntegrationTest
@@ -780,9 +745,10 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
       end
     end
 end
-~~~
+```
 
-## 运行测试使用的 Rake 任务
+运行测试使用的 Rake 任务
+---------------------
 
 你不用一个一个手动运行测试，Rails 提供了很多运行测试的命令。下表列出了新建 Rails 程序后，默认的 `Rakefile` 中包含的用来运行测试的命令。
 
@@ -799,7 +765,8 @@ end
 | `rake test:all`         | 不还原数据库，快速运行所有测试 |
 | `rake test:all:db`      | 还原数据库，快速运行所有测试 |
 
-## MiniTest 简介
+MiniTest 简介
+-------------
 
 Ruby 提供了很多代码库，Ruby 1.8 提供有 `Test::Unit`，这是个单元测试框架。前文介绍的所有基本断言都在 `Test::Unit::Assertions` 中定义。在单元测试和功能测试中使用的 `ActiveSupport::TestCase` 继承自 `Test::Unit::TestCase`，因此可在测试中使用所有的基本断言。
 
@@ -807,12 +774,12 @@ Ruby 1.9 引入了 `MiniTest`，这是 `Test::Unit` 的改进版本，兼容 `Te
 
 NOTE: 关于 `Test::Unit` 更详细的介绍，请参阅其[文档](http://ruby-doc.org/stdlib/libdoc/test/unit/rdoc/)。关于 `MiniTest` 更详细的介绍，请参阅其[文档](http://ruby-doc.org/stdlib-1.9.3/libdoc/minitest/unit/rdoc/)。
 
-## 测试前准备和测试后清理
+测试前准备和测试后清理
+-------------------
 
 如果想在每个测试运行之前以及运行之后运行一段代码，可以使用两个特殊的回调。我们以 `Posts` 控制器的功能测试为例，说明这两个回调的用法：
 
-{:lang="ruby"}
-~~~
+```ruby
 require 'test_helper'
 
 class PostsControllerTest < ActionController::TestCase
@@ -844,7 +811,7 @@ class PostsControllerTest < ActionController::TestCase
   end
 
 end
-~~~
+```
 
 在上述代码中，运行各测试之前都会执行 `setup` 方法，所以在每个测试中都可使用 `@post`。Rails 以 `ActiveSupport::Callbacks` 的方式实现 `setup` 和 `teardown`，因此这两个方法不仅可以作为方法使用，还可以这么用：
 
@@ -855,8 +822,7 @@ end
 
 下面重写前例，为 `setup` 指定一个用 Symbol 表示的方法名：
 
-{:lang="ruby"}
-~~~
+```ruby
 require 'test_helper'
 
 class PostsControllerTest < ActionController::TestCase
@@ -893,20 +859,21 @@ class PostsControllerTest < ActionController::TestCase
       @post = posts(:one)
     end
 end
-~~~
+```
 
-## 测试路由
+测试路由
+-------
 
 和 Rails 程序的其他部分一样，也建议你测试路由。针对前文 `Posts` 控制器中默认生成的 `show` 动作，其路由测试如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 test "should route to post" do
   assert_routing '/posts/1', {controller: "posts", action: "show", id: "1"}
 end
-~~~
+```
 
-## 测试邮件程序
+测试邮件程序
+----------
 
 测试邮件程序需要一些特殊的工具才能完成。
 
@@ -938,8 +905,7 @@ end
 
 下面的单元测试针对 `UserMailer` 的 `invite` 动作，这个动作的作用是向朋友发送邀请。这段代码改进了生成器为 `invite` 动作生成的测试。
 
-{:lang="ruby"}
-~~~
+```ruby
 require 'test_helper'
 
 class UserMailerTest < ActionMailer::TestCase
@@ -956,19 +922,19 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal read_fixture('invite').join, email.body.to_s
   end
 end
-~~~
+```
 
 在这个测试中，我们发送了一封邮件，并把返回对象赋值给 `email` 变量。在第一个断言中确保邮件已经发送了；在第二段断言中，确保邮件包含了期望的内容。`read_fixture` 这个帮助方法的作用是从指定的文件中读取固件。
 
 `invite` 固件的内容如下：
 
-~~~
+```
 Hi friend@example.com,
 
 You have been invited.
 
 Cheers!
-~~~
+```
 
 现在我们稍微深入一点地介绍针对邮件程序的测试。在文件 `config/environments/test.rb` 中，有这么一行设置：`ActionMailer::Base.delivery_method = :test`。这行设置把发送邮件的方法设为 `:test`，所以邮件并不会真的发送出去（避免测试时骚扰用户），而是添加到一个数组中（`ActionMailer::Base.deliveries`）。
 
@@ -978,8 +944,7 @@ NOTE: `ActionMailer::Base.deliveries` 数组只会在 `ActionMailer::TestCase` �
 
 功能测试不只是测试邮件正文和收件人等是否正确这么简单。在针对邮件程序的功能测试中，要调用发送邮件的方法，检查相应的邮件是否出现在发送列表中。你可以尽情放心地假定发送邮件的方法本身能顺利完成工作。你需要重点关注的是程序自身的业务逻辑，确保能在期望的时间发出邮件。例如，可以使用下面的代码测试要求朋友的操作是否发出了正确的邮件：
 
-{:lang="ruby"}
-~~~
+```ruby
 require 'test_helper'
 
 class UserControllerTest < ActionController::TestCase
@@ -994,34 +959,32 @@ class UserControllerTest < ActionController::TestCase
     assert_match(/Hi friend@example.com/, invite_email.body)
   end
 end
-~~~
+```
 
-## 测试帮助方法
+测试帮助方法
+----------
 
 针对帮助方法的测试，只需检测帮助方法的输出和预想的值是否一致，所需的测试文件保存在 `test/helpers` 文件夹中。Rails 提供了一个生成器，用来生成帮助方法和测试文件：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate helper User
       create  app/helpers/user_helper.rb
       invoke  test_unit
       create    test/helpers/user_helper_test.rb
-~~~
+```
 
 生成的测试文件内容如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 require 'test_helper'
 
 class UserHelperTest < ActionView::TestCase
 end
-~~~
+```
 
 帮助方法就是可以在视图中使用的方法。要测试帮助方法，要按照如下的方式混入相应的模块：
 
-{:lang="ruby"}
-~~~
+```ruby
 class UserHelperTest < ActionView::TestCase
   include UserHelper
 
@@ -1029,11 +992,12 @@ class UserHelperTest < ActionView::TestCase
     # ...
   end
 end
-~~~
+```
 
 而且，因为测试类继承自 `ActionView::TestCase`，所以在测试中可以使用 Rails 内建的帮助方法，例如 `link_to` 和 `pluralize`。
 
-## 其他测试方案
+其他测试方案
+----------
 
 Rails 内建基于 `test/unit` 的测试并不是唯一的测试方式。Rails 开发者发明了很多方案，开发了很多协助测试的代码库，例如：
 
