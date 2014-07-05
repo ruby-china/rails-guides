@@ -8,7 +8,8 @@
 
 --------------------------------------------------------------------------------
 
-## 初始化代码的存放位置
+初始化代码的存放位置
+-----------------
 
 Rails 的初始化代码存放在四个标准位置：
 
@@ -17,42 +18,41 @@ Rails 的初始化代码存放在四个标准位置：
 * 初始化脚本；
 * 后置初始化脚本；
 
-## 加载 Rails 前运行代码
+加载 Rails 前运行代码
+-------------------
 
 如果想在加载 Rails 之前运行代码，可以把代码添加到 `config/application.rb` 文件的 `require 'rails/all'` 之前。
 
-## 设置 Rails 组件
+设置 Rails 组件
+--------------
 
 总的来说，设置 Rails 的工作包括设置 Rails 的组件以及 Rails 本身。在设置文件 `config/application.rb` 和针对特定环境的设置文件（例如 `config/environments/production.rb`）中可以指定传给各个组件的不同设置项目。
 
 例如，在文件 `config/application.rb` 中有下面这个设置：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.autoload_paths += %W(#{config.root}/extras)
-~~~
+```
 
 这是针对 Rails 本身的设置项目。如果想设置单独的 Rails 组件，一样可以在 `config/application.rb` 文件中使用同一个 `config` 对象：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.active_record.schema_format = :ruby
-~~~
+```
 
 Rails 会使用指定的设置配置 Active Record。
 
-### 常规选项
+###3常规选项
 
 下面这些设置方法在 `Rails::Railtie` 对象上调用，例如 `Rails::Engine` 或 `Rails::Application` 的子类。
 
 *   `config.after_initialize`：接受一个代码块，在 Rails 初始化程序之后执行。初始化的过程包括框架本身，引擎，以及 `config/initializers` 文件夹中所有的初始化脚本。注意，Rake 任务也会执行代码块中的代码。常用于设置初始化脚本用到的值。
 
-    {:lang="ruby"}
-    ~~~
+```    ruby
     config.after_initialize do
       ActionView::Base.sanitized_allowed_tags.delete 'div'
     end
-    ~~~
+    ```
 
 *   `config.asset_host`：设置静态资源的主机。可用于设置静态资源所用的 CDN，或者通过不同的域名绕过浏览器对并发请求数量的限制。是 `config.action_controller.asset_host` 的简化。
 
@@ -74,15 +74,14 @@ Rails 会使用指定的设置配置 Active Record。
 
 *   `config.console`：设置执行 `rails console` 命令时使用哪个类实现控制台，最好在 `console` 代码块中设置：
 
-    {:lang="ruby"}
-    ~~~
+```    ruby
     console do
       # this block is called only when running console,
       # so we can safely require pry here
       require "pry"
       config.console = Pry
     end
-    ~~~
+    ```
 
 *   `config.dependency_loading`：设为 `false` 时禁止自动加载常量。只有 `config.cache_classes` 为 `true`（生产环境的默认值）时才有效。`config.threadsafe!` 为 `true` 时，这个选项为 `false`。
 
@@ -121,16 +120,15 @@ Rails 会使用指定的设置配置 Active Record。
 
 *   `config.session_store`：一般在 `config/initializers/session_store.rb` 文件中设置，指定使用什么方式存储会话。可用值有：`:cookie_store`（默认），`:mem_cache_store` 和 `:disabled`。`:disabled` 指明不让 Rails 处理会话。当然也可指定自定义的会话存储：
 
-    {:lang="ruby"}
-    ~~~
+```    ruby
     config.session_store :my_custom_store
-    ~~~
+    ```
 
     这个自定义的存储方式必须定义为 `ActionDispatch::Session::MyCustomStore`。
 
 *   `config.time_zone`：设置程序使用的默认时区，也让 Active Record 使用这个时区。
 
-### 设置静态资源
+###3设置静态资源
 
 *   `config.assets.enabled`：设置是否启用 Asset Pipeline。默认启用。
 
@@ -160,17 +158,16 @@ Rails 会使用指定的设置配置 Active Record。
 
 *   `config.assets.logger`：接受一个实现了 Log4r 接口的类，或者使用默认的 `Logger` 类。默认值等于 `config.logger` 选项的值。把 `config.assets.logger` 设为 `false`，可以关闭静态资源相关的日志。
 
-### 设置生成器
+###3设置生成器
 
 Rails 允许使用 `config.generators` 方法设置使用的生成器。这个方法接受一个代码块：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.generators do |g|
   g.orm :active_record
   g.test_framework :test_unit
 end
-~~~
+```
 
 在代码块中可用的方法如下所示：
 
@@ -188,7 +185,7 @@ end
 * `test_framework`：设置使用哪个测试框架，默认为 `false`，使用 Test::Unit。
 * `template_engine`：设置使用哪个模板引擎，例如 ERB 或 Haml，默认为 `:erb`。
 
-### 设置中间件
+###3设置中间件
 
 每个 Rails 程序都使用了一组标准的中间件，在开发环境中的加载顺序如下：
 
@@ -214,40 +211,35 @@ end
 
 除了上述标准中间件之外，还可使用 `config.middleware.use` 方法添加其他中间件：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.middleware.use Magical::Unicorns
-~~~
+```
 
 上述代码会把中间件 `Magical::Unicorns` 放入中间件列表的最后。如果想在某个中间件之前插入中间件，可以使用 `insert_before`：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.middleware.insert_before ActionDispatch::Head, Magical::Unicorns
-~~~
+```
 
 如果想在某个中间件之后插入中间件，可以使用 `insert_after`：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.middleware.insert_after ActionDispatch::Head, Magical::Unicorns
-~~~
+```
 
 中间件还可替换成其他中间件：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.middleware.swap ActionController::Failsafe, Lifo::Failsafe
-~~~
+```
 
 也可从中间件列表中删除：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.middleware.delete "Rack::MethodOverride"
-~~~
+```
 
-### 设置 i18n
+###3设置 i18n
 
 下述设置项目都针对 `I18n` 代码库。
 
@@ -259,7 +251,7 @@ config.middleware.delete "Rack::MethodOverride"
 
 * `config.i18n.load_path`：设置 Rails 搜寻本地化文件的路径。默认为 config/locales/*.{yml,rb}`。
 
-### 设置 Active Record
+###3设置 Active Record
 
 `config.active_record` 包含很多设置项：
 
@@ -305,7 +297,7 @@ MySQL 适配器添加了一项额外设置：
 
 * `ActiveRecord::SchemaDumper.ignore_tables`：指定一个由数据表组成的数组，导出模式时不会出现在模式文件中。仅当 `config.active_record.schema_format == :ruby` 时才有效。
 
-### 设置 Action Controller
+###3设置 Action Controller
 
 `config.action_controller` 包含以下设置项：
 
@@ -329,20 +321,19 @@ MySQL 适配器添加了一项额外设置：
 
 * `config.action_controller.action_on_unpermitted_parameters`：发现禁止使用的参数时，写入日志还是抛出异常（分别设为 `:log` 和 `:raise`）。在开发环境和测试环境中的默认值为 `:log`，在其他环境中的默认值为 `false`。
 
-### 设置 Action Dispatch
+###3设置 Action Dispatch
 
 *   `config.action_dispatch.session_store`：设置存储会话的方式，默认为 `:cookie_store`，其他可用值有：`:active_record_store`，`:mem_cache_store`，以及自定义类的名字。
 
 *   `config.action_dispatch.default_headers`：一个 Hash，设置响应的默认报头。默认设定的报头为：
 
-    {:lang="ruby"}
-    ~~~
+```    ruby
     config.action_dispatch.default_headers = {
       'X-Frame-Options' => 'SAMEORIGIN',
       'X-XSS-Protection' => '1; mode=block',
       'X-Content-Type-Options' => 'nosniff'
     }
-    ~~~
+    ```
 
 *   `config.action_dispatch.tld_length`：设置顶级域名（top-level domain，简称 TLD）的长度，默认为 `1`。
 
@@ -362,18 +353,17 @@ MySQL 适配器添加了一项额外设置：
 
 *   `ActionDispatch::Callbacks.after`：设置处理请求之后运行的代码块。
 
-### 设置 Action View
+###3设置 Action View
 
 `config.action_view` 包含以下设置项：
 
 *   `config.action_view.field_error_proc`：设置用于生成 Active Record 表单错误的 HTML，默认为：
 
-    {:lang="ruby"}
-    ~~~
+```    ruby
     Proc.new do |html_tag, instance|
       %Q(<div class="field_with_errors">#{html_tag}</div>).html_safe
     end
-    ~~~
+    ```
 
 *   `config.action_view.default_form_builder`：设置默认使用的表单构造器。默认值为 `ActionView::Helpers::FormBuilder`。如果想让表单构造器在程序初始化完成后加载（在开发环境中每次请求都会重新加载），可使用字符串形式。
 
@@ -385,16 +375,15 @@ MySQL 适配器添加了一项额外设置：
 
 *   `config.action_view.prefix_partial_path_with_controller_namespace`：设置渲染命名空间中的控制器时是否要在子文件夹中查找局部视图。例如，控制器名为 `Admin::PostsController`，渲染了以下视图：
 
-    {:lang="erb"}
-    ~~~
+```    erb
     <%= render @post %>
-    ~~~
+    ```
 
     这个设置的默认值为 `true`，渲染的局部视图为 `/admin/posts/_post.erb`。如果设为 `false`，就会渲染 `/posts/_post.erb`，和没加命名空间的控制器（例如 `PostsController`）行为一致。
 
 *   `config.action_view.raise_on_missing_translations`：找不到翻译时是否抛出异常。
 
-### 设置 Action Mailer
+###3设置 Action Mailer
 
 `config.action_mailer` 包含以下设置项：
 
@@ -420,38 +409,34 @@ MySQL 适配器添加了一项额外设置：
 
 *   `config.action_mailer.default_options`：设置 Action Mailer 的默认选项。可设置各个邮件发送程序的 `from` 或 `reply_to` 等选项。默认值为：
 
-    {:lang="ruby"}
-    ~~~
+```    ruby
     mime_version:  "1.0",
     charset:       "UTF-8",
     content_type: "text/plain",
     parts_order:  ["text/plain", "text/enriched", "text/html"]
-    ~~~
+    ```
 
     设置时要使用 Hash：
 
-    {:lang="ruby"}
-    ~~~
+```    ruby
     config.action_mailer.default_options = {
       from: "noreply@example.com"
     }
-    ~~~
+    ```
 
 *   `config.action_mailer.observers`：注册邮件发送后触发的监控器。
 
-    {:lang="ruby"}
-    ~~~
+```    ruby
     config.action_mailer.observers = ["MailObserver"]
-    ~~~
+    ```
 
 *   `config.action_mailer.interceptors`：注册发送邮件前调用的拦截程序。
 
-    {:lang="ruby"}
-    ~~~
+```    ruby
     config.action_mailer.interceptors = ["MailInterceptor"]
-    ~~~
+    ```
 
-### 设置 Active Support
+###3设置 Active Support
 
 Active Support 包含以下设置项：
 
@@ -473,27 +458,25 @@ Active Support 包含以下设置项：
 
 * `ActiveSupport::Deprecation.silenced`：设置是否显示废弃提醒。
 
-### 设置数据库
+###3设置数据库
 
 几乎每个 Rails 程序都要用到数据库。数据库信息可以在环境变量 `ENV['DATABASE_URL']` 中设定，也可在 `config/database.yml` 文件中设置。
 
 在 `config/database.yml` 文件中可以设置连接数据库所需的所有信息：
 
-{:lang="yaml"}
-~~~
+```yaml
 development:
   adapter: postgresql
   database: blog_development
   pool: 5
-~~~
+```
 
 上述设置使用 `postgresql` 适配器连接名为 `blog_development` 的数据库。这些信息也可存储在 URL 中，通过下面的环境变量提供：
 
-{:lang="ruby"}
-~~~
+```ruby
 > puts ENV['DATABASE_URL']
 postgresql://localhost/blog_development?pool=5
-~~~
+```
 
 `config/database.yml` 文件包含三个区域，分别对应 Rails 中的三个默认环境：
 
@@ -503,33 +486,31 @@ postgresql://localhost/blog_development?pool=5
 
 如果需要使用 URL 形式，也可在 `config/database.yml` 文件中按照下面的方式设置：
 
-~~~
+```
 development:
   url: postgresql://localhost/blog_development?pool=5
-~~~
+```
 
 `config/database.yml` 文件中可以包含 ERB 标签 `<%= %>`。这个标签中的代码被视为 Ruby 代码。使用 ERB 标签可以从环境变量中获取数据，或者计算所需的连接信息。
 
 TIP: 你无须手动更新数据库设置信息。查看新建程序生成器，会发现一个名为 `--database` 的选项。使用这个选项可以从一组常用的关系型数据库中选择想用的数据库。甚至还可重复执行生成器：`cd .. && rails new blog --database=mysql`。确认覆盖文件 `config/database.yml` 后，程序就设置成使用 MySQL，而不是 SQLite。常用数据库的设置如下所示。
 
-### 连接设置
+###3连接设置
 
 既然数据库的连接信息有两种设置方式，就要知道两者之间的关系。
 
 如果 `config/database.yml` 文件为空，而且设置了环境变量 `ENV['DATABASE_URL']`，Rails 就会使用环境变量连接数据库：
 
-{:lang="sh"}
-~~~
+```sh
 $ cat config/database.yml
 
 $ echo $DATABASE_URL
 postgresql://localhost/my_database
-~~~
+```
 
 如果 `config/database.yml` 文件存在，且没有设置环境变量 `ENV['DATABASE_URL']`，Rails 会使用设置文件中的信息连接数据库：
 
-{:lang="sh"}
-~~~
+```sh
 $ cat config/database.yml
 development:
   adapter: postgresql
@@ -537,14 +518,13 @@ development:
   host: localhost
 
 $ echo $DATABASE_URL
-~~~
+```
 
 如果有 `config/database.yml` 文件，也设置了环境变量 `ENV['DATABASE_URL']`，Rails 会合并二者提供的信息。下面举个例子说明。
 
 如果二者提供的信息有重复，环境变量中的信息优先级更高：
 
-{:lang="sh"}
-~~~
+```sh
 $ cat config/database.yml
 development:
   adapter: sqlite3
@@ -556,14 +536,13 @@ postgresql://localhost/my_database
 
 $ rails runner 'puts ActiveRecord::Base.connections'
 {"development"=>{"adapter"=>"postgresql", "host"=>"localhost", "database"=>"my_database"}}
-~~~
+```
 
 这里的适配器、主机和数据库名都和 `ENV['DATABASE_URL']` 中的信息一致。
 
 如果没有重复，则会从这两个信息源获取信息。如果有冲突，环境变量的优先级更高。
 
-{:lang="sh"}
-~~~
+```sh
 $ cat config/database.yml
 development:
   adapter: sqlite3
@@ -574,14 +553,13 @@ postgresql://localhost/my_database
 
 $ rails runner 'puts ActiveRecord::Base.connections'
 {"development"=>{"adapter"=>"postgresql", "host"=>"localhost", "database"=>"my_database", "pool"=>5}}
-~~~
+```
 
 因为 `ENV['DATABASE_URL']` 中没有提供数据库连接池信息，所以从设置文件中获取。二者都提供了 `adapter` 信息，但使用的是 `ENV['DATABASE_URL']` 中的信息。
 
 如果完全不想使用 `ENV['DATABASE_URL']` 中的信息，要使用 `url` 子建指定一个 URL：
 
-{:lang="sh"}
-~~~
+```sh
 $ cat config/database.yml
 development:
   url: sqlite3://localhost/NOT_my_database
@@ -591,44 +569,41 @@ postgresql://localhost/my_database
 
 $ rails runner 'puts ActiveRecord::Base.connections'
 {"development"=>{"adapter"=>"sqlite3", "host"=>"localhost", "database"=>"NOT_my_database"}}
-~~~
+```
 
 如上所示，`ENV['DATABASE_URL']` 中的连接信息被忽略了，使用了不同的适配器和数据库名。
 
 既然 `config/database.yml` 文件中可以使用 ERB，最好使用 `ENV['DATABASE_URL']` 中的信息连接数据库。这种方式在生产环境中特别有用，因为我们并不想把数据库密码等信息纳入版本控制系统（例如 Git）。
 
-{:lang="sh"}
-~~~
+```sh
 $ cat config/database.yml
 production:
   url: <%= ENV['DATABASE_URL'] %>
-~~~
+```
 
 注意，这种设置方式很明确，只使用 `ENV['DATABASE_URL']` 中的信息。
 
-#### 设置 SQLite3 数据库
+####4设置 SQLite3 数据库
 
 Rails 内建支持 [SQLite3](http://www.sqlite.org)。SQLite 是个轻量级数据库，无需单独的服务器。大型线上环境可能并不适合使用 SQLite，但在开发环境和测试环境中使用却很便利。新建程序时，Rails 默认使用 SQLite，但可以随时换用其他数据库。
 
 下面是默认的设置文件（`config/database.yml`）中针对开发环境的数据库设置：
 
-{:lang="yaml"}
-~~~
+```yaml
 development:
   adapter: sqlite3
   database: db/development.sqlite3
   pool: 5
   timeout: 5000
-~~~
+```
 
 NOTE: Rails 默认使用 SQLite3 存储数据，因为 SQLite3 无需设置即可使用。Rails 还内建支持 MySQL 和 PostgreSQL。还提供了很多插件，支持更多的数据库系统。如果在生产环境中使用了数据库，Rails 很可能已经提供了对应的适配器。
 
-#### 设置 MySQL 数据库
+####4设置 MySQL 数据库
 
 如果不想使用 SQLite3，而是使用 MySQL，`config/database.yml` 文件的内容会有些不同。下面是针对开发环境的设置：
 
-{:lang="yaml"}
-~~~
+```yaml
 development:
   adapter: mysql2
   encoding: utf8
@@ -637,16 +612,15 @@ development:
   username: root
   password:
   socket: /tmp/mysql.sock
-~~~
+```
 
 如果开发电脑中的 MySQL 使用 root 用户，且没有密码，可以直接使用上述设置。否则就要相应的修改用户名和密码。
 
-#### 设置 PostgreSQL 数据库
+####4设置 PostgreSQL 数据库
 
 如果选择使用 PostgreSQL，`config/database.yml` 会准备好连接 PostgreSQL 数据库的信息：
 
-{:lang="yaml"}
-~~~
+```yaml
 development:
   adapter: postgresql
   encoding: unicode
@@ -654,58 +628,54 @@ development:
   pool: 5
   username: blog
   password:
-~~~
+```
 
 `PREPARE` 语句可使用下述方法禁用：
 
-{:lang="yaml"}
-~~~
+```yaml
 production:
   adapter: postgresql
   prepared_statements: false
-~~~
+```
 
-#### 在 JRuby 平台上设置 SQLite3 数据库
+####4在 JRuby 平台上设置 SQLite3 数据库
 
 如果在 JRuby 中使用 SQLite3，`config/database.yml` 文件的内容会有点不同。下面是针对开发环境的设置：
 
-{:lang="yaml"}
-~~~
+```yaml
 development:
   adapter: jdbcsqlite3
   database: db/development.sqlite3
-~~~
+```
 
-#### 在 JRuby 平台上设置 MySQL 数据库
+####4在 JRuby 平台上设置 MySQL 数据库
 
 如果在 JRuby 中使用 MySQL，`config/database.yml` 文件的内容会有点不同。下面是针对开发环境的设置：
 
-{:lang="yaml"}
-~~~
+```yaml
 development:
   adapter: jdbcmysql
   database: blog_development
   username: root
   password:
-~~~
+```
 
-#### 在 JRuby 平台上设置 PostgreSQL 数据库
+####4在 JRuby 平台上设置 PostgreSQL 数据库
 
 如果在 JRuby 中使用 PostgreSQL，`config/database.yml` 文件的内容会有点不同。下面是针对开发环境的设置：
 
-{:lang="yaml"}
-~~~
+```yaml
 development:
   adapter: jdbcpostgresql
   encoding: unicode
   database: blog_development
   username: blog
   password:
-~~~
+```
 
 请相应地修改 `development` 区中的用户名和密码。
 
-### 新建 Rails 环境
+###3新建 Rails 环境
 
 默认情况下，Rails 提供了三个环境：开发，测试和生产。这三个环境能满足大多数需求，但有时需要更多的环境。
 
@@ -713,30 +683,29 @@ development:
 
 新建的环境和默认提供的环境没什么区别，可以执行 `rails server -e staging` 命令启动服务器，执行 `rails console staging` 命令进入控制台，`Rails.env.staging?` 也可使用。
 
-### 部署到子目录中
+###3部署到子目录中
 
 默认情况下，Rails 在根目录（例如 `/`）中运行程序。本节说明如何在子目录中运行程序。
 
 假设想把网站部署到 `/app1` 目录中。生成路由时，Rails 要知道这个目录：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.relative_url_root = "/app1"
-~~~
+```
 
 或者，设置环境变量 `RAILS_RELATIVE_URL_ROOT` 也行。
 
 这样设置之后，Rails 生成的链接都会加上前缀 `/app1`。
 
-#### 使用 Passenger
+####4使用 Passenger
 
 使用 Passenger 时，在子目录中运行程序更简单。具体做法参见 [Passenger 手册](http://www.modrails.com/documentation/Users%20guide%20Apache.html#deploying_rails_to_sub_uri)。
 
-#### 使用反向代理
+####4使用反向代理
 
 TODO
 
-#### 部署到子目录时的注意事项
+####4部署到子目录时的注意事项
 
 在生产环境中部署到子目录中会影响 Rails 的多个功能：
 
@@ -745,7 +714,8 @@ TODO
 * 伺服静态资源文件
 * Asset Pipeline
 
-## Rails 环境设置
+Rails 环境设置
+-------------
 
 Rails 的某些功能只能通过外部的环境变量设置。下面介绍的环境变量可以被 Rails 识别：
 
@@ -755,7 +725,8 @@ Rails 的某些功能只能通过外部的环境变量设置。下面介绍的�
 
 * `ENV["RAILS_CACHE_ID"]` 和 `ENV["RAILS_APP_VERSION"]`：用于生成缓存扩展键。允许在同一程序中使用多个缓存。
 
-## 使用初始化脚本
+使用初始化脚本
+------------
 
 加载完框架以及程序中使用的 gem 后，Rails 会加载初始化脚本。初始化脚本是个 Ruby 文件，存储在程序的 `config/initializers` 文件夹中。初始化脚本可在框架和 gem 加载完成后做设置。
 
@@ -763,7 +734,8 @@ NOTE: 如果有需求，可以使用子文件夹组织初始化脚本，Rails �
 
 TIP: 如果对初始化脚本的加载顺序有要求，可以通过文件名控制。初始化脚本的加载顺序按照文件名的字母表顺序进行。例如，`01_critical.rb` 在 `02_normal.rb` 之前加载。
 
-## 初始化事件
+初始化事件
+--------
 
 Rails 提供了 5 个初始化事件，可做钩子使用。下面按照事件的加载顺序介绍：
 
@@ -779,8 +751,7 @@ Rails 提供了 5 个初始化事件，可做钩子使用。下面按照事件�
 
 要想为这些钩子定义事件，可以在 `Rails::Application`、`Rails::Railtie` 或 `Rails::Engine` 的子类中使用代码块：
 
-{:lang="ruby"}
-~~~
+```ruby
 module YourApp
   class Application < Rails::Application
     config.before_initialize do
@@ -788,29 +759,27 @@ module YourApp
     end
   end
 end
-~~~
+```
 
 或者，在 `Rails.application` 对象上调用 `config` 方法：
 
-{:lang="ruby"}
-~~~
+```ruby
 Rails.application.config.before_initialize do
   # initialization code goes here
 end
-~~~
+```
 
 WARNING: 程序的某些功能，尤其是路由，在 `after_initialize` 之后还不可用。
 
-### `Rails::Railtie#initializer`
+###3`Rails::Railtie#initializer`
 
 Rails 中有几个初始化脚本使用 `Rails::Railtie` 的 `initializer` 方法定义，在程序启动时运行。下面这段代码摘自 Action Controller 中的 `set_helpers_path` 初始化脚本：
 
-{:lang="ruby"}
-~~~
+```ruby
 initializer "action_controller.set_helpers_path" do |app|
   ActionController::Helpers.helpers_path = app.helpers_paths
 end
-~~~
+```
 
 `initializer` 方法接受三个参数，第一个是初始化脚本的名字，第二个是选项 Hash（上述代码中没用到），第三个参数是代码块。参数 Hash 中的 `:before` 键指定在特定的初始化脚本之前运行，`:after` 键指定在特定的初始化脚本之后运行。
 
@@ -822,7 +791,7 @@ WARNING: 初始化脚本可放在任一初始化脚本的前面或后面，只�
 
 因为 `Rails::Application` 直接继承自 `Rails::Railtie`，因此可在文件 `config/application.rb` 中使用 `initializer` 方法定义程序的初始化脚本。
 
-### 初始化脚本
+###3初始化脚本
 
 下面列出了 Rails 中的所有初始化脚本，按照定义的顺序，除非特别说明，也按照这个顺序执行。
 
@@ -916,18 +885,18 @@ WARNING: 初始化脚本可放在任一初始化脚本的前面或后面，只�
 
 * `disable_dependency_loading`：如果 `config.eager_load` 为 `true`，禁止自动加载依赖件。
 
-## 数据库连接池
+数据库连接池
+----------
 
 Active Record 数据库连接由 `ActiveRecord::ConnectionAdapters::ConnectionPool` 管理，确保一个连接池的线程量限制在有限的数据库连接数之内。这个限制量默认为 5，但可以在文件 `database.yml` 中设置。
 
-{:lang="ruby"}
-~~~
+```ruby
 development:
   adapter: sqlite3
   database: db/development.sqlite3
   pool: 5
   timeout: 5000
-~~~
+```
 
 因为连接池在 Active Record 内部处理，因此程序服务器（Thin，mongrel，Unicorn 等）要表现一致。一开始数据库连接池是空的，然后按需创建更多的链接，直到达到连接池数量限制为止。
 
@@ -935,10 +904,9 @@ development:
 
 如果尝试使用比可用限制更多的连接，Active Record 会阻塞连接，等待连接池分配新的连接。如果无法获得连接，会抛出如下所示的异常。
 
-{:lang="ruby"}
-~~~
+```ruby
 ActiveRecord::ConnectionTimeoutError - could not obtain a database connection within 5 seconds. The max pool size is currently 5; consider increasing it:
-~~~
+```
 
 如果看到以上异常，可能需要增加连接池限制数量，方法是修改 `database.yml` 文件中的 `pool` 选项。
 
