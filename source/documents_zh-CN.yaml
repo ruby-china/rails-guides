@@ -179,7 +179,7 @@
     -
       name: 升级 Ruby on Rails
       url: upgrading_ruby_on_rails.html
-      description: 本篇帮助您将应用程式升级至最新版本。
+      description: 本篇帮助您将程序升级至最新版本。
       needs_translation: true
     -
       name: Ruby on Rails 4.2 发布记
