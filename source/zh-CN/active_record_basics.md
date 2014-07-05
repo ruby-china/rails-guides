@@ -13,7 +13,8 @@ Active Record 基础
 
 --------------------------------------------------------------------------------
 
-## Active Record 是什么？
+Active Record 是什么？
+---------------------
 
 Active Record 是 [MVC](getting_started.html#the-mvc-architecture) 中的 M（模型），处理数据和业务逻辑。Active Record 负责创建和使用需要持久存入数据库中的数据。Active Record 实现了 Active Record 模式，是一种对象关系映射系统。
 
@@ -35,7 +36,8 @@ Active Record 提供了很多功能，其中最重要的几个如下：
 * 持久存入数据库之前，验证模型；
 * 以面向对象的方式处理数据库操作；
 
-## Active Record 中的“多约定少配置”原则
+Active Record 中的“多约定少配置”原则
+----------------------------------
 
 使用其他编程语言或框架开发程序时，可能必须要编写很多配置代码。大多数的 ORM 框架都是这样。但是，如果遵循 Rails 的约定，创建 Active Record 模型时不用做多少配置（有时甚至完全不用配置）。Rails 的理念是，如果大多数情况下都要使用相同的方式配置程序，那么就应该把这定为默认的方法。所以，只有常规的方法无法满足要求时，才要额外的配置。
 
@@ -53,7 +55,6 @@ Active Record 提供了很多功能，其中最重要的几个如下：
 | `Deer`        | `deers`        |
 | `Mouse`       | `mice`         |
 | `Person`      | `people`       |
-
 
 ### 模式约定
 
@@ -73,7 +74,8 @@ Active Record 提供了很多功能，其中最重要的几个如下：
 
 I> 虽然这些字段是可选的，但在 Active Record 中是被保留的。如果想使用相应的功能，就不要把这些保留字段用作其他用途。例如，`type` 这个保留字段是用来指定数据表使用“单表继承”（STI）的，如果不用 STI，请使用其他的名字，例如“context”，这也能表明该字段的作用。
 
-## 创建 Active Record 模型
+创建 Active Record 模型
+-----------------------
 
 创建 Active Record 模型的过程很简单，只要继承 `ActiveRecord::Base` 类就行了：
 
@@ -100,7 +102,8 @@ p.name = "Some Book"
 puts p.name # "Some Book"
 ```
 
-## 不用默认的命名约定
+不用默认的命名约定
+----------------
 
 如果想使用其他的命名约定，或者在 Rails 程序中使用即有的数据库可以吗？没问题，不用默认的命名约定也很简单。
 
@@ -130,7 +133,8 @@ class Product < ActiveRecord::Base
 end
 ```
 
-## CRUD：读写数据
+CRUD：读写数据
+-------------
 
 CURD 是四种数据操作的简称：C 表示创建，R 表示读取，U 表示更新，D 表示删除。Active Record 自动创建了处理数据表中数据的方法。
 
@@ -222,7 +226,8 @@ user = User.find_by(name: 'David')
 user.destroy
 ```
 
-## 数据验证
+数据验证
+-------
 
 在存入数据库之前，Active Record 还可以验证模型。模型验证有很多方法，可以检查属性值是否不为空、是否是唯一的，或者没有在数据库中出现过，等等。
 
@@ -239,11 +244,13 @@ User.create! # => ActiveRecord::RecordInvalid: Validation failed: Name can't be 
 
 [Active Record 数据验证](active_record_validations.html)一文会详细介绍数据验证。
 
-## 回调
+回调
+----
 
 Active Record 回调可以在模型声明周期的特定事件上绑定代码，相应的事件发生时，执行这些代码。例如创建新纪录时，更新记录时，删除记录时，等等。[Active Record 回调](active_record_callbacks.html)一文会详细介绍回调。
 
-## 迁移
+迁移
+----
 
 Rails 提供了一个 DSL 用来处理数据库模式，叫做“迁移”。迁移的代码存储在特定的文件中，通过 `rake` 调用，可以用在 Active Record 支持的所有数据库上。下面这个迁移会新建一个数据表：
 

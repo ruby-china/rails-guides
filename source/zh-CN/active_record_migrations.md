@@ -12,7 +12,8 @@ Active Record 数据库迁移
 
 --------------------------------------------------------------------------------
 
-## 迁移简介
+迁移简介
+-------
 
 迁移使用一种统一、简单的方式，按照时间顺序修改数据库的模式。迁移使用 Ruby DSL 编写，因此不用手动编写 SQL 语句，对数据库的操作和所用的数据库种类无关。
 
@@ -74,7 +75,8 @@ class ChangeProductsPrice < ActiveRecord::Migration
 end
 ```
 
-## 创建迁移
+创建迁移
+-------
 
 ### 单独创建迁移
 
@@ -271,7 +273,8 @@ class AddDetailsToProducts < ActiveRecord::Migration
 end
 ```
 
-## 编写迁移
+编写迁移
+-------
 
 使用前面介绍的生成器生成迁移后，就可以开始写代码了。
 
@@ -524,7 +527,8 @@ end
 
 上面这个迁移也可以不用 `revert` 方法，不过步骤就多了：调换 `create_table` 和 `reversible` 的顺序，把 `create_table` 换成 `drop_table`，还要对调 `up` 和 `down` 中的代码。这些操作都可交给 `revert` 方法完成。
 
-## 运行迁移
+运行迁移
+-------
 
 Rails 提供了很多 Rake 任务，用来执行指定的迁移。
 
@@ -651,7 +655,8 @@ end
 
 如果不想让 Active Record 输出任何结果，可以使用 `rake db:migrate VERBOSE=false`。
 
-## 修改现有的迁移
+修改现有的迁移
+------------
 
 有时编写的迁移中可能有错误，如果已经运行了迁移，不能直接编辑迁移文件再运行迁移。Rails 认为这个迁移已经运行，所以执行 `rake db:migrate` 任务时什么也不会做。这种情况必须先回滚迁移（例如，执行 `rake db:rollback` 任务），编辑迁移文件后再执行 `rake db:migrate` 任务执行改正后的版本。
 
@@ -659,7 +664,8 @@ end
 
 在新迁移中撤销之前迁移中的全部操作或者部分操作可以使用 `revert` 方法。（参见前面的 [撤销之前的迁移](#reverting-previous-migrations) 一节）
 
-## 导出模式
+导出模式
+-------
 
 ### 模式文件的作用
 
@@ -707,7 +713,8 @@ end
 
 因为导出的模式文件时数据库模式的可信源，强烈推荐将其纳入版本控制。
 
-## Active Record 和引用完整性
+Active Record 和引用完整性
+-------------------------
 
 Active Record 在模型中，而不是数据库中设置关联。因此，需要在数据库中实现的功能，例如触发器、外键约束，不太常用。
 
@@ -715,7 +722,8 @@ Active Record 在模型中，而不是数据库中设置关联。因此，需要
 
 Active Record 并没有为使用这些功能提供任何工具，不过 `execute` 方法可以执行任意的 SQL 语句。还可以使用 [foreigner](https://github.com/matthuhiggins/foreigner) 等 gem，为 Active Record 添加外键支持（还能把外键导出到 `db/schema.rb` 文件）。
 
-## 迁移和种子数据
+迁移和种子数据
+-------------
 
 有些人使用迁移把数据存入数据库：
 
