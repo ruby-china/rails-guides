@@ -477,7 +477,7 @@ class Person < ActiveRecord::Base
 end
 ```
 
-I> `record.errors[:base]` 中的错误针对整个对象，而不是特定的属性。
+NOTE: `record.errors[:base]` 中的错误针对整个对象，而不是特定的属性。
 
 `validates_with` 方法的参数是一个类，或一组类，用来做验证。`validates_with` 方法没有默认的错误消息。在做验证的类中要手动把错误添加到记录的错误集合中。
 

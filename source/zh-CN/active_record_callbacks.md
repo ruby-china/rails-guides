@@ -223,7 +223,7 @@ An Employee was touched
 
 `after_initialize` 回调在新对象初始化时触发执行。
 
-I> `find_by_*` 和 `find_by_*!` 是为每个属性生成的动态查询方法，详情参见“[动态查询方法](active_record_querying.html#dynamic-finders)”一节。
+NOTE: `find_by_*` 和 `find_by_*!` 是为每个属性生成的动态查询方法，详情参见“[动态查询方法](active_record_querying.html#dynamic-finders)”一节。
 
 跳过回调
 --------
@@ -403,6 +403,6 @@ class PictureFile < ActiveRecord::Base
 end
 ```
 
-I> `:on` 选项指定什么时候出发回调。如果不设置 `:on` 选项，每各个操作都会触发回调。
+NOTE: `:on` 选项指定什么时候出发回调。如果不设置 `:on` 选项，每各个操作都会触发回调。
 
 WARNING: `after_commit` 和 `after_rollback` 回调确保模型的创建、更新和销毁等操作在事务中完成。如果这两个回调抛出了异常，会被忽略，因此不会干扰其他回调。因此，如果回调可能抛出异常，就要做适当的补救和处理。

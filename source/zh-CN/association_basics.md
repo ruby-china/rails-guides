@@ -92,7 +92,7 @@ end
 
 ![belongs_to 关联](images/belongs_to.png)
 
-I> 在 `belongs_to` 关联声明中必须使用单数形式。如果在上面的代码中使用复数形式，程序会报错，提示未初始化常量 `Order::Customers`。因为 Rails 自动使用关联中的名字引用类名。如果关联中的名字错误的使用复数，引用的类也就变成了复数。
+NOTE: 在 `belongs_to` 关联声明中必须使用单数形式。如果在上面的代码中使用复数形式，程序会报错，提示未初始化常量 `Order::Customers`。因为 Rails 自动使用关联中的名字引用类名。如果关联中的名字错误的使用复数，引用的类也就变成了复数。
 
 相应的迁移如下：
 
@@ -154,7 +154,7 @@ class Customer < ActiveRecord::Base
 end
 ```
 
-I> 声明 `has_many` 关联时，另一个模型使用复数形式。
+NOTE: 声明 `has_many` 关联时，另一个模型使用复数形式。
 
 ![has_many 关联](images/has_many.png)
 
@@ -381,7 +381,7 @@ class CreateSuppliers < ActiveRecord::Migration
 end
 ```
 
-I> `t.integer :supplier_id` 更明确的表明了外键的名字。在目前的 Rails 版本中，可以抽象实现的细节，使用 `t.references :supplier` 代替。
+NOTE: `t.integer :supplier_id` 更明确的表明了外键的名字。在目前的 Rails 版本中，可以抽象实现的细节，使用 `t.references :supplier` 代替。
 
 ### 使用 `has_many :through` 还是 `has_and_belongs_to_many`
 
@@ -749,7 +749,7 @@ create_customer
 create_customer!
 ```
 
-I> 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法构建关联对象。`association.build` 方法是在 `has_many` 和 `has_and_belongs_to_many` 关联中使用的。创建关联对象要使用 `create_*` 方法。
+NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法构建关联对象。`association.build` 方法是在 `has_many` 和 `has_and_belongs_to_many` 关联中使用的。创建关联对象要使用 `create_*` 方法。
 
 ##### `association(force_reload = false)`
 
@@ -997,7 +997,7 @@ class Customer < ActiveRecord::Base
 end
 ```
 
-I> 直接关联没必要使用 `includes`。如果 `Order belongs_to :customer`，那么顾客会自动按需加载。
+NOTE: 直接关联没必要使用 `includes`。如果 `Order belongs_to :customer`，那么顾客会自动按需加载。
 
 ##### `readonly`
 
@@ -1055,7 +1055,7 @@ create_account
 create_account!
 ```
 
-I> 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法构建关联对象。`association.build` 方法是在 `has_many` 和 `has_and_belongs_to_many` 关联中使用的。创建关联对象要使用 `create_*` 方法。
+NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法构建关联对象。`association.build` 方法是在 `has_many` 和 `has_and_belongs_to_many` 关联中使用的。创建关联对象要使用 `create_*` 方法。
 
 ##### `association(force_reload = false)`
 
@@ -1509,7 +1509,7 @@ end
 * `:restrict_with_exception`：有关联的对象时抛出异常；
 * `:restrict_with_error`：有关联的对象时，向拥有者添加一个错误；
 
-I> 如果声明关联时指定了 `:through` 选项，会忽略这个选项。
+NOTE: 如果声明关联时指定了 `:through` 选项，会忽略这个选项。
 
 ##### `:foreign_key`
 
@@ -1835,7 +1835,7 @@ WARNING: 在 `has_and_belongs_to_many` 关联的连接数据表中使用其他�
 @part.assemblies << @assembly1
 ```
 
-I> 这个方法与 `collection.concat` 和 `collection.push` 是同名方法。
+NOTE: 这个方法与 `collection.concat` 和 `collection.push` 是同名方法。
 
 ##### `collection.delete(object, ...)`
 

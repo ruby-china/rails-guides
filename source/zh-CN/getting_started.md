@@ -285,7 +285,7 @@ end
 
 控制器就是一个类，继承自 `ApplicationController`。在这个类中定义的方法就是控制器的动作。动作的作用是处理文章的 CRUD 操作。
 
-I> 在 Ruby 中，方法分为 `public`、`private` 和 `protected` 三种，只有 `public` 方法才能作为控制器的动作。详情参阅 [Programming Ruby](http://www.ruby-doc.org/docs/ProgrammingRuby/) 一书。
+NOTE: 在 Ruby 中，方法分为 `public`、`private` 和 `protected` 三种，只有 `public` 方法才能作为控制器的动作。详情参阅 [Programming Ruby](http://www.ruby-doc.org/docs/ProgrammingRuby/) 一书。
 
 现在刷新 <http://localhost:3000/articles/new>，会看到一个新错误：
 
@@ -476,7 +476,7 @@ Rails 会执行迁移操作，告诉你创建了 `articles` 表。
 ==  CreateArticles: migrated (0.0020s) =========================================
 ```
 
-I> 因为默认情况下，程序运行在开发环境中，所以相关的操作应用于 `config/database.yml` 文件中 `development` 区域设置的数据库上。如果想在其他环境中运行迁移，必须在命令中指明：`rake db:migrate RAILS_ENV=production`。
+NOTE: 因为默认情况下，程序运行在开发环境中，所以相关的操作应用于 `config/database.yml` 文件中 `development` 区域设置的数据库上。如果想在其他环境中运行迁移，必须在命令中指明：`rake db:migrate RAILS_ENV=production`。
 
 ### 在控制器中保存数据
 

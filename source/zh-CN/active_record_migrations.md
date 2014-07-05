@@ -40,7 +40,7 @@ end
 
 在支持事物的数据库中，对模式的改动会在一个事物中执行。如果数据库不支持事物，迁移失败时，成功执行的操作将无法回滚。如要回滚，必须手动改回来。
 
-I> 某些查询无法在事物中运行。如果适配器支持 DDL 事物，可以在某个迁移中调用 `disable_ddl_transaction!` 方法禁用。
+NOTE: 某些查询无法在事物中运行。如果适配器支持 DDL 事物，可以在某个迁移中调用 `disable_ddl_transaction!` 方法禁用。
 
 如果想在迁移中执行 Active Record 不知如何撤销的操作，可以使用 `reversible` 方法：
 
@@ -576,7 +576,7 @@ $ rake db:migrate:redo STEP=3
 
 `rake db:reset` 任务会删除数据库，然后重建，等价于 `rake db:drop db:setup`。
 
-I> 这个任务和执行所有迁移的作用不同。`rake db:reset` 使用的是 `schema.rb` 文件中的内容。如果迁移无法回滚，`rake db:reset` 起不了作用。详细介绍参见“[导出模式](#schema-dumping-and-you)”一节。
+NOTE: 这个任务和执行所有迁移的作用不同。`rake db:reset` 使用的是 `schema.rb` 文件中的内容。如果迁移无法回滚，`rake db:reset` 起不了作用。详细介绍参见“[导出模式](#schema-dumping-and-you)”一节。
 
 ### 运行指定的迁移
 

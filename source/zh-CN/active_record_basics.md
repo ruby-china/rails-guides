@@ -72,7 +72,7 @@ Active Record 中的“多约定少配置”原则
 * `(association_name)_type` - [多态关联](association_basics.html#polymorphic-associations)的类型；
 * `(table_name)_count` - 缓存关联对象的数量。例如，`posts` 表中的 `comments_count` 字段，缓存每篇文章的评论数；
 
-I> 虽然这些字段是可选的，但在 Active Record 中是被保留的。如果想使用相应的功能，就不要把这些保留字段用作其他用途。例如，`type` 这个保留字段是用来指定数据表使用“单表继承”（STI）的，如果不用 STI，请使用其他的名字，例如“context”，这也能表明该字段的作用。
+NOTE: 虽然这些字段是可选的，但在 Active Record 中是被保留的。如果想使用相应的功能，就不要把这些保留字段用作其他用途。例如，`type` 这个保留字段是用来指定数据表使用“单表继承”（STI）的，如果不用 STI，请使用其他的名字，例如“context”，这也能表明该字段的作用。
 
 创建 Active Record 模型
 -----------------------
