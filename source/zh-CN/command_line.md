@@ -13,7 +13,8 @@ Rails 命令行
 
 NOTE: 阅读本文前要具备一些 Rails 基础知识，可以阅读“[Rails 入门]({{ site.baseurl }}/getting_started.html)”一文。
 
-## 命令行基础
+命令行基础
+---------
 
 有些命令在 Rails 开发过程中经常会用到，下面按照使用频率倒序列出：
 
@@ -34,8 +35,7 @@ NOTE: 阅读本文前要具备一些 Rails 基础知识，可以阅读“[Rails 
 
 NOTE: 如果还没安装 Rails ，可以执行 `gem install rails` 命令安装。
 
-{:lang="bash"}
-~~~
+```bash
 $ rails new commandsapp
      create
      create  README.rdoc
@@ -48,7 +48,7 @@ $ rails new commandsapp
      create  tmp/cache
      ...
         run  bundle install
-~~~
+```
 
 这个简单的命令会生成很多文件，组成一个完整的 Rails 程序，直接就可运行。
 
@@ -58,8 +58,7 @@ $ rails new commandsapp
 
 无需其他操作，执行 `rails server` 命令后就能运行刚创建的 Rails 程序：
 
-{:lang="bash"}
-~~~
+```bash
 $ cd commandsapp
 $ rails server
 => Booting WEBrick
@@ -69,7 +68,7 @@ $ rails server
 [2013-08-07 02:00:01] INFO  WEBrick 1.3.1
 [2013-08-07 02:00:01] INFO  ruby 2.0.0 (2013-06-27) [x86_64-darwin11.2.0]
 [2013-08-07 02:00:01] INFO  WEBrick::HTTPServer#start: pid=69680 port=3000
-~~~
+```
 
 只执行了三个命令，我们就启动了一个 Rails 服务器，监听端口 3000。打开浏览器，访问 <http://localhost:3000>，会看到一个简单的 Rails 程序。
 
@@ -77,10 +76,9 @@ NOTE: 启动服务器的命令还可使用别名“s”：`rails s`。
 
 如果想让服务器监听其他端口，可通过 `-p` 选项指定。所处的环境可由 `-e` 选项指定。
 
-{:lang="bash"}
-~~~
+```bash
 $ rails server -e production -p 4000
-~~~
+```
 
 `-b` 选项把 Rails 绑定到指定的 IP，默认 IP 是 0.0.0.0。指定 `-d` 选项后，服务器会以守护进程的形式运行。
 
@@ -90,8 +88,7 @@ $ rails server -e production -p 4000
 
 NOTE: 还可使用别名“g”执行生成器命令：`rails g`。
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate
 Usage: rails generate GENERATOR [args] [options]
 
@@ -106,7 +103,7 @@ Rails:
   generator
   ...
   ...
-~~~
+```
 
 NOTE: 使用其他生成器 gem 可以安装更多的生成器，或者使用插件中提供的生成器，甚至还可以自己编写生成器。
 
@@ -116,8 +113,7 @@ NOTE: 使用其他生成器 gem 可以安装更多的生成器，或者使用插
 
 NOTE: 所有的 Rails 命令都有帮助信息。和其他 *nix 命令一样，可以在命令后加上 `--help` 或 `-h` 选项，例如 `rails server --help`。
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate controller
 Usage: rails generate controller NAME [action action] [options]
 
@@ -140,12 +136,11 @@ Example:
         Test:       test/controllers/credit_card_controller_test.rb
         Views:      app/views/credit_card/debit.html.erb [...]
         Helper:     app/helpers/credit_card_helper.rb
-~~~
+```
 
 控制器生成器接受的参数形式是 `generate controller ControllerName action1 action2`。下面我们来生成 `Greetings` 控制器，包含一个动作 `hello`，跟读者打个招呼。
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate controller Greetings hello
      create  app/controllers/greetings_controller.rb
       route  get "greetings/hello"
@@ -163,36 +158,33 @@ $ rails generate controller Greetings hello
      create      app/assets/javascripts/greetings.js.coffee
      invoke    scss
      create      app/assets/stylesheets/greetings.css.scss
-~~~
+```
 
 这个命令生成了什么呢？在程序中创建了一堆文件夹，还有控制器文件、视图文件、功能测试文件、视图帮助方法文件、JavaScript 文件盒样式表文件。
 
 打开控制器文件（`app/controllers/greetings_controller.rb`），做些改动：
 
-{:lang="ruby"}
-~~~
+```ruby
 class GreetingsController < ApplicationController
   def hello
     @message = "Hello, how are you today?"
   end
 end
-~~~
+```
 
 然后修改视图文件（`app/views/greetings/hello.html.erb`），显示消息：
 
-{:lang="erb"}
-~~~
+```erb
 <h1>A Greeting for You!</h1>
 <p><%= @message %></p>
-~~~
+```
 
 执行 `rails server` 命令启动服务器：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails server
 => Booting WEBrick...
-~~~
+```
 
 要查看的地址是 <http://localhost:3000/greetings/hello>。
 
@@ -200,8 +192,7 @@ NOTE: 在常规的 Rails 程序中，URL 的格式是 http://(host)/(controller)
 
 Rails 也为数据模型提供了生成器。
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate model
 Usage:
   rails generate model NAME [field[:type][:index] field[:type][:index]] [options]
@@ -216,7 +207,7 @@ Active Record options:
 
 Description:
     Create rails files for model generator.
-~~~
+```
 
 NOTE: 全部可用的字段类型，请查看 `TableDefinition#column` 方法的[文档](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html#method-i-column)。
 
@@ -224,8 +215,7 @@ NOTE: 全部可用的字段类型，请查看 `TableDefinition#column` 方法的
 
 我们要创建一个名为“HighScore”的资源，记录视频游戏的最高得分。
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate scaffold HighScore game:string score:integer
     invoke  active_record
     create    db/migrate/20130717151933_create_high_scores.rb
@@ -260,29 +250,27 @@ $ rails generate scaffold HighScore game:string score:integer
     create      app/assets/stylesheets/high_scores.css.scss
     invoke  scss
    identical    app/assets/stylesheets/scaffolds.css.scss
-~~~
+```
 
 这个生成器检测到以下各组件对应的文件夹已经存储在：模型，控制器，帮助方法，布局，功能测试，单元测试，样式表。然后创建“HighScore”资源的视图、控制器、模型和迁移文件（用来创建 `high_scores` 数据表和字段），并设置好路由，以及测试等。
 
 我们要运行迁移，执行文件 `20130717151933_create_high_scores.rb` 中的代码，这才能修改数据库的模式。那么要修改哪个数据库呢？执行 `rake db:migrate` 命令后会生成 SQLite3 数据库。稍后再详细介绍 Rake。
 
-{:lang="bash"}
-~~~
+```bash
 $ rake db:migrate
 ==  CreateHighScores: migrating ===============================================
 -- create_table(:high_scores)
    -> 0.0017s
 ==  CreateHighScores: migrated (0.0019s) ======================================
-~~~
+```
 
 NOTE: 介绍一下单元测试。单元测试是用来测试代码、做断定的代码。在单元测试中，我们只关注代码的一部分，例如模型中的一个方法，测试其输入和输出。单元测试是你的好伙伴，你逐渐会意识到，单元测试的程度越高，生活的质量才能提上来。真的。稍后我们会编写一个单元测试。
 
 我们来看一下 Rails 创建的界面。
 
-{:lang="bash"}
-~~~
+```bash
 $ rails server
-~~~
+```
 
 打开浏览器，访问 <http://localhost:3000/high_scores>，现在可以创建新的最高得分了（太空入侵者得了 55,160 分）。
 
@@ -294,20 +282,18 @@ NOTE:  这个命令还可以使用别名“c”：`rails c`。
 
 执行 `console` 命令时可以指定终端在哪个环境中打开：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails console staging
-~~~
+```
 
 如果你想测试一些代码，但不想改变存储的数据，可以执行 `rails console --sandbox`。
 
-{:lang="bash"}
-~~~
+```bash
 $ rails console --sandbox
 Loading development environment in sandbox (Rails 4.0.0)
 Any modifications you make will be rolled back on exit
 irb(main):001:0>
-~~~
+```
 
 ### `rails dbconsole`
 
@@ -319,19 +305,17 @@ NOTE: 这个命令还可使用别名“db”：`rails db`。
 
 `runner` 可以以非交互的方式在 Rails 中运行 Ruby 代码。例如：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails runner "Model.long_running_method"
-~~~
+```
 
 NOTE: 这个命令还可使用别名“r”：`rails r`。
 
 可使用 `-e` 选项指定 `runner` 命令在哪个环境中运行。
 
-{:lang="bash"}
-~~~
+```bash
 $ rails runner -e staging "Model.long_running_method"
-~~~
+```
 
 ### `rails destroy`
 
@@ -339,8 +323,7 @@ $ rails runner -e staging "Model.long_running_method"
 
 NOTE: 这个命令还可使用别名“d”：`rails d`。
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate model Oops
       invoke  active_record
       create    db/migrate/20120528062523_create_oops.rb
@@ -348,10 +331,9 @@ $ rails generate model Oops
       invoke    test_unit
       create      test/models/oops_test.rb
       create      test/fixtures/oops.yml
-~~~
+```
 
-{:lang="bash"}
-~~~
+```bash
 $ rails destroy model Oops
       invoke  active_record
       remove    db/migrate/20120528062523_create_oops.rb
@@ -359,9 +341,10 @@ $ rails destroy model Oops
       invoke    test_unit
       remove      test/models/oops_test.rb
       remove      test/fixtures/oops.yml
-~~~
+```
 
-## Rake
+Rake
+----
 
 Rake 是 Ruby 领域的 Make，是个独立的 Ruby 工具，目的是代替 Unix 中的 make。Rake 根据 `Rakefile` 和 `.rake` 文件构建任务。Rails 使用 Rake 实现常见的管理任务，尤其是较为复杂的任务。
 
@@ -369,8 +352,7 @@ Rake 是 Ruby 领域的 Make，是个独立的 Ruby 工具，目的是代替 Uni
 
 要想查看执行 Rake 任务时的完整调用栈，可以在命令中使用 `--trace` 选项，例如 `rake db:create --trace`。
 
-{:lang="bash"}
-~~~
+```bash
 $ rake --tasks
 rake about              # List versions of all Rails frameworks and the environment
 rake assets:clean       # Remove compiled assets
@@ -382,7 +364,7 @@ rake middleware         # Prints out your Rack middleware stack
 ...
 rake tmp:clear          # Clear session, cache, and socket files from tmp/ (narrow w/ tmp:sessions:clear, tmp:cache:clear, tmp:sockets:clear)
 rake tmp:create         # Creates tmp directories for sessions, cache, sockets, and pids
-~~~
+```
 
 NOTE: 还可以执行 `rake -T` 查看所有任务。
 
@@ -390,8 +372,7 @@ NOTE: 还可以执行 `rake -T` 查看所有任务。
 
 `rake about` 任务输出以下信息：Ruby、RubyGems、Rails 的版本号，Rails 使用的组件，程序所在的文件夹，Rails 当前所处的环境名，程序使用的数据库适配器，数据库模式版本号。如果想向他人需求帮助，检查安全补丁是否影响程序，或者需要查看现有 Rails 程序的信息，可以使用这个任务。
 
-{:lang="bash"}
-~~~
+```bash
 $ rake about
 About your application's environment
 Ruby version              1.9.3 (x86_64-linux)
@@ -409,7 +390,7 @@ Application root          /home/foobar/commandsapp
 Environment               development
 Database adapter          sqlite3
 Database schema version   20110805173523
-~~~
+```
 
 ### `assets`
 
@@ -433,8 +414,7 @@ Rake 命名空间 `db:` 中最常用的任务是 `migrate` 和 `create`，这两
 
 `rake notes` 会搜索整个程序，寻找以 FIXME、OPTIMIZE 或 TODO 开头的注释。搜索的文件包括 `.builder`，`.rb`，`.erb`，`.haml`，`.slim`，`.css`，`.scss`，`.js`，`.coffee`，`.rake`，`.sass` 和 `.less`。搜索的内容包括默认注解和自定义注解。
 
-{:lang="bash"}
-~~~
+```bash
 $ rake notes
 (in /home/foobar/commandsapp)
 app/controllers/admin/users_controller.rb:
@@ -444,12 +424,11 @@ app/controllers/admin/users_controller.rb:
 app/models/school.rb:
   * [ 13] [OPTIMIZE] refactor this code to make it faster
   * [ 17] [FIXME]
-~~~
+```
 
 如果想查找特定的注解，例如 FIXME，可以执行 `rake notes:fixme` 任务。注意，在命令中注解的名字要使用小写形式。
 
-{:lang="bash"}
-~~~
+```bash
 $ rake notes:fixme
 (in /home/foobar/commandsapp)
 app/controllers/admin/users_controller.rb:
@@ -457,24 +436,22 @@ app/controllers/admin/users_controller.rb:
 
 app/models/school.rb:
   * [ 17]
-~~~
+```
 
 在代码中可以使用自定义的注解，然后执行 `rake notes:custom` 任务，并使用 `ANNOTATION` 环境变量指定要查找的注解。
 
-{:lang="bash"}
-~~~
+```bash
 $ rake notes:custom ANNOTATION=BUG
 (in /home/foobar/commandsapp)
 app/models/post.rb:
   * [ 23] Have to fix this one before pushing!
-~~~
+```
 
 NOTE: 注意，不管查找的是默认的注解还是自定义的直接，注解名（例如 FIXME，BUG 等）不会在输出结果中显示。
 
 默认情况下，`rake notes` 会搜索 `app`、`config`、`lib`、`bin` 和 `test` 这几个文件夹中的文件。如果想在其他的文件夹中查找，可以使用 `SOURCE_ANNOTATION_DIRECTORIES` 环境变量指定一个以逗号分隔的列表。
 
-{:lang="bash"}
-~~~
+```bash
 $ export SOURCE_ANNOTATION_DIRECTORIES='spec,vendor'
 $ rake notes
 (in /home/foobar/commandsapp)
@@ -482,7 +459,7 @@ app/models/user.rb:
   * [ 35] [FIXME] User should have a subscription at this point
 spec/models/user_spec.rb:
   * [122] [TODO] Verify the user that has a subscription works
-~~~
+```
 
 ### `routes`
 
@@ -516,48 +493,45 @@ Rails 提供了一个名为 Minitest 的测试组件。Rails 的稳定性也由�
 
 自己编写的 Rake 任务保存在 `Rails.root/lib/tasks` 文件夹中，文件的扩展名是 `.rake`。执行 `bin/rails generate task` 命令会生成一个新的自定义任务文件。
 
-{:lang="ruby"}
-~~~
+```ruby
 desc "I am short, but comprehensive description for my cool task"
 task task_name: [:prerequisite_task, :another_task_we_depend_on] do
   # All your magic here
   # Any valid Ruby code is allowed
 end
-~~~
+```
 
 向自定义的任务中传入参数的方式如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 task :task_name, [:arg_1] => [:pre_1, :pre_2] do |t, args|
   # You can use args from here
 end
-~~~
+```
 
 任务可以分组，放入命名空间：
 
-{:lang="ruby"}
-~~~
+```ruby
 namespace :db do
   desc "This task does nothing"
   task :nothing do
     # Seriously, nothing
   end
 end
-~~~
+```
 
 执行任务的方法如下：
 
-{:lang="bash"}
-~~~
+```bash
 rake task_name
 rake "task_name[value 1]" # entire argument string should be quoted
 rake db:nothing
-~~~
+```
 
 NOTE: 如果在任务中要和程序的模型交互，例如查询数据库等，可以使用 `environment` 任务，加载程序代码。
 
-## Rails 命令行高级用法
+Rails 命令行高级用法
+------------------
 
 Rails 命令行的高级用法就是找到实用的参数，满足特定需求或者工作流程。下面是一些常用的高级命令。
 
@@ -567,8 +541,7 @@ Rails 命令行的高级用法就是找到实用的参数，满足特定需求�
 
 我们来看一下 `--git` 和 `--database=postgresql` 选项有什么作用：
 
-{:lang="bash"}
-~~~
+```bash
 $ mkdir gitapp
 $ cd gitapp
 $ git init
@@ -591,12 +564,11 @@ add 'app/controllers/application_controller.rb'
 ...
       create  log/test.log
 add 'log/test.log'
-~~~
+```
 
 上面的命令先新建一个 `gitapp` 文件夹，初始化一个空的 git 仓库，然后再把 Rails 生成的文件加入仓库。再来看一下在数据库设置文件中添加了什么：
 
-{:lang="bash"}
-~~~
+```bash
 $ cat config/database.yml
 # PostgreSQL. Versions 8.2 and up are supported.
 #
@@ -623,7 +595,7 @@ development:
   password:
 ...
 ...
-~~~
+```
 
 这个命令还根据我们选择的 PostgreSQL 数据库在 `database.yml` 中添加了一些设置。
 
