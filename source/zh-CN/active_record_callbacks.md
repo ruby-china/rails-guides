@@ -223,7 +223,7 @@ An Employee was touched
 
 `after_initialize` 回调在新对象初始化时触发执行。
 
-I> `find_by_*` 和 `find_by_*!` 是为每个属性生成的动态查询方法，详情参见“[动态查询方法]({{ site.baseurl }}/active_record_querying.html#dynamic-finders)”一节。
+I> `find_by_*` 和 `find_by_*!` 是为每个属性生成的动态查询方法，详情参见“[动态查询方法](active_record_querying.html#dynamic-finders)”一节。
 
 跳过回调
 --------
