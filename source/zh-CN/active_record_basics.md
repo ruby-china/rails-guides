@@ -1,9 +1,5 @@
----
-layout: docs
-title: Active Record 基础
-prev_section: getting_started
-next_section: migrations
----
+Active Record 基础
+==================
 
 本文介绍 Active Record。
 

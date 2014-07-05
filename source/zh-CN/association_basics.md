@@ -1,9 +1,5 @@
----
-layout: docs
-title: Active Record 关联
-prev_section: active_record_callbacks
-next_section: active_record_quering
----
+Active Record 关联
+==================
 
 本文介绍 Active Record 中的关联功能。
 

@@ -1,9 +1,5 @@
----
-layout: docs
-title: Active Record 数据库迁移
-prev_section: active_record_basics
-next_section: active_record_validations
----
+Active Record 数据库迁移
+=======================
 
 迁移是 Active Record 提供的一个功能，按照时间顺序管理数据库模式。使用迁移，无需编写 SQL，使用简单的 Ruby DSL 就能修改数据表。
 

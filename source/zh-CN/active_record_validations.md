@@ -1,9 +1,5 @@
----
-layout: docs
-title: Active Record 数据验证
-prev_section: migrations
-next_section: active_record_callbacks
----
+Active Record 数据验证
+=====================
 
 本文介绍如何使用 Active Record 提供的数据验证功能在数据存入数据库之前验证对象的状态。
 

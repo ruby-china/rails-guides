@@ -1,9 +1,5 @@
----
-layout: docs
-title: Active Record 回调
-prev_section: active_record_validations
-next_section: association_basics
----
+Active Record 回调
+==================
 
 本文介绍如何介入 Active Record 对象的生命周期。
 
