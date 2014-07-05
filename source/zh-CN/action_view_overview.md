@@ -1,9 +1,5 @@
----
-layout: docs
-title: Action View 基础
-prev_section: active_record_quering
-next_section: layouts_and_rendering
----
+Action View 基础
+================
 
 读完本文后，你将学会：
 
@@ -13,7 +9,7 @@ next_section: layouts_and_rendering
 * 如何使用本地化视图；
 * 如何在 Rails 之外的程序中使用 Action View；
 
----
+--------------------------------------------------------------------------------
 
 ## Action View 是什么？ {#what-is-action-view-questionmark}
 

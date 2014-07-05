@@ -1,9 +1,5 @@
----
-layout: docs
-title: Rails 布局和视图渲染
-prev_section: action_view_overview
-next_section: form_helpers
----
+Rails 布局和视图渲染
+===================
 
 本文介绍 Action Controller 和 Action View 中布局的基本功能。
 
@@ -14,7 +10,7 @@ next_section: form_helpers
 * 如何使用局部视图去除重复；
 * 如何使用嵌套布局（子模板）；
 
----
+--------------------------------------------------------------------------------
 
 ## 概览：各组件之间的协作 {#overview-how-the-pieces-fit-together}
 

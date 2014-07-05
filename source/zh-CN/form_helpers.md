@@ -1,9 +1,5 @@
----
-layout: docs
-title: 表单帮助方法
-prev_section: layouts_and_rendering
-next_section: action_controller_overview
----
+表单帮助方法
+===========
 
 表单是网页程序的基本组成部分，用于接收用户的输入。然而，由于表单中控件的名称和各种属性，使用标记语言难以编写和维护。Rails 提供了很多视图帮助方法简化表单的创建过程。因为各帮助方法的用途不一样，所以开发者在使用之前必须要知道相似帮助方法的差异。
 
@@ -17,7 +13,7 @@ next_section: action_controller_overview
 * 创建操作外部资源的案例；
 * 如何编写复杂的表单；
 
----
+--------------------------------------------------------------------------------
 
 I> 本文的目的不是全面解说每个表单方法和其参数，完整的说明请阅读 [Rails API 文档](http://api.rubyonrails.org/)。
 
