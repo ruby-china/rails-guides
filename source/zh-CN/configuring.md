@@ -799,7 +799,7 @@ Rails.application.config.before_initialize do
 end
 ~~~
 
-W> 程序的某些功能，尤其是路由，在 `after_initialize` 之后还不可用。
+WARNING: 程序的某些功能，尤其是路由，在 `after_initialize` 之后还不可用。
 
 ### `Rails::Railtie#initializer`
 
@@ -816,7 +816,7 @@ end
 
 使用 `initializer` 方法定义的初始化脚本按照定义的顺序运行，但指定 `:before` 或 `:after` 参数的初始化脚本例外。
 
-W> 初始化脚本可放在任一初始化脚本的前面或后面，只要符合逻辑即可。假设定义了四个初始化脚本，名字为 `"one"` 到 `"four"`（就按照这个顺序定义），其中 `"four"` 在 `"four"` 之前，且在 `"three"` 之后，这就不符合逻辑，Rails 无法判断初始化脚本的加载顺序。
+WARNING: 初始化脚本可放在任一初始化脚本的前面或后面，只要符合逻辑即可。假设定义了四个初始化脚本，名字为 `"one"` 到 `"four"`（就按照这个顺序定义），其中 `"four"` 在 `"four"` 之前，且在 `"three"` 之后，这就不符合逻辑，Rails 无法判断初始化脚本的加载顺序。
 
 `initializer` 方法的代码块参数是程序实例，因此可以调用 `config` 方法，如上例所示。
 

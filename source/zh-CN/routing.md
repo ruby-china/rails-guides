@@ -171,12 +171,11 @@ NOTE: 有时需要使用同个控制器处理单数路由（例如 `/account`）
 
 和复数资源一样，上面各帮助方法都有对应的 `_url` 形式，返回主机、端口加路径。
 
-W> 有个一直存在的问题导致 `form_for` 无法自动处理单数资源。为了解决这个问题，可以直接指定表单的 URL，例如：
-W>
-W>
-W>```ruby
-W> form_for @geocoder, url: geocoder_path do |f|
-W> ```
+WARNING: 有个一直存在的问题导致 `form_for` 无法自动处理单数资源。为了解决这个问题，可以直接指定表单的 URL，例如：
+
+```ruby
+form_for @geocoder, url: geocoder_path do |f|
+```
 
 ### 控制器命名空间和路由
 

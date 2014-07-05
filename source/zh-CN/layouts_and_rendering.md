@@ -224,7 +224,7 @@ render file: "/path/to/rails/app/views/books/edit.html.erb"
 render inline: "<% products.each do |p| %><p><%= p.name %></p><% end %>"
 ```
 
-W> 但是很少这么做。在控制器中混用 ERB 代码违反了 MVC 架构原则，也让程序的其他开发者难以理解程序的逻辑思路。请使用单独的 ERB 视图。
+WARNING: 但是很少这么做。在控制器中混用 ERB 代码违反了 MVC 架构原则，也让程序的其他开发者难以理解程序的逻辑思路。请使用单独的 ERB 视图。
 
 默认情况下，行间渲染使用 ERB 模板。你可以使用 `:type` 选项指定使用其他处理程序：
 
@@ -721,7 +721,7 @@ Rails 渲染响应的视图时，会把视图和当前模板结合起来。查�
 
 这六个帮助方法可以在布局或视图中使用，不过 `auto_discovery_link_tag`、`javascript_include_tag` 和 `stylesheet_link_tag` 最常出现在布局的 `<head>` 中。
 
-W> 静态资源标签帮助方法不会检查指定位置是否存在静态资源，假定你知道自己在做什么，只负责生成对应的链接。
+WARNING: 静态资源标签帮助方法不会检查指定位置是否存在静态资源，假定你知道自己在做什么，只负责生成对应的链接。
 
 #### 使用 `auto_discovery_link_tag` 链接到 Feed
 
@@ -819,7 +819,7 @@ Rails 生成的 `script` 标签如下：
 
 `image_tag` 帮助方法为指定的文件生成 HTML `<img />` 标签。默认情况下，文件存放在 `public/images` 文件夹中。
 
-W> 注意，必须指定图片的扩展名。
+WARNING: 注意，必须指定图片的扩展名。
 
 ```erb
 <%= image_tag "header.png" %>

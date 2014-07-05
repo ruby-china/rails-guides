@@ -223,7 +223,7 @@ T> 如果使用密码输入框，或许还不想把其中的值写入日志。�
 
 提交表单后，用户输入的值存储在 `params[:person][:name]` 中。`params[:person]` 这个 Hash 可以传递给 `Person.new` 方法；如果 `@person` 是 `Person` 的实例，还可传递给 `@person.update`。一般来说，这些帮助方法的第二个参数是对象属性的名字，但 Rails 并不对此做强制要求，只要对象能响应 `name` 和 `name=` 方法即可。
 
-W> 传入的参数必须是实例变量的名字，例如 `:person` 或 `"person"`，而不是模型对象的实例本身。
+WARNING: 传入的参数必须是实例变量的名字，例如 `:person` 或 `"person"`，而不是模型对象的实例本身。
 
 Rails 还提供了用于显示模型对象数据验证错误的帮助方法，详情参阅“[Active Record 数据验证](active_record_validations.html#displaying-validation-errors-in-views)”一文。
 
@@ -322,7 +322,7 @@ form_for(@article)
 
 Rails 还会自动设置 `class` 和 `id` 属性。在新建文章的表单中，`id` 和 `class` 属性的值都是 `new_article`。如果编辑 ID 为 23 的文章，表单的 `class` 为 `edit_article`，`id` 为 `edit_article_23`。为了行文简洁，后文会省略这些属性。
 
-W> 如果在模型中使用单表继承（single-table inheritance，简称 STI），且只有父类声明为资源，子类就不能依赖记录辨别技术，必须指定模型名，`:url` 和 `:method` 选项。
+WARNING: 如果在模型中使用单表继承（single-table inheritance，简称 STI），且只有父类声明为资源，子类就不能依赖记录辨别技术，必须指定模型名，`:url` 和 `:method` 选项。
 
 #### 处理命名空间
 
@@ -477,7 +477,7 @@ T> `options_for_select` 方法的第二个参数必须完全和需要选中的�
 <% end %>
 ```
 
-W> 如果使用 `select` 方法（或类似的帮助方法，例如 `collection_select` 和 `select_tag`）处理 `belongs_to` 关联，必须传入外键名（在上例中是 `city_id`），而不是关联名。如果传入的是 `city` 而不是 `city_id`，把 `params` 传给 `Person.new` 或 `update` 方法时，会抛出异常：` ActiveRecord::AssociationTypeMismatch: City(#17815740) expected, got String(#1138750)`。这个要求还可以这么理解，表单帮助方法只能编辑模型的属性。此外还要知道，允许用户直接编辑外键具有潜在地安全隐患。
+WARNING: 如果使用 `select` 方法（或类似的帮助方法，例如 `collection_select` 和 `select_tag`）处理 `belongs_to` 关联，必须传入外键名（在上例中是 `city_id`），而不是关联名。如果传入的是 `city` 而不是 `city_id`，把 `params` 传给 `Person.new` 或 `update` 方法时，会抛出异常：` ActiveRecord::AssociationTypeMismatch: City(#17815740) expected, got String(#1138750)`。这个要求还可以这么理解，表单帮助方法只能编辑模型的属性。此外还要知道，允许用户直接编辑外键具有潜在地安全隐患。
 
 ### 根据任意对象组成的集合创建 `option` 标签
 
@@ -740,7 +740,7 @@ Hash 可以随意嵌套，不限制层级，例如：
 
 不过有个限制，虽然 Hash 可以嵌套任意层级，但数组只能嵌套一层。如果需要嵌套多层数组，可以使用 Hash 实现。例如，如果想创建一个包含模型对象的数组，可以创建一个 Hash，以模型对象的 ID、数组索引或其他参数为键。
 
-W> 数组类型参数不能很好的在 `check_box` 帮助方法中使用。根据 HTML 规范，未选中的复选框不应该提交值。但是不管是否选中都提交值往往更便于处理。为此 `check_box` 方法额外创建了一个同名的隐藏 `input` 元素。如果没有选中复选框，只会提交隐藏 `input` 元素的值，如果选中则同时提交两个值，但复选框的值优先级更高。处理数组参数时重复提交相同的参数会让 Rails 迷惑，因为对 Rails 来说，见到重复的 `input` 值，就会创建一个新数组元素。所以更推荐使用 `check_box_tag` 方法，或者用 Hash 代替数组。
+WARNING: 数组类型参数不能很好的在 `check_box` 帮助方法中使用。根据 HTML 规范，未选中的复选框不应该提交值。但是不管是否选中都提交值往往更便于处理。为此 `check_box` 方法额外创建了一个同名的隐藏 `input` 元素。如果没有选中复选框，只会提交隐藏 `input` 元素的值，如果选中则同时提交两个值，但复选框的值优先级更高。处理数组参数时重复提交相同的参数会让 Rails 迷惑，因为对 Rails 来说，见到重复的 `input` 值，就会创建一个新数组元素。所以更推荐使用 `check_box_tag` 方法，或者用 Hash 代替数组。
 
 ### 使用表单帮助方法
 

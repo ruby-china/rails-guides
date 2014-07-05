@@ -124,7 +124,7 @@ Asset Pipeline 使用的就是这种指纹实现方式。
 
 如果需要这么做，切记不要使用 `require_tree`。如果使用了这个指令，会多次引入相同的静态资源。
 
-W> 预处理静态资源时要确保同时处理控制器相关的静态资源。默认情况下，不会自动编译 `.coffee` 和 `.scss` 文件。在开发环境中没什么问题，因为会自动编译。但在生产环境中会得到 500 错误，因为此时自动编译默认是关闭的。关于预编译的工作机理，请阅读“[事先编译好静态资源](#precompiling-assets)”一节。
+WARNING: 预处理静态资源时要确保同时处理控制器相关的静态资源。默认情况下，不会自动编译 `.coffee` 和 `.scss` 文件。在开发环境中没什么问题，因为会自动编译。但在生产环境中会得到 500 错误，因为此时自动编译默认是关闭的。关于预编译的工作机理，请阅读“[事先编译好静态资源](#precompiling-assets)”一节。
 
 NOTE: 要想使用 CoffeeScript，必须安装支持 ExecJS 的运行时。如果使用 Mac OS X 和 Windows，系统中已经安装了 JavaScript 运行时。所有支持的 JavaScript 运行时参见 [ExecJS](https://github.com/sstephenson/execjs#readme) 的文档。
 
@@ -145,7 +145,7 @@ Asset Pipeline 的静态文件可以放在三个位置：`app/assets`，`lib/ass
 * `lib/assets`：存放自己的代码库，或者共用代码库的静态资源；
 * `vendor/assets`：存放他人的静态资源，例如 JavaScript 插件，或者 CSS 框架；
 
-W> 如果从 Rails 3 升级过来，请注意，`lib/assets` 和 `vendor/assets` 中的静态资源可以引入程序，但不在预编译的范围内。详情参见“[事先编译好静态资源](#precompiling-assets)”一节。
+WARNING: 如果从 Rails 3 升级过来，请注意，`lib/assets` 和 `vendor/assets` 中的静态资源可以引入程序，但不在预编译的范围内。详情参见“[事先编译好静态资源](#precompiling-assets)”一节。
 
 #### 搜索路径
 
@@ -251,7 +251,7 @@ Sprockets 还会检查 `config.assets.paths` 中指定的路径。`config.assets
 <%= image_tag "icons/rails.png" %>
 ~~~
 
-W> 如果预编译了静态资源（参见“[在生产环境中](#in-production)”一节），链接不存在的资源（也包括链接到空字符串的情况）会在调用页面抛出异常。因此，在处理用户提交的数据时，使用 `image_tag` 等帮助方法要小心一点。
+WARNING: 如果预编译了静态资源（参见“[在生产环境中](#in-production)”一节），链接不存在的资源（也包括链接到空字符串的情况）会在调用页面抛出异常。因此，在处理用户提交的数据时，使用 `image_tag` 等帮助方法要小心一点。
 
 #### CSS 和 ERB
 
@@ -766,7 +766,7 @@ Apache 和 Nginx 都支持这个报头，可以在 `config/environments/producti
 # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 ~~~
 
-W> 如果升级现有程序，请把这两个设置写入 `production.rb`，以及其他类似生产环境的设置文件中。不能写入 `application.rb`。
+WARNING: 如果升级现有程序，请把这两个设置写入 `production.rb`，以及其他类似生产环境的设置文件中。不能写入 `application.rb`。
 
 T> 详情参见生产环境所用服务器的文档：
 T>
