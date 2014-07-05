@@ -12,13 +12,13 @@ Rails 布局和视图渲染
 
 --------------------------------------------------------------------------------
 
-## 概览：各组件之间的协作 {#overview-how-the-pieces-fit-together}
+## 概览：各组件之间的协作
 
 本文关注 MVC 架构中控制器和视图之间的交互。你可能已经知道，控制器的作用是处理请求，但经常会把繁重的操作交给模型完成。返回响应时，控制器会把一些操作交给视图完成。本文要说明的就是控制器交给视图的操作是怎么完成的。
 
 总的来说，这个过程涉及到响应中要发送什么内容，以及调用哪个方法创建响应。如果响应是个完整的视图，Rails 还要做些额外工作，把视图套入布局，有时还要渲染局部视图。后文会详细介绍整个过程。
 
-## 创建响应 {#creating-responses}
+## 创建响应
 
 从控制器的角度来看，创建 HTTP 响应有三种方法：
 
@@ -26,7 +26,7 @@ Rails 布局和视图渲染
 * 调用 `redirect_to` 方法，向浏览器发送一个 HTTP 重定向状态码；
 * 调用 `head` 方法，向浏览器发送只含报头的响应；
 
-### 渲染视图 {#rendering-by-default-convention-over-configuration-in-action}
+### 渲染视图
 
 你可能已经听说过 Rails 的开发原则之一是“多约定，少配置”。默认渲染视图的处理就是这一原则的完美体现。默认情况下，Rails 中的控制器会渲染路由对应的视图。例如，有如下的 `BooksController` 代码：
 
@@ -96,15 +96,15 @@ end
 <%= link_to "New book", new_book_path %>
 ~~~
 
-I> 真正处理渲染过程的是 `ActionView::TemplateHandlers` 的子类。本文不做深入说明，但要知道，文件的扩展名决定了要使用哪个模板处理程序。从 Rails 2 开始，ERB 模板（含有嵌入式 Ruby 代码的 HTML）的标准扩展名是 `.erb`，Builder 模板（XML 生成器）的标准扩展名是 `.builder`。
+NOTE: 真正处理渲染过程的是 `ActionView::TemplateHandlers` 的子类。本文不做深入说明，但要知道，文件的扩展名决定了要使用哪个模板处理程序。从 Rails 2 开始，ERB 模板（含有嵌入式 Ruby 代码的 HTML）的标准扩展名是 `.erb`，Builder 模板（XML 生成器）的标准扩展名是 `.builder`。
 
-### 使用 `render` 方法 {#using-render}
+### 使用 `render` 方法
 
 大多数情况下，`ActionController::Base#render` 方法都能满足需求，而且还有多种定制方式，可以渲染 Rails 模板的默认视图、指定的模板、文件、行间代码或者什么也不渲染。渲染的内容格式可以是文本，JSON 或 XML。而且还可以设置响应的内容类型和 HTTP 状态码。
 
 T> 如果不想使用浏览器直接查看调用 `render` 方法得到的结果，可以使用 `render_to_string` 方法。`render_to_string` 和 `render` 的用法完全一样，不过不会把响应发送给浏览器，而是直接返回字符串。
 
-#### 什么都不渲染 {#rendering-nothing}
+#### 什么都不渲染
 
 或许 `render` 方法最简单的用法是什么也不渲染：
 
@@ -134,7 +134,7 @@ $
 
 T> 或许不应该使用 `render :nothing`，而要用后面介绍的 `head` 方法。`head` 方法用起来更灵活，而且只返回 HTTP 报头。
 
-#### 渲染动作的视图 {#rendering-an-action-s-view}
+#### 渲染动作的视图
 
 如果想渲染同个控制器中的其他模板，可以把视图的名字传递给 `render` 方法：
 
@@ -166,7 +166,7 @@ def update
 end
 ~~~
 
-#### 渲染其他控制器中的动作模板 {#rendering-an-action-s-template-from-another-controller}
+#### 渲染其他控制器中的动作模板
 
 如果想渲染其他控制器中的模板该怎么做呢？还是使用 `render` 方法，指定模板的完整路径即可。例如，如果控制器 `AdminProductsController` 在 `app/controllers/admin` 文件夹中，可使用下面的方式渲染 `app/views/products` 文件夹中的模板：
 
@@ -182,7 +182,7 @@ render "products/show"
 render template: "products/show"
 ~~~
 
-#### 渲染任意文件 {#rendering-an-arbitrary-file}
+#### 渲染任意文件
 
 `render` 方法还可渲染程序之外的视图（或许多个程序共用一套视图）：
 
@@ -200,11 +200,11 @@ render file: "/u/apps/warehouse_app/current/app/views/products/show"
 
 `:file` 选项的值是文件系统中的绝对路径。当然，你要对使用的文件拥有相应权限。
 
-I> 默认情况下，渲染文件时不会使用当前程序的布局。如果想让 Rails 把文件套入布局，要指定 `layout: true` 选项。
+NOTE: 默认情况下，渲染文件时不会使用当前程序的布局。如果想让 Rails 把文件套入布局，要指定 `layout: true` 选项。
 
 T> 如果在 Windows 中运行 Rails，就必须使用 `:file` 选项指定文件的路径，因为 Windows 中的文件名和 Unix 格式不一样。
 
-#### 小结 {#wrapping-it-up}
+#### 小结
 
 上述三种渲染方式的作用其实是一样的。在 `BooksController` 控制器的 `update` 动作中，如果更新失败后想渲染 `views/books` 文件夹中的 `edit.html.erb` 模板，下面这些用法都能达到这个目的：
 
@@ -228,7 +228,7 @@ render file: "/path/to/rails/app/views/books/edit.html.erb"
 
 你可以根据自己的喜好决定使用哪种方式，总的原则是，使用符合代码意图的最简单方式。
 
-#### 使用 `render` 方法的 `:inline` 选项 {#using-render-with-inline}
+#### 使用 `render` 方法的 `:inline` 选项
 
 如果使用 `:inline` 选项指定了 ERB 代码，`render` 方法就不会渲染视图。如下所示的用法完全可行：
 
@@ -246,7 +246,7 @@ W> 但是很少这么做。在控制器中混用 ERB 代码违反了 MVC 架构�
 render inline: "xml.p {'Horrid coding practice!'}", type: :builder
 ~~~
 
-#### 渲染文本 {#rendering-text}
+#### 渲染文本
 
 调用 `render` 方法时指定 `:plain` 选项，可以把没有标记语言的纯文本发给浏览器：
 
@@ -257,9 +257,9 @@ render plain: "OK"
 
 T> 渲染纯文本主要用于 Ajax 或无需使用 HTML 的网络服务。
 
-I> 默认情况下，使用 `:plain` 选项渲染纯文本，不会套用程序的布局。如果想使用布局，可以指定 `layout: true` 选项。
+NOTE: 默认情况下，使用 `:plain` 选项渲染纯文本，不会套用程序的布局。如果想使用布局，可以指定 `layout: true` 选项。
 
-#### 渲染 HTML {#rendering-html}
+#### 渲染 HTML
 
 调用 `render` 方法时指定 `:html` 选项，可以把 HTML 字符串发给浏览器：
 
@@ -270,9 +270,9 @@ render html: "<strong>Not Found</strong>".html_safe
 
 T> 这种方法可用来渲染 HTML 片段。如果标记很复杂，就要考虑使用模板文件了。
 
-I> 如果字符串对 HTML 不安全，会进行转义。
+NOTE: 如果字符串对 HTML 不安全，会进行转义。
 
-#### 渲染 JSON {#rendering-json}
+#### 渲染 JSON
 
 JSON 是一种 JavaScript 数据格式，很多 Ajax 库都用这种格式。Rails 内建支持把对象转换成 JSON，经渲染后再发送给浏览器。
 
@@ -283,7 +283,7 @@ render json: @product
 
 T> 在需要渲染的对象上无需调用 `to_json` 方法，如果使用了 `:json` 选项，`render` 方法会自动调用 `to_json`。
 
-#### 渲染 XML {#rendering-xml}
+#### 渲染 XML
 
 Rails 也内建支持把对象转换成 XML，经渲染后再发回给调用者：
 
@@ -294,7 +294,7 @@ render xml: @product
 
 T> 在需要渲染的对象上无需调用 `to_xml` 方法，如果使用了 `:xml` 选项，`render` 方法会自动调用 `to_xml`。
 
-#### 渲染普通的 JavaScript {#rendering-vanilla-javascript}
+#### 渲染普通的 JavaScript
 
 Rails 能渲染普通的 JavaScript：
 
@@ -305,7 +305,7 @@ render js: "alert('Hello Rails');"
 
 这种方法会把 MIME 设为 `text/javascript`，再把指定的字符串发给浏览器。
 
-#### 渲染原始的主体 {#rendering-raw-body}
+#### 渲染原始的主体
 
 调用 `render` 方法时使用 `:body` 选项，可以不设置内容类型，把原始的内容发送给浏览器：
 
@@ -316,9 +316,9 @@ render body: "raw"
 
 T> 只有不在意内容类型时才可使用这个选项。大多数时候，使用 `:plain` 或 `:html` 选项更合适。
 
-I> 如果没有修改，这种方式返回的内容类型是 `text/html`，因为这是 Action Dispatch 响应默认使用的内容类型。
+NOTE: 如果没有修改，这种方式返回的内容类型是 `text/html`，因为这是 Action Dispatch 响应默认使用的内容类型。
 
-#### `render` 方法的选项 {#options-for-render}
+#### `render` 方法的选项
 
 `render` 方法一般可接受四个选项：
 
@@ -327,7 +327,7 @@ I> 如果没有修改，这种方式返回的内容类型是 `text/html`，因�
 * `:location`
 * `:status`
 
-##### `:content_type` 选项 {#the-content-type-option}
+##### `:content_type` 选项
 
 默认情况下，Rails 渲染得到的结果内容类型为 `text/html`；如果使用 `:json` 选项，内容类型为 `application/json`；如果使用 `:xml` 选项，内容类型为 `application/xml`。如果需要修改内容类型，可使用 `:content_type` 选项
 
@@ -336,7 +336,7 @@ I> 如果没有修改，这种方式返回的内容类型是 `text/html`，因�
 render file: filename, content_type: "application/rss"
 ~~~
 
-##### `:layout` 选项 {#the-layout-option}
+##### `:layout` 选项
 
 `render` 方法的大多数选项渲染得到的结果都会作为当前布局的一部分显示。后文会详细介绍布局。
 
@@ -354,7 +354,7 @@ render layout: "special_layout"
 render layout: false
 ~~~
 
-##### `:location` 选项 {#the-location-option}
+##### `:location` 选项
 
 `:location` 选项可以设置 HTTP `Location` 报头：
 
@@ -363,7 +363,7 @@ render layout: false
 render xml: photo, location: photo_url(photo)
 ~~~
 
-##### `:status` 选项 {#the-status-option}
+##### `:status` 选项
 
 Rails 会自动为生成的响应附加正确的 HTTP 状态码（大多数情况下是 `200 OK`）。使用 `:status` 选项可以修改状态码：
 
@@ -436,11 +436,11 @@ Rails 能理解数字状态码和对应的符号，如下所示：
 |                     | 510              | :not_extended                    |
 |                     | 511              | :network_authentication_required |
 
-#### 查找布局 {#finding-layouts}
+#### 查找布局
 
 查找布局时，Rails 首先查看 `app/views/layouts` 文件夹中是否有和控制器同名的文件。例如，渲染 `PhotosController` 控制器中的动作会使用 `app/views/layouts/photos.html.erb`（或 `app/views/layouts/photos.builder`）。如果没找到针对控制器的布局，Rails 会使用 `app/views/layouts/application.html.erb` 或 `app/views/layouts/application.builder`。如果没有 `.erb` 布局，Rails 会使用 `.builder` 布局（如果文件存在）。Rails 还提供了多种方法用来指定单个控制器和动作使用的布局。
 
-##### 指定控制器所用布局 {#specifying-layouts-for-controllers}
+##### 指定控制器所用布局
 
 在控制器中使用 `layout` 方法，可以改写默认使用的布局约定。例如：
 
@@ -466,7 +466,7 @@ end
 
 这么声明之后，整个程序的视图都会使用 `app/views/layouts/main.html.erb` 文件作为布局。
 
-##### 运行时选择布局 {#choosing-layouts-at-runtime}
+##### 运行时选择布局
 
 可以使用一个 Symbol，在处理请求时选择布局：
 
@@ -498,7 +498,7 @@ class ProductsController < ApplicationController
 end
 ~~~
 
-##### 条件布局 {#conditional-layouts}
+##### 条件布局
 
 在控制器中指定布局时可以使用 `:only` 和 `:except` 选项。这两个选项的值可以是一个方法名或者一个方法名数组，这些方法都是控制器中的动作：
 
@@ -511,7 +511,7 @@ end
 
 这么声明后，除了 `rss` 和 `index` 动作之外，其他动作都使用 `product` 布局渲染视图。
 
-##### 布局继承 {#layout-inheritance}
+##### 布局继承
 
 布局声明按层级顺序向下顺延，专用布局比通用布局优先级高。例如：
 
@@ -568,7 +568,7 @@ end
 * `OldPostsController#show` 不用布局；
 * `OldPostsController#index` 使用 `old` 布局；
 
-#### 避免双重渲染错误 {#avoiding-double-render-errors}
+#### 避免双重渲染错误
 
 大多数 Rails 开发者迟早都会看到一个错误消息：Can only render or redirect once per action（动作只能渲染或重定向一次）。这个提示很烦人，也很容易修正。出现这个错误的原因是，没有理解 `render` 的工作原理。
 
@@ -614,7 +614,7 @@ end
 
 如果 `@book.special?` 的结果是 `true`，会渲染 `special_show` 视图，否则就渲染默认的 `show` 模板。
 
-### 使用 `redirect_to` 方法 {#using-redirect-to}
+### 使用 `redirect_to` 方法
 
 响应 HTTP 请求的另一种方法是使用 `redirect_to`。如前所述，`render` 告诉 Rails 构建响应时使用哪个视图（以及其他静态资源）。`redirect_to` 做的事情则完全不同：告诉浏览器向另一个地址发起新请求。例如，在程序中的任何地方使用下面的代码都可以重定向到 `photos` 控制器的 `index` 动作：
 
@@ -630,7 +630,7 @@ redirect_to photos_url
 redirect_to :back
 ~~~
 
-#### 设置不同的重定向状态码 {#getting-a-different-redirect-status-code}
+#### 设置不同的重定向状态码
 
 调用 `redirect_to` 方法时，Rails 会把 HTTP 状态码设为 302，即临时重定向。如果想使用其他的状态码，例如 301（永久重定向），可以设置 `:status` 选项：
 
@@ -641,7 +641,7 @@ redirect_to photos_path, status: 301
 
 和 `render` 方法的 `:status` 选项一样，`redirect_to` 方法的 `:status` 选项同样可使用数字状态码或符号。
 
-#### `render` 和 `redirect_to` 的区别 {#the-difference-between-render-and-redirect-to}
+#### `render` 和 `redirect_to` 的区别
 
 有些经验不足的开发者会认为 `redirect_to` 方法是一种 `goto` 命令，把代码从一处转到别处。这么理解是**不对**的。执行到 `redirect_to` 方法时，代码会停止运行，等待浏览器发起新请求。你需要告诉浏览器下一个请求是什么，并返回 302 状态码。
 
@@ -701,7 +701,7 @@ end
 
 在这段代码中，如果指定 ID 的图书不存在，会从模型中取出所有图书，赋值给 `@books` 实例变量，然后直接渲染 `index.html.erb` 模板，并显示一个 Flash 消息，告知用户出了什么问题。
 
-### 使用 `head` 构建只返回报头的响应 {#using-head-to-build-header-only-responses}
+### 使用 `head` 构建只返回报头的响应
 
 `head` 方法可以只把报头发送给浏览器。还可使用意图更明确的 `render :nothing` 达到同样的目的。`head` 方法的参数是 HTTP 状态码的符号形式（参见[前文表格](#the-status-option)），选项是一个 Hash，指定报头名和对应的值。例如，可以只返回报错的报头：
 
@@ -744,7 +744,7 @@ Set-Cookie: _blog_session=...snip...; path=/; HttpOnly
 Cache-Control: no-cache
 ~~~
 
-## 布局的结构 {#structuring-layouts}
+## 布局的结构
 
 Rails 渲染响应的视图时，会把视图和当前模板结合起来。查找当前模板的方法前文已经介绍过。在布局中可以使用三种工具把各部分合在一起组成完整的响应：
 
@@ -752,7 +752,7 @@ Rails 渲染响应的视图时，会把视图和当前模板结合起来。查�
 * `yield` 和 `content_for`
 * 局部视图
 
-### 静态资源标签帮助方法 {#asset-tag-helpers}
+### 静态资源标签帮助方法
 
 静态资源帮助方法用来生成链接到 Feed、JavaScript、样式表、图片、视频和音频的 HTML 代码。Rails 提供了六个静态资源标签帮助方法：
 
@@ -767,7 +767,7 @@ Rails 渲染响应的视图时，会把视图和当前模板结合起来。查�
 
 W> 静态资源标签帮助方法不会检查指定位置是否存在静态资源，假定你知道自己在做什么，只负责生成对应的链接。
 
-#### 使用 `auto_discovery_link_tag` 链接到 Feed {#linking-to-feeds-with-the-auto-discovery-link-tag}
+#### 使用 `auto_discovery_link_tag` 链接到 Feed
 
 `auto_discovery_link_tag` 帮助方法生成的 HTML，大多数浏览器和 Feed 阅读器都能用来自动识别 RSS 或 Atom Feed。`auto_discovery_link_tag` 接受的参数包括链接的类型（`:rss` 或 `:atom`），传递给 `url_for` 的 Hash 选项，以及该标签使用的 Hash 选项：
 
@@ -783,7 +783,7 @@ W> 静态资源标签帮助方法不会检查指定位置是否存在静态资�
 * `:type`：指定 MIME 类型，不过 Rails 会自动生成正确的 MIME 类型；
 * `:title`：指定链接的标题，默认值是 `:type` 参数值的全大写形式，例如 `"ATOM"` 或 `"RSS"`；
 
-#### 使用 `javascript_include_tag` 链接 JavaScript 文件 {#linking-to-javascript-files-with-the-javascript-include-tag}
+#### 使用 `javascript_include_tag` 链接 JavaScript 文件
 
 `javascript_include_tag` 帮助方法为指定的每个资源生成 HTML `script` 标签。
 
@@ -828,7 +828,7 @@ Rails 生成的 `script` 标签如下：
 <%= javascript_include_tag "http://example.com/main.js" %>
 ~~~
 
-#### 使用 `stylesheet_link_tag` 链接 CSS 文件 {#linking-to-css-files-with-the-stylesheet-link-tag}
+#### 使用 `stylesheet_link_tag` 链接 CSS 文件
 
 `stylesheet_link_tag` 帮助方法为指定的每个资源生成 HTML `<link>` 标签。
 
@@ -869,7 +869,7 @@ Rails 生成的 `script` 标签如下：
 <%= stylesheet_link_tag "main_print", media: "print" %>
 ~~~
 
-#### 使用 `image_tag` 链接图片 {#linking-to-images-with-the-image-tag}
+#### 使用 `image_tag` 链接图片
 
 `image_tag` 帮助方法为指定的文件生成 HTML `<img />` 标签。默认情况下，文件存放在 `public/images` 文件夹中。
 
@@ -918,7 +918,7 @@ W> 注意，必须指定图片的扩展名。
                           class: "nav_bar" %>
 ~~~
 
-#### 使用 `video_tag` 链接视频 {#linking-to-videos-with-the-video-tag}
+#### 使用 `video_tag` 链接视频
 
 `video_tag` 帮助方法为指定的文件生成 HTML5 `<video>` 标签。默认情况下，视频文件存放在 `public/videos` 文件夹中。
 
@@ -958,7 +958,7 @@ W> 注意，必须指定图片的扩展名。
 <video><source src="trailer.ogg" /><source src="movie.ogg" /></video>
 ~~~
 
-#### 使用 `audio_tag` 链接音频 {#linking-to-audio-files-with-the-audio-tag}
+#### 使用 `audio_tag` 链接音频
 
 `audio_tag` 帮助方法为指定的文件生成 HTML5 `<audio>` 标签。默认情况下，音频文件存放在 `public/audio` 文件夹中。
 
@@ -982,7 +982,7 @@ W> 注意，必须指定图片的扩展名。
 * `controls: true`：为用户提供浏览器对音频的控制支持，用于和音频交互；
 * `autobuffer: true`：页面加载时预先加载音频文件；
 
-### 理解 `yield` {#understanding-yield}
+### 理解 `yield`
 
 在布局中，`yield` 标明一个区域，渲染的视图会插入这里。最简单的情况是只有一个 `yield`，此时渲染的整个视图都会插入这个区域：
 
@@ -1013,7 +1013,7 @@ W> 注意，必须指定图片的扩展名。
 
 视图的主体会插入未命名的 `yield` 区域。要想在具名 `yield` 区域插入内容，得使用 `content_for` 方法。
 
-### 使用 `content_for` 方法 {#using-the-content-for-method}
+### 使用 `content_for` 方法
 
 `content_for` 方法在布局的具名 `yield` 区域插入内容。例如，下面的视图会在前一节的布局中插入内容：
 
@@ -1042,11 +1042,11 @@ W> 注意，必须指定图片的扩展名。
 
 如果布局不同的区域需要不同的内容，例如侧边栏和底部，就可以使用 `content_for` 方法。`content_for` 方法还可用来在通用布局中引入特定页面使用的 JavaScript 文件或 CSS 文件。
 
-### 使用局部视图 {#using-partials}
+### 使用局部视图
 
 局部视图可以把渲染过程分为多个管理方便的片段，把响应的某个特殊部分移入单独的文件。
 
-#### 具名局部视图 {#naming-partials}
+#### 具名局部视图
 
 在视图中渲染局部视图可以使用 `render` 方法：
 
@@ -1064,7 +1064,7 @@ W> 注意，必须指定图片的扩展名。
 
 这行代码会引入 `app/views/shared/_menu.html.erb` 这个局部视图。
 
-#### 使用局部视图简化视图 {#using-partials-to-simplify-views}
+#### 使用局部视图简化视图
 
 局部视图的一种用法是作为“子程序”（subroutine），把细节提取出来，以便更好地理解整个视图的作用。例如，有如下的视图：
 
@@ -1084,7 +1084,7 @@ W> 注意，必须指定图片的扩展名。
 
 T> 程序所有页面共用的内容，可以直接在布局中使用局部视图渲染。
 
-#### 局部布局 {#partial-layouts}
+#### 局部布局
 
 和视图可以使用布局一样，局部视图也可使用自己的布局文件。例如，可以这样调用局部视图：
 
@@ -1097,7 +1097,7 @@ T> 程序所有页面共用的内容，可以直接在布局中使用局部视�
 
 还要注意，指定其他选项时，例如 `:layout`，必须明确地使用 `:partial` 选项。
 
-#### 传递本地变量 {#passing-local-variables}
+#### 传递本地变量
 
 本地变量可以传入局部视图，这么做可以把局部视图变得更强大、更灵活。例如，可以使用这种方法去除新建和编辑页面的重复代码，但仍然保有不同的内容：
 
@@ -1146,7 +1146,7 @@ T> 程序所有页面共用的内容，可以直接在布局中使用局部视�
 
 假设实例变量 `@customer` 的值为 `Customer` 模型的实例，上述代码会渲染 `_customer.html.erb`，其中本地变量 `customer` 的值为父级视图中 `@customer` 实例变量的值。
 
-#### 渲染集合 {#rendering-collections}
+#### 渲染集合
 
 渲染集合时使用局部视图特别方便。通过 `:collection` 选项把集合传给局部视图时，会把集合中每个元素套入局部视图渲染：
 
@@ -1199,7 +1199,7 @@ Rails 根据集合中各元素的模型名决定使用哪个局部视图。其�
 <%= render(@products) || "There are no products available." %>
 ~~~
 
-#### 本地变量 {#local-variables}
+#### 本地变量
 
 要在局部视图中自定义本地变量的名字，调用局部视图时可通过 `:as` 选项指定：
 
@@ -1224,7 +1224,7 @@ T> 在局部视图中还可使用计数器变量，变量名是在集合后加�
 
 在使用主局部视图渲染两个实例中间还可使用 `:spacer_template` 选项指定第二个局部视图。
 
-#### 间隔模板 {#spacer-templates}
+#### 间隔模板
 
 {:lang="erb"}
 ~~~
@@ -1233,7 +1233,7 @@ T> 在局部视图中还可使用计数器变量，变量名是在集合后加�
 
 Rails 会在两次渲染 `_product`  局部视图之间渲染 `_product_ruler` 局部视图（不传入任何数据）。
 
-#### 集合局部视图的布局 {#collection-partial-layouts}
+#### 集合局部视图的布局
 
 渲染集合时也可使用 `:layout` 选项。
 
@@ -1244,7 +1244,7 @@ Rails 会在两次渲染 `_product`  局部视图之间渲染 `_product_ruler` �
 
 使用局部视图渲染集合中的各元素时会套用指定的模板。和局部视图一样，当前渲染的对象以及 `object_counter` 变量也可在布局中使用。
 
-### 使用嵌套布局 {#using-nested-layouts}
+### 使用嵌套布局
 
 在程序中有时需要使用不同于常规布局的布局渲染特定的控制器。此时无需复制主视图进行编辑，可以使用嵌套布局（有时也叫子模板）。下面举个例子。
 

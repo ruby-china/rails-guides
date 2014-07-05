@@ -17,7 +17,7 @@
 
 I> 本文的目的不是全面解说每个表单方法和其参数，完整的说明请阅读 [Rails API 文档](http://api.rubyonrails.org/)。
 
-## 编写简单的表单 {#dealing-with-basic-forms}
+## 编写简单的表单
 
 最基本的表单帮助方法是 `form_tag`。
 
@@ -45,7 +45,7 @@ I> 本文的目的不是全面解说每个表单方法和其参数，完整的�
 
 I> 为了行文简洁，后续代码没有包含这个 `div` 元素。
 
-### 普通的搜索表单 {#a-generic-search-form}
+### 普通的搜索表单
 
 在网上见到最多的表单是搜索表单，搜索表单包含以下元素：
 
@@ -83,7 +83,7 @@ T> 表单中的每个 `input` 元素都有 ID 属性，其值和 `name` 属性�
 
 I> 搜索表单的请求类型一定要用 GET，这样用户才能把某个搜索结果页面加入收藏夹，以便后续访问。一般来说，Rails 建议使用合适的请求方法处理表单。
 
-### 调用 `form_tag` 时使用多个 Hash 参数 {#multiple-hashes-in-form-helper-calls}
+### 调用 `form_tag` 时使用多个 Hash 参数
 
 `form_tag` 方法可接受两个参数：表单提交地址和一个 Hash 选项。Hash 选项指定提交表单使用的请求方法和 HTML 选项，例如 `form` 元素的 `class` 属性。
 
@@ -103,7 +103,7 @@ form_tag({controller: "people", action: "search"}, method: "get", class: "nifty_
 # => '<form accept-charset="UTF-8" action="/people/search" method="get" class="nifty_form">'
 ~~~
 
-### 生成表单中控件的帮助方法 {#helpers-for-generating-form-elements}
+### 生成表单中控件的帮助方法
 
 Rails 提供了很多用来生成表单中控件的帮助方法，例如复选框，文本输入框和单选框。这些基本的帮助方法都以 `_tag` 结尾，例如 `text_field_tag` 和 `check_box_tag`，生成单个 `input` 元素。这些帮助方法的第一个参数都是 `input` 元素的 `name` 属性值。提交表单后，`name` 属性的值会随表单中的数据一起传入控制器，在控制器中可通过 `params` 这个 Hash 获取各输入框中的值。例如，如果表单中包含 `<%= text_field_tag(:query) %>`，就可以在控制器中使用 `params[:query]` 获取这个输入框中的值。
 
@@ -111,7 +111,7 @@ Rails 使用特定的规则生成 `input` 的 `name` 属性值，便于提交非
 
 各帮助方法的详细用法请查阅 [API 文档](http://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html)。
 
-#### 复选框 {#checkboxes}
+#### 复选框
 
 复选框是一种表单控件，给用户一些选项，可用于启用或禁用某项功能。
 
@@ -135,7 +135,7 @@ Rails 使用特定的规则生成 `input` 的 `name` 属性值，便于提交非
 
 `check_box_tag` 方法的第一个参数是 `name` 属性的值。第二个参数是 `value` 属性的值。选中复选框后，`value` 属性的值会包含在提交的表单数据中，因此可以通过 `params` 获取。
 
-#### 单选框 {#radio-buttons}
+#### 单选框
 
 单选框有点类似复选框，但是各单选框之间是互斥的，只能选择一组中的一个：
 
@@ -161,7 +161,7 @@ Rails 使用特定的规则生成 `input` 的 `name` 属性值，便于提交非
 
 I> 复选框和单选框一定要指定 `label` 标签。`label` 标签可以为指定的选项框附加文字说明，还能增加选项框的点选范围，让用户更容易选中。
 
-### 其他帮助方法 {#other-helpers-of-interest}
+### 其他帮助方法
 
 其他值得说明的表单控件包括：多行文本输入框，密码输入框，隐藏输入框，搜索关键字输入框，电话号码输入框，日期输入框，时间输入框，颜色输入框，日期时间输入框，本地日期时间输入框，月份输入框，星期输入框，URL 地址输入框，Email 地址输入框，数字输入框和范围输入框：
 
@@ -213,9 +213,9 @@ I> 搜索关键字输入框，电话号码输入框，日期输入框，时间�
 
 T> 如果使用密码输入框，或许还不想把其中的值写入日志。具体做法参见“[Rails 安全指南]({{ site.baseurl }}/security.html#logging)”。
 
-## 处理模型对象 {#dealing-with-model-objects}
+## 处理模型对象
 
-### 模型对象帮助方法 {#model-object-helpers}
+### 模型对象帮助方法
 
 表单的一个特别常见的用途是编辑或创建模型对象。这时可以使用 `*_tag` 帮助方法，但是太麻烦了，每个元素都要设置正确的参数名称和默认值。Rails 提供了很多帮助方法可以简化这一过程，这些帮助方法没有 `_tag` 后缀，例如 `text_field` 和 `text_area`。
 
@@ -239,7 +239,7 @@ W> 传入的参数必须是实例变量的名字，例如 `:person` 或 `"person
 
 Rails 还提供了用于显示模型对象数据验证错误的帮助方法，详情参阅“[Active Record 数据验证]({{ site.baseurl }}/active_record_validations.html#displaying-validation-errors-in-views)”一文。
 
-### 把表单绑定到对象上 {#binding-a-form-to-an-object}
+### 把表单绑定到对象上
 
 虽然上述用法很方便，但却不是最好的使用方式。如果 `Person` 有很多要编辑的属性，我们就得不断重复编写要编辑对象的名字。我们想要的是能把表单绑定到对象上的方法，`form_for` 帮助方法就是为此而生。
 
@@ -309,7 +309,7 @@ end
 
 `fields_for` 方法拽入的对象和 `form_for` 方法一样，都是表单构造器（其实在代码内部 `form_for` 会调用 `fields_for` 方法）。
 
-### 记录辨别技术 {#relying-on-record-identification}
+### 记录辨别技术
 
 用户可以直接处理程序中的 `Article` 模型，根据开发 Rails 的最佳实践，应该将其视为一个资源：
 
@@ -343,7 +343,7 @@ Rails 还会自动设置 `class` 和 `id` 属性。在新建文章的表单中�
 
 W> 如果在模型中使用单表继承（single-table inheritance，简称 STI），且只有父类声明为资源，子类就不能依赖记录辨别技术，必须指定模型名，`:url` 和 `:method` 选项。
 
-#### 处理命名空间 {#dealing-with-namespaces}
+#### 处理命名空间
 
 如果在路由中使用了命名空间，`form_for` 方法也有相应的简写形式。如果程序中有个 `admin` 命名空间，表单可以写成：
 
@@ -361,7 +361,7 @@ form_for [:admin, :management, @article]
 
 关于 Rails 路由的详细信息以及相关的约定，请阅读“[Rails 路由全解]({{ site.baseurl }}/routing.html)”一文。
 
-### 表单如何处理 PATCH，PUT 或 DELETE 请求？ {#how-do-forms-with-patch-put-or-delete-methods-work}
+### 表单如何处理 PATCH，PUT 或 DELETE 请求？
 
 Rails 框架建议使用 REST 架构设计程序，因此除了 GET 和 POST 请求之外，还要处理 PATCH 和 DELETE 请求。但是大多数浏览器不支持从表单中提交 GET 和 POST 之外的请求。
 
@@ -387,7 +387,7 @@ form_tag(search_path, method: "patch")
 
 处理提交的数据时，Rails 以 `_method` 的值为准，发起相应类型的请求（在这个例子中是 PATCH 请求）。
 
-## 快速创建选择列表 {#making-select-boxes-with-ease}
+## 快速创建选择列表
 
 HTML 中的选择列表往往需要编写很多标记语言（每个选项都要创建一个 `option` 元素），因此最适合自动生成。
 
@@ -405,7 +405,7 @@ HTML 中的选择列表往往需要编写很多标记语言（每个选项都要
 
 这个列表列出了一组城市名。在程序内部只需要处理各选项的 ID，因此把各选项的 `value` 属性设为 ID。下面来看一下 Rails 为我们提供了哪些帮助方法。
 
-### `select` 和 `option` 标签 {#the-select-and-option-tags}
+### `select` 和 `option` 标签
 
 最常见的帮助方法是 `select_tag`，如其名所示，其作用是生成 `select` 标签，其中可以包含一个由选项组成的字符串：
 
@@ -475,7 +475,7 @@ T> `options_for_select` 方法的第二个参数必须完全和需要选中的�
 ...
 ~~~
 
-### 处理模型的选择列表 {#select-boxes-for-dealing-with-models}
+### 处理模型的选择列表
 
 大多数情况下，表单的控件用于处理指定的数据库模型，正如你所期望的，Rails 为此提供了很多用于生成选择列表的帮助方法。和其他表单帮助方法一样，处理模型时要去掉 `select_tag` 中的 `_tag`：
 
@@ -514,7 +514,7 @@ T> `options_for_select` 方法的第二个参数必须完全和需要选中的�
 
 W> 如果使用 `select` 方法（或类似的帮助方法，例如 `collection_select` 和 `select_tag`）处理 `belongs_to` 关联，必须传入外键名（在上例中是 `city_id`），而不是关联名。如果传入的是 `city` 而不是 `city_id`，把 `params` 传给 `Person.new` 或 `update` 方法时，会抛出异常：` ActiveRecord::AssociationTypeMismatch: City(#17815740) expected, got String(#1138750)`。这个要求还可以这么理解，表单帮助方法只能编辑模型的属性。此外还要知道，允许用户直接编辑外键具有潜在地安全隐患。
 
-### 根据任意对象组成的集合创建 `option` 标签 {#option-tags-from-a-collection-of-arbitrary-objects}
+### 根据任意对象组成的集合创建 `option` 标签
 
 使用 `options_for_select` 方法生成 `option` 标签必须使用数组指定各选项的文本和值。如果有个 `City` 模型，想根据模型实例组成的集合生成 `option` 标签应该怎么做呢？一种方法是遍历集合，创建一个嵌套数组：
 
@@ -542,7 +542,7 @@ W> 如果使用 `select` 方法（或类似的帮助方法，例如 `collection_
 
 I> 传入 `options_for_select` 方法的子数组第一个元素是选项文本，第二个元素是选项的值，但传入 `options_from_collection_for_select` 方法的第一个参数是获取选项值的方法，第二个才是获取选项文本的方法。
 
-### 时区和国家选择列表 {#time-zone-and-country-select}
+### 时区和国家选择列表
 
 要想在 Rails 程序中实现时区相关的功能，就得询问用户其所在的时区。设定时区时可以使用 `collection_select` 方法根据预先定义的时区对象生成一个选择列表，也可以直接使用 `time_zone_select` 帮助方法：
 
@@ -555,7 +555,7 @@ I> 传入 `options_for_select` 方法的子数组第一个元素是选项文本�
 
 以前 Rails 还内置了 `country_select` 帮助方法，用于创建国家选择列表，但现在已经被提取出来做成了 [country_select](https://github.com/stefanpenner/country_select) gem。使用这个 gem 时要注意，是否包含某个国家还存在争议（正因为此，Rails 才不想内置）。
 
-## 使用日期和时间表单帮助方法 {#using-date-and-time-form-helpers}
+## 使用日期和时间表单帮助方法
 
 你可以选择不使用生成 HTML5 日期和时间输入框的帮助方法，而使用生成日期和时间选择列表的帮助方法。生成日期和时间选择列表的帮助方法和其他表单帮助方法有两个重要的不同点：
 
@@ -564,7 +564,7 @@ I> 传入 `options_for_select` 方法的子数组第一个元素是选项文本�
 
 这两类帮助方法都会为每个时间单位（年，月，日等）生成各自的选择列表。
 
-### 独立的帮助方法 {#barebones-helpers}
+### 独立的帮助方法
 
 `select_*` 这类帮助方法的第一个参数是 `Date`、`Time` 或 `DateTime` 类的实例，并选中指定的日期时间。如果不指定，就使用当前日期时间。例如：
 
@@ -591,7 +591,7 @@ Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, pa
 
 `:prefix` 选项的作用是指定从 `params` 中获取各时间组成部分的键名。在上例中，`:prefix` 选项的值是 `start_date`。如果不指定这个选项，就是用默认值 `date`。
 
-### 处理模型对象的帮助方法 {#model-object-helpers}
+### 处理模型对象的帮助方法
 
 `select_date` 方法在更新或创建 Active Record 对象的表单中有点力不从心，因为 Active Record 期望 `params` 中的每个元素都对应一个属性。用于处理模型对象的日期和时间帮助方法会提交一个名字特殊的参数，Active Record 看到这个参数时就知道必须和其他参数结合起来传递给字段类型对应的构造方法。例如：
 
@@ -618,7 +618,7 @@ Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, pa
 
 传递给 `Person.new`（或 `update`）方法时，Active Record 知道这些参数应该结合在一起组成 `birth_date` 属性，使用括号中的信息决定传给 `Date.civil` 等方法的顺序。
 
-### 通用选项 {#common-options}
+### 通用选项
 
 这两种帮助方法都使用同一组核心函数生成各选择列表，因此使用的选项基本一样。默认情况下，Rails 生成的年份列表包含本年前后五年。如果这个范围不能满足需求，可以使用 `:start_year` 和 `:end_year` 选项指定。更详细的可用选项列表请参阅 [API 文档](http://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html)。
 
@@ -626,7 +626,7 @@ Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, pa
 
 I> 很多时候内置的日期选择列表不太智能，不能协助用户处理日期和星期几之间的对应关系。
 
-### 单个时间单位选择列表 {#individual-components}
+### 单个时间单位选择列表
 
 有时只需显示日期中的一部分，例如年份或月份。为此，Rails 提供了一系列帮助方法，分别用于创建各时间单位的选择列表：`select_year`，`select_month`，`select_day`，`select_hour`，`select_minute`，`select_second`。各帮助方法的作用一目了然。默认情况下，这些帮助方法创建的选择列表 `name` 属性都跟时间单位的名称一样，例如，`select_year` 方法创建的 `select` 元素 `name` 属性值为 `year`，`select_month` 方法创建的 `select` 元素 `name` 属性值为 `month`，不过也可使用 `:field_name` 选项指定其他值。`:prefix` 选项的作用与在 `select_date` 和 `select_time` 方法中一样，且默认值也一样。
 
@@ -640,7 +640,7 @@ I> 很多时候内置的日期选择列表不太智能，不能协助用户处�
 
 如果今年是 2009 年，那么上述两种用法生成的 HTML 是一样的。用户选择的值可以通过 `params[:date][:year]` 获取。
 
-## 上传文件 {#uploading-files}
+## 上传文件
 
 程序中一个常见的任务是上传某种文件，可以是用户的照片，或者 CSV 文件包含要处理的数据。处理文件上传功能时有一点要特别注意，表单的编码必须设为 `"multipart/form-data"`。如果使用 `form_for` 生成上传文件的表单，Rails 会自动加入这个编码。如果使用 `form_tag` 就得自己设置，如下例所示。
 
@@ -659,7 +659,7 @@ I> 很多时候内置的日期选择列表不太智能，不能协助用户处�
 
 像往常一样，Rails 提供了两种帮助方法：独立的 `file_field_tag` 方法和处理模型的 `file_field` 方法。这两个方法和其他帮助方法唯一的区别是不能为文件选择框指定默认值，因为这样做没有意义。正如你所期望的，`file_field_tag` 方法上传的文件在 `params[:picture]` 中，`file_field` 方法上传的文件在 `params[:person][:picture]` 中。
 
-### 上传了什么 {#what-gets-uploaded}
+### 上传了什么
 
 存在 `params` Hash 中的对象其实是 `IO` 的子类，根据文件大小，可能是 `StringIO` 或者是存储在临时文件中的 `File` 实例。不管是哪个类，这个对象都有 `original_filename` 属性，其值为文件在用户电脑中的文件名；还有个 `content_type` 属性，其值为上传文件的 MIME 类型。下面这段代码把上传的文件保存在 `#{Rails.root}/public/uploads` 文件夹中，文件名和原始文件名一样（假设使用前面的表单上传）。
 
@@ -677,11 +677,11 @@ end
 
 I> 如果用户没有选择文件，相应的参数为空字符串。
 
-### 使用 Ajax 上传文件 {#dealing-with-ajax}
+### 使用 Ajax 上传文件
 
 异步上传文件和其他类型的表单不一样，仅在 `form_for` 方法中加入 `remote: true` 选项是不够的。在 Ajax 表单中，使用浏览器中的 JavaScript 进行序列化，但是 JavaScript 无法读取硬盘中的文件，因此文件无法上传。常见的解决方法是使用一个隐藏的 `iframe` 作为表单提交的目标。
 
-## 定制表单构造器 {#customizing-form-builders}
+## 定制表单构造器
 
 前面说过，`form_for` 和 `fields_for` 方法拽入的对象是 `FormBuilder` 或其子类的实例。表单构造器中封装了用于显示单个对象表单元素的信息。你可以使用常规的方式使用各帮助方法，也可以继承 `FormBuilder` 类，添加其他的帮助方法。例如：
 
@@ -723,7 +723,7 @@ end
 
 如果 `f` 是 `FormBuilder` 类的实例，上述代码会渲染局部视图 `form`，并把传入局部视图的对象设为表单构造器。如果表单构造器是 `LabellingFormBuilder` 类的实例，则会渲染局部视图 `labelling_form`。
 
-## 理解参数命名约定 {#understanding-parameter-naming-conventions}
+## 理解参数命名约定
 
 从前几节可以看出，表单提交的数据可以直接保存在 `params` Hash 中，或者嵌套在子 Hash 中。例如，在 `Person` 模型对应控制器的 `create` 动作中，`params[:person]` 一般是一个 Hash，保存创建 `Person` 实例的所有属性。`params` Hash 中也可以保存数组，或由 Hash 组成的数组，等等。
 
@@ -737,7 +737,7 @@ T> Rack::Utils.parse_query "name=fred&phone=0123456789"
 T> # => {"name"=>"fred", "phone"=>"0123456789"}
 T> ~~~
 
-### 基本结构 {#basic-structures}
+### 基本结构
 
 数组和 Hash 是两种基本结构。获取 Hash 中值的方法和 `params` 一样。如果表单中包含以下控件：
 
@@ -780,7 +780,7 @@ Hash 可以随意嵌套，不限制层级，例如：
 
 得到的 `params[:person][:phone_number]` 就是一个数组。
 
-### 结合在一起使用 {#combining-them}
+### 结合在一起使用
 
 上述命名约定可以结合起来使用，让 `params` 的某个元素值为数组（如前例），或者由 Hash 组成的数组。例如，使用下面的表单控件可以填写多个地址：
 
@@ -797,7 +797,7 @@ Hash 可以随意嵌套，不限制层级，例如：
 
 W> 数组类型参数不能很好的在 `check_box` 帮助方法中使用。根据 HTML 规范，未选中的复选框不应该提交值。但是不管是否选中都提交值往往更便于处理。为此 `check_box` 方法额外创建了一个同名的隐藏 `input` 元素。如果没有选中复选框，只会提交隐藏 `input` 元素的值，如果选中则同时提交两个值，但复选框的值优先级更高。处理数组参数时重复提交相同的参数会让 Rails 迷惑，因为对 Rails 来说，见到重复的 `input` 值，就会创建一个新数组元素。所以更推荐使用 `check_box_tag` 方法，或者用 Hash 代替数组。
 
-### 使用表单帮助方法 {#using-form-helpers}
+### 使用表单帮助方法
 
 前面几节并没有使用 Rails 提供的表单帮助方法。你可以自己创建 `input` 元素的 `name` 属性，然后直接将其传递给 `text_field_tag` 等帮助方法。但是 Rails 提供了更高级的支持。本节介绍 `form_for` 和 `fields_for` 方法的 `name` 参数以及 `:index` 选项。
 
@@ -865,7 +865,7 @@ Rails 之所以知道这些输入框中的值是 `person` Hash 的一部分，�
 生成的 HTML 和前面一样。
 
 
-## 处理外部资源的表单 {#forms-to-external-resources}
+## 处理外部资源的表单
 
 如果想把数据提交到外部资源，还是可以使用 Rails 提供的表单帮助方法。但有时需要为这些资源创建 `authenticity_token`。做法是把 `authenticity_token: 'your_external_token'` 作为选项传递给 `form_tag` 方法：
 
@@ -903,11 +903,11 @@ Rails 之所以知道这些输入框中的值是 `person` Hash 的一部分，�
 <% end %>
 ~~~
 
-## 编写复杂的表单 {#building-complex-forms}
+## 编写复杂的表单
 
 很多程序已经复杂到在一个表单中编辑一个对象已经无法满足需求了。例如，创建 `Person` 对象时还想让用户在同一个表单中创建多个地址（家庭地址，工作地址，等等）。以后编辑这个 `Person` 时，还想让用户根据需要添加、删除或修改地址。
 
-### 设置模型 {#configuring-the-model}
+### 设置模型
 
 Active Record 为此种需求在模型中提供了支持，通过 `accepts_nested_attributes_for` 方法实现：
 
@@ -925,7 +925,7 @@ end
 
 这段代码会在 `Person` 对象上创建 `addresses_attributes=` 方法，用于创建、更新和删除地址（可选操作）。
 
-### 嵌套表单 {#nested-forms}
+### 嵌套表单
 
 使用下面的表单可以创建 `Person` 对象及其地址：
 
@@ -983,7 +983,7 @@ end
 
 如果关联的对象已经存在于数据库中，`fields_for` 方法会自动生成一个隐藏字段，`value` 属性的值为记录的 `id`。把 `include_id: false` 选项传递给 `fields_for` 方法可以禁止生成这个隐藏字段。如果自动生成的字段位置不对，导致 HTML 无法通过验证，或者在 ORM 关系中子对象不存在 `id` 字段，就可以禁止自动生成这个隐藏字段。
 
-### 控制器端 {#the-controller}
+### 控制器端
 
 像往常一样，参数传递给模型之前，在控制器中要[过滤参数]({{ site.baseurl }}/action_controller_overview.html#strong-parameters)：
 
@@ -1000,7 +1000,7 @@ private
   end
 ~~~
 
-### 删除对象 {#removing-objects}
+### 删除对象
 
 如果允许用户删除关联的对象，可以把 `allow_destroy: true` 选项传递给 `accepts_nested_attributes_for` 方法：
 
@@ -1041,7 +1041,7 @@ def person_params
 end
 ~~~
 
-### 避免创建空记录 {#preventing-empty-records}
+### 避免创建空记录
 
 如果用户没有填写某些字段，最好将其忽略。此功能可以通过 `accepts_nested_attributes_for` 方法的 `:reject_if` 选项实现，其值为 Proc 对象。这个 Proc 对象会在通过表单提交的每一个属性 Hash 上调用。如果返回值为 `false`，Active Record 就不会为这个 Hash 构建关联对象。下面的示例代码只有当 `kind` 属性存在时才尝试构建地址对象：
 
@@ -1055,6 +1055,6 @@ end
 
 为了方便，可以把 `reject_if` 选项的值设为 `:all_blank`，此时创建的 Proc 会拒绝为 `_destroy` 之外其他属性都为空的 Hash 构建对象。
 
-### 按需添加字段 {#adding-fields-on-the-fly}
+### 按需添加字段
 
 我们往往不想事先显示多组字段，而是当用户点击“添加新地址”按钮后再显示。Rails 并没有内建这种功能。生成新的字段时要确保关联数组的键是唯一的，一般可在 JavaScript 中使用当前时间。
