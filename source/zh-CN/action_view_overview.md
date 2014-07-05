@@ -25,8 +25,7 @@ I> Action View 的有些功能和 Active Record 绑定在一起，但并不意�
 
 我们来看一下使用脚手架创建资源时，Rails 做了哪些事情：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate scaffold post
       [...]
       invoke  scaffold_controller
@@ -39,7 +38,7 @@ $ rails generate scaffold post
       create      app/views/posts/new.html.erb
       create      app/views/posts/_form.html.erb
       [...]
-~~~
+```
 
 Rails 中的视图也有命名约定。一般情况下，视图名和对应的控制器动作同名，如上所示。例如，`posts_controller.rb` 控制器中的 `index` 动作使用 `app/views/posts` 文件夹中的 `index.html.erb` 视图文件。
 
@@ -61,21 +60,19 @@ Rails 支持多种模板系统，通过文件扩展名加以区分。例如，�
 
 例如下面的代码，循环遍历名字：
 
-{:lang="erb"}
-~~~
+```erb
 <h1>Names of all the people</h1>
 <% @people.each do |person| %>
   Name: <%= person.name %><br>
 <% end %>
-~~~
+```
 
 在上述代码中，循环使用普通嵌入标签（`<% %>`），输出名字时使用输出式嵌入标签（`<%= %>`）。注意，这并不是一种使用建议。常规的输出方法，例如 `print` 或 `puts`，无法在 ERB 模板中使用。所以，下面这段代码是错误的：
 
-{:lang="erb"}
-~~~
+```erb
 <%# WRONG %>
 Hi, Mr. <% puts "Frodo" %>
-~~~
+```
 
 如果想去掉前后的空白，可以把 `<%` 和 `%>` 换成 `<%-` 和 `-%>`。
 
@@ -85,48 +82,43 @@ Builder 模板比 ERB 模板需要更多的编程，特别适合生成 XML 文�
 
 下面是个简单的例子：
 
-{:lang="ruby"}
-~~~
+```ruby
 xml.em("emphasized")
 xml.em { xml.b("emph & bold") }
 xml.a("A Link", "href" => "http://rubyonrails.org")
 xml.target("name" => "compile", "option" => "fast")
-~~~
+```
 
 输出结果如下：
 
-{:lang="html"}
-~~~
+```html
 <em>emphasized</em>
 <em><b>emph &amp; bold</b></em>
 <a href="http://rubyonrails.org">A link</a>
 <target option="fast" name="compile" />
-~~~
+```
 
 代码块被视为一个 XML 标签，代码块中的标记会嵌入这个标签之中。例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 xml.div {
   xml.h1(@person.name)
   xml.p(@person.bio)
 }
-~~~
+```
 
 输出结果如下：
 
-{:lang="html"}
-~~~
+```html
 <div>
   <h1>David Heinemeier Hansson</h1>
   <p>A product of Danish Design during the Winter of '79...</p>
 </div>
-~~~
+```
 
 下面这个例子是 Basecamp 用来生成 RSS 的完整代码：
 
-{:lang="ruby"}
-~~~
+```ruby
 xml.rss("version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/") do
   xml.channel do
     xml.title(@feed_title)
@@ -147,7 +139,7 @@ xml.rss("version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/") do
     end
   end
 end
-~~~
+```
 
 #### 模板缓存
 
@@ -161,17 +153,15 @@ end
 
 要想在视图中使用局部视图，可以调用 `render` 方法：
 
-{:lang="erb"}
-~~~
+```erb
 <%= render "menu" %>
-~~~
+```
 
 模板渲染到上述代码时，会渲染名为 `_menu.html.erb` 的文件。注意，文件名前面有个下划线。局部视图文件前面加上下划线是为了和普通视图区分，不过加载局部视图时不用加上下划线。从其他文件夹中加载局部视图也是一样：
 
-{:lang="erb"}
-~~~
+```erb
 <%= render "shared/menu" %>
-~~~
+```
 
 上述代码会加载 `app/views/shared/_menu.html.erb` 这个局部视图。
 
@@ -179,8 +169,7 @@ end
 
 局部视图的一种用法是作为子程序，把细节从视图中移出，这样能更好的理解整个视图的作用。例如，有如下的视图：
 
-{:lang="erb"}
-~~~
+```erb
 <%= render "shared/ad_banner" %>
 
 <h1>Products</h1>
@@ -191,7 +180,7 @@ end
 <% end %>
 
 <%= render "shared/footer" %>
-~~~
+```
 
 在上述代码中，`_ad_banner.html.erb` 和 `_footer.html.erb` 局部视图中的代码可能要用到程序的多个页面中。专注实现某个页面时，无需关心这些局部视图中的细节。
 
@@ -199,47 +188,41 @@ end
 
 默认情况下，`ActionView::Partials::PartialRenderer` 对象存在一个本地变量中，变量名和模板名相同。所以，如果有以下代码：
 
-{:lang="erb"}
-~~~
+```erb
 <%= render partial: "product" %>
-~~~
+```
 
 在 `_product.html.erb` 中，就可使用本地变量 `product` 表示 `@product`，和下面的写法是等效的：
 
-{:lang="erb"}
-~~~
+```erb
 <%= render partial: "product", locals: {product: @product} %>
-~~~
+```
 
 `as` 选项可以为这个本地变量指定一个不同的名字。例如，如果想用 `item` 代替 `product`，可以这么做：
 
-{:lang="erb"}
-~~~
+```erb
 <%= render partial: "product", as: "item" %>
-~~~
+```
 
 `object` 选项可以直接指定要在局部视图中使用的对象。如果模板中的对象在其他地方（例如，在其他实例变量或本地变量中），可以使用这个选项指定。
 
 例如，用
 
-{:lang="erb"}
-~~~
+```erb
 <%= render partial: "product", object: @item %>
-~~~
+```
 
 代替
 
-{:lang="erb"}
-~~~
+```erb
 <%= render partial: "product", locals: {product: @item} %>
-~~~
+```
 
 `object` 和 `as` 选项还可同时使用：
 
-{:lang="erb"}
-~~~
+```erb
 <%= render partial: "product", object: @item, as: "item" %>
-~~~
+```
 
 #### 渲染集合
 
@@ -247,28 +230,25 @@ end
 
 例如下面这个例子，渲染所有产品：
 
-{:lang="erb"}
-~~~
+```erb
 <% @products.each do |product| %>
   <%= render partial: "product", locals: { product: product } %>
 <% end %>
-~~~
+```
 
 可以写成：
 
-{:lang="erb"}
-~~~
+```erb
 <%= render partial: "product", collection: @products %>
-~~~
+```
 
 像上面这样使用局部视图时，每个局部视图实例都可以通过一个和局部视图同名的变量访问集合中的元素。在上面的例子中，渲染的局部视图是 `_product`，在局部视图总，可以通过变量 `product` 访问要渲染的单个产品。
 
 渲染集合还有个简写形式。假设 `@products` 是一个 `Product` 实例集合，可以使用下面的简写形式达到同样目的：
 
-{:lang="erb"}
-~~~
+```erb
 <%= render @products %>
-~~~
+```
 
 Rails 会根据集合中的模型名（在这个例子中，是 `Product` 模型）决定使用哪个局部视图。其实，集合中还可包含多种模型的实例，Rails 会根据各元素所属的模型渲染对应的局部视图。
 
@@ -276,10 +256,9 @@ Rails 会根据集合中的模型名（在这个例子中，是 `Product` 模型
 
 渲染局部视图时还可使用 `:spacer_template` 选项指定第二个局部视图，在使用主局部视图渲染各实例之间渲染：
 
-{:lang="erb"}
-~~~
+```erb
 <%= render partial: @products, spacer_template: "product_ruler" %>
-~~~
+```
 
 在这段代码中，渲染各 `_product` 局部视图之间还会渲染 `_product_ruler` 局部视图（不传入任何数据）。
 
@@ -293,59 +272,53 @@ Rails 会根据集合中的模型名（在这个例子中，是 `Product` 模型
 
 例如，要在网页中显示一篇文章，文章包含在一个 `div` 标签中。首先，我们要创建一个新 `Post` 实例：
 
-{:lang="ruby"}
-~~~
+```ruby
 Post.create(body: 'Partial Layouts are cool!')
-~~~
+```
 
 在 `show` 动作的视图中，我们要在 `box` 布局中渲染 `_post` 局部视图：
 
-{:lang="erb" title="posts/show.html.erb"}
-~~~
+```erb
 <%= render partial: 'post', layout: 'box', locals: {post: @post} %>
-~~~
+```
 
 `box` 布局只是把 `_post` 局部视图放在一个 `div` 标签中：
 
-{:lang="erb" title="posts/_box.html.erb"}
-~~~
+```erb
 <div class='box'>
   <%= yield %>
 </div>
-~~~
+```
 
 在 `_post` 局部视图中，文章的内容放在一个 `div` 标签中，并设置了标签的 `id` 属性，这两个操作通过 `div_for` 帮助方法实现：
 
-{:lang="erb" title="posts/_post.html.erb"}
-~~~
+```erb
 <%= div_for(post) do %>
   <p><%= post.body %></p>
 <% end %>
-~~~
+```
 
 最终渲染的文章如下：
 
-{:lang="html"}
-~~~
+```html
 <div class='box'>
   <div id='post_1'>
     <p>Partial Layouts are cool!</p>
   </div>
 </div>
-~~~
+```
 
 注意，在局部布局中可以使用传入 `render` 方法的本地变量 `post`。和全局布局不一样，局部布局文件名前也要加上下划线。
 
 在局部布局中可以不调用 `yield` 方法，直接使用代码块。例如，如果不使用 `_post` 局部视图，可以这么写：
 
-{:lang="erb" title="posts/show.html.erb"}
-~~~
+```erb
 <% render(layout: 'box', locals: {post: @post}) do %>
   <%= div_for(post) do %>
     <p><%= post.body %></p>
   <% end %>
 <% end %>
-~~~
+```
 
 假如还使用相同的 `_box` 局部布局，上述代码得到的输出和前面一样。
 
@@ -369,80 +342,72 @@ I> 本节并未列出所有帮助方法。完整的帮助方法列表请查阅 [
 
 假设 `@post` 是 `Post` 类的一个对象，可以这么写：
 
-{:lang="erb"}
-~~~
+```erb
 <%= content_tag_for(:tr, @post) do %>
   <td><%= @post.title %></td>
 <% end %>
-~~~
+```
 
 生成的 HTML 如下：
 
-{:lang="html"}
-~~~
+```html
 <tr id="post_1234" class="post">
   <td>Hello World!</td>
 </tr>
-~~~
+```
 
 还可以使用一个 Hash 指定 HTML 属性，例如：
 
-{:lang="erb"}
-~~~
+```erb
 <%= content_tag_for(:tr, @post, class: "frontpage") do %>
   <td><%= @post.title %></td>
 <% end %>
-~~~
+```
 
 生成的 HTML 如下：
 
-{:lang="html"}
-~~~
+```html
 <tr id="post_1234" class="post frontpage">
   <td>Hello World!</td>
 </tr>
-~~~
+```
 
 还可传入 Active Record 对象集合，`content_tag_for` 方法会遍历集合，为每个元素生成一个容器标签。假如 `@posts` 中有两个 `Post` 对象：
 
-{:lang="erb"}
-~~~
+```erb
 <%= content_tag_for(:tr, @posts) do |post| %>
   <td><%= post.title %></td>
 <% end %>
-~~~
+```
 
 生成的 HTML 如下：
 
-{:lang="html"}
-~~~
+```html
 <tr id="post_1234" class="post">
   <td>Hello World!</td>
 </tr>
 <tr id="post_1235" class="post">
   <td>Ruby on Rails Rocks!</td>
 </tr>
-~~~
+```
 
 #### `div_for`
 
 这个方法是使用 `content_tag_for` 创建 `div` 标签的快捷方式。可以传入一个 Active Record 对象，或对象集合。例如：
 
-{:lang="erb"}
-~~~
+```erb
 <%= div_for(@post, class: "frontpage") do %>
   <td><%= @post.title %></td>
 <% end %>
-~~~
+```
 
 生成的 HTML 如下：
 
-{:lang="html"}
-~~~
+```html
 <div id="post_1234" class="post frontpage">
   <td>Hello World!</td>
 </div>
-~~~
+```
 
 ### `AssetTagHelper`
 
@@ -450,174 +415,155 @@ I> 本节并未列出所有帮助方法。完整的帮助方法列表请查阅 [
 
 默认情况下，Rails 链接的静态文件在程序所处主机的 `public` 文件夹中。不过也可以链接到静态资源文件专用的服务器，在程序的设置文件（一般来说是 `config/environments/production.rb`）中设置 `config.action_controller.asset_host` 选项即可。假设静态资源服务器是 `assets.example.com`：
 
-{:lang="ruby"}
-~~~
+```ruby
 config.action_controller.asset_host = "assets.example.com"
 image_tag("rails.png") # => <img src="http://assets.example.com/images/rails.png" alt="Rails" />
-~~~
+```
 
 #### `register_javascript_expansion`
 
 这个方法注册一到多个 JavaScript 文件，把 Symbol 传给 `javascript_include_tag` 方法时，会引入相应的文件。这个方法经常用在插件的初始化代码中，注册保存在 `vendor/assets/javascripts` 文件夹中的 JavaScript 文件。
 
-{:lang="ruby"}
-~~~
+```ruby
 ActionView::Helpers::AssetTagHelper.register_javascript_expansion monkey: ["head", "body", "tail"]
 
 javascript_include_tag :monkey # =>
   <script src="/assets/head.js"></script>
   <script src="/assets/body.js"></script>
   <script src="/assets/tail.js"></script>
-~~~
+```
 
 #### `register_stylesheet_expansion`
 
 这个方法注册一到多个样式表文件，把 Symbol 传给 `stylesheet_link_tag` 方法时，会引入相应的文件。这个方法经常用在插件的初始化代码中，注册保存在 `vendor/assets/stylesheets` 文件夹中的样式表文件。
 
-{:lang="ruby"}
-~~~
+```ruby
 ActionView::Helpers::AssetTagHelper.register_stylesheet_expansion monkey: ["head", "body", "tail"]
 
 stylesheet_link_tag :monkey # =>
   <link href="/assets/head.css" media="screen" rel="stylesheet" />
   <link href="/assets/body.css" media="screen" rel="stylesheet" />
   <link href="/assets/tail.css" media="screen" rel="stylesheet" />
-~~~
+```
 
 #### `auto_discovery_link_tag`
 
 返回一个 `link` 标签，浏览器和 Feed 阅读器用来自动检测 RSS 或 Atom Feed。
 
-{:lang="ruby"}
-~~~
+```ruby
 auto_discovery_link_tag(:rss, "http://www.example.com/feed.rss", {title: "RSS Feed"}) # =>
   <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="http://www.example.com/feed" />
-~~~
+```
 
 #### `image_path`
 
 生成 `app/assets/images` 文件夹中所存图片的地址。得到的地址是从根目录到图片的完整路径。用于 `image_tag` 方法，获取图片的路径。
 
-{:lang="ruby"}
-~~~
+```ruby
 image_path("edit.png") # => /assets/edit.png
-~~~
+```
 
 如果 `config.assets.digest` 选项为 `true`，图片文件名后会加上指纹码。
 
-{:lang="ruby"}
-~~~
+```ruby
 image_path("edit.png") # => /assets/edit-2d1a2db63fc738690021fedb5a65b68e.png
-~~~
+```
 
 #### `image_url`
 
 生成 `app/assets/images` 文件夹中所存图片的 URL 地址。`image_url` 会调用 `image_path`，然后加上程序的主机地址或静态文件的主机地址。
 
-{:lang="ruby"}
-~~~
+```ruby
 image_url("edit.png") # => http://www.example.com/assets/edit.png
-~~~
+```
 
 #### `image_tag`
 
 生成图片的 HTML `image` 标签。图片的地址可以是完整的 URL，或者 `app/assets/images` 文件夹中的图片。
 
-{:lang="ruby"}
-~~~
+```ruby
 image_tag("icon.png") # => <img src="/assets/icon.png" alt="Icon" />
-~~~
+```
 
 #### `javascript_include_tag`
 
 为指定的每个资源生成 HTML `script` 标签。可以传入 `app/assets/javascripts` 文件夹中所存 JavaScript 文件的文件名（扩展名 `.js` 可加可不加），或者可以使用相对文件根目录的完整路径。
 
-{:lang="ruby"}
-~~~
+```ruby
 javascript_include_tag "common" # => <script src="/assets/common.js"></script>
-~~~
+```
 
 如果程序不使用 Asset Pipeline，要想引入 jQuery，可以传入 `:default`。使用 `:default` 时，如果 `app/assets/javascripts` 文件夹中存在 `application.js` 文件，也会将其引入。
 
-{:lang="ruby"}
-~~~
+```ruby
 javascript_include_tag :defaults
-~~~
+```
 
 还可以使用 `:all` 引入 `app/assets/javascripts` 文件夹中所有的 JavaScript 文件。
 
-{:lang="ruby"}
-~~~
+```ruby
 javascript_include_tag :all
-~~~
+```
 
 多个 JavaScript 文件还可合并成一个文件，减少 HTTP 连接数，还可以使用 gzip 压缩（提升传输速度）。只有 `ActionController::Base.perform_caching` 为 `true`（生产环境的默认值，开发环境为 `false`）时才会合并文件。
 
-{:lang="ruby"}
-~~~
+```ruby
 javascript_include_tag :all, cache: true # =>
   <script src="/javascripts/all.js"></script>
-~~~
+```
 
 #### `javascript_path`
 
 生成 `app/assets/javascripts` 文件夹中 JavaScript 文件的地址。如果没指定文件的扩展名，会自动加上 `.js`。参数也可以使用相对文档根路径的完整地址。这个方法在 `javascript_include_tag` 中调用，用来生成脚本的地址。
 
-{:lang="ruby"}
-~~~
+```ruby
 javascript_path "common" # => /assets/common.js
-~~~
+```
 
 #### `javascript_url`
 
 生成 `app/assets/javascripts` 文件夹中 JavaScript 文件的 URL 地址。这个方法调用 `javascript_path`，然后再加上当前程序的主机地址或静态资源文件的主机地址。
 
-{:lang="ruby"}
-~~~
+```ruby
 javascript_url "common" # => http://www.example.com/assets/common.js
-~~~
+```
 
 #### `stylesheet_link_tag`
 
 返回指定资源的样式表 `link` 标签。如果没提供扩展名，会自动加上 `.css`。
 
-{:lang="ruby"}
-~~~
+```ruby
 stylesheet_link_tag "application" # => <link href="/assets/application.css" media="screen" rel="stylesheet" />
-~~~
+```
 
 还可以使用 `:all`，引入 `app/assets/stylesheets` 文件夹中的所有样式表。
 
-{:lang="ruby"}
-~~~
+```ruby
 stylesheet_link_tag :all
-~~~
+```
 
 多个样式表还可合并成一个文件，减少 HTTP 连接数，还可以使用 gzip 压缩（提升传输速度）。只有 `ActionController::Base.perform_caching` 为 `true`（生产环境的默认值，开发环境为 `false`）时才会合并文件。
 
-{:lang="ruby"}
-~~~
+```ruby
 stylesheet_link_tag :all, cache: true
 # => <link href="/assets/all.css" media="screen" rel="stylesheet" />
-~~~
+```
 
 #### `stylesheet_path`
 
 生成 `app/assets/stylesheets` 文件夹中样式表的地址。如果没指定文件的扩展名，会自动加上 `.css`。参数也可以使用相对文档根路径的完整地址。这个方法在 `stylesheet_link_tag` 中调用，用来生成样式表的地址。
 
-{:lang="ruby"}
-~~~
+```ruby
 stylesheet_path "application" # => /assets/application.css
-~~~
+```
 
 #### `stylesheet_url`
 
 生成 `app/assets/stylesheets` 文件夹中样式表的 URL 地址。这个方法调用 `stylesheet_path`，然后再加上当前程序的主机地址或静态资源文件的主机地址。
 
-{:lang="ruby"}
-~~~
+```ruby
 stylesheet_url "application" # => http://www.example.com/assets/application.css
-~~~
+```
 
 ### `AtomFeedHelper`
 
@@ -625,13 +571,11 @@ stylesheet_url "application" # => http://www.example.com/assets/application.css
 
 这个帮助方法可以简化生成 Atom Feed 的过程。下面是个完整的示例：
 
-{:lang="ruby" title="config/routes.rb"}
-~~~
+```ruby
 resources :posts
-~~~
+```
 
-{:lang="ruby" title="app/controllers/posts_controller.rb"}
-~~~
+```ruby
 def index
   @posts = Post.all
 
@@ -640,10 +584,9 @@ def index
     format.atom
   end
 end
-~~~
+```
 
-{:lang="ruby" title="app/views/posts/index.atom.builder"}
-~~~
+```ruby
 atom_feed do |feed|
   feed.title("Posts Index")
   feed.updated((@posts.first.created_at))
@@ -659,7 +602,7 @@ atom_feed do |feed|
     end
   end
 end
-~~~
+```
 
 ### `BenchmarkHelper`
 
@@ -667,12 +610,11 @@ end
 
 这个方法可以计算模板中某个代码块的执行时间，然后把结果写入日志。可以把耗时的操作或瓶颈操作放入 `benchmark` 代码块中，查看此项操作使用的时间。
 
-{:lang="erb"}
-~~~
+```erb
 <% benchmark "Process data files" do %>
   <%= expensive_files_operation %>
 <% end %>
-~~~
+```
 
 上述代码会在日志中写入类似“Process data files (0.34523)”的文本，可用来对比优化前后的时间。
 
@@ -682,12 +624,11 @@ end
 
 这个方法缓存视图片段，而不是整个动作或页面。常用来缓存目录，新话题列表，静态 HTML 片段等。此方法接受一个代码块，即要缓存的内容。详情参见 `ActionController::Caching::Fragments` 模块的文档。
 
-{:lang="erb"}
-~~~
+```erb
 <% cache do %>
   <%= render "shared/footer" %>
 <% end %>
-~~~
+```
 
 ### `CaptureHelper`
 
@@ -695,17 +636,15 @@ end
 
 `capture` 方法可以把视图中的一段代码赋值给一个变量，这个变量可以在任何模板或视图中使用。
 
-{:lang="erb"}
-~~~
+```erb
 <% @greeting = capture do %>
   <p>Welcome! The date and time is <%= Time.now %></p>
 <% end %>
-~~~
+```
 
 `@greeting` 变量可以在任何地方使用。
 
-{:lang="erb"}
-~~~
+```erb
 <html>
   <head>
     <title>Welcome!</title>
@@ -714,7 +653,7 @@ end
     <%= @greeting %>
   </body>
 </html>
-~~~
+```
 
 #### `content_for`
 
@@ -722,8 +661,7 @@ end
 
 例如，程序有个通用的布局，但还有一个特殊页面，用到了其他页面不需要的 JavaScript 文件，此时就可以在这个特殊的页面中使用 `content_for` 方法，在不影响其他页面的情况下，引入所需的 JavaScript。
 
-{:lang="erb" title="app/views/layouts/application.html.erb"}
-~~~
+```erb
 <html>
   <head>
     <title>Welcome!</title>
@@ -733,16 +671,15 @@ end
     <p>Welcome! The date and time is <%= Time.now %></p>
   </body>
 </html>
-~~~
+```
 
-{:lang="erb" title="app/views/posts/special.html.erb"}
-~~~
+```erb
 <p>This is a special page.</p>
 
 <% content_for :special_script do %>
   <script>alert('Hello!')</script>
 <% end %>
-~~~
+```
 
 ### `DateHelper`
 
@@ -750,163 +687,147 @@ end
 
 这个方法会生成一组选择列表，分别对应年月日，用来设置日期相关的属性。
 
-{:lang="ruby"}
-~~~
+```ruby
 date_select("post", "published_on")
-~~~
+```
 
 #### `datetime_select`
 
 这个方法会生成一组选择列表，分别对应年月日时分，用来设置日期和时间相关的属性。
 
-{:lang="ruby"}
-~~~
+```ruby
 datetime_select("post", "published_on")
-~~~
+```
 
 #### `distance_of_time_in_words`
 
 这个方法会计算两个时间、两个日期或两个秒数之间的近似间隔。如果想得到更精准的间隔，可以把 `include_seconds` 选项设为 `true`。
 
-{:lang="ruby"}
-~~~
+```ruby
 distance_of_time_in_words(Time.now, Time.now + 15.seconds)        # => less than a minute
 distance_of_time_in_words(Time.now, Time.now + 15.seconds, include_seconds: true)  # => less than 20 seconds
-~~~
+```
 
 #### `select_date`
 
 返回一组 HTML 选择列表标签，分别对应年月日，并且选中指定的日期。
 
-{:lang="ruby"}
-~~~
+```ruby
 # Generates a date select that defaults to the date provided (six days after today)
 select_date(Time.today + 6.days)
 
 # Generates a date select that defaults to today (no specified date)
 select_date()
-~~~
+```
 
 #### `select_datetime`
 
 返回一组 HTML 选择列表标签，分别对应年月日时分，并且选中指定的日期和时间。
 
-{:lang="ruby"}
-~~~
+```ruby
 # Generates a datetime select that defaults to the datetime provided (four days after today)
 select_datetime(Time.now + 4.days)
 
 # Generates a datetime select that defaults to today (no specified datetime)
 select_datetime()
-~~~
+```
 
 #### `select_day`
 
 返回一个选择列表标签，其选项是当前月份的每一天，并且选中当日。
 
-{:lang="ruby"}
-~~~
+```ruby
 # Generates a select field for days that defaults to the day for the date provided
 select_day(Time.today + 2.days)
 
 # Generates a select field for days that defaults to the number given
 select_day(5)
-~~~
+```
 
 #### `select_hour`
 
 返回一个选择列表标签，其选项是一天中的每一个小时（0-23），并且选中当前的小时数。
 
-{:lang="ruby"}
-~~~
+```ruby
 # Generates a select field for hours that defaults to the hours for the time provided
 select_hour(Time.now + 6.hours)
-~~~
+```
 
 #### `select_minute`
 
 返回一个选择列表标签，其选项是一小时中的每一分钟（0-59），并且选中当前的分钟数。
 
-{:lang="ruby"}
-~~~
+```ruby
 # Generates a select field for minutes that defaults to the minutes for the time provided.
 select_minute(Time.now + 6.hours)
-~~~
+```
 
 #### `select_month`
 
 返回一个选择列表标签，其选项是一年之中的所有月份（“January”-“December”），并且选中当前月份。
 
-{:lang="ruby"}
-~~~
+```ruby
 # Generates a select field for months that defaults to the current month
 select_month(Date.today)
-~~~
+```
 
 #### `select_second`
 
 返回一个选择列表标签，其选项是一分钟内的各秒数（0-59），并且选中当前时间的秒数。
 
-{:lang="ruby"}
-~~~
+```ruby
 # Generates a select field for seconds that defaults to the seconds for the time provided
 select_second(Time.now + 16.minutes)
-~~~
+```
 
 #### `select_time`
 
 返回一组 HTML 选择列表标签，分别对应小时和分钟。
 
-{:lang="ruby"}
-~~~
+```ruby
 # Generates a time select that defaults to the time provided
 select_time(Time.now)
-~~~
+```
 
 #### `select_year`
 
 返回一个选择列表标签，其选项是今年前后各五年，并且选择今年。年份的前后范围可使用 `:start_year` 和 `:end_year` 选项指定。
 
-{:lang="ruby"}
-~~~
+```ruby
 # Generates a select field for five years on either side of Date.today that defaults to the current year
 select_year(Date.today)
 
 # Generates a select field from 1900 to 2009 that defaults to the current year
 select_year(Date.today, start_year: 1900, end_year: 2009)
-~~~
+```
 
 #### `time_ago_in_words`
 
 和 `distance_of_time_in_words` 方法作用类似，但是后一个时间点固定为当前时间（`Time.now`）。
 
-{:lang="ruby"}
-~~~
+```ruby
 time_ago_in_words(3.minutes.from_now)  # => 3 minutes
-~~~
+```
 
 #### `time_select`
 
 返回一组选择列表标签，分别对应小时和分钟，秒数是可选的，用来设置基于时间的属性。选中的值会作为多个参数赋值给 Active Record 对象。
 
-{:lang="ruby"}
-~~~
+```ruby
 # Creates a time select tag that, when POSTed, will be stored in the order variable in the submitted attribute
 time_select("order", "submitted")
-~~~
+```
 
 ### `DebugHelper`
 
 返回一个 `pre` 标签，以 YAML 格式显示对象。用这种方法审查对象，可读性极高。
 
-{:lang="ruby"}
-~~~
+```ruby
 my_hash = {'first' => 1, 'second' => 'two', 'third' => [1,2,3]}
 debug(my_hash)
-~~~
+```
 
-{:lang="html"}
-~~~
+```html
 <pre class='debug_dump'>---
 first: 1
 second: two
@@ -915,7 +836,7 @@ third:
 - 2
 - 3
 </pre>
-~~~
+```
 
 ### `FormHelper`
 
@@ -925,33 +846,30 @@ third:
 
 `FormHelper` 模块的核心是 `form_for` 方法，生成处理模型实例的表单。例如，有个名为 `Person` 的模型，要创建一个新实例，可使用下面的代码实现：
 
-{:lang="erb"}
-~~~
+```erb
 # Note: a @person variable will have been created in the controller (e.g. @person = Person.new)
 <%= form_for @person, url: {action: "create"} do |f| %>
   <%= f.text_field :first_name %>
   <%= f.text_field :last_name %>
   <%= submit_tag 'Create' %>
 <% end %>
-~~~
+```
 
 生成的 HTML 如下：
 
-{:lang="html"}
-~~~
+```html
 <form action="/people/create" method="post">
   <input id="person_first_name" name="person[first_name]" type="text" />
   <input id="person_last_name" name="person[last_name]" type="text" />
   <input name="commit" type="submit" value="Create" />
 </form>
-~~~
+```
 
 表单提交后创建的 `params` 对象如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 {"action" => "create", "controller" => "people", "person" => {"first_name" => "William", "last_name" => "Smith"}}
-~~~
+```
 
 `params` 中有个嵌套 Hash `person`，在控制器中使用 `params[:person]` 获取。
 
@@ -959,20 +877,18 @@ third:
 
 返回一个复选框标签，处理指定的属性。
 
-{:lang="ruby"}
-~~~
+```ruby
 # Let's say that @post.validated? is 1:
 check_box("post", "validated")
 # => <input type="checkbox" id="post_validated" name="post[validated]" value="1" />
 #    <input name="post[validated]" type="hidden" value="0" />
-~~~
+```
 
 #### `fields_for`
 
 类似 `form_for`，为指定的模型创建一个作用域，但不会生成 `form` 标签。特别适合在同一个表单中处理多个模型。
 
-{:lang="erb"}
-~~~
+```erb
 <%= form_for @person, url: {action: "update"} do |person_form| %>
   First name: <%= person_form.text_field :first_name %>
   Last name : <%= person_form.text_field :last_name %>
@@ -981,116 +897,106 @@ check_box("post", "validated")
     Admin?  : <%= permission_fields.check_box :admin %>
   <% end %>
 <% end %>
-~~~
+```
 
 #### `file_field`
 
 返回一个文件上传输入框，处理指定的属性。
 
-{:lang="ruby"}
-~~~
+```ruby
 file_field(:user, :avatar)
 # => <input type="file" id="user_avatar" name="user[avatar]" />
-~~~
+```
 
 #### `form_for`
 
 为指定的模型创建一个表单和作用域，表单中各字段的值都通过这个模型获取。
 
-{:lang="erb"}
-~~~
+```erb
 <%= form_for @post do |f| %>
   <%= f.label :title, 'Title' %>:
   <%= f.text_field :title %><br>
   <%= f.label :body, 'Body' %>:
   <%= f.text_area :body %><br>
 <% end %>
-~~~
+```
 
 #### `hidden_field`
 
 返回一个隐藏 `input` 标签，处理指定的属性。
 
-{:lang="ruby"}
-~~~
+```ruby
 hidden_field(:user, :token)
 # => <input type="hidden" id="user_token" name="user[token]" value="#{@user.token}" />
-~~~
+```
 
 #### `label`
 
 返回一个 `label` 标签，为指定属性的输入框加上标签。
 
-{:lang="ruby"}
-~~~
+```ruby
 label(:post, :title)
 # => <label for="post_title">Title</label>
-~~~
+```
 
 #### `password_field`
 
 返回一个密码输入框，处理指定的属性。
 
-{:lang="ruby"}
-~~~
+```ruby
 password_field(:login, :pass)
 # => <input type="text" id="login_pass" name="login[pass]" value="#{@login.pass}" />
-~~~
+```
 
 #### `radio_button`
 
 返回一个单选框，处理指定的属性。
 
-{:lang="ruby"}
-~~~
+```ruby
 # Let's say that @post.category returns "rails":
 radio_button("post", "category", "rails")
 radio_button("post", "category", "java")
 # => <input type="radio" id="post_category_rails" name="post[category]" value="rails" checked="checked" />
 #    <input type="radio" id="post_category_java" name="post[category]" value="java" />
-~~~
+```
 
 #### `text_area`
 
 返回一个多行文本输入框，处理指定的属性。
 
-{:lang="ruby"}
-~~~
+```ruby
 text_area(:comment, :text, size: "20x30")
 # => <textarea cols="20" rows="30" id="comment_text" name="comment[text]">
 #      #{@comment.text}
 #    </textarea>
-~~~
+```
 
 #### `text_field`
 
 返回一个文本输入框，处理指定的属性。
 
-{:lang="ruby"}
-~~~
+```ruby
 text_field(:post, :title)
 # => <input type="text" id="post_title" name="post[title]" value="#{@post.title}" />
-~~~
+```
 
 #### `email_field`
 
 返回一个 Email 输入框，处理指定的属性。
 
-{:lang="ruby"}
-~~~
+```ruby
 email_field(:user, :email)
 # => <input type="email" id="user_email" name="user[email]" value="#{@user.email}" />
-~~~
+```
 
 #### `url_field`
 
 返回一个 URL 输入框，处理指定的属性。
 
-{:lang="ruby"}
-~~~
+```ruby
 url_field(:user, :url)
 # => <input type="url" id="user_url" name="user[url]" value="#{@user.url}" />
-~~~
+```
 
 ### `FormOptionsHelper`
 
@@ -1102,8 +1008,7 @@ url_field(:user, :url)
 
 使用此方法的模型示例：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Post < ActiveRecord::Base
   belongs_to :author
 end
@@ -1114,26 +1019,24 @@ class Author < ActiveRecord::Base
     "#{first_name.first}. #{last_name}"
   end
 end
-~~~
+```
 
 使用举例，为文章实例（`@post`）选择作者（`Author`）：
 
-{:lang="ruby"}
-~~~
+```ruby
 collection_select(:post, :author_id, Author.all, :id, :name_with_initial, {prompt: true})
-~~~
+```
 
 如果 `@post.author_id` 的值是 1，上述代码生成的 HTML 如下：
 
-{:lang="html"}
-~~~
+```html
 <select name="post[author_id]">
   <option value="">Please select</option>
   <option value="1" selected="selected">D. Heinemeier Hansson</option>
   <option value="2">D. Thomas</option>
   <option value="3">M. Clark</option>
 </select>
-~~~
+```
 
 #### `collection_radio_buttons`
 
@@ -1141,8 +1044,7 @@ collection_select(:post, :author_id, Author.all, :id, :name_with_initial, {promp
 
 使用此方法的模型示例：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Post < ActiveRecord::Base
   belongs_to :author
 end
@@ -1153,26 +1055,24 @@ class Author < ActiveRecord::Base
     "#{first_name.first}. #{last_name}"
   end
 end
-~~~
+```
 
 使用举例，为文章实例（`@post`）选择作者（`Author`）：
 
-{:lang="ruby"}
-~~~
+```ruby
 collection_radio_buttons(:post, :author_id, Author.all, :id, :name_with_initial)
-~~~
+```
 
 如果 `@post.author_id` 的值是 1，上述代码生成的 HTML 如下：
 
-{:lang="html"}
-~~~
+```html
 <input id="post_author_id_1" name="post[author_id]" type="radio" value="1" checked="checked" />
 <label for="post_author_id_1">D. Heinemeier Hansson</label>
 <input id="post_author_id_2" name="post[author_id]" type="radio" value="2" />
 <label for="post_author_id_2">D. Thomas</label>
 <input id="post_author_id_3" name="post[author_id]" type="radio" value="3" />
 <label for="post_author_id_3">M. Clark</label>
-~~~
+```
 
 #### `collection_check_boxes`
 
@@ -1180,8 +1080,7 @@ collection_radio_buttons(:post, :author_id, Author.all, :id, :name_with_initial)
 
 使用此方法的模型示例：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Post < ActiveRecord::Base
   has_and_belongs_to_many :authors
 end
@@ -1192,19 +1091,17 @@ class Author < ActiveRecord::Base
     "#{first_name.first}. #{last_name}"
   end
 end
-~~~
+```
 
 使用举例，为文章实例（`@post`）选择作者（`Author`）：
 
-{:lang="ruby"}
-~~~
+```ruby
 collection_check_boxes(:post, :author_ids, Author.all, :id, :name_with_initial)
-~~~
+```
 
 如果 `@post.author_ids` 的值是 `[1]`，上述代码生成的 HTML 如下：
 
-{:lang="html"}
-~~~
+```html
 <input id="post_author_ids_1" name="post[author_ids][]" type="checkbox" value="1" checked="checked" />
 <label for="post_author_ids_1">D. Heinemeier Hansson</label>
 <input id="post_author_ids_2" name="post[author_ids][]" type="checkbox" value="2" />
@@ -1212,7 +1109,7 @@ collection_check_boxes(:post, :author_ids, Author.all, :id, :name_with_initial)
 <input id="post_author_ids_3" name="post[author_ids][]" type="checkbox" value="3" />
 <label for="post_author_ids_3">M. Clark</label>
 <input name="post[author_ids][]" type="hidden" value="" />
-~~~
+```
 
 #### `country_options_for_select`
 
@@ -1228,8 +1125,7 @@ collection_check_boxes(:post, :author_ids, Author.all, :id, :name_with_initial)
 
 使用此方法的模型示例：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Continent < ActiveRecord::Base
   has_many :countries
   # attribs: id, name
@@ -1239,19 +1135,17 @@ class Country < ActiveRecord::Base
   belongs_to :continent
   # attribs: id, name, continent_id
 end
-~~~
+```
 
 使用举例：
 
-{:lang="ruby"}
-~~~
+```ruby
 option_groups_from_collection_for_select(@continents, :countries, :name, :id, :name, 3)
-~~~
+```
 
 可能得到的输出如下：
 
-{:lang="html"}
-~~~
+```html
 <optgroup label="Africa">
   <option value="1">Egypt</option>
   <option value="4">Rwanda</option>
@@ -1263,7 +1157,7 @@ option_groups_from_collection_for_select(@continents, :countries, :name, :id, :n
   <option value="5">Japan</option>
   ...
 </optgroup>
-~~~
+```
 
 注意，这个方法只会返回 `optgroup` 和 `option` 标签，所以你要把输出放入 `select` 标签中。
 
@@ -1271,11 +1165,10 @@ option_groups_from_collection_for_select(@continents, :countries, :name, :id, :n
 
 接受一个集合（Hash，数组，可枚举的对象等），返回一个由 `option` 标签组成的字符串。
 
-{:lang="ruby"}
-~~~
+```ruby
 options_for_select([ "VISA", "MasterCard" ])
 # => <option>VISA</option> <option>MasterCard</option>
-~~~
+```
 
 注意，这个方法只返回 `option` 标签，所以你要把输出放入 `select` 标签中。
 
@@ -1283,18 +1176,16 @@ options_for_select([ "VISA", "MasterCard" ])
 
 遍历 `collection`，返回一组 `option` 标签。每个 `option` 标签的值是在 `collection` 元素上调用 `value_method` 方法得到的结果，`option` 标签的显示文本是在 `collection` 元素上调用 `text_method` 方法得到的结果
 
-{:lang="ruby"}
-~~~
+```ruby
 # options_from_collection_for_select(collection, value_method, text_method, selected = nil)
-~~~
+```
 
 例如，下面的代码遍历 `@project.people`，生成一组 `option` 标签：
 
-{:lang="ruby"}
-~~~
+```ruby
 options_from_collection_for_select(@project.people, "id", "name")
 # => <option value="#{person.id}">#{person.name}</option>
-~~~
+```
 
 注意：`options_from_collection_for_select` 方法只返回 `option` 标签，你应该将其放在 `select` 标签中。
 
@@ -1304,22 +1195,20 @@ options_from_collection_for_select(@project.people, "id", "name")
 
 例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 select("post", "person_id", Person.all.collect {|p| [ p.name, p.id ] }, {include_blank: true})
-~~~
+```
 
 如果 `@post.person_id` 的值为 1，返回的结果是：
 
-{:lang="html"}
-~~~
+```html
 <select name="post[person_id]">
   <option value=""></option>
   <option value="1" selected="selected">David</option>
   <option value="2">Sam</option>
   <option value="3">Tobias</option>
 </select>
-~~~
+```
 
 #### `time_zone_options_for_select`
 
@@ -1329,19 +1218,17 @@ select("post", "person_id", Person.all.collect {|p| [ p.name, p.id ] }, {include
 
 为指定的对象和方法返回 `select` 标签和 `option` 标签，`option` 标签使用 `time_zone_options_for_select` 方法生成。
 
-{:lang="ruby"}
-~~~
+```ruby
 time_zone_select( "user", "time_zone")
-~~~
+```
 
 #### `date_field`
 
 返回一个 `date` 类型的 `input` 标签，用于访问指定的属性。
 
-{:lang="ruby"}
-~~~
+```ruby
 date_field("user", "dob")
-~~~
+```
 
 ### `FormTagHelper`
 
@@ -1351,175 +1238,158 @@ date_field("user", "dob")
 
 为表单创建一个复选框标签。
 
-{:lang="ruby"}
-~~~
+```ruby
 check_box_tag 'accept'
 # => <input id="accept" name="accept" type="checkbox" value="1" />
-~~~
+```
 
 #### `field_set_tag`
 
 创建 `fieldset` 标签，用于分组 HTML 表单元素。
 
-{:lang="erb"}
-~~~
+```erb
 <%= field_set_tag do %>
   <p><%= text_field_tag 'name' %></p>
 <% end %>
 # => <fieldset><p><input id="name" name="name" type="text" /></p></fieldset>
-~~~
+```
 
 #### `file_field_tag`
 
 创建一个文件上传输入框。
 
-{:lang="erb"}
-~~~
+```erb
 <%= form_tag({action:"post"}, multipart: true) do %>
   <label for="file">File to Upload</label> <%= file_field_tag "file" %>
   <%= submit_tag %>
 <% end %>
-~~~
+```
 
 结果示例：
 
-{:lang="ruby"}
-~~~
+```ruby
 file_field_tag 'attachment'
 # => <input id="attachment" name="attachment" type="file" />
-~~~
+```
 
 #### `form_tag`
 
 创建 `form` 标签，指向的地址由 `url_for_options` 选项指定，和 `ActionController::Base#url_for` 方法类似。
 
-{:lang="erb"}
-~~~
+```erb
 <%= form_tag '/posts' do %>
   <div><%= submit_tag 'Save' %></div>
 <% end %>
 # => <form action="/posts" method="post"><div><input type="submit" name="submit" value="Save" /></div></form>
-~~~
+```
 
 #### `hidden_field_tag`
 
 为表单创建一个隐藏的 `input` 标签，用于传递由于 HTTP 无状态的特性而丢失的数据，或者隐藏不想让用户看到的数据。
 
-{:lang="ruby"}
-~~~
+```ruby
 hidden_field_tag 'token', 'VUBJKB23UIVI1UU1VOBVI@'
 # => <input id="token" name="token" type="hidden" value="VUBJKB23UIVI1UU1VOBVI@" />
-~~~
+```
 
 #### `image_submit_tag`
 
 显示一个图片，点击后提交表单。
 
-{:lang="ruby"}
-~~~
+```ruby
 image_submit_tag("login.png")
 # => <input src="/images/login.png" type="image" />
-~~~
+```
 
 #### `label_tag`
 
 创建一个 `label` 标签。
 
-{:lang="ruby"}
-~~~
+```ruby
 label_tag 'name'
 # => <label for="name">Name</label>
-~~~
+```
 
 #### `password_field_tag`
 
 创建一个密码输入框，用户输入的值会被遮盖。
 
-{:lang="ruby"}
-~~~
+```ruby
 password_field_tag 'pass'
 # => <input id="pass" name="pass" type="password" />
-~~~
+```
 
 #### `radio_button_tag`
 
 创建一个单选框。如果希望用户从一组选项中选择，可以使用多个单选框，`name` 属性的值都设为一样的。
 
-{:lang="ruby"}
-~~~
+```ruby
 radio_button_tag 'gender', 'male'
 # => <input id="gender_male" name="gender" type="radio" value="male" />
-~~~
+```
 
 #### `select_tag`
 
 创建一个下拉选择框。
 
-{:lang="ruby"}
-~~~
+```ruby
 select_tag "people", "<option>David</option>"
 # => <select id="people" name="people"><option>David</option></select>
-~~~
+```
 
 #### `submit_tag`
 
 创建一个提交按钮，按钮上显示指定的文本。
 
-{:lang="ruby"}
-~~~
+```ruby
 submit_tag "Publish this post"
 # => <input name="commit" type="submit" value="Publish this post" />
-~~~
+```
 
 #### `text_area_tag`
 
 创建一个多行文本输入框，用于输入大段文本，例如博客和描述信息。
 
-{:lang="ruby"}
-~~~
+```ruby
 text_area_tag 'post'
 # => <textarea id="post" name="post"></textarea>
-~~~
+```
 
 #### `text_field_tag`
 
 创建一个标准文本输入框，用于输入小段文本，例如用户名和搜索关键字。
 
-{:lang="ruby"}
-~~~
+```ruby
 text_field_tag 'name'
 # => <input id="name" name="name" type="text" />
-~~~
+```
 
 #### `email_field_tag`
 
 创建一个标准文本输入框，用于输入 Email 地址。
 
-{:lang="ruby"}
-~~~
+```ruby
 email_field_tag 'email'
 # => <input id="email" name="email" type="email" />
-~~~
+```
 
 #### `url_field_tag`
 
 创建一个标准文本输入框，用于输入 URL 地址。
 
-{:lang="ruby"}
-~~~
+```ruby
 url_field_tag 'url'
 # => <input id="url" name="url" type="url" />
-~~~
+```
 
 #### `date_field_tag`
 
 创建一个标准文本输入框，用于输入日期。
 
-{:lang="ruby"}
-~~~
+```ruby
 date_field_tag "dob"
 # => <input id="dob" name="dob" type="date" />
-~~~
+```
 
 ### `JavaScriptHelper`
 
@@ -1529,14 +1399,13 @@ date_field_tag "dob"
 
 返回一个按钮，点击后触发一个 JavaScript 函数。例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 button_to_function "Greeting", "alert('Hello world!')"
 button_to_function "Delete", "if (confirm('Really?')) do_delete()"
 button_to_function "Details" do |page|
   page[:details].visual_effect :toggle_slide
 end
-~~~
+```
 
 #### `define_javascript_functions`
 
@@ -1550,29 +1419,26 @@ end
 
 返回一个 `script` 标签，把指定的代码放入其中。
 
-{:lang="ruby"}
-~~~
+```ruby
 javascript_tag "alert('All is good')"
-~~~
+```
 
-{:lang="html"}
-~~~
+```html
 <script>
 //<![CDATA[
 alert('All is good')
 //]]>
 </script>
-~~~
+```
 
 #### `link_to_function`
 
 返回一个链接，点击后触发指定的 JavaScript 函数并返回 `false`。
 
-{:lang="ruby"}
-~~~
+```ruby
 link_to_function "Greeting", "alert('Hello world!')"
 # => <a onclick="alert('Hello world!'); return false;" href="#">Greeting</a>
-~~~
+```
 
 ### `NumberHelper`
 
@@ -1582,57 +1448,51 @@ link_to_function "Greeting", "alert('Hello world!')"
 
 把数字格式化成货币字符串，例如 $13.65。
 
-{:lang="ruby"}
-~~~
+```ruby
 number_to_currency(1234567890.50) # => $1,234,567,890.50
-~~~
+```
 
 #### `number_to_human_size`
 
 把字节数格式化成更易理解的形式，显示文件大小时特别有用。
 
-{:lang="ruby"}
-~~~
+```ruby
 number_to_human_size(1234)          # => 1.2 KB
 number_to_human_size(1234567)       # => 1.2 MB
-~~~
+```
 
 #### `number_to_percentage`
 
 把数字格式化成百分数形式。
 
-{:lang="ruby"}
-~~~
+```ruby
 number_to_percentage(100, precision: 0)        # => 100%
-~~~
+```
 
 #### `number_to_phone`
 
 把数字格式化成美国使用的电话号码形式。
 
-{:lang="ruby"}
-~~~
+```ruby
 number_to_phone(1235551234) # => 123-555-1234
-~~~
+```
 
 #### `number_with_delimiter`
 
 格式化数字，使用分隔符隔开每三位数字。
 
-{:lang="ruby"}
-~~~
+```ruby
 number_with_delimiter(12345678) # => 12,345,678
-~~~
+```
 
 #### `number_with_precision`
 
 使用指定的精度格式化数字，精度默认值为 3。
 
-{:lang="ruby"}
-~~~
+```ruby
 number_with_precision(111.2345)     # => 111.235
 number_with_precision(111.2345, 2)  # => 111.23
-~~~
+```
 
 ### `SanitizeHelper`
 
@@ -1642,26 +1502,23 @@ number_with_precision(111.2345, 2)  # => 111.23
 
 `sanitize` 方法会编码所有标签，并删除所有不允许使用的属性。
 
-{:lang="ruby"}
-~~~
+```ruby
 sanitize @article.body
-~~~
+```
 
 如果指定了 `:attributes` 或 `:tags` 选项，只允许使用指定的标签和属性。
 
-{:lang="ruby"}
-~~~
+```ruby
 sanitize @article.body, tags: %w(table tr td), attributes: %w(id class style)
-~~~
+```
 
 要想修改默认值，例如允许使用 `table` 标签，可以这么设置：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Application < Rails::Application
   config.action_view.sanitized_allowed_tags = 'table', 'tr', 'td'
 end
-~~~
+```
 
 #### `sanitize_css(style)`
 
@@ -1671,23 +1528,20 @@ end
 
 删除文本中的所有链接标签，但保留链接文本。
 
-{:lang="ruby"}
-~~~
+```ruby
 strip_links("<a href="http://rubyonrails.org">Ruby on Rails</a>")
 # => Ruby on Rails
-~~~
+```
 
-{:lang="ruby"}
-~~~
+```ruby
 strip_links("emails to <a href="mailto:me@email.com">me@email.com</a>.")
 # => emails to me@email.com.
-~~~
+```
 
-{:lang="ruby"}
-~~~
+```ruby
 strip_links('Blog: <a href="http://myblog.com/">Visit</a>.')
 # => Blog: Visit.
-~~~
+```
 
 #### `strip_tags(html)`
 
@@ -1695,17 +1549,15 @@ strip_links('Blog: <a href="http://myblog.com/">Visit</a>.')
 
 这个方法使用 `html-scanner` 解析 HTML，所以解析能力受 `html-scanner` 的限制。
 
-{:lang="ruby"}
-~~~
+```ruby
 strip_tags("Strip <i>these</i> tags!")
 # => Strip these tags!
-~~~
+```
 
-{:lang="ruby"}
-~~~
+```ruby
 strip_tags("<b>Bold</b> no more!  <a href='more.html'>See more</a>")
 # => Bold no more!  See more
-~~~
+```
 
 注意，得到的结果中可能仍然有字符 `<`、`>` 和 `&`，会导致浏览器显示异常。
 
@@ -1719,14 +1571,13 @@ Action View 可以根据当前的本地化设置渲染不同的模板。
 
 Rails 并不限制 `I18n.locale` 选项的值，因此可以根据任意需求显示不同的内容。假设想让专业用户看到不同于普通用户的页面，可以在 `app/controllers/application_controller.rb` 中这么设置：
 
-{:lang="ruby"}
-~~~
+```ruby
 before_action :set_expert_locale
 
 def set_expert_locale
   I18n.locale = :expert if current_user.expert?
 end
-~~~
+```
 
 然后创建只显示给专业用户的 `app/views/posts/show.expert.html.erb` 视图。
 
