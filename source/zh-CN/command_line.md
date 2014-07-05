@@ -11,7 +11,7 @@ Rails 命令行
 
 --------------------------------------------------------------------------------
 
-I> 阅读本文前要具备一些 Rails 基础知识，可以阅读“[Rails 入门]({{ site.baseurl }}/getting_started.html)”一文。
+NOTE: 阅读本文前要具备一些 Rails 基础知识，可以阅读“[Rails 入门]({{ site.baseurl }}/getting_started.html)”一文。
 
 ## 命令行基础
 
@@ -32,7 +32,7 @@ I> 阅读本文前要具备一些 Rails 基础知识，可以阅读“[Rails 入
 
 安装 Rails 后首先要做的就是使用 `rails new` 命令新建 Rails 程序。
 
-I> 如果还没安装 Rails ，可以执行 `gem install rails` 命令安装。
+NOTE: 如果还没安装 Rails ，可以执行 `gem install rails` 命令安装。
 
 {:lang="bash"}
 ~~~
@@ -73,7 +73,7 @@ $ rails server
 
 只执行了三个命令，我们就启动了一个 Rails 服务器，监听端口 3000。打开浏览器，访问 <http://localhost:3000>，会看到一个简单的 Rails 程序。
 
-I> 启动服务器的命令还可使用别名“s”：`rails s`。
+NOTE: 启动服务器的命令还可使用别名“s”：`rails s`。
 
 如果想让服务器监听其他端口，可通过 `-p` 选项指定。所处的环境可由 `-e` 选项指定。
 
@@ -88,7 +88,7 @@ $ rails server -e production -p 4000
 
 `rails generate` 使用模板生成很多东西。单独执行 `rails generate` 命令，会列出可用的生成器：
 
-I> 还可使用别名“g”执行生成器命令：`rails g`。
+NOTE: 还可使用别名“g”执行生成器命令：`rails g`。
 
 {:lang="bash"}
 ~~~
@@ -108,13 +108,13 @@ Rails:
   ...
 ~~~
 
-I> 使用其他生成器 gem 可以安装更多的生成器，或者使用插件中提供的生成器，甚至还可以自己编写生成器。
+NOTE: 使用其他生成器 gem 可以安装更多的生成器，或者使用插件中提供的生成器，甚至还可以自己编写生成器。
 
 使用生成器可以节省大量编写程序骨架的时间。
 
 下面我们使用控制器生成器生成控制器。但应该使用哪个命令呢？我们问一下生成器：
 
-I> 所有的 Rails 命令都有帮助信息。和其他 *nix 命令一样，可以在命令后加上 `--help` 或 `-h` 选项，例如 `rails server --help`。
+NOTE: 所有的 Rails 命令都有帮助信息。和其他 *nix 命令一样，可以在命令后加上 `--help` 或 `-h` 选项，例如 `rails server --help`。
 
 {:lang="bash"}
 ~~~
@@ -196,7 +196,7 @@ $ rails server
 
 要查看的地址是 <http://localhost:3000/greetings/hello>。
 
-I> 在常规的 Rails 程序中，URL 的格式是 http://(host)/(controller)/(action)，访问 http://(host)/(controller) 会进入控制器的 `index` 动作。
+NOTE: 在常规的 Rails 程序中，URL 的格式是 http://(host)/(controller)/(action)，访问 http://(host)/(controller) 会进入控制器的 `index` 动作。
 
 Rails 也为数据模型提供了生成器。
 
@@ -218,7 +218,7 @@ Description:
     Create rails files for model generator.
 ~~~
 
-I> 全部可用的字段类型，请查看 `TableDefinition#column` 方法的[文档](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html#method-i-column)。
+NOTE: 全部可用的字段类型，请查看 `TableDefinition#column` 方法的[文档](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html#method-i-column)。
 
 不过我们暂且不单独生成模型（后文再生成），先使用脚手架。Rails 中的脚手架会生成资源所需的全部文件，包括：模型，模型所用的迁移，处理模型的控制器，查看数据的视图，以及测试组件。
 
@@ -275,7 +275,7 @@ $ rake db:migrate
 ==  CreateHighScores: migrated (0.0019s) ======================================
 ~~~
 
-I> 介绍一下单元测试。单元测试是用来测试代码、做断定的代码。在单元测试中，我们只关注代码的一部分，例如模型中的一个方法，测试其输入和输出。单元测试是你的好伙伴，你逐渐会意识到，单元测试的程度越高，生活的质量才能提上来。真的。稍后我们会编写一个单元测试。
+NOTE: 介绍一下单元测试。单元测试是用来测试代码、做断定的代码。在单元测试中，我们只关注代码的一部分，例如模型中的一个方法，测试其输入和输出。单元测试是你的好伙伴，你逐渐会意识到，单元测试的程度越高，生活的质量才能提上来。真的。稍后我们会编写一个单元测试。
 
 我们来看一下 Rails 创建的界面。
 
@@ -290,7 +290,7 @@ $ rails server
 
 执行 `console` 命令后，可以在命令行中和 Rails 程序交互。`rails` console` 使用的是 IRB，所以如果你用过 IRB 的话，操作起来很顺手。在终端里可以快速测试想法，或者修改服务器端的数据，而无需在网站中操作。
 
-I>  这个命令还可以使用别名“c”：`rails c`。
+NOTE:  这个命令还可以使用别名“c”：`rails c`。
 
 执行 `console` 命令时可以指定终端在哪个环境中打开：
 
@@ -313,7 +313,7 @@ irb(main):001:0>
 
 `rails dbconsole` 能检测到你正在使用的数据库类型（还能理解传入的命令行参数），然后进入该数据库的命令行界面。该命令支持 MySQL，PostgreSQL，SQLite 和 SQLite3。
 
-I> 这个命令还可使用别名“db”：`rails db`。
+NOTE: 这个命令还可使用别名“db”：`rails db`。
 
 ### `rails runner`
 
@@ -324,7 +324,7 @@ I> 这个命令还可使用别名“db”：`rails db`。
 $ rails runner "Model.long_running_method"
 ~~~
 
-I> 这个命令还可使用别名“r”：`rails r`。
+NOTE: 这个命令还可使用别名“r”：`rails r`。
 
 可使用 `-e` 选项指定 `runner` 命令在哪个环境中运行。
 
@@ -337,7 +337,7 @@ $ rails runner -e staging "Model.long_running_method"
 
 `destroy` 可以理解成 `generate` 的逆操作，能识别生成了什么，然后将其删除。
 
-I> 这个命令还可使用别名“d”：`rails d`。
+NOTE: 这个命令还可使用别名“d”：`rails d`。
 
 {:lang="bash"}
 ~~~
@@ -384,7 +384,7 @@ rake tmp:clear          # Clear session, cache, and socket files from tmp/ (narr
 rake tmp:create         # Creates tmp directories for sessions, cache, sockets, and pids
 ~~~
 
-I> 还可以执行 `rake -T` 查看所有任务。
+NOTE: 还可以执行 `rake -T` 查看所有任务。
 
 ### `about`
 
@@ -469,7 +469,7 @@ app/models/post.rb:
   * [ 23] Have to fix this one before pushing!
 ~~~
 
-I> 注意，不管查找的是默认的注解还是自定义的直接，注解名（例如 FIXME，BUG 等）不会在输出结果中显示。
+NOTE: 注意，不管查找的是默认的注解还是自定义的直接，注解名（例如 FIXME，BUG 等）不会在输出结果中显示。
 
 默认情况下，`rake notes` 会搜索 `app`、`config`、`lib`、`bin` 和 `test` 这几个文件夹中的文件。如果想在其他的文件夹中查找，可以使用 `SOURCE_ANNOTATION_DIRECTORIES` 环境变量指定一个以逗号分隔的列表。
 
@@ -490,7 +490,7 @@ spec/models/user_spec.rb:
 
 ### `test`
 
-I> Rails 中的单元测试详情，参见“[Rails 程序测试指南]({{ site.baseurl }}/testing.html)”一文。
+NOTE: Rails 中的单元测试详情，参见“[Rails 程序测试指南]({{ site.baseurl }}/testing.html)”一文。
 
 Rails 提供了一个名为 Minitest 的测试组件。Rails 的稳定性也由测试决定。`test:` 命名空间中的任务可用于运行各种测试。
 
@@ -555,7 +555,7 @@ rake "task_name[value 1]" # entire argument string should be quoted
 rake db:nothing
 ~~~
 
-I> 如果在任务中要和程序的模型交互，例如查询数据库等，可以使用 `environment` 任务，加载程序代码。
+NOTE: 如果在任务中要和程序的模型交互，例如查询数据库等，可以使用 `environment` 任务，加载程序代码。
 
 ## Rails 命令行高级用法
 
@@ -627,4 +627,4 @@ development:
 
 这个命令还根据我们选择的 PostgreSQL 数据库在 `database.yml` 中添加了一些设置。
 
-I> 指定源码管理系统选项时唯一的不便是，要先新建程序的文件夹，再初始化源码管理系统，然后才能执行 `rails new` 命令生成程序骨架。
+NOTE: 指定源码管理系统选项时唯一的不便是，要先新建程序的文件夹，再初始化源码管理系统，然后才能执行 `rails new` 命令生成程序骨架。

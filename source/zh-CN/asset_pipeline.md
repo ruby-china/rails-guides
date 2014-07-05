@@ -52,7 +52,7 @@ config.assets.css_compressor = :yui
 config.assets.js_compressor = :uglify
 ~~~
 
-I> 如果 `Gemfile` 中有 `sass-rails`，就会自动用来压缩 CSS，无需设置 `config.assets.css_compressor` 选项。
+NOTE: 如果 `Gemfile` 中有 `sass-rails`，就会自动用来压缩 CSS，无需设置 `config.assets.css_compressor` 选项。
 
 ### 主要功能
 
@@ -126,7 +126,7 @@ Asset Pipeline 使用的就是这种指纹实现方式。
 
 W> 预处理静态资源时要确保同时处理控制器相关的静态资源。默认情况下，不会自动编译 `.coffee` 和 `.scss` 文件。在开发环境中没什么问题，因为会自动编译。但在生产环境中会得到 500 错误，因为此时自动编译默认是关闭的。关于预编译的工作机理，请阅读“[事先编译好静态资源](#precompiling-assets)”一节。
 
-I> 要想使用 CoffeeScript，必须安装支持 ExecJS 的运行时。如果使用 Mac OS X 和 Windows，系统中已经安装了 JavaScript 运行时。所有支持的 JavaScript 运行时参见 [ExecJS](https://github.com/sstephenson/execjs#readme) 的文档。
+NOTE: 要想使用 CoffeeScript，必须安装支持 ExecJS 的运行时。如果使用 Mac OS X 和 Windows，系统中已经安装了 JavaScript 运行时。所有支持的 JavaScript 运行时参见 [ExecJS](https://github.com/sstephenson/execjs#readme) 的文档。
 
 在 `config/application.rb` 文件中加入以下代码可以禁止生成控制器相关的静态资源：
 
@@ -341,7 +341,7 @@ Rails 还会生成 `app/assets/stylesheets/application.css` 文件，内容如�
 
 上面的代码中还用到了 `require_self`。这么做可以把当前文件中的 CSS 加入调用 `require_self` 的位置。如果多次调用 `require_self`，只有最后一次调用有效。
 
-I> 如果想使用多个 Sass 文件，应该使用 [Sass 中的 `@import` 规则](http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#import)，不要使用 Sprockets 指令。如果使用 Sprockets 指令，Sass 文件只出现在各自的作用域中，Sass 变量和混入只在定义所在文件中有效。为了达到 `require_tree` 指令的效果，可以使用通配符，例如 `@import "*"` 和 `@import "**/*"`。详情参见 [sass-rails 的文档](https://github.com/rails/sass-rails#features)。
+NOTE: 如果想使用多个 Sass 文件，应该使用 [Sass 中的 `@import` 规则](http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#import)，不要使用 Sprockets 指令。如果使用 Sprockets 指令，Sass 文件只出现在各自的作用域中，Sass 变量和混入只在定义所在文件中有效。为了达到 `require_tree` 指令的效果，可以使用通配符，例如 `@import "*"` 和 `@import "**/*"`。详情参见 [sass-rails 的文档](https://github.com/rails/sass-rails#features)。
 
 清单文件可以有多个。例如，`admin.css` 和 `admin.js` 这两个清单文件包含程序管理后台所需的 JS 和 CSS 文件。
 
@@ -477,7 +477,7 @@ rel="stylesheet" />
 
 指纹由 `config.assets.digest` 初始化选项控制（生产环境默认为 `true`，其他环境为 `false`）。
 
-I> 一般情况下，请勿修改 `config.assets.digest` 的默认值。如果文件名中没有指纹，而且缓存报头的时间设置为很久以后，那么即使文件的内容变了，客户端也不会重新获取文件。
+NOTE: 一般情况下，请勿修改 `config.assets.digest` 的默认值。如果文件名中没有指纹，而且缓存报头的时间设置为很久以后，那么即使文件的内容变了，客户端也不会重新获取文件。
 
 ### 事先编译好静态资源
 
@@ -513,7 +513,7 @@ load 'deploy/assets'
 /application.(css|js)$/ ]
 ~~~
 
-I> 这个正则表达式表示最终要编译的文件。也就是说，JS/CSS 文件不包含在内。例如，因为 `.coffee` 和 `.scss` 文件能编译成 JS 和 CSS 文件，所以**不在**自动编译的范围内。
+NOTE: 这个正则表达式表示最终要编译的文件。也就是说，JS/CSS 文件不包含在内。例如，因为 `.coffee` 和 `.scss` 文件能编译成 JS 和 CSS 文件，所以**不在**自动编译的范围内。
 
 如果想编译其他清单，或者单独的样式表和 JavaScript，可以添加到 `config/application.rb` 文件中的 `precompile` 选项：
 
@@ -544,7 +544,7 @@ config.assets.precompile << Proc.new do |path|
 end
 ~~~
 
-I> 即便想添加 Sass 或 CoffeeScript 文件，也要把希望编译的文件名设为 .js 或 .css。
+NOTE: 即便想添加 Sass 或 CoffeeScript 文件，也要把希望编译的文件名设为 .js 或 .css。
 
 这个 rake 任务还会生成一个名为 `manifest-md5hash.json` 的文件，列出所有静态资源和对应的指纹。这样 Rails 帮助方法就不用再通过 Sprockets 获取指纹了。下面是一个 `manifest-md5hash.json` 文件内容示例：
 
@@ -564,7 +564,7 @@ I> 即便想添加 Sass 或 CoffeeScript 文件，也要把希望编译的文件
 
 `manifest-md5hash.json` 文件的存放位置是 `config.assets.prefix` 选项指定位置（默认为 `/assets`）的根目录。
 
-I> 在生产环境中，如果找不到编译好的文件，会抛出 `Sprockets::Helpers::RailsHelper::AssetPaths::AssetNotPrecompiledError` 异常，并提示找不到哪个文件。
+NOTE: 在生产环境中，如果找不到编译好的文件，会抛出 `Sprockets::Helpers::RailsHelper::AssetPaths::AssetNotPrecompiledError` 异常，并提示找不到哪个文件。
 
 #### 把 Expires 报头设置为很久以后
 
@@ -717,9 +717,9 @@ config.assets.css_compressor = :sass
 config.assets.js_compressor = :uglifier
 ~~~
 
-I> 系统中要安装支持 [ExecJS](https://github.com/sstephenson/execjs#readme) 的运行时才能使用 `uglifier`。Mac OS X 和 Windows 系统中已经安装了 JavaScript 运行时。
+NOTE: 系统中要安装支持 [ExecJS](https://github.com/sstephenson/execjs#readme) 的运行时才能使用 `uglifier`。Mac OS X 和 Windows 系统中已经安装了 JavaScript 运行时。
 I>
-I> `config.assets.compress` 初始化选项在 Rails 4 中不可用，即便设置了也没有效果。请分别使用 `config.assets.css_compressor` 和 `config.assets.js_compressor` 这两个选项设置 CSS 和 JavaScript 的压缩方式。
+NOTE: `config.assets.compress` 初始化选项在 Rails 4 中不可用，即便设置了也没有效果。请分别使用 `config.assets.css_compressor` 和 `config.assets.js_compressor` 这两个选项设置 CSS 和 JavaScript 的压缩方式。
 
 ### 使用自己的压缩程序
 

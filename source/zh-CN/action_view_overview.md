@@ -18,7 +18,7 @@ Action View 和 Action Controller 是 Action Pack 的两个主要组件。在 Ra
 
 Action View 模板由嵌入 HTML 的 Ruby 代码编写。为了保证模板代码简洁明了，Action View 提供了很多帮助方法，用来构建表单、日期和字符串等。如果需要，自己编写帮助方法也很简单。
 
-I> Action View 的有些功能和 Active Record 绑定在一起，但并不意味着 Action View 依赖于 Active Record。Action View 是个独立的代码库，可以在任何 Ruby 代码库中使用。
+NOTE: Action View 的有些功能和 Active Record 绑定在一起，但并不意味着 Action View 依赖于 Active Record。Action View 是个独立的代码库，可以在任何 Ruby 代码库中使用。
 
 在 Rails 中使用 Action View
 --------------------------

@@ -104,7 +104,7 @@ $ rackup --help
 
 Action Dispatcher 中的很多组件都以 Rack 中间件的形式实现。`Rails::Application` 通过 `ActionDispatch::MiddlewareStack` 把内部和外部的中间件组合在一起，形成一个完整的 Rails Rack 程序。
 
-I> 在 Rails 中，`ActionDispatch::MiddlewareStack` 的作用和 `Rack::Builder` 一样，不过前者更灵活，也为满足 Rails 的需求加入了更多功能。
+NOTE: 在 Rails 中，`ActionDispatch::MiddlewareStack` 的作用和 `Rack::Builder` 一样，不过前者更灵活，也为满足 Rails 的需求加入了更多功能。
 
 ### 查看使用的中间件
 

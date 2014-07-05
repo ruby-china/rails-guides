@@ -188,7 +188,7 @@ Action Mailer 会自动编码邮件头和邮件主体中的多字节字符。
 
     触发 `mail` 方法后，会发送一个由多部分组成的邮件，附件嵌套在类型为 `multipart/mixed` 的顶级结构中，其中第一部分的类型为 `multipart/alternative`，包含纯文本和 HTML 格式的邮件内容。
 
-I> Mail gem 会自动使用 Base64 编码附件。如果想使用其他编码方式，可以先编码好，再把编码后的附件通过 Hash 传给 `attachments` 方法。
+NOTE: Mail gem 会自动使用 Base64 编码附件。如果想使用其他编码方式，可以先编码好，再把编码后的附件通过 Hash 传给 `attachments` 方法。
 
 *   传入文件名，指定邮件头和内容，Action Mailer 和 Mail gem 会使用传入的参数添加附件。
 
@@ -200,7 +200,7 @@ I> Mail gem 会自动使用 Base64 编码附件。如果想使用其他编码方
                                    content: encoded_content }
     ~~~
 
-I> 如果指定了 `encoding` 键，Mail 会认为附件已经编码了，不会再使用 Base64 编码附件。
+NOTE: 如果指定了 `encoding` 键，Mail 会认为附件已经编码了，不会再使用 Base64 编码附件。
 
 #### 使用行间附件
 
@@ -373,7 +373,7 @@ config.action_mailer.default_url_options = { host: 'example.com' }
             action: 'greeting') %>
 ~~~
 
-I> 如果指定了 `:host` 选项，Rails 会生成绝对 URL，没必要再指定 `only_path: false`。
+NOTE: 如果指定了 `:host` 选项，Rails 会生成绝对 URL，没必要再指定 `only_path: false`。
 
 #### 使用具名路由生成 URL
 
@@ -593,4 +593,4 @@ end
 ActionMailer::Base.register_interceptor(SandboxEmailInterceptor) if Rails.env.staging?
 ~~~
 
-I> 上述代码中使用的是自定义环境，名为“staging”。这个环境和生产环境一样，但只做测试之用。关于自定义环境的详细介绍，参阅“[新建 Rails 环境]({{ site.baseurl }}/configuring.html#creating-rails-environments)”一节。
+NOTE: 上述代码中使用的是自定义环境，名为“staging”。这个环境和生产环境一样，但只做测试之用。关于自定义环境的详细介绍，参阅“[新建 Rails 环境]({{ site.baseurl }}/configuring.html#creating-rails-environments)”一节。

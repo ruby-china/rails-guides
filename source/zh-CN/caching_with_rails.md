@@ -27,13 +27,13 @@ config.action_controller.perform_caching = true
 
 页面缓存机制允许网页服务器（Apache 或 Nginx 等）直接处理请求，不经 Rails 处理。这么做显然速度超快，但并不适用于所有情况（例如需要身份认证的页面）。服务器直接从文件系统上伺服文件，所以缓存过期是一个很棘手的问题。
 
-I> Rails 4 删除了对页面缓存的支持，如想使用就得安装 [actionpack-page_caching gem](https://github.com/rails/actionpack-page_caching)。最新推荐的缓存方法参见 [DHH 对键基缓存过期的介绍](http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works)。
+NOTE: Rails 4 删除了对页面缓存的支持，如想使用就得安装 [actionpack-page_caching gem](https://github.com/rails/actionpack-page_caching)。最新推荐的缓存方法参见 [DHH 对键基缓存过期的介绍](http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works)。
 
 ### 动作缓存
 
 如果动作上有前置过滤器就不能使用页面缓存，例如需要身份认证的页面，这时需要使用动作缓存。动作缓存和页面缓存的工作方式差不多，但请求还是会经由 Rails 处理，所以在伺服缓存之前会执行前置过滤器。使用动作缓存可以执行身份认证等限制，然后再从缓存中取出结果返回客户端。
 
-I> Rails 4 删除了对动作缓存的支持，如想使用就得安装 [actionpack-action_caching gem](https://github.com/rails/actionpack-action_caching)。最新推荐的缓存方法参见 [DHH 对键基缓存过期的介绍](http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works)。
+NOTE: Rails 4 删除了对动作缓存的支持，如想使用就得安装 [actionpack-action_caching gem](https://github.com/rails/actionpack-action_caching)。最新推荐的缓存方法参见 [DHH 对键基缓存过期的介绍](http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works)。
 
 ### 片段缓存
 
@@ -167,7 +167,7 @@ class Product < ActiveRecord::Base
 end
 ~~~
 
-I> 注意，在这个例子中使用了 `cache_key` 方法，所以得到的缓存键名是这种形式：`products/233-20140225082222765838000/competing_price`。`cache_key` 方法根据模型的 `id` 和 `updated_at` 属性生成键名。这是最常见的做法，因为商品更新后，缓存就失效了。一般情况下，使用底层缓存保存实例的相关信息时，都要生成缓存键。
+NOTE: 注意，在这个例子中使用了 `cache_key` 方法，所以得到的缓存键名是这种形式：`products/233-20140225082222765838000/competing_price`。`cache_key` 方法根据模型的 `id` 和 `updated_at` 属性生成键名。这是最常见的做法，因为商品更新后，缓存就失效了。一般情况下，使用底层缓存保存实例的相关信息时，都要生成缓存键。
 
 ### SQL 缓存
 
@@ -207,7 +207,7 @@ T> 页面缓存全部存储在硬盘中。
 config.cache_store = :memory_store
 ~~~
 
-I> 在设置代码块外部可以调用 `ActionController::Base.cache_store` 方法设置存储方式。
+NOTE: 在设置代码块外部可以调用 `ActionController::Base.cache_store` 方法设置存储方式。
 
 缓存中的数据通过 `Rails.cache` 方法获取。
 

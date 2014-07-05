@@ -621,7 +621,7 @@ development:
   timeout: 5000
 ~~~
 
-I> Rails 默认使用 SQLite3 存储数据，因为 SQLite3 无需设置即可使用。Rails 还内建支持 MySQL 和 PostgreSQL。还提供了很多插件，支持更多的数据库系统。如果在生产环境中使用了数据库，Rails 很可能已经提供了对应的适配器。
+NOTE: Rails 默认使用 SQLite3 存储数据，因为 SQLite3 无需设置即可使用。Rails 还内建支持 MySQL 和 PostgreSQL。还提供了很多插件，支持更多的数据库系统。如果在生产环境中使用了数据库，Rails 很可能已经提供了对应的适配器。
 
 #### 设置 MySQL 数据库
 
@@ -759,7 +759,7 @@ Rails 的某些功能只能通过外部的环境变量设置。下面介绍的�
 
 加载完框架以及程序中使用的 gem 后，Rails 会加载初始化脚本。初始化脚本是个 Ruby 文件，存储在程序的 `config/initializers` 文件夹中。初始化脚本可在框架和 gem 加载完成后做设置。
 
-I> 如果有需求，可以使用子文件夹组织初始化脚本，Rails 会加载整个 `config/initializers` 文件夹中的内容。
+NOTE: 如果有需求，可以使用子文件夹组织初始化脚本，Rails 会加载整个 `config/initializers` 文件夹中的内容。
 
 T> 如果对初始化脚本的加载顺序有要求，可以通过文件名控制。初始化脚本的加载顺序按照文件名的字母表顺序进行。例如，`01_critical.rb` 在 `02_normal.rb` 之前加载。
 
@@ -942,4 +942,4 @@ ActiveRecord::ConnectionTimeoutError - could not obtain a database connection wi
 
 如果看到以上异常，可能需要增加连接池限制数量，方法是修改 `database.yml` 文件中的 `pool` 选项。
 
-I> 如果在多线程环境中运行程序，有可能多个线程同时使用多个连接。所以，如果程序的请求量很大，有可能出现多个线程抢用有限的连接。
+NOTE: 如果在多线程环境中运行程序，有可能多个线程同时使用多个连接。所以，如果程序的请求量很大，有可能出现多个线程抢用有限的连接。
