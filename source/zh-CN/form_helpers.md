@@ -74,7 +74,7 @@ NOTE: 为了行文简洁，后续代码没有包含这个 `div` 元素。
 </form>
 ```
 
-T> 表单中的每个 `input` 元素都有 ID 属性，其值和 `name` 属性的值一样（上例中是 `q`）。ID 可用于 CSS 样式或使用 JavaScript 处理表单控件。
+TIP: 表单中的每个 `input` 元素都有 ID 属性，其值和 `name` 属性的值一样（上例中是 `q`）。ID 可用于 CSS 样式或使用 JavaScript 处理表单控件。
 
 除了 `text_field_tag` 和 `submit_tag` 之外，每个 HTML 表单控件都有对应的帮助方法。
 
@@ -200,7 +200,7 @@ NOTE: 复选框和单选框一定要指定 `label` 标签。`label` 标签可以
 
 NOTE: 搜索关键字输入框，电话号码输入框，日期输入框，时间输入框，颜色输入框，日期时间输入框，本地日期时间输入框，月份输入框，星期输入框，URL 地址输入框，Email 地址输入框，数字输入框和范围输入框是 HTML5 提供的控件。如果想在旧版本的浏览器中保持体验一致，需要使用 HTML5 polyfill（使用 CSS 或 JavaScript 编写）。polyfill 虽[无不足之处](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills)，但现今比较流行的工具是 [Modernizr](http://www.modernizr.com/) 和 [yepnope](http://yepnopejs.com/)，根据检测到的 HTML5 特性添加相应的功能。
 
-T> 如果使用密码输入框，或许还不想把其中的值写入日志。具体做法参见“[Rails 安全指南](security.html#logging)”。
+TIP: 如果使用密码输入框，或许还不想把其中的值写入日志。具体做法参见“[Rails 安全指南](security.html#logging)”。
 
 处理模型对象
 -----------
@@ -300,7 +300,7 @@ end
 resources :articles
 ```
 
-T> 声明资源有很多附属作用。资源的创建与使用请阅读“[Rails 路由全解](routing.html#resource-routing-the-rails-default)”一文。
+TIP: 声明资源有很多附属作用。资源的创建与使用请阅读“[Rails 路由全解](routing.html#resource-routing-the-rails-default)”一文。
 
 处理 REST 资源时，使用“记录辨别”技术可以简化 `form_for` 方法的调用。简单来说，你可以只把模型实例传给 `form_for`，让 Rails 查找模型名等其他信息：
 
@@ -428,7 +428,7 @@ HTML 中的选择列表往往需要编写很多标记语言（每个选项都要
 
 当 Rails 发现生成的选项 `value` 属性值和指定的值一样时，就会在这个选项中加上 `selected` 属性。
 
-T> `options_for_select` 方法的第二个参数必须完全和需要选中的选项 `value` 属性值相等。如果 `value` 的值是整数 2，就不能传入字符串 `"2"`，必须传入数字 `2`。注意，从 `params` 中获取的值都是字符串。
+TIP: `options_for_select` 方法的第二个参数必须完全和需要选中的选项 `value` 属性值相等。如果 `value` 的值是整数 2，就不能传入字符串 `"2"`，必须传入数字 `2`。注意，从 `params` 中获取的值都是字符串。
 
 使用 Hash 可以为选项指定任意属性：
 
@@ -681,12 +681,12 @@ end
 
 HTML 表单基本上不能处理任何结构化数据，提交的只是由普通的字符串组成的键值对。在程序中使用的数组参数和 Hash 参数是通过 Rails 的参数命名约定生成的。
 
-T> 如果想快速试验本节中的示例，可以在控制台中直接调用 Rack 的参数解析器。例如：
+TIP: 如果想快速试验本节中的示例，可以在控制台中直接调用 Rack 的参数解析器。例如：
 T>
 ```ruby
-T> Rack::Utils.parse_query "name=fred&phone=0123456789"
-T> # => {"name"=>"fred", "phone"=>"0123456789"}
-T> ```
+TIP: Rack::Utils.parse_query "name=fred&phone=0123456789"
+TIP: # => {"name"=>"fred", "phone"=>"0123456789"}
+TIP: ```
 
 ### 基本结构
 

@@ -768,10 +768,10 @@ Apache 和 Nginx 都支持这个报头，可以在 `config/environments/producti
 
 WARNING: 如果升级现有程序，请把这两个设置写入 `production.rb`，以及其他类似生产环境的设置文件中。不能写入 `application.rb`。
 
-T> 详情参见生产环境所用服务器的文档：
+TIP: 详情参见生产环境所用服务器的文档：
 T>
-T> - [Apache](https://tn123.org/mod_xsendfile/)
-T> - [Nginx](http://wiki.nginx.org/XSendfile)
+TIP: - [Apache](https://tn123.org/mod_xsendfile/)
+TIP: - [Nginx](http://wiki.nginx.org/XSendfile)
 
 ## 静态资源缓存的存储方式
 

@@ -99,7 +99,7 @@ NOTE: 真正处理渲染过程的是 `ActionView::TemplateHandlers` 的子类。
 
 大多数情况下，`ActionController::Base#render` 方法都能满足需求，而且还有多种定制方式，可以渲染 Rails 模板的默认视图、指定的模板、文件、行间代码或者什么也不渲染。渲染的内容格式可以是文本，JSON 或 XML。而且还可以设置响应的内容类型和 HTTP 状态码。
 
-T> 如果不想使用浏览器直接查看调用 `render` 方法得到的结果，可以使用 `render_to_string` 方法。`render_to_string` 和 `render` 的用法完全一样，不过不会把响应发送给浏览器，而是直接返回字符串。
+TIP: 如果不想使用浏览器直接查看调用 `render` 方法得到的结果，可以使用 `render_to_string` 方法。`render_to_string` 和 `render` 的用法完全一样，不过不会把响应发送给浏览器，而是直接返回字符串。
 
 #### 什么都不渲染
 
@@ -127,7 +127,7 @@ $
 
 可以看到，响应的主体是空的（`Cache-Control` 之后没有数据），但请求本身是成功的，因为 Rails 把响应码设为了“200 OK”。调用 `render` 方法时可以设置 `:status` 选项修改状态码。这种用法可在 Ajax 请求中使用，因为此时只需告知浏览器请求已经完成。
 
-T> 或许不应该使用 `render :nothing`，而要用后面介绍的 `head` 方法。`head` 方法用起来更灵活，而且只返回 HTTP 报头。
+TIP: 或许不应该使用 `render :nothing`，而要用后面介绍的 `head` 方法。`head` 方法用起来更灵活，而且只返回 HTTP 报头。
 
 #### 渲染动作的视图
 
@@ -191,7 +191,7 @@ render file: "/u/apps/warehouse_app/current/app/views/products/show"
 
 NOTE: 默认情况下，渲染文件时不会使用当前程序的布局。如果想让 Rails 把文件套入布局，要指定 `layout: true` 选项。
 
-T> 如果在 Windows 中运行 Rails，就必须使用 `:file` 选项指定文件的路径，因为 Windows 中的文件名和 Unix 格式不一样。
+TIP: 如果在 Windows 中运行 Rails，就必须使用 `:file` 选项指定文件的路径，因为 Windows 中的文件名和 Unix 格式不一样。
 
 #### 小结
 
@@ -240,7 +240,7 @@ render inline: "xml.p {'Horrid coding practice!'}", type: :builder
 render plain: "OK"
 ```
 
-T> 渲染纯文本主要用于 Ajax 或无需使用 HTML 的网络服务。
+TIP: 渲染纯文本主要用于 Ajax 或无需使用 HTML 的网络服务。
 
 NOTE: 默认情况下，使用 `:plain` 选项渲染纯文本，不会套用程序的布局。如果想使用布局，可以指定 `layout: true` 选项。
 
@@ -252,7 +252,7 @@ NOTE: 默认情况下，使用 `:plain` 选项渲染纯文本，不会套用程�
 render html: "<strong>Not Found</strong>".html_safe
 ```
 
-T> 这种方法可用来渲染 HTML 片段。如果标记很复杂，就要考虑使用模板文件了。
+TIP: 这种方法可用来渲染 HTML 片段。如果标记很复杂，就要考虑使用模板文件了。
 
 NOTE: 如果字符串对 HTML 不安全，会进行转义。
 
@@ -264,7 +264,7 @@ JSON 是一种 JavaScript 数据格式，很多 Ajax 库都用这种格式。Rai
 render json: @product
 ```
 
-T> 在需要渲染的对象上无需调用 `to_json` 方法，如果使用了 `:json` 选项，`render` 方法会自动调用 `to_json`。
+TIP: 在需要渲染的对象上无需调用 `to_json` 方法，如果使用了 `:json` 选项，`render` 方法会自动调用 `to_json`。
 
 #### 渲染 XML
 
@@ -274,7 +274,7 @@ Rails 也内建支持把对象转换成 XML，经渲染后再发回给调用者�
 render xml: @product
 ```
 
-T> 在需要渲染的对象上无需调用 `to_xml` 方法，如果使用了 `:xml` 选项，`render` 方法会自动调用 `to_xml`。
+TIP: 在需要渲染的对象上无需调用 `to_xml` 方法，如果使用了 `:xml` 选项，`render` 方法会自动调用 `to_xml`。
 
 #### 渲染普通的 JavaScript
 
@@ -294,7 +294,7 @@ render js: "alert('Hello Rails');"
 render body: "raw"
 ```
 
-T> 只有不在意内容类型时才可使用这个选项。大多数时候，使用 `:plain` 或 `:html` 选项更合适。
+TIP: 只有不在意内容类型时才可使用这个选项。大多数时候，使用 `:plain` 或 `:html` 选项更合适。
 
 NOTE: 如果没有修改，这种方式返回的内容类型是 `text/html`，因为这是 Action Dispatch 响应默认使用的内容类型。
 
@@ -1009,7 +1009,7 @@ WARNING: 注意，必须指定图片的扩展名。
 
 这里，局部视图 `_ad_banner.html.erb` 和 `_footer.html.erb` 可以包含程序多个页面共用的内容。在编写某个页面的视图时，无需关心这些局部视图中的详细内容。
 
-T> 程序所有页面共用的内容，可以直接在布局中使用局部视图渲染。
+TIP: 程序所有页面共用的内容，可以直接在布局中使用局部视图渲染。
 
 #### 局部布局
 
@@ -1132,7 +1132,7 @@ Rails 根据集合中各元素的模型名决定使用哪个局部视图。其�
 
 在局部视图中可以使用本地变量 `title`，其值为 `"Products Page"`。
 
-T> 在局部视图中还可使用计数器变量，变量名是在集合后加上 `_counter`。例如，渲染 `@products` 时，在局部视图中可以使用 `product_counter` 表示局部视图渲染了多少次。不过不能和 `as: :value` 一起使用。
+TIP: 在局部视图中还可使用计数器变量，变量名是在集合后加上 `_counter`。例如，渲染 `@products` 时，在局部视图中可以使用 `product_counter` 表示局部视图渲染了多少次。不过不能和 `as: :value` 一起使用。
 
 在使用主局部视图渲染两个实例中间还可使用 `:spacer_template` 选项指定第二个局部视图。
 

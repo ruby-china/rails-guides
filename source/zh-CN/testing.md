@@ -319,7 +319,7 @@ Finished tests in 0.047721s, 20.9551 tests/s, 20.9551 assertions/s.
 
 你可能注意到了，我们首先编写一个检测所需功能的测试，这个测试会失败，然后编写代码，实现所需功能，最后再运行测试，确保测试可以通过。这一过程，在软件开发中称为“测试驱动开发”（Test-Driven Development，TDD）。
 
-T> 很多 Rails 开发者都会使用 TDD，这种开发方式可以确保程序的每个功能都能正确运行。本文不会详细介绍 TDD，如果想学习，可以从 [15 TDD steps to create a Rails application](http://andrzejonsoftware.blogspot.com/2007/05/15-tdd-steps-to-create-rails.html) 这篇文章开始。
+TIP: 很多 Rails 开发者都会使用 TDD，这种开发方式可以确保程序的每个功能都能正确运行。本文不会详细介绍 TDD，如果想学习，可以从 [15 TDD steps to create a Rails application](http://andrzejonsoftware.blogspot.com/2007/05/15-tdd-steps-to-create-rails.html) 这篇文章开始。
 
 要想查看错误的输出，可以在测试中加入一处错误：
 

@@ -120,7 +120,7 @@ Rails.logger = Logger.new(STDOUT)
 Rails.logger = Log4r::Logger.new("Application Log")
 ~~~
 
-T> 默认情况下，日志文件都保存在 `Rails.root/log/` 文件夹中，日志文件名为 `environment_name.log`。
+TIP: 默认情况下，日志文件都保存在 `Rails.root/log/` 文件夹中，日志文件名为 `environment_name.log`。
 
 ### 日志等级
 
@@ -136,7 +136,7 @@ Rails.logger.level = 0 # at any time
 
 这么设置在开发环境和交付准备环境中很有用，在生产环境中则不会写入大量不必要的信息。
 
-T> Rails 为生产环境设置的默认日志等级是 `info`，生产环境和测试环境的默认日志等级是 `debug`。
+TIP: Rails 为生产环境设置的默认日志等级是 `info`，生产环境和测试环境的默认日志等级是 `debug`。
 
 ### 写日志
 
@@ -274,7 +274,7 @@ $ rails server --debugger
 ...
 ~~~
 
-T> 在开发环境中，如果启动服务器时没有指定 `--debugger` 选项，不用重启服务器，加入 `require "debugger"` 即可。
+TIP: 在开发环境中，如果启动服务器时没有指定 `--debugger` 选项，不用重启服务器，加入 `require "debugger"` 即可。
 
 ### Shell
 
@@ -306,7 +306,7 @@ condition  down     finish  list    ps    save     thread  var
 continue   edit     frame   method  putl  set      tmate   where
 ~~~
 
-T> 要想查看某个命令的帮助信息，可以在终端里输入 `help <command-name>`，例如 `help var`。
+TIP: 要想查看某个命令的帮助信息，可以在终端里输入 `help <command-name>`，例如 `help var`。
 
 接下来要学习最有用的命令之一：`list`。调试器中的命令可以使用简写形式，只要输入的字母数量足够和其他命令区分即可。因此，可使用 `l` 代替 `list`。
 
@@ -463,7 +463,7 @@ true
 
 实例变量中出现了 `@posts`，因为执行了定义这个变量的代码。
 
-T> 执行 `irb` 命令可进入 **irb** 模式，irb 会话使用当前上下文。警告：这是实验性功能。
+TIP: 执行 `irb` 命令可进入 **irb** 模式，irb 会话使用当前上下文。警告：这是实验性功能。
 
 `var` 命令是显示变量值最便捷的方式：
 
@@ -491,7 +491,7 @@ var
 @new_record = true
 ~~~
 
-T> 命令 `p`（print，打印）和 `pp`(pretty print，精美格式化打印)可用来执行 Ruby 表达式并把结果显示在终端里。
+TIP: 命令 `p`（print，打印）和 `pp`(pretty print，精美格式化打印)可用来执行 Ruby 表达式并把结果显示在终端里。
 
 `display` 命令可用来监视变量，查看在代码执行过程中变量值的变化：
 
@@ -508,7 +508,7 @@ T> 命令 `p`（print，打印）和 `pp`(pretty print，精美格式化打印)�
 
 `step` 命令（缩写形式为 `s`）可以一直执行程序，直到下一个逻辑停止点，再把控制权交给调试器。
 
-T> `step+ n` 和 `step- n` 可以相应的向前或向后 `n` 步。
+TIP: `step+ n` 和 `step- n` 可以相应的向前或向后 `n` 步。
 
 `next` 命令的作用和 `step` 命令类似，但执行的方法不会停止。和 `step` 命令一样，也可使用加号前进 `n` 步。
 
@@ -529,7 +529,7 @@ class Author < ActiveRecord::Base
 end
 ~~~
 
-T> 在控制台中也可启用调试器，但要记得在调用 `debugger` 方法之前先 `require "debugger"`。
+TIP: 在控制台中也可启用调试器，但要记得在调用 `debugger` 方法之前先 `require "debugger"`。
 
 {:lang="sh"}
 ~~~
@@ -663,7 +663,7 @@ No breakpoints.
 
 执行 `help set` 命令可以查看完整说明。执行 `help set subcommand` 可以查看 `subcommand` 的帮助信息。
 
-T> 设置可以保存到家目录中的 `.rdebugrc` 文件中。启动调试器时会读取这个文件中的全局设置。
+TIP: 设置可以保存到家目录中的 `.rdebugrc` 文件中。启动调试器时会读取这个文件中的全局设置。
 
 下面是 `.rdebugrc` 文件示例：
 
