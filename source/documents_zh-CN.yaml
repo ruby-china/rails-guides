@@ -220,10 +220,3 @@
       url: 2_2_release_notes.html
       description: Rails 2.2 的发布记。
       needs_translation: true
--
-  name: Rails 指南翻译术语
-  documents:
-    -
-      name: 翻译术语
-      url: translation_terms.html
-      description: 翻译所使用的术语。
