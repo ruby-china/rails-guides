@@ -1,71 +1,78 @@
-Layouts and Rendering in Rails
-==============================
+---
+layout: docs
+title: Rails 布局和视图渲染
+prev_section: action_view_overview
+next_section: form_helpers
+---
 
-This guide covers the basic layout features of Action Controller and Action View.
+本文介绍 Action Controller 和 Action View 中布局的基本功能。
 
-After reading this guide, you will know:
+读完后，你将学会：
 
-* How to use the various rendering methods built into Rails.
-* How to create layouts with multiple content sections.
-* How to use partials to DRY up your views.
-* How to use nested layouts (sub-templates).
+* 如何使用 Rails 内建的各种渲染方法；
+* 如果创建具有多个内容区域的布局；
+* 如何使用局部视图去除重复；
+* 如何使用嵌套布局（子模板）；
 
---------------------------------------------------------------------------------
+---
 
-Overview: How the Pieces Fit Together
--------------------------------------
+## 概览：各组件之间的协作 {#overview-how-the-pieces-fit-together}
 
-This guide focuses on the interaction between Controller and View in the Model-View-Controller triangle. As you know, the Controller is responsible for orchestrating the whole process of handling a request in Rails, though it normally hands off any heavy code to the Model. But then, when it's time to send a response back to the user, the Controller hands things off to the View. It's that handoff that is the subject of this guide.
+本文关注 MVC 架构中控制器和视图之间的交互。你可能已经知道，控制器的作用是处理请求，但经常会把繁重的操作交给模型完成。返回响应时，控制器会把一些操作交给视图完成。本文要说明的就是控制器交给视图的操作是怎么完成的。
 
-In broad strokes, this involves deciding what should be sent as the response and calling an appropriate method to create that response. If the response is a full-blown view, Rails also does some extra work to wrap the view in a layout and possibly to pull in partial views. You'll see all of those paths later in this guide.
+总的来说，这个过程涉及到响应中要发送什么内容，以及调用哪个方法创建响应。如果响应是个完整的视图，Rails 还要做些额外工作，把视图套入布局，有时还要渲染局部视图。后文会详细介绍整个过程。
 
-Creating Responses
-------------------
+## 创建响应 {#creating-responses}
 
-From the controller's point of view, there are three ways to create an HTTP response:
+从控制器的角度来看，创建 HTTP 响应有三种方法：
 
-* Call `render` to create a full response to send back to the browser
-* Call `redirect_to` to send an HTTP redirect status code to the browser
-* Call `head` to create a response consisting solely of HTTP headers to send back to the browser
+* 调用 `render` 方法，向浏览器发送一个完整的响应；
+* 调用 `redirect_to` 方法，向浏览器发送一个 HTTP 重定向状态码；
+* 调用 `head` 方法，向浏览器发送只含报头的响应；
 
-### Rendering by Default: Convention Over Configuration in Action
+### 渲染视图 {#rendering-by-default-convention-over-configuration-in-action}
 
-You've heard that Rails promotes "convention over configuration". Default rendering is an excellent example of this. By default, controllers in Rails automatically render views with names that correspond to valid routes. For example, if you have this code in your `BooksController` class:
+你可能已经听说过 Rails 的开发原则之一是“多约定，少配置”。默认渲染视图的处理就是这一原则的完美体现。默认情况下，Rails 中的控制器会渲染路由对应的视图。例如，有如下的 `BooksController` 代码：
 
-```ruby
+{:lang="ruby"}
+~~~
 class BooksController < ApplicationController
 end
-```
+~~~
 
-And the following in your routes file:
+在路由文件中有如下定义：
 
-```ruby
+{:lang="ruby"}
+~~~
 resources :books
-```
+~~~
 
-And you have a view file `app/views/books/index.html.erb`:
+而且有个名为 `app/views/books/index.html.erb` 的视图文件：
 
-```html+erb
+{:lang="erb"}
+~~~
 <h1>Books are coming soon!</h1>
-```
+~~~
 
-Rails will automatically render `app/views/books/index.html.erb` when you navigate to `/books` and you will see "Books are coming soon!" on your screen.
+那么，访问 `/books` 时，Rails 会自动渲染视图 `app/views/books/index.html.erb`，网页中会看到显示有“Books are coming soon!”。
 
-However a coming soon screen is only minimally useful, so you will soon create your `Book` model and add the index action to `BooksController`:
+网页中显示这些文字没什么用，所以后续你可能会创建一个 `Book` 模型，然后在 `BooksController` 中添加 `index` 动作：
 
-```ruby
+{:lang="ruby"}
+~~~
 class BooksController < ApplicationController
   def index
     @books = Book.all
   end
 end
-```
+~~~
 
-Note that we don't have explicit render at the end of the index action in accordance with "convention over configuration" principle. The rule is that if you do not explicitly render something at the end of a controller action, Rails will automatically look for the `action_name.html.erb` template in the controller's view path and render it. So in this case, Rails will render the `app/views/books/index.html.erb` file.
+注意，基于“多约定，少配置”原则，在 `index` 动作末尾并没有指定要渲染视图，Rails 会自动在控制器的视图文件夹中寻找 `action_name.html.erb` 模板，然后渲染。在这个例子中，Rails 渲染的是 `app/views/books/index.html.erb` 文件。
 
-If we want to display the properties of all the books in our view, we can do so with an ERB template like this:
+如果要在视图中显示书籍的属性，可以使用 ERB 模板：
 
-```html+erb
+{:lang="erb"}
+~~~
 <h1>Listing Books</h1>
 
 <table>
@@ -91,27 +98,29 @@ If we want to display the properties of all the books in our view, we can do so 
 <br>
 
 <%= link_to "New book", new_book_path %>
-```
+~~~
 
-NOTE: The actual rendering is done by subclasses of `ActionView::TemplateHandlers`. This guide does not dig into that process, but it's important to know that the file extension on your view controls the choice of template handler. Beginning with Rails 2, the standard extensions are `.erb` for ERB (HTML with embedded Ruby), and `.builder` for Builder (XML generator).
+I> 真正处理渲染过程的是 `ActionView::TemplateHandlers` 的子类。本文不做深入说明，但要知道，文件的扩展名决定了要使用哪个模板处理程序。从 Rails 2 开始，ERB 模板（含有嵌入式 Ruby 代码的 HTML）的标准扩展名是 `.erb`，Builder 模板（XML 生成器）的标准扩展名是 `.builder`。
 
-### Using `render`
+### 使用 `render` 方法 {#using-render}
 
-In most cases, the `ActionController::Base#render` method does the heavy lifting of rendering your application's content for use by a browser. There are a variety of ways to customize the behavior of `render`. You can render the default view for a Rails template, or a specific template, or a file, or inline code, or nothing at all. You can render text, JSON, or XML. You can specify the content type or HTTP status of the rendered response as well.
+大多数情况下，`ActionController::Base#render` 方法都能满足需求，而且还有多种定制方式，可以渲染 Rails 模板的默认视图、指定的模板、文件、行间代码或者什么也不渲染。渲染的内容格式可以是文本，JSON 或 XML。而且还可以设置响应的内容类型和 HTTP 状态码。
 
-TIP: If you want to see the exact results of a call to `render` without needing to inspect it in a browser, you can call `render_to_string`. This method takes exactly the same options as `render`, but it returns a string instead of sending a response back to the browser.
+T> 如果不想使用浏览器直接查看调用 `render` 方法得到的结果，可以使用 `render_to_string` 方法。`render_to_string` 和 `render` 的用法完全一样，不过不会把响应发送给浏览器，而是直接返回字符串。
 
-#### Rendering Nothing
+#### 什么都不渲染 {#rendering-nothing}
 
-Perhaps the simplest thing you can do with `render` is to render nothing at all:
+或许 `render` 方法最简单的用法是什么也不渲染：
 
-```ruby
+{:lang="ruby"}
+~~~
 render nothing: true
-```
+~~~
 
-If you look at the response for this using cURL, you will see the following:
+如果使用 cURL 查看请求，会得到一些输出：
 
-```bash
+{:lang="bash"}
+~~~
 $ curl -i 127.0.0.1:3000/books
 HTTP/1.1 200 OK
 Connection: close
@@ -123,17 +132,18 @@ Set-Cookie: _blog_session=...snip...; path=/; HttpOnly
 Cache-Control: no-cache
 
 $
-```
+~~~
 
-We see there is an empty response (no data after the `Cache-Control` line), but the request was successful because Rails has set the response to 200 OK. You can set the `:status` option on render to change this response. Rendering nothing can be useful for Ajax requests where all you want to send back to the browser is an acknowledgment that the request was completed.
+可以看到，响应的主体是空的（`Cache-Control` 之后没有数据），但请求本身是成功的，因为 Rails 把响应码设为了“200 OK”。调用 `render` 方法时可以设置 `:status` 选项修改状态码。这种用法可在 Ajax 请求中使用，因为此时只需告知浏览器请求已经完成。
 
-TIP: You should probably be using the `head` method, discussed later in this guide, instead of `render :nothing`. This provides additional flexibility and makes it explicit that you're only generating HTTP headers.
+T> 或许不应该使用 `render :nothing`，而要用后面介绍的 `head` 方法。`head` 方法用起来更灵活，而且只返回 HTTP 报头。
 
-#### Rendering an Action's View
+#### 渲染动作的视图 {#rendering-an-action-s-view}
 
-If you want to render the view that corresponds to a different template within the same controller, you can use `render` with the name of the view:
+如果想渲染同个控制器中的其他模板，可以把视图的名字传递给 `render` 方法：
 
-```ruby
+{:lang="ruby"}
+~~~
 def update
   @book = Book.find(params[:id])
   if @book.update(book_params)
@@ -142,13 +152,14 @@ def update
     render "edit"
   end
 end
-```
+~~~
 
-If the call to `update` fails, calling the `update` action in this controller will render the `edit.html.erb` template belonging to the same controller.
+如果更新失败，会渲染同个控制器中的 `edit.html.erb` 模板。
 
-If you prefer, you can use a symbol instead of a string to specify the action to render:
+如果不想用字符串，还可使用 Symbol 指定要渲染的动作：
 
-```ruby
+{:lang="ruby"}
+~~~
 def update
   @book = Book.find(params[:id])
   if @book.update(book_params)
@@ -157,49 +168,52 @@ def update
     render :edit
   end
 end
-```
+~~~
 
-#### Rendering an Action's Template from Another Controller
+#### 渲染其他控制器中的动作模板 {#rendering-an-action-s-template-from-another-controller}
 
-What if you want to render a template from an entirely different controller from the one that contains the action code? You can also do that with `render`, which accepts the full path (relative to `app/views`) of the template to render. For example, if you're running code in an `AdminProductsController` that lives in `app/controllers/admin`, you can render the results of an action to a template in `app/views/products` this way:
+如果想渲染其他控制器中的模板该怎么做呢？还是使用 `render` 方法，指定模板的完整路径即可。例如，如果控制器 `AdminProductsController` 在 `app/controllers/admin` 文件夹中，可使用下面的方式渲染 `app/views/products` 文件夹中的模板：
 
-```ruby
+{:lang="ruby"}
+~~~
 render "products/show"
-```
+~~~
 
-Rails knows that this view belongs to a different controller because of the embedded slash character in the string. If you want to be explicit, you can use the `:template` option (which was required on Rails 2.2 and earlier):
+因为参数中有个斜线，所以 Rails 知道这个视图属于另一个控制器。如果想让代码的意图更明显，可以使用 `:template` 选项（Rails 2.2+ 必须这么做）：
 
-```ruby
+{:lang="ruby"}
+~~~
 render template: "products/show"
-```
+~~~
 
-#### Rendering an Arbitrary File
+#### 渲染任意文件 {#rendering-an-arbitrary-file}
 
-The `render` method can also use a view that's entirely outside of your application (perhaps you're sharing views between two Rails applications):
+`render` 方法还可渲染程序之外的视图（或许多个程序共用一套视图）：
 
-```ruby
+{:lang="ruby"}
+~~~
 render "/u/apps/warehouse_app/current/app/views/products/show"
-```
+~~~
 
-Rails determines that this is a file render because of the leading slash character. To be explicit, you can use the `:file` option (which was required on Rails 2.2 and earlier):
+因为参数以斜线开头，所以 Rails 将其视为一个文件。如果想让代码的意图更明显，可以使用 `:file` 选项（Rails 2.2+ 必须这么做）
 
-```ruby
+{:lang="ruby"}
+~~~
 render file: "/u/apps/warehouse_app/current/app/views/products/show"
-```
+~~~
 
-The `:file` option takes an absolute file-system path. Of course, you need to have rights to the view that you're using to render the content.
+`:file` 选项的值是文件系统中的绝对路径。当然，你要对使用的文件拥有相应权限。
 
-NOTE: By default, the file is rendered without using the current layout. If you want Rails to put the file into the current layout, you need to add the `layout: true` option.
+I> 默认情况下，渲染文件时不会使用当前程序的布局。如果想让 Rails 把文件套入布局，要指定 `layout: true` 选项。
 
-TIP: If you're running Rails on Microsoft Windows, you should use the `:file` option to render a file, because Windows filenames do not have the same format as Unix filenames.
+T> 如果在 Windows 中运行 Rails，就必须使用 `:file` 选项指定文件的路径，因为 Windows 中的文件名和 Unix 格式不一样。
 
-#### Wrapping it up
+#### 小结 {#wrapping-it-up}
 
-The above three ways of rendering (rendering another template within the controller, rendering a template within another controller and rendering an arbitrary file on the file system) are actually variants of the same action.
+上述三种渲染方式的作用其实是一样的。在 `BooksController` 控制器的 `update` 动作中，如果更新失败后想渲染 `views/books` 文件夹中的 `edit.html.erb` 模板，下面这些用法都能达到这个目的：
 
-In fact, in the BooksController class, inside of the update action where we want to render the edit template if the book does not update successfully, all of the following render calls would all render the `edit.html.erb` template in the `views/books` directory:
-
-```ruby
+{:lang="ruby"}
+~~~
 render :edit
 render action: :edit
 render "edit"
@@ -214,161 +228,163 @@ render "/path/to/rails/app/views/books/edit"
 render "/path/to/rails/app/views/books/edit.html.erb"
 render file: "/path/to/rails/app/views/books/edit"
 render file: "/path/to/rails/app/views/books/edit.html.erb"
-```
+~~~
 
-Which one you use is really a matter of style and convention, but the rule of thumb is to use the simplest one that makes sense for the code you are writing.
+你可以根据自己的喜好决定使用哪种方式，总的原则是，使用符合代码意图的最简单方式。
 
-#### Using `render` with `:inline`
+#### 使用 `render` 方法的 `:inline` 选项 {#using-render-with-inline}
 
-The `render` method can do without a view completely, if you're willing to use the `:inline` option to supply ERB as part of the method call. This is perfectly valid:
+如果使用 `:inline` 选项指定了 ERB 代码，`render` 方法就不会渲染视图。如下所示的用法完全可行：
 
-```ruby
+{:lang="ruby"}
+~~~
 render inline: "<% products.each do |p| %><p><%= p.name %></p><% end %>"
-```
+~~~
 
-WARNING: There is seldom any good reason to use this option. Mixing ERB into your controllers defeats the MVC orientation of Rails and will make it harder for other developers to follow the logic of your project. Use a separate erb view instead.
+W> 但是很少这么做。在控制器中混用 ERB 代码违反了 MVC 架构原则，也让程序的其他开发者难以理解程序的逻辑思路。请使用单独的 ERB 视图。
 
-By default, inline rendering uses ERB. You can force it to use Builder instead with the `:type` option:
+默认情况下，行间渲染使用 ERB 模板。你可以使用 `:type` 选项指定使用其他处理程序：
 
-```ruby
+{:lang="ruby"}
+~~~
 render inline: "xml.p {'Horrid coding practice!'}", type: :builder
-```
+~~~
 
-#### Rendering Text
+#### 渲染文本 {#rendering-text}
 
-You can send plain text - with no markup at all - back to the browser by using
-the `:plain` option to `render`:
+调用 `render` 方法时指定 `:plain` 选项，可以把没有标记语言的纯文本发给浏览器：
 
-```ruby
+{:lang="ruby"}
+~~~
 render plain: "OK"
-```
+~~~
 
-TIP: Rendering pure text is most useful when you're responding to Ajax or web
-service requests that are expecting something other than proper HTML.
+T> 渲染纯文本主要用于 Ajax 或无需使用 HTML 的网络服务。
 
-NOTE: By default, if you use the `:plain` option, the text is rendered without
-using the current layout. If you want Rails to put the text into the current
-layout, you need to add the `layout: true` option.
+I> 默认情况下，使用 `:plain` 选项渲染纯文本，不会套用程序的布局。如果想使用布局，可以指定 `layout: true` 选项。
 
-#### Rendering HTML
+#### 渲染 HTML {#rendering-html}
 
-You can send a HTML string back to the browser by using the `:html` option to
-`render`:
+调用 `render` 方法时指定 `:html` 选项，可以把 HTML 字符串发给浏览器：
 
-```ruby
+{:lang="ruby"}
+~~~
 render html: "<strong>Not Found</strong>".html_safe
-```
+~~~
 
-TIP: This is useful when you're rendering a small snippet of HTML code.
-However, you might want to consider moving it to a template file if the markup
-is complex.
+T> 这种方法可用来渲染 HTML 片段。如果标记很复杂，就要考虑使用模板文件了。
 
-NOTE: This option will escape HTML entities if the string is not html safe.
+I> 如果字符串对 HTML 不安全，会进行转义。
 
-#### Rendering JSON
+#### 渲染 JSON {#rendering-json}
 
-JSON is a JavaScript data format used by many Ajax libraries. Rails has built-in support for converting objects to JSON and rendering that JSON back to the browser:
+JSON 是一种 JavaScript 数据格式，很多 Ajax 库都用这种格式。Rails 内建支持把对象转换成 JSON，经渲染后再发送给浏览器。
 
-```ruby
+{:lang="ruby"}
+~~~
 render json: @product
-```
+~~~
 
-TIP: You don't need to call `to_json` on the object that you want to render. If you use the `:json` option, `render` will automatically call `to_json` for you.
+T> 在需要渲染的对象上无需调用 `to_json` 方法，如果使用了 `:json` 选项，`render` 方法会自动调用 `to_json`。
 
-#### Rendering XML
+#### 渲染 XML {#rendering-xml}
 
-Rails also has built-in support for converting objects to XML and rendering that XML back to the caller:
+Rails 也内建支持把对象转换成 XML，经渲染后再发回给调用者：
 
-```ruby
+{:lang="ruby"}
+~~~
 render xml: @product
-```
+~~~
 
-TIP: You don't need to call `to_xml` on the object that you want to render. If you use the `:xml` option, `render` will automatically call `to_xml` for you.
+T> 在需要渲染的对象上无需调用 `to_xml` 方法，如果使用了 `:xml` 选项，`render` 方法会自动调用 `to_xml`。
 
-#### Rendering Vanilla JavaScript
+#### 渲染普通的 JavaScript {#rendering-vanilla-javascript}
 
-Rails can render vanilla JavaScript:
+Rails 能渲染普通的 JavaScript：
 
-```ruby
+{:lang="ruby"}
+~~~
 render js: "alert('Hello Rails');"
-```
+~~~
 
-This will send the supplied string to the browser with a MIME type of `text/javascript`.
+这种方法会把 MIME 设为 `text/javascript`，再把指定的字符串发给浏览器。
 
-#### Rendering raw body
+#### 渲染原始的主体 {#rendering-raw-body}
 
-You can send a raw content back to the browser, without setting any content
-type, by using the `:body` option to `render`:
+调用 `render` 方法时使用 `:body` 选项，可以不设置内容类型，把原始的内容发送给浏览器：
 
-```ruby
+{:lang="ruby"}
+~~~
 render body: "raw"
-```
+~~~
 
-TIP: This option should be used only if you don't care about the content type of
-the response. Using `:plain` or `:html` might be more appropriate in most of the
-time.
+T> 只有不在意内容类型时才可使用这个选项。大多数时候，使用 `:plain` 或 `:html` 选项更合适。
 
-NOTE: Unless overridden, your response returned from this render option will be
-`text/html`, as that is the default content type of Action Dispatch response.
+I> 如果没有修改，这种方式返回的内容类型是 `text/html`，因为这是 Action Dispatch 响应默认使用的内容类型。
 
-#### Options for `render`
+#### `render` 方法的选项 {#options-for-render}
 
-Calls to the `render` method generally accept four options:
+`render` 方法一般可接受四个选项：
 
 * `:content_type`
 * `:layout`
 * `:location`
 * `:status`
 
-##### The `:content_type` Option
+##### `:content_type` 选项 {#the-content-type-option}
 
-By default, Rails will serve the results of a rendering operation with the MIME content-type of `text/html` (or `application/json` if you use the `:json` option, or `application/xml` for the `:xml` option.). There are times when you might like to change this, and you can do so by setting the `:content_type` option:
+默认情况下，Rails 渲染得到的结果内容类型为 `text/html`；如果使用 `:json` 选项，内容类型为 `application/json`；如果使用 `:xml` 选项，内容类型为 `application/xml`。如果需要修改内容类型，可使用 `:content_type` 选项
 
-```ruby
+{:lang="ruby"}
+~~~
 render file: filename, content_type: "application/rss"
-```
+~~~
 
-##### The `:layout` Option
+##### `:layout` 选项 {#the-layout-option}
 
-With most of the options to `render`, the rendered content is displayed as part of the current layout. You'll learn more about layouts and how to use them later in this guide.
+`render` 方法的大多数选项渲染得到的结果都会作为当前布局的一部分显示。后文会详细介绍布局。
 
-You can use the `:layout` option to tell Rails to use a specific file as the layout for the current action:
+`:layout` 选项告知 Rails，在当前动作中使用指定的文件作为布局：
 
-```ruby
+{:lang="ruby"}
+~~~
 render layout: "special_layout"
-```
+~~~
 
-You can also tell Rails to render with no layout at all:
+也可以告知 Rails 不使用布局：
 
-```ruby
+{:lang="ruby"}
+~~~
 render layout: false
-```
+~~~
 
-##### The `:location` Option
+##### `:location` 选项 {#the-location-option}
 
-You can use the `:location` option to set the HTTP `Location` header:
+`:location` 选项可以设置 HTTP `Location` 报头：
 
-```ruby
+{:lang="ruby"}
+~~~
 render xml: photo, location: photo_url(photo)
-```
+~~~
 
-##### The `:status` Option
+##### `:status` 选项 {#the-status-option}
 
-Rails will automatically generate a response with the correct HTTP status code (in most cases, this is `200 OK`). You can use the `:status` option to change this:
+Rails 会自动为生成的响应附加正确的 HTTP 状态码（大多数情况下是 `200 OK`）。使用 `:status` 选项可以修改状态码：
 
-```ruby
+{:lang="ruby"}
+~~~
 render status: 500
 render status: :forbidden
-```
+~~~
 
-Rails understands both numeric status codes and the corresponding symbols shown below.
+Rails 能理解数字状态码和对应的符号，如下所示：
 
-| Response Class      | HTTP Status Code | Symbol                           |
-| ------------------- | ---------------- | -------------------------------- |
-| **Informational**   | 100              | :continue                        |
+| 响应类别             | HTTP 状态码       | 符号                             |
+|---------------------|------------------|----------------------------------|
+| **信息**             | 100              | :continue                        |
 |                     | 101              | :switching_protocols             |
 |                     | 102              | :processing                      |
-| **Success**         | 200              | :ok                              |
+| **成功**             | 200              | :ok                              |
 |                     | 201              | :created                         |
 |                     | 202              | :accepted                        |
 |                     | 203              | :non_authoritative_information   |
@@ -378,7 +394,7 @@ Rails understands both numeric status codes and the corresponding symbols shown 
 |                     | 207              | :multi_status                    |
 |                     | 208              | :already_reported                |
 |                     | 226              | :im_used                         |
-| **Redirection**     | 300              | :multiple_choices                |
+| **重定向**           | 300              | :multiple_choices                |
 |                     | 301              | :moved_permanently               |
 |                     | 302              | :found                           |
 |                     | 303              | :see_other                       |
@@ -387,7 +403,7 @@ Rails understands both numeric status codes and the corresponding symbols shown 
 |                     | 306              | :reserved                        |
 |                     | 307              | :temporary_redirect              |
 |                     | 308              | :permanent_redirect              |
-| **Client Error**    | 400              | :bad_request                     |
+| **客户端错误**       | 400              | :bad_request                     |
 |                     | 401              | :unauthorized                    |
 |                     | 402              | :payment_required                |
 |                     | 403              | :forbidden                       |
@@ -412,7 +428,7 @@ Rails understands both numeric status codes and the corresponding symbols shown 
 |                     | 428              | :precondition_required           |
 |                     | 429              | :too_many_requests               |
 |                     | 431              | :request_header_fields_too_large |
-| **Server Error**    | 500              | :internal_server_error           |
+| **服务器错误**        | 500              | :internal_server_error           |
 |                     | 501              | :not_implemented                 |
 |                     | 502              | :bad_gateway                     |
 |                     | 503              | :service_unavailable             |
@@ -424,39 +440,42 @@ Rails understands both numeric status codes and the corresponding symbols shown 
 |                     | 510              | :not_extended                    |
 |                     | 511              | :network_authentication_required |
 
-#### Finding Layouts
+#### 查找布局 {#finding-layouts}
 
-To find the current layout, Rails first looks for a file in `app/views/layouts` with the same base name as the controller. For example, rendering actions from the `PhotosController` class will use `app/views/layouts/photos.html.erb` (or `app/views/layouts/photos.builder`). If there is no such controller-specific layout, Rails will use `app/views/layouts/application.html.erb` or `app/views/layouts/application.builder`. If there is no `.erb` layout, Rails will use a `.builder` layout if one exists. Rails also provides several ways to more precisely assign specific layouts to individual controllers and actions.
+查找布局时，Rails 首先查看 `app/views/layouts` 文件夹中是否有和控制器同名的文件。例如，渲染 `PhotosController` 控制器中的动作会使用 `app/views/layouts/photos.html.erb`（或 `app/views/layouts/photos.builder`）。如果没找到针对控制器的布局，Rails 会使用 `app/views/layouts/application.html.erb` 或 `app/views/layouts/application.builder`。如果没有 `.erb` 布局，Rails 会使用 `.builder` 布局（如果文件存在）。Rails 还提供了多种方法用来指定单个控制器和动作使用的布局。
 
-##### Specifying Layouts for Controllers
+##### 指定控制器所用布局 {#specifying-layouts-for-controllers}
 
-You can override the default layout conventions in your controllers by using the `layout` declaration. For example:
+在控制器中使用 `layout` 方法，可以改写默认使用的布局约定。例如：
 
-```ruby
+{:lang="ruby"}
+~~~
 class ProductsController < ApplicationController
   layout "inventory"
   #...
 end
-```
+~~~
 
-With this declaration, all of the views rendered by the `ProductsController` will use `app/views/layouts/inventory.html.erb` as their layout.
+这么声明之后，`ProductsController` 渲染的所有视图都将使用 `app/views/layouts/inventory.html.erb` 文件作为布局。
 
-To assign a specific layout for the entire application, use a `layout` declaration in your `ApplicationController` class:
+要想指定整个程序使用的布局，可以在 `ApplicationController` 类中使用 `layout` 方法：
 
-```ruby
+{:lang="ruby"}
+~~~
 class ApplicationController < ActionController::Base
   layout "main"
   #...
 end
-```
+~~~
 
-With this declaration, all of the views in the entire application will use `app/views/layouts/main.html.erb` for their layout.
+这么声明之后，整个程序的视图都会使用 `app/views/layouts/main.html.erb` 文件作为布局。
 
-##### Choosing Layouts at Runtime
+##### 运行时选择布局 {#choosing-layouts-at-runtime}
 
-You can use a symbol to defer the choice of layout until a request is processed:
+可以使用一个 Symbol，在处理请求时选择布局：
 
-```ruby
+{:lang="ruby"}
+~~~
 class ProductsController < ApplicationController
   layout :products_layout
 
@@ -470,90 +489,97 @@ class ProductsController < ApplicationController
     end
 
 end
-```
+~~~
 
-Now, if the current user is a special user, they'll get a special layout when viewing a product.
+如果当前用户是特殊用户，会使用一个特殊布局渲染产品视图。
 
-You can even use an inline method, such as a Proc, to determine the layout. For example, if you pass a Proc object, the block you give the Proc will be given the `controller` instance, so the layout can be determined based on the current request:
+还可使用行间方法，例如 Proc，决定使用哪个布局。如果使用 Proc，其代码块可以访问 `controller` 实例，这样就能根据当前请求决定使用哪个布局：
 
-```ruby
+{:lang="ruby"}
+~~~
 class ProductsController < ApplicationController
   layout Proc.new { |controller| controller.request.xhr? ? "popup" : "application" }
 end
-```
+~~~
 
-##### Conditional Layouts
+##### 条件布局 {#conditional-layouts}
 
-Layouts specified at the controller level support the `:only` and `:except` options. These options take either a method name, or an array of method names, corresponding to method names within the controller:
+在控制器中指定布局时可以使用 `:only` 和 `:except` 选项。这两个选项的值可以是一个方法名或者一个方法名数组，这些方法都是控制器中的动作：
 
-```ruby
+{:lang="ruby"}
+~~~
 class ProductsController < ApplicationController
   layout "product", except: [:index, :rss]
 end
-```
+~~~
 
-With this declaration, the `product` layout would be used for everything but the `rss` and `index` methods.
+这么声明后，除了 `rss` 和 `index` 动作之外，其他动作都使用 `product` 布局渲染视图。
 
-##### Layout Inheritance
+##### 布局继承 {#layout-inheritance}
 
-Layout declarations cascade downward in the hierarchy, and more specific layout declarations always override more general ones. For example:
+布局声明按层级顺序向下顺延，专用布局比通用布局优先级高。例如：
 
-* `application_controller.rb`
+*   `application_controller.rb`
 
-    ```ruby
+    {:lang="ruby"}
+    ~~~
     class ApplicationController < ActionController::Base
       layout "main"
     end
-    ```
+    ~~~
 
-* `articles_controller.rb`
+*   `posts_controller.rb`
 
-    ```ruby
-    class ArticlesController < ApplicationController
+    {:lang="ruby"}
+    ~~~
+    class PostsController < ApplicationController
     end
-    ```
+    ~~~
 
-* `special_articles_controller.rb`
+*   `special_posts_controller.rb`
 
-    ```ruby
-    class SpecialArticlesController < ArticlesController
+    {:lang="ruby"}
+    ~~~
+    class SpecialPostsController < PostsController
       layout "special"
     end
-    ```
+    ~~~
 
-* `old_articles_controller.rb`
+*   `old_posts_controller.rb`
 
-    ```ruby
-    class OldArticlesController < SpecialArticlesController
+    {:lang="ruby"}
+    ~~~
+    class OldPostsController < SpecialPostsController
       layout false
 
       def show
-        @article = Article.find(params[:id])
+        @post = Post.find(params[:id])
       end
 
       def index
-        @old_articles = Article.older
+        @old_posts = Post.older
         render layout: "old"
       end
       # ...
     end
-    ```
+    ~~~
 
-In this application:
+在这个程序中：
 
-* In general, views will be rendered in the `main` layout
-* `ArticlesController#index` will use the `main` layout
-* `SpecialArticlesController#index` will use the `special` layout
-* `OldArticlesController#show` will use no layout at all
-* `OldArticlesController#index` will use the `old` layout
+* 一般情况下，视图使用 `main` 布局渲染；
+* `PostsController#index` 使用 `main` 布局；
+* `SpecialPostsController#index` 使用 `special` 布局；
+* `OldPostsController#show` 不用布局；
+* `OldPostsController#index` 使用 `old` 布局；
 
-#### Avoiding Double Render Errors
+#### 避免双重渲染错误 {#avoiding-double-render-errors}
 
-Sooner or later, most Rails developers will see the error message "Can only render or redirect once per action". While this is annoying, it's relatively easy to fix. Usually it happens because of a fundamental misunderstanding of the way that `render` works.
+大多数 Rails 开发者迟早都会看到一个错误消息：Can only render or redirect once per action（动作只能渲染或重定向一次）。这个提示很烦人，也很容易修正。出现这个错误的原因是，没有理解 `render` 的工作原理。
 
-For example, here's some code that will trigger this error:
+例如，下面的代码会导致这个错误：
 
-```ruby
+{:lang="ruby"}
+~~~
 def show
   @book = Book.find(params[:id])
   if @book.special?
@@ -561,11 +587,12 @@ def show
   end
   render action: "regular_show"
 end
-```
+~~~
 
-If `@book.special?` evaluates to `true`, Rails will start the rendering process to dump the `@book` variable into the `special_show` view. But this will _not_ stop the rest of the code in the `show` action from running, and when Rails hits the end of the action, it will start to render the `regular_show` view - and throw an error. The solution is simple: make sure that you have only one call to `render` or `redirect` in a single code path. One thing that can help is `and return`. Here's a patched version of the method:
+如果 `@book.special?` 的结果是 `true`，Rails 开始渲染，把 `@book` 变量导入 `special_show` 视图中。但是，`show` 动作并不会就此停止运行，当 Rails 运行到动作的末尾时，会渲染 `regular_show` 视图，导致错误出现。解决的办法很简单，确保在一次代码运行路线中只调用一次 `render` 或 `redirect_to` 方法。有一个语句可以提供帮助，那就是 `and return`。下面的代码对上述代码做了修改：
 
-```ruby
+{:lang="ruby"}
+~~~
 def show
   @book = Book.find(params[:id])
   if @book.special?
@@ -573,54 +600,59 @@ def show
   end
   render action: "regular_show"
 end
-```
+~~~
 
-Make sure to use `and return` instead of `&& return` because `&& return` will not work due to the operator precedence in the Ruby Language.
+千万别用 `&& return` 代替 `and return`，因为 Ruby 语言操作符优先级的关系，`&& return` 根本不起作用。
 
-Note that the implicit render done by ActionController detects if `render` has been called, so the following will work without errors:
+注意，`ActionController` 能检测到是否显式调用了 `render` 方法，所以下面这段代码不会出错：
 
-```ruby
+{:lang="ruby"}
+~~~
 def show
   @book = Book.find(params[:id])
   if @book.special?
     render action: "special_show"
   end
 end
-```
+~~~
 
-This will render a book with `special?` set with the `special_show` template, while other books will render with the default `show` template.
+如果 `@book.special?` 的结果是 `true`，会渲染 `special_show` 视图，否则就渲染默认的 `show` 模板。
 
-### Using `redirect_to`
+### 使用 `redirect_to` 方法 {#using-redirect-to}
 
-Another way to handle returning responses to an HTTP request is with `redirect_to`. As you've seen, `render` tells Rails which view (or other asset) to use in constructing a response. The `redirect_to` method does something completely different: it tells the browser to send a new request for a different URL. For example, you could redirect from wherever you are in your code to the index of photos in your application with this call:
+响应 HTTP 请求的另一种方法是使用 `redirect_to`。如前所述，`render` 告诉 Rails 构建响应时使用哪个视图（以及其他静态资源）。`redirect_to` 做的事情则完全不同：告诉浏览器向另一个地址发起新请求。例如，在程序中的任何地方使用下面的代码都可以重定向到 `photos` 控制器的 `index` 动作：
 
-```ruby
+{:lang="ruby"}
+~~~
 redirect_to photos_url
-```
+~~~
 
-You can use `redirect_to` with any arguments that you could use with `link_to` or `url_for`. There's also a special redirect that sends the user back to the page they just came from:
+`redirect_to` 方法的参数与 `link_to` 和 `url_for` 一样。有个特殊的重定向，返回到前一个页面：
 
-```ruby
+{:lang="ruby"}
+~~~
 redirect_to :back
-```
+~~~
 
-#### Getting a Different Redirect Status Code
+#### 设置不同的重定向状态码 {#getting-a-different-redirect-status-code}
 
-Rails uses HTTP status code 302, a temporary redirect, when you call `redirect_to`. If you'd like to use a different status code, perhaps 301, a permanent redirect, you can use the `:status` option:
+调用 `redirect_to` 方法时，Rails 会把 HTTP 状态码设为 302，即临时重定向。如果想使用其他的状态码，例如 301（永久重定向），可以设置 `:status` 选项：
 
-```ruby
+{:lang="ruby"}
+~~~
 redirect_to photos_path, status: 301
-```
+~~~
 
-Just like the `:status` option for `render`, `:status` for `redirect_to` accepts both numeric and symbolic header designations.
+和 `render` 方法的 `:status` 选项一样，`redirect_to` 方法的 `:status` 选项同样可使用数字状态码或符号。
 
-#### The Difference Between `render` and `redirect_to`
+#### `render` 和 `redirect_to` 的区别 {#the-difference-between-render-and-redirect-to}
 
-Sometimes inexperienced developers think of `redirect_to` as a sort of `goto` command, moving execution from one place to another in your Rails code. This is _not_ correct. Your code stops running and waits for a new request for the browser. It just happens that you've told the browser what request it should make next, by sending back an HTTP 302 status code.
+有些经验不足的开发者会认为 `redirect_to` 方法是一种 `goto` 命令，把代码从一处转到别处。这么理解是**不对**的。执行到 `redirect_to` 方法时，代码会停止运行，等待浏览器发起新请求。你需要告诉浏览器下一个请求是什么，并返回 302 状态码。
 
-Consider these actions to see the difference:
+下面通过实例说明。
 
-```ruby
+{:lang="ruby"}
+~~~
 def index
   @books = Book.all
 end
@@ -631,11 +663,12 @@ def show
     render action: "index"
   end
 end
-```
+~~~
 
-With the code in this form, there will likely be a problem if the `@book` variable is `nil`. Remember, a `render :action` doesn't run any code in the target action, so nothing will set up the `@books` variable that the `index` view will probably require. One way to fix this is to redirect instead of rendering:
+在这段代码中，如果 `@book` 变量的值为 `nil` 很可能会出问题。记住，`render :action` 不会执行目标动作中的任何代码，因此不会创建 `index` 视图所需的 `@books` 变量。修正方法之一是不渲染，使用重定向：
 
-```ruby
+{:lang="ruby"}
+~~~
 def index
   @books = Book.all
 end
@@ -646,15 +679,16 @@ def show
     redirect_to action: :index
   end
 end
-```
+~~~
 
-With this code, the browser will make a fresh request for the index page, the code in the `index` method will run, and all will be well.
+这样修改之后，浏览器会向 `index` 动作发起新请求，执行 `index` 方法中的代码，一切都能正常运行。
 
-The only downside to this code is that it requires a round trip to the browser: the browser requested the show action with `/books/1` and the controller finds that there are no books, so the controller sends out a 302 redirect response to the browser telling it to go to `/books/`, the browser complies and sends a new request back to the controller asking now for the `index` action, the controller then gets all the books in the database and renders the index template, sending it back down to the browser which then shows it on your screen.
+这种方法有个缺点，增加了浏览器的工作量。浏览器通过 `/books/1` 向 `show` 动作发起请求，控制器做了查询，但没有找到对应的图书，所以返回 302 重定向响应，告诉浏览器访问 `/books/`。浏览器收到指令后，向控制器的 `index` 动作发起新请求，控制器从数据库中取出所有图书，渲染 `index` 模板，将其返回浏览器，在屏幕上显示所有图书。
 
-While in a small application, this added latency might not be a problem, it is something to think about if response time is a concern. We can demonstrate one way to handle this with a contrived example:
+在小型程序中，额外增加的时间不是个问题。如果响应时间很重要，这个问题就值得关注了。下面举个虚拟的例子演示如何解决这个问题：
 
-```ruby
+{:lang="ruby"}
+~~~
 def index
   @books = Book.all
 end
@@ -667,21 +701,22 @@ def show
     render "index"
   end
 end
-```
+~~~
 
-This would detect that there are no books with the specified ID, populate the `@books` instance variable with all the books in the model, and then directly render the `index.html.erb` template, returning it to the browser with a flash alert message to tell the user what happened.
+在这段代码中，如果指定 ID 的图书不存在，会从模型中取出所有图书，赋值给 `@books` 实例变量，然后直接渲染 `index.html.erb` 模板，并显示一个 Flash 消息，告知用户出了什么问题。
 
-### Using `head` To Build Header-Only Responses
+### 使用 `head` 构建只返回报头的响应 {#using-head-to-build-header-only-responses}
 
-The `head` method can be used to send responses with only headers to the browser. It provides a more obvious alternative to calling `render :nothing`. The `head` method accepts a number or symbol (see [reference table](#the-status-option)) representing a HTTP status code. The options argument is interpreted as a hash of header names and values. For example, you can return only an error header:
+`head` 方法可以只把报头发送给浏览器。还可使用意图更明确的 `render :nothing` 达到同样的目的。`head` 方法的参数是 HTTP 状态码的符号形式（参见[前文表格](#the-status-option)），选项是一个 Hash，指定报头名和对应的值。例如，可以只返回报错的报头：
 
-```ruby
+{:lang="ruby"}
+~~~
 head :bad_request
-```
+~~~
 
-This would produce the following header:
+生成的报头如下：
 
-```
+~~~
 HTTP/1.1 400 Bad Request
 Connection: close
 Date: Sun, 24 Jan 2010 12:15:53 GMT
@@ -690,17 +725,18 @@ Content-Type: text/html; charset=utf-8
 X-Runtime: 0.013483
 Set-Cookie: _blog_session=...snip...; path=/; HttpOnly
 Cache-Control: no-cache
-```
+~~~
 
-Or you can use other HTTP headers to convey other information:
+或者使用其他 HTTP 报头提供其他信息：
 
-```ruby
+{:lang="ruby"}
+~~~
 head :created, location: photo_path(@photo)
-```
+~~~
 
-Which would produce:
+生成的报头如下：
 
-```
+~~~
 HTTP/1.1 201 Created
 Connection: close
 Date: Sun, 24 Jan 2010 12:16:44 GMT
@@ -710,20 +746,19 @@ Content-Type: text/html; charset=utf-8
 X-Runtime: 0.083496
 Set-Cookie: _blog_session=...snip...; path=/; HttpOnly
 Cache-Control: no-cache
-```
+~~~
 
-Structuring Layouts
--------------------
+## 布局的结构 {#structuring-layouts}
 
-When Rails renders a view as a response, it does so by combining the view with the current layout, using the rules for finding the current layout that were covered earlier in this guide. Within a layout, you have access to three tools for combining different bits of output to form the overall response:
+Rails 渲染响应的视图时，会把视图和当前模板结合起来。查找当前模板的方法前文已经介绍过。在布局中可以使用三种工具把各部分合在一起组成完整的响应：
 
-* Asset tags
-* `yield` and `content_for`
-* Partials
+* 静态资源标签
+* `yield` 和 `content_for`
+* 局部视图
 
-### Asset Tag Helpers
+### 静态资源标签帮助方法 {#asset-tag-helpers}
 
-Asset tag helpers provide methods for generating HTML that link views to feeds, JavaScript, stylesheets, images, videos and audios. There are six asset tag helpers available in Rails:
+静态资源帮助方法用来生成链接到 Feed、JavaScript、样式表、图片、视频和音频的 HTML 代码。Rails 提供了六个静态资源标签帮助方法：
 
 * `auto_discovery_link_tag`
 * `javascript_include_tag`
@@ -732,207 +767,231 @@ Asset tag helpers provide methods for generating HTML that link views to feeds, 
 * `video_tag`
 * `audio_tag`
 
-You can use these tags in layouts or other views, although the `auto_discovery_link_tag`, `javascript_include_tag`, and `stylesheet_link_tag`, are most commonly used in the `<head>` section of a layout.
+这六个帮助方法可以在布局或视图中使用，不过 `auto_discovery_link_tag`、`javascript_include_tag` 和 `stylesheet_link_tag` 最常出现在布局的 `<head>` 中。
 
-WARNING: The asset tag helpers do _not_ verify the existence of the assets at the specified locations; they simply assume that you know what you're doing and generate the link.
+W> 静态资源标签帮助方法不会检查指定位置是否存在静态资源，假定你知道自己在做什么，只负责生成对应的链接。
 
-#### Linking to Feeds with the `auto_discovery_link_tag`
+#### 使用 `auto_discovery_link_tag` 链接到 Feed {#linking-to-feeds-with-the-auto-discovery-link-tag}
 
-The `auto_discovery_link_tag` helper builds HTML that most browsers and feed readers can use to detect the presence of RSS or Atom feeds. It takes the type of the link (`:rss` or `:atom`), a hash of options that are passed through to url_for, and a hash of options for the tag:
+`auto_discovery_link_tag` 帮助方法生成的 HTML，大多数浏览器和 Feed 阅读器都能用来自动识别 RSS 或 Atom Feed。`auto_discovery_link_tag` 接受的参数包括链接的类型（`:rss` 或 `:atom`），传递给 `url_for` 的 Hash 选项，以及该标签使用的 Hash 选项：
 
-```erb
+{:lang="erb"}
+~~~
 <%= auto_discovery_link_tag(:rss, {action: "feed"},
   {title: "RSS Feed"}) %>
-```
+~~~
 
-There are three tag options available for the `auto_discovery_link_tag`:
+`auto_discovery_link_tag` 的标签选项有三个：
 
-* `:rel` specifies the `rel` value in the link. The default value is "alternate".
-* `:type` specifies an explicit MIME type. Rails will generate an appropriate MIME type automatically.
-* `:title` specifies the title of the link. The default value is the uppercase `:type` value, for example, "ATOM" or "RSS".
+* `:rel`：指定链接 `rel` 属性的值，默认值为 `"alternate"`；
+* `:type`：指定 MIME 类型，不过 Rails 会自动生成正确的 MIME 类型；
+* `:title`：指定链接的标题，默认值是 `:type` 参数值的全大写形式，例如 `"ATOM"` 或 `"RSS"`；
 
-#### Linking to JavaScript Files with the `javascript_include_tag`
+#### 使用 `javascript_include_tag` 链接 JavaScript 文件 {#linking-to-javascript-files-with-the-javascript-include-tag}
 
-The `javascript_include_tag` helper returns an HTML `script` tag for each source provided.
+`javascript_include_tag` 帮助方法为指定的每个资源生成 HTML `script` 标签。
 
-If you are using Rails with the [Asset Pipeline](asset_pipeline.html) enabled, this helper will generate a link to `/assets/javascripts/` rather than `public/javascripts` which was used in earlier versions of Rails. This link is then served by the asset pipeline.
+如果启用了 [Asset Pipeline]({{ site.baseurl }}/asset_pipeline.html)，这个帮助方法生成的链接指向 `/assets/javascripts/` 而不是 Rails 旧版中使用的 `public/javascripts`。链接的地址由 Asset Pipeline 伺服。
 
-A JavaScript file within a Rails application or Rails engine goes in one of three locations: `app/assets`, `lib/assets` or `vendor/assets`. These locations are explained in detail in the [Asset Organization section in the Asset Pipeline Guide](asset_pipeline.html#asset-organization)
+Rails 程序或引擎中的 JavaScript 文件可存放在三个位置：`app/assets`，`lib/assets` 或 `vendor/assets`。详细说明参见 Asset Pipeline 中的“[静态资源的组织方式]({{ site.baseurl }}/asset_pipeline.html#asset-organization)”一节。
 
-You can specify a full path relative to the document root, or a URL, if you prefer. For example, to link to a JavaScript file that is inside a directory called `javascripts` inside of one of `app/assets`, `lib/assets` or `vendor/assets`, you would do this:
+文件的地址可使用相对文档根目录的完整路径，或者是 URL。例如，如果想链接到 `app/assets`、`lib/assets` 或 `vendor/assets` 文件夹中名为 `javascripts` 的子文件夹中的文件，可以这么做：
 
-```erb
+{:lang="erb"}
+~~~
 <%= javascript_include_tag "main" %>
-```
+~~~
 
-Rails will then output a `script` tag such as this:
+Rails 生成的 `script` 标签如下：
 
-```html
+{:lang="html"}
+~~~
 <script src='/assets/main.js'></script>
-```
+~~~
 
-The request to this asset is then served by the Sprockets gem.
+对这个静态资源的请求由 Sprockets gem 伺服。
 
-To include multiple files such as `app/assets/javascripts/main.js` and `app/assets/javascripts/columns.js` at the same time:
+同时引入 `app/assets/javascripts/main.js` 和 `app/assets/javascripts/columns.js` 可以这么做：
 
-```erb
+{:lang="erb"}
+~~~
 <%= javascript_include_tag "main", "columns" %>
-```
+~~~
 
-To include `app/assets/javascripts/main.js` and `app/assets/javascripts/photos/columns.js`:
+引入 `app/assets/javascripts/main.js` 和 `app/assets/javascripts/photos/columns.js`：
 
-```erb
+{:lang="erb"}
+~~~
 <%= javascript_include_tag "main", "/photos/columns" %>
-```
+~~~
 
-To include `http://example.com/main.js`:
+引入 `http://example.com/main.js`：
 
-```erb
+{:lang="erb"}
+~~~
 <%= javascript_include_tag "http://example.com/main.js" %>
-```
+~~~
 
-#### Linking to CSS Files with the `stylesheet_link_tag`
+#### 使用 `stylesheet_link_tag` 链接 CSS 文件 {#linking-to-css-files-with-the-stylesheet-link-tag}
 
-The `stylesheet_link_tag` helper returns an HTML `<link>` tag for each source provided.
+`stylesheet_link_tag` 帮助方法为指定的每个资源生成 HTML `<link>` 标签。
 
-If you are using Rails with the "Asset Pipeline" enabled, this helper will generate a link to `/assets/stylesheets/`. This link is then processed by the Sprockets gem. A stylesheet file can be stored in one of three locations: `app/assets`, `lib/assets` or `vendor/assets`.
+如果启用了 Asset Pipeline，这个帮助方法生成的链接指向 `/assets/stylesheets/`，由 Sprockets gem 伺服。样式表文件可以存放在三个位置：`app/assets`，`lib/assets` 或 `vendor/assets`。
 
-You can specify a full path relative to the document root, or a URL. For example, to link to a stylesheet file that is inside a directory called `stylesheets` inside of one of `app/assets`, `lib/assets` or `vendor/assets`, you would do this:
+文件的地址可使用相对文档根目录的完整路径，或者是 URL。例如，如果想链接到 `app/assets`、`lib/assets` 或 `vendor/assets` 文件夹中名为 `stylesheets` 的子文件夹中的文件，可以这么做：
 
-```erb
+{:lang="erb"}
+~~~
 <%= stylesheet_link_tag "main" %>
-```
+~~~
 
-To include `app/assets/stylesheets/main.css` and `app/assets/stylesheets/columns.css`:
+引入 `app/assets/stylesheets/main.css` 和 `app/assets/stylesheets/columns.css`：
 
-```erb
+{:lang="erb"}
+~~~
 <%= stylesheet_link_tag "main", "columns" %>
-```
+~~~
 
-To include `app/assets/stylesheets/main.css` and `app/assets/stylesheets/photos/columns.css`:
+引入 `app/assets/stylesheets/main.css` 和 `app/assets/stylesheets/photos/columns.css`：
 
-```erb
+{:lang="erb"}
+~~~
 <%= stylesheet_link_tag "main", "photos/columns" %>
-```
+~~~
 
-To include `http://example.com/main.css`:
+引入 `http://example.com/main.css`：
 
-```erb
+{:lang="erb"}
+~~~
 <%= stylesheet_link_tag "http://example.com/main.css" %>
-```
+~~~
 
-By default, the `stylesheet_link_tag` creates links with `media="screen" rel="stylesheet"`. You can override any of these defaults by specifying an appropriate option (`:media`, `:rel`):
+默认情况下，`stylesheet_link_tag` 创建的链接属性为 `media="screen" rel="stylesheet"`。指定相应的选项（`:media`，`:rel`）可以重写默认值：
 
-```erb
+{:lang="erb"}
+~~~
 <%= stylesheet_link_tag "main_print", media: "print" %>
-```
+~~~
 
-#### Linking to Images with the `image_tag`
+#### 使用 `image_tag` 链接图片 {#linking-to-images-with-the-image-tag}
 
-The `image_tag` helper builds an HTML `<img />` tag to the specified file. By default, files are loaded from `public/images`.
+`image_tag` 帮助方法为指定的文件生成 HTML `<img />` 标签。默认情况下，文件存放在 `public/images` 文件夹中。
 
-WARNING: Note that you must specify the extension of the image.
+W> 注意，必须指定图片的扩展名。
 
-```erb
+{:lang="erb"}
+~~~
 <%= image_tag "header.png" %>
-```
+~~~
 
-You can supply a path to the image if you like:
+可以指定图片的路径：
 
-```erb
+{:lang="erb"}
+~~~
 <%= image_tag "icons/delete.gif" %>
-```
+~~~
 
-You can supply a hash of additional HTML options:
+可以使用 Hash 指定额外的 HTML 属性：
 
-```erb
+{:lang="erb"}
+~~~
 <%= image_tag "icons/delete.gif", {height: 45} %>
-```
+~~~
 
-You can supply alternate text for the image which will be used if the user has images turned off in their browser. If you do not specify an alt text explicitly, it defaults to the file name of the file, capitalized and with no extension. For example, these two image tags would return the same code:
+可以指定一个替代文本，在关闭图片的浏览器中显示。如果没指定替代文本，Rails 会使用图片的文件名，去掉扩展名，并把首字母变成大写。例如，下面两个标签会生成相同的代码：
 
-```erb
+{:lang="erb"}
+~~~
 <%= image_tag "home.gif" %>
 <%= image_tag "home.gif", alt: "Home" %>
-```
+~~~
 
-You can also specify a special size tag, in the format "{width}x{height}":
+还可指定图片的大小，格式为“{width}x{height}”：
 
-```erb
+{:lang="erb"}
+~~~
 <%= image_tag "home.gif", size: "50x20" %>
-```
+~~~
 
-In addition to the above special tags, you can supply a final hash of standard HTML options, such as `:class`, `:id` or `:name`:
+除了上述特殊的选项外，还可在最后一个参数中指定标准的 HTML 属性，例如 `:class`、`:id` 或 `:name`：
 
-```erb
+{:lang="erb"}
+~~~
 <%= image_tag "home.gif", alt: "Go Home",
                           id: "HomeImage",
                           class: "nav_bar" %>
-```
+~~~
 
-#### Linking to Videos with the `video_tag`
+#### 使用 `video_tag` 链接视频 {#linking-to-videos-with-the-video-tag}
 
-The `video_tag` helper builds an HTML 5 `<video>` tag to the specified file. By default, files are loaded from `public/videos`.
+`video_tag` 帮助方法为指定的文件生成 HTML5 `<video>` 标签。默认情况下，视频文件存放在 `public/videos` 文件夹中。
 
-```erb
+{:lang="erb"}
+~~~
 <%= video_tag "movie.ogg" %>
-```
+~~~
 
-Produces
+生成的代码如下：
 
-```erb
+{:lang="erb"}
+~~~
 <video src="/videos/movie.ogg" />
-```
+~~~
 
-Like an `image_tag` you can supply a path, either absolute, or relative to the `public/videos` directory. Additionally you can specify the `size: "#{width}x#{height}"` option just like an `image_tag`. Video tags can also have any of the HTML options specified at the end (`id`, `class` et al).
+和 `image_tag` 类似，视频的地址可以使用绝对路径，或者相对 `public/videos` 文件夹的路径。而且也可以指定 `size: "#{width}x#{height}"` 选项。`video_tag` 还可指定其他 HTML 属性，例如 `id`、`class` 等。
 
-The video tag also supports all of the `<video>` HTML options through the HTML options hash, including:
+`video_tag` 方法还可使用 HTML Hash 选项指定所有 `<video>` 标签的属性，包括：
 
-* `poster: "image_name.png"`, provides an image to put in place of the video before it starts playing.
-* `autoplay: true`, starts playing the video on page load.
-* `loop: true`, loops the video once it gets to the end.
-* `controls: true`, provides browser supplied controls for the user to interact with the video.
-* `autobuffer: true`, the video will pre load the file for the user on page load.
+* `poster: "image_name.png"`：指定视频播放前在视频的位置显示的图片；
+* `autoplay: true`：页面加载后开始播放视频；
+* `loop: true`：视频播完后再次播放；
+* `controls: true`：为用户提供浏览器对视频的控制支持，用于和视频交互；
+* `autobuffer: true`：页面加载时预先加载视频文件；
 
-You can also specify multiple videos to play by passing an array of videos to the `video_tag`:
+把数组传递给 `video_tag` 方法可以指定多个视频：
 
-```erb
+{:lang="erb"}
+~~~
 <%= video_tag ["trailer.ogg", "movie.ogg"] %>
-```
+~~~
 
-This will produce:
+生成的代码如下：
 
-```erb
+{:lang="erb"}
+~~~
 <video><source src="trailer.ogg" /><source src="movie.ogg" /></video>
-```
+~~~
 
-#### Linking to Audio Files with the `audio_tag`
+#### 使用 `audio_tag` 链接音频 {#linking-to-audio-files-with-the-audio-tag}
 
-The `audio_tag` helper builds an HTML 5 `<audio>` tag to the specified file. By default, files are loaded from `public/audios`.
+`audio_tag` 帮助方法为指定的文件生成 HTML5 `<audio>` 标签。默认情况下，音频文件存放在 `public/audio` 文件夹中。
 
-```erb
+{:lang="erb"}
+~~~
 <%= audio_tag "music.mp3" %>
-```
+~~~
 
-You can supply a path to the audio file if you like:
+还可指定音频文件的路径：
 
-```erb
+{:lang="erb"}
+~~~
 <%= audio_tag "music/first_song.mp3" %>
-```
+~~~
 
-You can also supply a hash of additional options, such as `:id`, `:class` etc.
+还可使用 Hash 指定其他属性，例如 `:id`、`:class` 等。
 
-Like the `video_tag`, the `audio_tag` has special options:
+和 `video_tag` 类似，`audio_tag` 也有特殊的选项：
 
-* `autoplay: true`, starts playing the audio on page load
-* `controls: true`, provides browser supplied controls for the user to interact with the audio.
-* `autobuffer: true`, the audio will pre load the file for the user on page load.
+* `autoplay: true`：页面加载后开始播放音频；
+* `controls: true`：为用户提供浏览器对音频的控制支持，用于和音频交互；
+* `autobuffer: true`：页面加载时预先加载音频文件；
 
-### Understanding `yield`
+### 理解 `yield` {#understanding-yield}
 
-Within the context of a layout, `yield` identifies a section where content from the view should be inserted. The simplest way to use this is to have a single `yield`, into which the entire contents of the view currently being rendered is inserted:
+在布局中，`yield` 标明一个区域，渲染的视图会插入这里。最简单的情况是只有一个 `yield`，此时渲染的整个视图都会插入这个区域：
 
-```html+erb
+{:lang="erb"}
+~~~
 <html>
   <head>
   </head>
@@ -940,11 +999,12 @@ Within the context of a layout, `yield` identifies a section where content from 
   <%= yield %>
   </body>
 </html>
-```
+~~~
 
-You can also create a layout with multiple yielding regions:
+布局中可以标明多个区域：
 
-```html+erb
+{:lang="erb"}
+~~~
 <html>
   <head>
   <%= yield :head %>
@@ -953,25 +1013,27 @@ You can also create a layout with multiple yielding regions:
   <%= yield %>
   </body>
 </html>
-```
+~~~
 
-The main body of the view will always render into the unnamed `yield`. To render content into a named `yield`, you use the `content_for` method.
+视图的主体会插入未命名的 `yield` 区域。要想在具名 `yield` 区域插入内容，得使用 `content_for` 方法。
 
-### Using the `content_for` Method
+### 使用 `content_for` 方法 {#using-the-content-for-method}
 
-The `content_for` method allows you to insert content into a named `yield` block in your layout. For example, this view would work with the layout that you just saw:
+`content_for` 方法在布局的具名 `yield` 区域插入内容。例如，下面的视图会在前一节的布局中插入内容：
 
-```html+erb
+{:lang="erb"}
+~~~
 <% content_for :head do %>
   <title>A simple page</title>
 <% end %>
 
 <p>Hello, Rails!</p>
-```
+~~~
 
-The result of rendering this page into the supplied layout would be this HTML:
+套入布局后生成的 HTML 如下：
 
-```html+erb
+{:lang="erb"}
+~~~
 <html>
   <head>
   <title>A simple page</title>
@@ -980,35 +1042,38 @@ The result of rendering this page into the supplied layout would be this HTML:
   <p>Hello, Rails!</p>
   </body>
 </html>
-```
+~~~
 
-The `content_for` method is very helpful when your layout contains distinct regions such as sidebars and footers that should get their own blocks of content inserted. It's also useful for inserting tags that load page-specific JavaScript or css files into the header of an otherwise generic layout.
+如果布局不同的区域需要不同的内容，例如侧边栏和底部，就可以使用 `content_for` 方法。`content_for` 方法还可用来在通用布局中引入特定页面使用的 JavaScript 文件或 CSS 文件。
 
-### Using Partials
+### 使用局部视图 {#using-partials}
 
-Partial templates - usually just called "partials" - are another device for breaking the rendering process into more manageable chunks. With a partial, you can move the code for rendering a particular piece of a response to its own file.
+局部视图可以把渲染过程分为多个管理方便的片段，把响应的某个特殊部分移入单独的文件。
 
-#### Naming Partials
+#### 具名局部视图 {#naming-partials}
 
-To render a partial as part of a view, you use the `render` method within the view:
+在视图中渲染局部视图可以使用 `render` 方法：
 
-```ruby
+{:lang="ruby"}
+~~~
 <%= render "menu" %>
-```
+~~~
 
-This will render a file named `_menu.html.erb` at that point within the view being rendered. Note the leading underscore character: partials are named with a leading underscore to distinguish them from regular views, even though they are referred to without the underscore. This holds true even when you're pulling in a partial from another folder:
+渲染这个视图时，会渲染名为 `_menu.html.erb` 的文件。注意文件名开头的下划线：局部视图的文件名开头有个下划线，用于和普通视图区分开，不过引用时无需加入下划线。即便从其他文件夹中引入局部视图，规则也是一样：
 
-```ruby
+{:lang="ruby"}
+~~~
 <%= render "shared/menu" %>
-```
+~~~
 
-That code will pull in the partial from `app/views/shared/_menu.html.erb`.
+这行代码会引入 `app/views/shared/_menu.html.erb` 这个局部视图。
 
-#### Using Partials to Simplify Views
+#### 使用局部视图简化视图 {#using-partials-to-simplify-views}
 
-One way to use partials is to treat them as the equivalent of subroutines: as a way to move details out of a view so that you can grasp what's going on more easily. For example, you might have a view that looked like this:
+局部视图的一种用法是作为“子程序”（subroutine），把细节提取出来，以便更好地理解整个视图的作用。例如，有如下的视图：
 
-```erb
+{:lang="erb"}
+~~~
 <%= render "shared/ad_banner" %>
 
 <h1>Products</h1>
@@ -1017,210 +1082,209 @@ One way to use partials is to treat them as the equivalent of subroutines: as a 
 ...
 
 <%= render "shared/footer" %>
-```
+~~~
 
-Here, the `_ad_banner.html.erb` and `_footer.html.erb` partials could contain content that is shared among many pages in your application. You don't need to see the details of these sections when you're concentrating on a particular page.
+这里，局部视图 `_ad_banner.html.erb` 和 `_footer.html.erb` 可以包含程序多个页面共用的内容。在编写某个页面的视图时，无需关心这些局部视图中的详细内容。
 
-TIP: For content that is shared among all pages in your application, you can use partials directly from layouts.
+T> 程序所有页面共用的内容，可以直接在布局中使用局部视图渲染。
 
-#### Partial Layouts
+#### 局部布局 {#partial-layouts}
 
-A partial can use its own layout file, just as a view can use a layout. For example, you might call a partial like this:
+和视图可以使用布局一样，局部视图也可使用自己的布局文件。例如，可以这样调用局部视图：
 
-```erb
+{:lang="erb"}
+~~~
 <%= render partial: "link_area", layout: "graybar" %>
-```
+~~~
 
-This would look for a partial named `_link_area.html.erb` and render it using the layout `_graybar.html.erb`. Note that layouts for partials follow the same leading-underscore naming as regular partials, and are placed in the same folder with the partial that they belong to (not in the master `layouts` folder).
+这行代码会使用 `_graybar.html.erb` 布局渲染局部视图 `_link_area.html.erb`。注意，局部布局的名字也以下划线开头，和局部视图保存在同个文件夹中（不在 `layouts` 文件夹中）。
 
-Also note that explicitly specifying `:partial` is required when passing additional options such as `:layout`.
+还要注意，指定其他选项时，例如 `:layout`，必须明确地使用 `:partial` 选项。
 
-#### Passing Local Variables
+#### 传递本地变量 {#passing-local-variables}
 
-You can also pass local variables into partials, making them even more powerful and flexible. For example, you can use this technique to reduce duplication between new and edit pages, while still keeping a bit of distinct content:
+本地变量可以传入局部视图，这么做可以把局部视图变得更强大、更灵活。例如，可以使用这种方法去除新建和编辑页面的重复代码，但仍然保有不同的内容：
 
-* `new.html.erb`
+{:lang="erb" title="`new.html.erb`"}
+~~~
+<h1>New zone</h1>
+<%= render partial: "form", locals: {zone: @zone} %>
+~~~
 
-    ```html+erb
-    <h1>New zone</h1>
-    <%= render partial: "form", locals: {zone: @zone} %>
-    ```
+{:lang="erb" title="`edit.html.erb`"}
+~~~
+<h1>Editing zone</h1>
+<%= render partial: "form", locals: {zone: @zone} %>
+~~~
 
-* `edit.html.erb`
+{:lang="erb" title="`_form.html.erb`"}
+~~~
+<%= form_for(zone) do |f| %>
+  <p>
+    <b>Zone name</b><br>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+~~~
 
-    ```html+erb
-    <h1>Editing zone</h1>
-    <%= render partial: "form", locals: {zone: @zone} %>
-    ```
+虽然两个视图使用同一个局部视图，但 Action View 的 `submit` 帮助方法为 `new` 动作生成的提交按钮名为“Create Zone”，为 `edit` 动作生成的提交按钮名为“Update Zone”。
 
-* `_form.html.erb`
+每个局部视图中都有个和局部视图同名的本地变量（去掉前面的下划线）。通过 `object` 选项可以把对象传给这个变量：
 
-    ```html+erb
-    <%= form_for(zone) do |f| %>
-      <p>
-        <b>Zone name</b><br>
-        <%= f.text_field :name %>
-      </p>
-      <p>
-        <%= f.submit %>
-      </p>
-    <% end %>
-    ```
-
-Although the same partial will be rendered into both views, Action View's submit helper will return "Create Zone" for the new action and "Update Zone" for the edit action.
-
-Every partial also has a local variable with the same name as the partial (minus the underscore). You can pass an object in to this local variable via the `:object` option:
-
-```erb
+{:lang="erb"}
+~~~
 <%= render partial: "customer", object: @new_customer %>
-```
+~~~
 
-Within the `customer` partial, the `customer` variable will refer to `@new_customer` from the parent view.
+在 `customer` 局部视图中，变量 `customer` 的值为父级视图中的 `@new_customer`。
 
-If you have an instance of a model to render into a partial, you can use a shorthand syntax:
+如果要在局部视图中渲染模型实例，可以使用简写句法：
 
-```erb
+{:lang="erb"}
+~~~
 <%= render @customer %>
-```
+~~~
 
-Assuming that the `@customer` instance variable contains an instance of the `Customer` model, this will use `_customer.html.erb` to render it and will pass the local variable `customer` into the partial which will refer to the `@customer` instance variable in the parent view.
+假设实例变量 `@customer` 的值为 `Customer` 模型的实例，上述代码会渲染 `_customer.html.erb`，其中本地变量 `customer` 的值为父级视图中 `@customer` 实例变量的值。
 
-#### Rendering Collections
+#### 渲染集合 {#rendering-collections}
 
-Partials are very useful in rendering collections. When you pass a collection to a partial via the `:collection` option, the partial will be inserted once for each member in the collection:
+渲染集合时使用局部视图特别方便。通过 `:collection` 选项把集合传给局部视图时，会把集合中每个元素套入局部视图渲染：
 
-* `index.html.erb`
+{:lang="erb" title="`index.html.erb`"}
+~~~
+<h1>Products</h1>
+<%= render partial: "product", collection: @products %>
+~~~
 
-    ```html+erb
-    <h1>Products</h1>
-    <%= render partial: "product", collection: @products %>
-    ```
+{:lang="erb" title="_product.html.erb"}
+~~~
+<p>Product Name: <%= product.name %></p>
+~~~
 
-* `_product.html.erb`
+传入复数形式的集合时，在局部视图中可以使用和局部视图同名的变量引用集合中的成员。在上面的代码中，局部视图是 `_product`，在其中可以使用 `product` 引用渲染的实例。
 
-    ```html+erb
-    <p>Product Name: <%= product.name %></p>
-    ```
+渲染集合还有个简写形式。假设 `@products` 是 `product` 实例集合，在 `index.html.erb` 中可以直接写成下面的形式，得到的结果是一样的：
 
-When a partial is called with a pluralized collection, then the individual instances of the partial have access to the member of the collection being rendered via a variable named after the partial. In this case, the partial is `_product`, and within the `_product` partial, you can refer to `product` to get the instance that is being rendered.
-
-There is also a shorthand for this. Assuming `@products` is a collection of `product` instances, you can simply write this in the `index.html.erb` to produce the same result:
-
-```html+erb
+{:lang="erb"}
+~~~
 <h1>Products</h1>
 <%= render @products %>
-```
+~~~
 
-Rails determines the name of the partial to use by looking at the model name in the collection. In fact, you can even create a heterogeneous collection and render it this way, and Rails will choose the proper partial for each member of the collection:
+Rails 根据集合中各元素的模型名决定使用哪个局部视图。其实，集合中的元素可以来自不同的模型，Rails 会选择正确的局部视图进行渲染。
 
-* `index.html.erb`
+{:lang="erb" title="`index.html.erb`"}
+~~~
+<h1>Contacts</h1>
+<%= render [customer1, employee1, customer2, employee2] %>
+~~~
 
-    ```html+erb
-    <h1>Contacts</h1>
-    <%= render [customer1, employee1, customer2, employee2] %>
-    ```
+{:lang="erb" title="`customers/_customer.html.erb`"}
+~~~
+<p>Customer: <%= customer.name %></p>
+~~~
 
-* `customers/_customer.html.erb`
+{:lang="erb" title="`employees/_employee.html.erb`"}
+~~~
+<p>Employee: <%= employee.name %></p>
+~~~
 
-    ```html+erb
-    <p>Customer: <%= customer.name %></p>
-    ```
+在上面几段代码中，Rails 会根据集合中各成员所属的模型选择正确的局部视图。
 
-* `employees/_employee.html.erb`
+如果集合为空，`render` 方法会返回 `nil`，所以最好提供替代文本。
 
-    ```html+erb
-    <p>Employee: <%= employee.name %></p>
-    ```
-
-In this case, Rails will use the customer or employee partials as appropriate for each member of the collection.
-
-In the event that the collection is empty, `render` will return nil, so it should be fairly simple to provide alternative content.
-
-```html+erb
+{:lang="erb"}
+~~~
 <h1>Products</h1>
 <%= render(@products) || "There are no products available." %>
-```
+~~~
 
-#### Local Variables
+#### 本地变量 {#local-variables}
 
-To use a custom local variable name within the partial, specify the `:as` option in the call to the partial:
+要在局部视图中自定义本地变量的名字，调用局部视图时可通过 `:as` 选项指定：
 
-```erb
+{:lang="erb"}
+~~~
 <%= render partial: "product", collection: @products, as: :item %>
-```
+~~~
 
-With this change, you can access an instance of the `@products` collection as the `item` local variable within the partial.
+这样修改之后，在局部视图中可以使用本地变量 `item` 访问 `@products` 集合中的实例。
 
-You can also pass in arbitrary local variables to any partial you are rendering with the `locals: {}` option:
+使用 `locals: {}` 选项可以把任意本地变量传入局部视图：
 
-```erb
+{:lang="erb"}
+~~~
 <%= render partial: "product", collection: @products,
            as: :item, locals: {title: "Products Page"} %>
-```
+~~~
 
-In this case, the partial will have access to a local variable `title` with the value "Products Page".
+在局部视图中可以使用本地变量 `title`，其值为 `"Products Page"`。
 
-TIP: Rails also makes a counter variable available within a partial called by the collection, named after the member of the collection followed by `_counter`. For example, if you're rendering `@products`, within the partial you can refer to `product_counter` to tell you how many times the partial has been rendered. This does not work in conjunction with the `as: :value` option.
+T> 在局部视图中还可使用计数器变量，变量名是在集合后加上 `_counter`。例如，渲染 `@products` 时，在局部视图中可以使用 `product_counter` 表示局部视图渲染了多少次。不过不能和 `as: :value` 一起使用。
 
-You can also specify a second partial to be rendered between instances of the main partial by using the `:spacer_template` option:
+在使用主局部视图渲染两个实例中间还可使用 `:spacer_template` 选项指定第二个局部视图。
 
-#### Spacer Templates
+#### 间隔模板 {#spacer-templates}
 
-```erb
+{:lang="erb"}
+~~~
 <%= render partial: @products, spacer_template: "product_ruler" %>
-```
+~~~
 
-Rails will render the `_product_ruler` partial (with no data passed in to it) between each pair of `_product` partials.
+Rails 会在两次渲染 `_product`  局部视图之间渲染 `_product_ruler` 局部视图（不传入任何数据）。
 
-#### Collection Partial Layouts
+#### 集合局部视图的布局 {#collection-partial-layouts}
 
-When rendering collections it is also possible to use the `:layout` option:
+渲染集合时也可使用 `:layout` 选项。
 
-```erb
+{:lang="erb"}
+~~~
 <%= render partial: "product", collection: @products, layout: "special_layout" %>
-```
+~~~
 
-The layout will be rendered together with the partial for each item in the collection. The current object and object_counter variables will be available in the layout as well, the same way they do within the partial.
+使用局部视图渲染集合中的各元素时会套用指定的模板。和局部视图一样，当前渲染的对象以及 `object_counter` 变量也可在布局中使用。
 
-### Using Nested Layouts
+### 使用嵌套布局 {#using-nested-layouts}
 
-You may find that your application requires a layout that differs slightly from your regular application layout to support one particular controller. Rather than repeating the main layout and editing it, you can accomplish this by using nested layouts (sometimes called sub-templates). Here's an example:
+在程序中有时需要使用不同于常规布局的布局渲染特定的控制器。此时无需复制主视图进行编辑，可以使用嵌套布局（有时也叫子模板）。下面举个例子。
 
-Suppose you have the following `ApplicationController` layout:
+假设 `ApplicationController` 布局如下：
 
-* `app/views/layouts/application.html.erb`
+{:lang="erb" title="`app/views/layouts/application.html.erb`"}
+~~~
+<html>
+<head>
+  <title><%= @page_title or "Page Title" %></title>
+  <%= stylesheet_link_tag "layout" %>
+  <style><%= yield :stylesheets %></style>
+</head>
+<body>
+  <div id="top_menu">Top menu items here</div>
+  <div id="menu">Menu items here</div>
+  <div id="content"><%= content_for?(:content) ? yield(:content) : yield %></div>
+</body>
+</html>
+~~~
 
-    ```html+erb
-    <html>
-    <head>
-      <title><%= @page_title or "Page Title" %></title>
-      <%= stylesheet_link_tag "layout" %>
-      <style><%= yield :stylesheets %></style>
-    </head>
-    <body>
-      <div id="top_menu">Top menu items here</div>
-      <div id="menu">Menu items here</div>
-      <div id="content"><%= content_for?(:content) ? yield(:content) : yield %></div>
-    </body>
-    </html>
-    ```
+在 `NewsController` 的页面中，想隐藏顶部目录，在右侧添加一个目录：
 
-On pages generated by `NewsController`, you want to hide the top menu and add a right menu:
+{:lang="erb" title="`app/views/layouts/news.html.erb`"}
+~~~
+<% content_for :stylesheets do %>
+  #top_menu {display: none}
+  #right_menu {float: right; background-color: yellow; color: black}
+<% end %>
+<% content_for :content do %>
+  <div id="right_menu">Right menu items here</div>
+  <%= content_for?(:news_content) ? yield(:news_content) : yield %>
+<% end %>
+<%= render template: "layouts/application" %>
+~~~
 
-* `app/views/layouts/news.html.erb`
+就这么简单。`News` 控制器的视图会使用 `news.html.erb` 布局，隐藏了顶部目录，在 `<div id="content">` 中添加一个右侧目录。
 
-    ```html+erb
-    <% content_for :stylesheets do %>
-      #top_menu {display: none}
-      #right_menu {float: right; background-color: yellow; color: black}
-    <% end %>
-    <% content_for :content do %>
-      <div id="right_menu">Right menu items here</div>
-      <%= content_for?(:news_content) ? yield(:news_content) : yield %>
-    <% end %>
-    <%= render template: "layouts/application" %>
-    ```
-
-That's it. The News views will use the new layout, hiding the top menu and adding a new right menu inside the "content" div.
-
-There are several ways of getting similar results with different sub-templating schemes using this technique. Note that there is no limit in nesting levels. One can use the `ActionView::render` method via `render template: 'layouts/news'` to base a new layout on the News layout. If you are sure you will not subtemplate the `News` layout, you can replace the `content_for?(:news_content) ? yield(:news_content) : yield` with simply `yield`.
+使用子模板方式实现这种效果有很多方法。注意，布局的嵌套层级没有限制。使用 `render template: 'layouts/news'` 可以指定使用一个新布局。如果确定，可以不为 `News` 控制器创建子模板，直接把 `content_for?(:news_content) ? yield(:news_content) : yield` 替换成 `yield` 即可。
