@@ -3,7 +3,7 @@ Asset Pipeline
 
 本文介绍 Asset Pipeline。
 
-读完后，你将学会：
+读完本文，你将学到：
 
 * Asset Pipeline 是什么以及其作用；
 * 如何合理组织程序的静态资源；

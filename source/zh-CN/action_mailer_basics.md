@@ -3,7 +3,7 @@ Action Mailer 基础
 
 本文全面介绍如何在程序中收发邮件，Action Mailer 的内部机理，以及如何测试“邮件程序”（mailer）。
 
-读完本文后，你将学到：
+读完本文，你将学到：
 
 * 如何在 Rails 程序内收发邮件；
 * 如何生成及编辑 Action Mailer 类和邮件视图；

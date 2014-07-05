@@ -3,7 +3,7 @@ Active Record 基础
 
 本文介绍 Active Record。
 
-读完本文后，你将了解：
+读完本文，你将学到：
 
 * 对象关系映射（Object Relational Mapping，ORM）和 Active Record 是什么，以及如何在 Rails 中使用；
 * Active Record 在 MVC 中的作用；

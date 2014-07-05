@@ -3,7 +3,7 @@ Rails on Rack
 
 本文介绍 Rails 和 Rack 的集成，以及与其他 Rack 组件的配合。
 
-本完后，你将学会：
+读完本文，你将学到：
 
 * 如何在 Rails 程序中使用中间件；
 * Action Pack 内建的中间件；

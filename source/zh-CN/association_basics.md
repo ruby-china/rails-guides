@@ -3,7 +3,7 @@ Active Record 关联
 
 本文介绍 Active Record 中的关联功能。
 
-读完后，你将学会：
+读完本文，你将学到：
 
 * 如何声明 Active Record 模型间的关联；
 * 怎么理解不同的 Active Record 关联类型；

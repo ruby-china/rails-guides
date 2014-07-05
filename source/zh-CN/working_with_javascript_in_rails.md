@@ -3,7 +3,7 @@
 
 本文介绍 Rails 内建对 Ajax 和 JavaScript 等的支持，使用这些功能可以轻易的开发强大的 Ajax 程序。
 
-本完后，你将学会：
+读完本文，你将学到：
 
 * Ajax 基本知识；
 * 剥离式 JavaScript；
