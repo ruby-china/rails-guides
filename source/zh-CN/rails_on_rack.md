@@ -13,7 +13,8 @@ Rails on Rack
 
 WARNING: 阅读本文之前需要了解 Rack 协议及相关概念，如中间件、URL 映射和 `Rack::Builder`。
 
-## Rack 简介
+Rack 简介
+---------
 
 Rack 为使用 Ruby 开发的网页程序提供了小型模块化，适应性极高的接口。Rack 尽量使用最简单的方式封装 HTTP 请求和响应，为服务器、框架和二者之间的软件（中间件）提供了统一的 API，只要调用一个简单的方法就能完成一切操作。
 
@@ -21,7 +22,8 @@ Rack 为使用 Ruby 开发的网页程序提供了小型模块化，适应性极
 
 详细解说 Rack 不是本文的目的，如果不知道 Rack 基础知识，可以阅读“[参考资源](#resources)”一节。
 
-## Rails on Rack
+Rails on Rack
+-------------
 
 ### Rails 程序中的 Rack 对象
 
@@ -33,37 +35,35 @@ Rack 为使用 Ruby 开发的网页程序提供了小型模块化，适应性极
 
 `rails server` 创建 `Rack::Server` 实例的方法如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 Rails::Server.new.tap do |server|
   require APP_PATH
   Dir.chdir(Rails.application.root)
   server.start
 end
-~~~
+```
+
 `Rails::Server` 继承自 `Rack::Server`，使用下面的方式调用 `Rack::Server#start` 方法：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Server < ::Rack::Server
   def start
     ...
     super
   end
 end
-~~~
+```
 
 `Rails::Server` 加载中间件的方式如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 def middleware
   middlewares = []
   middlewares << [Rails::Rack::Debugger] if options[:debugger]
   middlewares << [::Rack::ContentLength]
   Hash.new(middlewares)
 end
-~~~
+```
 
 `Rails::Rack::Debugger` 基本上只在开发环境中有用。下表说明了加载的各中间件的用途：
 
@@ -76,31 +76,29 @@ end
 
 如果想用 `rackup` 代替 `rails server` 命令，可以在 Rails 程序根目录下的 `config.ru` 文件中写入下面的代码：
 
-{:lang="ruby"}
-~~~
+```ruby
 # Rails.root/config.ru
 require ::File.expand_path('../config/environment', __FILE__)
 
 use Rails::Rack::Debugger
 use Rack::ContentLength
 run Rails.application
-~~~
+```
 
 然后使用下面的命令启动服务器：
 
-{:lang="bash"}
-~~~
+```bash
 $ rackup config.ru
-~~~
+```
 
 查看 `rackup` 的其他选项，可以执行下面的命令：
 
-{:lang="bash"}
-~~~
+```bash
 $ rackup --help
-~~~
+```
 
-## Action Dispatcher 中间件
+Action Dispatcher 中间件
+-----------------------
 
 Action Dispatcher 中的很多组件都以 Rack 中间件的形式实现。`Rails::Application` 通过 `ActionDispatch::MiddlewareStack` 把内部和外部的中间件组合在一起，形成一个完整的 Rails Rack 程序。
 
@@ -110,15 +108,13 @@ NOTE: 在 Rails 中，`ActionDispatch::MiddlewareStack` 的作用和 `Rack::Buil
 
 Rails 提供了一个 rake 任务，用来查看使用的中间件：
 
-{:lang="bash"}
-~~~
+```bash
 $ rake middleware
-~~~
+```
 
 在新建的 Rails 程序中，可能会输出如下结果：
 
-{:lang="ruby"}
-~~~
+```ruby
 use Rack::Sendfile
 use ActionDispatch::Static
 use Rack::Lock
@@ -143,7 +139,7 @@ use Rack::Head
 use Rack::ConditionalGet
 use Rack::ETag
 run MyApp::Application.routes
-~~~
+```
 
 这里列出的各中间件在“[内部中间件](#internal-middleware-stack)”一节有详细介绍。
 
@@ -159,8 +155,7 @@ Rails 在 `application.rb` 和 `environments/<environment>.rb` 文件中提供�
 * `config.middleware.insert_before(existing_middleware, new_middleware, args)`：在 `existing_middleware` 之前添加新中间件；
 * `config.middleware.insert_after(existing_middleware, new_middleware, args)`：在 `existing_middleware` 之后添加新中间件；
 
-{:lang="ruby"}
-~~~
+```ruby
 # config/application.rb
 
 # Push Rack::BounceFavicon at the bottom
@@ -169,34 +164,31 @@ config.middleware.use Rack::BounceFavicon
 # Add Lifo::Cache after ActiveRecord::QueryCache.
 # Pass { page_cache: false } argument to Lifo::Cache.
 config.middleware.insert_after ActiveRecord::QueryCache, Lifo::Cache, page_cache: false
-~~~
+```
 
 #### 替换中间件
 
 使用 `config.middleware.swap` 可以替换现有的中间件：
 
-{:lang="ruby"}
-~~~
+```ruby
 # config/application.rb
 
 # Replace ActionDispatch::ShowExceptions with Lifo::ShowExceptions
 config.middleware.swap ActionDispatch::ShowExceptions, Lifo::ShowExceptions
-~~~
+```
 
 #### 删除中间件
 
 在程序的设置文件中加入下面的代码：
 
-{:lang="ruby"}
-~~~
+```ruby
 # config/application.rb
 config.middleware.delete "Rack::Lock"
-~~~
+```
 
 现在查看所用的中间件，会发现 `Rack::Lock` 不在输出结果中。
 
-{:lang="bash"}
-~~~
+```bash
 $ rake middleware
 (in /Users/lifo/Rails/blog)
 use ActionDispatch::Static
@@ -204,25 +196,23 @@ use #<ActiveSupport::Cache::Strategy::LocalCache::Middleware:0x00000001c304c8>
 use Rack::Runtime
 ...
 run Blog::Application.routes
-~~~
+```
 
 如果想删除会话相关的中间件，可以这么做：
 
-{:lang="ruby"}
-~~~
+```ruby
 # config/application.rb
 config.middleware.delete "ActionDispatch::Cookies"
 config.middleware.delete "ActionDispatch::Session::CookieStore"
 config.middleware.delete "ActionDispatch::Flash"
-~~~
+```
 
 删除浏览器相关的中间件：
 
-{:lang="ruby"}
-~~~
+```ruby
 # config/application.rb
 config.middleware.delete "Rack::MethodOverride"
-~~~
+```
 
 ### 内部中间件
 
@@ -276,7 +266,8 @@ Action Controller 的很多功能都以中间件的形式实现。下面解释�
 
 TIP: 设置 Rack 时可使用上述任意一个中间件。
 
-## 参考资源
+参考资源
+-------
 
 ### 学习
 
