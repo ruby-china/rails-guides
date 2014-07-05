@@ -15,15 +15,14 @@ Active Record 数据验证
 
 下面演示一个非常简单的数据验证：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :name, presence: true
 end
 
 Person.create(name: "John Doe").valid? # => true
 Person.create(name: nil).valid? # => false
-~~~
+```
 
 如上所示，如果 `Person` 没有 `name` 属性，验证就会将其视为不合法对象。创建的第二个 `Person` 对象不会存入数据库。
 
@@ -45,16 +44,14 @@ Person.create(name: nil).valid? # => false
 
 在 Active Record 中对象有两种状态：一种在数据库中有对应的记录，一种没有。新建的对象（例如，使用 `new` 方法）还不属于数据库。在对象上调用 `save` 方法后，才会把对象存入相应的数据表。Active Record 使用实例方法 `new_record?` 判断对象是否已经存入数据库。加入有下面这个简单的 Active Record 类：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
 end
-~~~
+```
 
 我们可以在 `rails console` 中看一下到底怎么回事：
 
-{:lang="ruby"}
-~~~
+```ruby
 $ rails console
 >> p = Person.new(name: "John Doe")
 => #<Person id: nil, name: "John Doe", created_at: nil, updated_at: nil>
@@ -64,7 +61,7 @@ $ rails console
 => true
 >> p.new_record?
 => false
-~~~
+```
 
 新建并保存记录会在数据库中执行 SQL `INSERT` 操作。更新现有的记录会在数据库上执行 SQL `UPDATE` 操作。一般情况下，数据验证发生在这些 SQL 操作执行之前。如果验证失败，对象会被标记为不合法，Active Record 不会向数据库发送 `INSERT` 或 `UPDATE` 指令。这样就可以避免把不合法的数据存入数据库。你可以选择在对象创建、保存或更新时执行哪些数据验证。
 
@@ -105,22 +102,20 @@ W> 修改数据库中对象的状态有很多方法。有些方法会做数据�
 
 Rails 使用 `valid?` 方法检查对象是否合法。`valid?` 方法会触发数据验证，如果对象上没有错误，就返回 `true`，否则返回 `false`。前面我们已经用过了：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :name, presence: true
 end
 
 Person.create(name: "John Doe").valid? # => true
 Person.create(name: nil).valid? # => false
-~~~
+```
 
 Active Record 验证结束后，所有发现的错误都可以通过实例方法 `errors.messages` 获取，该方法返回一个错误集合。如果数据验证后，这个集合为空，则说明对象是合法的。
 
 注意，使用 `new` 方法初始化对象时，即使不合法也不会报错，因为这时还没做数据验证。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :name, presence: true
 end
@@ -148,7 +143,7 @@ end
 
 >> Person.create!
 # => ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
-~~~
+```
 
 `invalid?` 是 `valid?` 的逆测试，会触发数据验证，如果找到错误就返回 `true`，否则返回 `false`。
 
@@ -158,15 +153,14 @@ end
 
 这个方法只在数据验证之后才能使用，因为它只是用来收集错误信息的，并不会触发验证。而且，和前面介绍的 `ActiveRecord::Base#invalid?` 方法不一样，因为 `errors[:attribute]` 不会验证整个对象，值检查对象的某个属性是否出错。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :name, presence: true
 end
 
 >> Person.new.errors[:name].any? # => false
 >> Person.create.errors[:name].any? # => true
-~~~
+```
 
 我们会在“[处理验证错误](#working-with-validation-errors)”一节详细介绍验证错误。现在，我们来看一下 Rails 默认提供的数据验证帮助方法。
 
@@ -182,35 +176,32 @@ Active Record 预先定义了很多数据验证帮助方法，可以直接在模
 
 这个方法检查表单提交时，用户界面中的复选框是否被选中。这个功能一般用来要求用户接受程序的服务条款，阅读一些文字，等等。这种验证只针对网页程序，不会存入数据库（如果没有对应的字段，该方法会创建一个虚拟属性）。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :terms_of_service, acceptance: true
 end
-~~~
+```
 
 这个帮助方法的默认错误消息是“must be accepted”。
 
 这个方法可以指定 `:accept` 选项，决定可接受什么值。默认为“1”，很容易修改：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :terms_of_service, acceptance: { accept: 'yes' }
 end
-~~~
+```
 
 ### `validates_associated`
 
 如果模型和其他模型有关联，也要验证关联的模型对象，可以使用这个方法。保存对象是，会在相关联的每个对象上调用 `valid?` 方法。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Library < ActiveRecord::Base
   has_many :books
   validates_associated :books
 end
-~~~
+```
 
 这个帮助方法可用于所有关联类型。
 
@@ -222,30 +213,27 @@ W> 不要在关联的两端都使用 `validates_associated`，这样会生成一
 
 如果要检查两个文本字段的值是否完全相同，可以使用这个帮助方法。例如，确认 Email 地址或密码。这个帮助方法会创建一个虚拟属性，其名字为要验证的属性名后加 `_confirmation`。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :email, confirmation: true
 end
-~~~
+```
 
 在试图中可以这么写：
 
-{:lang="erb"}
-~~~
+```erb
 <%= text_field :person, :email %>
 <%= text_field :person, :email_confirmation %>
-~~~
+```
 
 只有 `email_confirmation` 的值不是 `nil` 时才会做这个验证。所以要为确认属性加上存在性验证（后文会介绍 `presence` 验证）。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :email, confirmation: true
   validates :email_confirmation, presence: true
 end
-~~~
+```
 
 这个帮助方法的默认错误消息是“doesn't match confirmation”。
 
@@ -253,13 +241,12 @@ end
 
 这个帮助方法检查属性的值是否不在指定的集合中。集合可以是任何一种可枚举的对象。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Account < ActiveRecord::Base
   validates :subdomain, exclusion: { in: %w(www us ca jp),
     message: "%{value} is reserved." }
 end
-~~~
+```
 
 `exclusion` 方法要指定 `:in` 选项，设置哪些值不能作为属性的值。`:in` 选项有个别名 `:with`，作用相同。上面的例子设置了 `:message` 选项，演示如何获取属性的值。
 
@@ -269,13 +256,12 @@ end
 
 这个帮助方法检查属性的值是否匹配 `:with` 选项指定的正则表达式。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Product < ActiveRecord::Base
   validates :legacy_code, format: { with: /\A[a-zA-Z]+\z/,
     message: "only allows letters" }
 end
-~~~
+```
 
 默认的错误消息是“is invalid”。
 
@@ -283,13 +269,12 @@ end
 
 这个帮助方法检查属性的值是否在指定的集合中。集合可以是任何一种可枚举的对象。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Coffee < ActiveRecord::Base
   validates :size, inclusion: { in: %w(small medium large),
     message: "%{value} is not a valid size" }
 end
-~~~
+```
 
 `inclusion` 方法要指定 `:in` 选项，设置可接受哪些值。`:in` 选项有个别名 `:within`，作用相同。上面的例子设置了 `:message` 选项，演示如何获取属性的值。
 
@@ -299,15 +284,14 @@ end
 
 这个帮助方法验证属性值的长度，有多个选项，可以使用不同的方法指定长度限制：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :name, length: { minimum: 2 }
   validates :bio, length: { maximum: 500 }
   validates :password, length: { in: 6..20 }
   validates :registration_number, length: { is: 6 }
 end
-~~~
+```
 
 可用的长度限制选项有：
 
@@ -318,18 +302,16 @@ end
 
 默认的错误消息根据长度验证类型而有所不同，还是可以 `:message` 定制。定制消息时，可以使用 `:wrong_length`、`:too_long` 和 `:too_short` 选项，`%{count}` 表示长度限制的值。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :bio, length: { maximum: 1000,
     too_long: "%{count} characters is the maximum allowed" }
 end
-~~~
+```
 
 这个帮助方法默认统计字符数，但可以使用 `:tokenizer` 选项设置其他的统计方式：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Essay < ActiveRecord::Base
   validates :content, length: {
     minimum: 300,
@@ -339,7 +321,7 @@ class Essay < ActiveRecord::Base
     too_long: "must have at most %{count} words"
   }
 end
-~~~
+```
 
 注意，默认的错误消息使用复数形式（例如，“is too short (minimum is %{count} characters”），所以如果长度限制是 `minimum: 1`，就要提供一个定制的消息，或者使用 `presence: true` 代替。`:in` 或 `:within` 的值比 1 小时，都要提供一个定制的消息，或者在 `length` 之前，调用 `presence` 方法。
 
@@ -349,22 +331,20 @@ end
 
 如果 `:only_integer` 为 `true`，则使用下面的正则表达式验证属性的值。
 
-{:lang="ruby"}
-~~~
+```ruby
 /\A[+-]?\d+\Z/
-~~~
+```
 
 否则，会尝试使用 `Float` 把值转换成数字。
 
 W> 注意上面的正则表达式允许最后出现换行符。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Player < ActiveRecord::Base
   validates :points, numericality: true
   validates :games_played, numericality: { only_integer: true }
 end
-~~~
+```
 
 除了 `:only_integer` 之外，这个方法还可指定以下选项，限制可接受的值：
 
@@ -382,31 +362,28 @@ end
 
 这个帮助方法检查指定的属性是否为非空值，调用 `blank?` 方法检查只是否为 `nil` 或空字符串，即空字符串或只包含空白的字符串。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :name, :login, :email, presence: true
 end
-~~~
+```
 
 如果要确保关联对象存在，需要测试关联的对象本身是够存在，而不是用来映射关联的外键。
 
-{:lang="ruby"}
-~~~
+```ruby
 class LineItem < ActiveRecord::Base
   belongs_to :order
   validates :order, presence: true
 end
-~~~
+```
 
 为了能验证关联的对象是否存在，要在关联中指定 `:inverse_of` 选项。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Order < ActiveRecord::Base
   has_many :line_items, inverse_of: :order
 end
-~~~
+```
 
 如果验证 `has_one` 或 `has_many` 关联的对象是否存在，会在关联的对象上调用 `blank?` 和 `marked_for_destruction?` 方法。
 
@@ -418,31 +395,28 @@ end
 
 这个方法验证指定的属性值是否为空，使用 `present?` 方法检测值是否为 `nil` 或空字符串，即空字符串或只包含空白的字符串。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :name, :login, :email, absence: true
 end
-~~~
+```
 
 如果要确保关联对象为空，需要测试关联的对象本身是够为空，而不是用来映射关联的外键。
 
-{:lang="ruby"}
-~~~
+```ruby
 class LineItem < ActiveRecord::Base
   belongs_to :order
   validates :order, absence: true
 end
-~~~
+```
 
 为了能验证关联的对象是否为空，要在关联中指定 `:inverse_of` 选项。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Order < ActiveRecord::Base
   has_many :line_items, inverse_of: :order
 end
-~~~
+```
 
 如果验证 `has_one` 或 `has_many` 关联的对象是否为空，会在关联的对象上调用 `present?` 和 `marked_for_destruction?` 方法。
 
@@ -454,33 +428,30 @@ end
 
 这个帮助方法会在保存对象之前验证属性值是否是唯一的。该方法不会在数据库中创建唯一性约束，所以有可能两个数据库连接创建的记录字段的值是相同的。为了避免出现这种问题，要在数据库的字段上建立唯一性索引。关于多字段所以的详细介绍，参阅 [MySQL 手册](http://dev.mysql.com/doc/refman/5.6/en/multiple-column-indexes.html)。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Account < ActiveRecord::Base
   validates :email, uniqueness: true
 end
-~~~
+```
 
 这个验证会在模型对应的数据表中执行一个 SQL 查询，检查现有的记录中该字段是否已经出现过相同的值。
 
 `:scope` 选项可以指定其他属性，用来约束唯一性验证：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Holiday < ActiveRecord::Base
   validates :name, uniqueness: { scope: :year,
     message: "should happen once per year" }
 end
-~~~
+```
 
 还有个 `:case_sensitive` 选项，指定唯一性验证是否要区分大小写，默认值为 `true`。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :name, uniqueness: { case_sensitive: false }
 end
-~~~
+```
 
 W> 注意，有些数据库的设置是，查询时不区分大小写。
 
@@ -490,8 +461,7 @@ W> 注意，有些数据库的设置是，查询时不区分大小写。
 
 这个帮助方法把记录交给其他的类做验证。
 
-{:lang="ruby"}
-~~~
+```ruby
 class GoodnessValidator < ActiveModel::Validator
   def validate(record)
     if record.first_name == "Evil"
@@ -503,7 +473,7 @@ end
 class Person < ActiveRecord::Base
   validates_with GoodnessValidator
 end
-~~~
+```
 
 I> `record.errors[:base]` 中的错误针对整个对象，而不是特定的属性。
 
@@ -513,8 +483,7 @@ I> `record.errors[:base]` 中的错误针对整个对象，而不是特定的属
 
 和其他验证一样，`validates_with` 也可指定 `:if`、`:unless` 和 `:on` 选项。如果指定了其他选项，会包含在 `options` 中传递给做验证的类。
 
-{:lang="ruby"}
-~~~
+```ruby
 class GoodnessValidator < ActiveModel::Validator
   def validate(record)
     if options[:fields].any?{|field| record.send(field) == "Evil" }
@@ -526,14 +495,13 @@ end
 class Person < ActiveRecord::Base
   validates_with GoodnessValidator, fields: [:first_name, :last_name]
 end
-~~~
+```
 
 注意，做验证的类在整个程序的生命周期内只会初始化一次，而不是每次验证时都初始化，所以使用实例变量时要特别小心。
 
 如果做验证的类很复杂，必须要用实例变量，可以用纯粹的 Ruby 对象代替：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validate do |person|
     GoodnessValidator.new(person).validate
@@ -553,20 +521,19 @@ class GoodnessValidator
 
   # ...
 end
-~~~
+```
 
 ### `validates_each`
 
 这个帮助方法会把属性值传入代码库做验证，没有预先定义验证的方式，你应该在代码库中定义验证方式。要验证的每个属性都会传入块中做验证。在下面的例子中，我们确保名和姓都不能以小写字母开头：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates_each :name, :surname do |record, attr, value|
     record.errors.add(attr, 'must start with upper case') if value =~ /\A[a-z]/
   end
 end
-~~~
+```
 
 代码块的参数是记录，属性名和属性值。在代码块中可以做任何检查，确保数据合法。如果验证失败，要向模型添加一个错误消息，把数据标记为不合法。
 
@@ -578,27 +545,25 @@ end
 
 指定 `:allow_nil` 选项后，如果要验证的值为 `nil` 就会跳过验证。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Coffee < ActiveRecord::Base
   validates :size, inclusion: { in: %w(small medium large),
     message: "%{value} is not a valid size" }, allow_nil: true
 end
-~~~
+```
 
 ### `:allow_blank`
 
 `:allow_blank` 选项和 `:allow_nil` 选项类似。如果要验证的值为空（调用 `blank?` 方法，例如 `nil` 或空字符串），就会跳过验证。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Topic < ActiveRecord::Base
   validates :title, length: { is: 5 }, allow_blank: true
 end
 
 Topic.create(title: "").valid?  # => true
 Topic.create(title: nil).valid? # => true
-~~~
+```
 
 ### `:message`
 
@@ -608,8 +573,7 @@ Topic.create(title: nil).valid? # => true
 
 `:on` 选项指定什么时候做验证。所有内建的验证帮助方法默认都在保存时（新建记录或更新记录）做验证。如果想修改，可以使用 `on: :create`，指定只在创建记录时做验证；或者使用 `on: :update`，指定只在更新记录时做验证。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   # it will be possible to update email with a duplicated value
   validates :email, uniqueness: true, on: :create
@@ -620,31 +584,29 @@ class Person < ActiveRecord::Base
   # the default (validates on both create and update)
   validates :name, presence: true
 end
-~~~
+```
 
 ## 严格验证
 
 数据验证还可以使用严格模式，失败后会抛出 `ActiveModel::StrictValidationFailed` 异常。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :name, presence: { strict: true }
 end
 
 Person.new.valid?  # => ActiveModel::StrictValidationFailed: Name can't be blank
-~~~
+```
 
 通过 `:strict` 选项，还可以指定抛出什么异常：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :token, presence: true, uniqueness: true, strict: TokenGenerationException
 end
 
 Person.new.valid?  # => TokenGenerationException: Token can't be blank
-~~~
+```
 
 ## 条件验证
 
@@ -654,8 +616,7 @@ Person.new.valid?  # => TokenGenerationException: Token can't be blank
 
 `:if` 和 `:unless` 选项的值为 Symbol 时，表示要在验证之前执行对应的方法。这是最常用的设置方法。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Order < ActiveRecord::Base
   validates :card_number, presence: true, if: :paid_with_card?
 
@@ -663,44 +624,41 @@ class Order < ActiveRecord::Base
     payment_type == "card"
   end
 end
-~~~
+```
 
 ### 指定字符串
 
 `:if` 和 `:unless` 选项的值还可以是字符串，但必须是 Ruby 代码，传入 `eval` 方法中执行。当字符串表示的条件非常短时才应该使用这种形式。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :surname, presence: true, if: "name.nil?"
 end
-~~~
+```
 
 ### 指定 Proc
 
 `:if` and `:unless` 选项的值还可以是 Proc。使用 Proc 对象可以在行间编写条件，不用定义额外的方法。这种形式最适合用在一行代码能表示的条件上。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Account < ActiveRecord::Base
   validates :password, confirmation: true,
     unless: Proc.new { |a| a.password.blank? }
 end
-~~~
+```
 
 ### 条件组合
 
 有时同一个条件会用在多个验证上，这时可以使用 `with_options` 方法：
 
-{:lang="ruby"}
-~~~
+```ruby
 class User < ActiveRecord::Base
   with_options if: :is_admin? do |admin|
     admin.validates :password, length: { minimum: 10 }
     admin.validates :email, presence: true
   end
 end
-~~~
+```
 
 `with_options` 代码块中的所有验证都会使用 `if: :is_admin?` 这个条件。
 
@@ -708,14 +666,13 @@ end
 
 另一方面，如果是否做某个验证要满足多个条件时，可以使用数组。而且，都一个验证可以同时指定 `:if` 和 `:unless` 选项。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Computer < ActiveRecord::Base
   validates :mouse, presence: true,
                     if: ["market.retail?", :desktop?]
                     unless: Proc.new { |c| c.trackpad.present? }
 end
-~~~
+```
 
 只有当 `:if` 选项的所有条件都返回 `true`，且 `:unless` 选项中的条件返回 `false` 时才会做验证。
 
@@ -727,8 +684,7 @@ end
 
 自定义的验证类继承自 `ActiveModel::Validator`，必须实现 `validate` 方法，传入的参数是要验证的记录，然后验证这个记录是否合法。自定义的验证类通过 `validates_with` 方法调用。
 
-{:lang="ruby"}
-~~~
+```ruby
 class MyValidator < ActiveModel::Validator
   def validate(record)
     unless record.name.starts_with? 'X'
@@ -741,12 +697,11 @@ class Person
   include ActiveModel::Validations
   validates_with MyValidator
 end
-~~~
+```
 
 在自定义的验证类中验证单个属性，最简单的方法是集成 `ActiveModel::EachValidator` 类。此时，自定义的验证类中要实现 `validate_each` 方法。这个方法接受三个参数：记录，属性名和属性值。
 
-{:lang="ruby"}
-~~~
+```ruby
 class EmailValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless value =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
@@ -758,7 +713,7 @@ end
 class Person < ActiveRecord::Base
   validates :email, presence: true, email: true
 end
-~~~
+```
 
 如上面的代码所示，可以同时使用内建的验证方法和自定义的验证类。
 
@@ -768,8 +723,7 @@ end
 
 类方法可以接受多个 Symbol，自定义的验证方法会按照注册的顺序执行。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Invoice < ActiveRecord::Base
   validate :expiration_date_cannot_be_in_the_past,
     :discount_cannot_be_greater_than_total_value
@@ -786,12 +740,11 @@ class Invoice < ActiveRecord::Base
     end
   end
 end
-~~~
+```
 
 默认情况下，每次调用 `valid?` 方法时都会执行自定义的验证方法。使用 `validate` 方法注册自定义验证方法时可以设置 `:on` 选项，执行什么时候运行。`:on` 的可选值为 `:create` 和 `:update`。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Invoice < ActiveRecord::Base
   validate :active_customer, on: :create
 
@@ -799,7 +752,7 @@ class Invoice < ActiveRecord::Base
     errors.add(:customer_id, "is not active") unless customer.active?
   end
 end
-~~~
+```
 
 ## 处理验证错误
 
@@ -811,8 +764,7 @@ end
 
 `ActiveModel::Errors` 的实例包含所有的错误。其键是每个属性的名字，值是一个数组，包含错误消息字符串。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :name, presence: true, length: { minimum: 3 }
 end
@@ -825,14 +777,13 @@ person.errors.messages
 person = Person.new(name: "John Doe")
 person.valid? # => true
 person.errors.messages # => {}
-~~~
+```
 
 ### `errors[]`
 
 `errors[]` 用来获取某个属性上的错误消息，返回结果是一个由该属性所有错误消息字符串组成的数组，每个字符串表示一个错误消息。如果字段上没有错误，则返回空数组。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :name, presence: true, length: { minimum: 3 }
 end
@@ -849,14 +800,13 @@ person = Person.new
 person.valid? # => false
 person.errors[:name]
  # => ["can't be blank", "is too short (minimum is 3 characters)"]
-~~~
+```
 
 ### `errors.add`
 
 `add` 方法可以手动添加某属性的错误消息。使用 `errors.full_messages` 或 `errors.to_a` 方法会以最终显示给用户的形式显示错误消息。这些错误消息的前面都会加上字段名可读形式（并且首字母大写）。`add` 方法接受两个参数：错误消息要添加到的字段名和错误消息本身。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   def a_method_used_for_validation_purposes
     errors.add(:name, "cannot contain the characters !@#%*()_-+=")
@@ -870,12 +820,11 @@ person.errors[:name]
 
 person.errors.full_messages
  # => ["Name cannot contain the characters !@#%*()_-+="]
-~~~
+```
 
 还有一种方法可以实现同样地效果，使用 `[]=` 设置方法：
 
-{:lang="ruby"}
-~~~
+```ruby
   class Person < ActiveRecord::Base
     def a_method_used_for_validation_purposes
       errors[:name] = "cannot contain the characters !@#%*()_-+="
@@ -889,27 +838,25 @@ person.errors.full_messages
 
   person.errors.to_a
    # => ["Name cannot contain the characters !@#%*()_-+="]
-~~~
+```
 
 ### `errors[:base]`
 
 错误消息可以添加到整个对象上，而不是针对某个属性。如果不想管是哪个属性导致对象不合法，指向把对象标记为不合法状态，就可以使用这个方法。`errors[:base]` 是个数字，可以添加字符串作为错误消息。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   def a_method_used_for_validation_purposes
     errors[:base] << "This person is invalid because ..."
   end
 end
-~~~
+```
 
 ### `errors.clear`
 
 如果想清除 `errors` 集合中的所有错误消息，可以使用 `clear` 方法。当然了，在不合法的对象上调用 `errors.clear` 方法后，这个对象还是不合法的，虽然 `errors` 集合为空了，但下次调用 `valid?` 方法，或调用其他把对象存入数据库的方法时， 会再次进行验证。如果任何一个验证失败了，`errors` 集合中就再次出现值了。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :name, presence: true, length: { minimum: 3 }
 end
@@ -926,14 +873,13 @@ p.save # => false
 
 p.errors[:name]
 # => ["can't be blank", "is too short (minimum is 3 characters)"]
-~~~
+```
 
 ### `errors.size`
 
 `size` 方法返回对象上错误消息的总数。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Person < ActiveRecord::Base
   validates :name, presence: true, length: { minimum: 3 }
 end
@@ -945,7 +891,7 @@ person.errors.size # => 2
 person = Person.new(name: "Andrea", email: "andrea@example.com")
 person.valid? # => true
 person.errors.size # => 0
-~~~
+```
 
 ## 在视图中显示验证错误
 
@@ -955,8 +901,7 @@ person.errors.size # => 0
 
 假设有个模型对象存储在实例变量 `@post` 中，视图的代码可以这么写：
 
-{:lang="ruby"}
-~~~
+```ruby
 <% if @post.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -968,24 +913,24 @@ person.errors.size # => 0
     </ul>
   </div>
 <% end %>
-~~~
+```
 
 而且，如果使用 Rails 的表单帮助方法生成表单，如果某个表单字段验证失败，会把字段包含在一个 `<div>` 中：
 
-~~~
+```
 <div class="field_with_errors">
  <input id="post_title" name="post[title]" size="30" type="text" value="">
 </div>
-~~~
+```
 
 然后可以根据需求为这个 `div` 添加样式。脚手架默认添加的 CSS 如下：
 
-~~~
+```
 .field_with_errors {
   padding: 2px;
   background-color: red;
   display: table;
 }
-~~~
+```
 
 所有出错的表单字段都会放入一个内边距为 2像素的红色框内。

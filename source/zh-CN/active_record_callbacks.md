@@ -25,8 +25,7 @@ Active Record 回调
 
 在使用回调之前，要先注册。回调方法的定义和普通的方法一样，然后使用类方法注册：
 
-{:lang="ruby"}
-~~~
+```ruby
 class User < ActiveRecord::Base
   validates :login, :email, presence: true
 
@@ -39,12 +38,11 @@ class User < ActiveRecord::Base
       end
     end
 end
-~~~
+```
 
 这种类方法还可以接受一个代码块。如果操作可以使用一行代码表述，可以考虑使用代码块形式。
 
-{:lang="ruby"}
-~~~
+```ruby
 class User < ActiveRecord::Base
   validates :login, :email, presence: true
 
@@ -52,12 +50,11 @@ class User < ActiveRecord::Base
     self.name = login.capitalize if name.blank?
   end
 end
-~~~
+```
 
 注册回调时可以指定只在对象生命周期的特定事件发生时执行：
 
-{:lang="ruby"}
-~~~
+```ruby
 class User < ActiveRecord::Base
   before_validation :normalize_name, on: :create
 
@@ -73,7 +70,7 @@ class User < ActiveRecord::Base
       self.location = LocationService.query(self)
     end
 end
-~~~
+```
 
 一般情况下，都把回调方法定义为受保护的方法或私有方法。如果定义成公共方法，回调就可以在模型外部调用，违背了对象封装原则。
 
@@ -119,8 +116,7 @@ W> 创建和更新对象时都会触发 `after_save`，但不管注册的顺序�
 
 `after_initialize` 和 `after_find` 没有对应的 `before_*` 回调，但可以像其他回调一样注册。
 
-{:lang="ruby"}
-~~~
+```ruby
 class User < ActiveRecord::Base
   after_initialize do |user|
     puts "You have initialized an object!"
@@ -139,14 +135,13 @@ You have initialized an object!
 You have found an object!
 You have initialized an object!
 => #<User id: 1>
-~~~
+```
 
 ### `after_touch`
 
 `after_touch` 回调在触碰 Active Record 对象时执行。
 
-{:lang="ruby"}
-~~~
+```ruby
 class User < ActiveRecord::Base
   after_touch do |user|
     puts "You have touched an object"
@@ -159,12 +154,11 @@ end
 >> u.touch
 You have touched an object
 => true
-~~~
+```
 
 可以结合 `belongs_to` 一起使用：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Employee < ActiveRecord::Base
   belongs_to :company, touch: true
   after_touch do
@@ -190,7 +184,7 @@ end
 Employee/Company was touched
 An Employee was touched
 => true
-~~~
+```
 
 ## 执行回调
 
@@ -258,8 +252,7 @@ W> `ActiveRecord::Rollback` 之外的异常在回调链终止之后，还会由 
 
 回调能在模型关联中使用，甚至可由关联定义。假如一个用户发布了多篇文章，如果用户删除了，他发布的文章也应该删除。下面我们在 `Post` 模型中注册一个 `after_destroy` 回调，应用到 `User` 模型上：
 
-{:lang="ruby"}
-~~~
+```ruby
 class User < ActiveRecord::Base
   has_many :posts, dependent: :destroy
 end
@@ -279,7 +272,7 @@ end
 >> user.destroy
 Post destroyed
 => #<User id: 1>
-~~~
+```
 
 ## 条件回调
 
@@ -289,47 +282,43 @@ Post destroyed
 
 :if 和 :unless 选项的值为 Symbol 时，表示要在调用回调之前执行对应的判断方法。使用 `:if` 选项时，如果判断方法返回 `false`，就不会调用回调；使用 `:unless` 选项时，如果判断方法返回 `true`，就不会调用回调。Symbol 是最常用的设置方式。使用这种方式注册回调时，可以使用多个判断方法检查是否要调用回调。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Order < ActiveRecord::Base
   before_save :normalize_card_number, if: :paid_with_card?
 end
-~~~
+```
 
 ### 使用字符串
 
 `:if` 和 `:unless` 选项的值还可以是字符串，但必须是 RUby 代码，传入 `eval` 方法中执行。当字符串表示的条件非常短时才应该是使用这种形式。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Order < ActiveRecord::Base
   before_save :normalize_card_number, if: "paid_with_card?"
 end
-~~~
+```
 
 ### 使用 Proc
 
 `:if` 和 `:unless` 选项的值还可以是 Proc 对象。这种形式最适合用在一行代码能表示的条件上。
 
-{:lang="ruby"}
-~~~
+```ruby
 class Order < ActiveRecord::Base
   before_save :normalize_card_number,
     if: Proc.new { |order| order.paid_with_card? }
 end
-~~~
+```
 
 ### 回调的多重条件
 
 注册条件回调时，可以同时使用 `:if` 和 `:unless` 选项：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Comment < ActiveRecord::Base
   after_create :send_email_to_author, if: :author_wants_emails?,
     unless: Proc.new { |comment| comment.post.ignore_comments? }
 end
-~~~
+```
 
 ## 回调类
 
@@ -337,8 +326,7 @@ end
 
 在下面这个例子中，我们为 `PictureFile` 模型定义了一个 `after_destroy` 回调：
 
-{:lang="ruby"}
-~~~
+```ruby
 class PictureFileCallbacks
   def after_destroy(picture_file)
     if File.exist?(picture_file.filepath)
@@ -346,21 +334,19 @@ class PictureFileCallbacks
     end
   end
 end
-~~~
+```
 
 在类中定义回调方法时（如上），可把模型对象作为参数传入。然后可以在模型中使用这个回调：
 
-{:lang="ruby"}
-~~~
+```ruby
 class PictureFile < ActiveRecord::Base
   after_destroy PictureFileCallbacks.new
 end
-~~~
+```
 
 注意，因为回调方法被定义成实例方法，所以要实例化 `PictureFileCallbacks`。如果回调要使用实例化对象的状态，使用这种定义方式很有用。不过，一般情况下，定义为类方法更说得通：
 
-{:lang="ruby"}
-~~~
+```ruby
 class PictureFileCallbacks
   def self.after_destroy(picture_file)
     if File.exist?(picture_file.filepath)
@@ -368,16 +354,15 @@ class PictureFileCallbacks
     end
   end
 end
-~~~
+```
 
 如果按照这种方式定义回调方法，就不用实例化 `PictureFileCallbacks`：
 
-{:lang="ruby"}
-~~~
+```ruby
 class PictureFile < ActiveRecord::Base
   after_destroy PictureFileCallbacks
 end
-~~~
+```
 
 在回调类中可以定义任意数量的回调方法。
 
@@ -387,18 +372,16 @@ end
 
 例如，在前面的例子中，`PictureFile` 模型中的记录删除后，还要删除相应的文件。如果执行 `after_destroy` 回调之后程序抛出了异常，事务就会回滚，文件会被删除，但模型的状态前后不一致。假设在下面的代码中，`picture_file_2` 是不合法的，那么调用 `save!` 方法会抛出异常。
 
-{:lang="ruby"}
-~~~
+```ruby
 PictureFile.transaction do
   picture_file_1.destroy
   picture_file_2.save!
 end
-~~~
+```
 
 使用 `after_commit` 回调可以解决这个问题。
 
-{:lang="ruby"}
-~~~
+```ruby
 class PictureFile < ActiveRecord::Base
   after_commit :delete_picture_file_from_disk, on: [:destroy]
 
@@ -408,7 +391,7 @@ class PictureFile < ActiveRecord::Base
     end
   end
 end
-~~~
+```
 
 I> `:on` 选项指定什么时候出发回调。如果不设置 `:on` 选项，每各个操作都会触发回调。
 

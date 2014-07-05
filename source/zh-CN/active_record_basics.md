@@ -77,31 +77,28 @@ I> 虽然这些字段是可选的，但在 Active Record 中是被保留的。�
 
 创建 Active Record 模型的过程很简单，只要继承 `ActiveRecord::Base` 类就行了：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Product < ActiveRecord::Base
 end
-~~~
+```
 
 上面的代码会创建 `Product` 模型，对应于数据库中的 `products` 表。同时，`products` 表中的字段也映射到 `Product` 模型实例的属性上。假如 `products` 表由下面的 SQL 语句创建：
 
-{:lang="sql"}
-~~~
+```sql
 CREATE TABLE products (
    id int(11) NOT NULL auto_increment,
    name varchar(255),
    PRIMARY KEY  (id)
 );
-~~~
+```
 
 按照这样的数据表结构，可以编写出下面的代码：
 
-{:lang="ruby"}
-~~~
+```ruby
 p = Product.new
 p.name = "Some Book"
 puts p.name # "Some Book"
-~~~
+```
 
 ## 不用默认的命名约定
 
@@ -109,32 +106,29 @@ puts p.name # "Some Book"
 
 使用 `ActiveRecord::Base.table_name=` 方法可以指定数据表的名字：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Product < ActiveRecord::Base
   self.table_name = "PRODUCT"
 end
-~~~
+```
 
 如果这么做，还要在测试中调用 `set_fixture_class` 方法，手动指定固件（`class_name.yml`）的类名：
 
-{:lang="ruby"}
-~~~
+```ruby
 class FunnyJoke < ActiveSupport::TestCase
   set_fixture_class funny_jokes: Joke
   fixtures :funny_jokes
   ...
 end
-~~~
+```
 
 还可以使用 `ActiveRecord::Base.primary_key=` 方法指定数据表的主键：
 
-{:lang="ruby"}
-~~~
+```ruby
 class Product < ActiveRecord::Base
   self.primary_key = "product_id"
 end
-~~~
+```
 
 ## CRUD：读写数据
 
@@ -146,60 +140,53 @@ Active Record 对象可以使用 Hash 创建，在块中创建，或者创建后
 
 例如，`User` 模型中有两个属性，`name` 和 `occupation`。调用 `create` 方法会创建一个新纪录，并存入数据库：
 
-{:lang="ruby"}
-~~~
+```ruby
 user = User.create(name: "David", occupation: "Code Artist")
-~~~
+```
 
 使用 `new` 方法，可以实例化一个新对象，但不会保存：
 
-{:lang="ruby"}
-~~~
+```ruby
 user = User.new
 user.name = "David"
 user.occupation = "Code Artist"
-~~~
+```
 
 调用 `user.save` 可以把记录存入数据库。
 
 如果在 `create` 和 `new` 方法中使用块，会把新创建的对象拉入块中：
 
-{:lang="ruby"}
-~~~
+```ruby
 user = User.new do |u|
   u.name = "David"
   u.occupation = "Code Artist"
 end
-~~~
+```
 
 ### 读取
 
 Active Record 为读取数据库中的数据提供了丰富的 API。下面举例说明。
 
-{:lang="ruby"}
-~~~
+```ruby
 # return a collection with all users
 users = User.all
-~~~
+```
 
-{:lang="ruby"}
-~~~
+```ruby
 # return the first user
 user = User.first
-~~~
+```
 
-{:lang="ruby"}
-~~~
+```ruby
 # return the first user named David
 david = User.find_by(name: 'David')
-~~~
+```
 
-{:lang="ruby"}
-~~~
+```ruby
 # find all users named David who are Code Artists and sort by created_at
 # in reverse chronological order
 users = User.where(name: 'David', occupation: 'Code Artist').order('created_at DESC')
-~~~
+```
 
 [Active Record 查询]({{ site.baseurl }}/active_record_querying.html)一文会详细介绍查询 Active Record 模型的方法。
 
@@ -207,37 +194,33 @@ users = User.where(name: 'David', occupation: 'Code Artist').order('created_at D
 
 得到 Active Record 对象后，可以修改其属性，然后再存入数据库。
 
-{:lang="ruby"}
-~~~
+```ruby
 user = User.find_by(name: 'David')
 user.name = 'Dave'
 user.save
-~~~
+```
 
 还有个简写方式，使用 Hash，指定属性名和属性值，例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 user = User.find_by(name: 'David')
 user.update(name: 'Dave')
-~~~
+```
 
 一次更新多个属性时使用这种方法很方便。如果想批量更新多个记录，可以使用类方法 `update_all`：
 
-{:lang="ruby"}
-~~~
+```ruby
 User.update_all "max_login_attempts = 3, must_change_password = 'true'"
-~~~
+```
 
 ### 删除
 
 类似地，得到 Active Record 对象后还可以将其销毁，从数据库中删除。
 
-{:lang="ruby"}
-~~~
+```ruby
 user = User.find_by(name: 'David')
 user.destroy
-~~~
+```
 
 ## 数据验证
 
@@ -245,15 +228,14 @@ user.destroy
 
 把数据存入数据库之前进行验证是十分重要的步骤，所以调用 `create`、`save`、`update` 这三个方法时会做数据验证，验证失败时返回 `false`，此时不会对数据库做任何操作。这三个方法都要对应的爆炸方法（`create!`，`save!`，`update!`），爆炸方法要严格一些，如果验证失败，会抛出 `ActiveRecord::RecordInvalid` 异常。下面是个简单的例子：
 
-{:lang="ruby"}
-~~~
+```ruby
 class User < ActiveRecord::Base
   validates :name, presence: true
 end
 
 User.create  # => false
 User.create! # => ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
-~~~
+```
 
 [Active Record 数据验证]({{ site.baseurl }}/active_record_validations.html)一文会详细介绍数据验证。
 
@@ -265,8 +247,7 @@ Active Record 回调可以在模型声明周期的特定事件上绑定代码，
 
 Rails 提供了一个 DSL 用来处理数据库模式，叫做“迁移”。迁移的代码存储在特定的文件中，通过 `rake` 调用，可以用在 Active Record 支持的所有数据库上。下面这个迁移会新建一个数据表：
 
-{:lang="ruby"}
-~~~
+```ruby
 class CreatePublications < ActiveRecord::Migration
   def change
     create_table :publications do |t|
@@ -282,7 +263,7 @@ class CreatePublications < ActiveRecord::Migration
     add_index :publications, :publication_type_id
   end
 end
-~~~
+```
 
 Rails 会跟踪哪些迁移已经应用到数据库中，还提供了回滚功能。创建数据表要执行 `rake db:migrate` 命令；回滚操作要执行 `rake db:rollback` 命令。
 

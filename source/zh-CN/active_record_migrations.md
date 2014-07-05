@@ -20,8 +20,7 @@ Active Record 数据库迁移
 
 下面是一个迁移示例：
 
-{:lang="ruby"}
-~~~
+```ruby
 class CreateProducts < ActiveRecord::Migration
   def change
     create_table :products do |t|
@@ -32,7 +31,7 @@ class CreateProducts < ActiveRecord::Migration
     end
   end
 end
-~~~
+```
 
 这个迁移创建了一个名为 `products` 的表，然后在表中创建字符串字段 `name` 和文本字段 `description`。名为 `id` 的主键字段会被自动创建。`id` 字段是所有 Active Record 模型的默认主键。`timestamps` 方法创建两个字段：`created_at` 和 `updated_at`。如果数据表中有这两个字段，Active Record 会负责操作。
 
@@ -44,8 +43,7 @@ I> 某些查询无法在事物中运行。如果适配器支持 DDL 事物，可
 
 如果想在迁移中执行 Active Record 不知如何撤销的操作，可以使用 `reversible` 方法：
 
-{:lang="ruby"}
-~~~
+```ruby
 class ChangeProductsPrice < ActiveRecord::Migration
   def change
     reversible do |dir|
@@ -56,12 +54,11 @@ class ChangeProductsPrice < ActiveRecord::Migration
     end
   end
 end
-~~~
+```
 
 或者不用 `change` 方法，分别使用 `up` 和 `down` 方法：
 
-{:lang="ruby"}
-~~~
+```ruby
 class ChangeProductsPrice < ActiveRecord::Migration
   def up
     change_table :products do |t|
@@ -75,7 +72,7 @@ class ChangeProductsPrice < ActiveRecord::Migration
     end
   end
 end
-~~~
+```
 
 ## 创建迁移
 
@@ -85,106 +82,94 @@ end
 
 自己计算时间戳不是件简单的事，所以 Active Record 提供了一个生成器：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate migration AddPartNumberToProducts
-~~~
+```
 
 这个命令生成一个空的迁移，但名字已经起好了：
 
-{:lang="ruby"}
-~~~
+```ruby
 class AddPartNumberToProducts < ActiveRecord::Migration
   def change
   end
 end
-~~~
+```
 
 如果迁移的名字是“AddXXXToYYY”或者“RemoveXXXFromYYY”这种格式，而且后面跟着一个字段名和类型列表，那么迁移中会生成合适的 `add_column` 或 `remove_column` 语句。
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate migration AddPartNumberToProducts part_number:string
-~~~
+```
 
 这个命令生成的迁移如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 class AddPartNumberToProducts < ActiveRecord::Migration
   def change
     add_column :products, :part_number, :string
   end
 end
-~~~
+```
 
 如果想为新建的字段创建添加索引，可以这么做：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate migration AddPartNumberToProducts part_number:string:index
-~~~
+```
 
 这个命令生成的迁移如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 class AddPartNumberToProducts < ActiveRecord::Migration
   def change
     add_column :products, :part_number, :string
     add_index :products, :part_number
   end
 end
-~~~
+```
 
 类似地，还可以生成删除字段的迁移：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate migration RemovePartNumberFromProducts part_number:string
-~~~
+```
 
 这个命令生成的迁移如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 class RemovePartNumberFromProducts < ActiveRecord::Migration
   def change
     remove_column :products, :part_number, :string
   end
 end
-~~~
+```
 
 迁移生成器不单只能创建一个字段，例如：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate migration AddDetailsToProducts part_number:string price:decimal
-~~~
+```
 
 生成的迁移如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 class AddDetailsToProducts < ActiveRecord::Migration
   def change
     add_column :products, :part_number, :string
     add_column :products, :price, :decimal
   end
 end
-~~~
+```
 
 如果迁移名是“CreateXXX”形式，后面跟着一串字段名和类型声明，迁移就会创建名为“XXX”的表，以及相应的字段。例如：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate migration CreateProducts name:string part_number:string
-~~~
+```
 
 生成的迁移如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 class CreateProducts < ActiveRecord::Migration
   def change
     create_table :products do |t|
@@ -193,41 +178,37 @@ class CreateProducts < ActiveRecord::Migration
     end
   end
 end
-~~~
+```
 
 生成器生成的只是一些基础代码，你可以根据需要修改 `db/migrate/YYYYMMDDHHMMSS_add_details_to_products.rb` 文件，增删代码。
 
 在生成器中还可把字段类型设为 `references`（还可使用 `belongs_to`）。例如：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate migration AddUserRefToProducts user:references
-~~~
+```
 
 生成的迁移如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 class AddUserRefToProducts < ActiveRecord::Migration
   def change
     add_reference :products, :user, index: true
   end
 end
-~~~
+```
 
 这个迁移会创建 `user_id` 字段，并建立索引。
 
 如果迁移名中包含 `JoinTable`，生成器还会创建联合数据表：
 
-{:lang="bash"}
-~~~
+```bash
 rails g migration CreateJoinTableCustomerProduct customer product
-~~~
+```
 
 生成的迁移如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 class CreateJoinTableCustomerProduct < ActiveRecord::Migration
   def change
     create_join_table :customers, :products do |t|
@@ -236,21 +217,19 @@ class CreateJoinTableCustomerProduct < ActiveRecord::Migration
     end
   end
 end
-~~~
+```
 
 ### 模型生成器
 
 模型生成器和脚手架生成器会生成合适的迁移，创建模型。迁移中会包含创建所需数据表的代码。如果在生成器中指定了字段，还会生成创建字段的代码。例如，运行下面的命令：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate model Product name:string description:text
-~~~
+```
 
 会生成如下的迁移：
 
-{:lang="ruby"}
-~~~
+```ruby
 class CreateProducts < ActiveRecord::Migration
   def change
     create_table :products do |t|
@@ -261,7 +240,7 @@ class CreateProducts < ActiveRecord::Migration
     end
   end
 end
-~~~
+```
 
 字段的名字和类型数量不限。
 
@@ -277,22 +256,20 @@ end
 
 例如，执行下面的命令：
 
-{:lang="bash"}
-~~~
+```bash
 $ rails generate migration AddDetailsToProducts 'price:decimal{5,2}' supplier:references{polymorphic}
-~~~
+```
 
 生成的迁移如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 class AddDetailsToProducts < ActiveRecord::Migration
   def change
     add_column :products, :price, :decimal, precision: 5, scale: 2
     add_reference :products, :supplier, polymorphic: true, index: true
   end
 end
-~~~
+```
 
 ## 编写迁移
 
@@ -302,23 +279,21 @@ end
 
 `create_table` 方法最常用，大多数时候都会由模型或脚手架生成器生成。典型的用例如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 create_table :products do |t|
   t.string :name
 end
-~~~
+```
 
 这个迁移会创建 `products` 数据表，在数据表中创建 `name` 字段（后面会介绍，还会自动创建 `id` 字段）。
 
 默认情况下，`create_table` 方法会创建名为 `id` 的主键。通过 `:primary_key` 选项可以修改主键名（修改后别忘了修改相应的模型）。如果不想生成主键，可以传入 `id: false` 选项。如果设置数据库的选项，可以在 `:options` 选择中使用 SQL。例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 create_table :products, options: "ENGINE=BLACKHOLE" do |t|
   t.string :name, null: false
 end
-~~~
+```
 
 这样设置之后，会在创建数据表的 SQL 语句后面加上 `ENGINE=BLACKHOLE`。（MySQL 默认的选项是 `ENGINE=InnoDB`）
 
@@ -326,52 +301,47 @@ end
 
 `create_join_table` 方法用来创建 HABTM 联合数据表。典型的用例如下：
 
-{:lang="ruby"}
-~~~
+```ruby
 create_join_table :products, :categories
-~~~
+```
 
 这段代码会创建一个名为 `categories_products` 的数据表，包含两个字段：`category_id` 和 `product_id`。这两个字段的 `:null` 选项默认情况都是 `false`，不过可在 `:column_options` 选项中设置。
 
-{:lang="ruby"}
-~~~
+```ruby
 create_join_table :products, :categories, column_options: {null: true}
-~~~
+```
 
 这段代码会把 `product_id` 和 `category_id` 字段的 `:null` 选项设为 `true`。
 
 如果想修改数据表的名字，可以传入 `:table_name` 选项。例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 create_join_table :products, :categories, table_name: :categorization
-~~~
+```
 
 创建的数据表名为 `categorization`。
 
 `create_join_table` 还可接受代码库，用来创建索引（默认无索引）或其他字段。
 
-{:lang="ruby"}
-~~~
+```ruby
 create_join_table :products, :categories do |t|
   t.index :product_id
   t.index :category_id
 end
-~~~
+```
 
 ### 修改数据表
 
 有一个和 `create_table` 类似地方法，名为 `change_table`，用来修改现有的数据表。其用法和 `create_table` 类似，不过传入块的参数知道更多技巧。例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 change_table :products do |t|
   t.remove :description, :name
   t.string :part_number
   t.index :part_number
   t.rename :upccode, :upc_code
 end
-~~~
+```
 
 这段代码删除了 `description` 和 `name` 字段，创建 `part_number` 字符串字段，并建立索引，最后重命名 `upccode` 字段。
 
@@ -379,10 +349,9 @@ end
 
 如果 Active Record 提供的帮助方法不够用，可以使用 `excute` 方法，执行任意的 SQL 语句：
 
-{:lang="ruby"}
-~~~
+```ruby
 Product.connection.execute('UPDATE `products` SET `price`=`free` WHERE 1')
-~~~
+```
 
 各方法的详细用法请查阅 API 文档：
 
@@ -416,8 +385,7 @@ Product.connection.execute('UPDATE `products` SET `price`=`free` WHERE 1')
 
 Active Record 可能不知如何撤销复杂的迁移操作，这时可以使用 `reversible` 方法指定运行迁移和撤销迁移时怎么操作。例如：
 
-{:lang="ruby"}
-~~~
+```ruby
 class ExampleMigration < ActiveRecord::Migration
   def change
     create_table :products do |t|
@@ -445,7 +413,7 @@ class ExampleMigration < ActiveRecord::Migration
     add_column :users, :home_page_url, :string
     rename_column :users, :email, :email_address
   end
-~~~
+```
 
 使用 `reversible` 方法还能确保操作按顺序执行。在上面的例子中，如果撤销迁移，`down` 代码块会在 `home_page_url` 字段删除后、`products` 数据表删除前运行。
 
@@ -455,8 +423,7 @@ class ExampleMigration < ActiveRecord::Migration
 
 在迁移中可以不用 `change` 方法，而用 `up` 和 `down` 方法。`up` 方法定义要对数据库模式做哪些操作，`down` 方法用来撤销这些操作。也就是说，如果执行 `up` 后立即执行 `down`，数据库的模式应该没有任何变化。例如，在 `up` 中创建了数据表，在 `down` 方法中就要将其删除。撤销时最好按照添加的相反顺序进行。前一节中的 `reversible` 用法示例代码可以改成：
 
-{:lang="ruby"}
-~~~
+```ruby
 class ExampleMigration < ActiveRecord::Migration
   def up
     create_table :products do |t|
@@ -487,7 +454,7 @@ class ExampleMigration < ActiveRecord::Migration
     drop_table :products
   end
 end
-~~~
+```
 
 如果迁移不可撤销，应该在 `down` 方法中抛出 `ActiveRecord::IrreversibleMigration` 异常。如果有人尝试撤销迁移，会看到一个错误消息，告诉他无法撤销。
 
@@ -495,8 +462,7 @@ end
 
 Active Record 提供了撤销迁移的功能，通过 `revert` 方法实现：
 
-{:lang="ruby"}
-~~~
+```ruby
 require_relative '2012121212_example_migration'
 
 class FixupExampleMigration < ActiveRecord::Migration
@@ -508,12 +474,11 @@ class FixupExampleMigration < ActiveRecord::Migration
     end
   end
 end
-~~~
+```
 
 `revert` 方法还可接受一个块，定义撤销操作。`revert` 方法可用来撤销以前迁移的部分操作。例如，`ExampleMigration` 已经执行，但后来觉得最好还是序列化产品列表。那么，可以编写下面的代码：
 
-{:lang="ruby"}
-~~~
+```ruby
 class SerializeProductListMigration < ActiveRecord::Migration
   def change
     add_column :categories, :product_list
@@ -555,7 +520,7 @@ class SerializeProductListMigration < ActiveRecord::Migration
     end
   end
 end
-~~~
+```
 
 上面这个迁移也可以不用 `revert` 方法，不过步骤就多了：调换 `create_table` 和 `reversible` 的顺序，把 `create_table` 换成 `drop_table`，还要对调 `up` 和 `down` 中的代码。这些操作都可交给 `revert` 方法完成。
 
@@ -569,10 +534,9 @@ Rails 提供了很多 Rake 任务，用来执行指定的迁移。
 
 如果指定了版本，Active Record 会运行该版本之前的所有迁移。版本就是迁移文件名前的数字部分。例如，要运行 20080906120000 这个迁移，可以执行下面的命令：
 
-{:lang="bash"}
-~~~
+```bash
 $ rake db:migrate VERSION=20080906120000
-~~~
+```
 
 如果 20080906120000 比当前的版本高，上面的命令就会执行所有 20080906120000 之前（包括 20080906120000）的迁移中的 `change` 或 `up` 方法，但不会运行 20080906120000 之后的迁移。如果回滚迁移，则会执行 20080906120000 之前（不包括 20080906120000）的迁移中的 `down` 方法。
 
@@ -580,26 +544,23 @@ $ rake db:migrate VERSION=20080906120000
 
 还有一个常用的操作时回滚到之前的迁移。例如，迁移代码写错了，想纠正。我们无须查找迁移的版本号，直接执行下面的命令即可：
 
-{:lang="bash"}
-~~~
+```bash
 $ rake db:rollback
-~~~
+```
 
 这个命令会回滚上一次迁移，撤销 `change` 方法中的操作，或者执行 `down` 方法。如果想撤销多个迁移，可以使用 `STEP` 参数：
 
-{:lang="bash"}
-~~~
+```bash
 $ rake db:rollback STEP=3
-~~~
+```
 
 这个命令会撤销前三次迁移。
 
 `db:migrate:redo` 命令可以回滚上一次迁移，然后再次执行迁移。和 `db:rollback` 一样，如果想重做多次迁移，可以使用 `STEP` 参数。例如：
 
-{:lang="bash"}
-~~~
+```bash
 $ rake db:migrate:redo STEP=3
-~~~
+```
 
 这些 Rake 任务的作用和 `db:migrate` 一样，只是用起来更方便，因为无需查找特定的迁移版本号。
 
@@ -617,10 +578,9 @@ I> 这个任务和执行所有迁移的作用不同。`rake db:reset` 使用的�
 
 如果想执行指定迁移，或者撤销指定迁移，可以使用 `db:migrate:up` 和 `db:migrate:down` 任务，指定相应的版本号，就会根据需求调用 `change`、`up` 或 `down` 方法。例如：
 
-{:lang="bash"}
-~~~
+```bash
 $ rake db:migrate:up VERSION=20080906120000
-~~~
+```
 
 这个命令会执行 20080906120000 迁移中的 `change` 方法或 `up` 方法。`db:migrate:up` 首先会检测指定的迁移是否已经运行，如果 Active Record 任务已经执行，就不会做任何操作。
 
@@ -628,22 +588,20 @@ $ rake db:migrate:up VERSION=20080906120000
 
 默认情况下，`rake db:migrate` 任务在 `development` 环境中执行。要在其他环境中运行迁移，执行命令时可以使用环境变量 `RAILS_ENV` 指定环境。例如，要在 `test` 环境中运行迁移，可以执行下面的命令：
 
-{:lang="bash"}
-~~~
+```bash
 $ rake db:migrate RAILS_ENV=test
-~~~
+```
 
 ### 修改运行迁移时的输出
 
 默认情况下，运行迁移时，会输出操作了哪些操作，以及花了多长时间。创建数据表并添加索引的迁移产生的输出如下：
 
-{:lang="bash"}
-~~~
+```bash
 ==  CreateProducts: migrating =================================================
 -- create_table(:products)
    -> 0.0028s
 ==  CreateProducts: migrated (0.0028s) ========================================
-~~~
+```
 
 在迁移中可以使用很多方法，控制输出：
 
@@ -655,8 +613,7 @@ $ rake db:migrate RAILS_ENV=test
 
 例如，下面这个迁移：
 
-{:lang="ruby"}
-~~~
+```ruby
 class CreateProducts < ActiveRecord::Migration
   def change
     suppress_messages do
@@ -678,12 +635,11 @@ class CreateProducts < ActiveRecord::Migration
     end
   end
 end
-~~~
+```
 
 输出结果是：
 
-{:lang="bash"}
-~~~
+```bash
 ==  CreateProducts: migrating =================================================
 -- Created a table
    -> and an index!
@@ -691,7 +647,7 @@ end
    -> 10.0013s
    -> 250 rows
 ==  CreateProducts: migrated (10.0054s) =======================================
-~~~
+```
 
 如果不想让 Active Record 输出任何结果，可以使用 `rake db:migrate VERBOSE=false`。
 
@@ -721,8 +677,7 @@ end
 
 如果设为 `:ruby`，导出的模式保存在 `db/schema.rb` 文件中。打开这个文件，你会发现内容很多，就像一个很大的迁移：
 
-{:lang="ruby"}
-~~~
+```ruby
 ActiveRecord::Schema.define(version: 20080906171750) do
   create_table "authors", force: true do |t|
     t.string   "name"
@@ -738,7 +693,7 @@ ActiveRecord::Schema.define(version: 20080906171750) do
     t.string "part_number"
   end
 end
-~~~
+```
 
 大多数情况下，文件的内容都是这样。这个文件使用 `create_table`、`add_index` 等方法审查数据库的结构。这个文件盒使用的数据库类型无关，可以导入任何一种 Active Record 支持的数据库。如果开发的程序需要兼容多种数据库，可以使用这个文件。
 
@@ -764,8 +719,7 @@ Active Record 并没有为使用这些功能提供任何工具，不过 `execute
 
 有些人使用迁移把数据存入数据库：
 
-{:lang="ruby"}
-~~~
+```ruby
 class AddInitialProducts < ActiveRecord::Migration
   def up
     5.times do |i|
@@ -777,15 +731,14 @@ class AddInitialProducts < ActiveRecord::Migration
     Product.delete_all
   end
 end
-~~~
+```
 
 Rails 提供了“种子”功能，可以把初始化数据存入数据库。这个功能用起来很简单，在 `db/seeds.rb` 文件中写一些 Ruby 代码，然后执行 `rake db:seed` 命令即可：
 
-{:lang="ruby"}
-~~~
+```ruby
 5.times do |i|
   Product.create(name: "Product ##{i}", description: "A product.")
 end
-~~~
+```
 
 填充新建程序的数据库，使用这种方法操作起来简洁得多。
