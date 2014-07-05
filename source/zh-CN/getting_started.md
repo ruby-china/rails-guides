@@ -47,13 +47,13 @@ Rails 哲学包含两大指导思想：
 
 本文会新建一个名为 `blog` 的 Rails 程序，这是一个非常简单的博客。在开始开发程序之前，要确保已经安装了 Rails。
 
-T> 文中的示例代码使用 `$` 表示命令行提示符，你的提示符可能修改过，所以会不一样。在 Windows 中，提示符可能是 `c:\source_code>`。
+TIP: 文中的示例代码使用 `$` 表示命令行提示符，你的提示符可能修改过，所以会不一样。在 Windows 中，提示符可能是 `c:\source_code>`。
 
 ### 安装 Rails
 
 打开命令行：在 Mac OS X 中打开 Terminal.app，在 Windows 中选择“运行”，然后输入“cmd.exe”。下文中所有以 `$` 开头的代码，都要在命令行中运行。先确认是否安装了 Ruby 最新版：
 
-T> 有很多工具可以帮助你快速在系统中安装 Ruby 和 Ruby on Rails。Windows 用户可以使用 [Rails Installer](http://railsinstaller.org)，Mac OS X 用户可以使用 [Rails One Click](http://railsoneclick.com)。
+TIP: 有很多工具可以帮助你快速在系统中安装 Ruby 和 Ruby on Rails。Windows 用户可以使用 [Rails Installer](http://railsinstaller.org)，Mac OS X 用户可以使用 [Rails One Click](http://railsoneclick.com)。
 
 ```bash
 $ ruby -v
@@ -96,7 +96,7 @@ $ rails new blog
 
 这个命令会在文件夹 `blog` 中新建一个 Rails 程序，然后执行 `bundle install` 命令安装 `Gemfile` 中列出的 gem。
 
-T> 执行 `rails new -h` 可以查看新程序生成器的所有命令行选项。
+TIP: 执行 `rails new -h` 可以查看新程序生成器的所有命令行选项。
 
 生成 `blog` 程序后，进入该文件夹：
 
@@ -136,13 +136,13 @@ Hello, Rails!
 $ rails server
 ```
 
-T> 把 CoffeeScript 编译成 JavaScript 需要 JavaScript 运行时，如果没有运行时，会报错，提示没有 `execjs`。Mac OS X 和 Windows 一般都提供了 JavaScript 运行时。Rails 生成的 `Gemfile` 中，安装 `therubyracer` gem 的代码被注释掉了，如果需要使用这个 gem，请把前面的注释去掉。在 JRuby 中推荐使用 `therubyracer`。在 JRuby 中生成的 `Gemfile` 已经包含了这个 gem。所有支持的运行时参见 [ExecJS](https://github.com/sstephenson/execjs#readme)。
+TIP: 把 CoffeeScript 编译成 JavaScript 需要 JavaScript 运行时，如果没有运行时，会报错，提示没有 `execjs`。Mac OS X 和 Windows 一般都提供了 JavaScript 运行时。Rails 生成的 `Gemfile` 中，安装 `therubyracer` gem 的代码被注释掉了，如果需要使用这个 gem，请把前面的注释去掉。在 JRuby 中推荐使用 `therubyracer`。在 JRuby 中生成的 `Gemfile` 已经包含了这个 gem。所有支持的运行时参见 [ExecJS](https://github.com/sstephenson/execjs#readme)。
 
 上述命令会启动 WEBrick，这是 Ruby 内置的服务器。要查看程序，请打开一个浏览器窗口，访问 <http://localhost:3000>。应该会看到默认的 Rails 信息页面：
 
 ![欢迎使用页面](images/getting_started/rails_welcome.png)
 
-T> 要想停止服务器，请在命令行中按 Ctrl+C 键。服务器成功停止后回重新看到命令行提示符。在大多数类 Unix 系统中，包括 Mac OS X，命令行提示符是 `$` 符号。在开发模式中，一般情况下无需重启服务器，修改文件后，服务器会自动重新加载。
+TIP: 要想停止服务器，请在命令行中按 Ctrl+C 键。服务器成功停止后回重新看到命令行提示符。在大多数类 Unix 系统中，包括 Mac OS X，命令行提示符是 `$` 符号。在开发模式中，一般情况下无需重启服务器，修改文件后，服务器会自动重新加载。
 
 “欢迎使用”页面是新建 Rails 程序后的“冒烟测试”：确保程序设置正确，能顺利运行。你可以点击“About your application's environment”链接查看程序所处环境的信息。
 
@@ -220,7 +220,7 @@ root 'welcome#index'
 
 如果生成控制器时停止了服务器，请再次启动（`rails server`），然后在浏览器中访问 <http://localhost:3000>。你会看到之前写入 `app/views/welcome/index.html.erb` 文件的“Hello, Rails!”，说明新定义的路由把根目录交给 `WelcomeController` 的 `index` 动作处理了，而且也正确的渲染了视图。
 
-T> 关于路由的详细介绍，请阅读“[Rails 路由全解](/routing.html)”一文。
+TIP: 关于路由的详细介绍，请阅读“[Rails 路由全解](/routing.html)”一文。
 
 开始使用
 -------
@@ -436,7 +436,7 @@ $ rails generate model Article title:string text:text
 
 执行这个命令后，Rails 会生成一堆文件。现在我们只关注 `app/models/article.rb` 和 `db/migrate/20140120191729_create_articles.rb`（你得到的文件名可能有点不一样）这两个文件。后者用来创建数据库结构，下一节会详细说明。
 
-T> Active Record 很智能，能自动把数据表中的字段映射到模型的属性上。所以无需在 Rails 的模型中声明属性，因为 Active Record 会自动映射。
+TIP: Active Record 很智能，能自动把数据表中的字段映射到模型的属性上。所以无需在 Rails 的模型中声明属性，因为 Active Record 会自动映射。
 
 ### 运行迁移
 
@@ -459,7 +459,7 @@ end
 
 在这个迁移中定义了一个名为 `change` 的方法，在运行迁移时执行。`change` 方法中定义的操作都是可逆的，Rails 知道如何撤销这次迁移操作。运行迁移后，会创建 `articles` 表，以及一个字符串字段和文本字段。同时还会创建两个时间戳字段，用来跟踪记录的创建时间和更新时间。
 
-T> 关于迁移的详细说明，请参阅“[Active Record 数据库迁移](/migrations.html)”一文。
+TIP: 关于迁移的详细说明，请参阅“[Active Record 数据库迁移](/migrations.html)”一文。
 
 然后，使用 rake 命令运行迁移：
 
@@ -493,7 +493,7 @@ end
 
 在 Rails 中，每个模型可以使用各自的属性初始化，自动映射到数据库字段上。`create` 动作中的第一行就是这个目的（还记得吗，`params[:article]` 就是我们要获取的属性）。`@article.save` 的作用是把模型保存到数据库中。保存完后转向 `show` 动作。稍后再编写 `show` 动作。
 
-T> 后文会看到，`@article.save` 返回一个布尔值，表示保存是否成功。
+TIP: 后文会看到，`@article.save` 返回一个布尔值，表示保存是否成功。
 
 再次访问 <http://localhost:3000/articles/new>，填写表单，还差一步就能创建文章了，会看到一个错误页面：
 
@@ -517,7 +517,7 @@ private
 
 看到 `permit` 方法了吗？这个方法允许在动作中使用 `title` 和 `text` 属性。
 
-T> 注意，`article_params` 是私有方法。这种用法可以防止攻击者把修改后的属性传递给模型。关于健壮参数的更多介绍，请阅读[这篇文章](http://weblog.rubyonrails.org/2012/3/21/strong-parameters/)。
+TIP: 注意，`article_params` 是私有方法。这种用法可以防止攻击者把修改后的属性传递给模型。关于健壮参数的更多介绍，请阅读[这篇文章](http://weblog.rubyonrails.org/2012/3/21/strong-parameters/)。
 
 ### 显示文章
 
@@ -644,9 +644,9 @@ end
 <%= link_to 'Back', articles_path %>
 ```
 
-T> 如果要链接到同一个控制器中的动作，不用指定 `:controller` 选项，因为默认情况下使用的就是当前控制器。
+TIP: 如果要链接到同一个控制器中的动作，不用指定 `:controller` 选项，因为默认情况下使用的就是当前控制器。
 
-T> 在开发模式下（默认），每次请求 Rails 都会重新加载程序，因此修改之后无需重启服务器。
+TIP: 在开发模式下（默认），每次请求 Rails 都会重新加载程序，因此修改之后无需重启服务器。
 
 ### 添加数据验证
 
@@ -736,7 +736,7 @@ private
 
 在 `new` 动作中加入 `@article = Article.new` 的原因是，如果不这么做，在视图中 `@article` 的值就是 `nil`，调用 `@article.errors.any?` 时会发生错误。
 
-T> Rails 会自动把出错的表单字段包含在一个 `div` 中，并为其添加了一个 class：`field_with_errors`。我们可以定义一些样式，凸显出错的字段。
+TIP: Rails 会自动把出错的表单字段包含在一个 `div` 中，并为其添加了一个 class：`field_with_errors`。我们可以定义一些样式，凸显出错的字段。
 
 再次访问 <http://localhost:3000/articles/new>，尝试发布一篇没有标题的文章，会看到一个很有用的错误提示。
 
@@ -818,7 +818,7 @@ private
 
 上面的代码再次使用了前面为 `create` 动作定义的 `article_params` 方法。
 
-T> 不用把所有的属性都提供给 `update` 动作。例如，如果使用 `@article.update(title: 'A new title')`，Rails 只会更新 `title` 属性，不修改其他属性。
+TIP: 不用把所有的属性都提供给 `update` 动作。例如，如果使用 `@article.update(title: 'A new title')`，Rails 只会更新 `title` 属性，不修改其他属性。
 
 最后，我们想在文章列表页面，在每篇文章后面都加上一个链接，指向 `edit` 动作。打开 `app/views/articles/index.html.erb` 文件，在“Show”链接后面添加“Edit”链接：
 
@@ -858,7 +858,7 @@ T> 不用把所有的属性都提供给 `update` 动作。例如，如果使用 
 
 编辑文章页面和新建文章页面很相似，显示表单的代码是相同的。下面使用局部视图去掉两个视图中的重复代码。按照约定，局部视图的文件名以下划线开头。
 
-T> 关于局部视图的详细介绍参阅“[Layouts and Rendering in Rails](/layouts_and_rendering.html)”一文。
+TIP: 关于局部视图的详细介绍参阅“[Layouts and Rendering in Rails](/layouts_and_rendering.html)”一文。
 
 新建 `app/views/articles/_form.html.erb` 文件，写入以下代码：
 
@@ -973,7 +973,7 @@ end
 
 恭喜，现在你可以新建、显示、列出、更新、删除文章了。
 
-T> 一般情况下，Rails 建议使用资源对象，而不手动设置路由。关于路由的详细介绍参阅“[Rails 路由全解](/routing.html)”一文。
+TIP: 一般情况下，Rails 建议使用资源对象，而不手动设置路由。关于路由的详细介绍参阅“[Rails 路由全解](/routing.html)”一文。
 
 添加第二个模型
 ------------
@@ -1067,7 +1067,7 @@ end
 
 这两行声明能自动完成很多操作。例如，如果实例变量 `@article` 是一个文章对象，可以使用 `@article.comments` 取回一个数组，其元素是这篇文章的评论。
 
-T> 关于 Active Record 关联的详细介绍，参阅“[Active Record 关联](/association_basics.html)”一文。
+TIP: 关于 Active Record 关联的详细介绍，参阅“[Active Record 关联](/association_basics.html)”一文。
 
 ### 添加评论的路由
 
@@ -1081,7 +1081,7 @@ end
 
 我们把 `comments` 放在 `articles` 中，这叫做嵌套资源，表明了文章和评论间的层级关系。
 
-T> 关于路由的详细介绍，参阅“[Rails 路由全解](/routing.html)”一文。
+TIP: 关于路由的详细介绍，参阅“[Rails 路由全解](/routing.html)”一文。
 
 ### 生成控制器
 
@@ -1442,7 +1442,7 @@ Rails 本身也提供了帮助文档，可以使用下面的 rake 任务生成�
 * 运行 `rake doc:guides`，会在程序的 `doc/guides` 文件夹中生成一份 Rails 指南。在浏览器中打开 `doc/guides/index.html` 可以查看这份指南。
 * 运行 `rake doc:rails`，会在程序的 `doc/api` 文件夹中生成一份完整的 API 文档。在浏览器中打开 `doc/api/index.html` 可以查看 API 文档。
 
-T> 使用 `doc:guides` 任务在本地生成 Rails 指南，要安装 RedCloth gem。在 `Gemfile` 中加入这个 gem，然后执行 `bundle install` 命令即可。
+TIP: 使用 `doc:guides` 任务在本地生成 Rails 指南，要安装 RedCloth gem。在 `Gemfile` 中加入这个 gem，然后执行 `bundle install` 命令即可。
 
 常见问题
 -------

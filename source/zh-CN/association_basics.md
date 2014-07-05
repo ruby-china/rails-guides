@@ -887,7 +887,7 @@ class Order < ActiveRecord::Base
 end
 ```
 
-T> 不管怎样，Rails 都不会自动创建外键字段，你要自己在迁移中创建。
+TIP: 不管怎样，Rails 都不会自动创建外键字段，你要自己在迁移中创建。
 
 ##### `:inverse_of`
 
@@ -1007,7 +1007,7 @@ I> 直接关联没必要使用 `includes`。如果 `Order belongs_to :customer`�
 
 `select` 方法会覆盖获取关联对象使用的 SQL `SELECT` 子句。默认情况下，Rails 会读取所有字段。
 
-T> 如果在 `belongs_to` 关联中使用 `select` 方法，应该同时设置 `:foreign_key` 选项，确保返回正确的结果。
+TIP: 如果在 `belongs_to` 关联中使用 `select` 方法，应该同时设置 `:foreign_key` 选项，确保返回正确的结果。
 
 #### 检查关联的对象是否存在
 
@@ -1159,7 +1159,7 @@ class Supplier < ActiveRecord::Base
 end
 ```
 
-T> 不管怎样，Rails 都不会自动创建外键字段，你要自己在迁移中创建。
+TIP: 不管怎样，Rails 都不会自动创建外键字段，你要自己在迁移中创建。
 
 ##### `:inverse_of`
 
@@ -1521,7 +1521,7 @@ class Customer < ActiveRecord::Base
 end
 ```
 
-T> 不管怎样，Rails 都不会自动创建外键字段，你要自己在迁移中创建。
+TIP: 不管怎样，Rails 都不会自动创建外键字段，你要自己在迁移中创建。
 
 ##### `:inverse_of`
 
@@ -1958,7 +1958,7 @@ end
 
 按照约定，在连接数据表中用来指向另一个模型的外键名是模型名后加 `_id`。`:association_foreign_key` 选项可以设置要使用的外键名：
 
-T> `:foreign_key` 和 `:association_foreign_key` 这两个选项在设置多对多自连接时很有用。
+TIP: `:foreign_key` 和 `:association_foreign_key` 这两个选项在设置多对多自连接时很有用。
 
 ```ruby
 class User < ActiveRecord::Base
