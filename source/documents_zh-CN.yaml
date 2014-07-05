@@ -188,6 +188,7 @@
       name: Ruby on Rails 4.1 发布记
       url: 4_1_release_notes.html
       description: Rails 4.1 的发布记。
+      needs_translation: true
     -
       name: Ruby on Rails 4.0 发布记
       url: 4_0_release_notes.html
