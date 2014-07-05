@@ -11,17 +11,17 @@ Active Record 回调
 
 --------------------------------------------------------------------------------
 
-## 对象的声明周期 {#the-object-life-cycle}
+## 对象的声明周期
 
 在 Rails 程序运行过程中，对象可以被创建、更新和销毁。Active Record 为对象的生命周期提供了很多钩子，让你控制程序及其数据。
 
 回调可以在对象的状态改变之前或之后触发指定的逻辑操作。
 
-## 回调简介 {#callbacks-overview}
+## 回调简介
 
 回调是在对象生命周期的特定时刻执行的方法。回调方法可以在 Active Record 对象创建、保存、更新、删除、验证或从数据库中读出时执行。
 
-### 注册回调 {#callback-registration}
+### 注册回调
 
 在使用回调之前，要先注册。回调方法的定义和普通的方法一样，然后使用类方法注册：
 
@@ -77,11 +77,11 @@ end
 
 一般情况下，都把回调方法定义为受保护的方法或私有方法。如果定义成公共方法，回调就可以在模型外部调用，违背了对象封装原则。
 
-## 可用的回调 {#available-callbacks}
+## 可用的回调
 
 下面列出了所有可用的 Active Record 回调，按照执行各操作时触发的顺序：
 
-### 创建对象 {#creating-an-object}
+### 创建对象
 
 * `before_validation`
 * `after_validation`
@@ -92,7 +92,7 @@ end
 * `after_create`
 * `after_save`
 
-### 更新对象 {#updating-an-object}
+### 更新对象
 
 * `before_validation`
 * `after_validation`
@@ -103,7 +103,7 @@ end
 * `after_update`
 * `after_save`
 
-### 销毁对象 {#destroying-an-object}
+### 销毁对象
 
 * `before_destroy`
 * `around_destroy`
@@ -111,7 +111,7 @@ end
 
 W> 创建和更新对象时都会触发 `after_save`，但不管注册的顺序，总在 `after_create` 和 `after_update` 之后执行。
 
-### `after_initialize` 和 `after_find` {#after-initialize-and-after-find}
+### `after_initialize` 和 `after_find`
 
 `after_initialize` 回调在 Active Record 对象初始化时执行，包括直接使用 `new` 方法初始化和从数据库中读取记录。`after_initialize` 回调不用直接重定义 Active Record 的 `initialize` 方法。
 
@@ -141,7 +141,7 @@ You have initialized an object!
 => #<User id: 1>
 ~~~
 
-### `after_touch` {#after-touch}
+### `after_touch`
 
 `after_touch` 回调在触碰 Active Record 对象时执行。
 
@@ -192,7 +192,7 @@ An Employee was touched
 => true
 ~~~
 
-## 执行回调 {#running-callbacks}
+## 执行回调
 
 下面的方法会触发执行回调：
 
@@ -227,7 +227,7 @@ An Employee was touched
 
 I> `find_by_*` 和 `find_by_*!` 是为每个属性生成的动态查询方法，详情参见“[动态查询方法]({{ site.baseurl }}/active_record_querying.html#dynamic-finders)”一节。
 
-## 跳过回调 {#skipping-callbacks}
+## 跳过回调
 
 和数据验证一样，回调也可跳过，使用下列方法即可：
 
@@ -246,7 +246,7 @@ I> `find_by_*` 和 `find_by_*!` 是为每个属性生成的动态查询方法，
 
 使用这些方法是要特别留心，因为重要的业务逻辑可能在回调中完成。如果没弄懂回调的作用直接跳过，可能导致数据不合法。
 
-## 终止执行 {#halting-execution}
+## 终止执行
 
 在模型中注册回调后，回调会加入一个执行队列。这个队列中包含模型的数据验证，注册的回调，以及要执行的数据库操作。
 
@@ -254,7 +254,7 @@ I> `find_by_*` 和 `find_by_*!` 是为每个属性生成的动态查询方法，
 
 W> `ActiveRecord::Rollback` 之外的异常在回调链终止之后，还会由 Rails 再次抛出。抛出 `ActiveRecord::Rollback` 之外的异常，可能导致不应该抛出异常的方法（例如 `save` 和 `update_attributes`，应该返回 `true` 或 `false`）无法执行。
 
-## 关联回调 {#relational-callbacks}
+## 关联回调
 
 回调能在模型关联中使用，甚至可由关联定义。假如一个用户发布了多篇文章，如果用户删除了，他发布的文章也应该删除。下面我们在 `Post` 模型中注册一个 `after_destroy` 回调，应用到 `User` 模型上：
 
@@ -281,11 +281,11 @@ Post destroyed
 => #<User id: 1>
 ~~~
 
-## 条件回调 {#conditional-callbacks}
+## 条件回调
 
 和数据验证类似，也可以在满足指定条件时再调用回调方法。条件通过 `:if` 和 `:unless` 选项指定，选项的值可以是 Symbol、字符串、`Proc` 或数组。`:if` 选项指定什么时候调用回调。如果要指定何时不调用回调，使用 `:unless` 选项。
 
-### 使用 Symbol {#using-if-and-unless-with-a-symbol}
+### 使用 Symbol
 
 :if 和 :unless 选项的值为 Symbol 时，表示要在调用回调之前执行对应的判断方法。使用 `:if` 选项时，如果判断方法返回 `false`，就不会调用回调；使用 `:unless` 选项时，如果判断方法返回 `true`，就不会调用回调。Symbol 是最常用的设置方式。使用这种方式注册回调时，可以使用多个判断方法检查是否要调用回调。
 
@@ -296,7 +296,7 @@ class Order < ActiveRecord::Base
 end
 ~~~
 
-### 使用字符串 {#using-if-and-unless-with-a-string}
+### 使用字符串
 
 `:if` 和 `:unless` 选项的值还可以是字符串，但必须是 RUby 代码，传入 `eval` 方法中执行。当字符串表示的条件非常短时才应该是使用这种形式。
 
@@ -307,7 +307,7 @@ class Order < ActiveRecord::Base
 end
 ~~~
 
-### 使用 Proc {#using-if-and-unless-with-a-proc}
+### 使用 Proc
 
 `:if` 和 `:unless` 选项的值还可以是 Proc 对象。这种形式最适合用在一行代码能表示的条件上。
 
@@ -319,7 +319,7 @@ class Order < ActiveRecord::Base
 end
 ~~~
 
-### 回调的多重条件 {#multiple-conditions-for-callbacks}
+### 回调的多重条件
 
 注册条件回调时，可以同时使用 `:if` 和 `:unless` 选项：
 
@@ -331,7 +331,7 @@ class Comment < ActiveRecord::Base
 end
 ~~~
 
-## 回调类 {#callback-classes}
+## 回调类
 
 有时回调方法可以在其他模型中重用，我们可以将其封装在类中。
 
@@ -381,7 +381,7 @@ end
 
 在回调类中可以定义任意数量的回调方法。
 
-## 事务回调 {#transaction-callbacks}
+## 事务回调
 
 还有两个回调会在数据库事务完成时触发：`after_commit` 和 `after_rollback`。这两个回调和 `after_save` 很像，只不过在数据库操作提交或回滚之前不会执行。如果模型要和数据库事务之外的系统交互，就可以使用这两个回调。
 

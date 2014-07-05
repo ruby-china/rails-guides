@@ -12,7 +12,7 @@ Active Record 数据库迁移
 
 --------------------------------------------------------------------------------
 
-## 迁移简介 {#migration-overview}
+## 迁移简介
 
 迁移使用一种统一、简单的方式，按照时间顺序修改数据库的模式。迁移使用 Ruby DSL 编写，因此不用手动编写 SQL 语句，对数据库的操作和所用的数据库种类无关。
 
@@ -77,9 +77,9 @@ class ChangeProductsPrice < ActiveRecord::Migration
 end
 ~~~
 
-## 创建迁移 {#creating-a-migration}
+## 创建迁移
 
-### 单独创建迁移 {#creating-a-standalone-migration}
+### 单独创建迁移
 
 迁移文件存储在 `db/migrate` 文件夹中，每个迁移保存在一个文件中。文件名采用 `YYYYMMDDHHMMSS_create_products.rb` 形式，即一个 UTC 时间戳后加以下划线分隔的迁移名。迁移的类名（驼峰式）要和文件名时间戳后面的部分匹配。例如，在 `20080906120000_create_products.rb` 文件中要定义 `CreateProducts` 类；在 `20080906120001_add_details_to_products.rb` 文件中要定义 `AddDetailsToProducts` 类。文件名中的时间戳决定要运行哪个迁移，以及按照什么顺序运行。从其他程序中复制迁移，或者自己生成迁移时，要注意运行的顺序。
 
@@ -238,7 +238,7 @@ class CreateJoinTableCustomerProduct < ActiveRecord::Migration
 end
 ~~~
 
-### 模型生成器 {#model-generators}
+### 模型生成器
 
 模型生成器和脚手架生成器会生成合适的迁移，创建模型。迁移中会包含创建所需数据表的代码。如果在生成器中指定了字段，还会生成创建字段的代码。例如，运行下面的命令：
 
@@ -265,7 +265,7 @@ end
 
 字段的名字和类型数量不限。
 
-### 支持的类型修饰符 {#supported-type-modifiers}
+### 支持的类型修饰符
 
 在字段类型后面，可以在花括号中添加选项。可用的修饰符如下：
 
@@ -294,11 +294,11 @@ class AddDetailsToProducts < ActiveRecord::Migration
 end
 ~~~
 
-## 编写迁移 {#writing-a-migration}
+## 编写迁移
 
 使用前面介绍的生成器生成迁移后，就可以开始写代码了。
 
-### 创建数据表 {#creating-a-table}
+### 创建数据表
 
 `create_table` 方法最常用，大多数时候都会由模型或脚手架生成器生成。典型的用例如下：
 
@@ -322,7 +322,7 @@ end
 
 这样设置之后，会在创建数据表的 SQL 语句后面加上 `ENGINE=BLACKHOLE`。（MySQL 默认的选项是 `ENGINE=InnoDB`）
 
-### 创建联合数据表 {#creating-a-join-table}
+### 创建联合数据表
 
 `create_join_table` 方法用来创建 HABTM 联合数据表。典型的用例如下：
 
@@ -359,7 +359,7 @@ create_join_table :products, :categories do |t|
 end
 ~~~
 
-### 修改数据表 {#changing-tables}
+### 修改数据表
 
 有一个和 `create_table` 类似地方法，名为 `change_table`，用来修改现有的数据表。其用法和 `create_table` 类似，不过传入块的参数知道更多技巧。例如：
 
@@ -375,7 +375,7 @@ end
 
 这段代码删除了 `description` 和 `name` 字段，创建 `part_number` 字符串字段，并建立索引，最后重命名 `upccode` 字段。
 
-### 如果帮助方法不够用 {#when-helpers-arent-enough}
+### 如果帮助方法不够用
 
 如果 Active Record 提供的帮助方法不够用，可以使用 `excute` 方法，执行任意的 SQL 语句：
 
@@ -390,7 +390,7 @@ Product.connection.execute('UPDATE `products` SET `price`=`free` WHERE 1')
 - [`ActiveRecord::ConnectionAdapters::TableDefinition`](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html)：包含可在 `create_table` 方法的块参数上调用的方法；
 - [`ActiveRecord::ConnectionAdapters::Table`](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/Table.html)：包含可在 `change_table` 方法的块参数上调用的方法；
 
-### 使用 `change` 方法 {#using-the-change-method}
+### 使用 `change` 方法
 
 `change` 是迁移中最常用的方法，大多数情况下都能完成指定的操作，而且 Active Record 知道如何撤这些操作。目前，在 `change` 方法中只能使用下面的方法：
 
@@ -412,7 +412,7 @@ Product.connection.execute('UPDATE `products` SET `price`=`free` WHERE 1')
 
 如果要使用任何其他方法，可以使用 `reversible` 方法，或者不定义 `change` 方法，而分别定义 `up` 和 `down` 方法。
 
-### 使用 `reversible` 方法 {#using-reversible}
+### 使用 `reversible` 方法
 
 Active Record 可能不知如何撤销复杂的迁移操作，这时可以使用 `reversible` 方法指定运行迁移和撤销迁移时怎么操作。例如：
 
@@ -451,7 +451,7 @@ class ExampleMigration < ActiveRecord::Migration
 
 有时，迁移的操作根本无法撤销，例如删除数据。这是，可以在 `down` 代码块中抛出 `ActiveRecord::IrreversibleMigration` 异常。如果有人尝试撤销迁移，会看到一个错误消息，告诉他无法撤销。
 
-### 使用 `up` 和 `down` 方法 {#using-the-up-down-methods}
+### 使用 `up` 和 `down` 方法
 
 在迁移中可以不用 `change` 方法，而用 `up` 和 `down` 方法。`up` 方法定义要对数据库模式做哪些操作，`down` 方法用来撤销这些操作。也就是说，如果执行 `up` 后立即执行 `down`，数据库的模式应该没有任何变化。例如，在 `up` 中创建了数据表，在 `down` 方法中就要将其删除。撤销时最好按照添加的相反顺序进行。前一节中的 `reversible` 用法示例代码可以改成：
 
@@ -491,7 +491,7 @@ end
 
 如果迁移不可撤销，应该在 `down` 方法中抛出 `ActiveRecord::IrreversibleMigration` 异常。如果有人尝试撤销迁移，会看到一个错误消息，告诉他无法撤销。
 
-### 撤销之前的迁移 {#reverting-previous-migrations}
+### 撤销之前的迁移
 
 Active Record 提供了撤销迁移的功能，通过 `revert` 方法实现：
 
@@ -559,7 +559,7 @@ end
 
 上面这个迁移也可以不用 `revert` 方法，不过步骤就多了：调换 `create_table` 和 `reversible` 的顺序，把 `create_table` 换成 `drop_table`，还要对调 `up` 和 `down` 中的代码。这些操作都可交给 `revert` 方法完成。
 
-## 运行迁移 {#running-migrations}
+## 运行迁移
 
 Rails 提供了很多 Rake 任务，用来执行指定的迁移。
 
@@ -576,7 +576,7 @@ $ rake db:migrate VERSION=20080906120000
 
 如果 20080906120000 比当前的版本高，上面的命令就会执行所有 20080906120000 之前（包括 20080906120000）的迁移中的 `change` 或 `up` 方法，但不会运行 20080906120000 之后的迁移。如果回滚迁移，则会执行 20080906120000 之前（不包括 20080906120000）的迁移中的 `down` 方法。
 
-### 回滚 {#rolling-back}
+### 回滚
 
 还有一个常用的操作时回滚到之前的迁移。例如，迁移代码写错了，想纠正。我们无须查找迁移的版本号，直接执行下面的命令即可：
 
@@ -603,17 +603,17 @@ $ rake db:migrate:redo STEP=3
 
 这些 Rake 任务的作用和 `db:migrate` 一样，只是用起来更方便，因为无需查找特定的迁移版本号。
 
-### 搭建数据库 {#setup-the-database}
+### 搭建数据库
 
 `rake db:setup` 任务会创建数据库，加载模式，并填充种子数据。
 
-### 重建数据库 {#resetting-the-database}
+### 重建数据库
 
 `rake db:reset` 任务会删除数据库，然后重建，等价于 `rake db:drop db:setup`。
 
 I> 这个任务和执行所有迁移的作用不同。`rake db:reset` 使用的是 `schema.rb` 文件中的内容。如果迁移无法回滚，`rake db:reset` 起不了作用。详细介绍参见“[导出模式](#schema-dumping-and-you)”一节。
 
-### 运行指定的迁移 {#running-specific-migrations}
+### 运行指定的迁移
 
 如果想执行指定迁移，或者撤销指定迁移，可以使用 `db:migrate:up` 和 `db:migrate:down` 任务，指定相应的版本号，就会根据需求调用 `change`、`up` 或 `down` 方法。例如：
 
@@ -624,7 +624,7 @@ $ rake db:migrate:up VERSION=20080906120000
 
 这个命令会执行 20080906120000 迁移中的 `change` 方法或 `up` 方法。`db:migrate:up` 首先会检测指定的迁移是否已经运行，如果 Active Record 任务已经执行，就不会做任何操作。
 
-### 在不同的环境中运行迁移 {#running-migrations-in-different-environments}
+### 在不同的环境中运行迁移
 
 默认情况下，`rake db:migrate` 任务在 `development` 环境中执行。要在其他环境中运行迁移，执行命令时可以使用环境变量 `RAILS_ENV` 指定环境。例如，要在 `test` 环境中运行迁移，可以执行下面的命令：
 
@@ -633,7 +633,7 @@ $ rake db:migrate:up VERSION=20080906120000
 $ rake db:migrate RAILS_ENV=test
 ~~~
 
-### 修改运行迁移时的输出 {#changing-the-output-of-running-migrations}
+### 修改运行迁移时的输出
 
 默认情况下，运行迁移时，会输出操作了哪些操作，以及花了多长时间。创建数据表并添加索引的迁移产生的输出如下：
 
@@ -695,7 +695,7 @@ end
 
 如果不想让 Active Record 输出任何结果，可以使用 `rake db:migrate VERBOSE=false`。
 
-## 修改现有的迁移 {#changing-existing-migrations}
+## 修改现有的迁移
 
 有时编写的迁移中可能有错误，如果已经运行了迁移，不能直接编辑迁移文件再运行迁移。Rails 认为这个迁移已经运行，所以执行 `rake db:migrate` 任务时什么也不会做。这种情况必须先回滚迁移（例如，执行 `rake db:rollback` 任务），编辑迁移文件后再执行 `rake db:migrate` 任务执行改正后的版本。
 
@@ -703,9 +703,9 @@ end
 
 在新迁移中撤销之前迁移中的全部操作或者部分操作可以使用 `revert` 方法。（参见前面的 [撤销之前的迁移](#reverting-previous-migrations) 一节）
 
-## 导出模式 {#schema-dumping-and-you}
+## 导出模式
 
-### 模式文件的作用 {#what-are-schema-files-for}
+### 模式文件的作用
 
 迁移的作用并不是为数据库模式提供可信的参考源。`db/schema.rb` 或由 Active Record 生成的 SQL 文件才有这个作用。`db/schema.rb` 这些文件不可修改，其目的是表示数据库的当前结构。
 
@@ -715,7 +715,7 @@ end
 
 模式文件还可以用来快速查看 Active Record 中有哪些属性。模型中没有属性信息，而且迁移会频繁修改属性，但是模式文件中有最终的结果。[annotate_models](https://github.com/ctran/annotate_models) gem 会在模型文件的顶部加入注释，自动添加并更新模型的模式。
 
-### 导出的模式文件类型 {#types-of-schema-dumps}
+### 导出的模式文件类型
 
 导出模式有两种方法，由 `config/application.rb` 文件中的 `config.active_record.schema_format` 选项设置，可以是 `:sql` 或 `:ruby`。
 
@@ -748,11 +748,11 @@ end
 
 加载模式时，只要执行其中的 SQL 语句即可。按预期，导入后会创建一个完整的数据库结构。使用 `:sql` 格式，就不能把模式导入其他类型的数据库中了。
 
-### 模式导出和版本控制 {#schema-dumps-and-source-control}
+### 模式导出和版本控制
 
 因为导出的模式文件时数据库模式的可信源，强烈推荐将其纳入版本控制。
 
-## Active Record 和引用完整性 {#active-record-and-referential-integrity}
+## Active Record 和引用完整性
 
 Active Record 在模型中，而不是数据库中设置关联。因此，需要在数据库中实现的功能，例如触发器、外键约束，不太常用。
 
@@ -760,7 +760,7 @@ Active Record 在模型中，而不是数据库中设置关联。因此，需要
 
 Active Record 并没有为使用这些功能提供任何工具，不过 `execute` 方法可以执行任意的 SQL 语句。还可以使用 [foreigner](https://github.com/matthuhiggins/foreigner) 等 gem，为 Active Record 添加外键支持（还能把外键导出到 `db/schema.rb` 文件）。
 
-## 迁移和种子数据 {#migrations-and-seed-data}
+## 迁移和种子数据
 
 有些人使用迁移把数据存入数据库：
 

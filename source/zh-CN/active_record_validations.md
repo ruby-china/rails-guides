@@ -11,7 +11,7 @@ Active Record 数据验证
 
 --------------------------------------------------------------------------------
 
-## 数据验证简介 {#validations-overview}
+## 数据验证简介
 
 下面演示一个非常简单的数据验证：
 
@@ -29,7 +29,7 @@ Person.create(name: nil).valid? # => false
 
 在深入探讨之前，我们先来介绍数据验证在整个程序中的作用。
 
-### 为什么要做数据验证？ {#why-use-validations}
+### 为什么要做数据验证？
 
 数据验证能确保只有合法的数据才会存入数据库。例如，程序可能需要用户提供一个合法的 Email 地址和邮寄地址。在模型中做验证是最有保障的，只有通过验证的数据才能存入数据库。数据验证和使用的数据库种类无关，终端用户也无法跳过，而且容易测试和维护。在 Rails 中做数据验证很简单，Rails 内置了很多帮助方法，能满足常规的需求，而且还可以编写自定义的验证方法。
 
@@ -41,7 +41,7 @@ Person.create(name: nil).valid? # => false
 
 你可以根据实际的需求选择使用哪种验证方式。Rails 团队认为，模型层数据验证最具普适性。
 
-### 什么时候做数据验证？ {#when-does-validation-happen}
+### 什么时候做数据验证？
 
 在 Active Record 中对象有两种状态：一种在数据库中有对应的记录，一种没有。新建的对象（例如，使用 `new` 方法）还不属于数据库。在对象上调用 `save` 方法后，才会把对象存入相应的数据表。Active Record 使用实例方法 `new_record?` 判断对象是否已经存入数据库。加入有下面这个简单的 Active Record 类：
 
@@ -81,7 +81,7 @@ W> 修改数据库中对象的状态有很多方法。有些方法会做数据�
 
 爆炸方法（例如 `save!`）会在验证失败后抛出异常。验证失败后，非爆炸方法不会抛出异常，`save` 和 `update` 返回 `false`，`create` 返回对象本身。
 
-### 跳过验证 {#skipping-validations}
+### 跳过验证
 
 下列方法会跳过验证，不过验证是否通过都会把对象存入数据库，使用时要特别留意。
 
@@ -101,7 +101,7 @@ W> 修改数据库中对象的状态有很多方法。有些方法会做数据�
 
 * `save(validate: false)`
 
-### `valid?` 和 `invalid?` {#valid-questionmark-and-invalid-questionmark}
+### `valid?` 和 `invalid?`
 
 Rails 使用 `valid?` 方法检查对象是否合法。`valid?` 方法会触发数据验证，如果对象上没有错误，就返回 `true`，否则返回 `false`。前面我们已经用过了：
 
@@ -152,7 +152,7 @@ end
 
 `invalid?` 是 `valid?` 的逆测试，会触发数据验证，如果找到错误就返回 `true`，否则返回 `false`。
 
-### `errors[]` {#validations-overview-errors}
+### `errors[]`
 
 要检查对象的某个属性是否合法，可以使用 `errors[:attribute]`。`errors[:attribute]` 中包含 `:attribute` 的所有错误。如果某个属性没有错误，就会返回空数组。
 
@@ -170,7 +170,7 @@ end
 
 我们会在“[处理验证错误](#working-with-validation-errors)”一节详细介绍验证错误。现在，我们来看一下 Rails 默认提供的数据验证帮助方法。
 
-## 数据验证帮助方法 {#validation-helpers}
+## 数据验证帮助方法
 
 Active Record 预先定义了很多数据验证帮助方法，可以直接在模型类定义中使用。这些帮助方法提供了常用的验证规则。每次验证失败后，都会向对象的 `errors` 集合中添加一个消息，这些消息和所验证的属性是关联的。
 
@@ -178,7 +178,7 @@ Active Record 预先定义了很多数据验证帮助方法，可以直接在模
 
 所有的帮助方法都可指定 `:on` 和 `:message` 选项，指定何时做验证，以及验证失败后向 `errors` 集合添加什么消息。`:on` 选项的可选值是 `:create` 和 `:update`。每个帮助函数都有默认的错误消息，如果没有通过 `:message` 选项指定，则使用默认值。下面分别介绍各帮助方法。
 
-### `acceptance` {#acceptance}
+### `acceptance`
 
 这个方法检查表单提交时，用户界面中的复选框是否被选中。这个功能一般用来要求用户接受程序的服务条款，阅读一些文字，等等。这种验证只针对网页程序，不会存入数据库（如果没有对应的字段，该方法会创建一个虚拟属性）。
 
@@ -200,7 +200,7 @@ class Person < ActiveRecord::Base
 end
 ~~~
 
-### `validates_associated` {#validates-associated}
+### `validates_associated`
 
 如果模型和其他模型有关联，也要验证关联的模型对象，可以使用这个方法。保存对象是，会在相关联的每个对象上调用 `valid?` 方法。
 
@@ -218,7 +218,7 @@ W> 不要在关联的两端都使用 `validates_associated`，这样会生成一
 
 `validates_associated` 的默认错误消息是“is invalid”。注意，相关联的每个对象都有各自的 `errors` 集合，错误消息不会都集中在调用该方法的模型对象上。
 
-### `confirmation` {#confirmation}
+### `confirmation`
 
 如果要检查两个文本字段的值是否完全相同，可以使用这个帮助方法。例如，确认 Email 地址或密码。这个帮助方法会创建一个虚拟属性，其名字为要验证的属性名后加 `_confirmation`。
 
@@ -249,7 +249,7 @@ end
 
 这个帮助方法的默认错误消息是“doesn't match confirmation”。
 
-### `exclusion` {#exclusion}
+### `exclusion`
 
 这个帮助方法检查属性的值是否不在指定的集合中。集合可以是任何一种可枚举的对象。
 
@@ -265,7 +265,7 @@ end
 
 默认的错误消息是“is reserved”。
 
-### `format` {#format}
+### `format`
 
 这个帮助方法检查属性的值是否匹配 `:with` 选项指定的正则表达式。
 
@@ -279,7 +279,7 @@ end
 
 默认的错误消息是“is invalid”。
 
-### `inclusion` {#inclusion}
+### `inclusion`
 
 这个帮助方法检查属性的值是否在指定的集合中。集合可以是任何一种可枚举的对象。
 
@@ -295,7 +295,7 @@ end
 
 该方法的默认错误消息是“is not included in the list”。
 
-### `length` {#length}
+### `length`
 
 这个帮助方法验证属性值的长度，有多个选项，可以使用不同的方法指定长度限制：
 
@@ -343,7 +343,7 @@ end
 
 注意，默认的错误消息使用复数形式（例如，“is too short (minimum is %{count} characters”），所以如果长度限制是 `minimum: 1`，就要提供一个定制的消息，或者使用 `presence: true` 代替。`:in` 或 `:within` 的值比 1 小时，都要提供一个定制的消息，或者在 `length` 之前，调用 `presence` 方法。
 
-### `numericality` {#numericality}
+### `numericality`
 
 这个帮助方法检查属性的值是否值包含数字。默认情况下，匹配的值是可选的正负符号后加整数或浮点数。如果只接受整数，可以把 `:only_integer` 选项设为 `true`。
 
@@ -378,7 +378,7 @@ end
 
 默认的错误消息是“is not a number”。
 
-### `presence` {#presence}
+### `presence`
 
 这个帮助方法检查指定的属性是否为非空值，调用 `blank?` 方法检查只是否为 `nil` 或空字符串，即空字符串或只包含空白的字符串。
 
@@ -414,7 +414,7 @@ end
 
 默认的错误消息是“can't be blank”。
 
-### `absence` {#absence}
+### `absence`
 
 这个方法验证指定的属性值是否为空，使用 `present?` 方法检测值是否为 `nil` 或空字符串，即空字符串或只包含空白的字符串。
 
@@ -450,7 +450,7 @@ end
 
 默认的错误消息是“must be blank”。
 
-### `uniqueness` {#uniqueness}
+### `uniqueness`
 
 这个帮助方法会在保存对象之前验证属性值是否是唯一的。该方法不会在数据库中创建唯一性约束，所以有可能两个数据库连接创建的记录字段的值是相同的。为了避免出现这种问题，要在数据库的字段上建立唯一性索引。关于多字段所以的详细介绍，参阅 [MySQL 手册](http://dev.mysql.com/doc/refman/5.6/en/multiple-column-indexes.html)。
 
@@ -486,7 +486,7 @@ W> 注意，有些数据库的设置是，查询时不区分大小写。
 
 默认的错误消息是“has already been taken”。
 
-### `validates_with` {#validates-with}
+### `validates_with`
 
 这个帮助方法把记录交给其他的类做验证。
 
@@ -555,7 +555,7 @@ class GoodnessValidator
 end
 ~~~
 
-### `validates_each` {#validates-each}
+### `validates_each`
 
 这个帮助方法会把属性值传入代码库做验证，没有预先定义验证的方式，你应该在代码库中定义验证方式。要验证的每个属性都会传入块中做验证。在下面的例子中，我们确保名和姓都不能以小写字母开头：
 
@@ -570,11 +570,11 @@ end
 
 代码块的参数是记录，属性名和属性值。在代码块中可以做任何检查，确保数据合法。如果验证失败，要向模型添加一个错误消息，把数据标记为不合法。
 
-## 常用的验证选项 {#common-validation-options}
+## 常用的验证选项
 
 常用的验证选项包括：
 
-### `:allow_nil` {#allow-nil}
+### `:allow_nil`
 
 指定 `:allow_nil` 选项后，如果要验证的值为 `nil` 就会跳过验证。
 
@@ -586,7 +586,7 @@ class Coffee < ActiveRecord::Base
 end
 ~~~
 
-### `:allow_blank` {#allow-blank}
+### `:allow_blank`
 
 `:allow_blank` 选项和 `:allow_nil` 选项类似。如果要验证的值为空（调用 `blank?` 方法，例如 `nil` 或空字符串），就会跳过验证。
 
@@ -600,11 +600,11 @@ Topic.create(title: "").valid?  # => true
 Topic.create(title: nil).valid? # => true
 ~~~
 
-### `:message` {#message}
+### `:message`
 
 前面已经介绍过，如果验证失败，会把 `:message` 选项指定的字符串添加到 `errors` 集合中。如果没指定这个选项，Active Record 会使用各种验证帮助方法的默认错误消息。
 
-### `:on` {#on}
+### `:on`
 
 `:on` 选项指定什么时候做验证。所有内建的验证帮助方法默认都在保存时（新建记录或更新记录）做验证。如果想修改，可以使用 `on: :create`，指定只在创建记录时做验证；或者使用 `on: :update`，指定只在更新记录时做验证。
 
@@ -622,7 +622,7 @@ class Person < ActiveRecord::Base
 end
 ~~~
 
-## 严格验证 {#strict-validations}
+## 严格验证
 
 数据验证还可以使用严格模式，失败后会抛出 `ActiveModel::StrictValidationFailed` 异常。
 
@@ -646,11 +646,11 @@ end
 Person.new.valid?  # => TokenGenerationException: Token can't be blank
 ~~~
 
-## 条件验证 {#conditional-validation}
+## 条件验证
 
 有时只有满足特定条件时做验证才说得通。条件可通过 `:if` 和 `:unless` 选项指定，这两个选项的值可以是 Symbol、字符串、`Proc` 或数组。`:if` 选项指定何时做验证。如果要指定何时不做验证，可以使用 `:unless` 选项。
 
-### 指定 Symbol {#using-a-symbol-with-if-and-unless}
+### 指定 Symbol
 
 `:if` 和 `:unless` 选项的值为 Symbol 时，表示要在验证之前执行对应的方法。这是最常用的设置方法。
 
@@ -665,7 +665,7 @@ class Order < ActiveRecord::Base
 end
 ~~~
 
-### 指定字符串 {#using-a-string-with-if-and-unless}
+### 指定字符串
 
 `:if` 和 `:unless` 选项的值还可以是字符串，但必须是 Ruby 代码，传入 `eval` 方法中执行。当字符串表示的条件非常短时才应该使用这种形式。
 
@@ -676,7 +676,7 @@ class Person < ActiveRecord::Base
 end
 ~~~
 
-### 指定 Proc {#using-a-proc-with-if-and-unless}
+### 指定 Proc
 
 `:if` and `:unless` 选项的值还可以是 Proc。使用 Proc 对象可以在行间编写条件，不用定义额外的方法。这种形式最适合用在一行代码能表示的条件上。
 
@@ -688,7 +688,7 @@ class Account < ActiveRecord::Base
 end
 ~~~
 
-### 条件组合 {#grouping-conditional-validations}
+### 条件组合
 
 有时同一个条件会用在多个验证上，这时可以使用 `with_options` 方法：
 
@@ -704,7 +704,7 @@ end
 
 `with_options` 代码块中的所有验证都会使用 `if: :is_admin?` 这个条件。
 
-### 联合条件 {#combining-validation-conditions}
+### 联合条件
 
 另一方面，如果是否做某个验证要满足多个条件时，可以使用数组。而且，都一个验证可以同时指定 `:if` 和 `:unless` 选项。
 
@@ -719,11 +719,11 @@ end
 
 只有当 `:if` 选项的所有条件都返回 `true`，且 `:unless` 选项中的条件返回 `false` 时才会做验证。
 
-## 自定义验证方式 {#performing-custom-validations}
+## 自定义验证方式
 
 如果内建的数据验证帮助方法无法满足需求时，可以选择自己定义验证使用的类或方法。
 
-### 自定义验证使用的类 {#custom-validators}
+### 自定义验证使用的类
 
 自定义的验证类继承自 `ActiveModel::Validator`，必须实现 `validate` 方法，传入的参数是要验证的记录，然后验证这个记录是否合法。自定义的验证类通过 `validates_with` 方法调用。
 
@@ -762,7 +762,7 @@ end
 
 如上面的代码所示，可以同时使用内建的验证方法和自定义的验证类。
 
-### 自定义验证使用的方法 {#custom-methods}
+### 自定义验证使用的方法
 
 还可以自定义方法验证模型的状态，如果验证失败，向 `erros` 集合添加错误消息。然后还要使用类方法 `validate` 注册这些方法，传入自定义验证方法名的 Symbol 形式。
 
@@ -801,13 +801,13 @@ class Invoice < ActiveRecord::Base
 end
 ~~~
 
-## 处理验证错误 {#working-with-validation-errors}
+## 处理验证错误
 
 除了前面介绍的 `valid?` 和 `invalid?` 方法之外，Rails 还提供了很多方法用来处理 `errors` 集合，以及查询对象的合法性。
 
 下面介绍其中一些常用的方法。所有可用的方法请查阅 `ActiveModel::Errors` 的文档。
 
-### `errors` {#working-with-validation-errors-errors}
+### `errors`
 
 `ActiveModel::Errors` 的实例包含所有的错误。其键是每个属性的名字，值是一个数组，包含错误消息字符串。
 
@@ -827,7 +827,7 @@ person.valid? # => true
 person.errors.messages # => {}
 ~~~
 
-### `errors[]` {#errors}
+### `errors[]`
 
 `errors[]` 用来获取某个属性上的错误消息，返回结果是一个由该属性所有错误消息字符串组成的数组，每个字符串表示一个错误消息。如果字段上没有错误，则返回空数组。
 
@@ -851,7 +851,7 @@ person.errors[:name]
  # => ["can't be blank", "is too short (minimum is 3 characters)"]
 ~~~
 
-### `errors.add` {#errors-add}
+### `errors.add`
 
 `add` 方法可以手动添加某属性的错误消息。使用 `errors.full_messages` 或 `errors.to_a` 方法会以最终显示给用户的形式显示错误消息。这些错误消息的前面都会加上字段名可读形式（并且首字母大写）。`add` 方法接受两个参数：错误消息要添加到的字段名和错误消息本身。
 
@@ -891,7 +891,7 @@ person.errors.full_messages
    # => ["Name cannot contain the characters !@#%*()_-+="]
 ~~~
 
-### `errors[:base]` {#errors-base}
+### `errors[:base]`
 
 错误消息可以添加到整个对象上，而不是针对某个属性。如果不想管是哪个属性导致对象不合法，指向把对象标记为不合法状态，就可以使用这个方法。`errors[:base]` 是个数字，可以添加字符串作为错误消息。
 
@@ -904,7 +904,7 @@ class Person < ActiveRecord::Base
 end
 ~~~
 
-### `errors.clear` {#errors-clear}
+### `errors.clear`
 
 如果想清除 `errors` 集合中的所有错误消息，可以使用 `clear` 方法。当然了，在不合法的对象上调用 `errors.clear` 方法后，这个对象还是不合法的，虽然 `errors` 集合为空了，但下次调用 `valid?` 方法，或调用其他把对象存入数据库的方法时， 会再次进行验证。如果任何一个验证失败了，`errors` 集合中就再次出现值了。
 
@@ -928,7 +928,7 @@ p.errors[:name]
 # => ["can't be blank", "is too short (minimum is 3 characters)"]
 ~~~
 
-### `errors.size` {#errors-size}
+### `errors.size`
 
 `size` 方法返回对象上错误消息的总数。
 
@@ -947,7 +947,7 @@ person.valid? # => true
 person.errors.size # => 0
 ~~~
 
-## 在视图中显示验证错误 {#displaying-validation-errors-in-views}
+## 在视图中显示验证错误
 
 在模型中加入数据验证后，如果在表单中创建模型，出错时，你或许想把错误消息显示出来。
 
