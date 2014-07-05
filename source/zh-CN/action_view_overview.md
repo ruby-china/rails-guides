@@ -11,7 +11,8 @@ Action View 基础
 
 --------------------------------------------------------------------------------
 
-## Action View 是什么？
+Action View 是什么？
+-------------------
 
 Action View 和 Action Controller 是 Action Pack 的两个主要组件。在 Rails 中，请求由 Action Pack 分两步处理，一步交给控制器（逻辑处理），一步交给视图（渲染视图）。一般来说，Action Controller 的作用是和数据库通信，根据需要执行 CRUD 操作；Action View 用来构建响应。
 
@@ -19,7 +20,8 @@ Action View 模板由嵌入 HTML 的 Ruby 代码编写。为了保证模板代�
 
 I> Action View 的有些功能和 Active Record 绑定在一起，但并不意味着 Action View 依赖于 Active Record。Action View 是个独立的代码库，可以在任何 Ruby 代码库中使用。
 
-## 在 Rails 中使用 Action View
+在 Rails 中使用 Action View
+--------------------------
 
 每个控制器在 `app/views` 中都对应一个文件夹，用来保存该控制器的模板文件。模板文件的作用是显示控制器动作的视图。
 
@@ -44,7 +46,8 @@ Rails 中的视图也有命名约定。一般情况下，视图名和对应的�
 
 返回给客户端的完整 HTML 由这个 ERB 文件、布局文件和视图中用到的所有局部视图组成。后文会详细介绍这几种视图文件。
 
-## 模板，局部视图和布局
+模板，局部视图和布局
+-----------------
 
 前面说过，最终输出的 HTML 由三部分组成：模板，局部视图和布局。下面详细介绍各部分。
 
@@ -266,7 +269,8 @@ Rails 会根据集合中的模型名（在这个例子中，是 `Product` 模型
 
 布局用来渲染 Rails 控制器动作的页面整体结构。一般来说，Rails 程序中有多个布局，大多数页面都使用这个布局渲染。例如，网站中可能有个布局用来渲染用户登录后的页面，以及一个布局用来渲染市场和销售页面。在用户登录后使用的布局中可能包含一个顶级导航，会在多个控制器动作中使用。在 SaaS 程序中，销售布局中可能包含一个顶级导航，指向“定价”和“联系”页面。每个布局都可以有自己的外观样式。关于布局的详细介绍，请阅读“[Rails 布局和视图渲染]({{ site.baseurl }}/layouts_and_rendering.html)”一文。
 
-## 局部布局
+局部布局
+-------
 
 局部视图可以使用自己的布局。局部布局和动作使用的全局布局不一样，但原理相同。
 
@@ -322,13 +326,15 @@ Post.create(body: 'Partial Layouts are cool!')
 
 假如还使用相同的 `_box` 局部布局，上述代码得到的输出和前面一样。
 
-## 视图路径
+视图路径
+-------
 
 暂无内容。
 
-## Action View 提供的帮助方法简介
+Action View 提供的帮助方法简介
+---------------------------
 
-I> 本节并未列出所有帮助方法。完整的帮助方法列表请查阅 [API 文档](http://api.rubyonrails.org/classes/ActionView/Helpers.html)。
+NOTE: 本节并未列出所有帮助方法。完整的帮助方法列表请查阅 [API 文档](http://api.rubyonrails.org/classes/ActionView/Helpers.html)。
 
 以下各节对 Action View 提供的帮助方法做个简单介绍。如果想深入了解各帮助方法，建议查看 [API 文档](http://api.rubyonrails.org/classes/ActionView/Helpers.html)。
 
@@ -1561,7 +1567,8 @@ strip_tags("<b>Bold</b> no more!  <a href='more.html'>See more</a>")
 
 注意，得到的结果中可能仍然有字符 `<`、`>` 和 `&`，会导致浏览器显示异常。
 
-## 视图本地化
+视图本地化
+---------
 
 Action View 可以根据当前的本地化设置渲染不同的模板。
 
