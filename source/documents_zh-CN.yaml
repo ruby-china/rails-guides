@@ -40,7 +40,6 @@
       url: action_view_overview.html
       description: 本篇介绍 Action View 辅助方法。
       work_in_progress: true
-      needs_translation: true
     -
       name: Rails 布局和视图渲染
       url: layouts_and_rendering.html
@@ -72,7 +71,6 @@
       name: Rails 国际化 API
       url: i18n.html
       description: 本篇介绍如何国际化应用程序。将应用程序翻译成多种语言、更改单复数规则、对不同的国家使用正确的日期格式等。
-      needs_translation: true
     -
       name: Action Mailer 基础
       url: action_mailer_basics.html
@@ -82,22 +80,18 @@
       url: testing.html
       work_in_progress: true
       description: 本篇介绍 Rails 里的单元与功能性测试，从什么是测试，解说到如何测试 API。
-      needs_translation: true
     -
       name: Rails 安全指南
       url: security.html
       description: 本篇介绍网路应用程序常见的安全问题，如何在 Rails 里处理这些问题。
-      needs_translation: true
     -
       name: 调试 Rails 程序
       url: debugging_rails_applications.html
       description: 本篇介绍如何给 Rails 应用程式除错。包含了多种除错技巧、如何理解与了解程式码背后究竟发生了什么事。
-      needs_translation: true
     -
       name: 设置 Rails 程序
       url: configuring.html
       description: 本篇介绍 Rails 应用程序的基本设置选项。
-      needs_translation: true
     -
       name: Rails 命令行
       url: command_line.html
@@ -107,12 +101,10 @@
       work_in_progress: true
       url: caching_with_rails.html
       description: 本篇介绍 Rails 提供的多种快取技巧。
-      needs_translation: true
     -
       name: Asset Pipeline
       url: asset_pipeline.html
       description: 本篇介绍 Asset Pipeline。
-      needs_translation: true
     -
       name: 在 Rails 中使用 JavaScript
       url: working_with_javascript_in_rails.html
@@ -136,6 +128,7 @@
       work_in_progress: true
       url: plugins.html
       description: 本篇介绍如何开发 Plugin 来扩展 Rails 的功能。
+      work_in_progress: true
       needs_translation: true
     -
       name: Rails on Rack
@@ -145,10 +138,12 @@
       name: 客制与新建 Rails 产生器
       url: generators.html
       description: 本篇介绍如何加入新的产生器、修改 Rails 内建的产生器。
+      needs_translation: true
     -
       name: Rails 应用程式模版
       url: rails_application_templates.html
       description: 本篇介绍如何使用应用程式模版。
+      needs_translation: true
 -
   name: 贡献 Ruby on Rails
   documents:
@@ -166,6 +161,7 @@
       name: Ruby on Rails 指南准则
       url: ruby_on_rails_guides_guidelines.html
       description: 本篇记录了撰写 Ruby on Rails 指南的准则。
+      needs_translation: true
 -
   name: 维护方针
   documents:
@@ -173,6 +169,7 @@
       name: 维护方针
       url: maintenance_policy.html
       description: Ruby on Rails 目前官方支持的版本、何时发布新版本。
+      needs_translation: true
 -
   name: 发布记
   documents:
@@ -186,6 +183,7 @@
       url: 4_2_release_notes.html
       description: Rails 4.2 的发布记。
       work_in_progress: true
+      needs_translation: true
     -
       name: Ruby on Rails 4.1 发布记
       url: 4_1_release_notes.html
