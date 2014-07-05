@@ -11,7 +11,7 @@ Active Record 基础
 * Active Record 模式（schema）命名约定；
 * 数据库迁移，数据验证和回调；
 
----
+--------------------------------------------------------------------------------
 
 ## Active Record 是什么？ {#what-is-active-record}
 
