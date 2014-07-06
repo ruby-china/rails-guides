@@ -169,7 +169,6 @@
       name: 维护方针
       url: maintenance_policy.html
       description: Ruby on Rails 目前官方支持的版本、何时发布新版本。
-      needs_translation: true
 -
   name: 发布记
   documents:

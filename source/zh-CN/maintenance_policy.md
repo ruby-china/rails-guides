@@ -1,75 +1,60 @@
-Maintenance Policy for Ruby on Rails
-====================================
+Ruby on Rails 维护方针
+=====================
 
-Support of the Rails framework is divided into four groups: New features, bug
-fixes, security issues, and severe security issues. They are handled as
-follows, all versions in `X.Y.Z` format.
+Rails 框架的维护方针分成四个部分：新特性、Bug 修复、安全问题、重大安全问题。
+以下分别解释，版本号皆采 `X.Y.Z` 格式。
 
 --------------------------------------------------------------------------------
 
-Rails follows a shifted version of [semver](http://semver.org/):
+Rails 遵循一种变种的[语义化版本][semver]。
 
-**Patch `Z`**
+**修订号 `Z`**
 
-Only bug fixes, no API changes, no new features.
-Except as necessary for security fixes.
+只修复 Bug，不会更改 API，不会加新特性。
+安全性修复情况下除外。
 
-**Minor `Y`**
+**次版号 `Y`**
 
-New features, may contain API changes (Serve as major versions of Semver).
-Breaking changes are paired with deprecation notices in the previous minor
-or major release.
+新特性、可能会改 API（等同于[语意化版本][semver]的主版号）。
+不兼容的变更会在前一次版号或主版号内加入弃用提醒。
 
-**Major `X`**
+**主版号 `X`**
 
-New features, will likely contain API changes. The difference between Rails'
-minor and major releases is the magnitude of breaking changes, and usually
-reserved for special occasions.
+新特性、很可能会改 API。Rails 次版号与主版号的差别在于，不兼容的变更的数量，主版号通常保留在特别场合释出。
 
-New Features
-------------
+新特性
+-----
 
-New features are only added to the master branch and will not be made available
-in point releases.
+新特性只会合并到 master 分支，不会更新至小版本。
 
-Bug Fixes
----------
+Bug 修复
+--------
 
-Only the latest release series will receive bug fixes. When enough bugs are
-fixed and its deemed worthy to release a new gem, this is the branch it happens
-from.
+只有最新的发行版会修 Bug。当修复的 Bug 累积到一定数量时，便会发布新版本。
 
-**Currently included series:** `4.1.Z`, `4.0.Z`.
+**目前会修 Bug 的版本： `4.1.Z`、`4.0.Z`**
 
-Security Issues
----------------
+安全问题
+-------
 
-The current release series and the next most recent one will receive patches
-and new versions in case of a security issue.
+只有最新版与上一版会修复安全问题。
 
-These releases are created by taking the last released version, applying the
-security patches, and releasing. Those patches are then applied to the end of
-the x-y-stable branch. For example, a theoretical 1.2.3 security release would
-be built from 1.2.2, and then added to the end of 1-2-stable. This means that
-security releases are easy to upgrade to if you're running the latest version
-of Rails.
+比如 `4.0.0` 出了个安全问题，会给 `4.0.0` 版本打上安全性补丁，
+即刻发布 `4.0.1`，并会把 `4.0.1` 会加至 `4-0-stable`。
 
-**Currently included series:** `4.1.Z`, `4.0.Z`.
+**目前会修安全问题的版本：`4.1.Z`、`4.0.Z`**
 
-Severe Security Issues
-----------------------
+重大安全问题
+----------
 
-For severe security issues we will provide new versions as above, and also the
-last major release series will receive patches and new versions. The
-classification of the security issue is judged by the core team.
+重大安全问题会如上所述发布新版本，还会修复上个版本。安全问题的重要性由 Rails 核心成员决定。
 
-**Currently included series:** `4.1.Z`, `4.0.Z`, `3.2.Z`.
+**目前会修重大安全问题的版本：`4.1.Z`、`4.0.Z`、`3.2.Z`**
 
-Unsupported Release Series
---------------------------
+不再支援的发行版
+--------------
 
-When a release series is no longer supported, it's your own responsibility to
-deal with bugs and security issues. We may provide backports of the fixes and
-publish them to git, however there will be no new versions released. If you are
-not comfortable maintaining your own versions, you should upgrade to a
-supported version.
+当我们不再支援某个发行版时，安全问题与 Bug 得自行处理。我们可能会在 GitHub 提供向下兼容的 Bug 修复，
+但不会发布新版本。如果无法自己维护，建议升级至新版本。
+
+[semver]: http://semver.org/lang
