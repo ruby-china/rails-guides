@@ -38,7 +38,7 @@ remove_foreign_key :accounts, column: :owner_id
 Railties
 --------
 
-请参考 [CHANGELOG][Railties-CHANGELOG] 来了解更多细节。
+请参考 [CHANGELOG][railties] 来了解更多细节。
 
 ### 移除
 
@@ -62,7 +62,7 @@ Railties
 Action Pack
 -----------
 
-请参考 [CHANGELOG][AP-CHANGELOG] 来了解更多细节。
+请参考 [CHANGELOG][action-pack] 来了解更多细节。
 
 ### 弃用
 
@@ -118,7 +118,7 @@ Action Pack
 Action View
 -------------
 
-请参考 [CHANGELOG][AV-CHANGELOG] 来了解更多细节。
+请参考 [CHANGELOG][action-view] 来了解更多细节。
 
 ### 弃用
 
@@ -135,14 +135,14 @@ Action View
 Action Mailer
 -------------
 
-请参考 [CHANGELOG](https://github.com/rails/rails/blob/4-1-stable/actionmailer/CHANGELOG.md) 来了解更多细节。
+请参考 [CHANGELOG][action-mailer] 来了解更多细节。
 
 ### 值得一提的变化
 
 Active Record
 -------------
 
-请参考 [CHANGELOG][AR-CHANGELOG] 来了解更多细节。
+请参考 [CHANGELOG][active-record] 来了解更多细节。
 
 ### 移除
 
@@ -220,7 +220,7 @@ Active Record
 Active Model
 ------------
 
-请参考 [CHANGELOG][AM-CHANGELOG] 来了解更多细节。
+请参考 [CHANGELOG][active-model] 来了解更多细节。
 
 ### 移除
 
@@ -235,7 +235,7 @@ Active Model
 Active Support
 --------------
 
-请参考 [CHANGELOG](https://github.com/rails/rails/blob/4-1-stable/activesupport/CHANGELOG.md) 来了解更多细节。
+请参考 [CHANGELOG][active-support] 来了解更多细节。
 
 ### 移除
 
@@ -274,8 +274,10 @@ Active Support
 
 许多人花费宝贵的时间贡献至 Rails 项目，使 Rails 成为更稳定、更强韧的网络框架，参考[完整的 Rails 贡献者清单](http://contributors.rubyonrails.org/)，感谢所有的贡献者！
 
-[Railties-CHANGELOG]: https://github.com/rails/rails/blob/4-2-stable/railties/CHANGELOG.md
-[AR-CHANGELOG]: https://github.com/rails/rails/blob/4-2-stable/activerecord/CHANGELOG.md
-[AP-CHANGELOG]: https://github.com/rails/rails/blob/4-2-stable/actionpack/CHANGELOG.md
-[AM-CHANGELOG]: https://github.com/rails/rails/blob/4-2-stable/activemodel/CHANGELOG.md
-[AV-CHANGELOG]: https://github.com/rails/rails/blob/4-2-stable/actionview/CHANGELOG.md
+[railties]: https://github.com/rails/rails/blob/4-2-stable/railties/CHANGELOG.md
+[action-pack]: https://github.com/rails/rails/blob/4-2-stable/actionpack/CHANGELOG.md
+[action-view]: https://github.com/rails/rails/blob/4-2-stable/actionview/CHANGELOG.md
+[action-mailer]: (https://github.com/rails/rails/blob/4-2-stable/actionmailer/CHANGELOG.md)
+[active-record]: https://github.com/rails/rails/blob/4-2-stable/activerecord/CHANGELOG.md
+[active-model]: https://github.com/rails/rails/blob/4-2-stable/activemodel/CHANGELOG.md
+[ative-support]: (https://github.com/rails/rails/blob/4-2-stable/activesupport/CHANGELOG.md)
