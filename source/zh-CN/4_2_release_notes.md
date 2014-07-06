@@ -1,35 +1,23 @@
-Ruby on Rails 4.2 Release Notes
-===============================
+Ruby on Rails 4.2 发布记
+========================
 
-Highlights in Rails 4.2:
+Rails 4.2 精华摘要：
 
-These release notes cover only the major changes. To know about various bug
-fixes and changes, please refer to the change logs or check out the
-[list of commits](https://github.com/rails/rails/commits/master) in the main
-Rails repository on GitHub.
+本篇仅记录主要的变化。要了解关于已修复的 Bug、功能变更等，请参考 [Rails GitHub 主页][rails]上各个 Gem 的 CHANGELOG 或是 [Rails 的提交历史](https://github.com/rails/rails/commits/master)。
 
 --------------------------------------------------------------------------------
 
-Upgrading to Rails 4.2
+升级至 Rails 4.2
 ----------------------
 
-If you're upgrading an existing application, it's a great idea to have good test
-coverage before going in. You should also first upgrade to Rails 4.1 in case you
-haven't and make sure your application still runs as expected before attempting
-an update to Rails 4.2. A list of things to watch out for when upgrading is
-available in the
-[Upgrading Ruby on Rails](upgrading_ruby_on_rails.html#upgrading-from-rails-4-1-to-rails-4-2)
-guide.
+如果您正试着升级现有的应用程序，最好有广的测试覆盖度。首先应先升级至 4.1，确保应用程序仍正常工作，接着再升上 4.2。升级需要注意的事项在 [Ruby on Rails 升级指南](upgrading_ruby_on_rails.html#upgrading-from-rails-4-1-to-rails-4-2)可以找到。
 
-
-Major Features
+重要新功能
 --------------
 
-### Foreign key support
+### 外键支援
 
-The migration DSL now supports adding and removing foreign keys. They are dumped
-to `schema.rb` as well. At this time, only the `mysql`, `mysql2` and `postgresql`
-adapters support foreign keys.
+迁移 DSL 现在支援新增、移除外键，也会导出到 `schema.rb`。目前只有 `mysql`、`mysql2` 以及 `postgresql` 的适配器支援外键。
 
 ```ruby
 # add a foreign key to `articles.author_id` referencing `authors.id`
@@ -45,51 +33,40 @@ remove_foreign_key :accounts, :branches
 remove_foreign_key :accounts, column: :owner_id
 ```
 
-See the API documentation on
-[add_foreign_key](http://api.rubyonrails.org/v4.2.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_foreign_key)
-and
-[remove_foreign_key](http://api.rubyonrails.org/v4.2.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_foreign_key)
-for a full description.
-
+完整说明请参考 API 文档：[add_foreign_key](http://api.rubyonrails.org/v4.2.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_foreign_key) 和 [remove_foreign_key](http://api.rubyonrails.org/v4.2.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_foreign_key)。
 
 Railties
 --------
 
-Please refer to the
-[Changelog](https://github.com/rails/rails/blob/4-2-stable/railties/CHANGELOG.md)
-for detailed changes.
+请参考 [CHANGELOG][Railties-CHANGELOG] 来了解更多细节。
 
-### Removals
+### 移除
 
-* The `rails application` command has been removed without replacement.
+* 移除了 `rails application` 命令。
   ([Pull Request](https://github.com/rails/rails/pull/11616))
 
-### Notable changes
+### 值得一提的变化
 
-* Introduced `bin/setup` script to bootstrap an application.
+* 导入 `bin/setup` 脚本来启动应用程序。
   ([Pull Request](https://github.com/rails/rails/pull/15189))
 
-* Changed default value for `config.assets.digest` to `true` in development.
+* `config.assets.digest` 在开发模式的缺省值改为 `true`。
   ([Pull Request](https://github.com/rails/rails/pull/15155))
 
-* Introduced an API to register new extensions for `rake notes`.
+* 导入给 `rake notes` 注册新扩展功能的 API。
   ([Pull Request](https://github.com/rails/rails/pull/14379))
 
-* Introduced `Rails.gem_version` as a convenience method to return `Gem::Version.new(Rails.version)`.
+* 导入 `Rails.gem_version` 作为返回 `Gem::Version.new(Rails.version)` 的便捷方法。
   ([Pull Request](https://github.com/rails/rails/pull/14101))
-
 
 Action Pack
 -----------
 
-Please refer to the
-[Changelog](https://github.com/rails/rails/blob/4-2-stable/actionpack/CHANGELOG.md)
-for detailed changes.
+请参考 [CHANGELOG][AP-CHANGELOG] 来了解更多细节。
 
-### Deprecations
+### 弃用
 
-* Deprecated support for setting the `:to` option of a router to a symbol or a
-  string that does not contain a `#` character:
+* 弃用路由的 `:to` 选项里，`:to` 可以指向符号或不含井号的字串这两个功能。
 
       get '/posts', to: MyRackApp    => (No change necessary)
       get '/posts', to: 'post#index' => (No change necessary)
@@ -98,227 +75,208 @@ for detailed changes.
 
   ([Commit](https://github.com/rails/rails/commit/cc26b6b7bccf0eea2e2c1a9ebdcc9d30ca7390d9))
 
-### Notable changes
+### 值得一提的变化
 
-* The `*_filter` family methods has been removed from the documentation. Their
-  usage are discouraged in favor of the `*_action` family methods:
+* `*_filter` 方法已经从文档中移除，已经不鼓励使用。偏好使用 `*_action` 方法：
 
-      after_filter          => after_action
-      append_after_filter   => append_after_action
-      append_around_filter  => append_around_action
-      append_before_filter  => append_before_action
-      around_filter         => around_action
-      before_filter         => before_action
-      prepend_after_filter  => prepend_after_action
-      prepend_around_filter => prepend_around_action
-      prepend_before_filter => prepend_before_action
-      skip_after_filter     => skip_after_action
-      skip_around_filter    => skip_around_action
-      skip_before_filter    => skip_before_action
-      skip_filter           => skip_action_callback
+    ```ruby
+    after_filter          => after_action
+    append_after_filter   => append_after_action
+    append_around_filter  => append_around_action
+    append_before_filter  => append_before_action
+    around_filter         => around_action
+    before_filter         => before_action
+    prepend_after_filter  => prepend_after_action
+    prepend_around_filter => prepend_around_action
+    prepend_before_filter => prepend_before_action
+    skip_after_filter     => skip_after_action
+    skip_around_filter    => skip_around_action
+    skip_before_filter    => skip_before_action
+    skip_filter           => skip_action_callback
+    ```
 
-  If your application is depending on these methods, you should use the
-  replacement `*_action` methods instead. These methods will be deprecated in
-  the future and eventually removed from Rails.
+  若应用程序依赖这些 `*_filter` 方法，应该使用 `*_action` 方法替换。
+  因为 `*_filter` 方法最终会从 Rails 里拿掉。
   (Commit [1](https://github.com/rails/rails/commit/6c5f43bab8206747a8591435b2aa0ff7051ad3de),
   [2](https://github.com/rails/rails/commit/489a8f2a44dc9cea09154ee1ee2557d1f037c7d4))
 
-* Added HTTP method `MKCALENDAR` from RFC-4791
+* 从 RFC-4791 新增 HTTP 方法 `MKCALENDAR`。
   ([Pull Request](https://github.com/rails/rails/pull/15121))
 
-* `*_fragment.action_controller` notifications now include the controller and action name
-  in the payload.
+* `*_fragment.action_controller` 通知消息的 Payload 现在包含 Controller 与动作名称。
   ([Pull Request](https://github.com/rails/rails/pull/14137))
 
-* Segments that are passed into URL helpers are now automatically escaped.
+* 传入 URL 辅助方法的片段现在会自动 Escaped。
   ([Commit](https://github.com/rails/rails/commit/5460591f0226a9d248b7b4f89186bd5553e7768f))
 
-* Improved Routing Error page with fuzzy matching for route search.
+* 改善路由错误页面，搜索路由支持模糊搜索。
   ([Pull Request](https://github.com/rails/rails/pull/14619))
 
-* Added option to disable logging of CSRF failures.
+* 新增关掉记录 CSRF 失败的选项。
   ([Pull Request](https://github.com/rails/rails/pull/14280))
-
 
 Action View
 -------------
 
-Please refer to the
-[Changelog](https://github.com/rails/rails/blob/4-2-stable/actionview/CHANGELOG.md)
-for detailed changes.
+请参考 [CHANGELOG][AV-CHANGELOG] 来了解更多细节。
 
-### Deprecations
+### 弃用
 
-* Deprecated `AbstractController::Base.parent_prefixes`.
-  Override `AbstractController::Base.local_prefixes` when you want to change
-  where to find views.
+* 弃用 `AbstractController::Base.parent_prefixes`。想修改寻找视图的位置，
+  请覆写 `AbstractController::Base.local_prefixes`。
   ([Pull Request](https://github.com/rails/rails/pull/15026))
 
-* Deprecated `ActionView::Digestor#digest(name, format, finder, options = {})`,
-  arguments should be passed as a hash instead.
+* 弃用 `ActionView::Digestor#digest(name, format, finder, options = {})`，
+  现在参数改用 Hash 传入。
   ([Pull Request](https://github.com/rails/rails/pull/14243))
 
-### Notable changes
-
+### 值得一提的变化
 
 Action Mailer
 -------------
 
-Please refer to the
-[Changelog](https://github.com/rails/rails/blob/4-2-stable/actionmailer/CHANGELOG.md)
-for detailed changes.
+请参考 [CHANGELOG](https://github.com/rails/rails/blob/4-1-stable/actionmailer/CHANGELOG.md) 来了解更多细节。
 
-### Notable changes
-
+### 值得一提的变化
 
 Active Record
 -------------
 
-Please refer to the
-[Changelog](https://github.com/rails/rails/blob/4-2-stable/activerecord/CHANGELOG.md)
-for detailed changes.
+请参考 [CHANGELOG][AR-CHANGELOG] 来了解更多细节。
 
-### Removals
+### 移除
 
-* Removed deprecated method `ActiveRecord::Base.quoted_locking_column`.
+* 移除已弃用的方法 `ActiveRecord::Base.quoted_locking_column`.
   ([Pull Request](https://github.com/rails/rails/pull/15612))
 
-* Removed deprecated `ActiveRecord::Migrator.proper_table_name`. Use the
-  `proper_table_name` instance method on `ActiveRecord::Migration` instead.
+* 移除已弃用的方法 `ActiveRecord::Migrator.proper_table_name`。
+  请改用 `ActiveRecord::Migration` 的实例方法：`proper_table_name`。
   ([Pull Request](https://github.com/rails/rails/pull/15512))
 
-* Removed `cache_attributes` and friends. All attributes are cached.
+* 移除 `cache_attributes` 以及其它相关的方法，所有的属性现在都会快取了。
   ([Pull Request](https://github.com/rails/rails/pull/15429))
 
-* Removed unused `:timestamp` type. Transparently alias it to `:datetime`
-  in all cases. Fixes inconsistencies when column types are sent outside of
-  `ActiveRecord`, such as for XML Serialization.
+* 移除了未使用的 `:timestamp` 类型。把所有 `timestamp` 类型都改为 `:datetime` 的别名。
+  修正在 `ActiveRecord` 之外，栏位类型不一致的问题，譬如 XML 序列化。
   ([Pull Request](https://github.com/rails/rails/pull/15184))
 
-### Deprecations
+### 弃用
 
-* Deprecated returning `nil` from `column_for_attribute` when no column exists.
-  It will return a null object in Rails 5.0
+* 弃用了当栏位不存在时，还会从 `column_for_attribute` 返回 `nil` 的情况。
+  Rails 5.0 将会返回 Null Object。
   ([Pull Request](https://github.com/rails/rails/pull/15878))
 
-* Deprecated `serialized_attributes` without replacement.
+* 弃用了 `serialized_attributes`，没有替代方案。
   ([Pull Request](https://github.com/rails/rails/pull/15704))
 
-* Deprecated using `.joins`, `.preload` and `.eager_load` with associations that
-  depends on the instance state (i.e. those defined with a scope that takes an
-  argument) without replacement.
+* 依赖实例状态（有定义接受参数的作用域）的关联现在不能使用 `.joins`、`.preload` 以及 `.eager_load` 了。
   ([Commit](https://github.com/rails/rails/commit/ed56e596a0467390011bc9d56d462539776adac1))
 
-* Deprecated passing Active Record objects to `.find` or `.exists?`. Call `#id`
-  on the objects first.
+* 弃用 `.find` 或 `.exists?` 可传入 Active Record 对象。请先对对象呼叫 `#id`。
   (Commit [1](https://github.com/rails/rails/commit/d92ae6ccca3bcfd73546d612efaea011270bd270),
   [2](https://github.com/rails/rails/commit/d35f0033c7dec2b8d8b52058fb8db495d49596f7))
 
-* Deprecated half-baked support for PostgreSQL range values with excluding
-  beginnings. We currently map PostgreSQL ranges to Ruby ranges. This conversion
-  is not fully possible because the Ruby range does not support excluded
-  beginnings.
+* 弃用仅支持一半的 PostgreSQL 范围数值（不包含起始值）。目前我们把 PostgreSQL 的范围对应到 Ruby 的范围。但由于 Ruby 的范围不支援不包含起始值，所以无法完全转换。
 
-  The current solution of incrementing the beginning is not correct and is now
-  deprecated. For subtypes where we don't know how to increment (e.g. `#succ`
-  is not defined) it will raise an `ArgumentError` for ranges with excluding
-  beginnings.
+  目前的解决方法是将起始数递增，这是不对的，已经弃用了。关于不知如何递增的子类型（比如没有定义 `#succ`）会对不包含起始值的抛出 `ArgumentError`。
 
   ([Commit](https://github.com/rails/rails/commit/91949e48cf41af9f3e4ffba3e5eecf9b0a08bfc3))
 
-* Deprecated broken support for automatic detection of counter caches on
-  `has_many :through` associations. You should instead manually specify the
-  counter cache on the `has_many` and `belongs_to` associations for the through
-  records.
+* 弃用对 `has_many :through` 自动侦测 counter cache 的支持。要自己对 `has_many` 与
+  `belongs_to` 关联，给 `through` 的纪录手动设定。
   ([Pull Request](https://github.com/rails/rails/pull/15754))
 
-### Notable changes
+### 值得一提的变化
 
-* Added support for `#pretty_print` in `ActiveRecord::Base` objects.
+* 新增 `ActiveRecord::Base` 对象的 `#pretty_print` 方法。
   ([Pull Request](https://github.com/rails/rails/pull/15172))
 
-* PostgreSQL and SQLite adapters no longer add a default limit of 255 characters
-  on string columns.
+* PostgreSQL 与 SQLite 适配器不再默认限制字串只能 255 字符。
   ([Pull Request](https://github.com/rails/rails/pull/14579))
 
-* `sqlite3:///some/path` now resolves to the absolute system path `/some/path`.
-  For relative paths, use `sqlite3:some/path` instead. (Previously, `sqlite3:///some/path`
-  resolved to the relative path `some/path`. This behaviour was deprecated on
-  Rails 4.1.)
+* `sqlite3:///some/path` 现在可以解析系统的绝对路径 `/some/path`。
+  相对路径请使用 `sqlite3:some/path`。(先前是 `sqlite3:///some/path`
+  会解析成 `some/path`。这个行为已在 Rails 4.1 被弃用了。  Rails 4.1.)
   ([Pull Request](https://github.com/rails/rails/pull/14569))
 
-* Introduced `#validate` as an alias for `#valid?`.
+* 引入 `#validate` 作为 `#valid?` 的别名。
   ([Pull Request](https://github.com/rails/rails/pull/14456))
 
-* `#touch` now accepts multiple attributes to be touched at once.
+* `#touch` 现在可一次对多属性操作。
   ([Pull Request](https://github.com/rails/rails/pull/14423))
 
-* Added support for fractional seconds for MySQL 5.6 and above.
+* 新增 MySQL 5.6 以上版本的 fractional seconds 支持。
   (Pull Request [1](https://github.com/rails/rails/pull/8240), [2](https://github.com/rails/rails/pull/14359))
 
-* Added support for the `citext` column type in PostgreSQL adapter.
+* 新增 PostgreSQL 适配器的 `citext` 支持。
   ([Pull Request](https://github.com/rails/rails/pull/12523))
 
-* Added support for user-created range types in PostgreSQL adapter.
+* 新增 PostgreSQL 适配器的使用自建的范围类型支持。
   ([Commit](https://github.com/rails/rails/commit/4cb47167e747e8f9dc12b0ddaf82bdb68c03e032))
+
+* 单数关联增加 `:required` 选项，用来定义关联的存在性验证。
+  ([Pull Request](https://github.com/rails/rails/pull/16056))
 
 Active Model
 ------------
 
-Please refer to the
-[Changelog](https://github.com/rails/rails/blob/4-2-stable/activemodel/CHANGELOG.md)
-for detailed changes.
+请参考 [CHANGELOG][AM-CHANGELOG] 来了解更多细节。
 
-### Removals
+### 移除
 
-* Removed deprecated `Validator#setup` without replacement.
+* 移除了 `Validator#setup`，没有替代方案。
   ([Pull Request](https://github.com/rails/rails/pull/15617))
 
-### Notable changes
+### 值得一提的变化
 
-* Introduced `#validate` as an alias for `#valid?`.
+* 引入 `#validate` 作为 `#valid?` 的别名。
   ([Pull Request](https://github.com/rails/rails/pull/14456))
-
 
 Active Support
 --------------
 
-Please refer to the
-[Changelog](https://github.com/rails/rails/blob/4-2-stable/activesupport/CHANGELOG.md)
-for detailed changes.
+请参考 [CHANGELOG](https://github.com/rails/rails/blob/4-1-stable/activesupport/CHANGELOG.md) 来了解更多细节。
 
-### Removals
+### 移除
 
-* Removed deprecated `Numeric#ago`, `Numeric#until`, `Numeric#since`,
+* 移除弃用的 `Numeric#ago`、`Numeric#until`、`Numeric#since` 以及
   `Numeric#from_now`. ([Commit](https://github.com/rails/rails/commit/f1eddea1e3f6faf93581c43651348f48b2b7d8bb))
 
-* Removed deprecated string based terminators for `ActiveSupport::Callbacks`.
+* 移除弃用 `ActiveSupport::Callbacks` 基于字串的终止符。
   ([Pull Request](https://github.com/rails/rails/pull/15100))
 
-### Deprecations
+### 弃用
 
-* Deprecated `Class#superclass_delegating_accessor`, use `Class#class_attribute`
-  instead. ([Pull Request](https://github.com/rails/rails/pull/14271))
+* 弃用 `Class#superclass_delegating_accessor`，请改用 `Class#class_attribute`。
+  ([Pull Request](https://github.com/rails/rails/pull/14271))
 
-* Deprecated `ActiveSupport::SafeBuffer#prepend!` as `ActiveSupport::SafeBuffer#prepend`
-  now performs the same function. ([Pull Request](https://github.com/rails/rails/pull/14529))
+* 弃用 `ActiveSupport::SafeBuffer#prepend!` 请改用 `ActiveSupport::SafeBuffer#prepend`（两者功能相同）。
+  ([Pull Request](https://github.com/rails/rails/pull/14529))
 
-### Notable changes
+### 值得一提的变化
 
-* The `humanize` inflector helper now strips any leading underscores.
+* `humanize` 现在会去掉前面的底线。
   ([Commit](https://github.com/rails/rails/commit/daaa21bc7d20f2e4ff451637423a25ff2d5e75c7))
 
-* Added `SecureRandom::uuid_v3` and `SecureRandom::uuid_v5`.
+* 新增 `SecureRandom::uuid_v3` 和 `SecureRandom::uuid_v5` 方法。
   ([Pull Request](https://github.com/rails/rails/pull/12016))
 
-* Introduce `Concern#class_methods` as an alternative to `module ClassMethods`,
-  as well as `Kernel#concern` to avoid the `module Foo; extend ActiveSupport::Concern; end`
-  boilerplate. ([Commit](https://github.com/rails/rails/commit/b16c36e688970df2f96f793a759365b248b582ad))
+* 导入 `Concern#class_methods` 来取代 `module ClassMethods` 以及 `Kernel#concern`，
+  来避免使用 `module Foo; extend ActiveSupport::Concern; end` 这样的样板。
+  ([Commit](https://github.com/rails/rails/commit/b16c36e688970df2f96f793a759365b248b582ad))
 
-Credits
--------
+* 新增 `Hash#transform_values` 与 `Hash#transform_values!` 方法，来简化 Hash
+  值需要更新、但键保留不变这样的常见模式。
+  ([Pull Request](https://github.com/rails/rails/pull/15819))
 
-See the
-[full list of contributors to Rails](http://contributors.rubyonrails.org/) for
-the many people who spent many hours making Rails, the stable and robust
-framework it is. Kudos to all of them.
+致谢
+----
+
+许多人花费宝贵的时间贡献至 Rails 项目，使 Rails 成为更稳定、更强韧的网络框架，参考[完整的 Rails 贡献者清单](http://contributors.rubyonrails.org/)，感谢所有的贡献者！
+
+[rails]: https://github.com/rails/rails
+[Railties-CHANGELOG]: https://github.com/rails/rails/blob/4-2-stable/railties/CHANGELOG.md
+[AR-CHANGELOG]: https://github.com/rails/rails/blob/4-2-stable/activerecord/CHANGELOG.md
+[AP-CHANGELOG]: https://github.com/rails/rails/blob/4-2-stable/actionpack/CHANGELOG.md
+[AM-CHANGELOG]: https://github.com/rails/rails/blob/4-2-stable/activemodel/CHANGELOG.md
+[AV-CHANGELOG]: https://github.com/rails/rails/blob/4-2-stable/actionview/CHANGELOG.md
