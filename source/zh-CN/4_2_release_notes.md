@@ -3,7 +3,7 @@ Ruby on Rails 4.2 发布记
 
 Rails 4.2 精华摘要：
 
-本篇仅记录主要的变化。要了解关于已修复的 Bug、功能变更等，请参考 [Rails GitHub 主页][rails]上各个 Gem 的 CHANGELOG 或是 [Rails 的提交历史](https://github.com/rails/rails/commits/master)。
+本篇仅记录主要的变化。要了解关于已修复的 Bug、功能变更等，请参考 [Rails GitHub 主页](https://github.com/rails/rails)上各个 Gem 的 CHANGELOG 或是 [Rails 的提交历史](https://github.com/rails/rails/commits/master)。
 
 --------------------------------------------------------------------------------
 
@@ -274,7 +274,6 @@ Active Support
 
 许多人花费宝贵的时间贡献至 Rails 项目，使 Rails 成为更稳定、更强韧的网络框架，参考[完整的 Rails 贡献者清单](http://contributors.rubyonrails.org/)，感谢所有的贡献者！
 
-[rails]: https://github.com/rails/rails
 [Railties-CHANGELOG]: https://github.com/rails/rails/blob/4-2-stable/railties/CHANGELOG.md
 [AR-CHANGELOG]: https://github.com/rails/rails/blob/4-2-stable/activerecord/CHANGELOG.md
 [AP-CHANGELOG]: https://github.com/rails/rails/blob/4-2-stable/actionpack/CHANGELOG.md
