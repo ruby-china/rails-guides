@@ -274,10 +274,10 @@ Active Support
 
 许多人花费宝贵的时间贡献至 Rails 项目，使 Rails 成为更稳定、更强韧的网络框架，参考[完整的 Rails 贡献者清单](http://contributors.rubyonrails.org/)，感谢所有的贡献者！
 
-[railties]: https://github.com/rails/rails/blob/4-2-stable/railties/CHANGELOG.md
-[action-pack]: https://github.com/rails/rails/blob/4-2-stable/actionpack/CHANGELOG.md
-[action-view]: https://github.com/rails/rails/blob/4-2-stable/actionview/CHANGELOG.md
-[action-mailer]: (https://github.com/rails/rails/blob/4-2-stable/actionmailer/CHANGELOG.md)
-[active-record]: https://github.com/rails/rails/blob/4-2-stable/activerecord/CHANGELOG.md
-[active-model]: https://github.com/rails/rails/blob/4-2-stable/activemodel/CHANGELOG.md
-[ative-support]: (https://github.com/rails/rails/blob/4-2-stable/activesupport/CHANGELOG.md)
+[railties]:       https://github.com/rails/rails/blob/4-2-stable/railties/CHANGELOG.md
+[action-pack]:    https://github.com/rails/rails/blob/4-2-stable/actionpack/CHANGELOG.md
+[action-view]:    https://github.com/rails/rails/blob/4-2-stable/actionview/CHANGELOG.md
+[action-mailer]:  https://github.com/rails/rails/blob/4-2-stable/actionmailer/CHANGELOG.md
+[active-record]:  https://github.com/rails/rails/blob/4-2-stable/activerecord/CHANGELOG.md
+[active-model]:   https://github.com/rails/rails/blob/4-2-stable/activemodel/CHANGELOG.md
+[active-support]: https://github.com/rails/rails/blob/4-2-stable/activesupport/CHANGELOG.md
