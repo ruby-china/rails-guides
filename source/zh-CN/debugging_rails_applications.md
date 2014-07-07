@@ -257,7 +257,7 @@ end
 ```bash
 $ rails server --debugger
 => Booting WEBrick
-=> Rails 4.0.0 application starting on http://0.0.0.0:3000
+=> Rails 4.2.0 application starting on http://0.0.0.0:3000
 => Debugger enabled
 ...
 ```
@@ -512,7 +512,7 @@ TIP: 在控制台中也可启用调试器，但要记得在调用 `debugger` 方
 
 ```bash
 $ rails console
-Loading development environment (Rails 4.0.0)
+Loading development environment (Rails 4.2.0)
 >> require "debugger"
 => []
 >> author = Author.first

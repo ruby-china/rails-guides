@@ -82,7 +82,7 @@ $ gem install rails
 $ rails --version
 ```
 
-如果显示的结果类似“Rails 4.1.0”，那么就可以继续往下读了。
+如果显示的结果类似“Rails 4.2.0”，那么就可以继续往下读了。
 
 ### 创建 Blog 程序
 
