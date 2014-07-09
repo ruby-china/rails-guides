@@ -68,12 +68,14 @@ Action Pack
 
 * 弃用路由的 `:to` 选项里，`:to` 可以指向符号或不含井号的字串这两个功能。
 
-      get '/posts', to: MyRackApp    => (No change necessary)
-      get '/posts', to: 'post#index' => (No change necessary)
-      get '/posts', to: 'posts'      => get '/posts', controller: :posts
-      get '/posts', to: :index       => get '/posts', action: :index
+    ```ruby
+    get '/posts', to: MyRackApp    => (No change necessary)
+    get '/posts', to: 'post#index' => (No change necessary)
+    get '/posts', to: 'posts'      => get '/posts', controller: :posts
+    get '/posts', to: :index       => get '/posts', action: :index
+    ```
 
-  ([Commit](https://github.com/rails/rails/commit/cc26b6b7bccf0eea2e2c1a9ebdcc9d30ca7390d9))
+    ([Commit](https://github.com/rails/rails/commit/cc26b6b7bccf0eea2e2c1a9ebdcc9d30ca7390d9))
 
 ### 值得一提的变化
 
@@ -95,10 +97,10 @@ Action Pack
     skip_filter           => skip_action_callback
     ```
 
-  若应用程序依赖这些 `*_filter` 方法，应该使用 `*_action` 方法替换。
-  因为 `*_filter` 方法最终会从 Rails 里拿掉。
-  (Commit [1](https://github.com/rails/rails/commit/6c5f43bab8206747a8591435b2aa0ff7051ad3de),
-  [2](https://github.com/rails/rails/commit/489a8f2a44dc9cea09154ee1ee2557d1f037c7d4))
+    若应用程序依赖这些 `*_filter` 方法，应该使用 `*_action` 方法替换。
+    因为 `*_filter` 方法最终会从 Rails 里拿掉。
+    (Commit [1](https://github.com/rails/rails/commit/6c5f43bab8206747a8591435b2aa0ff7051ad3de),
+    [2](https://github.com/rails/rails/commit/489a8f2a44dc9cea09154ee1ee2557d1f037c7d4))
 
 * 从 RFC-4791 新增 HTTP 方法 `MKCALENDAR`。
   ([Pull Request](https://github.com/rails/rails/pull/15121))
@@ -178,9 +180,9 @@ Active Record
 
 * 弃用仅支持一半的 PostgreSQL 范围数值（不包含起始值）。目前我们把 PostgreSQL 的范围对应到 Ruby 的范围。但由于 Ruby 的范围不支援不包含起始值，所以无法完全转换。
 
-  目前的解决方法是将起始数递增，这是不对的，已经弃用了。关于不知如何递增的子类型（比如没有定义 `#succ`）会对不包含起始值的抛出 `ArgumentError`。
+    目前的解决方法是将起始数递增，这是不对的，已经弃用了。关于不知如何递增的子类型（比如没有定义 `#succ`）会对不包含起始值的抛出 `ArgumentError`。
 
-  ([Commit](https://github.com/rails/rails/commit/91949e48cf41af9f3e4ffba3e5eecf9b0a08bfc3))
+    ([Commit](https://github.com/rails/rails/commit/91949e48cf41af9f3e4ffba3e5eecf9b0a08bfc3))
 
 * 弃用对 `has_many :through` 自动侦测 counter cache 的支持。要自己对 `has_many` 与
   `belongs_to` 关联，给 `through` 的纪录手动设定。
