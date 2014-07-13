@@ -264,15 +264,15 @@ Action Pack
 * 更改 Action Controller 下列常量的名称：
 
 
-  | 移除                               | 采用                            |
-  |:-----------------------------------|:--------------------------------|
-  | ActionController::AbstractRequest  | ActionDispatch::Request         |
-  | ActionController::Request          | ActionDispatch::Request         |
-  | ActionController::AbstractResponse | ActionDispatch::Response        |
-  | ActionController::Response         | ActionDispatch::Response        |
-  | ActionController::Routing          | ActionDispatch::Routing         |
-  | ActionController::Integration      | ActionDispatch::Integration     |
-  | ActionController::IntegrationTest  | ActionDispatch::IntegrationTest |
+    | 移除                               | 采用                            |
+    |:-----------------------------------|:--------------------------------|
+    | ActionController::AbstractRequest  | ActionDispatch::Request         |
+    | ActionController::Request          | ActionDispatch::Request         |
+    | ActionController::AbstractResponse | ActionDispatch::Response        |
+    | ActionController::Response         | ActionDispatch::Response        |
+    | ActionController::Routing          | ActionDispatch::Routing         |
+    | ActionController::Integration      | ActionDispatch::Integration     |
+    | ActionController::IntegrationTest  | ActionDispatch::IntegrationTest |
 
 ### 值得一提的变化
 
