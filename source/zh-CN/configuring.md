@@ -50,11 +50,11 @@ Rails 会使用指定的设置配置 Active Record。
 
 *   `config.after_initialize`：接受一个代码块，在 Rails 初始化程序之后执行。初始化的过程包括框架本身，引擎，以及 `config/initializers` 文件夹中所有的初始化脚本。注意，Rake 任务也会执行代码块中的代码。常用于设置初始化脚本用到的值。
 
-```    ruby
-    config.after_initialize do
-      ActionView::Base.sanitized_allowed_tags.delete 'div'
-    end
-    ```
+```ruby
+config.after_initialize do
+  ActionView::Base.sanitized_allowed_tags.delete 'div'
+end
+```
 
 *   `config.asset_host`：设置静态资源的主机。可用于设置静态资源所用的 CDN，或者通过不同的域名绕过浏览器对并发请求数量的限制。是 `config.action_controller.asset_host` 的简化。
 
@@ -76,14 +76,14 @@ Rails 会使用指定的设置配置 Active Record。
 
 *   `config.console`：设置执行 `rails console` 命令时使用哪个类实现控制台，最好在 `console` 代码块中设置：
 
-```    ruby
-    console do
-      # this block is called only when running console,
-      # so we can safely require pry here
-      require "pry"
-      config.console = Pry
-    end
-    ```
+```ruby
+console do
+  # this block is called only when running console,
+  # so we can safely require pry here
+  require "pry"
+  config.console = Pry
+end
+```
 
 *   `config.dependency_loading`：设为 `false` 时禁止自动加载常量。只有 `config.cache_classes` 为 `true`（生产环境的默认值）时才有效。`config.threadsafe!` 为 `true` 时，这个选项为 `false`。
 
@@ -122,11 +122,11 @@ Rails 会使用指定的设置配置 Active Record。
 
 *   `config.session_store`：一般在 `config/initializers/session_store.rb` 文件中设置，指定使用什么方式存储会话。可用值有：`:cookie_store`（默认），`:mem_cache_store` 和 `:disabled`。`:disabled` 指明不让 Rails 处理会话。当然也可指定自定义的会话存储：
 
-```    ruby
-    config.session_store :my_custom_store
-    ```
+```ruby
+config.session_store :my_custom_store
+```
 
-    这个自定义的存储方式必须定义为 `ActionDispatch::Session::MyCustomStore`。
+这个自定义的存储方式必须定义为 `ActionDispatch::Session::MyCustomStore`。
 
 *   `config.time_zone`：设置程序使用的默认时区，也让 Active Record 使用这个时区。
 
@@ -329,13 +329,13 @@ MySQL 适配器添加了一项额外设置：
 
 *   `config.action_dispatch.default_headers`：一个 Hash，设置响应的默认报头。默认设定的报头为：
 
-```    ruby
-    config.action_dispatch.default_headers = {
-      'X-Frame-Options' => 'SAMEORIGIN',
-      'X-XSS-Protection' => '1; mode=block',
-      'X-Content-Type-Options' => 'nosniff'
-    }
-    ```
+```ruby
+config.action_dispatch.default_headers = {
+  'X-Frame-Options' => 'SAMEORIGIN',
+  'X-XSS-Protection' => '1; mode=block',
+  'X-Content-Type-Options' => 'nosniff'
+}
+```
 
 *   `config.action_dispatch.tld_length`：设置顶级域名（top-level domain，简称 TLD）的长度，默认为 `1`。
 
@@ -361,11 +361,11 @@ MySQL 适配器添加了一项额外设置：
 
 *   `config.action_view.field_error_proc`：设置用于生成 Active Record 表单错误的 HTML，默认为：
 
-```    ruby
-    Proc.new do |html_tag, instance|
-      %Q(<div class="field_with_errors">#{html_tag}</div>).html_safe
-    end
-    ```
+```ruby
+Proc.new do |html_tag, instance|
+  %Q(<div class="field_with_errors">#{html_tag}</div>).html_safe
+end
+```
 
 *   `config.action_view.default_form_builder`：设置默认使用的表单构造器。默认值为 `ActionView::Helpers::FormBuilder`。如果想让表单构造器在程序初始化完成后加载（在开发环境中每次请求都会重新加载），可使用字符串形式。
 
@@ -377,11 +377,11 @@ MySQL 适配器添加了一项额外设置：
 
 *   `config.action_view.prefix_partial_path_with_controller_namespace`：设置渲染命名空间中的控制器时是否要在子文件夹中查找局部视图。例如，控制器名为 `Admin::PostsController`，渲染了以下视图：
 
-```    erb
-    <%= render @post %>
-    ```
+```erb
+<%= render @post %>
+```
 
-    这个设置的默认值为 `true`，渲染的局部视图为 `/admin/posts/_post.erb`。如果设为 `false`，就会渲染 `/posts/_post.erb`，和没加命名空间的控制器（例如 `PostsController`）行为一致。
+这个设置的默认值为 `true`，渲染的局部视图为 `/admin/posts/_post.erb`。如果设为 `false`，就会渲染 `/posts/_post.erb`，和没加命名空间的控制器（例如 `PostsController`）行为一致。
 
 *   `config.action_view.raise_on_missing_translations`：找不到翻译时是否抛出异常。
 
@@ -411,32 +411,32 @@ MySQL 适配器添加了一项额外设置：
 
 *   `config.action_mailer.default_options`：设置 Action Mailer 的默认选项。可设置各个邮件发送程序的 `from` 或 `reply_to` 等选项。默认值为：
 
-```    ruby
-    mime_version:  "1.0",
-    charset:       "UTF-8",
-    content_type: "text/plain",
-    parts_order:  ["text/plain", "text/enriched", "text/html"]
-    ```
+```ruby
+mime_version:  "1.0",
+charset:       "UTF-8",
+content_type: "text/plain",
+parts_order:  ["text/plain", "text/enriched", "text/html"]
+```
 
     设置时要使用 Hash：
 
-```    ruby
-    config.action_mailer.default_options = {
-      from: "noreply@example.com"
-    }
-    ```
+```ruby
+config.action_mailer.default_options = {
+  from: "noreply@example.com"
+}
+```
 
 *   `config.action_mailer.observers`：注册邮件发送后触发的监控器。
 
-```    ruby
-    config.action_mailer.observers = ["MailObserver"]
-    ```
+```ruby
+config.action_mailer.observers = ["MailObserver"]
+```
 
 *   `config.action_mailer.interceptors`：注册发送邮件前调用的拦截程序。
 
-```    ruby
-    config.action_mailer.interceptors = ["MailInterceptor"]
-    ```
+```ruby
+config.action_mailer.interceptors = ["MailInterceptor"]
+```
 
 ###3设置 Active Support
 
