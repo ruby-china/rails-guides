@@ -23,12 +23,12 @@ end
 
 def clone_rails!
   return if BASE_PATH.join('rails').exist?
-  `git clone git@github.com:rails/rails.git`
+  `git clone https://github.com/rails/rails.git`
 end
 
 def clone_guides!
   return if BASE_PATH.join('guides').exist?
-  `git clone git@github.com:ruby-china/guides.git`
+  `git clone https://github.com/ruby-china/guides.git`
 end
 
 def clone_rails_guides_github_pages!
