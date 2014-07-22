@@ -119,9 +119,9 @@ $ git checkout -b new-branch-name
 
 翻译的错误，可以修正后发 Pull Request；或是[回报](https://github.com/ruby-china/guides/issues/new)等别人修正也可以。
 
-若不是翻译的错误，是原文的错误，请检查 http://edgeguides.rubyonrails.org 是否已经修正了，没有的话可以去 [rails/rails][rails] 帮忙修正。记得有关文件的改动，在提交信息要加上 `[ci skip]`。
+若不是翻译的错误，是原文的错误，请检查 http://edgeguides.rubyonrails.org 是否已经修正了，没有的话可以去 [rails/rails][rails] 帮忙修正。记得有关文档的改动，在提交信息要加上 `[ci skip]`。
 
-在 [rails/rails][rails] 提报或修正前，最好先阅读：[Contributing to Ruby on Rails](http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html)。
+在给 [rails/rails][rails] 提报或修正前，最好先阅读：[Contributing to Ruby on Rails](http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html)。
 
 部署
 ----
@@ -149,7 +149,7 @@ $ rake guides:deploy
 
 ![CC-BY-SA](CC-BY-SA.png)
 
-简体译文以 @Andor_Chen 翻译的基础着手进行。
+简体译文由 [@Andor_Chen](http://about.ac) 所翻译。
 
 译文授权协议为 [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/)。
 
