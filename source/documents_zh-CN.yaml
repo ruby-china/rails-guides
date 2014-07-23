@@ -97,10 +97,10 @@
       url: command_line.html
       description: 本篇介绍 Rails 提供的 Rake 任务与命令行功能。
     -
-      name: Rails 快取
+      name: Rails 缓存简介
       work_in_progress: true
       url: caching_with_rails.html
-      description: 本篇介绍 Rails 提供的多种快取技巧。
+      description: 本篇介绍 Rails 提供的多种缓存技巧。
     -
       name: Asset Pipeline
       url: asset_pipeline.html
