@@ -68,7 +68,7 @@ Active Record 中的“多约定少配置”原则
 * `created_at` - 创建记录时，自动设为当前的时间戳；
 * `updated_at` - 更新记录时，自动设为当前的时间戳；
 * `lock_version` - 在模型中添加[乐观锁定](http://api.rubyonrails.org/classes/ActiveRecord/Locking.html)功能；
-* `type` - 让模型使用[单表集成](http://api.rubyonrails.org/classes/ActiveRecord/Base.html#label-Single+table+inheritance)；
+* `type` - 让模型使用[单表继承](http://api.rubyonrails.org/classes/ActiveRecord/Base.html#label-Single+table+inheritance)；
 * `(association_name)_type` - [多态关联](association_basics.html#polymorphic-associations)的类型；
 * `(table_name)_count` - 缓存关联对象的数量。例如，`posts` 表中的 `comments_count` 字段，缓存每篇文章的评论数；
 
