@@ -1,105 +1,105 @@
-Active Support Core Extensions
+Active Support 核心扩展
 ==============================
 
-Active Support is the Ruby on Rails component responsible for providing Ruby language extensions, utilities, and other transversal stuff.
+Active Support 作为 Ruby on Rails 的一个组件，可以用来添加 Ruby 语言扩展、工具集以及其他这类事物。
 
-It offers a richer bottom-line at the language level, targeted both at the development of Rails applications, and at the development of Ruby on Rails itself.
+它从语言的层面上进行了强化，既可起效于一般 Rails 程序开发，又能增强 Ruby on Rails 框架自身。
 
-After reading this guide, you will know:
+读完本文，你将学到：
 
-* What Core Extensions are.
-* How to load all extensions.
-* How to cherry-pick just the extensions you want.
-* What extensions Active Support provides.
+* 核心扩展是什么。
+* 如何加载全部扩展。
+* 如何恰如其分的选出你需要的扩展。
+* Active Support 都提供了哪些功能。
 
 --------------------------------------------------------------------------------
 
-How to Load Core Extensions
+如何加载核心扩展
 ---------------------------
 
-### Stand-Alone Active Support
+### 单独的 Active Support
 
-In order to have a near-zero default footprint, Active Support does not load anything by default. It is broken in small pieces so that you can load just what you need, and also has some convenience entry points to load related extensions in one shot, even everything.
+为了使初始空间尽可能干净，默认情况下 Active Support 什么都不加载。它被拆分成许多小组建，这样一来你便可以只加载自己需要的那部分，同时它也提供了一系列便捷入口使你很容易加载相关的扩展，甚至把全部扩展都加载进来。
 
-Thus, after a simple require like:
+因而，像下面这样只简单用一个 require：
 
 ```ruby
 require 'active_support'
 ```
 
-objects do not even respond to `blank?`. Let's see how to load its definition.
+对象会连`blank?`都没法响应。让我们来看下该如何加载它的定义。
 
-#### Cherry-picking a Definition
+#### 选出合适的定义
 
-The most lightweight way to get `blank?` is to cherry-pick the file that defines it.
+找到`blank?`最轻便的方法就是直接找出定义它的那个文件。
 
-For every single method defined as a core extension this guide has a note that says where such a method is defined. In the case of `blank?` the note reads:
+对于每一个定义在核心扩展里的方法，本指南都会注明此方法定义于何处。例如这里提到的`blank?`，会像这样注明：
 
-NOTE: Defined in `active_support/core_ext/object/blank.rb`.
+NOTE: 定义于 `active_support/core_ext/object/blank.rb`。
 
-That means that you can require it like this:
+这意味着你可以像下面这样 require 它：
 
 ```ruby
 require 'active_support'
 require 'active_support/core_ext/object/blank'
 ```
 
-Active Support has been carefully revised so that cherry-picking a file loads only strictly needed dependencies, if any.
+Active Support 经过了严格的修订，确保选定的文件只会加载必要的依赖，若没有则不加载。
 
-#### Loading Grouped Core Extensions
+#### 加载一组核心扩展
 
-The next level is to simply load all extensions to `Object`. As a rule of thumb, extensions to `SomeClass` are available in one shot by loading `active_support/core_ext/some_class`.
+接下来加载`Object`下的全部扩展。一般来说，想加载`SomeClass`下的全部可用扩展，只需加载`active_support/core_ext/some_class`即可。
 
-Thus, to load all extensions to `Object` (including `blank?`):
+所以，若要加载`Object`下的全部扩展（包含`blank?`）：
 
 ```ruby
 require 'active_support'
 require 'active_support/core_ext/object'
 ```
 
-#### Loading All Core Extensions
+#### 加载全部核心扩展
 
-You may prefer just to load all core extensions, there is a file for that:
+你可能更倾向于加载全部核心扩展，有一个文件能办到：
 
 ```ruby
 require 'active_support'
 require 'active_support/core_ext'
 ```
 
-#### Loading All Active Support
+#### 加载全部 Active Support
 
-And finally, if you want to have all Active Support available just issue:
+最后，如果你想要 Active Support 的全部内容，只需：
 
 ```ruby
 require 'active_support/all'
 ```
 
-That does not even put the entire Active Support in memory upfront indeed, some stuff is configured via `autoload`, so it is only loaded if used.
+这样做并不会把整个 Active Support 预加载到内存里，鉴于`autoload`的机制，其只有在真正用到时才会加载。
 
-### Active Support Within a Ruby on Rails Application
+### Ruby on Rails 程序里的 Active Support
 
-A Ruby on Rails application loads all Active Support unless `config.active_support.bare` is true. In that case, the application will only load what the framework itself cherry-picks for its own needs, and can still cherry-pick itself at any granularity level, as explained in the previous section.
+除非把`config.active_support.bare`设置为 true, 否则 Ruby on Rails 的程序会加载全部的 Active Support。如此一来，程序只会加载框架为自身需要挑选出来的扩展，同时也可像上文所示，可以从任何级别加载特定扩展。
 
-Extensions to All Objects
+所有对象都可用的扩展
 -------------------------
 
 ### `blank?` and `present?`
 
-The following values are considered to be blank in a Rails application:
+以下各值在 Rails 程序里都看作 blank。
 
-* `nil` and `false`,
+* `nil` 和 `false`，
 
-* strings composed only of whitespace (see note below),
+* 只包含空白的字符串(参照下文注释),
 
-* empty arrays and hashes, and
+* 空的数组和散列表
 
-* any other object that responds to `empty?` and is empty.
+* 任何其他能响应 `empty?` 方法且为空的对象。
 
-INFO: The predicate for strings uses the Unicode-aware character class `[:space:]`, so for example U+2029 (paragraph separator) is considered to be whitespace.
+INFO: 判断字符串是否为空依据了 Unicode-aware 字符类 `[:space:]`，所以例如 U+2029（段落分隔符）这种会被当作空白。
 
-WARNING: Note that numbers are not mentioned. In particular, 0 and 0.0 are **not** blank.
+WARNING: 注意这里没有提到数字。通常来说，0和0.0都**不是**blank。
 
-For example, this method from `ActionController::HttpAuthentication::Token::ControllerMethods` uses `blank?` for checking whether a token is present:
+例如，`ActionController::HttpAuthentication::Token::ControllerMethods`里的一个方法使用了`blank?`来检验 token 是否存在。
 
 ```ruby
 def authenticate(controller, &login_procedure)
@@ -110,7 +110,7 @@ def authenticate(controller, &login_procedure)
 end
 ```
 
-The method `present?` is equivalent to `!blank?`. This example is taken from `ActionDispatch::Http::Cache::Response`:
+`present?` 方法等同于 `!blank?`， 下面的例子出自`ActionDispatch::Http::Cache::Response`：
 
 ```ruby
 def set_conditional_cache_control!
@@ -119,41 +119,42 @@ def set_conditional_cache_control!
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/object/blank.rb`.
+NOTE: 定义于 `active_support/core_ext/object/blank.rb`.
 
 ### `presence`
 
-The `presence` method returns its receiver if `present?`, and `nil` otherwise. It is useful for idioms like this:
+`presence`方法如果满足`present?`则返回调用者，否则返回`nil`。它适用于下面这种情况：
 
 ```ruby
 host = config[:host].presence || 'localhost'
 ```
 
-NOTE: Defined in `active_support/core_ext/object/blank.rb`.
+NOTE: 定义于 `active_support/core_ext/object/blank.rb`.
 
 ### `duplicable?`
 
 A few fundamental objects in Ruby are singletons. For example, in the whole life of a program the integer 1 refers always to the same instance:
+Ruby 里有些基本对象是单例的。比如，在整个程序的生命周期里，数字1永远指向同一个实例。
 
 ```ruby
 1.object_id                 # => 3
 Math.cos(0).to_i.object_id  # => 3
 ```
 
-Hence, there's no way these objects can be duplicated through `dup` or `clone`:
+因而，这些对象永远没法用`dup`或`clone`复制。
 
 ```ruby
 true.dup  # => TypeError: can't dup TrueClass
 ```
 
-Some numbers which are not singletons are not duplicable either:
+有些数字虽然不是单例的，但也同样无法复制：
 
 ```ruby
 0.0.clone        # => allocator undefined for Float
 (2**1024).clone  # => allocator undefined for Bignum
 ```
 
-Active Support provides `duplicable?` to programmatically query an object about this property:
+Active Support 提供了 `duplicable?` 方法来判断一个对象是否能够被复制:
 
 ```ruby
 "foo".duplicable? # => true
@@ -162,15 +163,15 @@ Active Support provides `duplicable?` to programmatically query an object about 
 false.duplicable? # => false
 ```
 
-By definition all objects are `duplicable?` except `nil`, `false`, `true`, symbols, numbers, class, and module objects.
+根据定义，所有的对象的`duplicated?`的，除了：`nil`、`false`、 `true`、 符号、 数字、 类和模块。
 
-WARNING: Any class can disallow duplication by removing `dup` and `clone` or raising exceptions from them. Thus only `rescue` can tell whether a given arbitrary object is duplicable. `duplicable?` depends on the hard-coded list above, but it is much faster than `rescue`. Use it only if you know the hard-coded list is enough in your use case.
+WARNING: 任何的类都可以通过移除`dup`和`clone`方法，或者在其中抛出异常，来禁用其复制功能。虽然`duplicable?`方法是基于上面的硬编码列表，但是它比用`rescue`快的多。确保仅在你的情况合乎上面的硬编码列表时候再使用它。
 
-NOTE: Defined in `active_support/core_ext/object/duplicable.rb`.
+NOTE: 定义于 `active_support/core_ext/object/duplicable.rb`.
 
 ### `deep_dup`
 
-The `deep_dup` method returns deep copy of a given object. Normally, when you `dup` an object that contains other objects, Ruby does not `dup` them, so it creates a shallow copy of the object. If you have an array with a string, for example, it will look like this:
+`deep_dup`方法返回一个对象的深度拷贝。一般来说，当你`dup`一个包含其他对象的对象时，Ruby 并不会把被包含的对象一同`dup`，它只会创建一个对象的浅表拷贝。假如你有一个字符串数组，如下例所示：
 
 ```ruby
 array     = ['string']
@@ -178,20 +179,20 @@ duplicate = array.dup
 
 duplicate.push 'another-string'
 
-# the object was duplicated, so the element was added only to the duplicate
+# 对象被复制了，所以只有 duplicate 的数组元素有所增加 
 array     # => ['string']
 duplicate # => ['string', 'another-string']
 
 duplicate.first.gsub!('string', 'foo')
 
-# first element was not duplicated, it will be changed in both arrays
+# 第一个数组元素并未被复制，所以两个数组都发生了变化
 array     # => ['foo']
 duplicate # => ['foo', 'another-string']
 ```
 
-As you can see, after duplicating the `Array` instance, we got another object, therefore we can modify it and the original object will stay unchanged. This is not true for array's elements, however. Since `dup` does not make deep copy, the string inside the array is still the same object.
+如你所见，对`Array`实例进行复制后，我们得到了另一个对象，因而我们修改它时，原始对象并未跟着有所变化。不过对数组元素而言，情况却有所不同。因为`dup`不会创建深度拷贝，所以数组里的字符串依然是同一个对象。
 
-If you need a deep copy of an object, you should use `deep_dup`. Here is an example:
+如果你需要一个对象的深度拷贝，就应该使用`deep_dup`。我们再来看下面这个例子：
 
 ```ruby
 array     = ['string']
@@ -203,7 +204,7 @@ array     # => ['string']
 duplicate # => ['foo']
 ```
 
-If the object is not duplicable, `deep_dup` will just return it:
+如果一个对象是不可复制的，`deep_dup`会返回其自身：
 
 ```ruby
 number = 1
@@ -211,25 +212,25 @@ duplicate = number.deep_dup
 number.object_id == duplicate.object_id   # => true
 ```
 
-NOTE: Defined in `active_support/core_ext/object/deep_dup.rb`.
+NOTE: 定义于 `active_support/core_ext/object/deep_dup.rb`.
 
 ### `try`
 
-When you want to call a method on an object only if it is not `nil`, the simplest way to achieve it is with conditional statements, adding unnecessary clutter. The alternative is to use `try`. `try` is like `Object#send` except that it returns `nil` if sent to `nil`.
+如果你想在一个对象不为`nil`时，对其调用一个方法，最简单的办法就是使用条件从句，但这么做也会使代码变得乱七八糟。另一个选择就是使用`try`。`try`就好比`Object#send`，只不过如果接收者为`nil`，那么返回值也会是`nil`。
 
-Here is an example:
+看下这个例子：
 
 ```ruby
-# without try
+# 不使用 try
 unless @number.nil?
   @number.next
 end
 
-# with try
+# 使用 try
 @number.try(:next)
 ```
 
-Another example is this code from `ActiveRecord::ConnectionAdapters::AbstractAdapter` where `@logger` could be `nil`. You can see that the code uses `try` and avoids an unnecessary check.
+接下来的这个例子，代码出自`ActiveRecord::ConnectionAdapters::AbstractAdapter`，这里的`@logger`有可能为`nil`。能够看到，代码里使用了`try`来避免不必要的检查。
 
 ```ruby
 def log_info(sql, name, ms)
@@ -240,17 +241,18 @@ def log_info(sql, name, ms)
 end
 ```
 
-`try` can also be called without arguments but a block, which will only be executed if the object is not nil:
+调用`try`时也可以不传参数而是用代码快，其中的代码只有在对象不为`nil`时才会执行：
 
 ```ruby
 @person.try { |p| "#{p.first_name} #{p.last_name}" }
 ```
 
-NOTE: Defined in `active_support/core_ext/object/try.rb`.
+NOTE: 定义于 `active_support/core_ext/object/try.rb`.
 
 ### `class_eval(*args, &block)`
 
 You can evaluate code in the context of any object's singleton class using `class_eval`:
+使用`class_eval`，可以使代码在对象的单件类的上下文里执行：
 
 ```ruby
 class Proc
@@ -267,52 +269,52 @@ class Proc
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/kernel/singleton_class.rb`.
+NOTE: 定义于 `active_support/core_ext/kernel/singleton_class.rb`.
 
 ### `acts_like?(duck)`
 
-The method `acts_like?` provides a way to check whether some class acts like some other class based on a simple convention: a class that provides the same interface as `String` defines
+`acts_like?`方法可以用来判断某个类与另一个类是否有相同的行为，它基于一个简单的惯例：这个类是否提供了与`String`相同的接口：
 
 ```ruby
 def acts_like_string?
 end
 ```
 
-which is only a marker, its body or return value are irrelevant. Then, client code can query for duck-type-safeness this way:
+上述代码只是一个标识，它的方法体或返回值都是不相关的。之后，就可以像下述代码那样判断其代码是否为“鸭子类型安全”的代码了：
 
 ```ruby
 some_klass.acts_like?(:string)
 ```
 
-Rails has classes that act like `Date` or `Time` and follow this contract.
+Rails 里的许多类，例如`Date`和`Time`，都遵循上述约定。
 
-NOTE: Defined in `active_support/core_ext/object/acts_like.rb`.
+NOTE: 定义于 `active_support/core_ext/object/acts_like.rb`.
 
 ### `to_param`
 
-All objects in Rails respond to the method `to_param`, which is meant to return something that represents them as values in a query string, or as URL fragments.
+所有 Rails 对象都可以响应`to_param`方法，它会把对象的值转换为查询字符串，或者 URL 片段，并返回该值。
 
-By default `to_param` just calls `to_s`:
+默认情况下，`to_param`仅仅调用了`to_s`：
 
 ```ruby
 7.to_param # => "7"
 ```
 
-The return value of `to_param` should **not** be escaped:
+**不要**对`to_param`方法的返回值进行转义：
 
 ```ruby
 "Tom & Jerry".to_param # => "Tom & Jerry"
 ```
 
-Several classes in Rails overwrite this method.
+Rails 里的许多类重写了这个方法。
 
-For example `nil`, `true`, and `false` return themselves. `Array#to_param` calls `to_param` on the elements and joins the result with "/":
+例如`nil`、`true`和`false`会返回其自身。`Array#to_param`会对数组元素调用`to_param`并把结果用"/"连接成字符串：
 
 ```ruby
 [0, true, String].to_param # => "0/true/String"
 ```
 
-Notably, the Rails routing system calls `to_param` on models to get a value for the `:id` placeholder. `ActiveRecord::Base#to_param` returns the `id` of a model, but you can redefine that method in your models. For example, given
+需要注意的是， Rails 的路由系统会在模型上调用`to_param`并把结果作为`:id`占位符。`ActiveRecord::Base#to_param`会返回模型的`id`，但是你也可以在自己模型里重新定义它。例如：
 
 ```ruby
 class User
@@ -322,19 +324,19 @@ class User
 end
 ```
 
-we get:
+会得到：
 
 ```ruby
 user_path(@user) # => "/users/357-john-smith"
 ```
 
-WARNING. Controllers need to be aware of any redefinition of `to_param` because when a request like that comes in "357-john-smith" is the value of `params[:id]`.
+WARNING. 控制器里需要注意被重定义过的`to_param`，因为一个类似上述的请求里，会把"357-john-smith"当作`params[:id]`的值。
 
-NOTE: Defined in `active_support/core_ext/object/to_param.rb`.
+NOTE: 定义于 `active_support/core_ext/object/to_param.rb`.
 
 ### `to_query`
 
-Except for hashes, given an unescaped `key` this method constructs the part of a query string that would map such key to what `to_param` returns. For example, given
+除了哈希表之外，给定一个未转义的`key`，这个方法就会基于这个键和`to_param`的返回值，构造出一个新的查询字符串。例如：
 
 ```ruby
 class User
@@ -344,48 +346,48 @@ class User
 end
 ```
 
-we get:
+会得到：
 
 ```ruby
-current_user.to_query('user') # => user=357-john-smith
+current_user.to_query('user') # => "user=357-john-smith"
 ```
 
-This method escapes whatever is needed, both for the key and the value:
+无论对于键还是值，本方法都会根据需要进行转义：
 
 ```ruby
 account.to_query('company[name]')
 # => "company%5Bname%5D=Johnson+%26+Johnson"
 ```
 
-so its output is ready to be used in a query string.
+所以它的输出已经完全适合于用作查询字符串。
 
-Arrays return the result of applying `to_query` to each element with `_key_[]` as key, and join the result with "&":
+对于数组，会对其中每个元素以`_key_[]`为键执行`to_query`方法，并把结果用"&"连接为字符串：
 
 ```ruby
 [3.4, -45.6].to_query('sample')
 # => "sample%5B%5D=3.4&sample%5B%5D=-45.6"
 ```
 
-Hashes also respond to `to_query` but with a different signature. If no argument is passed a call generates a sorted series of key/value assignments calling `to_query(key)` on its values. Then it joins the result with "&":
+哈系表也可以响应`to_query`方法但是用法有所不同。如果调用时没传参数，会先生成一系列排过序的键值对并在值上调用`to_query(键)`。然后把所得结果用"&"连接为字符串：
 
 ```ruby
 {c: 3, b: 2, a: 1}.to_query # => "a=1&b=2&c=3"
 ```
 
-The method `Hash#to_query` accepts an optional namespace for the keys:
+`Hash#to_query`方法也可接受一个可选的命名空间作为键：
 
 ```ruby
 {id: 89, name: "John Smith"}.to_query('user')
 # => "user%5Bid%5D=89&user%5Bname%5D=John+Smith"
 ```
 
-NOTE: Defined in `active_support/core_ext/object/to_query.rb`.
+NOTE: 定义于 `active_support/core_ext/object/to_query.rb`.
 
 ### `with_options`
 
-The method `with_options` provides a way to factor out common options in a series of method calls.
+`with_options`方法可以为一组方法调用提取出共有的选项。
 
-Given a default options hash, `with_options` yields a proxy object to a block. Within the block, methods called on the proxy are forwarded to the receiver with their options merged. For example, you get rid of the duplication in:
+假定有一个默认的哈希选项，`with_options`方法会引入一个代理对象到代码块。在代码块内部，代理对象上的方法调用，会连同被混入的选项一起，被转发至原方法接收者。例如，若要去除下述代码的重复内容：
 
 ```ruby
 class Account < ActiveRecord::Base
@@ -396,7 +398,7 @@ class Account < ActiveRecord::Base
 end
 ```
 
-this way:
+可按此法书写：
 
 ```ruby
 class Account < ActiveRecord::Base
@@ -409,7 +411,10 @@ class Account < ActiveRecord::Base
 end
 ```
 
+#TODO: clear this after totally understanding what these statnances means...
 That idiom may convey _grouping_ to the reader as well. For example, say you want to send a newsletter whose language depends on the user. Somewhere in the mailer you could group locale-dependent bits like this:
+上述写法也可用于对读取器进行分组。例如，假设你要发一份新闻通讯，通讯所用语言取决于用户。便可以利用如下例所示代码，对用户按照地区依赖进行分组：
+
 
 ```ruby
 I18n.with_options locale: user.locale, scope: "newsletter" do |i18n|
@@ -418,15 +423,15 @@ I18n.with_options locale: user.locale, scope: "newsletter" do |i18n|
 end
 ```
 
-TIP: Since `with_options` forwards calls to its receiver they can be nested. Each nesting level will merge inherited defaults in addition to their own.
+TIP: 由于`with_options`会把方法调用转发给其自身的接收者，所以可以进行嵌套。每层嵌套都会把继承来的默认值混入到自身的默认值里。
 
-NOTE: Defined in `active_support/core_ext/object/with_options.rb`.
+NOTE: 定义于 `active_support/core_ext/object/with_options.rb`.
 
 ### JSON support
 
 Active Support provides a better implementation of `to_json` than the `json` gem ordinarily provides for Ruby objects. This is because some classes, like `Hash`, `OrderedHash` and `Process::Status` need special handling in order to provide a proper JSON representation.
 
-NOTE: Defined in `active_support/core_ext/object/json.rb`.
+NOTE: 定义于 `active_support/core_ext/object/json.rb`.
 
 ### Instance Variables
 
@@ -447,7 +452,7 @@ end
 C.new(0, 1).instance_values # => {"x" => 0, "y" => 1}
 ```
 
-NOTE: Defined in `active_support/core_ext/object/instance_variables.rb`.
+NOTE: 定义于 `active_support/core_ext/object/instance_variables.rb`.
 
 #### `instance_variable_names`
 
@@ -463,7 +468,7 @@ end
 C.new(0, 1).instance_variable_names # => ["@x", "@y"]
 ```
 
-NOTE: Defined in `active_support/core_ext/object/instance_variables.rb`.
+NOTE: 定义于 `active_support/core_ext/object/instance_variables.rb`.
 
 ### Silencing Warnings, Streams, and Exceptions
 
@@ -498,7 +503,7 @@ suppress(ActiveRecord::StaleObjectError) do
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/kernel/reporting.rb`.
+NOTE: 定义于 `active_support/core_ext/kernel/reporting.rb`.
 
 ### `in?`
 
@@ -513,7 +518,7 @@ Examples of `in?`:
 1.in?(1)            # => ArgumentError
 ```
 
-NOTE: Defined in `active_support/core_ext/object/inclusion.rb`.
+NOTE: 定义于 `active_support/core_ext/object/inclusion.rb`.
 
 Extensions to `Module`
 ----------------------
@@ -566,7 +571,7 @@ end
 
 Rails uses `alias_method_chain` all over the code base. For example validations are added to `ActiveRecord::Base#save` by wrapping the method that way in a separate module specialized in validations.
 
-NOTE: Defined in `active_support/core_ext/module/aliasing.rb`.
+NOTE: 定义于 `active_support/core_ext/module/aliasing.rb`.
 
 ### Attributes
 
@@ -582,7 +587,7 @@ class User < ActiveRecord::Base
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/module/aliasing.rb`.
+NOTE: 定义于 `active_support/core_ext/module/aliasing.rb`.
 
 #### Internal Attributes
 
@@ -620,7 +625,7 @@ module ActionView
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/module/attr_internal.rb`.
+NOTE: 定义于 `active_support/core_ext/module/attr_internal.rb`.
 
 #### Module Attributes
 
@@ -647,7 +652,7 @@ module ActiveSupport
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/module/attribute_accessors.rb`.
+NOTE: 定义于 `active_support/core_ext/module/attribute_accessors.rb`.
 
 ### Parents
 
@@ -672,7 +677,7 @@ If the module is anonymous or belongs to the top-level, `parent` returns `Object
 
 WARNING: Note that in that case `parent_name` returns `nil`.
 
-NOTE: Defined in `active_support/core_ext/module/introspection.rb`.
+NOTE: 定义于 `active_support/core_ext/module/introspection.rb`.
 
 #### `parent_name`
 
@@ -695,7 +700,7 @@ For top-level or anonymous modules `parent_name` returns `nil`.
 
 WARNING: Note that in that case `parent` returns `Object`.
 
-NOTE: Defined in `active_support/core_ext/module/introspection.rb`.
+NOTE: 定义于 `active_support/core_ext/module/introspection.rb`.
 
 #### `parents`
 
@@ -714,7 +719,7 @@ X::Y::Z.parents # => [X::Y, X, Object]
 M.parents       # => [X::Y, X, Object]
 ```
 
-NOTE: Defined in `active_support/core_ext/module/introspection.rb`.
+NOTE: 定义于 `active_support/core_ext/module/introspection.rb`.
 
 ### Constants
 
@@ -737,7 +742,7 @@ X::Y.local_constants # => [:Y1, :X1]
 
 The names are returned as symbols.
 
-NOTE: Defined in `active_support/core_ext/module/introspection.rb`.
+NOTE: 定义于 `active_support/core_ext/module/introspection.rb`.
 
 #### Qualified Constant Names
 
@@ -795,7 +800,7 @@ as in `const_defined?`.
 For coherence with the built-in methods only relative paths are accepted.
 Absolute qualified constant names like `::Math::PI` raise `NameError`.
 
-NOTE: Defined in `active_support/core_ext/module/qualified_const.rb`.
+NOTE: 定义于 `active_support/core_ext/module/qualified_const.rb`.
 
 ### Reachable
 
@@ -833,7 +838,7 @@ end
 orphan.reachable? # => false
 ```
 
-NOTE: Defined in `active_support/core_ext/module/reachable.rb`.
+NOTE: 定义于 `active_support/core_ext/module/reachable.rb`.
 
 ### Anonymous
 
@@ -874,7 +879,7 @@ m.anonymous? # => false
 
 though an anonymous module is unreachable by definition.
 
-NOTE: Defined in `active_support/core_ext/module/anonymous.rb`.
+NOTE: 定义于 `active_support/core_ext/module/anonymous.rb`.
 
 ### Method Delegation
 
@@ -958,7 +963,7 @@ delegate :size, to: :attachment, prefix: :avatar
 
 In the previous example the macro generates `avatar_size` rather than `size`.
 
-NOTE: Defined in `active_support/core_ext/module/delegation.rb`
+NOTE: 定义于 `active_support/core_ext/module/delegation.rb`
 
 ### Redefining Methods
 
@@ -966,7 +971,7 @@ There are cases where you need to define a method with `define_method`, but don'
 
 The method `redefine_method` prevents such a potential warning, removing the existing method before if needed.
 
-NOTE: Defined in `active_support/core_ext/module/remove_method.rb`
+NOTE: 定义于 `active_support/core_ext/module/remove_method.rb`
 
 Extensions to `Class`
 ---------------------
@@ -1053,7 +1058,7 @@ When `:instance_reader` is `false`, the instance predicate returns a `NoMethodEr
 
 If you do not want the instance predicate, pass `instance_predicate: false` and it will not be defined.
 
-NOTE: Defined in `active_support/core_ext/class/attribute.rb`
+NOTE: 定义于 `active_support/core_ext/class/attribute.rb`
 
 #### `cattr_reader`, `cattr_writer`, and `cattr_accessor`
 
@@ -1106,7 +1111,7 @@ end
 
 A model may find it useful to set `:instance_accessor` to `false` as a way to prevent mass-assignment from setting the attribute.
 
-NOTE: Defined in `active_support/core_ext/module/attribute_accessors.rb`.
+NOTE: 定义于 `active_support/core_ext/module/attribute_accessors.rb`.
 
 ### Subclasses & Descendants
 
@@ -1130,7 +1135,7 @@ C.subclasses # => [B, D]
 
 The order in which these classes are returned is unspecified.
 
-NOTE: Defined in `active_support/core_ext/class/subclasses.rb`.
+NOTE: 定义于 `active_support/core_ext/class/subclasses.rb`.
 
 #### `descendants`
 
@@ -1152,7 +1157,7 @@ C.descendants # => [B, A, D]
 
 The order in which these classes are returned is unspecified.
 
-NOTE: Defined in `active_support/core_ext/class/subclasses.rb`.
+NOTE: 定义于 `active_support/core_ext/class/subclasses.rb`.
 
 Extensions to `String`
 ----------------------
@@ -1165,9 +1170,9 @@ Inserting data into HTML templates needs extra care. For example, you can't just
 
 #### Safe Strings
 
-Active Support has the concept of <i>(html) safe</i> strings. A safe string is one that is marked as being insertable into HTML as is. It is trusted, no matter whether it has been escaped or not.
+Active Support has the concept of _(html) safe_ strings. A safe string is one that is marked as being insertable into HTML as is. It is trusted, no matter whether it has been escaped or not.
 
-Strings are considered to be <i>unsafe</i> by default:
+Strings are considered to be _unsafe_ by default:
 
 ```ruby
 "".html_safe? # => false
@@ -1228,7 +1233,7 @@ def raw(stringish)
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/output_safety.rb`.
+NOTE: 定义于 `active_support/core_ext/string/output_safety.rb`.
 
 #### Transformation
 
@@ -1256,7 +1261,7 @@ The method `remove` will remove all occurrences of the pattern:
 
 There's also the destructive version `String#remove!`.
 
-NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+NOTE: 定义于 `active_support/core_ext/string/filters.rb`.
 
 ### `squish`
 
@@ -1270,7 +1275,7 @@ There's also the destructive version `String#squish!`.
 
 Note that it handles both ASCII and Unicode whitespace like mongolian vowel separator (U+180E).
 
-NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+NOTE: 定义于 `active_support/core_ext/string/filters.rb`.
 
 ### `truncate`
 
@@ -1308,7 +1313,7 @@ The option `:separator` can be a regexp:
 
 In above examples "dear" gets cut first, but then `:separator` prevents it.
 
-NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+NOTE: 定义于 `active_support/core_ext/string/filters.rb`.
 
 ### `inquiry`
 
@@ -1328,7 +1333,7 @@ Active Support defines 3rd person aliases of `String#start_with?` and `String#en
 "foo".ends_with?("o")   # => true
 ```
 
-NOTE: Defined in `active_support/core_ext/string/starts_ends_with.rb`.
+NOTE: 定义于 `active_support/core_ext/string/starts_ends_with.rb`.
 
 ### `strip_heredoc`
 
@@ -1353,7 +1358,7 @@ the user would see the usage message aligned against the left margin.
 Technically, it looks for the least indented line in the whole string, and removes
 that amount of leading whitespace.
 
-NOTE: Defined in `active_support/core_ext/string/strip.rb`.
+NOTE: 定义于 `active_support/core_ext/string/strip.rb`.
 
 ### `indent`
 
@@ -1390,7 +1395,7 @@ The third argument, `indent_empty_lines`, is a flag that says whether empty line
 
 The `indent!` method performs indentation in-place.
 
-NOTE: Defined in `active_support/core_ext/string/indent.rb`.
+NOTE: 定义于 `active_support/core_ext/string/indent.rb`.
 
 ### Access
 
@@ -1405,7 +1410,7 @@ Returns the character of the string at position `position`:
 "hello".at(10) # => nil
 ```
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: 定义于 `active_support/core_ext/string/access.rb`.
 
 #### `from(position)`
 
@@ -1418,7 +1423,7 @@ Returns the substring of the string starting at position `position`:
 "hello".from(10) # => "" if < 1.9, nil in 1.9
 ```
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: 定义于 `active_support/core_ext/string/access.rb`.
 
 #### `to(position)`
 
@@ -1431,19 +1436,19 @@ Returns the substring of the string up to position `position`:
 "hello".to(10) # => "hello"
 ```
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: 定义于 `active_support/core_ext/string/access.rb`.
 
 #### `first(limit = 1)`
 
 The call `str.first(n)` is equivalent to `str.to(n-1)` if `n` > 0, and returns an empty string for `n` == 0.
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: 定义于 `active_support/core_ext/string/access.rb`.
 
 #### `last(limit = 1)`
 
 The call `str.last(n)` is equivalent to `str.from(-n)` if `n` > 0, and returns an empty string for `n` == 0.
 
-NOTE: Defined in `active_support/core_ext/string/access.rb`.
+NOTE: 定义于 `active_support/core_ext/string/access.rb`.
 
 ### Inflections
 
@@ -1477,7 +1482,7 @@ def undecorated_table_name(class_name = base_class.name)
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/string/inflections.rb`.
 
 #### `singularize`
 
@@ -1500,7 +1505,7 @@ def derive_class_name
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/string/inflections.rb`.
 
 #### `camelize`
 
@@ -1548,7 +1553,7 @@ end
 
 `camelize` is aliased to `camelcase`.
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/string/inflections.rb`.
 
 #### `underscore`
 
@@ -1587,7 +1592,7 @@ end
 
 INFO: As a rule of thumb you can think of `underscore` as the inverse of `camelize`, though there are cases where that does not hold. For example, `"SSLError".underscore.camelize` gives back `"SslError"`.
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/string/inflections.rb`.
 
 #### `titleize`
 
@@ -1600,7 +1605,7 @@ The method `titleize` capitalizes the words in the receiver:
 
 `titleize` is aliased to `titlecase`.
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/string/inflections.rb`.
 
 #### `dasherize`
 
@@ -1621,7 +1626,7 @@ def reformat_name(name)
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/string/inflections.rb`.
 
 #### `demodulize`
 
@@ -1649,7 +1654,7 @@ def counter_cache_column
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/string/inflections.rb`.
 
 #### `deconstantize`
 
@@ -1674,7 +1679,7 @@ def qualified_const_set(path, value)
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/string/inflections.rb`.
 
 #### `parameterize`
 
@@ -1687,7 +1692,7 @@ The method `parameterize` normalizes its receiver in a way that can be used in p
 
 In fact, the result string is wrapped in an instance of `ActiveSupport::Multibyte::Chars`.
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/string/inflections.rb`.
 
 #### `tableize`
 
@@ -1701,7 +1706,7 @@ The method `tableize` is `underscore` followed by `pluralize`.
 
 As a rule of thumb, `tableize` returns the table name that corresponds to a given model for simple cases. The actual implementation in Active Record is not straight `tableize` indeed, because it also demodulizes the class name and checks a few options that may affect the returned string.
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/string/inflections.rb`.
 
 #### `classify`
 
@@ -1721,7 +1726,7 @@ The method understands qualified table names:
 
 Note that `classify` returns a class name as a string. You can get the actual class object invoking `constantize` on it, explained next.
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/string/inflections.rb`.
 
 #### `constantize`
 
@@ -1764,7 +1769,7 @@ rescue NameError => e
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/string/inflections.rb`.
 
 #### `humanize`
 
@@ -1814,7 +1819,7 @@ def full_messages
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/string/inflections.rb`.
 
 #### `foreign_key`
 
@@ -1839,7 +1844,7 @@ Associations use this method to infer foreign keys, for example `has_one` and `h
 foreign_key = options[:foreign_key] || reflection.active_record.name.foreign_key
 ```
 
-NOTE: Defined in `active_support/core_ext/string/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/string/inflections.rb`.
 
 ### Conversions
 
@@ -1866,7 +1871,7 @@ Please refer to the documentation of `Date._parse` for further details.
 
 INFO: The three of them return `nil` for blank receivers.
 
-NOTE: Defined in `active_support/core_ext/string/conversions.rb`.
+NOTE: 定义于 `active_support/core_ext/string/conversions.rb`.
 
 Extensions to `Numeric`
 -----------------------
@@ -1900,7 +1905,7 @@ Singular forms are aliased so you are able to say:
 1.megabyte # => 1048576
 ```
 
-NOTE: Defined in `active_support/core_ext/numeric/bytes.rb`.
+NOTE: 定义于 `active_support/core_ext/numeric/bytes.rb`.
 
 ### Time
 
@@ -1936,7 +1941,7 @@ In such cases, Ruby's core [Date](http://ruby-doc.org/stdlib/libdoc/date/rdoc/Da
 [Time](http://ruby-doc.org/stdlib/libdoc/time/rdoc/Time.html) should be used for precision
 date and time arithmetic.
 
-NOTE: Defined in `active_support/core_ext/numeric/time.rb`.
+NOTE: 定义于 `active_support/core_ext/numeric/time.rb`.
 
 ### Formatting
 
@@ -2023,7 +2028,7 @@ Produce a string representation of a number in human-readable words:
 1234567890123456.to_s(:human)  # => "1.23 Quadrillion"
 ```
 
-NOTE: Defined in `active_support/core_ext/numeric/conversions.rb`.
+NOTE: 定义于 `active_support/core_ext/numeric/conversions.rb`.
 
 Extensions to `Integer`
 -----------------------
@@ -2037,7 +2042,7 @@ The method `multiple_of?` tests whether an integer is multiple of the argument:
 1.multiple_of?(2) # => false
 ```
 
-NOTE: Defined in `active_support/core_ext/integer/multiple.rb`.
+NOTE: 定义于 `active_support/core_ext/integer/multiple.rb`.
 
 ### `ordinal`
 
@@ -2052,7 +2057,7 @@ The method `ordinal` returns the ordinal suffix string corresponding to the rece
 -134.ordinal # => "th"
 ```
 
-NOTE: Defined in `active_support/core_ext/integer/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/integer/inflections.rb`.
 
 ### `ordinalize`
 
@@ -2067,7 +2072,7 @@ The method `ordinalize` returns the ordinal string corresponding to the receiver
 -134.ordinalize # => "-134th"
 ```
 
-NOTE: Defined in `active_support/core_ext/integer/inflections.rb`.
+NOTE: 定义于 `active_support/core_ext/integer/inflections.rb`.
 
 Extensions to `BigDecimal`
 --------------------------
@@ -2139,7 +2144,7 @@ The sum of an empty receiver can be customized in this form as well:
 [].sum(1) {|n| n**3} # => 1
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: 定义于 `active_support/core_ext/enumerable.rb`.
 
 ### `index_by`
 
@@ -2154,7 +2159,7 @@ invoices.index_by(&:number)
 
 WARNING. Keys should normally be unique. If the block returns the same value for different elements no collection is built for that key. The last item will win.
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: 定义于 `active_support/core_ext/enumerable.rb`.
 
 ### `many?`
 
@@ -2172,7 +2177,7 @@ If an optional block is given, `many?` only takes into account those elements th
 @see_more = videos.many? {|video| video.category == params[:category]}
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: 定义于 `active_support/core_ext/enumerable.rb`.
 
 ### `exclude?`
 
@@ -2182,7 +2187,7 @@ The predicate `exclude?` tests whether a given object does **not** belong to the
 to_visit << node if visited.exclude?(node)
 ```
 
-NOTE: Defined in `active_support/core_ext/enumerable.rb`.
+NOTE: 定义于 `active_support/core_ext/enumerable.rb`.
 
 Extensions to `Array`
 ---------------------
@@ -2211,7 +2216,7 @@ The methods `second`, `third`, `fourth`, and `fifth` return the corresponding el
 %w(a b c d).fifth # => nil
 ```
 
-NOTE: Defined in `active_support/core_ext/array/access.rb`.
+NOTE: 定义于 `active_support/core_ext/array/access.rb`.
 
 ### Adding Elements
 
@@ -2224,7 +2229,7 @@ This method is an alias of `Array#unshift`.
 [].prepend(10)            # => [10]
 ```
 
-NOTE: Defined in `active_support/core_ext/array/prepend_and_append.rb`.
+NOTE: 定义于 `active_support/core_ext/array/prepend_and_append.rb`.
 
 #### `append`
 
@@ -2235,7 +2240,7 @@ This method is an alias of `Array#<<`.
 [].append([1,2])         # => [[1,2]]
 ```
 
-NOTE: Defined in `active_support/core_ext/array/prepend_and_append.rb`.
+NOTE: 定义于 `active_support/core_ext/array/prepend_and_append.rb`.
 
 ### Options Extraction
 
@@ -2263,7 +2268,7 @@ end
 
 This method receives an arbitrary number of action names, and an optional hash of options as last argument. With the call to `extract_options!` you obtain the options hash and remove it from `actions` in a simple and explicit way.
 
-NOTE: Defined in `active_support/core_ext/array/extract_options.rb`.
+NOTE: 定义于 `active_support/core_ext/array/extract_options.rb`.
 
 ### Conversions
 
@@ -2292,7 +2297,7 @@ The defaults for these options can be localized, their keys are:
 | `:words_connector`     | `support.array.words_connector`     |
 | `:last_word_connector` | `support.array.last_word_connector` |
 
-NOTE: Defined in `active_support/core_ext/array/conversions.rb`.
+NOTE: 定义于 `active_support/core_ext/array/conversions.rb`.
 
 #### `to_formatted_s`
 
@@ -2310,7 +2315,7 @@ invoice.lines.to_formatted_s(:db) # => "23,567,556,12"
 
 Integers in the example above are supposed to come from the respective calls to `id`.
 
-NOTE: Defined in `active_support/core_ext/array/conversions.rb`.
+NOTE: 定义于 `active_support/core_ext/array/conversions.rb`.
 
 #### `to_xml`
 
@@ -2411,7 +2416,7 @@ Contributor.limit(2).order(:rank).to_xml(skip_types: true)
 # </contributors>
 ```
 
-NOTE: Defined in `active_support/core_ext/array/conversions.rb`.
+NOTE: 定义于 `active_support/core_ext/array/conversions.rb`.
 
 ### Wrapping
 
@@ -2452,7 +2457,7 @@ which in Ruby 1.8 returns `[nil]` for `nil`, and calls to `Array(object)` otherw
 
 Thus, in this case the behavior is different for `nil`, and the differences with `Kernel#Array` explained above apply to the rest of `object`s.
 
-NOTE: Defined in `active_support/core_ext/array/wrap.rb`.
+NOTE: 定义于 `active_support/core_ext/array/wrap.rb`.
 
 ### Duplicating
 
@@ -2466,7 +2471,7 @@ dup[1][2] = 4
 array[1][2] == nil   # => true
 ```
 
-NOTE: Defined in `active_support/core_ext/object/deep_dup.rb`.
+NOTE: 定义于 `active_support/core_ext/object/deep_dup.rb`.
 
 ### Grouping
 
@@ -2504,7 +2509,7 @@ And you can tell the method not to fill the last group passing `false`:
 
 As a consequence `false` can't be a used as a padding value.
 
-NOTE: Defined in `active_support/core_ext/array/grouping.rb`.
+NOTE: 定义于 `active_support/core_ext/array/grouping.rb`.
 
 #### `in_groups(number, fill_with = nil)`
 
@@ -2542,7 +2547,7 @@ And you can tell the method not to fill the smaller groups passing `false`:
 
 As a consequence `false` can't be a used as a padding value.
 
-NOTE: Defined in `active_support/core_ext/array/grouping.rb`.
+NOTE: 定义于 `active_support/core_ext/array/grouping.rb`.
 
 #### `split(value = nil)`
 
@@ -2564,7 +2569,7 @@ Otherwise, the value received as argument, which defaults to `nil`, is the separ
 
 TIP: Observe in the previous example that consecutive separators result in empty arrays.
 
-NOTE: Defined in `active_support/core_ext/array/grouping.rb`.
+NOTE: 定义于 `active_support/core_ext/array/grouping.rb`.
 
 Extensions to `Hash`
 --------------------
@@ -2616,7 +2621,7 @@ By default the root node is "hash", but that's configurable via the `:root` opti
 
 The default XML builder is a fresh instance of `Builder::XmlMarkup`. You can configure your own builder with the `:builder` option. The method also accepts options like `:dasherize` and friends, they are forwarded to the builder.
 
-NOTE: Defined in `active_support/core_ext/hash/conversions.rb`.
+NOTE: 定义于 `active_support/core_ext/hash/conversions.rb`.
 
 ### Merging
 
@@ -2651,7 +2656,7 @@ options.reverse_merge!(length: 30, omission: "...")
 
 WARNING. Take into account that `reverse_merge!` may change the hash in the caller, which may or may not be a good idea.
 
-NOTE: Defined in `active_support/core_ext/hash/reverse_merge.rb`.
+NOTE: 定义于 `active_support/core_ext/hash/reverse_merge.rb`.
 
 #### `reverse_update`
 
@@ -2659,7 +2664,7 @@ The method `reverse_update` is an alias for `reverse_merge!`, explained above.
 
 WARNING. Note that `reverse_update` has no bang.
 
-NOTE: Defined in `active_support/core_ext/hash/reverse_merge.rb`.
+NOTE: 定义于 `active_support/core_ext/hash/reverse_merge.rb`.
 
 #### `deep_merge` and `deep_merge!`
 
@@ -2674,7 +2679,7 @@ Active Support defines `Hash#deep_merge`. In a deep merge, if a key is found in 
 
 The method `deep_merge!` performs a deep merge in place.
 
-NOTE: Defined in `active_support/core_ext/hash/deep_merge.rb`.
+NOTE: 定义于 `active_support/core_ext/hash/deep_merge.rb`.
 
 ### Deep duplicating
 
@@ -2692,7 +2697,7 @@ hash[:b][:e] == nil      # => true
 hash[:b][:d] == [3, 4]   # => true
 ```
 
-NOTE: Defined in `active_support/core_ext/object/deep_dup.rb`.
+NOTE: 定义于 `active_support/core_ext/object/deep_dup.rb`.
 
 ### Working with Keys
 
@@ -2713,7 +2718,7 @@ If the receiver responds to `convert_key`, the method is called on each of the a
 
 There's also the bang variant `except!` that removes keys in the very receiver.
 
-NOTE: Defined in `active_support/core_ext/hash/except.rb`.
+NOTE: 定义于 `active_support/core_ext/hash/except.rb`.
 
 #### `transform_keys` and `transform_keys!`
 
@@ -2755,7 +2760,7 @@ Besides that, one can use `deep_transform_keys` and `deep_transform_keys!` to pe
 # => {""=>nil, "1"=>1, "NESTED"=>{"A"=>3, "5"=>5}}
 ```
 
-NOTE: Defined in `active_support/core_ext/hash/keys.rb`.
+NOTE: 定义于 `active_support/core_ext/hash/keys.rb`.
 
 #### `stringify_keys` and `stringify_keys!`
 
@@ -2797,7 +2802,7 @@ Besides that, one can use `deep_stringify_keys` and `deep_stringify_keys!` to st
 # => {""=>nil, "1"=>1, "nested"=>{"a"=>3, "5"=>5}}
 ```
 
-NOTE: Defined in `active_support/core_ext/hash/keys.rb`.
+NOTE: 定义于 `active_support/core_ext/hash/keys.rb`.
 
 #### `symbolize_keys` and `symbolize_keys!`
 
@@ -2841,13 +2846,13 @@ Besides that, one can use `deep_symbolize_keys` and `deep_symbolize_keys!` to sy
 # => {nil=>nil, 1=>1, nested:{a:3, 5=>5}}
 ```
 
-NOTE: Defined in `active_support/core_ext/hash/keys.rb`.
+NOTE: 定义于 `active_support/core_ext/hash/keys.rb`.
 
 #### `to_options` and `to_options!`
 
 The methods `to_options` and `to_options!` are respectively aliases of `symbolize_keys` and `symbolize_keys!`.
 
-NOTE: Defined in `active_support/core_ext/hash/keys.rb`.
+NOTE: 定义于 `active_support/core_ext/hash/keys.rb`.
 
 #### `assert_valid_keys`
 
@@ -2860,7 +2865,7 @@ The method `assert_valid_keys` receives an arbitrary number of arguments, and ch
 
 Active Record does not accept unknown options when building associations, for example. It implements that control via `assert_valid_keys`.
 
-NOTE: Defined in `active_support/core_ext/hash/keys.rb`.
+NOTE: 定义于 `active_support/core_ext/hash/keys.rb`.
 
 ### Slicing
 
@@ -2891,7 +2896,7 @@ rest = hash.slice!(:a) # => {:b=>2}
 hash                   # => {:a=>1}
 ```
 
-NOTE: Defined in `active_support/core_ext/hash/slice.rb`.
+NOTE: 定义于 `active_support/core_ext/hash/slice.rb`.
 
 ### Extracting
 
@@ -2911,7 +2916,7 @@ rest = hash.extract!(:a).class
 # => ActiveSupport::HashWithIndifferentAccess
 ```
 
-NOTE: Defined in `active_support/core_ext/hash/slice.rb`.
+NOTE: 定义于 `active_support/core_ext/hash/slice.rb`.
 
 ### Indifferent Access
 
@@ -2921,7 +2926,7 @@ The method `with_indifferent_access` returns an `ActiveSupport::HashWithIndiffer
 {a: 1}.with_indifferent_access["a"] # => 1
 ```
 
-NOTE: Defined in `active_support/core_ext/hash/indifferent_access.rb`.
+NOTE: 定义于 `active_support/core_ext/hash/indifferent_access.rb`.
 
 ### Compacting
 
@@ -2931,7 +2936,7 @@ The methods `compact` and `compact!` return a Hash without items with `nil` valu
 {a: 1, b: 2, c: nil}.compact # => {a: 1, b: 2}
 ```
 
-NOTE: Defined in `active_support/core_ext/hash/compact.rb`.
+NOTE: 定义于 `active_support/core_ext/hash/compact.rb`.
 
 Extensions to `Regexp`
 ----------------------
@@ -2960,7 +2965,7 @@ def assign_route_options(segments, defaults, requirements)
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/regexp.rb`.
+NOTE: 定义于 `active_support/core_ext/regexp.rb`.
 
 Extensions to `Range`
 ---------------------
@@ -2979,7 +2984,7 @@ Active Support extends the method `Range#to_s` so that it understands an optiona
 
 As the example depicts, the `:db` format generates a `BETWEEN` SQL clause. That is used by Active Record in its support for range values in conditions.
 
-NOTE: Defined in `active_support/core_ext/range/conversions.rb`.
+NOTE: 定义于 `active_support/core_ext/range/conversions.rb`.
 
 ### `include?`
 
@@ -3003,7 +3008,7 @@ Active Support extends these methods so that the argument may be another range i
 (1...9) === (3..9)  # => false
 ```
 
-NOTE: Defined in `active_support/core_ext/range/include_range.rb`.
+NOTE: 定义于 `active_support/core_ext/range/include_range.rb`.
 
 ### `overlaps?`
 
@@ -3015,7 +3020,7 @@ The method `Range#overlaps?` says whether any two given ranges have non-void int
 (1..10).overlaps?(11..27) # => false
 ```
 
-NOTE: Defined in `active_support/core_ext/range/overlaps.rb`.
+NOTE: 定义于 `active_support/core_ext/range/overlaps.rb`.
 
 Extensions to `Proc`
 --------------------
@@ -3062,7 +3067,7 @@ def handler_for_rescue(exception)
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/proc.rb`.
+NOTE: 定义于 `active_support/core_ext/proc.rb`.
 
 Extensions to `Date`
 --------------------
@@ -3672,9 +3677,9 @@ t.advance(seconds: 1)
 
 #### `Time.current`
 
-Active Support defines `Time.current` to be today in the current time zone. That's like `Time.now`, except that it honors the user time zone, if defined. It also defines `Time.yesterday` and `Time.tomorrow`, and the instance predicates `past?`, `today?`, and `future?`, all of them relative to `Time.current`.
+Active Support defines `Time.current` to be today in the current time zone. That's like `Time.now`, except that it honors the user time zone, if defined. It also defines the instance predicates `past?`, `today?`, and `future?`, all of them relative to `Time.current`.
 
-When making Time comparisons using methods which honor the user time zone, make sure to use `Time.current` and not `Time.now`. There are cases where the user time zone might be in the future compared to the system time zone, which `Time.today` uses by default. This means `Time.now` may equal `Time.yesterday`.
+When making Time comparisons using methods which honor the user time zone, make sure to use `Time.current` instead of `Time.now`. There are cases where the user time zone might be in the future compared to the system time zone, which `Time.now` uses by default. This means `Time.now.to_date` may equal `Date.yesterday`.
 
 #### `all_day`, `all_week`, `all_month`, `all_quarter` and `all_year`
 
@@ -3764,7 +3769,7 @@ WARNING. Note you can't append with `atomic_write`.
 
 The auxiliary file is written in a standard directory for temporary files, but you can pass a directory of your choice as second argument.
 
-NOTE: Defined in `active_support/core_ext/file/atomic.rb`.
+NOTE: 定义于 `active_support/core_ext/file/atomic.rb`.
 
 Extensions to `Marshal`
 -----------------------
@@ -3783,7 +3788,7 @@ If the cached data refers to a constant that is unknown at that point, the autol
 
 WARNING. If the argument is an `IO` it needs to respond to `rewind` to be able to retry. Regular files respond to `rewind`.
 
-NOTE: Defined in `active_support/core_ext/marshal.rb`.
+NOTE: 定义于 `active_support/core_ext/marshal.rb`.
 
 Extensions to `Logger`
 ----------------------
@@ -3827,7 +3832,7 @@ logger.formatter = Logger::FormatWithTime
 logger.info("<- is the current time")
 ```
 
-NOTE: Defined in `active_support/core_ext/logger.rb`.
+NOTE: 定义于 `active_support/core_ext/logger.rb`.
 
 Extensions to `NameError`
 -------------------------
@@ -3852,7 +3857,7 @@ rescue NameError => e
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/name_error.rb`.
+NOTE: 定义于 `active_support/core_ext/name_error.rb`.
 
 Extensions to `LoadError`
 -------------------------
@@ -3875,4 +3880,4 @@ rescue NameError => e
 end
 ```
 
-NOTE: Defined in `active_support/core_ext/load_error.rb`.
+NOTE: 定义于 `active_support/core_ext/load_error.rb`.
