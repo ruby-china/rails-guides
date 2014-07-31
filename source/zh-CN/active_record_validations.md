@@ -221,7 +221,7 @@ class Person < ActiveRecord::Base
 end
 ```
 
-在试图中可以这么写：
+在视图中可以这么写：
 
 ```erb
 <%= text_field :person, :email %>
