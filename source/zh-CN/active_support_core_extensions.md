@@ -336,7 +336,7 @@ NOTE: 定义于 `active_support/core_ext/object/to_param.rb`.
 
 ### `to_query`
 
-除了哈希表之外，给定一个未转义的`key`，这个方法就会基于这个键和`to_param`的返回值，构造出一个新的查询字符串。例如：
+除了散列表之外，给定一个未转义的`key`，这个方法就会基于这个键和`to_param`的返回值，构造出一个新的查询字符串。例如：
 
 ```ruby
 class User
@@ -387,7 +387,7 @@ NOTE: 定义于 `active_support/core_ext/object/to_query.rb`.
 
 `with_options`方法可以为一组方法调用提取出共有的选项。
 
-假定有一个默认的哈希选项，`with_options`方法会引入一个代理对象到代码块。在代码块内部，代理对象上的方法调用，会连同被混入的选项一起，被转发至原方法接收者。例如，若要去除下述代码的重复内容：
+假定有一个默认的散列表选项，`with_options`方法会引入一个代理对象到代码块。在代码块内部，代理对象上的方法调用，会连同被混入的选项一起，被转发至原方法接收者。例如，若要去除下述代码的重复内容：
 
 ```ruby
 class Account < ActiveRecord::Base
@@ -427,20 +427,19 @@ TIP: 由于`with_options`会把方法调用转发给其自身的接收者，所�
 
 NOTE: 定义于 `active_support/core_ext/object/with_options.rb`.
 
-### JSON support
+### JSON 支持
 
-Active Support provides a better implementation of `to_json` than the `json` gem ordinarily provides for Ruby objects. This is because some classes, like `Hash`, `OrderedHash` and `Process::Status` need special handling in order to provide a proper JSON representation.
+相较于 `json` gem 为 Ruby 对象提供的`to_json`方法，Active Support 给出了一个更好的实现。因为有许多类，诸如`Hash`、`OrderedHash`和`Process::Status`，都需要做特殊处理才能到适合的 JSON 替换。
 
 NOTE: 定义于 `active_support/core_ext/object/json.rb`.
 
-### Instance Variables
+### 实例变量
 
-Active Support provides several methods to ease access to instance variables.
+Active Support 提供了若干方法以简化对实例变量的访问。
 
 #### `instance_values`
 
-The method `instance_values` returns a hash that maps instance variable names without "@" to their
-corresponding values. Keys are strings:
+`instance_values`方法返回一个散列表，其中会把实例变量名去掉"@"作为键，把相应的实例变量值作为值。键全部是字符串：
 
 ```ruby
 class C
@@ -456,7 +455,7 @@ NOTE: 定义于 `active_support/core_ext/object/instance_variables.rb`.
 
 #### `instance_variable_names`
 
-The method `instance_variable_names` returns an array.  Each name includes the "@" sign.
+`instance_variable_names`方法返回一个数组。数组中所有的实例变量名都带有"@"标志。
 
 ```ruby
 class C
@@ -470,31 +469,32 @@ C.new(0, 1).instance_variable_names # => ["@x", "@y"]
 
 NOTE: 定义于 `active_support/core_ext/object/instance_variables.rb`.
 
-### Silencing Warnings, Streams, and Exceptions
+### Silencing Warnings, Streams, 和 Exceptions
 
-The methods `silence_warnings` and `enable_warnings` change the value of `$VERBOSE` accordingly for the duration of their block, and reset it afterwards:
+`silence_warnings`和`enable_warnings`方法都可以在其代码块里改变`$VERBOSE`的值，并在之后把值重置：
 
 ```ruby
 silence_warnings { Object.const_set "RAILS_DEFAULT_LOGGER", logger }
 ```
 
 You can silence any stream while a block runs with `silence_stream`:
+在通过`silence_stream`执行的代码块里，可以使任意流安静的运行：
 
 ```ruby
 silence_stream(STDOUT) do
-  # STDOUT is silent here
+  # 这里的代码不会输出到 STDOUT 
 end
 ```
 
-The `quietly` method addresses the common use case where you want to silence STDOUT and STDERR, even in subprocesses:
+`quietly`方法可以使 STDOUT 和 STDERR 保持安静，即便在子进程里也如此：
 
 ```ruby
 quietly { system 'bundle install' }
 ```
 
-For example, the railties test suite uses that one in a few places to prevent command messages from being echoed intermixed with the progress status.
+例如，railties 测试组件会用到上述方法，来阻止普通消息与进度状态混到一起。
 
-Silencing exceptions is also possible with `suppress`. This method receives an arbitrary number of exception classes. If an exception is raised during the execution of the block and is `kind_of?` any of the arguments, `suppress` captures it and returns silently. Otherwise the exception is reraised:
+也可以用`suppress`方法来使异常保持安静。方法接收任意数量的异常类。如果代码块的代码执行时报出异常，并且该异常`kind_of?`满足任一参数，`suppress`便会将异其捕获并安静的返回。否则会重新抛出该异常：
 
 ```ruby
 # If the user is locked the increment is lost, no big deal.
@@ -507,9 +507,9 @@ NOTE: 定义于 `active_support/core_ext/kernel/reporting.rb`.
 
 ### `in?`
 
-The predicate `in?` tests if an object is included in another object. An `ArgumentError` exception will be raised if the argument passed does not respond to `include?`.
+判断式`in?`用于测试一个对象是否被包含在另一个对象里。当传入的参数无法响应`include?`时，会抛出`ArgumentError`异常。
 
-Examples of `in?`:
+使用`in?`的例子：
 
 ```ruby
 1.in?([1,2])        # => true
@@ -520,14 +520,14 @@ Examples of `in?`:
 
 NOTE: 定义于 `active_support/core_ext/object/inclusion.rb`.
 
-Extensions to `Module`
+对`Module`的扩展
 ----------------------
 
 ### `alias_method_chain`
 
-Using plain Ruby you can wrap methods with other methods, that's called _alias chaining_.
+使用纯 Ruby 可以用方法环绕其他的方法，这种做法被称为环绕别名。
 
-For example, let's say you'd like params to be strings in functional tests, as they are in real requests, but still want the convenience of assigning integers and other kind of values. To accomplish that you could wrap `ActionController::TestCase#process` this way in `test/test_helper.rb`:
+例如，我们假设在功能测试里你希望参数都是字符串，就如同真实的请求中那样，但是同时你也希望对于数字和其他类型的值能够很方便的赋值。为了做到这点，你可以把`test/test_helper.rb`里的`ActionController::TestCase#process`方法像下面这样环绕：
 
 ```ruby
 ActionController::TestCase.class_eval do
@@ -542,9 +542,9 @@ ActionController::TestCase.class_eval do
 end
 ```
 
-That's the method `get`, `post`, etc., delegate the work to.
+`get`、`post`等最终会通过此方法执行。
 
-That technique has a risk, it could be the case that `:original_process` was taken. To try to avoid collisions people choose some label that characterizes what the chaining is about:
+这么做有一定风险，`:original_process`有可能已经被占用了。为了避免方法名发生碰撞，通常会添加标签来表明这是个关于什么的别名：
 
 ```ruby
 ActionController::TestCase.class_eval do
@@ -557,7 +557,7 @@ ActionController::TestCase.class_eval do
 end
 ```
 
-The method `alias_method_chain` provides a shortcut for that pattern:
+`alias_method_chain`为上述技巧提供了一个便捷之法：
 
 ```ruby
 ActionController::TestCase.class_eval do
@@ -569,15 +569,15 @@ ActionController::TestCase.class_eval do
 end
 ```
 
-Rails uses `alias_method_chain` all over the code base. For example validations are added to `ActiveRecord::Base#save` by wrapping the method that way in a separate module specialized in validations.
+Rails 源代码中随处可见`alias_method_chain`。例如`ActiveRecord::Base#save`里，就通过这种方式对方法进行环绕，从 validations 下一个专门的模块里为其增加了验证。
 
 NOTE: 定义于 `active_support/core_ext/module/aliasing.rb`.
 
-### Attributes
+### 属性
 
 #### `alias_attribute`
 
-Model attributes have a reader, a writer, and a predicate. You can alias a model attribute having the corresponding three methods defined for you in one shot. As in other aliasing methods, the new name is the first argument, and the old name is the second (one mnemonic is that they go in the same order as if you did an assignment):
+模型属性包含读取器、写入器和判断式。只需添加一行代码，就可以为模型属性添加一个包含以上三个方法的别名。与其他别名方法一样，新名称充当第一个参数，原有名称是第二个参数（为了方便记忆，可以类比下赋值时的书写顺序）。
 
 ```ruby
 class User < ActiveRecord::Base
@@ -589,13 +589,13 @@ end
 
 NOTE: 定义于 `active_support/core_ext/module/aliasing.rb`.
 
-#### Internal Attributes
+#### 内部属性
 
-When you are defining an attribute in a class that is meant to be subclassed, name collisions are a risk. That's remarkably important for libraries.
+当你在一个被继承的类里定义一条属性时，属性名称有可能会发生碰撞。这一点对许多库而言尤为重要。
 
-Active Support defines the macros `attr_internal_reader`, `attr_internal_writer`, and `attr_internal_accessor`. They behave like their Ruby built-in `attr_*` counterparts, except they name the underlying instance variable in a way that makes collisions less likely.
+Active Support 定义了`attr_internal_reader`、`attr_internal_writer`和`attr_internal_accessor`这些类宏。它们的作用与 Ruby 内建的`attr_*`相当，只不过实例变量名多了下划线以避免碰撞。
 
-The macro `attr_internal` is a synonym for `attr_internal_accessor`:
+类宏`attr_internal`与`attr_internal_accessor`是同义：
 
 ```ruby
 # library
@@ -609,11 +609,11 @@ class MyCrawler < ThirdPartyLibrary::Crawler
 end
 ```
 
-In the previous example it could be the case that `:log_level` does not belong to the public interface of the library and it is only used for development. The client code, unaware of the potential conflict, subclasses and defines its own `:log_level`. Thanks to `attr_internal` there's no collision.
+上述例子里的情况可能是，`:log_level`并不属于库的公共接口，而是只用于开发。而在客户代码里，由于不知道可能出现的冲突，便在子类里又定义了`:log_level`。多亏了`attr_internal`才没有出项碰撞。
 
-By default the internal instance variable is named with a leading underscore, `@_log_level` in the example above. That's configurable via `Module.attr_internal_naming_format` though, you can pass any `sprintf`-like format string with a leading `@` and a `%s` somewhere, which is where the name will be placed. The default is `"@_%s"`.
+默认情况下，内部实例变量名以下划线开头，如上例中即为`@_log_level`。不过这点可以通过`Module.attr_internal_naming_format`进行配置，你可以传入任何`sprintf`这一类的格式化字符串，并在开头加上`@`，同时还要加上`%s`表示变量名称的位置。默认值为`"@_%s"`。
 
-Rails uses internal attributes in a few spots, for examples for views:
+Rails 在若干地方使用了内部属性，比如在视图层：
 
 ```ruby
 module ActionView
@@ -629,9 +629,9 @@ NOTE: 定义于 `active_support/core_ext/module/attr_internal.rb`.
 
 #### Module Attributes
 
-The macros `mattr_reader`, `mattr_writer`, and `mattr_accessor` are the same as the `cattr_*` macros defined for class. In fact, the `cattr_*` macros are just aliases for the `mattr_*` macros. Check [Class Attributes](#class-attributes).
+类宏`mattr_reader`、`mattr_writer`和`mattr_accessor`与为类定义的`cattr_*`是相同的。实际上，`cattr_*`系列的类宏只不过是`mattr_*`这些类宏的别名。详见[Class Attributes](#class-attributes)。
 
-For example, the dependencies mechanism uses them:
+例如，依赖性机制就用到了它们：
 
 ```ruby
 module ActiveSupport
@@ -658,7 +658,7 @@ NOTE: 定义于 `active_support/core_ext/module/attribute_accessors.rb`.
 
 #### `parent`
 
-The `parent` method on a nested named module returns the module that contains its corresponding constant:
+对一个嵌套的模块调用`parent`方法，会返回其相应的常量：
 
 ```ruby
 module X
@@ -673,15 +673,15 @@ X::Y::Z.parent # => X::Y
 M.parent       # => X::Y
 ```
 
-If the module is anonymous or belongs to the top-level, `parent` returns `Object`.
+如果这个模块是匿名的或者属于顶级作用域， `parent`会返回`Object`。
 
-WARNING: Note that in that case `parent_name` returns `nil`.
+WARNING: 若有上述情况，则`parent_name`会返回`nil`。
 
 NOTE: 定义于 `active_support/core_ext/module/introspection.rb`.
 
 #### `parent_name`
 
-The `parent_name` method on a nested named module returns the fully-qualified name of the module that contains its corresponding constant:
+对一个嵌套的模块调用`parent_name`方法，会返回其相应常量的完全限定名：
 
 ```ruby
 module X
@@ -696,15 +696,15 @@ X::Y::Z.parent_name # => "X::Y"
 M.parent_name       # => "X::Y"
 ```
 
-For top-level or anonymous modules `parent_name` returns `nil`.
+定义在顶级作用域里的模块或匿名的模块，`parent_name`会返回`nil`。
 
-WARNING: Note that in that case `parent` returns `Object`.
+WARNING: 若有上述情况，则`parent`返回`Object`。
 
 NOTE: 定义于 `active_support/core_ext/module/introspection.rb`.
 
 #### `parents`
 
-The method `parents` calls `parent` on the receiver and upwards until `Object` is reached. The chain is returned in an array, from bottom to top:
+`parents`方法会对接收者调用`parent`，并向上追溯直至`Object`。之后所得结果链按由低到高顺序组成一个数组被返回。
 
 ```ruby
 module X
@@ -721,10 +721,10 @@ M.parents       # => [X::Y, X, Object]
 
 NOTE: 定义于 `active_support/core_ext/module/introspection.rb`.
 
-### Constants
+### 常量
 
-The method `local_constants` returns the names of the constants that have been
 defined in the receiver module:
+`local_constants`方法返回在接收者模块中定义的常量。
 
 ```ruby
 module X
@@ -740,11 +740,11 @@ X.local_constants    # => [:X1, :X2, :Y]
 X::Y.local_constants # => [:Y1, :X1]
 ```
 
-The names are returned as symbols.
+常量名会作为符号被返回。
 
 NOTE: 定义于 `active_support/core_ext/module/introspection.rb`.
 
-#### Qualified Constant Names
+#### 限定常量名
 
 The standard methods `const_defined?`, `const_get` , and `const_set` accept
 bare constant names. Active Support extends this API to be able to pass
