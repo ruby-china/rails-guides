@@ -1014,17 +1014,9 @@ Testing helpers
 
 In order to test helpers, all you need to do is check that the output of the
 helper method matches what you'd expect. Tests related to the helpers are
-located under the `test/helpers` directory. Rails provides a generator which
-generates both the helper and the test file:
+located under the `test/helpers` directory.
 
-```bash
-$ bin/rails generate helper User
-      create  app/helpers/user_helper.rb
-      invoke  test_unit
-      create    test/helpers/user_helper_test.rb
-```
-
-The generated test file contains the following code:
+A helper test looks like so:
 
 ```ruby
 require 'test_helper'
@@ -1057,7 +1049,6 @@ The built-in `minitest` based testing is not the only way to test Rails applicat
 
 * [NullDB](http://avdi.org/projects/nulldb/), a way to speed up testing by avoiding database use.
 * [Factory Girl](https://github.com/thoughtbot/factory_girl/tree/master), a replacement for fixtures.
-* [Machinist](https://github.com/notahat/machinist/tree/master), another replacement for fixtures.
 * [Fixture Builder](https://github.com/rdy/fixture_builder), a tool that compiles Ruby factories into fixtures before a test run.
 * [MiniTest::Spec Rails](https://github.com/metaskills/minitest-spec-rails), use the MiniTest::Spec DSL within your rails tests.
 * [Shoulda](http://www.thoughtbot.com/projects/shoulda), an extension to `test/unit` with additional helpers, macros, and assertions.
