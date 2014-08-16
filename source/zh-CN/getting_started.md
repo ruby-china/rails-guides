@@ -17,16 +17,16 @@ Rails 入门
 
 本文针对想从零开始开发 Rails 程序的初学者，不需要预先具备任何的 Rails 使用经验。不过，为了能顺利阅读，还是需要事先安装好一些软件：
 
-* [Ruby](http://www.ruby-lang.org/en/downloads)  1.9.3 及以上版本
-* 包管理工具 [RubyGems](http://rubygems.org)，随 Ruby 1.9+ 安装。想深入了解 RubyGems，请阅读 [RubyGems 指南](http://guides.rubygems.org)
-* [SQLite3](http://www.sqlite.org) 数据库
+* [Ruby](https://www.ruby-lang.org/en/downloads)  1.9.3 及以上版本
+* 包管理工具 [RubyGems](https://rubygems.org)，随 Ruby 1.9+ 安装。想深入了解 RubyGems，请阅读 [RubyGems 指南](http://guides.rubygems.org)
+* [SQLite3](https://www.sqlite.org) 数据库
 
 Rails 是使用 Ruby 语言开发的网页程序框架。如果之前没接触过 Ruby，学习 Rails 可要深下一番功夫。网上有很多资源可以学习 Ruby：
 
 * [Ruby 语言官方网站](https://www.ruby-lang.org/zh_cn/documentation/)
 * [reSRC 列出的免费编程书籍](http://resrc.io/list/10/list-of-free-programming-books/#ruby)
 
-记住，某些资源虽然很好，但肯针对 Ruby 1.8，甚至 1.6，所以没有介绍一些 Rails 日常开发会用到的句法。
+记住，某些资源虽然很好，但是针对 Ruby 1.8，甚至 1.6 编写的，所以没有介绍一些 Rails 日常开发会用到的句法。
 
 Rails 是什么？
 -------------
@@ -53,16 +53,16 @@ TIP: 文中的示例代码使用 `$` 表示命令行提示符，你的提示符�
 
 打开命令行：在 Mac OS X 中打开 Terminal.app，在 Windows 中选择“运行”，然后输入“cmd.exe”。下文中所有以 `$` 开头的代码，都要在命令行中运行。先确认是否安装了 Ruby 最新版：
 
-TIP: 有很多工具可以帮助你快速在系统中安装 Ruby 和 Ruby on Rails。Windows 用户可以使用 [Rails Installer](http://railsinstaller.org)，Mac OS X 用户可以使用 [Rails One Click](http://railsoneclick.com)。
+TIP: 有很多工具可以帮助你快速在系统中安装 Ruby 和 Ruby on Rails。Windows 用户可以使用 [Rails Installer](http://railsinstaller.org)，Mac OS X 用户可以使用 [Tokaido](https://github.com/tokaido/tokaidoapp)。
 
 ```bash
 $ ruby -v
-ruby 2.0.0p353
+ruby 2.1.2p95
 ```
 
 如果你还没安装 Ruby，请访问 [ruby-lang.org](https://www.ruby-lang.org/en/downloads/)，找到针对所用系统的安装方法。
 
-很多类 Unix 系统都自带了版本尚新的 SQLite3。Windows 等其他操作系统的用户可以在 [SQLite3 的网站](http://www.sqlite.org)上找到安装说明。然后，确认是否在 PATH 中：
+很多类 Unix 系统都自带了版本尚新的 SQLite3。Windows 等其他操作系统的用户可以在 [SQLite3 的网站](https://www.sqlite.org)上找到安装说明。然后，确认是否在 PATH 中：
 
 ```bash
 $ sqlite3 --version
@@ -113,7 +113,7 @@ $ cd blog
 |config/|设置程序的路由，数据库等。详情参阅“[设置 Rails 程序](/configuring.html)”一文。|
 |config.ru|基于 Rack 服务器的程序设置，用来启动程序。|
 |db/|存放当前数据库的模式，以及数据库迁移文件。|
-|Gemfile, Gemfile.lock|这两个文件用来指定程序所需的 gem 依赖件，用于 Bundler gem。关于 Bundler 的详细介绍，请访问 [Bundler 官网](http://gembundler.com)。|
+|Gemfile, Gemfile.lock|这两个文件用来指定程序所需的 gem 依赖件，用于 Bundler gem。关于 Bundler 的详细介绍，请访问 [Bundler 官网](http://bundler.io)。|
 |lib/|程序的扩展模块。|
 |log/|程序的日志文件。|
 |public/|唯一对外开放的文件夹，存放静态文件和编译后的资源文件。|
@@ -172,8 +172,6 @@ invoke  test_unit
 create    test/controllers/welcome_controller_test.rb
 invoke  helper
 create    app/helpers/welcome_helper.rb
-invoke    test_unit
-create      test/helpers/welcome_helper_test.rb
 invoke  assets
 invoke    coffee
 create      app/assets/javascripts/welcome.js.coffee
@@ -234,7 +232,7 @@ TIP: 关于路由的详细介绍，请阅读“[Rails 路由全解](/routing.htm
 Rails 提供了一个 `resources` 方法，可以声明一个符合 REST 架构的资源。创建文章资源后，`config/routes.rb` 文件的内容如下：
 
 ```ruby
-Blog::Application.routes.draw do
+Rails.application.routes.draw do
 
   resources :articles
 
@@ -245,7 +243,7 @@ end
 执行 `rake routes` 任务，会看到定义了所有标准的 REST 动作。输出结果中各列的意义稍后会说明，现在只要留意 `article` 的单复数形式，这在 Rails 中有特殊的含义。
 
 ```bash
-$ rake routes
+$ bin/rake routes
       Prefix Verb   URI Pattern                  Controller#Action
     articles GET    /articles(.:format)          articles#index
              POST   /articles(.:format)          articles#create
@@ -273,7 +271,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 产生这个错误的原因是，没有定义用来处理该请求的控制器。解决这个问题的方法很简单：创建名为 `ArticlesController` 的控制器。执行下面的命令即可：
 
 ```bash
-$ rails g controller articles
+$ bin/rails g controller articles
 ```
 
 打开刚生成的 `app/controllers/articles_controller.rb` 文件，会看到一个几乎没什么内容的控制器：
@@ -296,7 +294,9 @@ NOTE: 在 Ruby 中，方法分为 `public`、`private` 和 `protected` 三种，
 手动创建动作只需在控制器中定义一个新方法。打开 `app/controllers/articles_controller.rb` 文件，在 `ArticlesController` 类中，定义 `new` 方法，如下所示：
 
 ```ruby
-def new
+class ArticlesController < ApplicationController
+  def new
+  end
 end
 ```
 
@@ -369,7 +369,7 @@ Missing template articles/new, application/new with {locale:[:en], formats:[:htm
 这里，我们把 `:url` 选项的值设为 `articles_path` 帮助方法。要想知道这个方法有什么作用，我们要回过头再看一下 `rake routes` 的输出：
 
 ```bash
-$ rake routes
+$ bin/rake routes
       Prefix Verb   URI Pattern                  Controller#Action
     articles GET    /articles(.:format)          articles#index
              POST   /articles(.:format)          articles#create
@@ -429,7 +429,7 @@ end
 在 Rails 中，模型的名字使用单数，对应的数据表名使用复数。Rails 提供了一个生成器用来创建模型，大多数 Rails 开发者创建模型时都会使用。创建模型，请在终端里执行下面的命令：
 
 ```bash
-$ rails generate model Article title:string text:text
+$ bin/rails generate model Article title:string text:text
 ```
 
 这个命令告知 Rails，我们要创建 `Article` 模型，以及一个字符串属性 `title` 和文本属性 `text`。这两个属性会自动添加到 `articles` 数据表中，映射到 `Article` 模型。
@@ -464,7 +464,7 @@ TIP: 关于迁移的详细说明，请参阅“[Active Record 数据库迁移](/
 然后，使用 rake 命令运行迁移：
 
 ```bash
-$ rake db:migrate
+$ bin/rake db:migrate
 ```
 
 Rails 会执行迁移操作，告诉你创建了 `articles` 表。
