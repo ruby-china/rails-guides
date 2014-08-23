@@ -488,43 +488,43 @@ end
 *   `application_controller.rb`
 
 ```ruby
-    class ApplicationController < ActionController::Base
-      layout "main"
-    end
-    ```
+class ApplicationController < ActionController::Base
+  layout "main"
+end
+```
 
 *   `posts_controller.rb`
 
 ```ruby
-    class PostsController < ApplicationController
-    end
-    ```
+class PostsController < ApplicationController
+end
+```
 
 *   `special_posts_controller.rb`
 
 ```ruby
-    class SpecialPostsController < PostsController
-      layout "special"
-    end
-    ```
+class SpecialPostsController < PostsController
+  layout "special"
+end
+```
 
 *   `old_posts_controller.rb`
 
 ```ruby
-    class OldPostsController < SpecialPostsController
-      layout false
+class OldPostsController < SpecialPostsController
+  layout false
 
-      def show
-        @post = Post.find(params[:id])
-      end
+  def show
+    @post = Post.find(params[:id])
+  end
 
-      def index
-        @old_posts = Post.older
-        render layout: "old"
-      end
-      # ...
-    end
-    ```
+  def index
+    @old_posts = Post.older
+    render layout: "old"
+  end
+  # ...
+end
+```
 
 在这个程序中：
 
@@ -754,8 +754,7 @@ Rails 程序或引擎中的 JavaScript 文件可存放在三个位置：`app/ass
 
 Rails 生成的 `script` 标签如下：
 
-{:lang="html"}
-```
+```html
 <script src='/assets/main.js'></script>
 ```
 
