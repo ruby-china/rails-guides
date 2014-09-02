@@ -43,7 +43,7 @@ Person.create(name: nil).valid? # => false
 
 ### 什么时候做数据验证？
 
-在 Active Record 中对象有两种状态：一种在数据库中有对应的记录，一种没有。新建的对象（例如，使用 `new` 方法）还不属于数据库。在对象上调用 `save` 方法后，才会把对象存入相应的数据表。Active Record 使用实例方法 `new_record?` 判断对象是否已经存入数据库。加入有下面这个简单的 Active Record 类：
+在 Active Record 中对象有两种状态：一种在数据库中有对应的记录，一种没有。新建的对象（例如，使用 `new` 方法）还不属于数据库。在对象上调用 `save` 方法后，才会把对象存入相应的数据表。Active Record 使用实例方法 `new_record?` 判断对象是否已经存入数据库。假如有下面这个简单的 Active Record 类：
 
 ```ruby
 class Person < ActiveRecord::Base
