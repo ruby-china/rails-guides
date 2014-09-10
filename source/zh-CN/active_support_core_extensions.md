@@ -746,13 +746,11 @@ NOTE: 定义于 `active_support/core_ext/module/introspection.rb`.
 
 #### 限定常量名
 
-The standard methods `const_defined?`, `const_get` , and `const_set` accept
-bare constant names. Active Support extends this API to be able to pass
-relative qualified constant names.
+标准方法`const_defined?`、`const_get`和`const_set`接受裸常量名。    
+Active Support 扩展了这些API使其可以接受相对限定常量名。
 
-The new methods are `qualified_const_defined?`, `qualified_const_get`, and
-`qualified_const_set`. Their arguments are assumed to be qualified constant
-names relative to their receiver:
+新的方法名是`qualified_const_defined?`，`qualified_const_get`和`qualified_const_set`。
+它们的参数被假定为相对于其接收者的限定常量名：
 
 ```ruby
 Object.qualified_const_defined?("Math::PI")       # => true
@@ -760,7 +758,7 @@ Object.qualified_const_get("Math::PI")            # => 3.141592653589793
 Object.qualified_const_set("Math::Phi", 1.618034) # => 1.618034
 ```
 
-Arguments may be bare constant names:
+参数可以使用裸常量名：
 
 ```ruby
 Math.qualified_const_get("E") # => 2.718281828459045
@@ -771,8 +769,9 @@ These methods are analogous to their built-in counterparts. In particular,
 able to say whether you want the predicate to look in the ancestors.
 This flag is taken into account for each constant in the expression while
 walking down the path.
+这些方法与其内建的对应方法很类似。尤为值得一提的是，`qualified_constant_defined?`接收一个可选的第二参数，以此来标明你是否要在祖先链中进行查找。
 
-For example, given
+例如，假定：
 
 ```ruby
 module M
@@ -786,7 +785,7 @@ module N
 end
 ```
 
-`qualified_const_defined?` behaves this way:
+`qualified_const_defined?`会这样执行：
 
 ```ruby
 N.qualified_const_defined?("C::X", false) # => false
