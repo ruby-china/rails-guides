@@ -152,7 +152,7 @@ end
 
 要检查对象的某个属性是否合法，可以使用 `errors[:attribute]`。`errors[:attribute]` 中包含 `:attribute` 的所有错误。如果某个属性没有错误，就会返回空数组。
 
-这个方法只在数据验证之后才能使用，因为它只是用来收集错误信息的，并不会触发验证。而且，和前面介绍的 `ActiveRecord::Base#invalid?` 方法不一样，因为 `errors[:attribute]` 不会验证整个对象，值检查对象的某个属性是否出错。
+这个方法只在数据验证之后才能使用，因为它只是用来收集错误信息的，并不会触发验证。而且，和前面介绍的 `ActiveRecord::Base#invalid?` 方法不一样，因为 `errors[:attribute]` 不会验证整个对象，只检查对象的某个属性是否出错。
 
 ```ruby
 class Person < ActiveRecord::Base
