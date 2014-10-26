@@ -624,7 +624,7 @@ end
 集成测试
 -------
 
-继承测试用来测试多个控制器之间的交互，一般用来测试程序中重要的工作流程。
+集成测试用来测试多个控制器之间的交互，一般用来测试程序中重要的工作流程。
 
 与单元测试和功能测试不同，集成测试必须单独生成，保存在 `test/integration` 文件夹中。Rails 提供了一个生成器用来生成集成测试骨架。
 
@@ -754,7 +754,7 @@ end
 
 | 任务                    | 说明      |
 |-------------------------|-----------|
-| `rake test`             | 运行所有单元测试，功能测试和继承测试。还可以直接运行 `rake`，因为默认的 Rake 任务就是运行所有测试。 |
+| `rake test`             | 运行所有单元测试，功能测试和集成测试。还可以直接运行 `rake`，因为默认的 Rake 任务就是运行所有测试。 |
 | `rake test:controllers` | 运行 `test/controllers` 文件夹中的所有控制器测试 |
 | `rake test:functionals` | 运行文件夹 `test/controllers`、`test/mailers` 和 `test/functional` 中的所有功能测试 |
 | `rake test:helpers`     | 运行 `test/helpers` 文件夹中的所有帮助方法测试 |
