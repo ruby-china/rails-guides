@@ -274,4 +274,4 @@ end
 
 Rails 会跟踪哪些迁移已经应用到数据库中，还提供了回滚功能。创建数据表要执行 `rake db:migrate` 命令；回滚操作要执行 `rake db:rollback` 命令。
 
-注意，上面的代码和具体的数据库种类无关，可用于 MySQL、PostgreSQL、Oracle 等数据库。关于迁移的详细介绍，参阅 [Active Record 迁移](migrations.html)一文。
+注意，上面的代码和具体的数据库种类无关，可用于 MySQL、PostgreSQL、Oracle 等数据库。关于迁移的详细介绍，参阅 [Active Record 迁移](active_record_migrations.html)一文。
