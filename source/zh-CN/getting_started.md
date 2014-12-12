@@ -382,7 +382,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
         root GET    /                            welcome#index
 ```
 
-`articles_path` 帮助方法告诉 Rails，对应的地址是 `/articels`，默认情况下，这个表单会向这个路由发起 `POST` 请求。这个路由对应于 `ArticlesController` 控制器的 `create` 动作。
+`articles_path` 帮助方法告诉 Rails，对应的地址是 `/articles`，默认情况下，这个表单会向这个路由发起 `POST` 请求。这个路由对应于 `ArticlesController` 控制器的 `create` 动作。
 
 表单写好了，路由也定义了，现在可以填写表单，然后点击提交按钮新建文章了。请实际操作一下。提交表单后，会看到一个熟悉的错误：
 
