@@ -162,7 +162,7 @@ Active Support provides `duplicable?` to programmatically query an object about 
 false.duplicable? # => false
 ```
 
-By definition all objects are `duplicable?` except `nil`, `false`, `true`, symbols, numbers, class, and module objects.
+By definition all objects are `duplicable?` except `nil`, `false`, `true`, symbols, numbers, class, module, and method objects.
 
 WARNING: Any class can disallow duplication by removing `dup` and `clone` or raising exceptions from them. Thus only `rescue` can tell whether a given arbitrary object is duplicable. `duplicable?` depends on the hard-coded list above, but it is much faster than `rescue`. Use it only if you know the hard-coded list is enough in your use case.
 
@@ -1011,7 +1011,7 @@ self.default_params = {
 }.freeze
 ```
 
-They can be also accessed and overridden at the instance level.
+They can also be accessed and overridden at the instance level.
 
 ```ruby
 A.x = 1
@@ -1268,7 +1268,7 @@ The method `squish` strips leading and trailing whitespace, and substitutes runs
 
 There's also the destructive version `String#squish!`.
 
-Note that it handles both ASCII and Unicode whitespace like mongolian vowel separator (U+180E).
+Note that it handles both ASCII and Unicode whitespace.
 
 NOTE: Defined in `active_support/core_ext/string/filters.rb`.
 
@@ -1307,6 +1307,38 @@ The option `:separator` can be a regexp:
 ```
 
 In above examples "dear" gets cut first, but then `:separator` prevents it.
+
+NOTE: Defined in `active_support/core_ext/string/filters.rb`.
+
+### `truncate_words`
+
+The method `truncate_words` returns a copy of its receiver truncated after a given number of words:
+
+```ruby
+"Oh dear! Oh dear! I shall be late!".truncate_words(4)
+# => "Oh dear! Oh dear!..."
+```
+
+Ellipsis can be customized with the `:omission` option:
+
+```ruby
+"Oh dear! Oh dear! I shall be late!".truncate_words(4, omission: '&hellip;')
+# => "Oh dear! Oh dear!&hellip;"
+```
+
+Pass a `:separator` to truncate the string at a natural break:
+
+```ruby
+"Oh dear! Oh dear! I shall be late!".truncate_words(3, separator: '!')
+# => "Oh dear! Oh dear! I shall be late..."
+```
+
+The option `:separator` can be a regexp:
+
+```ruby
+"Oh dear! Oh dear! I shall be late!".truncate_words(4, separator: /\s/)
+# => "Oh dear! Oh dear!..."
+```
 
 NOTE: Defined in `active_support/core_ext/string/filters.rb`.
 
@@ -1415,7 +1447,7 @@ Returns the substring of the string starting at position `position`:
 "hello".from(0)  # => "hello"
 "hello".from(2)  # => "llo"
 "hello".from(-2) # => "lo"
-"hello".from(10) # => "" if < 1.9, nil in 1.9
+"hello".from(10) # => nil
 ```
 
 NOTE: Defined in `active_support/core_ext/string/access.rb`.
@@ -1801,16 +1833,14 @@ attribute names:
 
 ```ruby
 def full_messages
-  full_messages = []
+  map { |attribute, message| full_message(attribute, message) }
+end
 
-  each do |attribute, messages|
-    ...
-    attr_name = attribute.to_s.gsub('.', '_').humanize
-    attr_name = @base.class.human_attribute_name(attribute, default: attr_name)
-    ...
-  end
-
-  full_messages
+def full_message
+  ...
+  attr_name = attribute.to_s.tr('.', '_').humanize
+  attr_name = @base.class.human_attribute_name(attribute, default: attr_name)
+  ...
 end
 ```
 
@@ -1919,24 +1949,6 @@ as well as adding or subtracting their results from a Time object. For example:
 # equivalent to Time.current.advance(months: 4, years: 5)
 (4.months + 5.years).from_now
 ```
-
-While these methods provide precise calculation when used as in the examples above, care
-should be taken to note that this is not true if the result of `months', `years', etc is
-converted before use:
-
-```ruby
-# equivalent to 30.days.to_i.from_now
-1.month.to_i.from_now
-
-# equivalent to 365.25.days.to_f.from_now
-1.year.to_f.from_now
-```
-
-In such cases, Ruby's core [Date](http://ruby-doc.org/stdlib/libdoc/date/rdoc/Date.html) and
-[Time](http://ruby-doc.org/stdlib/libdoc/time/rdoc/Time.html) should be used for precision
-date and time arithmetic.
-
-NOTE: Defined in `active_support/core_ext/numeric/time.rb`.
 
 ### Formatting
 
@@ -2861,6 +2873,20 @@ The method `assert_valid_keys` receives an arbitrary number of arguments, and ch
 Active Record does not accept unknown options when building associations, for example. It implements that control via `assert_valid_keys`.
 
 NOTE: Defined in `active_support/core_ext/hash/keys.rb`.
+
+### Working with Values
+
+#### `transform_values` && `transform_values!`
+
+The method `transform_values` accepts a block and returns a hash that has applied the block operations to each of the values in the receiver.
+
+```ruby
+{ nil => nil, 1 => 1, :x => :a }.transform_values { |value| value.to_s.upcase }
+# => {nil=>"", 1=>"1", :x=>"A"}
+```
+There's also the bang variant `transform_values!` that applies the block operations to values in the very receiver.
+
+NOTE: Defined in `active_support/core_text/hash/transform_values.rb`.
 
 ### Slicing
 

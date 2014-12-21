@@ -101,13 +101,13 @@ class CreateOrders < ActiveRecord::Migration
   def change
     create_table :customers do |t|
       t.string :name
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :orders do |t|
       t.belongs_to :customer, index: true
       t.datetime :order_date
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end
@@ -132,13 +132,13 @@ class CreateSuppliers < ActiveRecord::Migration
   def change
     create_table :suppliers do |t|
       t.string :name
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :accounts do |t|
       t.belongs_to :supplier, index: true
       t.string :account_number
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end
@@ -165,13 +165,13 @@ class CreateCustomers < ActiveRecord::Migration
   def change
     create_table :customers do |t|
       t.string :name
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :orders do |t|
       t.belongs_to :customer, index:true
       t.datetime :order_date
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end
@@ -207,19 +207,19 @@ class CreateAppointments < ActiveRecord::Migration
   def change
     create_table :physicians do |t|
       t.string :name
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :patients do |t|
       t.string :name
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :appointments do |t|
       t.belongs_to :physician, index: true
       t.belongs_to :patient, index: true
       t.datetime :appointment_date
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end
@@ -291,19 +291,19 @@ class CreateAccountHistories < ActiveRecord::Migration
   def change
     create_table :suppliers do |t|
       t.string :name
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :accounts do |t|
       t.belongs_to :supplier, index: true
       t.string :account_number
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :account_histories do |t|
       t.belongs_to :account, index: true
       t.integer :credit_rating
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end
@@ -332,12 +332,12 @@ class CreateAssembliesAndParts < ActiveRecord::Migration
   def change
     create_table :assemblies do |t|
       t.string :name
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :parts do |t|
       t.string :part_number
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :assemblies_parts, id: false do |t|
@@ -371,13 +371,13 @@ class CreateSuppliers < ActiveRecord::Migration
   def change
     create_table :suppliers do |t|
       t.string  :name
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :accounts do |t|
       t.integer :supplier_id
       t.string  :account_number
-      t.timestamps
+      t.timestamps null: false
     end
 
     add_index :accounts, :supplier_id
@@ -455,7 +455,7 @@ class CreatePictures < ActiveRecord::Migration
       t.string  :name
       t.integer :imageable_id
       t.string  :imageable_type
-      t.timestamps
+      t.timestamps null: false
     end
 
     add_index :pictures, :imageable_id
@@ -471,7 +471,7 @@ class CreatePictures < ActiveRecord::Migration
     create_table :pictures do |t|
       t.string :name
       t.references :imageable, polymorphic: true, index: true
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end
@@ -501,7 +501,7 @@ class CreateEmployees < ActiveRecord::Migration
   def change
     create_table :employees do |t|
       t.references :manager, index: true
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end
@@ -756,7 +756,7 @@ class Order < ActiveRecord::Base
 end
 ```
 
-Each instance of the order model will have these methods:
+Each instance of the `Order` model will have these methods:
 
 ```ruby
 customer
@@ -879,9 +879,11 @@ class Order < ActiveRecord::Base
   belongs_to :customer, counter_cache: :count_of_orders
 end
 class Customer < ActiveRecord::Base
-  has_many :orders
+  has_many :orders, counter_cache: :count_of_orders
 end
 ```
+
+NOTE: You only need to specify the :counter_cache option on the "has_many side" of the association when using a custom name for the counter cache.
 
 Counter cache columns are added to the containing model's list of read-only attributes through `attr_readonly`.
 
@@ -1342,16 +1344,16 @@ class Customer < ActiveRecord::Base
 end
 ```
 
-Each instance of the customer model will have these methods:
+Each instance of the `Customer` model will have these methods:
 
 ```ruby
 orders(force_reload = false)
 orders<<(object, ...)
 orders.delete(object, ...)
 orders.destroy(object, ...)
-orders=objects
+orders=(objects)
 order_ids
-order_ids=ids
+order_ids=(ids)
 orders.clear
 orders.empty?
 orders.size
@@ -1495,6 +1497,7 @@ The `has_many` association supports these options:
 * `:as`
 * `:autosave`
 * `:class_name`
+* `:counter_cache`
 * `:dependent`
 * `:foreign_key`
 * `:inverse_of`
@@ -1522,6 +1525,9 @@ class Customer < ActiveRecord::Base
 end
 ```
 
+##### `:counter_cache`
+This option can be used to configure a custom named `:counter_cache`. You only need this option when you customized the name of your `:counter_cache` on the [belongs_to association](#options-for-belongs-to).
+
 ##### `:dependent`
 
 Controls what happens to the associated objects when their owner is destroyed:
@@ -1531,8 +1537,6 @@ Controls what happens to the associated objects when their owner is destroyed:
 * `:nullify` causes the foreign keys to be set to `NULL`. Callbacks are not executed.
 * `:restrict_with_exception` causes an exception to be raised if there are any associated records
 * `:restrict_with_error` causes an error to be added to the owner if there are any associated objects
-
-NOTE: This option is ignored when you use the `:through` option on the association.
 
 ##### `:foreign_key`
 
@@ -1831,16 +1835,16 @@ class Part < ActiveRecord::Base
 end
 ```
 
-Each instance of the part model will have these methods:
+Each instance of the `Part` model will have these methods:
 
 ```ruby
 assemblies(force_reload = false)
 assemblies<<(object, ...)
 assemblies.delete(object, ...)
 assemblies.destroy(object, ...)
-assemblies=objects
+assemblies=(objects)
 assembly_ids
-assembly_ids=ids
+assembly_ids=(ids)
 assemblies.clear
 assemblies.empty?
 assemblies.size

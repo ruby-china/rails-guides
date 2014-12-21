@@ -39,7 +39,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string :name
       t.text :description
 
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end
@@ -285,7 +285,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string :name
       t.text :description
 
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end
@@ -452,6 +452,8 @@ number of digits after the decimal point.
 are using a dynamic value (such as a date), the default will only be calculated
 the first time (i.e. on the date the migration is applied).
 * `index`        Adds an index for the column.
+* `required`     Adds `required: true` for `belongs_to` associations and
+`null: false` to the column in the migration.
 
 Some adapters may support additional options; see the adapter specific API docs
 for further information.
@@ -466,7 +468,7 @@ add_foreign_key :articles, :authors
 ```
 
 This adds a new foreign key to the `author_id` column of the `articles`
-table. The key references the `id` column of the `articles` table. If the
+table. The key references the `id` column of the `authors` table. If the
 column names can not be derived from the table names, you can use the
 `:column` and `:primary_key` options.
 
@@ -824,7 +826,7 @@ class CreateProducts < ActiveRecord::Migration
       create_table :products do |t|
         t.string :name
         t.text :description
-        t.timestamps
+        t.timestamps null: false
       end
     end
 

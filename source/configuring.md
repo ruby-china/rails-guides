@@ -62,7 +62,7 @@ These configuration methods are to be called on a `Rails::Railtie` object, such 
 
 * `config.autoload_paths` accepts an array of paths from which Rails will autoload constants. Default is all directories under `app`.
 
-* `config.cache_classes` controls whether or not application classes and modules should be reloaded on each request. Defaults to false in development mode, and true in test and production modes. Can also be enabled with `threadsafe!`.
+* `config.cache_classes` controls whether or not application classes and modules should be reloaded on each request. Defaults to false in development mode, and true in test and production modes.
 
 * `config.action_view.cache_template_loading` controls whether or not templates should be reloaded on each request. Defaults to whatever is set for `config.cache_classes`.
 
@@ -86,7 +86,7 @@ application. Accepts a valid week day symbol (e.g. `:monday`).
     end
     ```
 
-* `config.dependency_loading` is a flag that allows you to disable constant autoloading setting it to false. It only has effect if `config.cache_classes` is true, which it is by default in production mode. This flag is set to false by `config.threadsafe!`.
+* `config.dependency_loading` is a flag that allows you to disable constant autoloading setting it to false. It only has effect if `config.cache_classes` is true, which it is by default in production mode.
 
 * `config.eager_load` when true, eager loads all registered `config.eager_load_namespaces`. This includes your application, engines, Rails frameworks and any other registered namespace.
 
@@ -108,7 +108,7 @@ numbers. New applications filter out passwords by adding the following `config.f
 
 * `config.log_formatter` defines the formatter of the Rails logger. This option defaults to an instance of `ActiveSupport::Logger::SimpleFormatter` for all modes except production, where it defaults to `Logger::Formatter`.
 
-* `config.log_level` defines the verbosity of the Rails logger. This option defaults to `:debug` for all modes except production, where it defaults to `:info`.
+* `config.log_level` defines the verbosity of the Rails logger. This option defaults to `:debug` for all environments.
 
 * `config.log_tags` accepts a list of methods that the `request` object responds to. This makes it easy to tag log lines with debug information like subdomain and request id - both very helpful in debugging multi-user production applications.
 
@@ -120,7 +120,7 @@ numbers. New applications filter out passwords by adding the following `config.f
 
 * `secrets.secret_key_base` is used for specifying a key which allows sessions for the application to be verified against a known secure key to prevent tampering. Applications get `secrets.secret_key_base` initialized to a random key present in `config/secrets.yml`.
 
-* `config.serve_static_assets` configures Rails itself to serve static assets. Defaults to true, but in the production environment is turned off as the server software (e.g. NGINX or Apache) used to run the application should serve static assets instead. Unlike the default setting set this to true when running (absolutely not recommended!) or testing your app in production mode using WEBrick. Otherwise you won't be able use page caching and requests for files that exist regularly under the public directory will anyway hit your Rails app.
+* `config.serve_static_files` configures Rails to serve static files. This option defaults to true, but in the production environment it is set to false because the server software (e.g. NGINX or Apache) used to run the application should serve static files instead. If you are running or testing your app in production mode using WEBrick (it is not recommended to use WEBrick in production) set the option to true. Otherwise, you won't be able use page caching and requests for files that exist under the public directory.
 
 * `config.session_store` is usually set up in `config/initializers/session_store.rb` and specifies what class to use to store the session. Possible values are `:cookie_store` which is the default, `:mem_cache_store`, and `:disabled`. The last one tells Rails not to deal with sessions. Custom session stores can also be specified:
 
@@ -153,7 +153,7 @@ pipeline is enabled. It is set to true by default.
 
 * `config.assets.manifest` defines the full path to be used for the asset precompiler's manifest file. Defaults to a file named `manifest-<random>.json` in the `config.assets.prefix` directory within the public folder.
 
-* `config.assets.digest` enables the use of MD5 fingerprints in asset names. Set to `true` by default in `production.rb`.
+* `config.assets.digest` enables the use of MD5 fingerprints in asset names. Set to `true` by default in `production.rb` and `development.rb`.
 
 * `config.assets.debug` disables the concatenation and compression of assets. Set to `true` by default in `development.rb`.
 
@@ -214,7 +214,7 @@ Every Rails application comes with a standard set of middleware which it uses in
 * `ActionDispatch::Flash` sets up the `flash` keys. Only available if `config.action_controller.session_store` is set to a value.
 * `ActionDispatch::ParamsParser` parses out parameters from the request into `params`.
 * `Rack::MethodOverride` allows the method to be overridden if `params[:_method]` is set. This is the middleware which supports the PATCH, PUT, and DELETE HTTP method types.
-* `ActionDispatch::Head` converts HEAD requests to GET requests and serves them as so.
+* `Rack::Head` converts HEAD requests to GET requests and serves them as so.
 
 Besides these usual middleware, you can add your own by using the `config.middleware.use` method:
 
@@ -225,13 +225,13 @@ config.middleware.use Magical::Unicorns
 This will put the `Magical::Unicorns` middleware on the end of the stack. You can use `insert_before` if you wish to add a middleware before another.
 
 ```ruby
-config.middleware.insert_before ActionDispatch::Head, Magical::Unicorns
+config.middleware.insert_before Rack::Head, Magical::Unicorns
 ```
 
 There's also `insert_after` which will insert a middleware after another:
 
 ```ruby
-config.middleware.insert_after ActionDispatch::Head, Magical::Unicorns
+config.middleware.insert_after Rack::Head, Magical::Unicorns
 ```
 
 Middlewares can also be completely swapped out and replaced with others:
@@ -364,6 +364,30 @@ encrypted cookies salt value. Defaults to `'signed encrypted cookie'`.
   method should be performed on the parameters. See [Security Guide](security.html#unsafe-query-generation)
   for more information. It defaults to true.
 
+* `config.action_dispatch.rescue_responses` configures what exceptions are assigned to an HTTP status. It accepts a hash and you can specify pairs of exception/status. By default, this is defined as:
+
+  ```ruby
+  config.action_dispatch.rescue_responses = {
+    'ActionController::RoutingError'              => :not_found,
+    'AbstractController::ActionNotFound'          => :not_found,
+    'ActionController::MethodNotAllowed'          => :method_not_allowed,
+    'ActionController::UnknownHttpMethod'         => :method_not_allowed,
+    'ActionController::NotImplemented'            => :not_implemented,
+    'ActionController::UnknownFormat'             => :not_acceptable,
+    'ActionController::InvalidAuthenticityToken'  => :unprocessable_entity,
+    'ActionController::InvalidCrossOriginRequest' => :unprocessable_entity,
+    'ActionDispatch::ParamsParser::ParseError'    => :bad_request,
+    'ActionController::BadRequest'                => :bad_request,
+    'ActionController::ParameterMissing'          => :bad_request,
+    'ActiveRecord::RecordNotFound'                => :not_found,
+    'ActiveRecord::StaleObjectError'              => :conflict,
+    'ActiveRecord::RecordInvalid'                 => :unprocessable_entity,
+    'ActiveRecord::RecordNotSaved'                => :unprocessable_entity
+  }
+  ```
+
+  Any exceptions that are not configured will be mapped to 500 Internal Server Error.
+
 * `ActionDispatch::Callbacks.before` takes a block of code to run before the request.
 
 * `ActionDispatch::Callbacks.to_prepare` takes a block to run after `ActionDispatch::Callbacks.before`, but before the request. Runs for every request in `development` mode, but only once for `production` or environments with `cache_classes` set to `true`.
@@ -470,6 +494,8 @@ There are a number of settings available on `config.action_mailer`:
 There are a few configuration options available in Active Support:
 
 * `config.active_support.bare` enables or disables the loading of `active_support/all` when booting Rails. Defaults to `nil`, which means `active_support/all` is loaded.
+
+* `config.active_support.test_order` sets the order that test cases are executed. Possible values are `:sorted` and `:random`. Currently defaults to `:sorted`. In Rails 5.0, the default will be changed to `:random` instead.
 
 * `config.active_support.escape_html_entities_in_json` enables or disables the escaping of HTML entities in JSON serialization. Defaults to `false`.
 

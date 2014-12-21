@@ -31,7 +31,7 @@ Object Relational Mapping system.
 in his book _Patterns of Enterprise Application Architecture_. In
 Active Record, objects carry both persistent data and behavior which
 operates on that data. Active Record takes the opinion that ensuring
-data access logic is part of the object will educate users of that
+data access logic as part of the object will educate users of that
 object on how to write to and read from the database.
 
 ### Object Relational Mapping
@@ -116,7 +116,7 @@ to Active Record instances:
   locking](http://api.rubyonrails.org/classes/ActiveRecord/Locking.html) to
   a model.
 * `type` - Specifies that the model uses [Single Table
-  Inheritance](http://api.rubyonrails.org/classes/ActiveRecord/Base.html#label-Single+table+inheritance).
+  Inheritance](http://api.rubyonrails.org/classes/ActiveRecord/Base.html#class-ActiveRecord::Base-label-Single+table+inheritance).
 * `(association_name)_type` - Stores the type for
   [polymorphic associations](association_basics.html#polymorphic-associations).
 * `(table_name)_count` - Used to cache the number of belonging objects on
@@ -358,7 +358,7 @@ class CreatePublications < ActiveRecord::Migration
       t.string :publisher_type
       t.boolean :single_issue
 
-      t.timestamps
+      t.timestamps null: false
     end
     add_index :publications, :publication_type_id
   end

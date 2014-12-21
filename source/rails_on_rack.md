@@ -99,6 +99,10 @@ To find out more about different `rackup` options:
 $ rackup --help
 ```
 
+### Development and auto-reloading
+
+Middlewares are loaded once and are not monitored for changes. You will have to restart the server for changes to be reflected in the running application.
+
 Action Dispatcher Middleware Stack
 ----------------------------------
 
@@ -229,7 +233,7 @@ Much of Action Controller's functionality is implemented as Middlewares. The fol
 
 **`ActionDispatch::Static`**
 
-* Used to serve static assets. Disabled if `config.serve_static_assets` is `false`.
+* Used to serve static files. Disabled if `config.serve_static_files` is `false`.
 
 **`Rack::Lock`**
 
@@ -273,7 +277,7 @@ Much of Action Controller's functionality is implemented as Middlewares. The fol
 
 **`ActionDispatch::Callbacks`**
 
-* Runs the prepare callbacks before serving the request.
+* Provides callbacks to be executed before and after dispatching the request.
 
 **`ActiveRecord::Migration::CheckPending`**
 
@@ -303,7 +307,7 @@ Much of Action Controller's functionality is implemented as Middlewares. The fol
 
 * Parses out parameters from the request into `params`.
 
-**`ActionDispatch::Head`**
+**`Rack::Head`**
 
 * Converts HEAD requests to `GET` requests and serves them as so.
 

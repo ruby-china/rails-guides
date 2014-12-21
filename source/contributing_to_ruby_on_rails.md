@@ -24,7 +24,7 @@ NOTE: Bugs in the most recent released version of Ruby on Rails are likely to ge
 
 ### Creating a Bug Report
 
-If you've found a problem in Ruby on Rails which is not a security risk, do a search in GitHub under [Issues](https://github.com/rails/rails/issues) in case it has already been reported. If you do not find any issue addressing it you may proceed to [open a new one](https://github.com/rails/rails/issues/new). (See the next section for reporting security issues.)
+If you've found a problem in Ruby on Rails which is not a security risk, do a search in GitHub under [Issues](https://github.com/rails/rails/issues) in case it has already been reported. If you are unable to find any open GitHub issues addressing the problem you found, your next step will be to [open a new one](https://github.com/rails/rails/issues/new). (See the next section for reporting security issues.)
 
 Your issue report should contain a title and a clear description of the issue at the bare minimum. You should include as much relevant information as possible and should at least post a code sample that demonstrates the issue. It would be even better if you could include a unit test that shows how the expected behavior is not occurring. Your goal should be to make it easy for yourself - and others - to replicate the bug and figure out a fix.
 
@@ -193,7 +193,7 @@ Now get busy and add/edit code. You're on your branch now, so you can write what
 * Update the (surrounding) documentation, examples elsewhere, and the guides: whatever is affected by your contribution.
 
 
-TIP: Changes that are cosmetic in nature and do not add anything substantial to the stability, functionality, or testability of Rails will generally not be accepted.
+TIP: Changes that are cosmetic in nature and do not add anything substantial to the stability, functionality, or testability of Rails will generally not be accepted (read more about [our rationales behind this decision](https://github.com/rails/rails/pull/13771#issuecomment-32746700)).
 
 #### Follow the Coding Conventions
 
@@ -205,7 +205,7 @@ Rails follows a simple set of coding style conventions:
 * Use Ruby >= 1.9 syntax for hashes. Prefer `{ a: :b }` over `{ :a => :b }`.
 * Prefer `&&`/`||` over `and`/`or`.
 * Prefer class << self over self.method for class methods.
-* Use `MyClass.my_method(my_arg)` not `my_method( my_arg )` or `my_method my_arg`.
+* Use `my_method(my_arg)` not `my_method( my_arg )` or `my_method my_arg`.
 * Use `a = b` and not `a=b`.
 * Use assert_not methods instead of refute.
 * Prefer `method { do_stuff }` instead of `method{do_stuff}` for single-line blocks.
@@ -558,6 +558,23 @@ $ git push origin my_pull_request -f
 
 You should be able to refresh the pull request on GitHub and see that it has
 been updated.
+
+#### Updating pull request
+
+Sometimes you will be asked to make some changes to the code you have
+already committed. This can include amending existing commits. In this
+case Git will not allow you to push the changes as the pushed branch
+and local branch do not match. Instead of opening a new pull request,
+you can force push to your branch on GitHub as described earlier in
+squashing commits section:
+
+```bash
+$ git push origin my_pull_request -f
+```
+
+This will update the branch and pull request on GitHub with your new code. Do
+note that using force push may result in commits being lost on the remote branch; use it with care.
+
 
 ### Older Versions of Ruby on Rails
 

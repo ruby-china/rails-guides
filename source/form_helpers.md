@@ -96,7 +96,15 @@ form_tag({controller: "people", action: "search"}, method: "get", class: "nifty_
 
 ### Helpers for Generating Form Elements
 
-Rails provides a series of helpers for generating form elements such as checkboxes, text fields, and radio buttons. These basic helpers, with names ending in "_tag" (such as `text_field_tag` and `check_box_tag`), generate just a single `<input>` element. The first parameter to these is always the name of the input. When the form is submitted, the name will be passed along with the form data, and will make its way to the `params` hash in the controller with the value entered by the user for that field. For example, if the form contains `<%= text_field_tag(:query) %>`, then you would be able to get the value of this field in the controller with `params[:query]`.
+Rails provides a series of helpers for generating form elements such as
+checkboxes, text fields, and radio buttons. These basic helpers, with names
+ending in `_tag` (such as `text_field_tag` and `check_box_tag`), generate just a
+single `<input>` element. The first parameter to these is always the name of the
+input. When the form is submitted, the name will be passed along with the form
+data, and will make its way to the `params` hash in the controller with the
+value entered by the user for that field. For example, if the form contains `<%=
+text_field_tag(:query) %>`, then you would be able to get the value of this
+field in the controller with `params[:query]`.
 
 When naming inputs, Rails uses certain conventions that make it possible to submit parameters with non-scalar values such as arrays or hashes, which will also be accessible in `params`. You can read more about them in [chapter 7 of this guide](#understanding-parameter-naming-conventions). For details on the precise usage of these helpers, please refer to the [API documentation](http://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html).
 
@@ -506,6 +514,12 @@ As the name implies, this only generates option tags. To generate a working sele
 <%= collection_select(:person, :city_id, City.all, :id, :name) %>
 ```
 
+As with other helpers, if you were to use the `collection_select` helper on a form builder scoped to the `@person` object, the syntax would be:
+
+```erb
+<%= f.collection_select(:city_id, City.all, :id, :name) %>
+```
+
 To recap, `options_from_collection_for_select` is to `collection_select` what `options_for_select` is to `select`.
 
 NOTE: Pairs passed to `options_for_select` should have the name first and the id second, however with `options_from_collection_for_select` the first argument is the value method and the second the text method.
@@ -623,7 +637,7 @@ Rails provides the usual pair of helpers: the barebones `file_field_tag` and the
 
 ### What Gets Uploaded
 
-The object in the `params` hash is an instance of a subclass of `IO`. Depending on the size of the uploaded file it may in fact be a StringIO or an instance of `File` backed by a temporary file. In both cases the object will have an `original_filename` attribute containing the name the file had on the user's computer and a `content_type` attribute containing the MIME type of the uploaded file. The following snippet saves the uploaded content in `#{Rails.root}/public/uploads` under the same name as the original file (assuming the form was the one in the previous example).
+The object in the `params` hash is an instance of a subclass of `IO`. Depending on the size of the uploaded file it may in fact be a `StringIO` or an instance of `File` backed by a temporary file. In both cases the object will have an `original_filename` attribute containing the name the file had on the user's computer and a `content_type` attribute containing the MIME type of the uploaded file. The following snippet saves the uploaded content in `#{Rails.root}/public/uploads` under the same name as the original file (assuming the form was the one in the previous example).
 
 ```ruby
 def upload

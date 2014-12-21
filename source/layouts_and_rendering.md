@@ -189,7 +189,7 @@ render file: "/u/apps/warehouse_app/current/app/views/products/show"
 
 The `:file` option takes an absolute file-system path. Of course, you need to have rights to the view that you're using to render the content.
 
-NOTE: By default, the file is rendered without using the current layout. If you want Rails to put the file into the current layout, you need to add the `layout: true` option.
+NOTE: By default, the file is rendered using the current layout.
 
 TIP: If you're running Rails on Microsoft Windows, you should use the `:file` option to render a file, because Windows filenames do not have the same format as Unix filenames.
 
@@ -904,7 +904,10 @@ You can also specify multiple videos to play by passing an array of videos to th
 This will produce:
 
 ```erb
-<video><source src="/videos/trailer.ogg" /><source src="/videos/trailer.flv" /></video>
+<video>
+  <source src="/videos/trailer.ogg">
+  <source src="/videos/movie.ogg">
+</video>
 ```
 
 #### Linking to Audio Files with the `audio_tag`

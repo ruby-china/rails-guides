@@ -29,11 +29,13 @@ Testing support was woven into the Rails fabric from the beginning. It wasn't an
 
 By default, every Rails application has three environments: development, test, and production. The database for each one of them is configured in `config/database.yml`.
 
-A dedicated test database allows you to set up and interact with test data in isolation. Tests can mangle test data with confidence, that won't touch the data in the development or production databases.
+A dedicated test database allows you to set up and interact with test data in isolation. This way your tests can mangle test data with confidence, without worrying about the data in the development or production databases.
+
+Also, each environment's configuration can be modified similarly. In this case, we can modify our test environment by changing the options found in `config/environments/test.rb`.
 
 ### Rails Sets up for Testing from the Word Go
 
-Rails creates a `test` folder for you as soon as you create a Rails project using `rails new` _application_name_. If you list the contents of this folder then you shall see:
+Rails creates a `test` directory for you as soon as you create a Rails project using `rails new` _application_name_. If you list the contents of this directory then you shall see:
 
 ```bash
 $ ls -F test
@@ -41,9 +43,9 @@ controllers/    helpers/        mailers/        test_helper.rb
 fixtures/       integration/    models/
 ```
 
-The `models` directory is meant to hold tests for your models, the `controllers` directory is meant to hold tests for your controllers and the `integration` directory is meant to hold tests that involve any number of controllers interacting.
+The `models` directory is meant to hold tests for your models, the `controllers` directory is meant to hold tests for your controllers and the `integration` directory is meant to hold tests that involve any number of controllers interacting. There is also a directory for testing your mailers and one for testing view helpers.
 
-Fixtures are a way of organizing test data; they reside in the `fixtures` folder.
+Fixtures are a way of organizing test data; they reside in the `fixtures` directory.
 
 The `test_helper.rb` file holds the default configuration for your tests.
 
@@ -51,7 +53,7 @@ The `test_helper.rb` file holds the default configuration for your tests.
 
 For good tests, you'll need to give some thought to setting up test data.
 In Rails, you can handle this by defining and customizing fixtures.
-You can find comprehensive documentation in the [fixture api documentation](http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
+You can find comprehensive documentation in the [Fixtures API documentation](http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
 
 #### What Are Fixtures?
 
@@ -61,7 +63,7 @@ You'll find fixtures under your `test/fixtures` directory. When you run `rails g
 
 #### YAML
 
-YAML-formatted fixtures are a very human-friendly way to describe your sample data. These types of fixtures have the **.yml** file extension (as in `users.yml`).
+YAML-formatted fixtures are a human-friendly way to describe your sample data. These types of fixtures have the **.yml** file extension (as in `users.yml`).
 
 Here's a sample YAML fixture file:
 
@@ -78,11 +80,11 @@ steve:
   profession: guy with keyboard
 ```
 
-Each fixture is given a name followed by an indented list of colon-separated key/value pairs. Records are typically separated by a blank space. You can place comments in a fixture file by using the # character in the first column. Keys which resemble YAML keywords such as 'yes' and 'no' are quoted so that the YAML Parser correctly interprets them.
+Each fixture is given a name followed by an indented list of colon-separated key/value pairs. Records are typically separated by a blank space. You can place comments in a fixture file by using the # character in the first column.
 
 If you are working with [associations](/association_basics.html), you can simply
 define a reference node between two different fixtures. Here's an example with
-a belongs_to/has_many association:
+a `belongs_to`/`has_many` association:
 
 ```yaml
 # In fixtures/categories.yml
@@ -96,11 +98,9 @@ one:
   category: about
 ```
 
-Note: For associations to reference one another by name, you cannot specify the `id:`
- attribute on the fixtures. Rails will auto assign a primary key to be consistent between
- runs. If you manually specify an `id:` attribute, this behavior will not work. For more
-  information on this association behavior please read the
-  [fixture api documentation](http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
+Notice the `category` key of the `one` article found in `fixtures/articles.yml` has a value of `about`. This tells Rails to load the category `about` found in `fixtures/categories.yml`.
+
+NOTE: For associations to reference one another by name, you cannot specify the `id:` attribute on the associated fixtures. Rails will auto assign a primary key to be consistent between runs. For more information on this association behavior please read the [Fixtures API documentation](http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html).
 
 #### ERB'in It Up
 
@@ -116,15 +116,17 @@ user_<%= n %>:
 
 #### Fixtures in Action
 
-Rails by default automatically loads all fixtures from the `test/fixtures` folder for your models and controllers test. Loading involves three steps:
+Rails by default automatically loads all fixtures from the `test/fixtures` directory for your models and controllers test. Loading involves three steps:
 
 * Remove any existing data from the table corresponding to the fixture
 * Load the fixture data into the table
-* Dump the fixture data into a variable in case you want to access it directly
+* Dump the fixture data into a method in case you want to access it directly
+
+TIP: In order to remove existing data from the database, Rails tries to disable referential integrity triggers (like foreign keys and check constraints). If you are getting annoying permission errors on running tests, make sure the database user has privilege to disable these triggers in testing environment. (In PostgreSQL, only superusers can disable all triggers. Read more about PostgreSQL permissions [here](http://blog.endpoint.com/2012/10/postgres-system-triggers-error.html))
 
 #### Fixtures are Active Record objects
 
-Fixtures are instances of Active Record. As mentioned in point #3 above, you can access the object directly because it is automatically setup as a local variable of the test case. For example:
+Fixtures are instances of Active Record. As mentioned in point #3 above, you can access the object directly because it is automatically available as a method who's scope is local of the test case. For example:
 
 ```ruby
 # this will return the User object for the fixture named david
@@ -140,13 +142,11 @@ email(david.girlfriend.email, david.location_tonight)
 Unit Testing your Models
 ------------------------
 
-In Rails, models tests are what you write to test your models.
+In Rails, unit tests are what you write to test your models.
 
-For this guide we will be using Rails _scaffolding_. It will create the model, a migration, controller and views for the new resource in a single operation. It will also create a full test suite following Rails best practices. We will be using examples from this generated code and will be supplementing it with additional examples where necessary.
+For this guide we will be using the application we built in the [Getting Started with Rails](getting_started.html) guide.
 
-NOTE: For more information on Rails _scaffolding_, refer to [Getting Started with Rails](getting_started.html)
-
-When you use `rails generate scaffold`, for a resource among other things it creates a test stub in the `test/models` folder:
+If you remember when you used the `rails generate scaffold` command from earlier. We created our first resource among other things it created a test stub in the `test/models` directory:
 
 ```bash
 $ bin/rails generate scaffold article title:string body:text
@@ -666,7 +666,7 @@ Integration Testing
 
 Integration tests are used to test the interaction among any number of controllers. They are generally used to test important work flows within your application.
 
-Unlike Unit and Functional tests, integration tests have to be explicitly created under the 'test/integration' folder within your application. Rails provides a generator to create an integration test skeleton for you.
+Unlike Unit and Functional tests, integration tests have to be explicitly created under the 'test/integration' directory within your application. Rails provides a generator to create an integration test skeleton for you.
 
 ```bash
 $ bin/rails generate integration_test user_flows
@@ -728,7 +728,7 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
     https!(false)
     get "/articles/all"
     assert_response :success
-    assert assigns(:products)
+    assert assigns(:articles)
   end
 end
 ```
@@ -785,26 +785,25 @@ end
 Rake Tasks for Running your Tests
 ---------------------------------
 
-You don't need to set up and run your tests by hand on a test-by-test basis.
-Rails comes with a number of commands to help in testing.
-The table below lists all commands that come along in the default Rakefile
-when you initiate a Rails project.
+Rails comes with a number of built-in rake tasks to help with testing. The
+table below lists the commands included in the default Rakefile when a Rails
+project is created.
 
 | Tasks                   | Description |
 | ----------------------- | ----------- |
-| `rake test`             | Runs all unit, functional and integration tests. You can also simply run `rake` as Rails will run all the tests by default |
+| `rake test`             | Runs all tests in the `test` directory. You can also run `rake` and Rails will run all tests by default |
 | `rake test:controllers` | Runs all the controller tests from `test/controllers` |
 | `rake test:functionals` | Runs all the functional tests from `test/controllers`, `test/mailers`, and `test/functional` |
 | `rake test:helpers`     | Runs all the helper tests from `test/helpers` |
 | `rake test:integration` | Runs all the integration tests from `test/integration` |
+| `rake test:jobs`        | Runs all the job tests from `test/jobs` |
 | `rake test:mailers`     | Runs all the mailer tests from `test/mailers` |
 | `rake test:models`      | Runs all the model tests from `test/models` |
 | `rake test:units`       | Runs all the unit tests from `test/models`, `test/helpers`, and `test/unit` |
-| `rake test:all`         | Runs all tests quickly by merging all types and not resetting db |
-| `rake test:all:db`      | Runs all tests quickly by merging all types and resetting db |
+| `rake test:db`          | Runs all tests in the `test` directory and resets the db |
 
 
-Brief Note About `Minitest`
+A Brief Note About Minitest
 -----------------------------
 
 Ruby ships with a vast Standard Library for all common use-cases including testing. Since version 1.9, Ruby provides `Minitest`, a framework for testing. All the basic assertions such as `assert_equal` discussed above are actually defined in `Minitest::Assertions`. The classes `ActiveSupport::TestCase`, `ActionController::TestCase`, `ActionMailer::TestCase`, `ActionView::TestCase` and `ActionDispatch::IntegrationTest` - which we have been inheriting in our test classes - include `Minitest::Assertions`, allowing us to use all of the basic assertions in our tests.
@@ -901,11 +900,17 @@ end
 Testing Routes
 --------------
 
-Like everything else in your Rails application, it is recommended that you test your routes. An example test for a route in the default `show` action of `Articles` controller above should look like:
+Like everything else in your Rails application, it is recommended that you test your routes. Below are example tests for the routes of default `show` and `create` action of `Articles` controller above and it should look like:
 
 ```ruby
-test "should route to article" do
-  assert_routing '/articles/1', {controller: "articles", action: "show", id: "1"}
+class ArticleRoutesTest < ActionController::TestCase
+  test "should route to article" do
+    assert_routing '/articles/1', { controller: "articles", action: "show", id: "1" }
+  end
+
+  test "should route to create article" do
+    assert_routing({ method: 'post', path: '/articles' }, { controller: "articles", action: "create" })
+  end
 end
 ```
 
@@ -1042,6 +1047,68 @@ end
 Moreover, since the test class extends from `ActionView::TestCase`, you have
 access to Rails' helper methods such as `link_to` or `pluralize`.
 
+Testing Jobs
+------------
+
+Since your custom jobs can be queued at different levels inside your application,
+you'll need to test both jobs themselves (their behavior when they get enqueued)
+and that other entities correctly enqueue them.
+
+### A Basic Test Case
+
+By default, when you generate a job, an associated test will be generated as well
+under the `test/jobs` directory. Here's an example test with a billing job:
+
+```ruby
+require 'test_helper'
+
+class BillingJobTest < ActiveJob::TestCase
+  test 'that account is charged' do
+    BillingJob.perform_now(account, product)
+    assert account.reload.charged_for?(product)
+  end
+end
+```
+
+This test is pretty simple and only asserts that the job get the work done
+as expected.
+
+By default, `ActiveJob::TestCase` will set the queue adapter to `:test` so that
+your jobs are performed inline. It will also ensure that all previously performed
+and enqueued jobs are cleared before any test run so you can safely assume that
+no jobs have already been executed in the scope of each test.
+
+### Custom Assertions And Testing Jobs Inside Other Components
+
+Active Job ships with a bunch of custom assertions that can be used to lessen
+the verbosity of tests:
+
+| Assertion                              | Purpose |
+| -------------------------------------- | ------- |
+| `assert_enqueued_jobs(number)`         | Asserts that the number of enqueued jobs matches the given number. |
+| `assert_performed_jobs(number)`        | Asserts that the number of performed jobs matches the given number. |
+| `assert_no_enqueued_jobs { ... }`      | Asserts that no jobs have been enqueued. |
+| `assert_no_performed_jobs { ... }`     | Asserts that no jobs have been performed. |
+| `assert_enqueued_with([args]) { ... }` | Asserts that the job passed in the block has been enqueued with the given arguments. |
+| `assert_performed_with([args]) { ... }`| Asserts that the job passed in the block has been performed with the given arguments. |
+
+It's a good practice to ensure that your jobs correctly get enqueued or performed
+wherever you invoke them (e.g. inside your controllers). This is precisely where
+the custom assertions provided by Active Job are pretty useful. For instance,
+within a model:
+
+```ruby
+require 'test_helper'
+
+class ProductTest < ActiveSupport::TestCase
+  test 'billing job scheduling' do
+    assert_enqueued_with(job: BillingJob) do
+      product.charge(account)
+    end
+  end
+end
+```
+
 Other Testing Approaches
 ------------------------
 
@@ -1053,3 +1120,4 @@ The built-in `minitest` based testing is not the only way to test Rails applicat
 * [MiniTest::Spec Rails](https://github.com/metaskills/minitest-spec-rails), use the MiniTest::Spec DSL within your rails tests.
 * [Shoulda](http://www.thoughtbot.com/projects/shoulda), an extension to `test/unit` with additional helpers, macros, and assertions.
 * [RSpec](http://relishapp.com/rspec), a behavior-driven development framework
+* [Capybara](http://jnicklas.github.com/capybara/), Acceptance test framework for web applications
