@@ -76,6 +76,10 @@
       url: action_mailer_basics.html
       description: 本篇介绍如何使用 Action Mailer 来收发信件。
     -
+      name: Active Job Basics
+      url: active_job_basics.html
+      description: This guide provides you with all you need to get started in creating, enqueueing and executing background jobs.
+    -
       name: Rails 程序测试指南
       url: testing.html
       work_in_progress: true
@@ -120,6 +124,10 @@
       work_in_progress: true
       url: initialization.html
       description: 本篇介绍 Rails 内部的启动过程。
+    -
+      name: Constant Autoloading and Reloading
+      url: constant_autoloading_and_reloading.html
+      description: This guide documents how constant autoloading and reloading work.
 -
   name: 扩展 Rails
   documents:
