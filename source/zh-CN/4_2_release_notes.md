@@ -115,26 +115,6 @@ remove_foreign_key :accounts, column: :owner_id
 
 完整说明请参考 API 文档：[add_foreign_key](http://api.rubyonrails.org/v4.2.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_foreign_key) 和 [remove_foreign_key](http://api.rubyonrails.org/v4.2.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_foreign_key)。
 
-### 外键支持
-
-迁移 DSL 现在支持新增、移除外键，也会导出到 `schema.rb`。目前只有 `mysql`、`mysql2` 以及 `postgresql` 的适配器支持外键。
-
-```ruby
-# add a foreign key to `articles.author_id` referencing `authors.id`
-add_foreign_key :articles, :authors
-
-# add a foreign key to `articles.author_id` referencing `users.lng_id`
-add_foreign_key :articles, :users, column: :author_id, primary_key: "lng_id"
-
-# remove the foreign key on `accounts.branch_id`
-remove_foreign_key :accounts, :branches
-
-# remove the foreign key on `accounts.owner_id`
-remove_foreign_key :accounts, column: :owner_id
-```
-
-完整说明请参考 API 文档：[add_foreign_key](http://api.rubyonrails.org/v4.2.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_foreign_key) 和 [remove_foreign_key](http://api.rubyonrails.org/v4.2.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_foreign_key)。
-
 Rails 4.2 向下不兼容的部份
 ------------------------
 
