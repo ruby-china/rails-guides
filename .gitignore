@@ -5,3 +5,4 @@
 /output/
 BASE_PATH
 .DS_Store
+/Gemfile.lock
