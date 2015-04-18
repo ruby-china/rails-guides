@@ -1,47 +1,39 @@
-Active Job Basics
+
+Active Job 基础
 =================
 
-This guide provides you with all you need to get started in creating,
-enqueueing and executing background jobs.
+本文提供开始创建任务、将任务加入队列和后台执行任务的所有知识。
 
-After reading this guide, you will know:
+读完本文后，你将学到:
 
-* How to create jobs.
-* How to enqueue jobs.
-* How to run jobs in the background.
-* How to send emails from your application async.
+* 如何新建任务
+* 如何将任务加入队列
+* 如何在后台运行任务
+* 如何在应用中异步发送邮件
 
 --------------------------------------------------------------------------------
 
 
-Introduction
-------------
+ 简介
+-------------
 
-Active Job is a framework for declaring jobs and making them run on a variety
-of queueing backends. These jobs can be everything from regularly scheduled
-clean-ups, to billing charges, to mailings. Anything that can be chopped up
-into small units of work and run in parallel, really.
+Active Job 是用来声明任务，并把任务放到多种多样的队列后台中执行的框架。从定期地安排清理，费用账单到发送邮件，任务可以是任何事情。 任何可以切分为小的单元和并行执行的任务都可以用 Active Job 来执行。
 
 
-The Purpose of Active Job
------------------------------
-The main point is to ensure that all Rails apps will have a job infrastructure
-in place, even if it's in the form of an "immediate runner". We can then have
-framework features and other gems build on top of that, without having to
-worry about API differences between various job runners such as Delayed Job
-and Resque. Picking your queuing backend becomes more of an operational concern,
-then. And you'll be able to switch between them without having to rewrite your jobs.
+Active Job 的目标
+----------------------
+
+主要是确保所有的 Rails 程序有一致任务框架，即便是以 “立即执行”的形式存在。然后可以基于 Active Job 来新建框架功能和其他的 gems， 而不用担心多种任务后台，比如 Dalayed Job 和 Resque 等之间API 的差异。之后，选择队列后台更多会变成运维方面的考虑，这样就能切换后台而无需重写任务代码。
 
 
-Creating a Job
---------------
+创建一个任务
+---------
 
-This section will provide a step-by-step guide to creating a job and enqueuing it.
+本节将会逐步地创建任务然后把任务加入队列中。
 
-### Create the Job
+### 创建任务
 
-Active Job provides a Rails generator to create jobs. The following will create a
-job in `app/jobs` (with an attached test case under `test/jobs`):
+Active Job 提供了Rails 生成器来创建任务。以下代码会在 `app/jobs` 中新建一个任务,（并且会在 `test/jobs` 中创建测试用例）：
 
 ```bash
 $ bin/rails generate job guests_cleanup
@@ -50,16 +42,15 @@ create    test/jobs/guests_cleanup_job_test.rb
 create  app/jobs/guests_cleanup_job.rb
 ```
 
-You can also create a job that will run on a specific queue:
+也可以创建运行在一个特定队列上的任务：
 
 ```bash
 $ bin/rails generate job guests_cleanup --queue urgent
 ```
 
-If you don't want to use a generator, you could create your own file inside of
-`app/jobs`, just make sure that it inherits from `ActiveJob::Base`.
+如果不想使用生成器，需要自己创建文件，并且替换 掉`app/jobs` 。确保任务继承 `ActiveJob::Base` 即可。
 
-Here's what a job looks like:
+以下是一个任务示例:
 
 ```ruby
 class GuestsCleanupJob < ActiveJob::Base
@@ -71,42 +62,43 @@ class GuestsCleanupJob < ActiveJob::Base
 end
 ```
 
-### Enqueue the Job
+### 任务加入队列
 
-Enqueue a job like so:
+将任务加入到队列中：
 
 ```ruby
-# Enqueue a job to be performed as soon the queueing system is free.
+# 将加入到队列系统中任务立即执行
 MyJob.perform_later record
 ```
 
 ```ruby
-# Enqueue a job to be performed tomorrow at noon.
+# 在明天中午执行加入队列的任务
 MyJob.set(wait_until: Date.tomorrow.noon).perform_later(record)
 ```
 
 ```ruby
-# Enqueue a job to be performed 1 week from now.
+# 一星期后执行加入到队列的任务
 MyJob.set(wait: 1.week).perform_later(record)
 ```
 
-That's it!
+就这么简单！
 
 
-Job Execution
--------------
+任务执行
+------------
 
-If no adapter is set, the job is immediately executed.
+如果没有设置连接器，任务会立即执行。
 
-### Backends
 
-Active Job has built-in adapters for multiple queueing backends (Sidekiq,
-Resque, Delayed Job and others). To get an up-to-date list of the adapters
-see the API Documentation for [ActiveJob::QueueAdapters](http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html).
+### 后台
 
-### Setting the Backend
+Active Job 内建支持多种队列后台连接器（Sidekiq，Resque， Delayed Job 等）。
+最新的连接器的列表详见  [ActiveJob::QueueAdapters](http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html) 的 API 文件。
 
-You can easily set your queueing backend:
+
+### 设置后台
+
+设置队列后台很简单：
 
 ```ruby
 # config/application.rb
@@ -120,11 +112,10 @@ end
 ```
 
 
-Queues
-------
+队列
+----------
 
-Most of the adapters support multiple queues. With Active Job you can schedule
-the job to run on a specific queue:
+大多数连接器支持多种队列。用 Active Job 可以安排任务运行在特定的队列：
 
 ```ruby
 class GuestsCleanupJob < ActiveJob::Base
@@ -133,8 +124,7 @@ class GuestsCleanupJob < ActiveJob::Base
 end
 ```
 
-You can prefix the queue name for all your jobs using
-`config.active_job.queue_name_prefix` in `application.rb`:
+在 `application.rb` 中通过  `config.active_job.queue_name_prefix` 来设置所有任务的队列名称的前缀。
 
 ```ruby
 # config/application.rb
@@ -154,9 +144,7 @@ end
 # production environment and on staging_low_priority on your staging
 # environment
 ```
-
-The default queue name prefix delimiter is '\_'.  This can be changed by setting
-`config.active_job.queue_name_delimiter` in `application.rb`:
+默认队列名称的前缀是 `_` 。可以设置 `application.rb` 里`config.active_job.queue_name_delimiter` 的值来改变：
 
 ```ruby
 # config/application.rb
@@ -178,16 +166,13 @@ end
 # environment
 ```
 
-If you want more control on what queue a job will be run you can pass a `:queue`
-option to `#set`:
+如果想要更细致的控制任务的执行，可以传 `:queue`选项给 `#set` 方法：
 
 ```ruby
 MyJob.set(queue: :another_queue).perform_later(record)
 ```
 
-To control the queue from the job level you can pass a block to `#queue_as`. The
-block will be executed in the job context (so you can access `self.arguments`)
-and you must return the queue name:
+为了在任务级别控制队列，可以传递一个块给 `#queue_as` 。块会在任务的上下文中执行(所以能获得 `self.arguments`) 并且必须返回队列的名字：
 
 ```ruby
 class ProcessVideoJob < ActiveJob::Base
@@ -208,17 +193,15 @@ end
 ProcessVideoJob.perform_later(Video.last)
 ```
 
-NOTE: Make sure your queueing backend "listens" on your queue name. For some
-backends you need to specify the queues to listen to.
+注意:  确认运行的队列后台“监听”队列的名称。某些后台需要明确的指定要“监听”队列的名称。
 
 
-Callbacks
+回调
 ---------
 
-Active Job provides hooks during the lifecycle of a job. Callbacks allow you to
-trigger logic during the lifecycle of a job.
+Active Job 在一个任务的生命周期里提供了钩子。回调允许在任务的生命周期中触发逻辑。
 
-### Available callbacks
+### 可用的回调
 
 * `before_enqueue`
 * `around_enqueue`
@@ -227,7 +210,7 @@ trigger logic during the lifecycle of a job.
 * `around_perform`
 * `after_perform`
 
-### Usage
+### 用法
 
 ```ruby
 class GuestsCleanupJob < ActiveJob::Base
@@ -251,11 +234,9 @@ end
 
 
 Action Mailer
-------------
+----------------
 
-One of the most common jobs in a modern web application is sending emails outside
-of the request-response cycle, so the user doesn't have to wait on it. Active Job
-is integrated with Action Mailer so you can easily send emails asynchronously:
+现代的网站应用中最常见的任务之一是在请求响应周期外发送 Email ，这样所有用户不需要焦急地等待邮件的发送。Active Job 集成到 Action Mail 中，所以能够简单的实现异步发送邮件：
 
 ```ruby
 # If you want to send the email now use #deliver_now
@@ -267,11 +248,9 @@ UserMailer.welcome(@user).deliver_later
 
 
 GlobalID
---------
+-----------
 
-Active Job supports GlobalID for parameters. This makes it possible to pass live
-Active Record objects to your job instead of class/id pairs, which you then have
-to manually deserialize. Before, jobs would look like this:
+Active Job 支持 GlobalID 作为参数。这样传递运行中的 Active Record 对象到任务中，来取代通常需要序列化的 class/id 对。之前，任务看起来是这样子的：
 
 ```ruby
 class TrashableCleanupJob < ActiveJob::Base
@@ -282,7 +261,7 @@ class TrashableCleanupJob < ActiveJob::Base
 end
 ```
 
-Now you can simply do:
+现在可以简化为:
 
 ```ruby
 class TrashableCleanupJob < ActiveJob::Base
@@ -292,18 +271,13 @@ class TrashableCleanupJob < ActiveJob::Base
 end
 ```
 
-This works with any class that mixes in `GlobalID::Identification`, which
-by default has been mixed into Active Model classes.
 
+异常
+-------
 
-Exceptions
-----------
-
-Active Job provides a way to catch exceptions raised during the execution of the
-job:
+Active Job 提供了在任务执行期间捕获出现的异常的方法：
 
 ```ruby
-
 class GuestsCleanupJob < ActiveJob::Base
   queue_as :default
 
