@@ -4,7 +4,7 @@ Active Job 基础
 
 本文提供开始创建任务、将任务加入队列和后台执行任务的所有知识。
 
-读完本文后，你将学到:
+读完本文，你将学到:
 
 * 如何新建任务
 * 如何将任务加入队列
@@ -17,13 +17,13 @@ Active Job 基础
  简介
 -------------
 
-Active Job 是用来声明任务，并把任务放到多种多样的队列后台中执行的框架。从定期地安排清理，费用账单到发送邮件，任务可以是任何事情。 任何可以切分为小的单元和并行执行的任务都可以用 Active Job 来执行。
+Active Job 是用来声明任务，并把任务放到多种多样的队列后台中执行的框架。从定期地安排清理，费用账单到发送邮件，任何事情都可以是任务。任何可以切分为小的单元和并行执行的任务都可以用 Active Job 来执行。
 
 
 Active Job 的目标
 ----------------------
 
-主要是确保所有的 Rails 程序有一致任务框架，即便是以 “立即执行”的形式存在。然后可以基于 Active Job 来新建框架功能和其他的 gems， 而不用担心多种任务后台，比如 Dalayed Job 和 Resque 等之间API 的差异。之后，选择队列后台更多会变成运维方面的考虑，这样就能切换后台而无需重写任务代码。
+主要是确保所有的 Rails 程序有一致任务框架，即便是以 “立即执行”的形式存在。然后可以基于 Active Job 来新建框架功能和其他的 RubyGems， 而不用担心多种任务后台，比如 Dalayed Job 和 Resque 之间 API 的差异。之后，选择队列后台更多会变成运维方面的考虑，这样就能切换后台而无需重写任务代码。
 
 
 创建一个任务
@@ -33,7 +33,7 @@ Active Job 的目标
 
 ### 创建任务
 
-Active Job 提供了Rails 生成器来创建任务。以下代码会在 `app/jobs` 中新建一个任务,（并且会在 `test/jobs` 中创建测试用例）：
+Active Job 提供了 Rails 生成器来创建任务。以下代码会在 `app/jobs` 中新建一个任务,（并且会在 `test/jobs` 中创建测试用例）：
 
 ```bash
 $ bin/rails generate job guests_cleanup
@@ -48,7 +48,7 @@ create  app/jobs/guests_cleanup_job.rb
 $ bin/rails generate job guests_cleanup --queue urgent
 ```
 
-如果不想使用生成器，需要自己创建文件，并且替换 掉`app/jobs` 。确保任务继承 `ActiveJob::Base` 即可。
+如果不想使用生成器，需要自己创建文件，并且替换掉 `app/jobs`。确保任务继承自 `ActiveJob::Base` 即可。
 
 以下是一个任务示例:
 
@@ -85,15 +85,14 @@ MyJob.set(wait: 1.week).perform_later(record)
 
 
 任务执行
-------------
+-------
 
 如果没有设置连接器，任务会立即执行。
 
 
 ### 后台
 
-Active Job 内建支持多种队列后台连接器（Sidekiq，Resque， Delayed Job 等）。
-最新的连接器的列表详见  [ActiveJob::QueueAdapters](http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html) 的 API 文件。
+Active Job 内建支持多种队列后台连接器（Sidekiq、Resque、Delayed Job 等）。最新的连接器的列表详见 [ActiveJob::QueueAdapters](http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html) 的 API 文件。
 
 
 ### 设置后台
@@ -113,7 +112,7 @@ end
 
 
 队列
-----------
+----
 
 大多数连接器支持多种队列。用 Active Job 可以安排任务运行在特定的队列：
 
@@ -144,7 +143,8 @@ end
 # production environment and on staging_low_priority on your staging
 # environment
 ```
-默认队列名称的前缀是 `_` 。可以设置 `application.rb` 里`config.active_job.queue_name_delimiter` 的值来改变：
+
+默认队列名称的前缀是 `_`。可以设置 `application.rb` 里 `config.active_job.queue_name_delimiter` 的值来改变：
 
 ```ruby
 # config/application.rb
@@ -166,13 +166,13 @@ end
 # environment
 ```
 
-如果想要更细致的控制任务的执行，可以传 `:queue`选项给 `#set` 方法：
+如果想要更细致的控制任务的执行，可以传 `:queue` 选项给 `#set` 方法：
 
 ```ruby
 MyJob.set(queue: :another_queue).perform_later(record)
 ```
 
-为了在任务级别控制队列，可以传递一个块给 `#queue_as` 。块会在任务的上下文中执行(所以能获得 `self.arguments`) 并且必须返回队列的名字：
+为了在任务级别控制队列，可以传递一个块给 `#queue_as`。块会在任务的上下文中执行（所以能获得 `self.arguments`）并且必须返回队列的名字：
 
 ```ruby
 class ProcessVideoJob < ActiveJob::Base
@@ -193,7 +193,7 @@ end
 ProcessVideoJob.perform_later(Video.last)
 ```
 
-注意:  确认运行的队列后台“监听”队列的名称。某些后台需要明确的指定要“监听”队列的名称。
+NOTE: 确认运行的队列后台“监听”队列的名称。某些后台需要明确的指定要“监听”队列的名称。
 
 
 回调
@@ -236,7 +236,7 @@ end
 Action Mailer
 ----------------
 
-现代的网站应用中最常见的任务之一是在请求响应周期外发送 Email ，这样所有用户不需要焦急地等待邮件的发送。Active Job 集成到 Action Mail 中，所以能够简单的实现异步发送邮件：
+现代网站应用中最常见的任务之一是，在请求响应周期外发送 Email，这样所有用户不需要焦急地等待邮件的发送。Active Job 集成到 Action Mailer 里了，所以能够简单的实现异步发送邮件：
 
 ```ruby
 # If you want to send the email now use #deliver_now
@@ -250,7 +250,7 @@ UserMailer.welcome(@user).deliver_later
 GlobalID
 -----------
 
-Active Job 支持 GlobalID 作为参数。这样传递运行中的 Active Record 对象到任务中，来取代通常需要序列化的 class/id 对。之前，任务看起来是这样子的：
+Active Job 支持 GlobalID 作为参数。这样传递运行中的 Active Record 对象到任务中，来取代通常需要序列化的 class/id 对。之前任务看起来是像这样：
 
 ```ruby
 class TrashableCleanupJob < ActiveJob::Base
@@ -275,7 +275,7 @@ end
 异常
 -------
 
-Active Job 提供了在任务执行期间捕获出现的异常的方法：
+Active Job 提供了在任务执行期间捕获异常的方法：
 
 ```ruby
 class GuestsCleanupJob < ActiveJob::Base
