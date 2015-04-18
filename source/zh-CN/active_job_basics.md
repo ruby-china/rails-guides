@@ -1,4 +1,3 @@
-
 Active Job 基础
 =================
 
@@ -144,7 +143,7 @@ end
 # environment
 ```
 
-默认队列名称的前缀是 `_`。可以设置 `application.rb` 里 `config.active_job.queue_name_delimiter` 的值来改变：
+默认队列名称的前缀是 `_`。可以设置 `config/application.rb` 里 `config.active_job.queue_name_delimiter` 的值来改变：
 
 ```ruby
 # config/application.rb

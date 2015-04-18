@@ -76,9 +76,9 @@
       url: action_mailer_basics.html
       description: 本篇介绍如何使用 Action Mailer 来收发信件。
     -
-      name: Active Job Basics
+      name: Active Job 基础
       url: active_job_basics.html
-      description: This guide provides you with all you need to get started in creating, enqueueing and executing background jobs.
+      description: 本篇提供创建背景任务、任务排程以及执行任务的所有知识。
     -
       name: Rails 程序测试指南
       url: testing.html
