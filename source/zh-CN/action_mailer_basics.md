@@ -175,17 +175,17 @@ Action Mailer 会自动编码邮件头和邮件主体中的多字节字符。
 
 *   传入文件名和内容，Action Mailer 和 [Mail](https://github.com/mikel/mail) gem 会自动猜测附件的 MIME 类型，设置编码并创建附件。
 
-```ruby
+    ```ruby
     attachments['filename.jpg'] = File.read('/path/to/filename.jpg')
     ```
 
-    触发 `mail` 方法后，会发送一个由多部分组成的邮件，附件嵌套在类型为 `multipart/mixed` 的顶级结构中，其中第一部分的类型为 `multipart/alternative`，包含纯文本和 HTML 格式的邮件内容。
+  触发 `mail` 方法后，会发送一个由多部分组成的邮件，附件嵌套在类型为 `multipart/mixed` 的顶级结构中，其中第一部分的类型为 `multipart/alternative`，包含纯文本和 HTML 格式的邮件内容。
 
 NOTE: Mail gem 会自动使用 Base64 编码附件。如果想使用其他编码方式，可以先编码好，再把编码后的附件通过 Hash 传给 `attachments` 方法。
 
 *   传入文件名，指定邮件头和内容，Action Mailer 和 Mail gem 会使用传入的参数添加附件。
 
-```ruby
+    ```ruby
     encoded_content = SpecialEncode(File.read('/path/to/filename.jpg'))
     attachments['filename.jpg'] = {mime_type: 'application/x-gzip',
                                    encoding: 'SpecialEncoding',
@@ -200,7 +200,7 @@ NOTE: 如果指定了 `encoding` 键，Mail 会认为附件已经编码了，不
 
 *   首先，在 `attachments` 方法上调用 `inline` 方法，告诉 Mail 这是个行间附件：
 
-```ruby
+    ```ruby
     def welcome
       attachments.inline['image.jpg'] = File.read('/path/to/image.jpg')
     end
@@ -208,7 +208,7 @@ NOTE: 如果指定了 `encoding` 键，Mail 会认为附件已经编码了，不
 
 *   在视图中，可以直接使用 `attachments` 方法，将其视为一个 Hash，指定想要使用的附件，在其上调用 `url` 方法，再把结果传给 `image_tag` 方法：
 
-```erb
+    ```erb
     <p>Hello there, this is our image</p>
 
     <%= image_tag attachments['image.jpg'].url %>
@@ -216,7 +216,7 @@ NOTE: 如果指定了 `encoding` 键，Mail 会认为附件已经编码了，不
 
 *   因为我们只是简单的调用了 `image_tag` 方法，所以和其他图片一样，在附件地址之后，还可以传入选项 Hash：
 
-```erb
+    ```erb
     <p>Hello there, this is our image</p>
 
     <%= image_tag attachments['image.jpg'].url, alt: 'My Photo',
@@ -448,7 +448,7 @@ Action Mailer 回调
 
 *   `after_action` 可以实现类似 `before_action` 的功能，而且在 `after_action` 中可以使用实例变量；
 
-```ruby
+    ```ruby
     class UserMailer < ActionMailer::Base
       after_action :set_delivery_options,
                    :prevent_delivery_to_guests,
