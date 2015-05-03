@@ -179,7 +179,7 @@ Action Mailer 会自动编码邮件头和邮件主体中的多字节字符。
     attachments['filename.jpg'] = File.read('/path/to/filename.jpg')
     ```
 
-  触发 `mail` 方法后，会发送一个由多部分组成的邮件，附件嵌套在类型为 `multipart/mixed` 的顶级结构中，其中第一部分的类型为 `multipart/alternative`，包含纯文本和 HTML 格式的邮件内容。
+    触发 `mail` 方法后，会发送一个由多部分组成的邮件，附件嵌套在类型为 `multipart/mixed` 的顶级结构中，其中第一部分的类型为 `multipart/alternative`，包含纯文本和 HTML 格式的邮件内容。
 
 NOTE: Mail gem 会自动使用 Base64 编码附件。如果想使用其他编码方式，可以先编码好，再把编码后的附件通过 Hash 传给 `attachments` 方法。
 
