@@ -56,7 +56,7 @@ Active Record 提供了很多查询方法，用来从数据库中获取对象。
 
 这些方法是：
 
-* `bind`
+* `find`
 * `create_with`
 * `distinct`
 * `eager_load`
