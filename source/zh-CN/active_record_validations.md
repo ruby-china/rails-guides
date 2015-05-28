@@ -428,7 +428,7 @@ end
 
 ### `uniqueness`
 
-这个帮助方法会在保存对象之前验证属性值是否是唯一的。该方法不会在数据库中创建唯一性约束，所以有可能两个数据库连接创建的记录字段的值是相同的。为了避免出现这种问题，要在数据库的字段上建立唯一性索引。关于多字段所以的详细介绍，参阅 [MySQL 手册](http://dev.mysql.com/doc/refman/5.6/en/multiple-column-indexes.html)。
+这个帮助方法会在保存对象之前验证属性值是否是唯一的。该方法不会在数据库中创建唯一性约束，所以有可能两个数据库连接创建的记录字段的值是相同的。为了避免出现这种问题，要在数据库的字段上建立唯一性索引。关于多字段索引的详细介绍，参阅 [MySQL 手册](http://dev.mysql.com/doc/refman/5.6/en/multiple-column-indexes.html)。
 
 ```ruby
 class Account < ActiveRecord::Base
