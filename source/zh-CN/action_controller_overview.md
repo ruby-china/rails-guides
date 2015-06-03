@@ -452,8 +452,8 @@ redirect_to root_url, flash: { referral_code: 1234 }
 
 上例中，`destroy` 动作转向程序的 `root_url`，然后显示 Flash 消息。注意，只有下一个动作才能处理前一个动作中设置的 Flash 消息。一般都会在程序的布局中加入显示警告或提醒 Flash 消息的代码：
 
-{:lang="erb"}
-```
+
+```erb
 <html>
   <!-- <head/> -->
   <body>
@@ -470,8 +470,7 @@ redirect_to root_url, flash: { referral_code: 1234 }
 
 Flash 不局限于警告和提醒，可以设置任何可在会话中存储的内容：
 
-{:lang="erb"}
-```
+```erb
 <% if flash[:just_signed_up] %>
   <p class="welcome">Welcome to our site!</p>
 <% end %>
@@ -705,8 +704,7 @@ end
 
 如果使用下面的代码生成一个表单：
 
-{:lang="erb"}
-```
+```erb
 <%= form_for @user do |f| %>
   <%= f.text_field :username %>
   <%= f.text_field :password %>
