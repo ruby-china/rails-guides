@@ -268,7 +268,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 
 ![路由错误，常量 ArticlesController 未初始化](images/getting_started/routing_error_no_controller.png)
 
-产生这个错误的原因是，没有定义用来处理该请求的控制器。解决这个问题的方法很简单：创建名为 `ArticlesController` 的控制器。执行下面的命令即可：
+产生这个错误的原因是，没有定义用来处理该请求的控制器。解决这个问题的方法很简单，执行下面的命令创建名为 `ArticlesController` 的控制器即可：
 
 ```bash
 $ bin/rails g controller articles
