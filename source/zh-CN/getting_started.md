@@ -43,7 +43,7 @@ Rails 哲学包含两大指导思想：
 新建 Rails 程序
 --------------
 
-阅读本文时，最好跟着一步一步操作，如果错过某段代码或某个步骤，程序就可能出错，所以请一步一步跟着做。完整的源码可以在[这里](https://github.com/rails/docrails/tree/master/guides/code/getting_started)获取。
+阅读本文时，最佳方式是跟着一步一步操作，如果错过某段代码或某个步骤，程序就可能出错，所以请一步一步跟着做。
 
 本文会新建一个名为 `blog` 的 Rails 程序，这是一个非常简单的博客。在开始开发程序之前，要确保已经安装了 Rails。
 
@@ -268,7 +268,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 
 ![路由错误，常量 ArticlesController 未初始化](images/getting_started/routing_error_no_controller.png)
 
-产生这个错误的原因是，没有定义用来处理该请求的控制器。解决这个问题的方法很简单：创建名为 `ArticlesController` 的控制器。执行下面的命令即可：
+产生这个错误的原因是，没有定义用来处理该请求的控制器。解决这个问题的方法很简单，执行下面的命令创建名为 `ArticlesController` 的控制器即可：
 
 ```bash
 $ bin/rails g controller articles
