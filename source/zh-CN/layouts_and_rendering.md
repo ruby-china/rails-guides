@@ -167,7 +167,7 @@ end
 render "products/show"
 ```
 
-因为参数中有个斜线，所以 Rails 知道这个视图属于另一个控制器。如果想让代码的意图更明显，可以使用 `:template` 选项（Rails 2.2+ 必须这么做）：
+因为参数中有个斜线，所以 Rails 知道这个视图属于另一个控制器。如果想让代码的意图更明显，可以使用 `:template` 选项（Rails 2.2 及先前版本必须这么做）：
 
 ```ruby
 render template: "products/show"
