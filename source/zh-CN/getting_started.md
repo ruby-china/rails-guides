@@ -1430,7 +1430,7 @@ class CommentsController < ApplicationController
 接下来做什么
 -----------
 
-至此，我们开发了第一个 Rails 程序，请尽情的修改、试验。在开发过程中难免会需要帮助，如果使用 Rails 时需要协助，可以使用这些资源：
+至此，我们开发了第一个 Rails 程序，请尽情地修改、试验。在开发过程中难免会需要帮助，如果使用 Rails 时需要协助，可以使用这些资源：
 
 * [Ruby on Rails 指南]({{ site.baseurl}}/index.html)
 * [Ruby on Rails 教程](http://railstutorial-china.org/)
