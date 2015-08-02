@@ -1317,7 +1317,7 @@ end
 删除评论
 -------
 
-博客还有一个重要的功能是删除垃圾评论。为了实现这个功能，要在视图中添加一个连接，并在 `CommentsController` 中定义 `destroy` 动作。
+博客还有一个重要的功能是删除垃圾评论。为了实现这个功能，要在视图中添加一个链接，并在 `CommentsController` 中定义 `destroy` 动作。
 
 先在 `app/views/comments/_comment.html.erb` 局部视图中加入删除评论的链接：
 
