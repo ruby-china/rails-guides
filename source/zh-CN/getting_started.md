@@ -499,7 +499,7 @@ TIP: 后文会看到，`@article.save` 返回一个布尔值，表示保存是�
 
 ![新建文章时禁止使用属性](images/getting_started/forbidden_attributes_for_new_article.png)
 
-Rails 提供了很多安全防范措施保证程序的安全，你所看到的错误就是因为违反了其中一个措施。这个防范措施叫做“健壮参数”，我们要明确地告知 Rails 哪些参数可在控制器中使用。这里，我们想使用 `title` 和 `text` 参数。请把 `create` 动作修成成：
+Rails 提供了很多安全防范措施保证程序的安全，你所看到的错误就是因为违反了其中一个措施。这个防范措施叫做“健壮参数”，我们要明确地告知 Rails 哪些参数可在控制器中使用。这里，我们想使用 `title` 和 `text` 参数。请把 `create` 动作修改成：
 
 ```ruby
 def create
