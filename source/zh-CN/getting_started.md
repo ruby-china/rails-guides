@@ -1432,8 +1432,8 @@ class CommentsController < ApplicationController
 
 至此，我们开发了第一个 Rails 程序，请尽情的修改、试验。在开发过程中难免会需要帮助，如果使用 Rails 时需要协助，可以使用这些资源：
 
-* [Ruby on Rails 指南]({{ site.baseurl}}/index.html)
-* [Ruby on Rails 教程](http://railstutorial-china.org/)
+* [Ruby on Rails 指南](http://guides.ruby-china.org/index.html)
+* [Ruby on Rails 教程](http://railstutorial-china.org)
 * [Ruby on Rails 邮件列表](http://groups.google.com/group/rubyonrails-talk)
 * irc.freenode.net 上的 [#rubyonrails](irc://irc.freenode.net/#rubyonrails) 频道
 
