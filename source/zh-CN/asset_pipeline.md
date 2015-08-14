@@ -196,9 +196,9 @@ Sprockets 会按照搜索路径中各路径出现的顺序进行搜索。默认�
 
 在 Sprockets 中，名为 `index` 的文件（扩展名各异）有特殊作用。
 
-例如，程序中使用了 jQuery 代码库和许多模块，都保存在 `lib/assets/javascripts/library_name` 文件夹中，那么 `lib/assets/javascripts/library_name/index.js` 文件的作用就是这个代码库的清单。清单文件中可以按顺序列出所需的文件，或者干脆使用 `require_tree` 指令。
+例如，程序中使用了 jQuery 代码库和许多模块，都保存在 `lib/assets/javascripts/library_name` 文件夹中，那么 `lib/assets/javascripts/library_name/index.js` 文件的作用就是这个代码库的清单。在这个清单中可以按顺序列出所需的文件，或者干脆使用 `require_tree` 指令。
 
-在清单文件中，可以把这个库作为一个整体引入：
+在程序的清单文件中，可以把这个库作为一个整体引入：
 
 ```js
 //= require library_name
