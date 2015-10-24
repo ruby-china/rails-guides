@@ -192,12 +192,11 @@ module Rails
 
 ### `actionpack/lib/action_dispatch.rb`
 
-Action Dispatch is the routing component of the Rails framework.
-It adds functionality like routing, session, and common middlewares.
+动作分发(Action Dispatch)是Rails框架中的路径组件。它增强了路径，会话等中间件的函数化功能。
 
 ### `rails/commands/server.rb`
 
-The `Rails::Server` class is defined in this file by inheriting from `Rack::Server`. When `Rails::Server.new` is called, this calls the `initialize` method in `rails/commands/server.rb`:
+这个文件中定义的`Rails::Server` 类是继承自 `Rack::Server`类的。当`Rails::Server.new` 被调用时，会在 `rails/commands/server.rb`中调用一个`initialize`方法：
 
 ```ruby
 def initialize(*)
@@ -206,13 +205,13 @@ def initialize(*)
 end
 ```
 
-Firstly, `super` is called which calls the `initialize` method on `Rack::Server`.
+首先，`super`会调用父类`Rack::Server`中的`initialize`方法。
 
 ### Rack: `lib/rack/server.rb`
 
-`Rack::Server` is responsible for providing a common server interface for all Rack-based applications, which Rails is now a part of.
+`Rack::Server`会为所以基于Rack的应用提供一般的服务接口，现在它已经是Rails框架的一部分了。
 
-The `initialize` method in `Rack::Server` simply sets a couple of variables:
+`Rack::Server`中的`initialize` 方法会简单的设置一对变量：
 
 ```ruby
 def initialize(options = nil)
@@ -221,9 +220,9 @@ def initialize(options = nil)
 end
 ```
 
-In this case, `options` will be `nil` so nothing happens in this method.
+在这种情况下，`options` 的值是 `nil`，所以在这个方法中相当于什么都没做。
 
-After `super` has finished in `Rack::Server`, we jump back to `rails/commands/server.rb`. At this point, `set_environment` is called within the context of the `Rails::Server` object and this method doesn't appear to do much at first glance:
+当`Rack::Server`中的`super`方法执行完毕后。我们会回到`rails/commands/server.rb`，此时此刻，`Rails::Server`对象根据上下文调用 `set_environment` 方法，貌似这个方法看上去也没干什么： 
 
 ```ruby
 def set_environment
@@ -231,7 +230,7 @@ def set_environment
 end
 ```
 
-In fact, the `options` method here does quite a lot. This method is defined in `Rack::Server` like this:
+事实上，`options`方法在这做了很多事情。`Rack::Server` 中的这个方法定义如下：
 
 ```ruby
 def options
@@ -239,7 +238,7 @@ def options
 end
 ```
 
-Then `parse_options` is defined like this:
+接着`parse_options`被定义成这样：
 
 ```ruby
 def parse_options(args)
@@ -256,7 +255,7 @@ def parse_options(args)
 end
 ```
 
-With the `default_options` set to this:
+使用　`default_options` 配置如下：
 
 ```ruby
 def default_options
