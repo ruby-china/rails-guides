@@ -1,15 +1,14 @@
-The Rails Initialization Process
+Rails 应用的初始化过程
 ================================
 
-This guide explains the internals of the initialization process in Rails
-as of Rails 4. It is an extremely in-depth guide and recommended for advanced Rails developers.
+本章节介绍了 Rails 4 应用启动的内部流程。很适合有一定经验的Rails 开发者阅读.
 
-After reading this guide, you will know:
+通过学习本章节，您会学到如下知识:
 
-* How to use `rails server`.
-* The timeline of Rails' initialization sequence.
-* Where different files are required by the boot sequence.
-* How the Rails::Server interface is defined and used.
+* 如何使用 `rails server`.
+* Rails应用初始化的时间序列.
+* Rails应用启动过程都用到哪些文件.
+* 接口 Rails::Server 的定义和使用.
 
 --------------------------------------------------------------------------------
 
