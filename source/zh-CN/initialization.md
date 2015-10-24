@@ -449,7 +449,7 @@ require ::File.expand_path('../config/environment', __FILE__)
 
 ### `config/environment.rb`
 
-这是`config.ru` (`rails server`)和Passenger需要的一个普通文件，这是为服务直接通信而存在的。之前的操作都是为了创建Rack和Rails。
+这是`config.ru` (`rails server`)和Passenger需要的一个普通文件，这是为服务之间通信而存在的。之前的操作都是为了创建Rack和Rails。
 
 这个文件是以引用 `config/application.rb`开始的：
 
@@ -632,4 +632,4 @@ end
 
 我们没有深入到服务端配置的细节，因为这是我们探索Rails初始化过程之旅的终点了。
 
-宽视角的浏览将有助于你提高组织和运行代码的水平，成为高段位的Rail开发者。如果你想要管多，那么去读Rails的源代码将是你的不二选择。
+高层次的浏览将有助于您提高组织和运行代码的水平，成为Rail开发高手。如果你想要知道更多，那么去读Rails的源代码将是你的不二选择。
