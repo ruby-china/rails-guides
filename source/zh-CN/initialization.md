@@ -76,7 +76,7 @@ ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../../Gemfile', __FILE__)
 require 'bundler/setup' if File.exist?(ENV['BUNDLE_GEMFILE'])
 ```
 
-在一个标准的Rails应用中，包含一个`Gemfile`文件配置该Rails应用的所以依赖项。`config/boot.rb`文件会设置`ENV['BUNDLE_GEMFILE']`来查找Gemfile的路径。如果Gemfile存在，那么`bundler/setup`操作会被执行，Bundler执行该操作是为了配置你的Gemfile相关的依赖项的加载路径。
+在一个标准的Rails应用中，包含一个`Gemfile`文件配置该Rails应用的所以依赖项。`config/boot.rb`文件会根据`ENV['BUNDLE_GEMFILE']`中的值来查找Gemfile的路径。如果Gemfile文件存在，那么`bundler/setup`操作会被执行，Bundler执行该操作是为了配置你的Gemfile相关的依赖项的加载路径。
 
 一个标准的Rails应用会依赖若干gem包，特别是下面这些：
 
