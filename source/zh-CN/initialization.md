@@ -27,7 +27,7 @@ Rails 应用的初始化过程
 
 ### `railties/bin/rails`
 
-Rails 中的 “rails server” 是一个你rails应用程序所在文件中的一个 ruby 的可执行程序，该程序包含如下操作：
+Rails 中的 `rails server` 是一个你rails应用程序所在文件中的一个 ruby 的可执行程序，该程序包含如下操作：
 
 ```ruby
 version = ">= 0"
