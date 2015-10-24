@@ -1,9 +1,9 @@
 Rails 应用的初始化过程
 ================================
 
-本章节介绍了 Rails 4 应用启动的内部流程。很适合有一定经验的Rails 开发者阅读.
+本章节介绍了 Rails 4 应用启动的内部流程。很适合有一定经验的Rails 开发者阅读。
 
-通过学习本章节，您会学到如下知识:
+通过学习本章节，您会学到如下知识：
 
 * 如何使用 `rails server`.
 * Rails应用初始化的时间序列.
@@ -11,55 +11,42 @@ Rails 应用的初始化过程
 * 接口 Rails::Server 的定义和使用.
 
 --------------------------------------------------------------------------------
+ 
+本章节通过介绍一个基于Ruby on Rails框架默认配置的 Rails 4 应用程序启动过程中的方法调用，详细介绍了每个调用的细节。通过本章节，我们将关注当你执行`rails server`命令启动你的应用时， 背后究竟发生了什么。
 
-This guide goes through every method call that is
-required to boot up the Ruby on Rails stack for a default Rails 4
-application, explaining each part in detail along the way. For this
-guide, we will be focusing on what happens when you execute `rails server`
-to boot your app.
 
-NOTE: Paths in this guide are relative to Rails or a Rails application unless otherwise specified.
+提示：本章节中的路径如果没有特别说明都是指Rails应用程序下的路径。
 
-TIP: If you want to follow along while browsing the Rails [source
-code](https://github.com/rails/rails), we recommend that you use the `t`
-key binding to open the file finder inside GitHub and find files
-quickly.
 
-Launch!
+提示：如果你想浏览Rails的源代码[sourcecode](https://github.com/rails/rails)，强烈建议您使用快捷键 `t`快速查找Github中的文件。
+
+启动!
 -------
 
-Let's start to boot and initialize the app. A Rails application is usually
-started by running `rails console` or `rails server`.
+我们们现在准备启动和初始化一个Rails 应用。 一个Rails 应用 经常是以运行命令 `rails console` or `rails server` 开始的。
 
 ### `railties/bin/rails`
 
-The `rails` in the command `rails server` is a ruby executable in your load
-path. This executable contains the following lines:
+Rails 中的 “rails server” 是一个你rails应用程序所在文件中的一个 ruby 的可执行程序，该程序包含如下操作：
 
 ```ruby
 version = ">= 0"
 load Gem.bin_path('railties', 'rails', version)
 ```
 
-If you try out this command in a Rails console, you would see that this loads
-`railties/bin/rails`. A part of the file `railties/bin/rails.rb` has the
-following code:
+如何你在Rails 控制台中使用上述命令 ，你将会看到载入`railties/exe/rails`这个路径。作为 `railties/exe/rails.rb`的一部分， 包含如下代码：
 
 ```ruby
 require "rails/cli"
 ```
 
-The file `railties/lib/rails/cli` in turn calls
-`Rails::AppRailsLoader.exec_app_rails`.
+文件 `railties/lib/rails/cli` 会调用`Rails::AppRailsLoader.exec_app_rails`模块.
 
 ### `railties/lib/rails/app_rails_loader.rb`
 
-The primary goal of the function `exec_app_rails` is to execute your app's
-`bin/rails`. If the current directory does not have a `bin/rails`, it will
-navigate upwards until it finds a `bin/rails` executable. Thus one can invoke a
-`rails` command from anywhere inside a rails application.
+ `exec_app_rails`模块的主要功能是去执行你的Rails应用中`bin/rails`文件夹下的指令。如果当前文件夹下没有`bin/rails`文件，它会到父级目录去搜索，直到找到为止（windows下应该会去搜索环境变量中的路径），在Rails应用程序目录的任意位置下(命令行模式下)，这将会触发一个`rails`的指令。
 
-For `rails server` the equivalent of the following command is executed:
+因为`rails server`命令和下面的操作是等价的：
 
 ```bash
 $ exec ruby bin/rails server
@@ -67,7 +54,7 @@ $ exec ruby bin/rails server
 
 ### `bin/rails`
 
-This file is as follows:
+文件`railties/bin/rails`包含的代码如下：
 
 ```ruby
 #!/usr/bin/env ruby
@@ -76,11 +63,11 @@ require_relative '../config/boot'
 require 'rails/commands'
 ```
 
-The `APP_PATH` constant will be used later in `rails/commands`. The `config/boot` file referenced here is the `config/boot.rb` file in our application which is responsible for loading Bundler and setting it up.
+`APP_PATH`稍后会在`rails/commands`中用到。`config/boot`在这被引用是因为我们的Rails应用中需要`config/boot.rb`文件来载入Bundler,并初始化Bundler的配置。
 
 ### `config/boot.rb`
 
-`config/boot.rb` contains:
+`config/boot.rb` 包含如下代码:
 
 ```ruby
 # Set up gems listed in the Gemfile.
@@ -89,13 +76,9 @@ ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../../Gemfile', __FILE__)
 require 'bundler/setup' if File.exist?(ENV['BUNDLE_GEMFILE'])
 ```
 
-In a standard Rails application, there's a `Gemfile` which declares all
-dependencies of the application. `config/boot.rb` sets
-`ENV['BUNDLE_GEMFILE']` to the location of this file. If the Gemfile
-exists, then `bundler/setup` is required. The require is used by Bundler to
-configure the load path for your Gemfile's dependencies.
+在一个标准的Rails应用中，包含一个`Gemfile`文件配置该Rails应用的所以依赖项。`config/boot.rb`文件会设置`ENV['BUNDLE_GEMFILE']`来查找Gemfile的路径。如果Gemfile存在，那么`bundler/setup`操作会被执行，Bundler执行该操作是为了配置你的Gemfile相关的依赖项的加载路径。
 
-A standard Rails application depends on several gems, specifically:
+一个标准的Rails应用会依赖若干gem包，特别是下面这些：
 
 * actionmailer
 * actionpack
@@ -125,9 +108,7 @@ A standard Rails application depends on several gems, specifically:
 
 ### `rails/commands.rb`
 
-Once `config/boot.rb` has finished, the next file that is required is
-`rails/commands`, which helps in expanding aliases. In the current case, the
-`ARGV` array simply contains `server` which will be passed over:
+一旦`config/boot.rb`执行完毕，接下来要执行的是`rails/commands`操作，这个操作会帮助解析别名。在本应用中，`ARGV` 数组包含 `server`项会被匹配：
 
 ```ruby
 ARGV << '--help' if ARGV.empty?
@@ -149,17 +130,13 @@ require 'rails/commands/commands_tasks'
 Rails::CommandsTasks.new(ARGV).run_command!(command)
 ```
 
-TIP: As you can see, an empty ARGV list will make Rails show the help
-snippet.
+提示： 如你所见，一个空的ARGV数组将会让系统显示相关的帮助项 。
 
-If we had used `s` rather than `server`, Rails would have used the `aliases`
-defined here to find the matching command.
+如果我们使用`s`缩写代替 `server`，Rails系统会使用`aliases`定义来查找匹配的命令。
 
 ### `rails/commands/command_tasks.rb`
 
-When one types an incorrect rails command, the `run_command` is responsible for
-throwing an error message. If the command is valid, a method of the same name
-is called.
+当你键入一个错误的rails命令，`run_command`函数会抛出一个错误信息。如果命令正确，一个与命令同名的方法会被调用。
 
 ```ruby
 COMMAND_WHITELIST = %(plugin generate destroy console server dbconsole application runner new version help)
@@ -174,7 +151,7 @@ def run_command!(command)
 end
 ```
 
-With the `server` command, Rails will further run the following code:
+如果执行`server`命令，Rails将会继续执行下面的代码：
 
 ```ruby
 def set_application_directory!
@@ -199,10 +176,7 @@ def require_command!(command)
 end
 ```
 
-This file will change into the Rails root directory (a path two directories up
-from `APP_PATH` which points at `config/application.rb`), but only if the
-`config.ru` file isn't found. This then requires `rails/commands/server` which
-sets up the `Rails::Server` class.
+这个文件将会指向Rails的根目录（与`APP_PATH`中指向`config/application.rb`不同），但是如果没找到`config.ru`文件，接下来将需要`rails/commands/server`来创建`Rails::Server`类。
 
 ```ruby
 require 'fileutils'
@@ -214,7 +188,7 @@ module Rails
   class Server < ::Rack::Server
 ```
 
-`fileutils` and `optparse` are standard Ruby libraries which provide helper functions for working with files and parsing options.
+`fileutils` 和 `optparse` 是Ruby标准库中帮助操作文件和解析选项的函数。
 
 ### `actionpack/lib/action_dispatch.rb`
 
