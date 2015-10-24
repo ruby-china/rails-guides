@@ -34,7 +34,7 @@ version = ">= 0"
 load Gem.bin_path('railties', 'rails', version)
 ```
 
-如何你在Rails 控制台中使用上述命令 ，你将会看到载入`railties/bin/rails`这个路径。作为 `railties/bin/rails.rb`的一部分， 包含如下代码：
+如何你在Rails 控制台中使用上述命令，你将会看到载入`railties/bin/rails`这个路径。作为 `railties/bin/rails.rb`的一部分， 包含如下代码：
 
 ```ruby
 require "rails/cli"
@@ -44,7 +44,7 @@ require "rails/cli"
 
 ### `railties/lib/rails/app_rails_loader.rb`
 
- `exec_app_rails`模块的主要功能是去执行你的Rails应用中`bin/rails`文件夹下的指令。如果当前文件夹下没有`bin/rails`文件，它会到父级目录去搜索，直到找到为止（windows下应该会去搜索环境变量中的路径），在Rails应用程序目录的任意位置下(命令行模式下)，这将会触发一个`rails`的指令。
+`exec_app_rails`模块的主要功能是去执行你的Rails应用中`bin/rails`文件夹下的指令。如果当前文件夹下没有`bin/rails`文件，它会到父级目录去搜索，直到找到为止（windows下应该会去搜索环境变量中的路径），在Rails应用程序目录的任意位置下(命令行模式下)，这将会触发一个`rails`的指令。
 
 因为`rails server`命令和下面的操作是等价的：
 
@@ -132,7 +132,7 @@ Rails::CommandsTasks.new(ARGV).run_command!(command)
 
 提示： 如你所见，一个空的ARGV数组将会让系统显示相关的帮助项 。
 
-如果我们使用`s`缩写代替 `server`，Rails系统会使用`aliases`定义来查找匹配的命令。
+如果我们使用`s`缩写代替 `server`，Rails系统会和`aliases`组中的项查找匹配的命令。
 
 ### `rails/commands/command_tasks.rb`
 
@@ -273,7 +273,7 @@ def default_options
 end
 ```
 
-`ENV`中没有`REQUEST_METHOD`项，所以我们可以忽略这一行。接下来的复合项`opt_parser` 已经在 `Rack::Server`被定义好了：
+`ENV`中没有`REQUEST_METHOD`项，所以我们可以忽略这一行。接下来的合并方法`opt_parser` 已经在 `Rack::Server`被定义好了：
 
 ```ruby
 def opt_parser
@@ -341,7 +341,7 @@ private
   end
 ```
 
-这个是Rails初始化过程中的第一次控制台输出。这个方法创建了一个`INT`中断信号，所以当你在服务端按下`CTRL-C`后，这将终止server的运行。我们可以看到，它创建了`tmp/cache`, `tmp/pids`, `tmp/sessions` and `tmp/sockets`等目录。在创建和声明`ActiveSupport::Logger`之前，会调用 `wrapped_app`方法来创建一个Rake 应用程序。
+这个是Rails初始化过程中的第一次控制台输出。这个方法创建了一个`INT`中断信号，所以当你在服务端按下`CTRL-C`后，这将终止server的运行。我们可以看到，它创建了`tmp/cache`,`tmp/pids`, `tmp/sessions`和`tmp/sockets`等目录。在创建和声明`ActiveSupport::Logger`之前，会调用 `wrapped_app`方法来创建一个Rake 应用程序。
 
 `super`方法会调用`Rack::Server.start` 方法，该方法包含如下定义：
 
@@ -389,7 +389,7 @@ def start &blk
 end
 ```
 
-一个Rails 应用有趣的部分在最会一行，`server.run`。这一次我们又碰到了`wrapped_app`方法这一次我们将会探索更多(温故而知新)
+一个Rails 应用有趣的部分在最后一行，`server.run`。这一次我们又碰到了`wrapped_app`方法这一次我们将会探索更多(温故而知新)
 
 ```ruby
 @wrapped_app ||= build_app app
@@ -449,7 +449,7 @@ require ::File.expand_path('../config/environment', __FILE__)
 
 ### `config/environment.rb`
 
-这是`config.ru` (`rails server`)和Passenger需要的一个普通文件，这是为服务之间通信而存在的。之前的操作都是为了创建Rack和Rails。
+这是`config.ru` (`rails server`)和信使(Passenger)需要的一个普通文件，这是为服务之间通信而存在的。之前的操作都是为了创建Rack和Rails。
 
 这个文件是以引用 `config/application.rb`开始的：
 
@@ -465,9 +465,9 @@ require File.expand_path('../application', __FILE__)
 require File.expand_path('../boot', __FILE__)
 ```
 
-如果之前在`rails server`中没有引用上述的依赖项，那么 **wouldn't**也不会和Passenger发生联系。
+如果之前在`rails server`中没有引用上述的依赖项，那么 **wouldn't**也不会和信使(Passenger)发生联系。
 
-那么，到有趣部分要开始了！
+那么，有趣部分要开始了！
 
 加载 Rails
 -------------
@@ -500,9 +500,9 @@ require "rails"
 end
 ```
 
-这样Rails框架中的所有组件已经准备就绪并可用了。我们不想深入介绍每一个框架的内部细节，不我我们强烈建议您这么做。
+这样Rails框架中的所有组件已经准备就绪处于可用状态了。我们不想深入介绍每一个框架的内部细节，不我我们强烈建议您这么做。
 
-现在，我们将关系的模块比如Rails engines,I18n 和 Rails configuration 都已经准备就绪了。
+现在，我们关心的模块比如Rails engines,I18n 和 Rails configuration 都已经准备就绪了。
 
 ### 回到 `config/environment.rb`
 
@@ -578,7 +578,7 @@ def build_app(app)
 end
 ```
 
-必须牢记，`Server#start`最后一行中的调用了`build_app`方法(被`wrapped_app`)了。接下来我们看看还剩下什么：
+必须牢记，`Server#start`最后一行中调用了`build_app`方法(被`wrapped_app`调用)了。接下来我们看看还剩下什么：
 
 ```ruby
 server.run wrapped_app, options, &blk
@@ -632,4 +632,4 @@ end
 
 我们没有深入到服务端配置的细节，因为这是我们探索Rails初始化过程之旅的终点了。
 
-高层次的浏览将有助于您提高组织和运行代码的水平，成为Rail开发高手。如果你想要知道更多，那么去读Rails的源代码将是你的不二选择。
+高层次的浏览将有助于您提高编写代码的水平，成为Rail开发高手。如果你想要知道更多，那么去读Rails的源代码将是你的不二选择。
