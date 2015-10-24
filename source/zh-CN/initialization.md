@@ -34,13 +34,13 @@ version = ">= 0"
 load Gem.bin_path('railties', 'rails', version)
 ```
 
-如何你在Rails 控制台中使用上述命令 ，你将会看到载入`railties/exe/rails`这个路径。作为 `railties/exe/rails.rb`的一部分， 包含如下代码：
+如何你在Rails 控制台中使用上述命令 ，你将会看到载入`railties/bin/rails`这个路径。作为 `railties/bin/rails.rb`的一部分， 包含如下代码：
 
 ```ruby
 require "rails/cli"
 ```
 
-文件 `railties/lib/rails/cli` 会调用`Rails::AppRailsLoader.exec_app_rails`模块.
+模块`railties/lib/rails/cli` 会调用`Rails::AppRailsLoader.exec_app_rails`方法.
 
 ### `railties/lib/rails/app_rails_loader.rb`
 
@@ -273,7 +273,7 @@ def default_options
 end
 ```
 
-There is no `REQUEST_METHOD` key in `ENV` so we can skip over that line. The next line merges in the options from `opt_parser` which is defined plainly in `Rack::Server`:
+`ENV`中没有`REQUEST_METHOD`项，所以我们可以忽略这一行。接下来的复合项`opt_parser` 已经在 `Rack::Server`被定义好了：
 
 ```ruby
 def opt_parser
@@ -281,7 +281,7 @@ def opt_parser
 end
 ```
 
-The class **is** defined in `Rack::Server`, but is overwritten in `Rails::Server` to take different arguments. Its `parse!` method begins like this:
+这个类 **is** 已经在`Rack::Server`被定义过了，但是在`Rails::Server` 使用不同的参数进行了重载。他的 `parse!`方法开始是这样的：
 
 ```ruby
 def parse!(args)
@@ -294,21 +294,15 @@ def parse!(args)
   ...
 ```
 
-This method will set up keys for the `options` which Rails will then be
-able to use to determine how its server should run. After `initialize`
-has finished, we jump back into `rails/server` where `APP_PATH` (which was
-set earlier) is required.
+这个方法为`options`建立一些配置选项，以便给Rails决定如何运行服务提供支持。`initialize`方法执行完毕后。我们将回到`rails/server`目录下，就是`APP_PATH`所指向的位置。
 
 ### `config/application`
 
-When `require APP_PATH` is executed, `config/application.rb` is loaded (recall
-that `APP_PATH` is defined in `bin/rails`). This file exists in your application
-and it's free for you to change based on your needs.
+当`require APP_PATH`操作执行完毕后。`config/application.rb` 被载入了 (重新调用`bin/rails`中的`APP_PATH`), 这个文件存在于你的应用中，你可以根据你的需求进行配置。
 
 ### `Rails::Server#start`
 
-After `config/application` is loaded, `server.start` is called. This method is
-defined like this:
+`config/application` 载入后，`server.start`方法被调用了。这个方法被定义成这样：
 
 ```ruby
 def start
@@ -347,15 +341,9 @@ private
   end
 ```
 
-This is where the first output of the Rails initialization happens. This
-method creates a trap for `INT` signals, so if you `CTRL-C` the server,
-it will exit the process. As we can see from the code here, it will
-create the `tmp/cache`, `tmp/pids`, `tmp/sessions` and `tmp/sockets`
-directories. It then calls `wrapped_app` which is responsible for
-creating the Rack app, before creating and assigning an
-instance of `ActiveSupport::Logger`.
+这个是Rails初始化过程中的第一次控制台输出。这个方法创建了一个`INT`中断信号，所以当你在服务端按下`CTRL-C`后，这将终止server的运行。我们可以看到，它创建了`tmp/cache`, `tmp/pids`, `tmp/sessions` and `tmp/sockets`等目录。在创建和声明`ActiveSupport::Logger`之前，会调用 `wrapped_app`方法来创建一个Rake 应用程序。
 
-The `super` method will call `Rack::Server.start` which begins its definition like this:
+`super`方法会调用`Rack::Server.start` 方法，该方法包含如下定义：
 
 ```ruby
 def start &blk
@@ -401,15 +389,13 @@ def start &blk
 end
 ```
 
-The interesting part for a Rails app is the last line, `server.run`. Here we encounter the `wrapped_app` method again, which this time
-we're going to explore more (even though it was executed before, and
-thus memoized by now).
+一个Rails 应用有趣的部分在最会一行，`server.run`。这一次我们又碰到了`wrapped_app`方法这一次我们将会探索更多(温故而知新)
 
 ```ruby
 @wrapped_app ||= build_app app
 ```
 
-The `app` method here is defined like so:
+这里的`app` 方法是这样定义的：
 
 ```ruby
 def app
@@ -432,7 +418,7 @@ private
   end
 ```
 
-The `options[:config]` value defaults to `config.ru` which contains this:
+`options[:config]`中的值默认会从 `config.ru` 中获取，包含内容如下：
 
 ```ruby
 # This file is used by Rack-based servers to start the application.
@@ -442,7 +428,7 @@ run <%= app_const %>
 ```
 
 
-The `Rack::Builder.parse_file` method here takes the content from this `config.ru` file and parses it using this code:
+`Rack::Builder.parse_file`方法会从`config.ru`中获取内容，包含代码如下：
 
 ```ruby
 app = new_from_string cfgfile, config
@@ -455,7 +441,7 @@ def self.new_from_string(builder_script, file="(rackup)")
 end
 ```
 
-The `initialize` method of `Rack::Builder` will take the block here and execute it within an instance of `Rack::Builder`. This is where the majority of the initialization process of Rails happens. The `require` line for `config/environment.rb` in `config.ru` is the first to run:
+`Rack::Builder`中的`initialize`方法会使用`Rack::Builder`的一个实例暂停Rails初始化的进程。`config.ru`中的`require`项`config/environment.rb`会首先执行：
 
 ```ruby
 require ::File.expand_path('../config/environment', __FILE__)
@@ -463,9 +449,9 @@ require ::File.expand_path('../config/environment', __FILE__)
 
 ### `config/environment.rb`
 
-This file is the common file required by `config.ru` (`rails server`) and Passenger. This is where these two ways to run the server meet; everything before this point has been Rack and Rails setup.
+这是`config.ru` (`rails server`)和Passenger需要的一个普通文件，这是为服务直接通信而存在的。之前的操作都是为了创建Rack和Rails。
 
-This file begins with requiring `config/application.rb`:
+这个文件是以引用 `config/application.rb`开始的：
 
 ```ruby
 require File.expand_path('../application', __FILE__)
@@ -473,21 +459,20 @@ require File.expand_path('../application', __FILE__)
 
 ### `config/application.rb`
 
-This file requires `config/boot.rb`:
+这个文件需要引用`config/boot.rb`：
 
 ```ruby
 require File.expand_path('../boot', __FILE__)
 ```
 
-But only if it hasn't been required before, which would be the case in `rails server`
-but **wouldn't** be the case with Passenger.
+如果之前在`rails server`中没有引用上述的依赖项，那么 **wouldn't**也不会和Passenger发生联系。
 
-Then the fun begins!
+那么，到有趣部分要开始了！
 
-Loading Rails
+加载 Rails
 -------------
 
-The next line in `config/application.rb` is:
+`config/application.rb`中的下一行是这样的：
 
 ```ruby
 require 'rails/all'
@@ -495,7 +480,7 @@ require 'rails/all'
 
 ### `railties/lib/rails/all.rb`
 
-This file is responsible for requiring all the individual frameworks of Rails:
+本文件中将引用和Rails框架相关的所有内容：
 
 ```ruby
 require "rails"
@@ -515,27 +500,17 @@ require "rails"
 end
 ```
 
-This is where all the Rails frameworks are loaded and thus made
-available to the application. We won't go into detail of what happens
-inside each of those frameworks, but you're encouraged to try and
-explore them on your own.
+这样Rails框架中的所有组件已经准备就绪并可用了。我们不想深入介绍每一个框架的内部细节，不我我们强烈建议您这么做。
 
-For now, just keep in mind that common functionality like Rails engines,
-I18n and Rails configuration are all being defined here.
+现在，我们将关系的模块比如Rails engines,I18n 和 Rails configuration 都已经准备就绪了。
 
-### Back to `config/environment.rb`
+### 回到 `config/environment.rb`
 
-The rest of `config/application.rb` defines the configuration for the
-`Rails::Application` which will be used once the application is fully
-initialized. When `config/application.rb` has finished loading Rails and defined
-the application namespace, we go back to `config/environment.rb`,
-where the application is initialized. For example, if the application was called
-`Blog`, here we would find `Rails.application.initialize!`, which is
-defined in `rails/application.rb`.
+`config/application.rb`为`Rails::Application`定义了Rails应用初始化之后所有需要用到的资源。当`config/application.rb` 加载了Rails和预定义的应用资源后，我们回到`config/environment.rb`，就是初始化完成的地方。比如我们的应用叫‘blog’，我们将在`rails/application.rb`中发现`Rails.application.initialize!`。
 
 ### `railties/lib/rails/application.rb`
 
-The `initialize!` method looks like this:
+`initialize!`方法长这样： 
 
 ```ruby
 def initialize!(group=:default) #:nodoc:
@@ -546,8 +521,7 @@ def initialize!(group=:default) #:nodoc:
 end
 ```
 
-As you can see, you can only initialize an app once. The initializers are run through
-the `run_initializers` method which is defined in `railties/lib/rails/initializable.rb`:
+如你所见，你可以只初始化一个应用一次。初始化器通过在`railties/lib/rails/initializable.rb`中的`run_initializers`方法运行：
 
 ```ruby
 def run_initializers(group=:default, *args)
@@ -559,24 +533,15 @@ def run_initializers(group=:default, *args)
 end
 ```
 
-The `run_initializers` code itself is tricky. What Rails is doing here is
-traversing all the class ancestors looking for those that respond to an
-`initializers` method. It then sorts the ancestors by name, and runs them.
-For example, the `Engine` class will make all the engines available by
-providing an `initializers` method on them.
+`run_initializers`代码本身是有点投机取巧的，Rails在这里要做的是遍历所有的祖先，查找一个`initializers`方法，之后根据名字进行排序，并执行它们。举个例子，`Engine`类将调用自己和祖先中提供名为`initializers`的方法。
 
-The `Rails::Application` class, as defined in `railties/lib/rails/application.rb`
-defines `bootstrap`, `railtie`, and `finisher` initializers. The `bootstrap` initializers
-prepare the application (like initializing the logger) while the `finisher`
-initializers (like building the middleware stack) are run last. The `railtie`
-initializers are the initializers which have been defined on the `Rails::Application`
-itself and are run between the `bootstrap` and `finishers`.
+`Rails::Application` 类，一个在`railties/lib/rails/application.rb`定义的类。定义了`bootstrap`, `railtie`, and `finisher`模块的初始化器。`bootstrap`的初始化器在应用被加载以前就预加载了。(类似初始化中的日志记录器)，`finisher`的初始化器则是最后加载的。`railtie`初始化器被定义在`Rails::Application`中，执行是在`bootstrap` and `finishers`之间。
 
-After this is done we go back to `Rack::Server`.
+这些完成后，我们将回到`Rack::Server` 。
 
 ### Rack: lib/rack/server.rb
 
-Last time we left when the `app` method was being defined:
+上次我们离开的时候，`app` 方法长这样：
 
 ```ruby
 def app
@@ -599,8 +564,7 @@ private
   end
 ```
 
-At this point `app` is the Rails app itself (a middleware), and what
-happens next is Rack will call all the provided middlewares:
+此时此刻，`app`是Rails 应用本身(中间件)。接下来就是Rack调用所有的依赖项了(提供支持的中间件)：
 
 ```ruby
 def build_app(app)
@@ -614,16 +578,13 @@ def build_app(app)
 end
 ```
 
-Remember, `build_app` was called (by `wrapped_app`) in the last line of `Server#start`.
-Here's how it looked like when we left:
+必须牢记，`Server#start`最后一行中的调用了`build_app`方法(被`wrapped_app`)了。接下来我们看看还剩下什么：
 
 ```ruby
 server.run wrapped_app, options, &blk
 ```
 
-At this point, the implementation of `server.run` will depend on the
-server you're using. For example, if you were using Puma, here's what
-the `run` method would look like:
+此时此刻，`server.run` 方法将依赖于你所以的server 。比如，如果你用的是Puma， 那么就会是下面这个结果：
 
 ```ruby
 ...
@@ -669,10 +630,6 @@ def self.run(app, options = {})
 end
 ```
 
-We won't dig into the server configuration itself, but this is
-the last piece of our journey in the Rails initialization process.
+我们没有深入到服务端配置的细节，因为这是我们探索Rails初始化过程之旅的终点了。
 
-This high level overview will help you understand when your code is
-executed and how, and overall become a better Rails developer. If you
-still want to know more, the Rails source code itself is probably the
-best place to go next.
+宽视角的浏览将有助于你提高组织和运行代码的水平，成为高段位的Rail开发者。如果你想要管多，那么去读Rails的源代码将是你的不二选择。
