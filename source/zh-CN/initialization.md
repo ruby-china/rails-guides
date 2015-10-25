@@ -584,7 +584,7 @@ end
 server.run wrapped_app, options, &blk
 ```
 
-此时此刻，`server.run` 方法将依赖于你所以的server 。比如，如果你用的是Puma， 那么就会是下面这个结果：
+此时此刻，调用`server.run` 方法将依赖于你所用的Server类型 。比如，如果你的Server的是Puma， 那么就会是下面这个结果：
 
 ```ruby
 ...
