@@ -6,7 +6,7 @@
 读完本文，你将学到：
 
 * Ajax 基本知识；
-* 剥离式 JavaScript；
+* 非侵入式 JavaScript；
 * 如何使用 Rails 内建的帮助方法；
 * 如何在服务器端处理 Ajax；
 * Turbolinks 简介；
@@ -35,10 +35,10 @@ $.ajax(url: "/test").done (html) ->
 
 Rails 内建了很多使用这种技术开发程序的功能，基本上无需自己动手编写上述代码。后文介绍 Rails 如何为开发这种程序提供帮助，不过都构建在这种简单的技术之上。
 
-剥离式 JavaScript
+非侵入式 JavaScript
 ----------------
 
-Rails 使用一种叫做“剥离式 JavaScript”（Unobtrusive JavaScript）的技术把 JavaScript 应用到 DOM 上。剥离式 JavaScript 是前端开发社区推荐使用的方法，但有些教程可能会使用其他方式。
+Rails 使用一种叫做“非侵入式 JavaScript”（Unobtrusive JavaScript）的技术把 JavaScript 应用到 DOM 上。非侵入式 JavaScript 是前端开发社区推荐使用的方法，但有些教程可能会使用其他方式。
 
 下面是编写 JavaScript 最简单的方式，你可能见过，这叫做“行间 JavaScript”：
 
@@ -96,7 +96,7 @@ $ ->
 <a href="#" data-background-color="#000099" data-text-color="#FFFFFF">Paint it blue</a>
 ```
 
-我们把这种方法称为“剥离式 JavaScript”，因为 JavaScript 代码不再和 HTML 混用。我们把两中代码完全分开，这么做易于修改功能。我们可以轻易地把这种效果应用到其他链接上，只要添加相应的 `data` 属性就行。所有 JavaScript 代码都可以放在一个文件中，进行压缩，每个页面都使用这个 JavaScript 文件，因此只在第一次请求时加载，后续请求会直接从缓存中读取。“剥离式 JavaScript”带来的好处太多了。
+我们把这种方法称为“非侵入式 JavaScript”，因为 JavaScript 代码不再和 HTML 混用。我们把两中代码完全分开，这么做易于修改功能。我们可以轻易地把这种效果应用到其他链接上，只要添加相应的 `data` 属性就行。所有 JavaScript 代码都可以放在一个文件中，进行压缩，每个页面都使用这个 JavaScript 文件，因此只在第一次请求时加载，后续请求会直接从缓存中读取。“非侵入式 JavaScript”带来的好处太多了。
 
 Rails 团队极力推荐使用这种方式编写 CoffeeScript 和 JavaScript，而且你会发现很多代码库都沿用了这种方式。
 
@@ -105,7 +105,7 @@ Rails 团队极力推荐使用这种方式编写 CoffeeScript 和 JavaScript，�
 
 Rails 提供了很多视图帮助方法协助你生成 HTML，如果想在元素上实现 Ajax 效果也没问题。
 
-因为使用的是剥离式 JavaScript，所以 Ajax 相关的帮助方法其实分成两部分，一部分是 JavaScript 代码，一部分是 Ruby 代码。
+因为使用的是非侵入式 JavaScript，所以 Ajax 相关的帮助方法其实分成两部分，一部分是 JavaScript 代码，一部分是 Ruby 代码。
 
 [rails.js](https://github.com/rails/jquery-ujs/blob/master/src/rails.js) 提供 JavaScript 代码，常规的 Ruby 视图帮助方法用来生成 DOM 标签。rails.js 中的 CoffeeScript 会监听这些属性，执行相应的处理程序。
 
