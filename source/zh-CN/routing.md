@@ -183,61 +183,61 @@ form_for @geocoder, url: geocoder_path do |f|
 
 ```ruby
 namespace :admin do
-  resources :posts, :comments
+  resources :articles, :comments
 end
 ```
 
-上述代码会为 `posts` 和 `comments` 控制器生成很多路由。对 `Admin::PostsController` 来说，Rails 会生成：
+上述代码会为 `articles` 和 `comments` 控制器生成很多路由。对 `Admin::ArticlesController` 来说，Rails 会生成：
 
-| HTTP 方法 | 路径                  | 控制器#动作         | 具名帮助方法              |
-|-----------|-----------------------|---------------------|---------------------------|
-| GET       | /admin/posts          | admin/posts#index   | admin_posts_path          |
-| GET       | /admin/posts/new      | admin/posts#new     | new_admin_post_path       |
-| POST      | /admin/posts          | admin/posts#create  | admin_posts_path          |
-| GET       | /admin/posts/:id      | admin/posts#show    | admin_post_path(:id)      |
-| GET       | /admin/posts/:id/edit | admin/posts#edit    | edit_admin_post_path(:id) |
-| PATCH/PUT | /admin/posts/:id      | admin/posts#update  | admin_post_path(:id)      |
-| DELETE    | /admin/posts/:id      | admin/posts#destroy | admin_post_path(:id)      |
+| HTTP 方法 | 路径                     | 控制器#动作            | 具名帮助方法                 |
+|-----------|--------------------------|------------------------|------------------------------|
+| GET       | /admin/articles          | admin/articles#index   | admin_articles_path          |
+| GET       | /admin/articles/new      | admin/articles#new     | new_admin_article_path       |
+| POST      | /admin/articles          | admin/articles#create  | admin_articles_path          |
+| GET       | /admin/articles/:id      | admin/articles#show    | admin_article_path(:id)      |
+| GET       | /admin/articles/:id/edit | admin/articles#edit    | edit_admin_article_path(:id) |
+| PATCH/PUT | /admin/articles/:id      | admin/articles#update  | admin_article_path(:id)      |
+| DELETE    | /admin/articles/:id      | admin/articles#destroy | admin_article_path(:id)      |
 
-如果想把 `/posts`（前面没有 `/admin`）映射到 `Admin::PostsController` 控制器上，可以这么声明：
+如果想把 `/articles`（前面没有 `/admin`）映射到 `Admin::ArticlesController` 控制器上，可以这么声明：
 
 ```ruby
 scope module: 'admin' do
-  resources :posts, :comments
+  resources :articles, :comments
 end
 ```
 
 如果只有一个资源，还可以这么声明：
 
 ```ruby
-resources :posts, module: 'admin'
+resources :articles, module: 'admin'
 ```
 
-如果想把 `/admin/posts` 映射到 `PostsController` 控制器（不在 `Admin::` 命名空间内），可以这么声明：
+如果想把 `/admin/articles` 映射到 `ArticlesController` 控制器（不在 `Admin::` 命名空间内），可以这么声明：
 
 ```ruby
 scope '/admin' do
-  resources :posts, :comments
+  resources :articles, :comments
 end
 ```
 
 如果只有一个资源，还可以这么声明：
 
 ```ruby
-resources :posts, path: '/admin/posts'
+resources :articles, path: '/admin/articles'
 ```
 
-在上述两种用法中，具名路由没有变化，跟不用 `scope` 时一样。在后一种用法中，映射到 `PostsController` 控制器上的路径如下：
+在上述两种用法中，具名路由没有变化，跟不用 `scope` 时一样。在后一种用法中，映射到 `ArticlesController` 控制器上的路径如下：
 
-| HTTP 方法 | 路径                  | 控制器#动作       | 具名帮助方法        |
-|-----------|-----------------------|-------------------|---------------------|
-| GET       | /admin/posts          | posts#index       | posts_path          |
-| GET       | /admin/posts/new      | posts#new         | new_post_path       |
-| POST      | /admin/posts          | posts#create      | posts_path          |
-| GET       | /admin/posts/:id      | posts#show        | post_path(:id)      |
-| GET       | /admin/posts/:id/edit | posts#edit        | edit_post_path(:id) |
-| PATCH/PUT | /admin/posts/:id      | posts#update      | post_path(:id)      |
-| DELETE    | /admin/posts/:id      | posts#destroy     | post_path(:id)      |
+| HTTP 方法 | 路径                     | 控制器#动作          | 具名帮助方法           |
+|-----------|--------------------------|----------------------|------------------------|
+| GET       | /admin/articles          | articles#index       | articles_path          |
+| GET       | /admin/articles/new      | articles#new         | new_article_path       |
+| POST      | /admin/articles          | articles#create      | articles_path          |
+| GET       | /admin/articles/:id      | articles#show        | article_path(:id)      |
+| GET       | /admin/articles/:id/edit | articles#edit        | edit_article_path(:id) |
+| PATCH/PUT | /admin/articles/:id      | articles#update      | article_path(:id)      |
+| DELETE    | /admin/articles/:id      | articles#destroy     | article_path(:id)      |
 
 TIP: 如果在 `namespace` 代码块中想使用其他的控制器命名空间，可以指定控制器的绝对路径，例如 `get '/foo' => '/foo#index'`。
 
@@ -304,7 +304,7 @@ TIP: 嵌套资源不可超过一层。
 避免深层嵌套的方法之一，是把控制器集合动作放在父级资源中，表明层级关系，但不嵌套成员动作。也就是说，用最少的信息表明资源的路由关系，如下所示：
 
 ```ruby
-resources :posts do
+resources :articles do
   resources :comments, only: [:index, :new, :create]
 end
 resources :comments, only: [:show, :edit, :update, :destroy]
@@ -313,7 +313,7 @@ resources :comments, only: [:show, :edit, :update, :destroy]
 这种做法在描述路由和深层嵌套之间做了适当的平衡。上述代码还有简写形式，即使用 `:shallow` 选项：
 
 ```ruby
-resources :posts do
+resources :articles do
   resources :comments, shallow: true
 end
 ```
@@ -321,7 +321,7 @@ end
 这种形式生成的路由和前面一样。`:shallow` 选项还可以在父级资源中使用，此时所有嵌套其中的资源都是浅层嵌套：
 
 ```ruby
-resources :posts, shallow: true do
+resources :articles, shallow: true do
   resources :comments
   resources :quotes
   resources :drafts
@@ -332,7 +332,7 @@ end
 
 ```ruby
 shallow do
-  resources :posts do
+  resources :articles do
     resources :comments
     resources :quotes
     resources :drafts
@@ -344,7 +344,7 @@ end
 
 ```ruby
 scope shallow_path: "sekret" do
-  resources :posts do
+  resources :articles do
     resources :comments, shallow: true
   end
 end
@@ -352,21 +352,21 @@ end
 
 上述代码为 `comments` 资源生成的路由如下：
 
-| HTTP 方法 | 路径                                   | 控制器#动作       | 具名帮助方法          |
-|-----------|----------------------------------------|-------------------|-----------------------|
-| GET       | /posts/:post_id/comments(.:format)     | comments#index    | post_comments_path    |
-| POST      | /posts/:post_id/comments(.:format)     | comments#create   | post_comments_path    |
-| GET       | /posts/:post_id/comments/new(.:format) | comments#new      | new_post_comment_path |
-| GET       | /sekret/comments/:id/edit(.:format)    | comments#edit     | edit_comment_path     |
-| GET       | /sekret/comments/:id(.:format)         | comments#show     | comment_path          |
-| PATCH/PUT | /sekret/comments/:id(.:format)         | comments#update   | comment_path          |
-| DELETE    | /sekret/comments/:id(.:format)         | comments#destroy  | comment_path          |
+| HTTP 方法 | 路径                                         | 控制器#动作       | 具名帮助方法             |
+|-----------|----------------------------------------------|-------------------|--------------------------|
+| GET       | /articles/:article_id/comments(.:format)     | comments#index    | article_comments_path    |
+| POST      | /articles/:article_id/comments(.:format)     | comments#create   | article_comments_path    |
+| GET       | /articles/:article_id/comments/new(.:format) | comments#new      | new_article_comment_path |
+| GET       | /sekret/comments/:id/edit(.:format)          | comments#edit     | edit_comment_path        |
+| GET       | /sekret/comments/:id(.:format)               | comments#show     | comment_path             |
+| PATCH/PUT | /sekret/comments/:id(.:format)               | comments#update   | comment_path             |
+| DELETE    | /sekret/comments/:id(.:format)               | comments#destroy  | comment_path             |
 
 `:shallow_prefix` 选项在具名帮助方法前加上指定的前缀：
 
 ```ruby
 scope shallow_prefix: "sekret" do
-  resources :posts do
+  resources :articles do
     resources :comments, shallow: true
   end
 end
@@ -374,15 +374,15 @@ end
 
 上述代码为 `comments` 资源生成的路由如下：
 
-| HTTP 方法 | 路径                                   | 控制器#动作       | 具名帮助方法             |
-| --------- | -------------------------------------- | ----------------- | ------------------------ |
-| GET       | /posts/:post_id/comments(.:format)     | comments#index    | post_comments_path       |
-| POST      | /posts/:post_id/comments(.:format)     | comments#create   | post_comments_path       |
-| GET       | /posts/:post_id/comments/new(.:format) | comments#new      | new_post_comment_path    |
-| GET       | /comments/:id/edit(.:format)           | comments#edit     | edit_sekret_comment_path |
-| GET       | /comments/:id(.:format)                | comments#show     | sekret_comment_path      |
-| PATCH/PUT | /comments/:id(.:format)                | comments#update   | sekret_comment_path      |
-| DELETE    | /comments/:id(.:format)                | comments#destroy  | sekret_comment_path      |
+| HTTP 方法 | 路径                                         | 控制器#动作       | 具名帮助方法             |
+| --------- | -------------------------------------------- | ----------------- | ------------------------ |
+| GET       | /articles/:article_id/comments(.:format)     | comments#index    | article_comments_path    |
+| POST      | /articles/:article_id/comments(.:format)     | comments#create   | article_comments_path    |
+| GET       | /articles/:article_id/comments/new(.:format) | comments#new      | new_article_comment_path |
+| GET       | /comments/:id/edit(.:format)                 | comments#edit     | edit_sekret_comment_path |
+| GET       | /comments/:id(.:format)                      | comments#show     | sekret_comment_path      |
+| PATCH/PUT | /comments/:id(.:format)                      | comments#update   | sekret_comment_path      |
+| DELETE    | /comments/:id(.:format)                      | comments#destroy  | sekret_comment_path      |
 
 ### Routing Concerns
 
@@ -403,7 +403,7 @@ Concerns 可在资源中重复使用，避免代码重复：
 ```ruby
 resources :messages, concerns: :commentable
 
-resources :posts, concerns: [:commentable, :image_attachable]
+resources :articles, concerns: [:commentable, :image_attachable]
 ```
 
 上述声明等价于：
@@ -413,7 +413,7 @@ resources :messages do
   resources :comments
 end
 
-resources :posts do
+resources :articles do
   resources :comments
   resources :images, only: :index
 end
@@ -422,7 +422,7 @@ end
 Concerns 在路由的任何地方都能使用，例如，在作用域或命名空间中：
 
 ```ruby
-namespace :posts do
+namespace :articles do
   concerns :commentable
 end
 ```
@@ -660,15 +660,15 @@ get 'photos/:id', to: 'photos#show', id: /[A-Z]\d{5}/
 `:constraints` 选项中的正则表达式不能使用“锚记”。例如，下面的路由是错误的：
 
 ```ruby
-get '/:id', to: 'posts#show', constraints: {id: /^\d/}
+get '/:id', to: 'photos#show', constraints: {id: /^\d/}
 ```
 
 之所以不能使用锚记，是因为所有正则表达式都从头开始匹配。
 
-例如，有下面的路由。如果 `to_param` 方法得到的值以数字开头，例如 `1-hello-world`，就会把请求交给 `posts` 控制器处理；如果 `to_param` 方法得到的值不以数字开头，例如 `david`，就交给 `users` 控制器处理。
+例如，有下面的路由。如果 `to_param` 方法得到的值以数字开头，例如 `1-hello-world`，就会把请求交给 `articles` 控制器处理；如果 `to_param` 方法得到的值不以数字开头，例如 `david`，就交给 `users` 控制器处理。
 
 ```ruby
-get '/:id', to: 'posts#show', constraints: { id: /\d.+/ }
+get '/:id', to: 'photos#show', constraints: { id: /\d.+/ }
 get '/:username', to: 'users#show'
 ```
 
@@ -769,20 +769,20 @@ NOTE: ```
 在路由中可以使用 `redirect` 帮助方法把一个路径重定向到另一个路径：
 
 ```ruby
-get '/stories', to: redirect('/posts')
+get '/stories', to: redirect('/articles')
 ```
 
 重定向时还可使用匹配的动态路径片段：
 
 ```ruby
-get '/stories/:name', to: redirect('/posts/%{name}')
+get '/stories/:name', to: redirect('/articles/%{name}')
 ```
 
 `redirect` 还可使用代码块形式，传入路径参数和 `request` 对象作为参数：
 
 ```ruby
-get '/stories/:name', to: redirect {|path_params, req| "/posts/#{path_params[:name].pluralize}" }
-get '/stories', to: redirect {|path_params, req| "/posts/#{req.subdomain}" }
+get '/stories/:name', to: redirect {|path_params, req| "/articles/#{path_params[:name].pluralize}" }
+get '/stories', to: redirect {|path_params, req| "/articles/#{req.subdomain}" }
 ```
 
 注意，`redirect` 实现的是 301 "Moved Permanently" 重定向，有些浏览器或代理服务器会缓存这种重定向，导致旧的页面不可用。
@@ -791,7 +791,7 @@ get '/stories', to: redirect {|path_params, req| "/posts/#{req.subdomain}" }
 
 ### 映射到 Rack 程序
 
-除了使用字符串，例如 `'posts#index'`，把请求映射到 `PostsController` 的 `index` 动作上之外，还可使用 [Rack](rails_on_rack.html) 程序作为端点：
+除了使用字符串，例如 `'articles#index'`，把请求映射到 `ArticlesController` 的 `index` 动作上之外，还可使用 [Rack](rails_on_rack.html) 程序作为端点：
 
 ```ruby
 match '/application.js', to: Sprockets, via: :all
@@ -799,7 +799,7 @@ match '/application.js', to: Sprockets, via: :all
 
 只要 `Sprockets` 能响应 `call` 方法，而且返回 `[status, headers, body]` 形式的结果，路由器就不知道这是个 Rack 程序还是动作。这里使用 `via: :all` 是正确的，因为我们想让 Rack 程序自行判断，处理所有 HTTP 方法。
 
-NOTE: 其实 `'posts#index'` 的复杂形式是 `PostsController.action(:index)`，得到的也是个合法的 Rack 程序。
+NOTE: 其实 `'articles#index'` 的复杂形式是 `ArticlesController.action(:index)`，得到的也是个合法的 Rack 程序。
 
 ### 使用 `root`
 
@@ -835,7 +835,7 @@ get 'こんにちは', to: 'welcome#index'
 定制资源式路由
 ------------
 
-虽然 `resources :posts` 默认生成的路由和帮助方法都满足大多数需求，但有时还是想做些定制。Rails 允许对资源式帮助方法做几乎任何形式的定制。
+虽然 `resources :articles` 默认生成的路由和帮助方法都满足大多数需求，但有时还是想做些定制。Rails 允许对资源式帮助方法做几乎任何形式的定制。
 
 ### 指定使用的控制器
 
@@ -970,11 +970,11 @@ NOTE: `namespace` 作用域会自动添加 `:as` 以及 `:module` 和 `:path` �
 
 ```ruby
 scope ':username' do
-  resources :posts
+  resources :articles
 end
 ```
 
-这段路由能识别 `/bob/posts/1` 这种请求，在控制器、帮助方法和视图中可使用 `params[:username]` 获取 `username` 的值。
+这段路由能识别 `/bob/articles/1` 这种请求，在控制器、帮助方法和视图中可使用 `params[:username]` 获取 `username` 的值。
 
 ### 限制生成的路由
 
