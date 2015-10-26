@@ -166,9 +166,9 @@ config.middleware.use Rack::BounceFavicon
 config.middleware.insert_after ActiveRecord::QueryCache, Lifo::Cache, page_cache: false
 ```
 
-#### 交换中间件位置
+#### 替换中间件
 
-使用 `config.middleware.swap` 可以交换middleware堆栈中的中间件位置：
+使用 `config.middleware.swap` 可以替换middleware堆栈中的中间件：
 
 ```ruby
 # config/application.rb
