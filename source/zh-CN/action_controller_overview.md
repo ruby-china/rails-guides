@@ -790,7 +790,7 @@ Rails 内建了两种 HTTP 身份认证方式：
 
 ### HTTP 基本身份认证
 
-大多数浏览器和 HTTP 客户端都支持 HTTP 基本身份认证。例如，在浏览器中如果要访问只有管理员才能查看的页面，就出回显一个对话框，要求输入用户名和密码。使用内建的身份认证非常简单，只要使用一个方法，即 `http_basic_authenticate_with`。
+大多数浏览器和 HTTP 客户端都支持 HTTP 基本身份认证。例如，在浏览器中如果要访问只有管理员才能查看的页面，就会出现一个对话框，要求输入用户名和密码。使用内建的身份认证非常简单，只要使用一个方法，即 `http_basic_authenticate_with`。
 
 ```ruby
 class AdminsController < ApplicationController
