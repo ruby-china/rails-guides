@@ -25,7 +25,7 @@ Person.create(name: "John Doe").valid? # => true
 Person.create(name: nil).valid? # => false
 ```
 
-如上所示，如果 `Person` 没有 `name` 属性，验证就会将其视为不合法对象。创建的第二个 `Person` 对象不会存入数据库。
+如上所示，如果 `Person`的 `name` 属性值为空，验证就会将其视为不合法对象。创建的第二个 `Person` 对象不会存入数据库。
 
 在深入探讨之前，我们先来介绍数据验证在整个程序中的作用。
 
