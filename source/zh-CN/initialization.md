@@ -281,7 +281,7 @@ def opt_parser
 end
 ```
 
-**is**类已经在`Rack::Server`被定义过了，但是在`Rails::Server` 使用不同的参数进行了重载。他的 `parse!`方法如下：
+**这个**方法已经在`Rack::Server`被定义过了，但是在`Rails::Server` 使用不同的参数进行了重载。他的 `parse!`方法如下：
 
 ```ruby
 def parse!(args)
