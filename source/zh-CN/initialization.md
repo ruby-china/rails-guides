@@ -449,7 +449,7 @@ require ::File.expand_path('../config/environment', __FILE__)
 
 ### `config/environment.rb`
 
-这是`config.ru` (`rails server`)和信使(Passenger)都要用到的文件，它是为服务之间通信而存在的。之前的操作都是为了创建Rack和Rails。
+这是`config.ru` (`rails server`)和信使(Passenger)都要用到的文件，是为两者交流的媒介。之前的操作都是为了创建Rack和Rails。
 
 这个文件是以引用 `config/application.rb`开始的：
 
@@ -465,7 +465,7 @@ require File.expand_path('../application', __FILE__)
 require File.expand_path('../boot', __FILE__)
 ```
 
-如果之前在`rails server`中没有引用上述的依赖项，那么 **wouldn't**也不会和信使(Passenger)发生联系。
+如果之前在`rails server`中没有引用上述的依赖项，那么它**将不会**也和信使(Passenger)发生联系。
 
 那么，有趣的部分要开始了！
 
