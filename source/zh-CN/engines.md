@@ -328,7 +328,7 @@ create      test/fixtures/blorgh/comments.yml
 $ rake db:migrate
 ```
 
-为了在主题中显示评论，需要在`app/views/blorgh/articles/show.html.erb`的 "Edit" 按钮之前添加如下代码：
+为了在主题中显示评论，需要在`app/views/blorgh/articles/show.html.erb`的 "Edit" 按钮之前添加如下代c码：
 
 ```html+erb
 <h3>Comments</h3>
@@ -742,7 +742,8 @@ Blorgh.author_class = "User"
 
 ### 功能测试
 
-在编写引擎的功能测试时，我们会假定这个引擎会在一个应用中使用。`test/dummy`目录中的应用和你引擎结构差不多。这是因为建立测试环境后，引擎需要一个宿主来测试它的功能，特别是控制器。这意味着你需要在一个控制器功能测试函数中添加如下代码：
+在编写引擎的功能测试时，我们会假定这个引擎会在一个
+Rails应用中使用。`test/dummy`目录中的Rails应用和你引擎结构差不多。这是因为建立测试环境后，引擎需要一个宿主来测试它的功能，特别是控制器。这意味着你需要在一个控制器功能测试函数中添加如下代码：
 
 ```ruby
 get :index
@@ -766,7 +767,7 @@ end
 
 上诉操作也同时保证了引擎的url助手方法在你的测试中正常使用。
 
-引擎功能优化 
+引擎优化 
 ------------------------------
 
 本章节将介绍在Rails应用中如何添加或重载引擎的MVC功能。
