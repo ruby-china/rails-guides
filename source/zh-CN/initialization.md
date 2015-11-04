@@ -76,7 +76,7 @@ ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../../Gemfile', __FILE__)
 require 'bundler/setup' if File.exist?(ENV['BUNDLE_GEMFILE'])
 ```
 
-在一个标准的Rails应用中，一个`Gemfile`文件配置会配置它的所有依赖项。`config/boot.rb`文件会根据`ENV['BUNDLE_GEMFILE']`中的值来查找`Gemfile`的路径。如果Gemfile文件存在，那么`bundler/setup`操作会被执行，Bundler执行该操作是为了配置Gemfile依赖项的加载路径。
+在一个标准的Rails应用中的`Gemfile`文件会配置它的所有依赖项。`config/boot.rb`文件会根据`ENV['BUNDLE_GEMFILE']`中的值来查找`Gemfile`文件的路径。如果`Gemfile`文件存在，那么`bundler/setup`操作会被执行，Bundler执行该操作是为了配置Gemfile依赖项的加载路径。
 
 一个标准的Rails应用会包含若干Gem包，特别是下面这些：
 
@@ -220,7 +220,7 @@ def initialize(options = nil)
 end
 ```
 
-在这种情况下，`options` 的值是 `nil`，所以在这个方法中相当于什么都没做。
+在这种情况下，`options` 的值是 `nil`，所以这个方法中相当于什么都没做。
 
 当`Rack::Server`中的`super`方法执行完毕后。我们回到`rails/commands/server.rb`，此时此刻，`Rails::Server`对象会调用 `set_environment` 方法，这个方法貌似看上去什么也没干： 
 
@@ -238,7 +238,7 @@ def options
 end
 ```
 
-接着`parse_options`方法定义如下：
+接着`parse_options`方法部分代码如下：
 
 ```ruby
 def parse_options(args)
