@@ -12,7 +12,7 @@ Rails 应用的初始化过程
 
 --------------------------------------------------------------------------------
  
-本章节通过介绍一个基于Ruby on Rails框架默认配置的 Rails 4 应用程序启动过程中的方法调用，详细介绍了每个调用的细节。通过本章节，我们将了解当你执行`rails server`命令启动你的应用时， 背后究竟都发生了什么。
+本章节通过介绍一个基于Ruby on Rails框架默认配置的 Rails 4 应用程序启动过程中的方法调用，详细介绍了每个调用的细节。通过本章节，我们将了解当你执行`rails server`命令启动你的Rails应用时，背后究竟都发生了什么。
 
 
 提示：本章节中的路径如果没有特别说明都是指Rails应用程序下的路径。
@@ -20,21 +20,21 @@ Rails 应用的初始化过程
 
 提示：如果你想浏览Rails的源代码[sourcecode](https://github.com/rails/rails)，强烈建议您使用快捷键 `t`快速查找Github中的文件。
 
-启动!
+启 动 !
 -------
 
-我们们现在准备启动和初始化一个Rails 应用。 一个Rails 应用 经常是以运行命令 `rails console` 或者 `rails server` 开始的。
+我们现在准备启动和初始化一个Rails 应用。 一个Rails 应用经常是以运行命令 `rails console` 或者 `rails server` 开始的。
 
 ### `railties/bin/rails`
 
-Rails 中的 `rails server` 是一个你rails应用程序所在文件中的一个 ruby 的可执行程序，该程序包含如下操作：
+Rails应用中的 `rails server`命令是Rails应用程序所在文件中的一个Ruby的可执行程序，该程序包含如下操作：
 
 ```ruby
 version = ">= 0"
 load Gem.bin_path('railties', 'rails', version)
 ```
 
-如果你在Rails 控制台中使用上述命令，你将会看到载入`railties/bin/rails`这个路径。作为 `railties/bin/rails.rb`的一部分， 包含如下代码：
+如果你在Rails 控制台中使用上述命令，你将会看到载入`railties/bin/rails`这个路径。作为 `railties/bin/rails.rb`的一部分，包含如下代码：
 
 ```ruby
 require "rails/cli"
@@ -44,7 +44,7 @@ require "rails/cli"
 
 ### `railties/lib/rails/app_rails_loader.rb`
 
-`exec_app_rails`模块的主要功能是去执行你的Rails应用中`bin/rails`文件夹下的指令。如果当前文件夹下没有`bin/rails`文件，它会到父级目录去搜索，直到找到为止（windows下应该会去搜索环境变量中的路径），在Rails应用程序目录下的任意位置(命令行模式下)，这将会触发一个`rails`的指令。
+`exec_app_rails`模块的主要功能是去执行你的Rails应用中`bin/rails`文件夹下的指令。如果当前文件夹下没有`bin/rails`文件，它会到父级目录去搜索，直到找到为止（Windows下应该会去搜索环境变量中的路径），在Rails应用程序目录下的任意位置(命令行模式下)，都可以执行`rails`的命令。
 
 因为`rails server`命令和下面的操作是等价的：
 
@@ -76,9 +76,9 @@ ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../../Gemfile', __FILE__)
 require 'bundler/setup' if File.exist?(ENV['BUNDLE_GEMFILE'])
 ```
 
-在一个标准的Rails应用中，一个`Gemfile`文件配置会配置它所有依赖项。`config/boot.rb`文件会根据`ENV['BUNDLE_GEMFILE']`中的值来查找`Gemfile`的路径。如果Gemfile文件存在，那么`bundler/setup`操作会被执行，Bundler执行该操作是为了配置Gemfile依赖项的加载路径。
+在一个标准的Rails应用中的`Gemfile`文件会配置它的所有依赖项。`config/boot.rb`文件会根据`ENV['BUNDLE_GEMFILE']`中的值来查找`Gemfile`文件的路径。如果`Gemfile`文件存在，那么`bundler/setup`操作会被执行，Bundler执行该操作是为了配置Gemfile依赖项的加载路径。
 
-一个标准的Rails应用会依赖若干gem包，特别是下面这些：
+一个标准的Rails应用会包含若干Gem包，特别是下面这些：
 
 * actionmailer
 * actionpack
@@ -130,9 +130,9 @@ require 'rails/commands/commands_tasks'
 Rails::CommandsTasks.new(ARGV).run_command!(command)
 ```
 
-提示： 如你所见，一个空的ARGV数组将会让系统显示相关的帮助项 。
+提示： 如你所见，一个空的ARGV数组将会让系统显示相关的帮助项。
 
-如果我们使用`s`缩写代替 `server`，Rails系统会和`aliases`组中的项查找匹配的命令。
+如果我们使用`s`缩写代替 `server`，Rails系统会从`aliases`中查找匹配的命令。
 
 ### `rails/commands/command_tasks.rb`
 
@@ -196,7 +196,7 @@ module Rails
 
 ### `rails/commands/server.rb`
 
-这个文件中定义的`Rails::Server` 类是继承自 `Rack::Server`类的。当`Rails::Server.new` 被调用时，会在 `rails/commands/server.rb`中调用一个`initialize`方法：
+这个文件中定义的`Rails::Server`类是继承自`Rack::Server`类的。当`Rails::Server.new`被调用时，会在 `rails/commands/server.rb`中调用一个`initialize`方法：
 
 ```ruby
 def initialize(*)
@@ -209,7 +209,7 @@ end
 
 ### Rack: `lib/rack/server.rb`
 
-`Rack::Server`会为所以基于Rack的应用提供一般的服务接口，现在它已经是Rails框架的一部分了。
+`Rack::Server`会为所有基于Rack的应用提供服务接口，现在它已经是Rails框架的一部分了。
 
 `Rack::Server`中的`initialize` 方法会简单的设置一对变量：
 
@@ -222,7 +222,7 @@ end
 
 在这种情况下，`options` 的值是 `nil`，所以在这个方法中相当于什么都没做。
 
-当`Rack::Server`中的`super`方法执行完毕后。我们会回到`rails/commands/server.rb`，此时此刻，`Rails::Server`对象会调用 `set_environment` 方法，貌似这个方法看上去什么也没干： 
+当`Rack::Server`中的`super`方法执行完毕后。我们回到`rails/commands/server.rb`，此时此刻，`Rails::Server`对象会调用 `set_environment` 方法，这个方法貌似看上去什么也没干： 
 
 ```ruby
 def set_environment
@@ -238,7 +238,7 @@ def options
 end
 ```
 
-接着`parse_options`被定义成这样：
+接着`parse_options`方法部分代码如下：
 
 ```ruby
 def parse_options(args)
@@ -255,7 +255,7 @@ def parse_options(args)
 end
 ```
 
-`default_options` 的配置如下：
+`default_options`方法的代码如下：
 
 ```ruby
 def default_options
@@ -298,11 +298,11 @@ def parse!(args)
 
 ### `config/application`
 
-当`require APP_PATH`操作执行完毕后。`config/application.rb` 被载入了 (重新调用`bin/rails`中的`APP_PATH`), 这个文件存在于你的应用中，你可以根据你的需求进行配置。
+当`require APP_PATH`操作执行完毕后。`config/application.rb` 被载入了 (重新调用`bin/rails`中的`APP_PATH`), 在你的应用中，你可以根据需求对该文件进行配置。
 
 ### `Rails::Server#start`
 
-`config/application` 载入后，`server.start`方法被调用了。这个方法定义如下：
+`config/application`载入后，`server.start`方法被调用了。这个方法定义如下：
 
 ```ruby
 def start
@@ -341,7 +341,7 @@ private
   end
 ```
 
-这个是Rails初始化过程中的第一次控制台输出。这个方法创建了一个`INT`中断信号，所以当你在服务端按下`CTRL-C`后，这将终止Server的运行。我们可以看到，它创建了`tmp/cache`,`tmp/pids`, `tmp/sessions`和`tmp/sockets`等目录。在创建和声明`ActiveSupport::Logger`之前，会调用 `wrapped_app`方法来创建一个Rake 应用程序。
+这是Rails初始化过程中的第一次控制台输出。这个方法创建了一个`INT`中断信号，所以当你在服务端控制台按下`CTRL-C`键后，这将终止Server的运行。我们可以看到，它创建了`tmp/cache`,`tmp/pids`, `tmp/sessions`和`tmp/sockets`等目录。在创建和声明`ActiveSupport::Logger`之前，会调用 `wrapped_app`方法来创建一个Rake 应用程序。
 
 `super`会调用`Rack::Server.start` 方法，该方法定义如下：
 
@@ -395,7 +395,7 @@ end
 @wrapped_app ||= build_app app
 ```
 
-这里的`app` 方法定义如下：
+这里的`app`方法定义如下：
 
 ```ruby
 def app
@@ -449,7 +449,7 @@ require ::File.expand_path('../config/environment', __FILE__)
 
 ### `config/environment.rb`
 
-这是`config.ru` (`rails server`)和信使(Passenger)都要用到的文件，是为两者交流的媒介。之前的操作都是为了创建Rack和Rails。
+这是`config.ru` (`rails server`)和信使(Passenger)都要用到的文件，是两者交流的媒介。之前的操作都是为了创建Rack和Rails。
 
 这个文件是以引用 `config/application.rb`开始的：
 
@@ -465,9 +465,9 @@ require File.expand_path('../application', __FILE__)
 require File.expand_path('../boot', __FILE__)
 ```
 
-如果之前在`rails server`中没有引用上述的依赖项，那么它**将不会**也和信使(Passenger)发生联系。
+如果之前在`rails server`中没有引用上述的依赖项，那么它**将不会**和信使(Passenger)发生联系。
 
-那么，有趣的部分要开始了！
+现在，有趣的部分要开始了！
 
 加载 Rails
 -------------
@@ -533,9 +533,9 @@ def run_initializers(group=:default, *args)
 end
 ```
 
-`run_initializers`代码本身是有点投机取巧的，Rails在这里要做的是遍历所有的祖先，查找一个`initializers`方法，之后根据名字进行排序，并执行它们。举个例子，`Engine`类将调用自己和祖先中名为`initializers`的方法。
+`run_initializers`代码本身是有点投机取巧的，Rails在这里要做的是遍历所有的祖先，查找一个`initializers`方法，之后根据名字进行排序，并依次执行它们。举个例子，`Engine`类将调用自己和祖先中名为`initializers`的方法。
 
-`Rails::Application` 类是在`railties/lib/rails/application.rb`定义的。定义了`bootstrap`, `railtie`, and `finisher`模块的初始化器。`bootstrap`的初始化器在应用被加载以前就预加载了。(类似初始化中的日志记录器)，`finisher`的初始化器则是最后加载的。`railtie`初始化器被定义在`Rails::Application`中，执行是在`bootstrap` and `finishers`之间。
+`Rails::Application` 类是在`railties/lib/rails/application.rb`定义的。定义了`bootstrap`, `railtie`和 `finisher`模块的初始化器。`bootstrap`的初始化器在应用被加载以前就预加载了。(类似初始化中的日志记录器)，`finisher`的初始化器则是最后加载的。`railtie`初始化器被定义在`Rails::Application`中，执行是在`bootstrap`和 `finishers`之间。
 
 这些完成后，我们将回到`Rack::Server` 。
 
