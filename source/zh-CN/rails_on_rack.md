@@ -145,7 +145,7 @@ run MyApp::Application.routes
 
 ### 设置中间件
 
-Rails 在 `application.rb` 和 `environments/<environment>.rb` 文件中提供了一个简单的设置项 `config.middleware`，可以添加新中间件，删除再用的中间件，或者修改中间件的加载顺序。
+Rails 在 `application.rb` 或 `environments/<environment>.rb` 文件中提供了一个简单的设置项 `config.middleware`，可以在middleware堆栈中添加，修改和删除中间件 。
 
 #### 添加新中间件
 
@@ -168,7 +168,7 @@ config.middleware.insert_after ActiveRecord::QueryCache, Lifo::Cache, page_cache
 
 #### 替换中间件
 
-使用 `config.middleware.swap` 可以替换现有的中间件：
+使用 `config.middleware.swap` 可以替换middleware堆栈中的中间件：
 
 ```ruby
 # config/application.rb
