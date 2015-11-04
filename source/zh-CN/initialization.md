@@ -44,7 +44,7 @@ require "rails/cli"
 
 ### `railties/lib/rails/app_rails_loader.rb`
 
-`exec_app_rails`模块的主要功能是去执行你的Rails应用中`bin/rails`文件夹下的指令。如果当前文件夹下没有`bin/rails`文件，它会到父级目录去搜索，直到找到为止（Windows下应该会去搜索环境变量中的路径），在Rails应用程序目录下的任意位置(命令行模式下)，都会会触发`rails`的指令执行。
+`exec_app_rails`模块的主要功能是去执行你的Rails应用中`bin/rails`文件夹下的指令。如果当前文件夹下没有`bin/rails`文件，它会到父级目录去搜索，直到找到为止（Windows下应该会去搜索环境变量中的路径），在Rails应用程序目录下的任意位置(命令行模式下)，都会触发`rails`的指令执行。
 
 因为`rails server`命令和下面的操作是等价的：
 
