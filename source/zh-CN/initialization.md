@@ -220,7 +220,7 @@ def initialize(options = nil)
 end
 ```
 
-在这种情况下，`options` 的值是 `nil`，所以这个方法中相当于什么都没做。
+在这种情况下，`options` 的值是 `nil`，所以在这个方法中相当于什么都没做。
 
 当`Rack::Server`中的`super`方法执行完毕后。我们回到`rails/commands/server.rb`，此时此刻，`Rails::Server`对象会调用 `set_environment` 方法，这个方法貌似看上去什么也没干： 
 
