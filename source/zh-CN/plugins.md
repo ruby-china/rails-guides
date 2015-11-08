@@ -18,9 +18,9 @@ Rails 插件入门
 * 如何为插件编写和运行测试用例；
 
 
-本指南将叙述如何开发一个测试驱动的插件：
+本指南将叙述如何通过测试驱动的方式开发插件：
 
-* 扩展核心类库功能，比如Hash和String； 
+* 扩展核心类库功能，比如`Hash`和`String`； 
 
 * 给`ActiveRecord::Base`添加`acts_as`插件功能；
 
@@ -28,7 +28,7 @@ Rails 插件入门
 
 
 
-假设你是一名狂热的鸟类观察爱好者，你最喜欢的鸟是Yaffle，你希望创建一个插件和开发者们分享有关Yaffle的信息。
+假定你是一名狂热的鸟类观察爱好者，你最喜欢的鸟是Yaffle，你希望创建一个插件和开发者们分享有关Yaffle的信息。
 
 --------------------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ Rails使用`rails plugin new`命令为开发者创建各种Rails扩展，以确�
 $ bin/rails plugin new yaffle
 ```
 
-如下命令可以获取创建插件功能命令的使用方式：
+如下命令可以获取创建插件命令的使用方式：
 
 ```bash
 $ bin/rails plugin --help
@@ -55,7 +55,7 @@ $ bin/rails plugin --help
 让新生成的插件支持测试
 -----------------------------------
 
- 你可以打开包含你插件的文件目录，然后在命令行模式下运行`bundle install`命令，然后使用`rake`命令生成测试环境。
+ 打开包插件所在的文件目录，然后在命令行模式下运行`bundle install`命令，使用`rake`命令生成测试环境。
 
 你将看到如下代码：
 
@@ -68,9 +68,9 @@ $ bin/rails plugin --help
 扩展核心类库
 ----------------------
 
-本章节将介绍如何为String添加一个方法，并使它能在你的Rails应用中生效。
+本章节将介绍如何为`String`添加一个方法，并让它在你的Rails应用中生效。
 
-下面我们将为String添加一个名为`to_squawk`的方法。开始前，我们可以先创建一些简单的测试函数：
+下面我们将为`String`添加一个名为`to_squawk`的方法。开始前，我们可以先创建一些简单的测试函数：
 
 ```ruby
 # yaffle/test/core_ext_test.rb
@@ -84,7 +84,7 @@ class CoreExtTest < ActiveSupport::TestCase
 end
 ```
 
-运行`rake`命令运行个测试，这个测试将返回错误信息，因为我们还没有完成`to_squawk`方法的功能实现：
+运行`rake`命令运行测试，测试将返回错误信息，因为我们还没有完成`to_squawk`方法的功能实现：
 
 ```bash
     1) Error:
@@ -95,7 +95,7 @@ end
 
 好吧，现在开始进入正题：
 
-在`lib/yaffle.rb`中, 添加 `require 'yaffle/core_ext'`：
+在`lib/yaffle.rb`文件中, 添加 `require 'yaffle/core_ext'`：
 
 ```ruby
 # yaffle/lib/yaffle.rb
@@ -118,13 +118,13 @@ String.class_eval do
 end
 ```
 
-为了测试你的方法是否符合预期，你可以在你的插件目录下运行`rake`命令，来测试一下。
+为了测试你的方法是否符合预期，可以在插件目录下运行`rake`命令，来测试一下。
 
 ```bash
   3 tests, 3 assertions, 0 failures, 0 errors, 0 skips
 ```
 
-看到上述内容后，你可以用命令行导航到test/dummy目录，然后使用Rails控制台来做个测试：
+看到上述内容后，用命令行导航到test/dummy目录，然后使用Rails控制台来做个测试：
 
 ```bash
 $ bin/rails console
@@ -135,7 +135,7 @@ $ bin/rails console
 为Active Record添加"acts_as"方法
 ----------------------------------------
 
-一般来说，在插件中为某模块添加方法的命名方式是`acts_as_something`，本例中你也许希望为你的Active Record写一个名为`acts_as_yaffle`的方法实现`squawk` 功能。
+一般来说，在插件中为某模块添加方法的命名方式是`acts_as_something`，本例中我们将为Active Record添加一个名为`acts_as_yaffle`的方法实现`squawk` 功能。
 
 首先，新建一些文件：
 
@@ -192,7 +192,7 @@ class ActsAsYaffleTest < ActiveSupport::TestCase
 end
 ```
 
-当你运行`rake`命令，你将看到如下结果：
+运行`rake`命令，你将看到如下结果：
 
 ```
     1) Error:
@@ -216,14 +216,14 @@ $ bin/rails generate model Hickwall last_squawk:string
 $ bin/rails generate model Wickwall last_squawk:string last_tweet:string
 ```
 
-接下来你需要为简单应用创建测试数据库并做数据迁移：
+接下来为简单应用创建测试数据库并做数据迁移：
 
 ```bash
 $ cd test/dummy
 $ bin/rake db:migrate
 ```
 
-至此，修改Hickwall和Wickwall模块，来让他们和yaffles关联起来：
+至此，修改Hickwall和Wickwall模块，把他们和yaffles关联起来：
 
 ```ruby
 # test/dummy/app/models/hickwall.rb
@@ -240,7 +240,7 @@ end
 
 ```
 
-同时我们也需要定义`acts_as_yaffle`方法：
+同时定义`acts_as_yaffle`方法：
 
 ```ruby
 # yaffle/lib/yaffle/acts_as_yaffle.rb
@@ -262,7 +262,7 @@ end
 ActiveRecord::Base.send :include, Yaffle::ActsAsYaffle
 ```
 
-你可以回到插件的根目录下，然后运行`rake`命令：
+在插件的根目录下运行`rake`命令：
 
 ```
     1) Error:
@@ -305,7 +305,7 @@ end
 ActiveRecord::Base.send :include, Yaffle::ActsAsYaffle
 ```
 
-当你运行`rake`命令后，你将看到所有测试都通过了:
+运行`rake`命令后，你将看到所有测试都通过了:
 
 ```bash
   5 tests, 5 assertions, 0 failures, 0 errors, 0 skips
@@ -313,8 +313,8 @@ ActiveRecord::Base.send :include, Yaffle::ActsAsYaffle
 
 ### 添加一个实例方法
 
-本插件将为所有Active Record对象添加一个名为'squawk'的方法，Active Record 对象通过调用'acts_as_yaffle'方法来间接调用插件的'squawk'方法。
-'squawk'方法将被作为一个可赋值的字段与数据库关联起来。
+本插件将为所有Active Record对象添加一个名为`squawk`的方法，Active Record 对象通过调用`acts_as_yaffle`方法来间接调用插件的`squawk`方法。
+`squawk`方法将被作为一个可赋值的字段与数据库关联起来。
 
 开始之前，可以先写一些测试用例来保证函数拥有符合预期的行为。：
 
@@ -396,14 +396,14 @@ send("#{self.class.yaffle_text_field}=", string.to_squawk)
 发布Gem
 -------------------
 
-Gem插件可以通过Git代码托管库方便的在开发者之间分享。如果你希望分享Yaffle插件，那么可以将Yaffle放在Git代码托管库上。如果你希望在你的应用中使用Yaffle插件，那么可以在你的Rails应用的Gem文件中添加如下代码：
+Gem插件可以通过Git代码托管库方便的在开发者之间分享。如果你希望分享Yaffle插件，那么可以将Yaffle放在Git代码托管库上。如果你希望在你的应用中使用Yaffle插件，那么可以在Rails应用的Gem文件中添加如下代码：
 
 
 ```ruby
 gem 'yaffle', git: 'git://github.com/yaffle_watcher/yaffle.git'
 ```
 
-运行`bundle install`命令后，你的gem包就可以在你的Rails应用中使用了。
+运行`bundle install`命令后，你的Yaffle插件就可以在你的Rails应用中使用了。
 
 
 当gem作为一个正式版本分享时，那么它就可以被发布到[RubyGems](http://www.rubygems.org)上了。想要了解更多关于发布gem到RubyGems信息，可以参考[Creating and Publishing Your First Ruby Gem](http://blog.thepete.net/2010/11/creating-and-publishing-your-first-ruby.html)。
@@ -412,9 +412,9 @@ gem 'yaffle', git: 'git://github.com/yaffle_watcher/yaffle.git'
 RDoc 文档
 ------------------
 
-当你插件功能稳定并准备发布了，为用户提供一个使用说明文档时必要的。很幸运，为你的插件写一个文档很容易。
+插件功能稳定并准备发布时，为用户提供一个使用说明文档是必要的。很幸运，为你的插件写一个文档很容易。
 
-首先更新说明文件以及如何使用你的插件的详细信息。文档主要包括以下几点：
+首先更新说明文件以及如何使用你的插件等详细信息。文档主要包括以下几点：
 
 * 你的名字
 * 安装指南
