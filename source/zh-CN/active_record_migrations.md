@@ -350,7 +350,7 @@ end
 
 ### 如果帮助方法不够用
 
-如果 Active Record 提供的帮助方法不够用，可以使用 `excute` 方法，执行任意的 SQL 语句：
+如果 Active Record 提供的帮助方法不够用，可以使用 `execute` 方法，执行任意的 SQL 语句：
 
 ```ruby
 Product.connection.execute('UPDATE `products` SET `price`=`free` WHERE 1')
