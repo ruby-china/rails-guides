@@ -14,14 +14,14 @@ Rails应用模版
 模版应用简介
 -----
 
-为了使用一个模版，你需要为Rails应用生成器在生成新应用时提供供一个'-m'选项来配置模版的路径。该路径可以是一个本地文件路径也可以是一个URL地址。
+为了使用一个模版，你需要为Rails应用生成器在生成新应用时提供一个'-m'选项来配置模版的路径。该路径可以是本地文件路径也可以是URL地址。
 
 ```bash
 $ rails new blog -m ~/template.rb
 $ rails new blog -m http://example.com/template.rb
 ```
 
-你可以使用rake的任务命令`rails:template`为一个Rails应用配置一个模版。模版的文件路径需要通过名为'LOCATION'的环境变量设定。再次强调，这个路径可以是一个本地文件路径也可以是一个URL地址。
+你可以使用rake的任务命令`rails:template`为Rails应用配置模版。模版的文件路径需要通过名为'LOCATION'的环境变量设定。再次强调，这个路径可以是本地文件路径也可以是URL地址：
 
 ```bash
 $ bin/rake rails:template LOCATION=~/template.rb
@@ -48,7 +48,7 @@ git commit: %Q{ -m 'Initial commit' }
 
 ### gem(*args)
 
-向一个应用文件的`Gemfile`配置文件添加一个'gem'实体。
+向一个Rails应用的`Gemfile`配置文件添加一个'gem'实体。
 举个例子，如果你的应用的依赖项包含`bj` 和 `nokogiri`等gem ： 
 
 ```ruby
@@ -77,7 +77,7 @@ end
 
 ### add_source(source, options = {})
 
-为应用`Gemfile`文件指定数据源。
+为Rails应用的`Gemfile`文件指定数据源。
 
 举个例子。如果你需要从`"http://code.whytheluckystiff.net"`下载一个gem： 
 
@@ -101,7 +101,7 @@ environment 'config.action_mailer.default_url_options = {host: "http://yourwebsi
 
 为一个应用的`config/initializers`目录添加初始化器。
 
-假如你喜欢使用`Object#not_nil?` and `Object#not_blank?`：
+假如你喜欢使用`Object#not_nil?` 和 `Object#not_blank?`：
 
 ```ruby
 initializer 'bloatlol.rb', <<-CODE
@@ -119,7 +119,7 @@ CODE
 
 一般来说，`lib()`方法会在 `lib/` 目录下创建一个文件，而`vendor()`方法会在`vendor/`目录下创建一个文件。
 
-甚至有来自`Rails.root`的`file()`方法创建所有Rails应用必须的文件和目录。
+甚至可以用`Rails.root`的`file()`方法创建所有Rails应用必须的文件和目录。
 
 ```ruby
 file 'app/components/foo.rb', <<-CODE
@@ -180,7 +180,7 @@ rake "db:migrate", env: 'production'
 
 ### route(routing_code)
 
-在`config/routes.rb`文件中添加一个路径实体。比如我们之前为某个人生成了一些简单的页面并且把 `README.rdoc`删除了。现在我们可以为把应用的`PeopleController#index`设置为默认页面：
+在`config/routes.rb`文件中添加一个路径实体。比如我们之前为某个人生成了一些简单的页面并且把 `README.rdoc`删除了。现在我们可以把应用的`PeopleController#index`设置为默认页面：
 
 ```ruby
 route "root to: 'person#index'"
