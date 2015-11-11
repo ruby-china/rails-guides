@@ -9,7 +9,7 @@ Rails 插件入门
 * 松散代码组织架构为修复，更新局部模块提供了支持；
 
 * 为核心成员开发局部功能特性提供了支持；
- 
+
 
 读完本章节，您将学到：
 
@@ -20,7 +20,7 @@ Rails 插件入门
 
 本指南将叙述如何通过测试驱动的方式开发插件：
 
-* 扩展核心类库功能，比如`Hash`和`String`； 
+* 扩展核心类库功能，比如`Hash`和`String`；
 
 * 给`ActiveRecord::Base`添加`acts_as`插件功能；
 
@@ -40,7 +40,7 @@ Rails 插件入门
 ### 生成一个gem化的插件
 
 
-Rails使用`rails plugin new`命令为开发者创建各种Rails扩展，以确保它能使用一个简单Rails应用进行测试。创建插件的命令如下： 
+Rails使用`rails plugin new`命令为开发者创建各种Rails扩展，以确保它能使用一个简单Rails应用进行测试。创建插件的命令如下：
 
 ```bash
 $ bin/rails plugin new yaffle
@@ -168,12 +168,12 @@ module Yaffle
 end
 ```
 
-### 添加一个类方法 
+### 添加一个类方法
 
-假如插件的模块中有一个名为`last_squawk`的方法，与此同时，插件的使用者在其他模块也定义了一个名为`last_squawk` 的方法，那么插件允许你添加一个类方法`yaffle_text_field`来改变插件内的`last_squawk`方法的名称。
-
+假如插件的模块中有一个名为 `last_squawk` 的方法，与此同时，插件的使用者在其他模块也定义了一个名为 `last_squawk` 的方法，那么插件允许你添加一个类方法 `yaffle_text_field` 来改变插件内的 `last_squawk` 方法的名称。
 
 开始之前，可以先写一些测试用例来保证函数拥有符合预期的行为。
+
 ```ruby
 # yaffle/test/acts_as_yaffle_test.rb
 
@@ -208,7 +208,7 @@ end
   5 tests, 3 assertions, 0 failures, 2 errors, 0 skips
 ```
 
-上述内容告诉我们，我们没有提供必要的模块(Hickwall and Wickwall)进行测试。我们可以在test/dummy目录下使用命令生成必要的模块： 
+上述内容告诉我们，我们没有提供必要的模块（Hickwall and Wickwall）进行测试。我们可以在 test/dummy 目录下使用命令生成必要的模块：
 
 ```bash
 $ cd test/dummy
@@ -383,7 +383,7 @@ ActiveRecord::Base.send :include, Yaffle::ActsAsYaffle
   7 tests, 7 assertions, 0 failures, 0 errors, 0 skips
 ```
 
-提示： 使用`write_attribute`方法写入字段只是举例说明插件如何与模型交互，并非推荐的使用方法，你也可以用如下方法实现： 
+提示： 使用`write_attribute`方法写入字段只是举例说明插件如何与模型交互，并非推荐的使用方法，你也可以用如下方法实现：
 ```ruby
 send("#{self.class.yaffle_text_field}=", string.to_squawk)
 ```
@@ -421,7 +421,7 @@ RDoc 文档
 * 如何安装gem到应用中(一些使用例子)
 * 警告,使用插件时需要注意的地方，这将为用户提供方便。
 
-当你的README文件写好以后，为用户提供所有与插件方法相关的rdoc注释。通常我们使用'#:nodoc:'来注释不包含在公共API中的代码。 
+当你的README文件写好以后，为用户提供所有与插件方法相关的rdoc注释。通常我们使用'#:nodoc:'来注释不包含在公共API中的代码。
 
 当你的注释编写好以后，可以到你的插件目录下运行如下命令：
 
