@@ -55,7 +55,7 @@ $ bin/rails plugin --help
 让新生成的插件支持测试
 -----------------------------------
 
- 打开包插件所在的文件目录，然后在命令行模式下运行`bundle install`命令，使用`rake`命令生成测试环境。
+ 打开新生成插件所在的文件目录，然后在命令行模式下运行`bundle install`命令，使用`rake`命令生成测试环境。
 
 你将看到如下代码：
 
@@ -208,7 +208,7 @@ end
   5 tests, 3 assertions, 0 failures, 2 errors, 0 skips
 ```
 
-上述内容告诉我们，我们没有提供必要的模块(Hickwall and Wickwall)进行测试。我们可以在test/dummy目录下使用命令生成必要的模块： 
+上述内容告诉我们，我们没有提供必要的模块(Hickwall 和 Wickwall)进行测试。我们可以在test/dummy目录下使用命令生成必要的模块： 
 
 ```bash
 $ cd test/dummy
@@ -316,7 +316,7 @@ ActiveRecord::Base.send :include, Yaffle::ActsAsYaffle
 本插件将为所有Active Record对象添加一个名为`squawk`的方法，Active Record 对象通过调用`acts_as_yaffle`方法来间接调用插件的`squawk`方法。
 `squawk`方法将被作为一个可赋值的字段与数据库关联起来。
 
-开始之前，可以先写一些测试用例来保证函数拥有符合预期的行为。：
+开始之前，可以先写一些测试用例来保证函数拥有符合预期的行为：
 
 ```ruby
 # yaffle/test/acts_as_yaffle_test.rb
