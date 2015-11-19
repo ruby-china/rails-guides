@@ -370,7 +370,7 @@ class Person < ActiveRecord::Base
 end
 ```
 
-如果要确保关联对象存在，需要测试关联的对象本身是够存在，而不是用来映射关联的外键。
+如果要确保关联对象存在，需要测试关联的对象本身是否存在，而不是用来映射关联的外键。
 
 ```ruby
 class LineItem < ActiveRecord::Base
@@ -403,7 +403,7 @@ class Person < ActiveRecord::Base
 end
 ```
 
-如果要确保关联对象为空，需要测试关联的对象本身是够为空，而不是用来映射关联的外键。
+如果要确保关联对象为空，需要测试关联的对象本身是否为空，而不是用来映射关联的外键。
 
 ```ruby
 class LineItem < ActiveRecord::Base
