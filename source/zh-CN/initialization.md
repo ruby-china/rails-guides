@@ -1,7 +1,7 @@
-Rails 应用的初始化过程
+Rails应用的初始化过程
 ================================
 
-本章节介绍了 Rails 4 应用启动的内部流程。很适合有一定经验的Rails 开发者阅读。
+本章节介绍了 Rails 4 应用启动的内部流程,适合有一定经验的Rails应用开发者阅读。
 
 通过学习本章节，您会学到如下知识：
 
@@ -44,7 +44,7 @@ require "rails/cli"
 
 ### `railties/lib/rails/app_rails_loader.rb`
 
-`exec_app_rails`模块的主要功能是去执行你的Rails应用中`bin/rails`文件夹下的指令。如果当前文件夹下没有`bin/rails`文件，它会到父级目录去搜索，直到找到为止（Windows下应该会去搜索环境变量中的路径），在Rails应用程序目录下的任意位置(命令行模式下)，都会触发`rails`的指令执行。
+`exec_app_rails`模块的主要功能是去执行你的Rails应用中`bin/rails`文件夹下的指令。如果当前文件夹下没有`bin/rails`文件，它会到父级目录去搜索，直到找到为止（Windows下应该会去搜索环境变量中的路径），在Rails应用程序目录下的任意位置(命令行模式下)，都可以执行`rails`的命令。
 
 因为`rails server`命令和下面的操作是等价的：
 
@@ -76,7 +76,7 @@ ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../../Gemfile', __FILE__)
 require 'bundler/setup' if File.exist?(ENV['BUNDLE_GEMFILE'])
 ```
 
-在一个标准的Rails应用中，一个`Gemfile`文件配置会配置它的所有依赖项。`config/boot.rb`文件会根据`ENV['BUNDLE_GEMFILE']`中的值来查找`Gemfile`的路径。如果Gemfile文件存在，那么`bundler/setup`操作会被执行，Bundler执行该操作是为了配置Gemfile依赖项的加载路径。
+在一个标准的Rails应用中的`Gemfile`文件会配置它的所有依赖项。`config/boot.rb`文件会根据`ENV['BUNDLE_GEMFILE']`中的值来查找`Gemfile`文件的路径。如果`Gemfile`文件存在，那么`bundler/setup`操作会被执行，Bundler执行该操作是为了配置Gemfile依赖项的加载路径。
 
 一个标准的Rails应用会包含若干Gem包，特别是下面这些：
 
@@ -238,7 +238,7 @@ def options
 end
 ```
 
-接着`parse_options`方法定义如下：
+接着`parse_options`方法部分代码如下：
 
 ```ruby
 def parse_options(args)

@@ -87,7 +87,7 @@ add_source "http://code.whytheluckystiff.net"
 
 ### environment/application(data=nil, options={}, &block)
 
-为'Application'在`config/application.rb`中添加一行内容。
+为`Application`在`config/application.rb`中添加一行内容。
 
 如果声明了`options[:env]`参数，那么这一行会在`config/environments`添加。
 
@@ -158,7 +158,7 @@ generate(:scaffold, "person", "name:string", "address:text", "age:number")
 
 ### run(command)
 
-执行命令行命令，和你在命令行终端敲命令一样。比如你想删除`README.rdoc`文件：
+执行命令行命令，和你在命令行终端敲命令效果一样。比如你想删除`README.rdoc`文件：
 
 ```ruby
 run "rm README.rdoc"
@@ -180,7 +180,7 @@ rake "db:migrate", env: 'production'
 
 ### route(routing_code)
 
-在`config/routes.rb`文件中添加一个路径实体。比如我们之前为某个人生成了一些简单的页面并且把 `README.rdoc`删除了。现在我们可以为该应用的`PeopleController#index`设置为默认页面：
+在`config/routes.rb`文件中添加一个路径实体。比如我们之前为某个人生成了一些简单的页面并且把 `README.rdoc`删除了。现在我们可以为把应用的`PeopleController#index`设置为默认页面：
 
 ```ruby
 route "root to: 'person#index'"
@@ -212,7 +212,7 @@ CODE
 
 ### yes?(question) or no?(question)
 
-这些方法是基于用户回答问题的答案之后做一些操作的。比如你的用户希望停止Rails应用，你可以这么做：
+这些方法是根据用户的选择之后做一些操作的。比如你的用户希望停止Rails应用，你可以这么做：
 
 ```ruby
 rake("rails:freeze:gems") if yes?("Freeze rails gems?")
@@ -234,7 +234,7 @@ git commit: "-a -m 'Initial commit'"
 
 应用模版是在`Rails::Generators::AppGenerator`实例的上下文环境中执行的，它使用`apply` 动作来执行操作[Thor](https://github.com/erikhuda/thor/blob/master/lib/thor/actions.rb#L207)。这意味着你可以根据需要扩展它的功能。
 
-比如重载`source_paths`方法实现把本地路径添加到你的模版应用中。现在类似`copy_file`方法会在你的模版路径中识别相对路径参数。
+比如重载`source_paths`方法实现把本地路径添加到你的模版应用中。那么类似`copy_file`方法会在你的模版路径中识别相对路径参数。
 
 ```ruby
 def source_paths
