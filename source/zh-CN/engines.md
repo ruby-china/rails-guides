@@ -328,7 +328,7 @@ create      test/fixtures/blorgh/comments.yml
 $ rake db:migrate
 ```
 
-为了在主题中显示评论，需要在`app/views/blorgh/articles/show.html.erb`的 "Edit" 按钮之前添加如下代c码：
+为了在主题中显示评论，需要在`app/views/blorgh/articles/show.html.erb`的 "Edit" 按钮之前添加如下代码：
 
 ```html+erb
 <h3>Comments</h3>
@@ -742,8 +742,7 @@ Blorgh.author_class = "User"
 
 ### 功能测试
 
-在编写引擎的功能测试时，我们会假定这个引擎会在一个
-Rails应用中使用。`test/dummy`目录中的Rails应用和你引擎结构差不多。这是因为建立测试环境后，引擎需要一个宿主来测试它的功能，特别是控制器。这意味着你需要在一个控制器功能测试函数中添加如下代码：
+在编写引擎的功能测试时，我们会假定这个引擎会在一个应用中使用。`test/dummy`目录中的应用和你引擎结构差不多。这是因为建立测试环境后，引擎需要一个宿主来测试它的功能，特别是控制器。这意味着你需要在一个控制器功能测试函数中下如下代码：
 
 ```ruby
 get :index
@@ -1013,7 +1012,7 @@ end
 
 ### 其他Gem依赖项
 
-一个引擎的相关依赖项会在引擎的根目录下的`.gemspec`中声明。因为引擎也许会被当作一个Gem安装到Rails应用中。如果在`Gemfile`中声明依赖项，那么这些依赖项就会被认为不是一个普通Gem，所以他们不会被安装，这会导致引擎发生故障。
+一个引擎的相关依赖项会在引擎的根目录下的`.gemspec`中声明。因为引擎也许会被当作一个gem安装到Rails应用中。如果在`Gemfile`中声明依赖项，那么这些依赖项就会被认为不是一个普通Gem，所以他们不会被安装，这会导致引擎发生故障。
 
 
 为了让引擎被当作一个普通的Gem安装，需要声明他的依赖项已经安装过了。那么可以在引擎根目录下的`.gemspec`文件中添加`Gem::Specification`配置项：
@@ -1028,7 +1027,7 @@ s.add_dependency "moo"
 ```ruby
 s.add_development_dependency "moo"
 ```
-所有的依赖项都会在执行`bundle install`命令时安装。gem开发环境的依赖项仅会在开发测试时用到。
+所有的依赖项都会在执行`bundle install`命令时安装。gem开发环境的依赖项仅会在测试时用到。
 
 注意，如果你希望引擎引用依赖项时马上引用。你应该在引擎初始化时就引用它们,比如：
 

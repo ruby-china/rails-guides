@@ -362,7 +362,7 @@ end
 
 ### `presence`
 
-这个帮助方法检查指定的属性是否为非空值，调用 `blank?` 方法检查只是否为 `nil` 或空字符串，即空字符串或只包含空白的字符串。
+这个帮助方法检查指定的属性是否为非空值，调用 `blank?` 方法检查值是否为 `nil` 或空字符串，即空字符串或只包含空白的字符串。
 
 ```ruby
 class Person < ActiveRecord::Base
@@ -370,7 +370,7 @@ class Person < ActiveRecord::Base
 end
 ```
 
-如果要确保关联对象存在，需要测试关联的对象本身是够存在，而不是用来映射关联的外键。
+如果要确保关联对象存在，需要测试关联的对象本身是否存在，而不是用来映射关联的外键。
 
 ```ruby
 class LineItem < ActiveRecord::Base
@@ -403,7 +403,7 @@ class Person < ActiveRecord::Base
 end
 ```
 
-如果要确保关联对象为空，需要测试关联的对象本身是够为空，而不是用来映射关联的外键。
+如果要确保关联对象为空，需要测试关联的对象本身是否为空，而不是用来映射关联的外键。
 
 ```ruby
 class LineItem < ActiveRecord::Base
@@ -849,7 +849,7 @@ person.errors.full_messages
 
 ### `errors[:base]`
 
-错误消息可以添加到整个对象上，而不是针对某个属性。如果不想管是哪个属性导致对象不合法，指向把对象标记为不合法状态，就可以使用这个方法。`errors[:base]` 是个数字，可以添加字符串作为错误消息。
+错误消息可以添加到整个对象上，而不是针对某个属性。如果不想管是哪个属性导致对象不合法，只想把对象标记为不合法状态，就可以使用这个方法。`errors[:base]` 是个数组，可以添加字符串作为错误消息。
 
 ```ruby
 class Person < ActiveRecord::Base

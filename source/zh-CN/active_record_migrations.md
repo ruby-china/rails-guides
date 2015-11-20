@@ -350,7 +350,7 @@ end
 
 ### 如果帮助方法不够用
 
-如果 Active Record 提供的帮助方法不够用，可以使用 `excute` 方法，执行任意的 SQL 语句：
+如果 Active Record 提供的帮助方法不够用，可以使用 `execute` 方法，执行任意的 SQL 语句：
 
 ```ruby
 Product.connection.execute('UPDATE `products` SET `price`=`free` WHERE 1')
@@ -711,7 +711,7 @@ end
 
 ### 模式导出和版本控制
 
-因为导出的模式文件时数据库模式的可信源，强烈推荐将其纳入版本控制。
+因为导出的模式文件是数据库模式的可信源，强烈推荐将其纳入版本控制。
 
 Active Record 和引用完整性
 -------------------------
