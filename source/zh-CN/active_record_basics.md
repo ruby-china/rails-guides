@@ -140,15 +140,15 @@ CURD 是四种数据操作的简称：C 表示创建，R 表示读取，U 表示
 
 ### 创建
 
-Active Record 对象可以使用 Hash 创建，在块中创建，或者创建后手动设置属性。`new` 方法创建一个新对象，`create` 方法创建新对象，并将其存入数据库。
+Active Record 对象可以使用 Hash 创建，在块中创建，或者创建后手动设置属性。`new` 方法会实例化一个对象，`create` 方法实例化一个对象，并将其存入数据库。
 
-例如，`User` 模型中有两个属性，`name` 和 `occupation`。调用 `create` 方法会创建一个新纪录，并存入数据库：
+例如，`User` 模型中有两个属性，`name` 和 `occupation`。调用 `create` 方法会实例化一个对象，并把该对象对应的记录存入数据库：
 
 ```ruby
 user = User.create(name: "David", occupation: "Code Artist")
 ```
 
-使用 `new` 方法，可以实例化一个新对象，但不会保存：
+使用 `new` 方法，可以实例化一个对象，但不会保存：
 
 ```ruby
 user = User.new
@@ -158,7 +158,7 @@ user.occupation = "Code Artist"
 
 调用 `user.save` 可以把记录存入数据库。
 
-如果在 `create` 和 `new` 方法中使用块，会把新创建的对象拉入块中：
+`create` 和 `new` 方法从结果来看，都实现了下面代码的功能：
 
 ```ruby
 user = User.new do |u|
