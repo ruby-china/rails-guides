@@ -20,7 +20,7 @@ Rails 插件入门
 
 本指南将介绍如何通过测试驱动的方式开发插件：
 
-* 扩展核心类库功能，如`Hash`和`String`； 
+* 扩展核心类库功能，比如`Hash`和`String`；
 
 * 给`ActiveRecord::Base`添加`acts_as`插件功能；
 
