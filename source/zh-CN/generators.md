@@ -646,7 +646,7 @@ rake "db:migrate"
 
 ### `capify!`
 
-在Rails应用的根目录下使用Capistrano运行`capify`命令，生成和应用相关的Capistrano配置文件。
+在Rails应用的根目录下使用Capistrano运行`capify`命令，生成和Rails应用相关的Capistrano配置文件。
 
 ```ruby
 capify!
