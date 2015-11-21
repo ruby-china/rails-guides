@@ -9,7 +9,7 @@ Rails 插件入门
 * 松散的代码组织架构为修复、更新局部模块提供了支持；
 
 * 为核心成员开发局部模块功能特性提供了支持；
- 
+
 
 读完本章节，您将学到：
 
@@ -28,7 +28,7 @@ Rails 插件入门
 
 
 
-假定你是一名狂热的鸟类观察爱好者，你最喜欢的鸟是Yaffle，你希望创建一个插件和开发者们分享有关Yaffle的信息。
+假定你是一名狂热的鸟类观察爱好者，你最喜欢的鸟是Yaffle，你希望创建一个插件和开发者们分享有关Yaffle的信息。  
 
 --------------------------------------------------------------------------------
 
@@ -40,7 +40,7 @@ Rails 插件入门
 ### 生成一个gem化的插件
 
 
-Rails使用`rails plugin new`命令为开发者创建各种Rails扩展，以确保它能使用一个简单Rails应用进行测试。创建插件的命令如下： 
+Rails使用`rails plugin new`命令为开发者创建各种Rails扩展，以确保它能使用一个简单Rails应用进行测试。创建插件的命令如下：
 
 ```bash
 $ bin/rails plugin new yaffle
@@ -168,12 +168,12 @@ module Yaffle
 end
 ```
 
-### 添加一个类方法 
+### 添加一个类方法
 
-假如插件的模块中有一个名为`last_squawk`的方法，与此同时，插件的使用者在其他模块也定义了一个名为`last_squawk` 的方法，那么插件允许你添加一个类方法`yaffle_text_field`来改变插件内的`last_squawk`方法的名称。
-
+假如插件的模块中有一个名为 `last_squawk` 的方法，与此同时，插件的使用者在其他模块也定义了一个名为 `last_squawk` 的方法，那么插件允许你添加一个类方法 `yaffle_text_field` 来改变插件内的 `last_squawk` 方法的名称。
 
 开始之前，先写一些测试用例来保证程序拥有符合预期的行为。
+
 ```ruby
 # yaffle/test/acts_as_yaffle_test.rb
 
@@ -383,7 +383,7 @@ ActiveRecord::Base.send :include, Yaffle::ActsAsYaffle
   7 tests, 7 assertions, 0 failures, 0 errors, 0 skips
 ```
 
-提示： 使用`write_attribute`方法写入字段只是举例说明插件如何与模型交互，并非推荐的使用方法，你也可以用如下方法实现： 
+提示： 使用`write_attribute`方法写入字段只是举例说明插件如何与模型交互，并非推荐的使用方法，你也可以用如下方法实现：
 ```ruby
 send("#{self.class.yaffle_text_field}=", string.to_squawk)
 ```
