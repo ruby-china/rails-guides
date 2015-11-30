@@ -499,7 +499,7 @@ TIP: 后文会看到，`@article.save` 返回一个布尔值，表示保存是�
 
 ![新建文章时禁止使用属性](images/getting_started/forbidden_attributes_for_new_article.png)
 
-Rails 提供了很多安全防范措施保证程序的安全，你所看到的错误就是因为违反了其中一个措施。这个防范措施叫做“健壮参数”，我们要明确地告知 Rails 哪些参数可在控制器中使用。这里，我们想使用 `title` 和 `text` 参数。请把 `create` 动作修成成：
+Rails 提供了很多安全防范措施保证程序的安全，你所看到的错误就是因为违反了其中一个措施。这个防范措施叫做“健壮参数”，我们要明确地告知 Rails 哪些参数可在控制器中使用。这里，我们想使用 `title` 和 `text` 参数。请把 `create` 动作修改成：
 
 ```ruby
 def create
@@ -1317,7 +1317,7 @@ end
 删除评论
 -------
 
-博客还有一个重要的功能是删除垃圾评论。为了实现这个功能，要在视图中添加一个连接，并在 `CommentsController` 中定义 `destroy` 动作。
+博客还有一个重要的功能是删除垃圾评论。为了实现这个功能，要在视图中添加一个链接，并在 `CommentsController` 中定义 `destroy` 动作。
 
 先在 `app/views/comments/_comment.html.erb` 局部视图中加入删除评论的链接：
 
@@ -1430,7 +1430,7 @@ class CommentsController < ApplicationController
 接下来做什么
 -----------
 
-至此，我们开发了第一个 Rails 程序，请尽情的修改、试验。在开发过程中难免会需要帮助，如果使用 Rails 时需要协助，可以使用这些资源：
+至此，我们开发了第一个 Rails 程序，请尽情地修改、试验。在开发过程中难免会需要帮助，如果使用 Rails 时需要协助，可以使用这些资源：
 
 * [Ruby on Rails 指南](http://guides.ruby-china.org/index.html)
 * [Ruby on Rails 教程](http://railstutorial-china.org)
