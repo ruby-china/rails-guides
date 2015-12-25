@@ -131,7 +131,7 @@ Rails.logger.level = 0 # at any time
 
 这么设置在开发环境和交付准备环境中很有用，在生产环境中则不会写入大量不必要的信息。
 
-TIP: Rails 为生产环境设置的默认日志等级是 `info`，生产环境和测试环境的默认日志等级是 `debug`。
+TIP: Rails 所有环境的默认日志等级是 `debug`。
 
 ### 写日志
 
