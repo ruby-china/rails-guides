@@ -668,7 +668,7 @@ get '/:id', to: 'photos#show', constraints: {id: /^\d/}
 例如，有下面的路由。如果 `to_param` 方法得到的值以数字开头，例如 `1-hello-world`，就会把请求交给 `articles` 控制器处理；如果 `to_param` 方法得到的值不以数字开头，例如 `david`，就交给 `users` 控制器处理。
 
 ```ruby
-get '/:id', to: 'photos#show', constraints: { id: /\d.+/ }
+get '/:id', to: 'articles#show', constraints: { id: /\d.+/ }
 get '/:username', to: 'users#show'
 ```
 
