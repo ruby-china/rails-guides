@@ -24,14 +24,14 @@
 
 引擎和插件也是近亲，拥有相同的`lib`目录结构，并且都是使用`rails plugin new`命令生成。不同之处在于，一个引擎对于Rails来说是一个"发育完全的插件"(使用命令行生成引擎时会加`--full`选项)。在这里我们将使用几乎包含`--full`选项所有特性的`--mountable` 来代替。本章节中"发育完全的插件"和引擎是等价的。一个引擎可以是一个插件，但一个插件不能被看作是引擎。 
 
-我们将创建一个叫"blorgh"的引擎。这个引擎将为其宿主提供博添加博客和博客评论等功能。刚出生的"blorgh"引擎也许会显得孤单，不过用不了多久，我们将看到她和自己的小伙伴一起愉快的聊天。
+我们将创建一个叫"blorgh"的引擎。这个引擎将为其宿主提供添加主题和主题评论等功能。刚出生的"blorgh"引擎也许会显得孤单，不过用不了多久，我们将看到她和自己的小伙伴一起愉快的聊天。
 
-引擎也可以离开他的应用宿主独立存在。这意味着一个应用可以通过一个路径助手获得一个`articles_path`方法，使用引擎也可以生成一个名为`articles_path`的方法，并且两者不会冲突。同理，控制器，模型，数据库表名都是属于不同命名空间的。接下来我们来讨论该如何实现。
+引擎也可以离开他的应用宿主独立存在。这意味着一个应用可以通过一个路径助手获得一个`articles_path`方法，使用引擎也可以生成一个名为`articles_path`的方法，而且两者不会冲突。同理，控制器，模型，数据库表名都是属于不同命名空间的。接下来我们来讨论该如何实现。
 
-你心里须清楚Rails应用是老大，引擎是老大的小弟。一个Rails应用在她的地盘里面是老大，引擎的作用只是锦上添花。
+你心里须清楚Rails应用是老大，引擎是老大的小弟。一个Rails应用在他的地盘里面是老大，引擎的作用只是锦上添花。
 
 
-可以看看下面的一些优秀的引擎项目,比如[Devise](https://github.com/plataformatec/devise) ，一个为其宿主应用提供权限认证功能的引擎；[Forem](https://github.com/radar/forem), 一个提供论坛功能的引擎；[Spree](https://github.com/spree/spree)，一个提供电子商务平台功能的引擎。[RefineryCMS](https://github.com/refinery/refinerycms), 一个 CMS 引擎 。
+可以看看下面的一些优秀引擎项目,比如[Devise](https://github.com/plataformatec/devise) ，一个为其宿主应用提供权限认证功能的引擎；[Forem](https://github.com/radar/forem), 一个提供论坛功能的引擎；[Spree](https://github.com/spree/spree)，一个提供电子商务平台功能的引擎。[RefineryCMS](https://github.com/refinery/refinerycms), 一个 CMS 引擎 。
 
 
 最后，大部分引擎开发工作离不开James Adam,Piotr Sarnacki 等Rails核心开发成员，以及很多默默无闻付出的人们。如果你见到他们，别忘了向他们致谢！ 
@@ -39,13 +39,13 @@
 生成一个引擎
 --------------------
 
-为了生成一个引擎，你必须使用生成插件的命令和适当的选项配合。比如你要生成"blorgh"应用 ，你需要一个"mountable"引擎。那么在命令行终端你就要敲下如下代码： 
+为了生成一个引擎，你必须将生成插件命令和适当的选项配合使用。比如你要生成"blorgh"应用 ，你需要一个"mountable"引擎。那么在命令行终端你就要敲下如下代码： 
 
 ```bash
 $ bin/rails plugin new blorgh --mountable
 ```
 
-生成插件的命令相关的帮助信息可以敲下面代码得到： 
+生成插件命令相关的帮助信息可以敲下面代码得到： 
 
 ```bash
 $ bin/rails plugin --help
@@ -131,14 +131,14 @@ module Blorgh
   end
 end
 ```
-因为引擎继承自`Rails::Engine`类，gem会通知Rails有一个引擎的特别路径，之后会正确的整合引擎到Rails应用中。会为Rails应用中的模型，控制器，视图和邮件等配置加载引擎的`app`目录的路径。
+因为引擎继承自`Rails::Engine`类，gem会通知Rails有一个引擎的特别路径，之后会正确的整合引擎到Rails应用中。会为Rails应用中的模型，控制器，视图和邮件等配置加载引擎的`app`目录路径。
 
-`isolate_namespace`方法必须拿出来单独谈谈。这个方法会把引擎模块中与控制器，模型，路径等模块内的同名组件隔离。如果没他的话，可能会把引擎的内部方法暴露给其它模块，这样会破坏引擎的封装性，可能会引发不可预期的风险，比如引擎的内部方法被其他模块重载。举个例子，如果没有用命名空间对模块进行隔离，各模块的helpers方法会发生冲突，那么引擎内部的helper方法会被Rails应用的控制器所调用。
+`isolate_namespace`方法必须拿出来单独谈谈。这个方法会把引擎模块中与控制器，模型，路径等模块内的同名组件隔离。如果没它的话，可能会把引擎的内部方法暴露给其它模块，这样会破坏引擎的封装性，可能会引发不可预期的风险，比如引擎的内部方法被其他模块重载。举个例子，如果没有用命名空间对模块进行隔离，各模块的helpers方法会发生冲突，那么引擎内部的helper方法会被Rails应用的控制器所调用。
 
 
-提示：强烈建议您使用`isolate_namespace`方法定义引擎的模块，如果没使用他，这可能会在一个Rails应用中和其他模块冲突。
+提示：强烈建议您使用`isolate_namespace`方法定义引擎的模块，如果没使用它，这可能会在一个Rails应用中和其它模块冲突。
 
-命名空间对于执行像`bin/rails g model`的命令意味者什么呢？ 比如`bin/rails g model article`，这个操作不会产生一个`Article`，而是`Blorgh::Article`。除此之外，模型的数据库表名也是命名空间化的，会用`blorgh_articles` 来代替`articles`。与模型的命名空间类似，控制器中的 `ArticlesController`会被`Blorgh::ArticlesController`取代。而且和控制器相关的视图也会从`app/views/articles`变成`app/views/blorgh/articles`，邮件模块也是类似的情况。
+命名空间对于执行像`bin/rails g model`的命令意味者什么呢？ 比如`bin/rails g model article`，这个操作不会产生一个`Article`，而是`Blorgh::Article`。此外，模型的数据库表名也是命名空间化的，会用`blorgh_articles` 代替`articles`。与模型的命名空间类似，控制器中的 `ArticlesController`会被`Blorgh::ArticlesController`取代。而且和控制器相关的视图也会从`app/views/articles`变成`app/views/blorgh/articles`，邮件模块也是如此。
 
 总而言之，路径同引擎一样也是有命名空间的，命名空间的重要性将会在本指南中的[Routes](#routes)继续讨论。
 
@@ -148,9 +148,9 @@ end
 `app`内部的结构和一般的Rails应用差不多，都包含 `assets`, `controllers`, `helpers`,
 `mailers`, `models` and `views` 等文件。`helpers`, `mailers` and `models` 文件夹是空的，我们就不详谈了。我们将会在将来的章节中讨论引擎的模型的时候，深入介绍。
 
-`app/assets`文件夹包含`images`, `javascripts`和`stylesheets`，这些你在一个Rails应用中应该很熟悉了。不同之处是，它们每个文件夹下包含一个和引擎同名的子目录，因为引擎是命名空间化的，那么assets也会遵循这一规定 。
+`app/assets`文件夹包含`images`, `javascripts`和`stylesheets`，这些你在一个Rails应用中应该很熟悉了。不同在于，它们每个文件夹下包含一个和引擎同名的子目录，因为引擎是命名空间化的，那么assets也会遵循这一规定 。
 
-`app/controllers`文件夹下有一个`blorgh`文件夹，他包含一个名为`application_controller.rb`的文件。这个文件为引擎提供控制器的一般功能。`blorgh`文件夹是专属于`blorgh`引擎的，通过命名空间化的目录结构，可以很好的将引擎的控制器与外部隔离起来，免受其他引擎或Rails应用的影响。
+`app/controllers`文件夹下有一个`blorgh`文件夹，他包含一个名为`application_controller.rb`的文件。这个文件为引擎提供控制器的一般功能。`blorgh`文件夹是专属于`blorgh`引擎的，通过命名空间化的目录结构，可以很好的将引擎的控制器与外部隔离起来，免受其它引擎或Rails应用的影响。
 
 提示：在引擎内部的`ApplicationController`类命名方式和Rails 应用类似是为了方便你将Rails应用和引擎整合。
 
@@ -160,13 +160,13 @@ end
 
 #### `bin` 目录
 
-这个目录包含了一个`bin/rails`文件，她为你像在Rails应用中使用`rails` 命令等命令提供了支持，比如为该引擎生成模型和视图等操作：
+这个目录包含了一个`bin/rails`文件，它为你像在Rails应用中使用`rails` 等命令提供了支持，比如为该引擎生成模型和视图等操作：
 
 ```bash
 $ bin/rails g model
 ```
 
-必须要注意的是，在引擎内部使用命令行工具生成的组件都会自动调用 `isolate_namespace`方法，以达到组件的命名空间化。
+必须要注意的是，在引擎内部使用命令行工具生成的组件都会自动调用 `isolate_namespace`方法，以达到组件命名空间化的目的。
 
 #### `test`目录  
 
@@ -180,14 +180,14 @@ end
 
 mounts这行的意思是Rails应用只能通过`/blorgh`路径来访问引擎。
 
-在测试目录下面有一个`test/integration`子目录，该子目录是为了引擎与测试交互而存在的。其他的目录也可以如此创建。举个例子，你想为你的模型创建一个测试目录，那么他的文件结构和`test/models`是一样的。
+在测试目录下面有一个`test/integration`子目录，该子目录是为了实现引擎的的交互测试而存在的。其它的目录也可以如此创建。举个例子，你想为你的模型创建一个测试目录，那么他的文件结构和`test/models`是一样的。
 
 引擎功能简介
 ------------------------------
 
 
-本章中创建的引擎需要提供发布博客，博客评论，关注[Getting Started
-Guide](getting_started.html)某人是否有新博客发布等功能。
+本章中创建的引擎需要提供发布主题，  主题评论，关注[Getting Started
+Guide](getting_started.html)某人是否有新主题发布等功能。
 
 ### 生成一个Article 资源
 
@@ -250,7 +250,7 @@ end
 
 接下来，`scaffold_controller`生成器被触发了，生成一个名为`Blorgh::ArticlesController`的控制器(`app/controllers/blorgh/articles_controller.rb`)，以及和控制器相关的视图`app/views/blorgh/articles`。这个生成器同时也会自动为控制器生成一个测试用例(`test/controllers/blorgh/articles_controller_test.rb`)和帮助方法(`app/helpers/blorgh/articles_controller.rb`)。
 
-生成器创建的所以对象几乎都是命名空间化的，控制器的类被定义在`Blorgh`模块中：  
+生成器创建的所有对象几乎都是命名空间化的，控制器的类被定义在`Blorgh`模块中：  
 
 ```ruby
 module Blorgh
@@ -260,7 +260,7 @@ module Blorgh
 end
 ```
 
-提示：`Blorgh::ApplicationController`类继承了`ApplicationController`类，而非一个应用的`ApplicationController`类。
+提示：`Blorgh::ApplicationController`类继承了`ApplicationController`类，而非Rails应用的`ApplicationController`类。
 
 `app/helpers/blorgh/articles_helper.rb`中的helper模块也是命名空间化的：
 ```ruby
@@ -270,7 +270,7 @@ module Blorgh
   end
 end
 ```
-这样有助于避免和其他引擎或应用的同名资源发生冲突。
+这样有助于避免和其它引擎或应用的同名资源发生冲突。
 
 最后，生成该资源相关的样式表和js脚本文件，文件路径分别是`app/assets/javascripts/blorgh/articles.js` 和
 `app/assets/stylesheets/blorgh/articles.css`。稍后你将了解如何使用它们。
@@ -299,9 +299,9 @@ end
 root to: "articles#index"
 ```
 
-现在人们将不需要到引擎的`/articles`目录下浏览主题了，这意味着`http://localhost:3000/blorgh`获得的内容和`http://localhost:3000/blorgh/articles`是相同的。
+现在人们不需要到引擎的`/articles`目录下浏览主题了，这意味着`http://localhost:3000/blorgh`获得的内容和`http://localhost:3000/blorgh/articles`是相同的。
 
-### 生成一个评论资源
+### 生成评论资源
 
 现在，这个引擎可以创建一个新主题，那么自然需要能够评论的功能。为了实现这个功能，你需要生成一个评论模型，以及和评论相关的控制器，并修改主题的结构用以显示评论和添加评论。
 
@@ -433,7 +433,7 @@ Missing partial blorgh/comments/comment with {:handlers=>[:erb, :builder],
 "/Users/ryan/Sites/side_projects/blorgh/app/views"
 ```
 
-显示上述错误是因为引擎无法知道和评论相关的内容。Rails 应用会首先去该应用的(`test/dummy`) `app/views`目录搜索，之后才会到引擎的`app/views` 目录下搜索匹配的内容。当找不到匹配的内容时，会抛出异常。引擎知道去`blorgh/comments/comment`目录下搜索，是因为模型对象是从`Blorgh::Comment`接受到请求的。
+显示上述错误是因为引擎无法知道和评论相关的内容。Rails 应用会首先去该应用的(`test/dummy`) `app/views`目录搜索，之后才会到引擎的`app/views` 目录下搜索匹配的内容。当找不到匹配的内容时，会抛出异常。引擎知道去`blorgh/comments/comment`目录下搜索，是因为模型对象是从`Blorgh::Comment`接收到请求的。
 
 
 现在，为了显示评论，我们需要创建一个新文件 `app/views/blorgh/comments/_comment.html.erb`，并在该文件中添加如下代码：
@@ -442,7 +442,7 @@ Missing partial blorgh/comments/comment with {:handlers=>[:erb, :builder],
 <%= comment_counter + 1 %>. <%= comment.text %>
 ```
 
-本地变量 `comment_counter`是通过`<%= render @article.comments %>`获取的。这个变量是评论的计数器。它用来显示评论的总数。
+本地变量 `comment_counter`是通过`<%= render @article.comments %>`获取的。这个变量是评论计数器，用来显示评论总数。
 
 现在，我们完成一个带评论功能的博客引擎后，接下来我们将介绍如何将引擎与Rails应用整合。
 
@@ -476,18 +476,18 @@ gem 'blorgh', path: "/path/to/blorgh"
 
 如前所述，在`Gemfile`中声明的gem将会与Rails框架一起加载。应用会从引擎中加载 `lib/blorgh.rb`和`lib/blorgh/engine.rb`等与引擎相关的主要文件。
 
-为了在Rails应用内部可以调用引擎，我们必须在Rails应用的`config/routes.rb`中做如下声明：
+为了在Rails应用内部调用引擎，我们必须在Rails应用的`config/routes.rb`中做如下声明：
 
 ```ruby
 mount Blorgh::Engine, at: "/blog"
 ```
-上述代码的意思是引擎将被整合进Rails应用中的"/blog"下。当Rails应用通过 `rails server`启动时，可通过`http://localhost:3000/blog`访问。
+上述代码的意思是引擎将被整合到Rails应用中的"/blog"下。当Rails应用通过 `rails server`启动时，可通过`http://localhost:3000/blog`访问。
 
-提示： 对于其他引擎，比如 `Devise` ，他在处理路径的方式上稍有不同，可以通过自定义的助手方法比如`devise_for`来处理路径。这些路径助理方法工作千篇一律，为引擎大部分功能提供预定义路径的个性化支持。
+提示： 对于其他引擎，比如 `Devise` ，它在处理路径的方式上稍有不同，可以通过自定义的助手方法比如`devise_for`来处理路径。这些路径助理方法工作千篇一律，为引擎大部分功能提供预定义路径的个性化支持。
 
 ### 建立引擎
 
-和引擎相关的两个`blorgh_articles` 和 `blorgh_comments`表需要迁移到Rails应用数据库中，以保证引擎的模型能查询正确。迁移引擎的数据可以使用下面的命令：
+和引擎相关的两个`blorgh_articles` 和 `blorgh_comments`表需要迁移到Rails应用数据库中，以保证引擎的模型能正确查询。迁移引擎的数据可以使用下面的命令：
 
 ```bash
 $ rake blorgh:install:migrations
@@ -516,7 +516,7 @@ Copied migration [timestamp_2]_create_blorgh_comments.rb from blorgh
 rake db:migrate SCOPE=blorgh
 ```
 
-这将有利于你的引擎执行数据迁移的回退操作。
+这将有利于你的引擎执行数据迁移的回滚操作。
 如果想让引擎的数据回到原始状态，那么可以执行下面的操作： 
 
 ```bash
@@ -577,7 +577,7 @@ private
   end
 ```
 
-和`author`关联的`User`类，成了引擎和Rails应用之间联系的纽带。于此同时，也需要把`blorgh_articles`和 `users` 表进行关联。因为通过`author`关联，那么需要给`blorgh_articles`表添加一个`author_id`字段来实现关联。
+和`author`关联的`User`类，成了引擎和Rails应用之间联系的纽带。与此同时，还需要把`blorgh_articles`和 `users` 表进行关联。因为通过`author`关联，那么需要给`blorgh_articles`表添加一个`author_id`字段来实现关联。
 
 
 为了生成这个新字段，我们需要在引擎中执行如下操作：
