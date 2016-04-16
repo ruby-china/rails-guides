@@ -40,7 +40,7 @@ NOTE: 本文的目的不是全面解说每个表单方法和其参数，完整�
 </form>
 ```
 
-你会发现 HTML 中多了一个 `div` 元素，其中有两个隐藏的 `input` 元素。这个 `div` 元素很重要，没有就无法提交表单。第一个 `input` 元素的 `name` 属性值为 `utf8`，其作用是强制浏览器使用指定的编码处理表单，不管是 GET 还是 POST。第二个 `input` 元素的 `name` 属性值为 `authenticity_token`，这是 Rails 的一项安全措施，称为“跨站请求伪造保护”。`form_tag` 帮助方法会为每个非 POST 表单生成这个元素（表明启用了这项安全保护措施）。详情参阅“[Rails 安全指南](security.html#cross-site-request-forgery-csrf)”。
+你会发现 HTML 中多了一个 `div` 元素，其中有两个隐藏的 `input` 元素。这个 `div` 元素很重要，没有就无法提交表单。第一个 `input` 元素的 `name` 属性值为 `utf8`，其作用是强制浏览器使用指定的编码处理表单，不管是 GET 还是 POST。第二个 `input` 元素的 `name` 属性值为 `authenticity_token`，这是 Rails 的一项安全措施，称为“跨站请求伪造保护”。`form_tag` 帮助方法会为每个非 GET 表单生成这个元素（表明启用了这项安全保护措施）。详情参阅“[Rails 安全指南](security.html#cross-site-request-forgery-csrf)”。
 
 NOTE: 为了行文简洁，后续代码没有包含这个 `div` 元素。
 
