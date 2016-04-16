@@ -676,7 +676,7 @@ c.first_name = 'Manny'
 c.first_name == o.customer.first_name # => false
 ```
 
-之所以会发生这种情况，是因为 `c` 和 `o.customer` 在内存中是同一数据的两钟表示，修改其中一个并不会刷新另一个。Active Record 提供了 `:inverse_of` 选项，可以告知 Rails 两者之间的关系：
+之所以会发生这种情况，是因为 `c` 和 `o.customer` 在内存中是同一数据的两种表示，修改其中一个并不会刷新另一个。Active Record 提供了 `:inverse_of` 选项，可以告知 Rails 两者之间的关系：
 
 ```ruby
 class Customer < ActiveRecord::Base
