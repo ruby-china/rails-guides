@@ -400,7 +400,7 @@ Database schema version   20110805173523
 
 Rake 命名空间 `db:` 中最常用的任务是 `migrate` 和 `create`，这两个任务会尝试运行所有迁移相关的 Rake 任务（`up`，`down`，`redo`，`reset`）。`rake db:version` 在排查问题时很有用，会输出数据库的当前版本。
 
-关于数据库迁移的更多介绍，参阅“[Active Record 数据库迁移](migrations.html)”一文。
+关于数据库迁移的更多介绍，参阅“[Active Record 数据库迁移](active_record_migrations.html)”一文。
 
 ### `doc`
 
