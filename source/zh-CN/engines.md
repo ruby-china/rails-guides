@@ -233,7 +233,7 @@ invoke  css
 create    app/assets/stylesheets/scaffold.css
 ```
 
-scaffold生成器做的第一件事情是执行生成`active_record`操作，这将会为资源生成一个模型和迁移集，这里要注意的是，生成的迁移集的名字是 `create_blorgh_articles`而非Raisl应用中`create_articles`。这归功于`Blorgh::Engine`类中`isolate_namespace`方法。这里的模型也是命名空间化的，本来应该是`app/models/article.rb`，现在被 `app/models/blorgh/article.rb`取代。
+scaffold生成器做的第一件事情是执行生成`active_record`操作，这将会为资源生成一个模型和迁移集，这里要注意的是，生成的迁移集的名字是 `create_blorgh_articles`而非Rails应用中`create_articles`。这归功于`Blorgh::Engine`类中`isolate_namespace`方法。这里的模型也是命名空间化的，本来应该是`app/models/article.rb`，现在被 `app/models/blorgh/article.rb`取代。
 
 接下来，模型的单元测试`test_unit`生成器会生成一个测试文件`test/models/blorgh/article_test.rb`(有别于`test/models/article_test.rb`)，和一个fixture`test/fixtures/blorgh/articles.yml`文件
 
@@ -454,7 +454,7 @@ Missing partial blorgh/comments/comment with {:handlers=>[:erb, :builder],
 
 ### 整合前的准备工作
 
-首先，引擎需要在一个Rails应用中的`Gemfile`进行声明。如果我们无法知道Rails应用中是否有这些声明，那么我们可以在引擎目录之外创建一个新的Raisl应用：
+首先，引擎需要在一个Rails应用中的`Gemfile`进行声明。如果我们无法知道Rails应用中是否有这些声明，那么我们可以在引擎目录之外创建一个新的Rails应用：
 
 ```bash
 $ rails new unicorn
