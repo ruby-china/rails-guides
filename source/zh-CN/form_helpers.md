@@ -534,7 +534,7 @@ NOTE: 传入 `options_for_select` 方法的子数组第一个元素是选项文�
 <%= select_date Date.today, prefix: :start_date %>
 ```
 
-生成的 HTML 如下（为了行为简便，省略了各选项）：
+生成的 HTML 如下（为了行文简洁，省略了各选项）：
 
 ```html
 <select id="start_date_year" name="start_date[year]"> ... </select>
@@ -558,7 +558,7 @@ Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, pa
 <%= date_select :person, :birth_date %>
 ```
 
-生成的 HTML 如下（为了行为简介，省略了各选项）：
+生成的 HTML 如下（为了行文简洁，省略了各选项）：
 
 ```html
 <select id="person_birth_date_1i" name="person[birth_date(1i)]"> ... </select>
