@@ -175,7 +175,7 @@ $(document).ready ->
 <a href="/posts/1" data-remote="true">a post</a>
 ```
 
-绑定的 Ajax 事件和 `form_for` 方法一样。下面举个例子。加入有一个文章列表，我们想只点击一个链接就删除所有文章，视图代码如下：
+绑定的 Ajax 事件和 `form_for` 方法一样。下面举个例子。假如有一个文章列表，我们想只点击一个链接就删除所有文章，视图代码如下：
 
 ```erb
 <%= link_to "Delete post", @post, remote: true, method: :delete %>
