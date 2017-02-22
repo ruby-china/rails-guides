@@ -14,4 +14,5 @@ rescue LoadError
 end
 
 require "rails_guides/generator"
+require "rails_guides/cn"
 RailsGuides::Generator.new.generate
