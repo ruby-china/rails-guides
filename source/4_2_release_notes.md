@@ -1,3 +1,5 @@
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+
 Ruby on Rails 4.2 Release Notes
 ===============================
 
@@ -89,6 +91,9 @@ Post.find(2)  # Subsequent calls reuse the cached prepared statement
 
 Post.find_by_title('first post')
 Post.find_by_title('second post')
+
+Post.find_by(title: 'first post')
+Post.find_by(title: 'second post')
 
 post.comments
 post.comments(true)
@@ -222,6 +227,17 @@ restore the old behavior.
 If you do this, be sure to configure your firewall properly such that only
 trusted machines on your network can access your development server.
 
+### Changed status option symbols for `render`
+
+Due to a [change in Rack](https://github.com/rack/rack/commit/be28c6a2ac152fe4adfbef71f3db9f4200df89e8), the symbols that the `render` method accepts for the `:status` option have changed:
+
+- 306: `:reserved` has been removed.
+- 413: `:request_entity_too_large` has been renamed to `:payload_too_large`.
+- 414: `:request_uri_too_long` has been renamed to `:uri_too_long`.
+- 416: `:requested_range_not_satisfiable` has been renamed to `:range_not_satisfiable`.
+
+Keep in mind that if calling `render` with an unknown symbol, the response status will default to 500.
+
 ### HTML Sanitizer
 
 The HTML sanitizer has been replaced with a new, more robust, implementation
@@ -252,7 +268,7 @@ application is using any of these spellings, you will need to update them:
 *   Values in attribute selectors may need to be quoted if they contain
     non-alphanumeric characters.
 
-    ```
+    ```ruby
     # before
     a[href=/]
     a[href$=/]
@@ -267,7 +283,7 @@ application is using any of these spellings, you will need to update them:
 
     For example:
 
-    ``` ruby
+    ```ruby
     # content: <div><i><p></i></div>
 
     # before:
@@ -285,7 +301,7 @@ application is using any of these spellings, you will need to update them:
     used to be raw (e.g. `AT&amp;T`), and now is evaluated
     (e.g. `AT&T`).
 
-    ``` ruby
+    ```ruby
     # content: <p>AT&amp;T</p>
 
     # before:
@@ -296,6 +312,30 @@ application is using any of these spellings, you will need to update them:
     assert_select('p', 'AT&T')      # => true
     assert_select('p', 'AT&amp;T')  # => false
     ```
+
+Furthermore substitutions have changed syntax.
+
+Now you have to use a `:match` CSS-like selector:
+
+```ruby
+assert_select ":match('id', ?)", 'comment_1'
+```
+
+Additionally Regexp substitutions look different when the assertion fails.
+Notice how `/hello/` here:
+
+```ruby
+assert_select(":match('id', ?)", /hello/)
+```
+
+becomes `"(?-mix:hello)"`:
+
+```
+Expected at least 1 element matching "div:match('id', "(?-mix:hello)")", found 0..
+Expected 0 to be >= 1.
+```
+
+See the [Rails Dom Testing](https://github.com/rails/rails-dom-testing/tree/8798b9349fb9540ad8cb9a0ce6cb88d1384a210b) documentation for more on `assert_select`.
 
 
 Railties
@@ -365,7 +405,7 @@ Please refer to the [Changelog][railties] for detailed changes.
       url: http://localhost:3001
       namespace: my_app_development
 
-    # config/production.rb
+    # config/environments/production.rb
     Rails.application.configure do
       config.middleware.use ExceptionNotifier, config_for(:exception_notification)
     end

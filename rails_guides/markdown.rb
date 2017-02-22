@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'redcarpet'
 require 'nokogiri'
 require 'rails_guides/markdown/renderer'
@@ -39,11 +37,7 @@ module RailsGuides
             @node_ids[new_node_id] = duplicate_nodes
           end
 
-          # begin
-            dom_id = "#{nodes[-2][:id]}-#{dom_id}"
-          # rescue NoMethodError
-          #   # ...
-          # end
+          dom_id = "#{nodes[-2][:id]}-#{dom_id}"
         end
 
         @node_ids[dom_id] = nodes
@@ -51,7 +45,12 @@ module RailsGuides
       end
 
       def dom_id_text(text)
-        text.downcase.gsub(/\?/, '-questionmark').gsub(/!/, '-bang').gsub(/\s+/, '-')
+        escaped_chars = Regexp.escape('\\/`*_{}[]()#+-.!:,;|&<>^~=\'"')
+
+        text.downcase.gsub(/\?/, '-questionmark')
+                     .gsub(/!/, '-bang')
+                     .gsub(/[#{escaped_chars}]+/, ' ').strip
+                     .gsub(/\s+/, '-')
       end
 
       def engine
@@ -134,9 +133,9 @@ module RailsGuides
 
       def generate_title
         if heading = Nokogiri::HTML.fragment(@header).at(:h2)
-          @title = "#{heading.text} — Ruby on Rails 指南"
+          @title = "#{heading.text} — Ruby on Rails Guides"
         else
-          @title = "Ruby on Rails 指南"
+          @title = "Ruby on Rails Guides"
         end
       end
 
