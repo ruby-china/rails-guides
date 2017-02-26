@@ -1,231 +1,231 @@
 -
-  name: Start Here
+  name: 入门
   documents:
     -
-      name: Getting Started with Rails
+      name: Rails 入门
       url: getting_started.html
-      description: Everything you need to know to install Rails and create your first application.
+      description: 从安装到建立第一个应用程序所需知道的一切。
 -
-  name: Models
+  name: 模型
   documents:
     -
-      name: Active Record Basics
+      name: Active Record 基础
       url: active_record_basics.html
-      description: This guide will get you started with models, persistence to database, and the Active Record pattern and library.
+      description: 本篇介绍 Models、数据库持久性以及 Active Record 模式。
     -
-      name: Active Record Migrations
+      name: Active Record 数据库迁移
       url: active_record_migrations.html
-      description: This guide covers how you can use Active Record migrations to alter your database in a structured and organized manner.
+      description: 本篇介绍如何有条有理地使用 Active Record 来修改数据库。
     -
-      name: Active Record Validations
+      name: Active Record 数据验证
       url: active_record_validations.html
-      description: This guide covers how you can use Active Record validations.
+      description: 本篇介绍如何使用 Active Record 验证功能。
     -
-      name: Active Record Callbacks
+      name: Active Record 回调
       url: active_record_callbacks.html
-      description: This guide covers how you can use Active Record callbacks.
+      description: 本篇介绍如何使用 Active Record 回调功能。
     -
-      name: Active Record Associations
+      name: Active Record 关联
       url: association_basics.html
-      description: This guide covers all the associations provided by Active Record.
+      description: 本篇介绍如何使用 Active Record 的关联功能。
     -
-      name: Active Record Query Interface
+      name: Active Record 查询
       url: active_record_querying.html
-      description: This guide covers the database query interface provided by Active Record.
+      description: 本篇介绍如何使用 Active Record 的数据库查询功能。
     -
-      name: Active Model Basics
+      name: Active Model 基础
       url: active_model_basics.html
-      description: This guide covers the use of model classes without Active Record.
+      description: 本篇介绍如何使用 Active Model。
       work_in_progress: true
 -
-  name: Views
+  name: 视图
   documents:
     -
-      name: Action View Overview
+      name: Action View 概述
       url: action_view_overview.html
-      description: This guide provides an introduction to Action View and introduces a few of the more common view helpers.
+      description: 本篇介绍 Action View 和常用辅助方法。
       work_in_progress: true
     -
-      name: Layouts and Rendering in Rails
+      name: Rails 布局和视图渲染
       url: layouts_and_rendering.html
-      description: This guide covers the basic layout features of Action Controller and Action View, including rendering and redirecting, using content_for blocks, and working with partials.
+      description: 本篇介绍 Action Controller 与 Action View 基本的版型功能，包含了渲染、重定向、使用 content_for 区块、以及局部模版。
     -
-      name: Action View Form Helpers
+      name: Action View 表单辅助方法
       url: form_helpers.html
-      description: Guide to using built-in Form helpers.
+      description: 本篇介绍 Action View 的表单帮助方法。
 -
-  name: Controllers
+  name: 控制器
   documents:
     -
-      name: Action Controller Overview
+      name: Action Controller 概览
       url: action_controller_overview.html
-      description: This guide covers how controllers work and how they fit into the request cycle in your application. It includes sessions, filters, and cookies, data streaming, and dealing with exceptions raised by a request, among other topics.
+      description: 本篇介绍 Controller 的工作原理，Controller 在请求周期所扮演的角色。内容包含 Session、滤动器、Cookies、资料串流以及如何处理由请求所发起的异常。
     -
-      name: Rails Routing from the Outside In
+      name: Rails 路由全解
       url: routing.html
-      description: This guide covers the user-facing features of Rails routing. If you want to understand how to use routing in your own Rails applications, start here.
+      description: 本篇介绍与使用者息息相关的路由功能。想了解如何使用 Rails 的路由，从这里开始。
 -
-  name: Digging Deeper
+  name: 深入
   documents:
     -
-      name: Active Support Core Extensions
+      name: Active Support 核心扩展
       url: active_support_core_extensions.html
-      description: This guide documents the Ruby core extensions defined in Active Support.
+      description: 本篇介绍由 Active Support 定义的核心扩展功能。
     -
-      name: Rails Internationalization API
+      name: Rails 国际化 API
       url: i18n.html
-      description: This guide covers how to add internationalization to your applications. Your application will be able to translate content to different languages, change pluralization rules, use correct date formats for each country, and so on.
+      description: 本篇介绍如何国际化应用程序。将应用程序翻译成多种语言、更改单复数规则、对不同的国家使用正确的日期格式等。
     -
-      name: Action Mailer Basics
+      name: Action Mailer 基础
       url: action_mailer_basics.html
-      description: This guide describes how to use Action Mailer to send and receive emails.
+      description: 本篇介绍如何使用 Action Mailer 来收发信件。
     -
-      name: Active Job Basics
+      name: Active Job 基础
       url: active_job_basics.html
-      description: This guide provides you with all you need to get started creating, enqueuing, and executing background jobs.
+      description: 本篇提供创建背景任务、任务排程以及执行任务的所有知识。
     -
-      name: Testing Rails Applications
+      name: 测试 Rails 应用
       url: testing.html
-      description: This is a rather comprehensive guide to the various testing facilities in Rails. It covers everything from 'What is a test?' to Integration Testing. Enjoy.
+      description: 这是 Rails 中测试设施的综合指南。它涵盖了从“什么是测试？”到集成测试的知识。
     -
-      name: Securing Rails Applications
+      name: Rails 安全指南
       url: security.html
-      description: This guide describes common security problems in web applications and how to avoid them with Rails.
+      description: 本篇介绍网路应用程序常见的安全问题，如何在 Rails 里避免这些问题。
     -
-      name: Debugging Rails Applications
+      name: 调试 Rails 应用
       url: debugging_rails_applications.html
-      description: This guide describes how to debug Rails applications. It covers the different ways of achieving this and how to understand what is happening "behind the scenes" of your code.
+      description: 本篇介绍如何给 Rails 应用程式除错。包含了多种除错技巧、如何理解与了解代码背后究竟发生了什么事。
     -
-      name: Configuring Rails Applications
+      name: 配置 Rails 应用
       url: configuring.html
-      description: This guide covers the basic configuration settings for a Rails application.
+      description: 本篇介绍 Rails 应用程序的基本配置选项。
     -
-      name: The Rails Command Line
+      name: Rails 命令行
       url: command_line.html
-      description: This guide covers the command line tools provided by Rails.
+      description: 本篇介绍 Rails 提供的命令行工具。
     -
       name: Asset Pipeline
       url: asset_pipeline.html
-      description: This guide documents the asset pipeline.
+      description: 本篇介绍 Asset Pipeline.
     -
-      name: Working with JavaScript in Rails
+      name: 在 Rails 中使用 JavaScript
       url: working_with_javascript_in_rails.html
-      description: This guide covers the built-in Ajax/JavaScript functionality of Rails.
+      description: 本篇介绍 Rails 内置的 Ajax 与 JavaScript 功能。
     -
-      name: The Rails Initialization Process
+      name: Rails 初始化过程
       work_in_progress: true
       url: initialization.html
-      description: This guide explains the internals of the Rails initialization process.
+      description: 本篇介绍 Rails 内部初始化过程。
     -
-      name: Autoloading and Reloading Constants
+      name: 自动加载和重新加载常量
       url: autoloading_and_reloading_constants.html
-      description: This guide documents how autoloading and reloading constants work.
+      description: 本篇介绍自动加载和重新加载常量是如何工作的。
     -
-      name: "Caching with Rails: An Overview"
+      name: Rails 缓存概览
       url: caching_with_rails.html
-      description: This guide is an introduction to speeding up your Rails application with caching.
+      description: 本篇介绍如何通过缓存给 Rails 应用提速。
     -
-      name: Active Support Instrumentation
+      name: Active Support 监测程序
       work_in_progress: true
       url: active_support_instrumentation.html
-      description: This guide explains how to use the instrumentation API inside of Active Support to measure events inside of Rails and other Ruby code.
+      description: 本篇介绍如何通过 Active Support 监测 API 观察 Rails 和其他 Ruby 代码的事件。
     -
-      name: Profiling Rails Applications
+      name: Rails 应用分析指南
       work_in_progress: true
       url: profiling.html
-      description: This guide explains how to profile your Rails applications to improve performance.
+      description: 本篇介绍如何分析 Rails 应用并提高性能。
     -
-      name: Using Rails for API-only Applications
+      name: 使用 Rails 开发只提供 API 的应用
       url: api_app.html
-      description: This guide explains how to effectively use Rails to develop a JSON API application.
+      description: 本篇介绍如何将 Rails 用于只提供 API 的应用。
     -
-      name: Action Cable Overview
+      name: Action Cable 概览
       url: action_cable_overview.html
-      description: This guide explains how Action Cable works, and how to use WebSockets to create real-time features.
+      description: 本篇介绍 Action Cable 如何工作，以及如何使用 WebSockets 创建实时功能。
 
 -
-  name: Extending Rails
+  name: 扩展 Rails
   documents:
     -
-      name: The Basics of Creating Rails Plugins
+      name: Rails 插件开发简介
       work_in_progress: true
       url: plugins.html
-      description: This guide covers how to build a plugin to extend the functionality of Rails.
+      description: 本篇介绍如何开发插件扩展 Rails 的功能。
     -
       name: Rails on Rack
       url: rails_on_rack.html
-      description: This guide covers Rails integration with Rack and interfacing with other Rack components.
+      description: 本篇介绍 Rails 和 Rack 的集成以及和其他 Rack 组件的交互。
     -
-      name: Creating and Customizing Rails Generators
+      name: 创建及定制 Rails 生成器
       url: generators.html
-      description: This guide covers the process of adding a brand new generator to your extension or providing an alternative to an element of a built-in Rails generator (such as providing alternative test stubs for the scaffold generator).
+      description: 本篇介绍如何添加新的生成器，或者为 Rails 内置生成器提供替代选项（例如替换 scaffold 生成器的测试组件）。
     -
-      name: Getting Started with Engines
+      name: 引擎
       url: engines.html
-      description: This guide explains how to write a mountable engine.
+      description: 本篇介绍如何编写可挂载的引擎。
       work_in_progress: true
 -
-  name: Contributing to Ruby on Rails
+  name: 贡献 Ruby on Rails
   documents:
     -
-      name: Contributing to Ruby on Rails
+      name: 贡献 Ruby on Rails
       url: contributing_to_ruby_on_rails.html
-      description: Rails is not 'somebody else's framework.' This guide covers a variety of ways that you can get involved in the ongoing development of Rails.
+      description: Rails 不是“别人的框架”。本篇提供几条贡献 Rails 开发的路线。
     -
-      name: API Documentation Guidelines
+      name: API 文档守则
       url: api_documentation_guidelines.html
-      description: This guide documents the Ruby on Rails API documentation guidelines.
+      description: 本篇介绍 Ruby on Rails API 文档守则。
     -
-      name: Ruby on Rails Guides Guidelines
+      name: Ruby on Rails 指南守则
       url: ruby_on_rails_guides_guidelines.html
-      description: This guide documents the Ruby on Rails guides guidelines.
+      description: 本篇介绍 Ruby on Rails 指南守则。
 -
-  name: Maintenance Policy
+  name: 维护方针
   documents:
     -
-      name: Maintenance Policy
+      name: 维护方针
       url: maintenance_policy.html
-      description: What versions of Ruby on Rails are currently supported, and when to expect new versions.
+      description: Ruby on Rails 当前支持版本，和什么时候发布新版本。
 -
-  name: Release Notes
+  name: 发布说明
   documents:
     -
-      name: Upgrading Ruby on Rails
+      name: 升级 Ruby on Rails
       url: upgrading_ruby_on_rails.html
-      description: This guide helps in upgrading applications to latest Ruby on Rails versions.
+      description: 本篇帮助升级到 Ruby on Rails 最新版。
     -
-      name: Ruby on Rails 5.0 Release Notes
+      name: Ruby on Rails 5.0 发布说明
       url: 5_0_release_notes.html
-      description: Release notes for Rails 5.0.
+      description: Rails 5.0 的发布说明。
     -
-      name: Ruby on Rails 4.2 Release Notes
+      name: Ruby on Rails 4.2 发布说明
       url: 4_2_release_notes.html
-      description: Release notes for Rails 4.2.
+      description: Rails 4.2 的发布说明。
     -
-      name: Ruby on Rails 4.1 Release Notes
+      name: Ruby on Rails 4.1 发布说明
       url: 4_1_release_notes.html
-      description: Release notes for Rails 4.1.
+      description: Rails 4.1 的发布说明。
     -
-      name: Ruby on Rails 4.0 Release Notes
+      name: Ruby on Rails 4.0 发布说明
       url: 4_0_release_notes.html
-      description: Release notes for Rails 4.0.
+      description: Rails 4.0 的发布说明
     -
-      name: Ruby on Rails 3.2 Release Notes
+      name: Ruby on Rails 3.2 发布说明
       url: 3_2_release_notes.html
-      description: Release notes for Rails 3.2.
+      description: Rails 3.2 的发布说明
     -
-      name: Ruby on Rails 3.1 Release Notes
+      name: Ruby on Rails 3.1 发布说明
       url: 3_1_release_notes.html
-      description: Release notes for Rails 3.1.
+      description: Rails 3.1 的发布说明
     -
-      name: Ruby on Rails 3.0 Release Notes
+      name: Ruby on Rails 3.0 发布说明
       url: 3_0_release_notes.html
-      description: Release notes for Rails 3.0.
+      description: Rails 3.0 的发布说明
     -
-      name: Ruby on Rails 2.3 Release Notes
+      name: Ruby on Rails 2.3 发布说明
       url: 2_3_release_notes.html
-      description: Release notes for Rails 2.3.
+      description: Rails 2.3 的发布说明
     -
-      name: Ruby on Rails 2.2 Release Notes
+      name: Ruby on Rails 2.2 发布说明
       url: 2_2_release_notes.html
-      description: Release notes for Rails 2.2.
+      description: Rails 2.2 的发布说明
