@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        More Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Return to home page">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">测试 Rails 应用</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档守则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布说明</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">测试 Rails 应用</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文档守则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布说明">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li>
+<a href="#%E4%BC%9A%E8%AF%9D">会话</a>
+
+<ul>
+<li><a href="#%E4%BC%9A%E8%AF%9D%E6%98%AF%E4%BB%80%E4%B9%88">会话是什么</a></li>
+<li><a href="#%E4%BC%9A%E8%AF%9D%20ID">会话 ID</a></li>
+<li><a href="#%E4%BC%9A%E8%AF%9D%E5%8A%AB%E6%8C%81">会话劫持</a></li>
+<li><a href="#%E4%BC%9A%E8%AF%9D%E5%AE%89%E5%85%A8%E6%8C%87%E5%8D%97">会话安全指南</a></li>
+<li><a href="#%E4%BC%9A%E8%AF%9D%E5%AD%98%E5%82%A8">会话存储</a></li>
+<li><a href="#%E5%AF%B9%20CookieStore%20%E4%BC%9A%E8%AF%9D%E7%9A%84%E9%87%8D%E6%94%BE%E6%94%BB%E5%87%BB%EF%BC%88replay%20attack%EF%BC%89">对 CookieStore 会话的重放攻击（replay attack）</a></li>
+<li><a href="#%E4%BC%9A%E8%AF%9D%E5%9B%BA%E5%AE%9A%E6%94%BB%E5%87%BB%EF%BC%88session%20fixation%EF%BC%89">会话固定攻击（session fixation）</a></li>
+<li><a href="#%E4%BC%9A%E8%AF%9D%E5%9B%BA%E5%AE%9A%E6%94%BB%E5%87%BB%E7%9A%84%E5%AF%B9%E7%AD%96">会话固定攻击的对策</a></li>
+<li><a href="#%E4%BC%9A%E8%AF%9D%E8%BF%87%E6%9C%9F">会话过期</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%EF%BC%88CSRF%EF%BC%89">跨站请求伪造（CSRF）</a>
+
+<ul>
+<li><a href="#CSRF%20%E5%AF%B9%E7%AD%96">CSRF 对策</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E9%87%8D%E5%AE%9A%E5%90%91%E5%92%8C%E6%96%87%E4%BB%B6">重定向和文件</a>
+
+<ul>
+<li><a href="#%E9%87%8D%E5%AE%9A%E5%90%91">重定向</a></li>
+<li><a href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">文件上传</a></li>
+<li><a href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%AD%E7%9A%84%E5%8F%AF%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81">文件上传中的可执行代码</a></li>
+<li><a href="#%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD">文件下载</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%B1%80%E5%9F%9F%E7%BD%91%E5%92%8C%E7%AE%A1%E7%90%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%AE%89%E5%85%A8">局域网和管理界面的安全</a>
+
+<ul>
+<li><a href="#%E5%85%B6%E4%BB%96%E9%A2%84%E9%98%B2%E6%8E%AA%E6%96%BD">其他预防措施</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86">用户管理</a>
+
+<ul>
+<li><a href="#%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E8%B4%A6%E6%88%B7">暴力破解账户</a></li>
+<li><a href="#%E8%B4%A6%E6%88%B7%E5%8A%AB%E6%8C%81">账户劫持</a></li>
+<li><a href="#%E9%AA%8C%E8%AF%81%E7%A0%81">验证码</a></li>
+<li><a href="#%E6%97%A5%E5%BF%97">日志</a></li>
+<li><a href="#%E5%A5%BD%E7%9A%84%E5%AF%86%E7%A0%81">好的密码</a></li>
+<li><a href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">正则表达式</a></li>
+<li><a href="#%E6%8F%90%E5%8D%87%E6%9D%83%E9%99%90">提升权限</a></li>
+</ul>
+</li>
+<li><a href="#%E6%B3%A8%E5%85%A5">注入</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h2>Ruby on Rails 安全指南</h2><p>本文介绍 Web 应用中常见的安全问题，以及如何在 Rails 中避免这些问题。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>所有需要强调的安全对策；</p></li>
+<li><p>Rails 中会话的概念，应该在会话中保存什么内容，以及常见的攻击方式；</p></li>
+<li><p>为什么访问网站也可能带来安全问题（跨站请求伪造）；</p></li>
+<li><p>处理文件或提供管理界面时需要注意的问题；</p></li>
+<li><p>如何管理用户：登录、退出，以及不同层次上的攻击方式；</p></li>
+<li><p>最常见的注入攻击方式。</p></li>
+</ul>
+<h3 id="%E7%AE%80%E4%BB%8B">1 简介</h3><p>Web 应用框架的作用是帮助开发者创建 Web 应用。其中一些框架还能帮助我们提高 Web 应用的安全性。事实上，框架之间无所谓谁更安全，对于许多框架来说，只要使用正确，我们都能开发出安全的应用。Ruby on Rails 提供了一些十分智能的辅助方法，例如，用于防止 SQL 注入的辅助方法，极大减少了这一安全风险。</p><p>一般来说，并不存在什么即插即用的安全机制。安全性取决于开发者如何使用框架，有时也取决于开发方式。安全性还取决于 Web 应用环境的各个层面，包括后端存储、Web 服务器和 Web 应用自身等（甚至包括其他 Web应用）。</p><p>不过，据高德纳咨询公司（Gartner Group）估计，75% 的攻击发生在 Web 应用层面，报告称“在进行了安全审计的 300 个网站中，97% 存在被攻击的风险”。这是因为针对 Web 应用的攻击相对来说更容易实施，其工作原理和具体操作都比较简单，即使是非专业人士也能发起攻击。</p><p>针对 Web 应用的安全威胁包括账户劫持、绕过访问控制、读取或修改敏感数据，以及显示欺诈信息等。有时，攻击者还会安装木马程序或使用垃圾邮件群发软件，以便获取经济利益，或者通过篡改公司资源来损害品牌形象。为了防止这些攻击，最大限度降低或消除攻击造成的影响，首先我们必须全面了解各种攻击方式，只有这样才能找出正确对策——这正是本文的主要目的。</p><p>为了开发安全的 Web 应用，我们必须从各个层面紧跟安全形势，做到知己知彼。为此，我们可以订阅安全相关的邮件列表，阅读相关博客，同时养成及时更新并定期进行安全检查的习惯（请参阅<a href="#additional-resources">其他资源</a>一节）。这些工作都是手动完成的，只有这样我们才能发现潜在安全隐患。</p><h3 id="%E4%BC%9A%E8%AF%9D">2 会话</h3><p>从会话入手来了解安全问题是一个很好的切入点，因为会话对于特定攻击十分脆弱。</p><h4 id="%E4%BC%9A%E8%AF%9D%E6%98%AF%E4%BB%80%E4%B9%88">2.1 会话是什么</h4><div class="note"><p>HTTP 是无状态协议，会话使其有状态。</p></div><p>大多数应用需要跟踪特定用户的某些状态，例如购物车里的商品、当前登录用户的 ID 等。如果没有会话，就需要为每一次请求标识用户甚至进行身份验证。当新用户访问应用时，Rails 会自动新建会话，如果用户曾经访问过应用，就会加载已有会话。</p><p>会话通常由值的散列和会话 ID（通常为 32 个字符的字符串）组成，其中会话 ID 用于标识散列。发送到客户端浏览器的每个 Cookie 都包含会话 ID，另一方面，客户端浏览器发送到服务器的每个请求也包含会话 ID。在 Rails 中，我们可以使用 <code>session</code> 方法保存和取回值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+session[:user_id] = @current_user.id
+User.find(session[:user_id])
+
+</pre>
+</div>
+<h4 id="%E4%BC%9A%E8%AF%9D%20ID">2.2 会话 ID</h4><div class="note"><p>会话 ID 是长度为 32 字节的 MD5 散列值。</p></div><p>会话 ID 由随机字符串的散列值组成。这个随机字符串包含当前时间，一个 0 到 1 之间的随机数，Ruby 解析器的进程 ID（基本上也是一个随机数），以及一个常量字符串。目前 Rails 会话 ID 还无法暴力破解。尽管直接破解 MD5 很难，但存在 MD5 碰撞的可能性，理论上可以创建具有相同散列值的另一个输入文本。不过到目前为止，这个问题还未产生安全影响。</p><h4 id="%E4%BC%9A%E8%AF%9D%E5%8A%AB%E6%8C%81">2.3 会话劫持</h4><div class="warning"><p>通过窃取用户的会话 ID，攻击者能够以受害者的身份使用 Web 应用。</p></div><p>很多 Web 应用都有身份验证系统：用户提供用户名和密码，Web 应用在验证后把对应的用户 ID 储存到会话散列中。之后，会话就可以合法使用了。对于每个请求，应用都会通过识别会话中储存的用户 ID 来加载用户，从而避免了重新进行身份验证。Cookie 中的会话 ID 用于标识会话。</p><p>因此，Cookie 提供了 Web 应用的临时身份验证。只要得到了他人的 Cookie，任何人都能以该用户的身份使用 Web 应用，这可能导致严重的后果。下面介绍几种劫持会话的方式及其对策：</p>
+<ul>
+<li>在不安全的网络中嗅探 Cookie。无线局域网就是一个例子。在未加密的无线局域网中，监听所有已连接客户端的流量极其容易。因此，Web 应用开发者应该通过 SSL 提供安全连接。在 Rails 3.1 和更高版本中，可以在应用配置文件中设置强制使用 SSL 连接：</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.force_ssl = true
+
+</pre>
+</div>
+
+<ul>
+<li><p>大多数人在使用公共终端后不会清除 Cookie。因此，如果最后一个用户没有退出 Web 应用，后续用户就能以该用户的身份继续使用。因此，Web 应用一定要提供“退出”按钮，并且要尽可能显眼。</p></li>
+<li><p>很多跨站脚本（XSS）攻击的目标是获取用户 Cookie。更多介绍请参阅<a href="#cross-site-scripting-xss">跨站脚本攻击</a>一节。</p></li>
+<li><p>有的攻击者不窃取 Cookie，而是篡改用户 Cookie 中的会话 ID。这种攻击方式被称为固定会话攻击，后文会详细介绍。</p></li>
+</ul>
+<p>大多数攻击者的主要目标是赚钱。根据赛门铁克《互联网安全威胁报告》，被窃取的银行登录账户的黑市价格从 10 到 1000 美元不等（取决于账户余额），信用卡卡号为 0.40 到 20 美元，在线拍卖网站的账户为 1 到 8 美元，电子邮件账户密码为 4 到 30 美元。</p><h4 id="%E4%BC%9A%E8%AF%9D%E5%AE%89%E5%85%A8%E6%8C%87%E5%8D%97">2.4 会话安全指南</h4><p>下面是一些关于会话安全的一般性指南。</p>
+<ul>
+<li><p>不要在会话中储存大型对象，而应该把它们储存在数据库中，并将其 ID 保存在会话中。这么做可以避免同步问题，并且不会导致会话存储空间耗尽（会话存储空间的大小取决于其类型，详见后文）。如果不这么做，当修改了对象结构时，用户 Cookie 中保存的仍然是对象的旧版本。通过在服务器端储存会话，我们可以轻而易举地清除会话，而在客户端储存会话，要想清除会话就很麻烦了。</p></li>
+<li><p>关键数据不应该储存在会话中。如果用户清除了 Cookie 或关闭了浏览器，这些关键数据就会丢失。并且在客户端储存会话，还会导致用户能够读取关键数据。</p></li>
+</ul>
+<h4 id="%E4%BC%9A%E8%AF%9D%E5%AD%98%E5%82%A8">2.5 会话存储</h4><div class="note"><p>Rails 提供了几种会话散列的存储机制。其中最重要的是 <code>ActionDispatch::Session::CookieStore</code>。</p></div><p>Rails 2 引入了一种新的默认会话存储机制——CookieStore。CookieStore 把会话散列直接储存在客户端的 Cookie 中。无需会话 ID，服务器就可以从 Cookie 中取回会话散列。这么做可以显著提高程序的运行速度，但也存在争议，因为这种存储机制具有下列安全隐患：</p>
+<ul>
+<li><p>Cookie 的大小被严格限制为 4 KB。这个限制本身没问题，因为如前文所述，本来就不应该在会话中储存大量数据。在会话中储存当前用户的数据库 ID 一般没问题。</p></li>
+<li><p>客户端可以看到储存在会话中的所有内容，因为数据是以明文形式储存的（实际上是 Base64 编码，因此没有加密）。因此，我们不应该在会话中储存隐私数据。为了防止会话散列被篡改，应该根据服务器端密令（<code>secrets.secret_token</code>）计算会话的摘要（digest），然后把这个摘要添加到 Cookie 的末尾。</p></li>
+</ul>
+<p>不过，从 Rails 4 开始，默认存储机制是 EncryptedCookieStore。EncryptedCookieStore 会先对会话进行加密，再储存到 Cookie 中。这么做可以防止用户访问和篡改 Cookie 的内容。因此，会话也成为储存数据的更安全的地方。加密时需要使用 <code>config/secrets.yml</code> 文件中储存的服务器端密钥 <code>secrets.secret_key_base</code>。</p><p>这意味着 EncryptedCookieStore 存储机制的安全性由密钥（以及摘要算法，出于兼容性考虑默认为 SHA1 算法）决定。因此，密钥不能随意取值，例如从字典中找一个单词，或少于 30 个字符，应该使用 <code>rails secret</code> 生成密钥。</p><p><code>secrets.secret_key_base</code> 用于指定密钥，在应用中会话使用这个密钥来验证已知密钥，以防止篡改。在创建应用时，<code>config/secrets.yml</code> 文件中储存的 <code>secrets.secret_key_base</code> 是一个随机密钥，例如：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+development:
+  secret_key_base: a75d...
+
+test:
+  secret_key_base: 492f...
+
+production:
+  secret_key_base: &lt;%= ENV["SECRET_KEY_BASE"] %&gt;
+
+</pre>
+</div>
+<p>Rails 老版本中的 CookieStore 使用的是 <code>secret_token</code>，而不是 EncryptedCookieStore 所使用的 <code>secret_key_base</code>。更多介绍请参阅升级文档。</p><p>如果应用的密钥泄露了（例如应用开放了源代码），强烈建议更换密钥。</p><h4 id="%E5%AF%B9%20CookieStore%20%E4%BC%9A%E8%AF%9D%E7%9A%84%E9%87%8D%E6%94%BE%E6%94%BB%E5%87%BB%EF%BC%88replay%20attack%EF%BC%89">2.6 对 CookieStore 会话的重放攻击（replay attack）</h4><div class="note"><p>重放攻击是使用 CookieStore 时必须注意的另一种攻击方式。</p></div><p>重放攻击的工作原理如下：</p>
+<ul>
+<li><p>用户获得的信用额度保存在会话中（信用额度实际上不应该保存在会话中，这里只是出于演示目的才这样做）；</p></li>
+<li><p>用户使用部分信用额度购买商品；</p></li>
+<li><p>减少后的信用额度仍然保存在会话中；</p></li>
+<li><p>用户先前复制了第一步中的 Cookie，并用这个 Cookie 替换浏览器中的当前 Cookie；</p></li>
+<li><p>用户重新获得了消费前的信用额度。</p></li>
+</ul>
+<p>在会话中包含随机数可以防止重放攻击。每个随机数验证一次后就会失效，服务器必须跟踪所有有效的随机数。当有多个应用服务器时，情况会变得更复杂，因为我们不能把随机数储存在数据库中，否则就违背了使用 CookieStore 的初衷（避免访问数据库）。</p><p>因此，防止重放攻击的最佳方案，不是把这类敏感数据储存在会话中，而是把它们储存在数据库中。回到上面的例子，我们可以把信用额度储存在数据库中，而把当前用户的 ID 储存在会话中。</p><h4 id="%E4%BC%9A%E8%AF%9D%E5%9B%BA%E5%AE%9A%E6%94%BB%E5%87%BB%EF%BC%88session%20fixation%EF%BC%89">2.7 会话固定攻击（session fixation）</h4><div class="note"><p>除了窃取用户的会话 ID 之外，攻击者还可以直接使用已知的会话 ID。这种攻击方式被称为会话固定攻击。</p></div><p><img src="images/session_fixation.png" alt="session fixation"></p><p>会话固定攻击的关键是强制用户的浏览器使用攻击者已知的会话 ID，这样攻击者就无需窃取会话 ID。会话固定攻击的工作原理如下：</p>
+<ul>
+<li><p>攻击者创建一个有效的会话 ID：打开 Web 应用的登录页面，从响应中获取 Cookie 中的会话 ID（参见上图中的第 1 和第 2 步）。</p></li>
+<li><p>攻击者定期访问 Web 应用，以避免会话过期。</p></li>
+<li><p>攻击者强制用户的浏览器使用这个会话 ID（参见上图中的第 3 步）。由于无法修改另一个域名的 Cookie（基于同源原则的限制），攻击者必须在目标 Web 应用的域名上运行 JavaScript，也就是通过 XSS 把 JavaScript 注入目标 Web 应用来完成攻击。例如：<code>&lt;script&gt;document.cookie="_session_id=16d5b78abb28e3d6206b60f22a03c8d9";&lt;/script&gt;</code>。关于 XSS 和注入的更多介绍见后文。</p></li>
+<li><p>攻击者诱使用户访问包含恶意 JavaScript 代码的页面，这样用户的浏览器中的会话 ID 就会被篡改为攻击者已知的会话 ID。</p></li>
+<li><p>由于这个被篡改的会话还未使用过，Web 应用会进行身份验证。</p></li>
+<li><p>此后，用户和攻击者将共用同一个会话来访问 Web 应用。攻击者篡改后的会话成为了有效会话，用户面对攻击却浑然不知。</p></li>
+</ul>
+<h4 id="%E4%BC%9A%E8%AF%9D%E5%9B%BA%E5%AE%9A%E6%94%BB%E5%87%BB%E7%9A%84%E5%AF%B9%E7%AD%96">2.8 会话固定攻击的对策</h4><div class="info"><p>一行代码就能保护我们免受会话固定攻击。</p></div><p>面对会话固定攻击，最有效的对策是在登录成功后重新设置会话 ID，并使原有会话 ID 失效，这样攻击者持有的会话 ID 也就失效了。这也是防止会话劫持的有效对策。在 Rails 中重新设置会话 ID 的方式如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+reset_session
+
+</pre>
+</div>
+<p>如果我们使用流行的 <a href="%24%24https://rubygems.org/gems/devise">Devise</a> gem 完成用户管理，Devise 会在用户登录和退出时自动使原有会话过期。如果打算手动完成用户管理，请记住在登录操作后（新会话创建后）使原有会话过期。会话过期后其中的值都会被删除，因此我们需要把有用的值转移到新会话中。</p><p>另一个对策是在会话中保存用户相关的属性，对于每次请求都验证这些属性，如果信息不匹配就拒绝访问。这些属性包括 IP 地址、用户代理（Web 浏览器名称），其中用户代理的用户相关性要弱一些。在保存 IP 地址时，必须注意，有些网络服务提供商（ISP）或大型组织，会把用户置于代理服务器之后。在会话的生命周期中，这些代理服务器有可能发生变化，从而导致用户无法正常使用应用，或出现权限问题。</p><h4 id="%E4%BC%9A%E8%AF%9D%E8%BF%87%E6%9C%9F">2.9 会话过期</h4><div class="note"><p>永不过期的会话增加了跨站请求伪造（CSRF）、会话劫持和会话固定攻击的风险。</p></div><p>Cookie 的过期时间可以通过会话 ID 设置。然而，客户端能够修改储存在 Web 浏览器中的 Cookie，因此在服务器上使会话过期更安全。下面的例子演示了如何使储存在数据库中的会话过期。通过调用 <code>Session.sweep("20 minutes")</code>，可以使闲置超过 20 分钟的会话过期。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Session &lt; ApplicationRecord
+  def self.sweep(time = 1.hour)
+    if time.is_a?(String)
+      time = time.split.inject { |count, unit| count.to_i.send(unit) }
+    end
+
+    delete_all "updated_at &lt; '#{time.ago.to_s(:db)}'"
+  end
+end
+
+</pre>
+</div>
+<p>“会话固定攻击”一节介绍了维护会话的问题。攻击者每五分钟维护一次会话，就可以使会话永远保持活动，不会过期。针对这个问题的一个简单解决方案是在会话数据表中添加 <code>created_at</code> 字段，这样就可以找出创建了很长时间的会话并删除它们。可以用下面这行代码代替上面例子中的对应代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+delete_all "updated_at &lt; '#{time.ago.to_s(:db)}' OR
+  created_at &lt; '#{2.days.ago.to_s(:db)}'"
+
+</pre>
+</div>
+<h3 id="%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%EF%BC%88CSRF%EF%BC%89">3 跨站请求伪造（CSRF）</h3><p>跨站请求伪造的工作原理是，通过在页面中包含恶意代码或链接，访问已验证用户才能访问的 Web 应用。如果该 Web 应用的会话未超时，攻击者就能执行未经授权的操作。</p><p><img src="images/csrf.png" alt="csrf"></p><p>在<a href="#%E4%BC%9A%E8%AF%9D">会话</a>一节中，我们了解到大多数 Rails 应用都使用基于 Cookie 的会话。它们或者把会话 ID 储存在 Cookie 中并在服务器端储存会话散列，或者把整个会话散列储存在客户端。不管是哪种情况，只要浏览器能够找到某个域名对应的 Cookie，就会自动在发送请求时包含该 Cookie。有争议的是，即便请求来源于另一个域名上的网站，浏览器在发送请求时也会包含客户端的 Cookie。让我们来看个例子：</p>
+<ul>
+<li><p>鲍勃在访问留言板时浏览了一篇黑客发布的帖子，其中有一个精心设计的 HTML 图片元素。这个元素实际指向的是鲍勃的项目管理应用中的某个操作，而不是真正的图片文件：<code>&lt;img src="http://www.webapp.com/project/1/destroy"&gt;</code>。</p></li>
+<li><p>鲍勃在 <a href="http://www.webapp.com">www.webapp.com</a> 上的会话仍然是活动的，因为几分钟前他访问这个应用后没有退出。</p></li>
+<li><p>当鲍勃浏览这篇帖子时，浏览器发现了这个图片标签，于是尝试从 <a href="http://www.webapp.com">www.webapp.com</a> 上加载图片。如前文所述，浏览器在发送请求时包含了 Cookie，其中包含了有效的会话 ID。</p></li>
+<li><p><a href="http://www.webapp.com">www.webapp.com</a> 上的 Web 应用会验证对应会话散列中的用户信息，并删除 ID 为 1 的项目，然后返回结果页面。由于返回的并非浏览器所期待的结果，图片无法显示。</p></li>
+<li><p>鲍勃当时并未发觉受到了攻击，但几天后，他发现 ID 为 1 的项目不见了。</p></li>
+</ul>
+<p>有一点需要特别注意，像上面这样精心设计的图片或链接，并不一定要出现在 Web 应用所在的域名上，而是可以出现在任何地方，例如论坛、博客帖子，甚至电子邮件中。</p><p>CSRF 在 CVE（Common Vulnerabilities and Exposures，公共漏洞披露）中很少出现，在 2006 年不到 0.1%，但却是个可怕的隐形杀手。对于很多安全保障工作来说，CSRF 是一个严重的安全问题。</p><h4 id="CSRF%20%E5%AF%B9%E7%AD%96">3.1 CSRF 对策</h4><div class="note"><p>首先，根据 W3C 的要求，应该适当地使用 <code>GET</code> 和 <code>POST</code> HTTP 方法。其次，在非 GET 请求中使用安全令牌（security token），可以防止应用受到 CSRF 攻击。</p></div><p>HTTP 协议提供了两种主要的基本请求类型，<code>GET</code> 和 <code>POST</code>（还有其他请求类型，但大多数浏览器不支持）。万维网联盟（W3C）提供了检查表，以帮助开发者在 <code>GET</code> 和 <code>POST</code> 这两个 HTTP 方法之间做出正确选择：</p><p>使用 <code>GET</code> HTTP 方法的情形：</p>
+<ul>
+<li>当交互更像是在询问时，例如查询、读取、查找等安全操作。</li>
+</ul>
+<p>使用 <code>POST</code> HTTP 方法的情形：</p>
+<ul>
+<li><p>当交互更像是在执行命令时；</p></li>
+<li><p>当交互改变了资源的状态并且这种变化能够被用户察觉时，例如订阅某项服务；</p></li>
+<li><p>当用户需要对交互结果负责时。</p></li>
+</ul>
+<p>如果应用是 REST 式的，我们还可以使用附加的 HTTP 方法，例如 <code>PATCH</code>、<code>PUT</code> 或 <code>DELETE</code>。然而现今的大多数浏览器都不支持这些 HTTP 方法，只有 <code>GET</code> 和 <code>POST</code> 得到了普遍支持。Rails 通过隐藏的 <code>_method</code> 字段来解决这个问题。</p><p><code>POST</code> 请求也可以自动发送。在下面的例子中，链接 <a href="http://www.harmless.com">www.harmless.com</a> 在浏览器状态栏中显示为目标地址，实际上却动态新建了一个发送 POST 请求的表单：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+&lt;a href="http://www.harmless.com/" onclick="
+  var f = document.createElement('form');
+  f.style.display = 'none';
+  this.parentNode.appendChild(f);
+  f.method = 'POST';
+  f.action = 'http://www.example.com/account/destroy';
+  f.submit();
+  return false;"&gt;To the harmless survey&lt;/a&gt;
+
+</pre>
+</div>
+<p>攻击者还可以把代码放在图片的 <code>onmouseover</code> 事件句柄中：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;img src="http://www.harmless.com/img" width="400" height="400" onmouseover="..." /&gt;
+
+</pre>
+</div>
+<p>CSRF 还有很多可能的攻击方式，例如使用 <code>&lt;script&gt;</code> 标签向返回 JSONP 或 JavaScript 的 URL 地址发起跨站请求。对跨站请求的响应，返回的如果是攻击者可以设法运行的可执行代码，就有可能导致敏感数据泄露。为了避免发生这种情况，我们必须禁用跨站 <code>&lt;script&gt;</code> 标签。不过 Ajax 请求是遵循同源原则的（只有在同一个网站中才能初始化 <code>XmlHttpRequest</code>），因此在响应 Ajax 请求时返回 JavaScript 是安全的，不必担心跨站请求问题。</p><p>注意：我们无法区分 <code>&lt;script&gt;</code> 标签的来源，无法知道这个标签是自己网站上的，还是其他恶意网站上的，因此我们必须全面禁止 <code>&lt;script&gt;</code> 标签，哪怕这个标签实际上来源于自己网站上的安全的同源脚本。在这种情况下，对于返回 JavaScript 的控制器动作，显式跳过 CSRF 保护，就意味着允许使用 <code>&lt;scipt&gt;</code> 标签。</p><p>为了防止其他各种伪造请求，我们引入了安全令牌，这个安全令牌只有我们自己的网站知道，其他网站不知道。我们把安全令牌包含在请求中，并在服务器上进行验证。这是应用的控制器中的一个线程，也是新建 Rails 应用的默认值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+protect_from_forgery with: :exception
+
+</pre>
+</div>
+<p>这行代码会在 Rails 生成的所有表单和 Ajax 请求中包含安全令牌。如果安全令牌验证失败，就会抛出异常。</p><div class="note"><p>默认情况下，Rails 会包含 jQuery 和 jQuery 非侵入式适配器，后者会在 jQuery 的每个非 GET Ajax 调用中添加名为 <code>X-CSRF-Token</code> 的头信息，其中包含安全令牌。如果没有这个头信息，Rails 不会接受非 GET Ajax 请求。当使用其他库进行 Ajax 调用时，同样需要把安全令牌作为 Ajax 调用的默认头信息添加到库中。要想获取令牌，请查看应用视图中由 <code>&lt;%= csrf_meta_tags %&gt;</code> 这行代码生成的 <code>&lt;meta name='csrf-token' content='THE-TOKEN'&gt;</code> 标签。</p></div><p>通常我们会使用持久化 Cookie 来储存用户信息，例如使用 <code>cookies.permanent</code>。在这种情况下，Cookie 不会被清除，CSRF 保护也无法自动生效。如果使用了其他 Cookie 存储而不是会话来保存用户信息，我们就必须手动解决这个问题：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+rescue_from ActionController::InvalidAuthenticityToken do |exception|
+  sign_out_user # 删除用户 Cookie 的示例方法
+end
+
+</pre>
+</div>
+<p>这段代码可以放在 <code>ApplicationController</code> 中。对于非 GET 请求，如果 CSRF 令牌不存在或不正确，就会执行这段代码。</p><p>注意，跨站脚本（XSS）漏洞能够绕过所有 CSRF 保护。攻击者通过 XSS 可以访问页面中的所有元素，也就是说攻击者可以读取表单中的 CSRF 安全令牌，也可以直接提交表单。更多介绍请参阅<a href="#cross-site-scripting-xss">跨站脚本</a>一节。</p><h3 id="%E9%87%8D%E5%AE%9A%E5%90%91%E5%92%8C%E6%96%87%E4%BB%B6">4 重定向和文件</h3><p>另一类安全漏洞由 Web 应用中的重定向和文件引起。</p><h4 id="%E9%87%8D%E5%AE%9A%E5%90%91">4.1 重定向</h4><div class="warning"><p>Web 应用中的重定向是一个被低估的黑客工具：攻击者不仅能够把用户的访问跳转到恶意网站，还能够发起独立攻击。</p></div><p>只要允许用户指定 URL 重定向地址（或其中的一部分），就有可能造成风险。最常见的攻击方式是，把用户重定向到假冒的 Web 应用，这个假冒的 Web 应用看起来感觉和真的一模一样。这就是所谓的钓鱼攻击。攻击者发动钓鱼攻击时，或者给用户发送包含恶意链接的邮件，或者通过 XSS 在 Web 应用中注入恶意链接，或者把恶意链接放入其他网站。这些恶意链接一般不会引起用户的怀疑，因为它们以正常的网站 URL 开头，而把恶意网站的 URL 隐藏在重定向参数中，例如<a href="http://www.example.com/site/redirect?to=%20www.attacker.com">http://www.example.com/site/redirect?to= www.attacker.com</a>。让我们来看一个例子：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def legacy
+  redirect_to(params.update(action:'main'))
+end
+
+</pre>
+</div>
+<p>如果用户访问 <code>legacy</code> 动作，就会被重定向到 <code>main</code> 动作，同时传递给 <code>legacy</code> 动作的 URL 参数会被保留并传递给 <code>main</code> 动作。然而，攻击者通过在 URL 地址中包含 <code>host</code> 参数就可以发动攻击：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+http://www.example.com/site/legacy?param1=xy&amp;param2=23&amp;host=www.attacker.com
+
+</pre>
+</div>
+<p>如果 <code>host</code> 参数出现在 URL 地址末尾，将很难被注意到，从而会把用户重定向到 <a href="http://www.attacker.com">www.attacker.com</a> 这个恶意网站。一个简单的对策是，在 <code>legacy</code> 动作中只保留所期望的参数（使用白名单，而不是去删除不想要的参数）。对于用户指定的重定向 URL 地址，应该通过白名单或正则表达式进行检查。</p><h5 id="%E7%8B%AC%E7%AB%8B%E7%9A%84%20XSS">4.1.1 独立的 XSS</h5><p>在 Firefox 和 Opera 浏览器中，通过使用 data 协议，还能发起另一种重定向和独立 XSS 攻击。data 协议允许把内容直接显示在浏览器中，支持的类型包括 HTML、JavaScript 和图片，例如：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K
+
+</pre>
+</div>
+<p>这是一段使用 Base64 编码的 JavaScript 代码，运行后会显示一个消息框。通过这种方式，攻击者可以使用恶意代码把用户重定向到恶意网站。为了防止这种攻击，我们的对策是禁止用户指定 URL 重定向地址。</p><h4 id="%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">4.2 文件上传</h4><div class="note"><p>请确保文件上传时不会覆盖重要文件，同时对于媒体文件应该采用异步上传方式。</p></div><p>很多 Web 应用都允许用户上传文件。由于文件名通常由用户指定（或部分指定），必须对文件名进行过滤，以防止攻击者通过指定恶意文件名覆盖服务器上的文件。如果我们把上传的文件储存在 <code>/var/www/uploads</code> 文件夹中，而用户输入了类似 <code>"../../../etc/passwd"</code> 的文件名，在没有对文件名进行过滤的情况下，<code>passwd</code> 这个重要文件就有可能被覆盖。当然，只有在 Ruby 解析器具有足够权限时文件才会被覆盖，这也是不应该使用 Unix 特权用户运行 Web 服务器、数据库服务器和其他应用的原因之一。</p><p>在过滤用户输入的文件名时，不要去尝试删除文件名的恶意部分。我们可以设想这样一种情况，Web 应用把文件名中所有的 <code>"../"</code> 都删除了，但攻击者使用的是 <code>"…​.//"</code> 这样的字符串，于是过滤后的文件名中仍然包含 <code>"../"</code>。最佳策略是使用白名单，只允许在文件名中使用白名单中的字符。黑名单的做法是尝试删除禁止使用的字符，白名单的做法恰恰相反。对于无效的文件名，可以直接拒绝（或者把禁止使用的字符都替换掉），但不要尝试删除禁止使用的字符。下面这个文件名净化程序来自 <a href="https://github.com/technoweenie/attachment_fu/tree/master">attachment_fu</a> 插件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def sanitize_filename(filename)
+  filename.strip.tap do |name|
+    # NOTE: File.basename doesn't work right with Windows paths on Unix
+    # get only the filename, not the whole path
+    name.sub! /\A.*(\\|\/)/, ''
+    # Finally, replace all non alphanumeric, underscore
+    # or periods with underscore
+    name.gsub! /[^\w\.\-]/, '_'
+  end
+end
+
+</pre>
+</div>
+<p>通过同步方式上传文件（<code>attachment_fu</code> 插件也可能被用于上传图片）的一个明显缺点是，存在受到拒绝服务攻击（denial-of-service，简称 DoS）的风险。攻击者可以通过很多计算机同时上传图片，这将导致服务器负载增加，并最终导致应用崩溃或服务器宕机。</p><p>最佳解决方案是，对于媒体文件采用异步上传方式：保存媒体文件，并通过数据库调度程序处理请求。由另一个进程在后台完成文件上传。</p><h4 id="%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%AD%E7%9A%84%E5%8F%AF%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81">4.3 文件上传中的可执行代码</h4><div class="warning"><p>如果把上传的文件储存在某些特定的文件夹中，文件中的源代码就有可能被执行。因此，如果 Rails 应用的 <code>/public</code> 文件夹被设置为 Apache 的主目录，请不要在这个文件夹中储存上传的文件。</p></div><p>流行的 Apache Web 服务器的配置文件中有一个名为 <code>DocumentRoot</code> 的选项，用于指定网站的主目录。主目录及其子文件夹中的所有内容都由 Web 服务器直接处理。如果其中包含了一些具有特定扩展名的文件，就能够通过 HTTP 请求执行这些文件中的代码（可能还需要设置一些选项），例如 PHP 和 CGI 文件。假设攻击者上传了 <code>"file.cgi"</code> 文件，其中包含了可执行代码，那么之后有人下载这个文件时，这些代码就会在服务器上执行。</p><p>如果 Apache 的 <code>DocumentRoot</code> 选项指向 Rails 的 <code>/public</code> 文件夹，请不要在其中储存上传的文件，至少也应该储存在子文件夹中。</p><h4 id="%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD">4.4 文件下载</h4><div class="note"><p>请确保用户不能随意下载文件。</p></div><p>正如在上传文件时必须过滤文件名，在下载文件时也必须进行过滤。<code>send_file()</code> 方法用于把服务器上的文件发送到客户端。如果传递给 <code>send_file()</code> 方法的文件名参数是由用户输入的，却没有进行过滤，用户就能够下载服务器上的任何文件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+send_file('/var/www/uploads/' + params[:filename])
+
+</pre>
+</div>
+<p>可以看到，只要指定 <code>"../../../etc/passwd"</code> 这样的文件名，用户就可以下载服务器登录信息。对此，一个简单的解决方案是，检查所请求的文件是否在规定的文件夹中：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+basename = File.expand_path(File.join(File.dirname(__FILE__), '../../files'))
+filename = File.expand_path(File.join(basename, @file.public_filename))
+raise if basename !=
+     File.expand_path(File.join(File.dirname(filename), '../../../'))
+send_file filename, disposition: 'inline'
+
+</pre>
+</div>
+<p>另一个（附加的）解决方案是在数据库中储存文件名，并以数据库中的记录 ID 作为文件名，把文件保存到磁盘。这样做还能有效防止上传的文件中的代码被执行。<code>attachment_fu</code> 插件具有类似的工作原理。</p><h3 id="%E5%B1%80%E5%9F%9F%E7%BD%91%E5%92%8C%E7%AE%A1%E7%90%86%E7%95%8C%E9%9D%A2%E7%9A%84%E5%AE%89%E5%85%A8">5 局域网和管理界面的安全</h3><p>由于具有访问特权，局域网和管理界面成为了常见的攻击目标。因此理应为它们采取多种安全防护措施，然而实际情况却不理想。</p><p>2007年，第一个在局域网中窃取信息的专用木马出现了，它的名字叫“员工怪兽”（Monster for employers），用于攻击在线招聘网站 Monster.com。专用木马非常少见，迄今为止造成的安全风险也相当低，但这种攻击方式毕竟是存在的，说明客户端的安全问题不容忽视。然而，对局域网和管理界面而言，最大的安全威胁来自 XSS 和 CSRF。</p><p><strong>XSS</strong> 如果在应用中显示了来自外网的恶意内容，应用就有可能受到 XSS 攻击。例如用户名、用户评论、垃圾信息报告、订单地址等等，都有可能受到 XSS攻击。</p><p>在局域网和管理界面中，只要有一个地方没有对输入进行过滤，整个应用就有可能受到 XSS 攻击。可能发生的攻击包括：窃取具有特权的管理员的 Cookie，注入 iframe 以窃取管理员密码，以及通过浏览器漏洞安装恶意软件以控制管理员的计算机。</p><p>关于 XSS 攻击的对策，请参阅<a href="#%E6%B3%A8%E5%85%A5">注入</a>一节。在局域网和管理界面中同样推荐使用 <code>SafeErb</code> 插件。</p><p><strong>CSRF</strong> 跨站请求伪造（CSRF），也称为跨站引用伪造（XSRF），是一种破坏性很强的攻击方法，它允许攻击者完成管理员或局域网用户可以完成的一切操作。前文我们已经介绍过 CSRF 的工作原理，下面是攻击者针对局域网和管理界面发动 CSRF 攻击的几个例子。</p><p>一个真实案例是<a href="http://www.h-online.com/security/news/item/Symantec-reports-first-active-attack-on-a-DSL-router-735883.html">通过 CSRF 攻击重新设置路由器</a>。攻击者向墨西哥用户发送包含 CSRF 代码的恶意电子邮件。邮件声称用户收到了一张电子贺卡，并且包含了一个能够发起 HTTP GET 请求的图片标签，以便重新设置用户的路由器（针对一款在墨西哥很常见的路由器）。攻击改变了路由器的 DNS 设置，当用户访问墨西哥境内银行的网站时，就会被带到攻击者的网站。通过受攻击的路由器访问银行网站的所有用户，都会被带到攻击者的假冒网站，最终导致用户的网银账号失窍。</p><p>另一个例子是修改 Google Adsense 账户的电子邮件和密码。一旦受害者登录 Google Adsense，打算对自己投放的 Google 广告进行管理，攻击者就能够趁机修改受害者的登录信息。</p><p>还有一种常见的攻击方式是在 Web 应用中大量发布垃圾信息，通过博客、论坛来传播 XSS 恶意脚本。当然，攻击者还得知道 URL 地址的结构才能发动攻击，但是大多数 Rails 应用的 URL 地址结构都很简单，很容易就能搞清楚，对于开源应用的管理界面更是如此。通过包含恶意图片标签，攻击者甚至可以进行上千次猜测，把 URL 地址结构所有可能的组合都尝试一遍。</p><p>关于针对局域网和管理界面发动的 CSRF 攻击的对策，请参阅<a href="#CSRF%20%E5%AF%B9%E7%AD%96">CSRF 对策</a>一节。</p><h4 id="%E5%85%B6%E4%BB%96%E9%A2%84%E9%98%B2%E6%8E%AA%E6%96%BD">5.1 其他预防措施</h4><p>通用管理界面的一般工作原理如下：通过 <a href="http://www.example.com/admin">www.example.com/admin</a> 访问，访问仅限于 <code>User</code> 模型的 <code>admin</code> 字段设置为 <code>true</code> 的用户。管理界面中会列出用户输入的数据，管理员可以根据需要对数据进行删除、添加或修改。下面是关于管理界面的一些参考意见：</p>
+<ul>
+<li><p>考虑最坏的情况非常重要：如果有人真的得到了用户的 Cookie 或账号密码怎么办？可以为管理界面引入用户角色权限设计，以限制攻击者的权限。或者为管理界面启用特殊的登录账号密码，而不采用应用的其他部分所使用的账号密码。对于特别重要的操作，还可以要求用户输入专用密码。</p></li>
+<li><p>管理员真的有可能从世界各地访问管理界面吗？可以考虑对登录管理界面的 IP 段进行限制。用户的 IP 地址可以通过 <code>request.remote_ip</code> 获取。这个解决方案虽然不能说万无一失，但确实为管理界面筑起了一道坚实的防线。不过在实际操作中，还要注意用户是否使用了代理服务器。</p></li>
+<li><p>通过专用子域名访问管理界面，如 admin.application.com，并为管理界面建立独立的应用和账户系统。这样，攻击者就无法从日常使用的域名（如 <a href="http://www.application.com%EF%BC%89%E4%B8%AD%E7%AA%83%E5%8F%96%E7%AE%A1%E7%90%86%E5%91%98%E7%9A%84">www.application.com）中窃取管理员的</a> Cookie。其原理是：基于浏览器的同源原则，在 <a href="http://www.application.com">www.application.com</a> 中注入的 XSS 脚本，无法读取 admin.application.com 的 Cookie，反之亦然。</p></li>
+</ul>
+<h3 id="%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86">6 用户管理</h3><div class="note"><p>几乎每个 Web 应用都必须处理授权和身份验证。自己实现这些功能并非首选，推荐的做法是使用插件。但在使用插件时，一定要记得及时更新。此外，还有一些预防措施可以使我们的应用更安全。</p></div><p>Rails 有很多可用的身份验证插件，其中有不少佳作，例如 <a href="https://github.com/plataformatec/devise">devise</a> 和 <a href="https://github.com/binarylogic/authlogic">authlogic</a>。这些插件只储存加密后的密码，而不储存明文密码。从 Rails 3.1 起，我们可以使用实现了类似功能的 <code>has_secure_password</code> 内置方法。</p><p>每位新注册用户都会收到一封包含激活码和激活链接的电子邮件，以便激活账户。账户激活后，该用户的数据库记录的 <code>activation_code</code> 字段会被设置为 <code>NULL</code>。如果有人访问了下列 URL 地址，就有可能以数据库中找到的第一个已激活用户的身份登录（有可能是管理员）：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+http://localhost:3006/user/activate
+http://localhost:3006/user/activate?id=
+
+</pre>
+</div>
+<p>之所以出现这种可能性，是因为对于某些服务器，ID 参数 <code>params[:id]</code> 的值是 <code>nil</code>，而查找激活码的代码如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+User.find_by_activation_code(params[:id])
+
+</pre>
+</div>
+<p>当 ID 参数为 <code>nil</code> 时，生成的 SQL 查询如下：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM users WHERE (users.activation_code IS NULL) LIMIT 1
+
+</pre>
+</div>
+<p>因此，查询结果是数据库中的第一个已激活用户，随后将以这个用户的身份登录。关于这个问题的更多介绍，请参阅<a href="http://www.rorsecurity.info/2007/10/28/restful_authentication-login-security/">这篇博客</a>。在使用插件时，建议及时更新。此外，通过代码审查可以找出应用的更多类似缺陷。</p><h4 id="%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E8%B4%A6%E6%88%B7">6.1 暴力破解账户</h4><div class="note"><p>对账户的暴力攻击是指对登录的账号密码进行试错攻击。通过显示较为模糊的错误信息、要求输入验证码等方式，可以增加暴力破解的难度。</p></div><p>Web 应用的用户名列表有可能被滥用于暴力破解密码，因为大多数用户并没有使用复杂密码。大多数密码是字典中的单词的组合，或单词和数字的组合。有了用户名列表和字典，自动化程序在几分钟内就可能找到正确密码。</p><p>因此，如果登录时用户名或密码不正确，大多数 Web 应用都会显示较为模糊的错误信息，如“用户名或密码不正确”。如果提示“未找到您输入的用户名”，攻击者就可以根据错误信息，自动生成精简后的有效用户名列表，从而提高攻击效率。</p><p>不过，容易被大多数 Web 应用设计者忽略的，是忘记密码页面。通过这个页面，通常能够确认用户名或电子邮件地址是否有效，攻击者可以据此生成用于暴力破解的用户名列表。</p><p>为了规避这种攻击，忘记密码页面也应该显示较为模糊的错误信息。此外，当某个 IP 地址多次登录失败时，可以要求输入验证码。但是要注意，这并非防范自动化程序的万无一失的解决方案，因为这些程序可能会频繁更换 IP 地址，不过毕竟还是筑起了一道防线。</p><h4 id="%E8%B4%A6%E6%88%B7%E5%8A%AB%E6%8C%81">6.2 账户劫持</h4><p>对于很多 Web 应用来说，实施账户劫持是一件很容易的事情。既然这样，为什么不尝试改变，想办法增加账户劫持的难度呢？</p><h5 id="%E5%AF%86%E7%A0%81">6.2.1 密码</h5><p>假设攻击者窃取了用户会话的 Cookie，因而能够像用户一样使用应用。此时，如果修改密码很容易，攻击者只需点击几次鼠标就能劫持该账户。另一种可能性是，修改密码的表单容易受到 CSRF 攻击，攻击者可以诱使受害者访问包含精心设计的图片标签的网页，通过 CSRF 窃取密码。针对这种攻击的对策是，在修改密码的表单中加入 CSRF 防护，同时要求用户在修改密码时先输入旧密码。</p><h5 id="%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6">6.2.2 电子邮件</h5><p>然而，攻击者还能通过修改电子邮件地址来劫持账户。一旦攻击者修改了账户的电子邮件地址，他们就会进入忘记密码页面，通过新邮件地址接收找回密码邮件。针对这种攻击的对策是，要求用户在修改电子邮件地址时同样先输入旧密码。</p><h5 id="%E5%85%B6%E4%BB%96">6.2.3 其他</h5><p>针对不同的 Web 应用，还可能存在更多的劫持用户账户的攻击方式。这些攻击方式大都借助于 CSRF 和 XSS，例如 <a href="http://www.gnucitizen.org/blog/google-gmail-e-mail-hijack-technique/">Gmail</a> 的 CSRF 漏洞。在这种概念验证攻击中，攻击者诱使受害者访问自己控制的网站，其中包含了精心设计的图片标签，然后通过 HTTP GET 请求修改 Gmail 的过滤器设置。如果受害者已经登录了 Gmail，攻击者就能通过修改后的过滤器把受害者的所有电子邮件转发到自己的电子邮件地址。这种攻击的危害性几乎和劫持账户一样大。针对这种攻击的对策是，通过代码审查封堵所有 XSS 和 CSRF 漏洞。</p><h4 id="%E9%AA%8C%E8%AF%81%E7%A0%81">6.3 验证码</h4><div class="info"><p>验证码是一种质询-响应测试，用于判断响应是否由计算机生成。验证码要求用户输入变形图片中的字符，以防止恶意注册和发布垃圾评论。验证码又分为积极验证码和消极验证码。消极验证码的思路不是证明用户是人类，而是证明机器人是机器人。</p></div><p><a href="http://recaptcha.net/">reCAPTCHA</a>（注：链接已失效）是一种流行的积极验证码 API，它会显示两张来自古籍的单词的变形图片，同时还添加了弯曲的中划线。相比之下，早期的验证码仅使用了扭曲的背景和高度变形的文本，所以后来被破解了。此外，使用 reCAPTCHA 同时是在为古籍数字化作贡献。和 reCAPTCHA API 同名的 <a href="https://github.com/ambethia/recaptcha/">reCAPTCHA</a> 是一个 Rails 插件。</p><p>reCAPTCHA API 提供了公钥、私钥两个密钥，它们应该在 Rails 环境中设置。设置完成后，我们就可以在视图中使用 <code>recaptcha_tags</code> 方法，在控制器中使用 <code>verify_recaptcha</code> 方法。如果验证码验证失败，<code>verify_recaptcha</code> 方法会返回 <code>false</code>。验证码的缺点是影响用户体验。并且对于视障用户，有些变形的验证码难以看清。尽管如此，积极验证码仍然是防止各种机器人提交表单的最有效的方法之一。</p><p>大多数机器人都很笨拙，它们在网上爬行，并在找到的每一个表单字段中填入垃圾信息。消极验证码正是利用了这一点，只要通过 JavaScript 或 CSS 在表单中添加隐藏的“蜜罐”字段，就能发现那些机器人。</p><p>注意，消极验证码只能有效防范笨拙的机器人，对于那些针对关键应用的专用机器人就力不从心了。不过，通过组合使用消极验证码和积极验证码，可以获得更好的性能表现。例如，如果“蜜罐”字段不为空（发现了机器人），再验证积极验码就没有必要了，从而避免了向 Google ReCaptcha 发起 HTTPS 请求。</p><p>通过 JavaScript 或 CSS 隐藏“蜜罐”字段有下面几种思路：</p>
+<ul>
+<li><p>把字段置于页面的可见区域之外；</p></li>
+<li><p>使元素非常小或使它们的颜色与页面背景相同；</p></li>
+<li><p>仍然显示字段，但告诉用户不要填写。</p></li>
+</ul>
+<p>最简单的消极验证码是一个隐藏的“蜜罐”字段。在服务器端，我们需要检查这个字段的值：如果包含任何文本，就说明请求来自机器人。然后，我们可以直接忽略机器人提交的表单数据。也可以提示保存成功但实际上并不写入数据库，这样被愚弄的机器人就会自动离开了。对于不受欢迎的用户，也可以采取类似措施。</p><p>Ned Batchelder 在<a href="http://nedbatchelder.com/text/stopbots.html">博客文章</a>中介绍了更复杂的消极验证码：</p>
+<ul>
+<li><p>在表单中包含带有当前 UTC 时间戳的字段，并在服务器端检查这个字段。无论字段中的时间过早还是过晚，都说该明表单不合法；</p></li>
+<li><p>随机生成字段名；</p></li>
+<li><p>包含各种类型的多个“蜜罐”字段，包括提交按钮。</p></li>
+</ul>
+<p>注意，消极验证码只能防范自动机器人，而不能防范专用机器人。因此，消极验证码并非保护登录表单的最佳方案。</p><h4 id="%E6%97%A5%E5%BF%97">6.4 日志</h4><div class="warning"><p>告诉 Rails 不要把密码写入日志。</p></div><p>默认情况下，Rails 会记录 Web 应用收到的所有请求。但是日志文件也可能成为巨大的安全问题，因为其中可能包含登录的账号密码、信用卡号码等。当我们考虑 Web 应用的安全性时，我们应该设想攻击者完全获得 Web 服务器访问权限的情况。如果在日志文件中可以找到密钥和密码的明文，在数据库中对这些信息进行加密就变得毫无意义。在应用配置文件中，我们可以通过设置 <code>config.filter_parameters</code> 选项，指定写入日志时需要过滤的请求参数。在日志中，这些被过滤的参数会显示为 <code>[FILTERED]</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.filter_parameters &lt;&lt; :password
+
+</pre>
+</div>
+<div class="note"><p>通过正则表达式，与配置中指定的参数部分匹配的所有参数都会被过滤掉。默认情况下，Rails 已经在初始化程序（<code>initializers/filter_parameter_logging.rb</code>）中指定了 <code>:password</code> 参数，因此应用中常见的 <code>password</code> 和 <code>password_confirmation</code> 参数都会被过滤。</p></div><h4 id="%E5%A5%BD%E7%9A%84%E5%AF%86%E7%A0%81">6.5 好的密码</h4><div class="info"><p>你是否发现，要想记住所有密码太难了？请不要因此把所有密码都完整地记下来，我们可以使用容易记住的句子中单词的首字母作为密码。</p></div><p>安全技术专家 Bruce Schneier 通过分析<a href="#examples-from-the-underground">下面</a>提到的 <a href="http://www.schneier.com/blog/archives/2006/12/realworld_passw.html">MySpace 钓鱼攻击</a>中 34,000 个真实的用户名和密码，发现绝大多数密码非常容易破解。其中最常见的 20 个密码是：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+password1, abc123, myspace1, password, blink182, qwerty1, ****you, 123abc, baseball1, football1, 123456, soccer, monkey1, liverpool1, princess1, jordan23, slipknot1, superman1, iloveyou1, monkey
+
+</pre>
+</div>
+<p>有趣的是，这些密码中只有 4% 是字典单词，绝大多数密码实际是由字母和数字组成的。不过，用于破解密码的字典中包含了大量目前常用的密码，而且攻击者还会尝试各种字母数字的组合。如果我们使用了弱密码，一旦攻击者知道了我们的用户名，就能轻易破解我们的账户。</p><p>好的密码是混合使用大小写字母和数字的长密码。但这样的密码很难记住，因此我们可以使用容易记住的句子中单词的首字母作为密码。例如，“The quick brown fox jumps over the lazy dog”对应的密码是“Tqbfjotld”。当然，这里只是举一个例子，实际在选择密码时不应该使用这样的名句，因为用于破解密码的字典中很可能包含了这些名句对应的密码。</p><h4 id="%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">6.6 正则表达式</h4><div class="info"><p>在使用 Ruby 的正则表达式时，一个常见错误是使用 <code>^</code> 和 <code>$</code> 分别匹配字符串的开头和结尾，实际上正确的做法是使用 <code>\A</code> 和 <code>\z</code>。</p></div><p>Ruby 的正则表达式匹配字符串开头和结尾的方式与很多其他语言略有不同。甚至很多 Ruby 和 Rails 的书籍都把这个问题搞错了。那么，为什么这个问题会造成安全威胁呢？让我们看一个例子。如果想要不太严谨地验证 URL 地址，我们可以使用下面这个简单的正则表达式：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+/^https?:\/\/[^\n]+$/i
+
+</pre>
+</div>
+<p>这个正则表达式在某些语言中可以正常工作，但在 Ruby 中，<code>^</code> 和 <code>$</code> 分别匹配行首和行尾，因此下面这个 URL 能够顺利通过验证：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+javascript:exploit_code();/*
+http://hi.com
+*/
+
+</pre>
+</div>
+<p>之所以能通过验证，是因为用于验证的正则表达式匹配了这个 URL 的第二行，因而不会再验证其他两行。假设我们在视图中像下面这样显示 URL：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+link_to "Homepage", @user.homepage
+
+</pre>
+</div>
+<p>这个链接看起来对访问者无害，但只要一点击，就会执行 <code>exploit_code</code> 这个 JavaScript 函数或攻击者提供的其他 JavaScript 代码。</p><p>要想修正这个正则表达式，我们可以用 <code>\A</code> 和 <code>\z</code> 分别代替 <code>^</code> 和 <code>$</code>，即：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+/\Ahttps?:\/\/[^\n]+\z/i
+
+</pre>
+</div>
+<p>由于这是一个常见错误，Rails 已经采取了预防措施，如果提供的正则表达式以 <code>^</code> 开头或以 <code>$</code> 结尾，格式验证器（<code>validates_format_of</code>）就会抛出异常。如果确实需要用 <code>^</code> 和 <code>$</code> 代替 <code>\A</code> 和 <code>\z</code>（这种情况很少见），我们可以把 <code>:multiline</code> 选项设置为 <code>true</code>，例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# content 字符串应包含 “Meanwhile” 这样一行
+validates :content, format: { with: /^Meanwhile$/, multiline: true }
+
+</pre>
+</div>
+<p>注意，这种方式只能防止格式验证中的常见错误，在 Ruby 中，我们需要时刻记住，<code>^</code> 和 <code>$</code> 分别匹配行首和行尾，而不是整个字符串的开头和结尾。</p><h4 id="%E6%8F%90%E5%8D%87%E6%9D%83%E9%99%90">6.7 提升权限</h4><div class="warning"><p>只需纂改一个参数，就有可能使用户获得未经授权的权限。记住，不管我们如何隐藏或混淆，每一个参数都有可能被纂改。</p></div><p>用户最常篡改的参数是 ID，例如在 <code>http://www.domain.com/project/1</code> 这个 URL 地址中，ID 是 <code>1</code>。在控制器中可以通过 <code>params</code> 得到这个 ID，通常的操作如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+@project = Project.find(params[:id])
+
+</pre>
+</div>
+<p>对于某些 Web 应用，这样做没问题。但如果用户不具有查看所有项目的权限，就不能这样做。否则，如果某个用户把 URL 地址中的 ID 改为 <code>42</code>，并且该用户没有查看这个项目的权限，结果却仍然能够查看项目。为此，我们需要同时查询用户的访问权限：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+@project = @current_user.projects.find(params[:id])
+
+</pre>
+</div>
+<p>对于不同的 Web 应用，用户能够纂改的参数也不同。根据经验，未经验证的用户输入都是不安全的，来自用户的参数都有被纂改的潜在风险。</p><p>通过混淆参数或 JavaScript 来实现安全性一点儿也不可靠。通过 Mozilla Firefox 的 Web 开发者工具栏，我们可以查看和修改表单的隐藏字段。JavaScript 常用于验证用户输入数据，但无法防止攻击者发送带有不合法数据的恶意请求。Mozilla Firefox 的 Live Http Headers 插件，可以记录每次请求，而且可以重复发起并修改这些请求，这样就能轻易绕过 JavaScript 验证。还有一些客户端代理，允许拦截进出的任何网络请求和响应。</p><h3 id="%E6%B3%A8%E5%85%A5">7 注入</h3>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

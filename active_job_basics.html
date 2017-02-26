@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        More Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Return to home page">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">测试 Rails 应用</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档守则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布说明</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">测试 Rails 应用</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文档守则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布说明">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#Active%20Job%20%E7%9A%84%E4%BD%9C%E7%94%A8">Active Job 的作用</a></li>
+<li>
+<a href="#%E5%88%9B%E5%BB%BA%E4%BD%9C%E4%B8%9A">创建作业</a>
+
+<ul>
+<li><a href="#%E5%88%9B%E5%BB%BA%E4%BD%9C%E4%B8%9A-%E5%88%9B%E5%BB%BA%E4%BD%9C%E4%B8%9A">创建作业</a></li>
+<li><a href="#%E5%85%A5%E9%98%9F%E4%BD%9C%E4%B8%9A">入队作业</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E6%89%A7%E8%A1%8C%E4%BD%9C%E4%B8%9A">执行作业</a>
+
+<ul>
+<li><a href="#%E5%90%8E%E7%AB%AF">后端</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E5%90%8E%E7%AB%AF">设置后端</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8%E5%90%8E%E7%AB%AF">启动后端</a></li>
+</ul>
+</li>
+<li><a href="#%E9%98%9F%E5%88%97">队列</a></li>
+<li>
+<a href="#%E5%9B%9E%E8%B0%83">回调</a>
+
+<ul>
+<li><a href="#%E5%8F%AF%E7%94%A8%E7%9A%84%E5%9B%9E%E8%B0%83">可用的回调</a></li>
+<li><a href="#%E7%94%A8%E6%B3%95">用法</a></li>
+</ul>
+</li>
+<li><a href="#Action%20Mailer">Action Mailer</a></li>
+<li><a href="#%E5%9B%BD%E9%99%85%E5%8C%96">国际化</a></li>
+<li><a href="#GlobalID">GlobalID</a></li>
+<li>
+<a href="#%E5%BC%82%E5%B8%B8">异常</a>
+
+<ul>
+<li><a href="#%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96">反序列化</a></li>
+</ul>
+</li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E4%BD%9C%E4%B8%9A">测试作业</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h2>Active Job 基础</h2><p>本文全面说明创建、入队和执行后台作业的基础知识。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>如何创建作业；</p></li>
+<li><p>如何入队作业；</p></li>
+<li><p>如何在后台运行作业；</p></li>
+<li><p>如何在应用中异步发送电子邮件。</p></li>
+</ul>
+<h3 id="%E7%AE%80%E4%BB%8B">1 简介</h3><p>Active Job 框架负责声明作业，在各种队列后端中运行。作业各种各样，可以是定期清理、账单支付和寄信。其实，任何可以分解且并行运行的工作都可以。</p><h3 id="Active%20Job%20%E7%9A%84%E4%BD%9C%E7%94%A8">2 Active Job 的作用</h3><p>主要作用是确保所有 Rails 应用都有作业基础设施。这样便可以在此基础上构建各种功能和其他 gem，而无需担心不同作业运行程序（如 Delayed Job 和 Resque）的 API 之间的差异。此外，选用哪个队列后端只是战术问题。而且，切换队列后端也不用重写作业。</p><div class="note"><p>Rails 默认实现了立即运行的队列运行程序。因此，队列中的各个作业会立即运行。</p></div><h3 id="%E5%88%9B%E5%BB%BA%E4%BD%9C%E4%B8%9A">3 创建作业</h3><p>本节逐步说明创建和入队作业的过程。</p><h4 id="%E5%88%9B%E5%BB%BA%E4%BD%9C%E4%B8%9A-%E5%88%9B%E5%BB%BA%E4%BD%9C%E4%B8%9A">3.1 创建作业</h4><p>Active Job 提供了一个 Rails 生成器，用于创建作业。下述命令在 <code>app/jobs</code> 目录中创建一个作业（还在 <code>test/jobs</code> 目录中创建相关的测试用例）：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate job guests_cleanup
+invoke  test_unit
+create    test/jobs/guests_cleanup_job_test.rb
+create  app/jobs/guests_cleanup_job.rb
+
+</pre>
+</div>
+<p>还可以创建在指定队列中运行的作业：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate job guests_cleanup --queue urgent
+
+</pre>
+</div>
+<p>如果不想使用生成器，可以自己动手在 <code>app/jobs</code> 目录中新建文件，不过要确保继承自 <code>ApplicationJob</code>。</p><p>看一下作业：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class GuestsCleanupJob &lt; ApplicationJob
+  queue_as :default
+
+  def perform(*guests)
+    # 稍后做些事情
+  end
+end
+
+</pre>
+</div>
+<p>注意，<code>perform</code> 方法的参数是任意个。</p><h4 id="%E5%85%A5%E9%98%9F%E4%BD%9C%E4%B8%9A">3.2 入队作业</h4><p>像下面这样入队作业：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 入队作业，作业在队列系统空闲时立即执行
+GuestsCleanupJob.perform_later guest
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 入队作业，在明天中午执行
+GuestsCleanupJob.set(wait_until: Date.tomorrow.noon).perform_later(guest)
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 入队作业，在一周以后执行
+GuestsCleanupJob.set(wait: 1.week).perform_later(guest)
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# `perform_now` 和 `perform_later` 会在幕后调用 `perform`
+# 因此可以传入任意个参数
+GuestsCleanupJob.perform_later(guest1, guest2, filter: 'some_filter')
+
+</pre>
+</div>
+<p>就这么简单！</p><h3 id="%E6%89%A7%E8%A1%8C%E4%BD%9C%E4%B8%9A">4 执行作业</h3><p>在生产环境中入队和执行作业需要使用队列后端，即要为 Rails 提供一个第三方队列库。Rails 本身只提供了一个进程内队列系统，把作业存储在 RAM 中。如果进程崩溃，或者设备重启了，默认的异步后端会丢失所有作业。这对小型应用或不重要的作业来说没什么，但是生产环境中的多数应用应该挑选一个持久后端。</p><h4 id="%E5%90%8E%E7%AB%AF">4.1 后端</h4><p>Active Job 为多种队列后端（Sidekiq、Resque、Delayed Job，等等）内置了适配器。最新的适配器列表参见 <a href="http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html"><code>ActiveJob::QueueAdapters</code> 的 API 文档</a>。</p><h4 id="%E8%AE%BE%E7%BD%AE%E5%90%8E%E7%AB%AF">4.2 设置后端</h4><p>队列后端易于设置：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# config/application.rb
+module YourApp
+  class Application &lt; Rails::Application
+    # 要把适配器的 gem 写入 Gemfile
+    # 请参照适配器的具体安装和部署说明
+    config.active_job.queue_adapter = :sidekiq
+  end
+end
+
+</pre>
+</div>
+<p>也可以在各个作业中配置后端：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class GuestsCleanupJob &lt; ApplicationJob
+  self.queue_adapter = :resque
+  #....
+end
+
+# 现在，这个作业使用 `resque` 作为后端队列适配器
+# 把 `config.active_job.queue_adapter` 配置覆盖了
+
+</pre>
+</div>
+<h4 id="%E5%90%AF%E5%8A%A8%E5%90%8E%E7%AB%AF">4.3 启动后端</h4><p>Rails 应用中的作业并行运行，因此多数队列库要求为自己启动专用的队列服务（与启动 Rails 应用的服务不同）。启动队列后端的说明参见各个库的文档。</p><p>下面列出部分文档：</p>
+<ul>
+<li><p><a href="https://github.com/mperham/sidekiq/wiki/Active-Job">Sidekiq</a></p></li>
+<li><p><a href="https://github.com/resque/resque/wiki/ActiveJob">Resque</a></p></li>
+<li><p><a href="https://github.com/brandonhilkert/sucker_punch#active-job">Sucker Punch</a></p></li>
+<li><p><a href="https://github.com/QueueClassic/queue_classic#active-job">Queue Classic</a></p></li>
+</ul>
+<h3 id="%E9%98%9F%E5%88%97">5 队列</h3><p>多数适配器支持多个队列。Active Job 允许把作业调度到具体的队列中：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class GuestsCleanupJob &lt; ApplicationJob
+  queue_as :low_priority
+  #....
+end
+
+</pre>
+</div>
+<p>队列名称可以使用 <code>application.rb</code> 文件中的 <code>config.active_job.queue_name_prefix</code> 选项配置前缀：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# config/application.rb
+module YourApp
+  class Application &lt; Rails::Application
+    config.active_job.queue_name_prefix = Rails.env
+  end
+end
+
+# app/jobs/guests_cleanup_job.rb
+class GuestsCleanupJob &lt; ApplicationJob
+  queue_as :low_priority
+  #....
+end
+
+# 在生产环境中，作业在 production_low_priority 队列中运行
+# 在交付准备环境中，作业在 staging_low_priority 队列中运行
+
+</pre>
+</div>
+<p>默认的队列名称前缀分隔符是 <code>'_'</code>。这个值可以使用 <code>application.rb</code> 文件中的 <code>config.active_job.queue_name_delimiter</code> 选项修改：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# config/application.rb
+module YourApp
+  class Application &lt; Rails::Application
+    config.active_job.queue_name_prefix = Rails.env
+    config.active_job.queue_name_delimiter = '.'
+  end
+end
+
+# app/jobs/guests_cleanup_job.rb
+class GuestsCleanupJob &lt; ApplicationJob
+  queue_as :low_priority
+  #....
+end
+
+# 在生产环境中，作业在 production.low_priority 队列中运行
+# 在交付准备环境中，作业在 staging.low_priority 队列中运行
+
+</pre>
+</div>
+<p>如果想更进一步控制作业在哪个队列中运行，可以把 <code>:queue</code> 选项传给 <code>#set</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+MyJob.set(queue: :another_queue).perform_later(record)
+
+</pre>
+</div>
+<p>如果想在作业层控制队列，可以把一个块传给 <code>#queue_as</code> 方法。那个块在作业的上下文中执行（因此可以访问 <code>self.arguments</code>），必须返回队列的名称：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ProcessVideoJob &lt; ApplicationJob
+  queue_as do
+    video = self.arguments.first
+    if video.owner.premium?
+      :premium_videojobs
+    else
+      :videojobs
+    end
+  end
+
+  def perform(video)
+    # 处理视频
+  end
+end
+
+ProcessVideoJob.perform_later(Video.last)
+
+</pre>
+</div>
+<div class="note"><p>确保队列后端“监听”着队列名称。某些后端要求指定要监听的队列。</p></div><h3 id="%E5%9B%9E%E8%B0%83">6 回调</h3><p>Active Job 在作业的生命周期内提供了多个钩子。回调用于在作业的生命周期内触发逻辑。</p><h4 id="%E5%8F%AF%E7%94%A8%E7%9A%84%E5%9B%9E%E8%B0%83">6.1 可用的回调</h4>
+<ul>
+<li><p><code>before_enqueue</code></p></li>
+<li><p><code>around_enqueue</code></p></li>
+<li><p><code>after_enqueue</code></p></li>
+<li><p><code>before_perform</code></p></li>
+<li><p><code>around_perform</code></p></li>
+<li><p><code>after_perform</code></p></li>
+</ul>
+<h4 id="%E7%94%A8%E6%B3%95">6.2 用法</h4><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class GuestsCleanupJob &lt; ApplicationJob
+  queue_as :default
+
+  before_enqueue do |job|
+    # 对作业实例做些事情
+  end
+
+  around_perform do |job, block|
+    # 在执行之前做些事情
+    block.call
+    # 在执行之后做些事情
+  end
+
+  def perform
+    # 稍后做些事情
+  end
+end
+
+</pre>
+</div>
+<h3 id="Action%20Mailer">7 Action Mailer</h3><p>对现代的 Web 应用来说，最常见的作业是在请求-响应循环之外发送电子邮件，这样用户无需等待。Active Job 与 Action Mailer 是集成的，因此可以轻易异步发送电子邮件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 如需想现在发送电子邮件，使用 #deliver_now
+UserMailer.welcome(@user).deliver_now
+
+# 如果想通过 Active Job 发送电子邮件，使用 #deliver_later
+UserMailer.welcome(@user).deliver_later
+
+</pre>
+</div>
+<h3 id="%E5%9B%BD%E9%99%85%E5%8C%96">8 国际化</h3><p>创建作业时，使用 <code>I18n.locale</code> 设置。如果异步发送电子邮件，可能用得到：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+I18n.locale = :eo
+
+UserMailer.welcome(@user).deliver_later # 使用世界语本地化电子邮件
+
+</pre>
+</div>
+<h3 id="GlobalID">9 GlobalID</h3><p>Active Job 支持参数使用 GlobalID。这样便可以把 Active Record 对象传给作业，而不用传递类和 ID，再自己反序列化。以前，要这么定义作业：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class TrashableCleanupJob &lt; ApplicationJob
+  def perform(trashable_class, trashable_id, depth)
+    trashable = trashable_class.constantize.find(trashable_id)
+    trashable.cleanup(depth)
+  end
+end
+
+</pre>
+</div>
+<p>现在可以简化成这样：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class TrashableCleanupJob &lt; ApplicationJob
+  def perform(trashable, depth)
+    trashable.cleanup(depth)
+  end
+end
+
+</pre>
+</div>
+<p>为此，模型类要混入 <code>GlobalID::Identification</code>。Active Record 模型类默认都混入了。</p><h3 id="%E5%BC%82%E5%B8%B8">10 异常</h3><p>Active Job 允许捕获执行作业过程中抛出的异常：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class GuestsCleanupJob &lt; ApplicationJob
+  queue_as :default
+
+  rescue_from(ActiveRecord::RecordNotFound) do |exception|
+   # 处理异常
+  end
+
+  def perform
+    # 稍后做些事情
+  end
+end
+
+</pre>
+</div>
+<h4 id="%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96">10.1 反序列化</h4><p>有了 GlobalID，可以序列化传给 <code>#perform</code> 方法的整个 Active Record 对象。</p><p>如果在作业入队之后、调用 <code>#perform</code> 方法之前删除了传入的记录，Active Job 会抛出 <code>ActiveJob::DeserializationError</code> 异常。</p><h3 id="%E6%B5%8B%E8%AF%95%E4%BD%9C%E4%B8%9A">11 测试作业</h3><p>测试作业的详细说明参见 <a href="testing.html#%E6%B5%8B%E8%AF%95%E4%BD%9C%E4%B8%9A">测试指南</a>。</p>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Rails Nested Model Forms — Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        More Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Return to home page">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">测试 Rails 应用</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档守则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布说明</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">测试 Rails 应用</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文档守则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布说明">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Rails Nested Model Forms</h2><p>Creating a form for a model <em>and</em> its associations can become quite tedious. Therefore Rails provides helpers to assist in dealing with the complexities of generating these forms <em>and</em> the required CRUD operations to create, update, and destroy associations.</p><p>After reading this guide, you will know:</p>
+<ul>
+<li>do stuff.</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li>
+<a href="#Model%20setup">Model setup</a>
+
+<ul>
+<li><a href="#ActiveRecord::Base%20model">ActiveRecord::Base model</a></li>
+<li><a href="#Custom%20model">Custom model</a></li>
+</ul>
+</li>
+<li>
+<a href="#Views">Views</a>
+
+<ul>
+<li><a href="#Controller%20code">Controller code</a></li>
+<li><a href="#Form%20code">Form code</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <div class="note"><p>This guide assumes the user knows how to use the <a href="form_helpers.html">Rails form helpers</a> in general. Also, it's <strong>not</strong> an API reference. For a complete reference please visit <a href="http://api.rubyonrails.org/">the Rails API documentation</a>.</p></div><h3 id="Model%20setup">1 Model setup</h3><p>To be able to use the nested model functionality in your forms, the model will need to support some basic operations.</p><p>First of all, it needs to define a writer method for the attribute that corresponds to the association you are building a nested model form for. The <code>fields_for</code> form helper will look for this method to decide whether or not a nested model form should be built.</p><p>If the associated object is an array, a form builder will be yielded for each object, else only a single form builder will be yielded.</p><p>Consider a Person model with an associated Address. When asked to yield a nested FormBuilder for the <code>:address</code> attribute, the <code>fields_for</code> form helper will look for a method on the Person instance named <code>address_attributes=</code>.</p><h4 id="ActiveRecord::Base%20model">1.1 ActiveRecord::Base model</h4><p>For an ActiveRecord::Base model and association this writer method is commonly defined with the <code>accepts_nested_attributes_for</code> class method:</p><h5 id="has_one">1.1.1 has_one</h5><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  has_one :address
+  accepts_nested_attributes_for :address
+end
+
+</pre>
+</div>
+<h5 id="belongs_to">1.1.2 belongs_to</h5><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  belongs_to :firm
+  accepts_nested_attributes_for :firm
+end
+
+</pre>
+</div>
+<h5 id="has_many%20/%20has_and_belongs_to_many">1.1.3 has_many / has_and_belongs_to_many</h5><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  has_many :projects
+  accepts_nested_attributes_for :projects
+end
+
+</pre>
+</div>
+<div class="note"><p>For greater detail on associations see <a href="association_basics.html">Active Record Associations</a>.
+For a complete reference on associations please visit the API documentation for <a href="http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html">ActiveRecord::Associations::ClassMethods</a>.</p></div><h4 id="Custom%20model">1.2 Custom model</h4><p>As you might have inflected from this explanation, you <em>don't</em> necessarily need an ActiveRecord::Base model to use this functionality. The following examples are sufficient to enable the nested model form behavior:</p><h5 id="Single%20associated%20object">1.2.1 Single associated object</h5><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  def address
+    Address.new
+  end
+
+  def address_attributes=(attributes)
+    # ...
+  end
+end
+
+</pre>
+</div>
+<h5 id="Association%20collection">1.2.2 Association collection</h5><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  def projects
+    [Project.new, Project.new]
+  end
+
+  def projects_attributes=(attributes)
+    # ...
+  end
+end
+
+</pre>
+</div>
+<div class="note"><p>See (TODO) in the advanced section for more information on how to deal with the CRUD operations in your custom model.</p></div><h3 id="Views">2 Views</h3><h4 id="Controller%20code">2.1 Controller code</h4><p>A nested model form will <em>only</em> be built if the associated object(s) exist. This means that for a new model instance you would probably want to build the associated object(s) first.</p><p>Consider the following typical RESTful controller which will prepare a new Person instance and its <code>address</code> and <code>projects</code> associations before rendering the <code>new</code> template:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class PeopleController &lt; ApplicationController
+  def new
+    @person = Person.new
+    @person.build_address
+    2.times { @person.projects.build }
+  end
+
+  def create
+    @person = Person.new(params[:person])
+    if @person.save
+      # ...
+    end
+  end
+end
+
+</pre>
+</div>
+<div class="note"><p>Obviously the instantiation of the associated object(s) can become tedious and not DRY, so you might want to move that into the model itself. ActiveRecord::Base provides an <code>after_initialize</code> callback which is a good way to refactor this.</p></div><h4 id="Form%20code">2.2 Form code</h4><p>Now that you have a model instance, with the appropriate methods and associated object(s), you can start building the nested model form.</p><h5 id="Standard%20form">2.2.1 Standard form</h5><p>Start out with a regular RESTful form:</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @person do |f| %&gt;
+  &lt;%= f.text_field :name %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>This will generate the following html:</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;form action="/people" class="new_person" id="new_person" method="post"&gt;
+  &lt;input id="person_name" name="person[name]" type="text" /&gt;
+&lt;/form&gt;
+
+</pre>
+</div>
+<h5 id="Nested%20form%20for%20a%20single%20associated%20object">2.2.2 Nested form for a single associated object</h5><p>Now add a nested form for the <code>address</code> association:</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @person do |f| %&gt;
+  &lt;%= f.text_field :name %&gt;
+
+  &lt;%= f.fields_for :address do |af| %&gt;
+    &lt;%= af.text_field :street %&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>This generates:</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;form action="/people" class="new_person" id="new_person" method="post"&gt;
+  &lt;input id="person_name" name="person[name]" type="text" /&gt;
+
+  &lt;input id="person_address_attributes_street" name="person[address_attributes][street]" type="text" /&gt;
+&lt;/form&gt;
+
+</pre>
+</div>
+<p>Notice that <code>fields_for</code> recognized the <code>address</code> as an association for which a nested model form should be built by the way it has namespaced the <code>name</code> attribute.</p><p>When this form is posted the Rails parameter parser will construct a hash like the following:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{
+  "person" =&gt; {
+    "name" =&gt; "Eloy Duran",
+    "address_attributes" =&gt; {
+      "street" =&gt; "Nieuwe Prinsengracht"
+    }
+  }
+}
+
+</pre>
+</div>
+<p>That's it. The controller will simply pass this hash on to the model from the <code>create</code> action. The model will then handle building the <code>address</code> association for you and automatically save it when the parent (<code>person</code>) is saved.</p><h5 id="Nested%20form%20for%20a%20collection%20of%20associated%20objects">2.2.3 Nested form for a collection of associated objects</h5><p>The form code for an association collection is pretty similar to that of a single associated object:</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @person do |f| %&gt;
+  &lt;%= f.text_field :name %&gt;
+
+  &lt;%= f.fields_for :projects do |pf| %&gt;
+    &lt;%= pf.text_field :name %&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>Which generates:</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;form action="/people" class="new_person" id="new_person" method="post"&gt;
+  &lt;input id="person_name" name="person[name]" type="text" /&gt;
+
+  &lt;input id="person_projects_attributes_0_name" name="person[projects_attributes][0][name]" type="text" /&gt;
+  &lt;input id="person_projects_attributes_1_name" name="person[projects_attributes][1][name]" type="text" /&gt;
+&lt;/form&gt;
+
+</pre>
+</div>
+<p>As you can see it has generated 2 <code>project name</code> inputs, one for each new <code>project</code> that was built in the controller's <code>new</code> action. Only this time the <code>name</code> attribute of the input contains a digit as an extra namespace. This will be parsed by the Rails parameter parser as:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{
+  "person" =&gt; {
+    "name" =&gt; "Eloy Duran",
+    "projects_attributes" =&gt; {
+      "0" =&gt; { "name" =&gt; "Project 1" },
+      "1" =&gt; { "name" =&gt; "Project 2" }
+    }
+  }
+}
+
+</pre>
+</div>
+<p>You can basically see the <code>projects_attributes</code> hash as an array of attribute hashes, one for each model instance.</p><div class="note"><p>The reason that <code>fields_for</code> constructed a hash instead of an array is that it won't work for any form nested deeper than one level deep.</p></div><div class="info"><p>You <em>can</em> however pass an array to the writer method generated by <code>accepts_nested_attributes_for</code> if you're using plain Ruby or some other API access. See (TODO) for more info and example.</p></div>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        More Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Return to home page">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">测试 Rails 应用</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档守则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布说明</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">测试 Rails 应用</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文档守则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布说明">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li>
+<a href="#%E4%BB%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E6%A3%80%E7%B4%A2%E5%AF%B9%E8%B1%A1">从数据库中检索对象</a>
+
+<ul>
+<li><a href="#%E6%A3%80%E7%B4%A2%E5%8D%95%E4%B8%AA%E5%AF%B9%E8%B1%A1">检索单个对象</a></li>
+<li><a href="#%E6%89%B9%E9%87%8F%E6%A3%80%E7%B4%A2%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1">批量检索多个对象</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2">条件查询</a>
+
+<ul>
+<li><a href="#%E7%BA%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9D%A1%E4%BB%B6">纯字符串条件</a></li>
+<li><a href="#%E6%95%B0%E7%BB%84%E6%9D%A1%E4%BB%B6">数组条件</a></li>
+<li><a href="#%E6%95%A3%E5%88%97%E6%9D%A1%E4%BB%B6">散列条件</a></li>
+<li><a href="#NOT%20%E6%9D%A1%E4%BB%B6">NOT 条件</a></li>
+</ul>
+</li>
+<li><a href="#%E6%8E%92%E5%BA%8F">排序</a></li>
+<li><a href="#%E9%80%89%E6%8B%A9%E7%89%B9%E5%AE%9A%E5%AD%97%E6%AE%B5">选择特定字段</a></li>
+<li><a href="#%E9%99%90%E9%87%8F%E5%92%8C%E5%81%8F%E7%A7%BB%E9%87%8F">限量和偏移量</a></li>
+<li>
+<a href="#%E5%88%86%E7%BB%84">分组</a>
+
+<ul>
+<li><a href="#%E5%88%86%E7%BB%84%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%80%BB%E6%95%B0">分组项目的总数</a></li>
+</ul>
+</li>
+<li><a href="#having%20%E6%96%B9%E6%B3%95"><code>having</code> 方法</a></li>
+<li>
+<a href="#%E6%9D%A1%E4%BB%B6%E8%A6%86%E7%9B%96">条件覆盖</a>
+
+<ul>
+<li><a href="#unscope%20%E6%96%B9%E6%B3%95"><code>unscope</code> 方法</a></li>
+<li><a href="#only%20%E6%96%B9%E6%B3%95"><code>only</code> 方法</a></li>
+<li><a href="#reorder%20%E6%96%B9%E6%B3%95"><code>reorder</code> 方法</a></li>
+<li><a href="#reverse_order%20%E6%96%B9%E6%B3%95"><code>reverse_order</code> 方法</a></li>
+<li><a href="#rewhere%20%E6%96%B9%E6%B3%95"><code>rewhere</code> 方法</a></li>
+</ul>
+</li>
+<li><a href="#%E7%A9%BA%E5%85%B3%E7%B3%BB">空关系</a></li>
+<li><a href="#%E5%8F%AA%E8%AF%BB%E5%AF%B9%E8%B1%A1">只读对象</a></li>
+<li>
+<a href="#%E5%9C%A8%E6%9B%B4%E6%96%B0%E6%97%B6%E9%94%81%E5%AE%9A%E8%AE%B0%E5%BD%95">在更新时锁定记录</a>
+
+<ul>
+<li><a href="#%E4%B9%90%E8%A7%82%E9%94%81%E5%AE%9A">乐观锁定</a></li>
+<li><a href="#%E6%82%B2%E8%A7%82%E9%94%81%E5%AE%9A">悲观锁定</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E8%81%94%E7%BB%93%E8%A1%A8">联结表</a>
+
+<ul>
+<li><a href="#joins%20%E6%96%B9%E6%B3%95"><code>joins</code> 方法</a></li>
+<li><a href="#left_outer_joins%20%E6%96%B9%E6%B3%95"><code>left_outer_joins</code> 方法</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%8F%8A%E6%97%A9%E5%8A%A0%E8%BD%BD%E5%85%B3%E8%81%94">及早加载关联</a>
+
+<ul>
+<li><a href="#%E5%8F%8A%E6%97%A9%E5%8A%A0%E8%BD%BD%E5%A4%9A%E4%B8%AA%E5%85%B3%E8%81%94">及早加载多个关联</a></li>
+<li><a href="#%E4%B8%BA%E5%85%B3%E8%81%94%E7%9A%84%E5%8F%8A%E6%97%A9%E5%8A%A0%E8%BD%BD%E6%8C%87%E6%98%8E%E6%9D%A1%E4%BB%B6">为关联的及早加载指明条件</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E4%BD%9C%E7%94%A8%E5%9F%9F">作用域</a>
+
+<ul>
+<li><a href="#%E4%BC%A0%E5%85%A5%E5%8F%82%E6%95%B0">传入参数</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6">使用条件</a></li>
+<li><a href="#%E5%BA%94%E7%94%A8%E9%BB%98%E8%AE%A4%E4%BD%9C%E7%94%A8%E5%9F%9F">应用默认作用域</a></li>
+<li><a href="#%E5%90%88%E5%B9%B6%E4%BD%9C%E7%94%A8%E5%9F%9F">合并作用域</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E4%BD%9C%E7%94%A8%E5%9F%9F">删除所有作用域</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8A%A8%E6%80%81%E6%9F%A5%E6%89%BE%E6%96%B9%E6%B3%95">动态查找方法</a></li>
+<li><a href="#enum%20%E5%AE%8F"><code>enum</code> 宏</a></li>
+<li>
+<a href="#%E7%90%86%E8%A7%A3%E6%96%B9%E6%B3%95%E9%93%BE">理解方法链</a>
+
+<ul>
+<li><a href="#%E4%BB%8E%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E6%A3%80%E7%B4%A2%E8%BF%87%E6%BB%A4%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE">从多个数据表中检索过滤后的数据</a></li>
+<li><a href="#%E4%BB%8E%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E6%A3%80%E7%B4%A2%E7%89%B9%E5%AE%9A%E7%9A%84%E6%95%B0%E6%8D%AE">从多个数据表中检索特定的数据</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E6%9F%A5%E6%89%BE%E6%88%96%E5%88%9B%E5%BB%BA%E6%96%B0%E5%AF%B9%E8%B1%A1">查找或创建新对象</a>
+
+<ul>
+<li><a href="#find_or_create_by%20%E6%96%B9%E6%B3%95"><code>find_or_create_by</code> 方法</a></li>
+<li><a href="#find_or_create_by!%20%E6%96%B9%E6%B3%95"><code>find_or_create_by!</code> 方法</a></li>
+<li><a href="#find_or_initialize_by%20%E6%96%B9%E6%B3%95"><code>find_or_initialize_by</code> 方法</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E4%BD%BF%E7%94%A8%20SQL%20%E8%AF%AD%E5%8F%A5%E8%BF%9B%E8%A1%8C%E6%9F%A5%E6%89%BE">使用 SQL 语句进行查找</a>
+
+<ul>
+<li><a href="#select_all%20%E6%96%B9%E6%B3%95"><code>select_all</code> 方法</a></li>
+<li><a href="#pluck%20%E6%96%B9%E6%B3%95"><code>pluck</code> 方法</a></li>
+<li><a href="#ids%20%E6%96%B9%E6%B3%95"><code>ids</code> 方法</a></li>
+</ul>
+</li>
+<li><a href="#%E6%A3%80%E6%9F%A5%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8">检查对象是否存在</a></li>
+<li>
+<a href="#%E8%AE%A1%E7%AE%97">计算</a>
+
+<ul>
+<li><a href="#count%20%E6%96%B9%E6%B3%95"><code>count</code> 方法</a></li>
+<li><a href="#average%20%E6%96%B9%E6%B3%95"><code>average</code> 方法</a></li>
+<li><a href="#minimum%20%E6%96%B9%E6%B3%95"><code>minimum</code> 方法</a></li>
+<li><a href="#maximum%20%E6%96%B9%E6%B3%95"><code>maximum</code> 方法</a></li>
+<li><a href="#sum%20%E6%96%B9%E6%B3%95"><code>sum</code> 方法</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E6%89%A7%E8%A1%8C%20EXPLAIN%20%E5%91%BD%E4%BB%A4">执行 <code>EXPLAIN</code> 命令</a>
+
+<ul>
+<li><a href="#%E5%AF%B9%20EXPLAIN%20%E5%91%BD%E4%BB%A4%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%E7%9A%84%E8%A7%A3%E9%87%8A">对 <code>EXPLAIN</code> 命令输出结果的解释</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h2>Active Record 查询接口</h2><p>本文介绍使用 Active Record 从数据库中检索数据的不同方法。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>如何使用各种方法和条件查找记录；</p></li>
+<li><p>如何指定所查找记录的排序方式、想要检索的属性、分组方式和其他特性；</p></li>
+<li><p>如何使用预先加载以减少数据检索所需的数据库查询的数量；</p></li>
+<li><p>如何使用动态查找方法；</p></li>
+<li><p>如何通过方法链来连续使用多个 Active Record 方法；</p></li>
+<li><p>如何检查某个记录是否存在；</p></li>
+<li><p>如何在 Active Record 模型上做各种计算；</p></li>
+<li><p>如何在关联上执行 <code>EXPLAIN</code> 命令。</p></li>
+</ul>
+<p>如果你习惯直接使用 SQL 来查找数据库记录，那么你通常会发现 Rails 为执行相同操作提供了更好的方式。在大多数情况下，Active Record 使你无需使用 SQL。</p><p>本文中的示例代码会用到下面的一个或多个模型：</p><div class="info"><p>除非另有说明，下面所有模型都使用 <code>id</code> 作为主键。</p></div><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Client &lt; ApplicationRecord
+  has_one :address
+  has_many :orders
+  has_and_belongs_to_many :roles
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Address &lt; ApplicationRecord
+  belongs_to :client
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Order &lt; ApplicationRecord
+  belongs_to :client, counter_cache: true
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Role &lt; ApplicationRecord
+  has_and_belongs_to_many :clients
+end
+
+</pre>
+</div>
+<p>Active Record 会为你执行数据库查询，它和大多数数据库系统兼容，包括 MySQL、MariaDB、PostgreSQL 和 SQLite。不管使用哪个数据库系统，Active Record 方法的用法总是相同的。</p><h3 id="%E4%BB%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E6%A3%80%E7%B4%A2%E5%AF%B9%E8%B1%A1">1 从数据库中检索对象</h3><p>Active Record 提供了几个用于从数据库中检索对象的查找方法。查找方法接受参数并执行指定的数据库查询，使我们无需直接编写 SQL。</p><p>下面列出这些查找方法：</p>
+<ul>
+<li><p><code>find</code></p></li>
+<li><p><code>create_with</code></p></li>
+<li><p><code>distinct</code></p></li>
+<li><p><code>eager_load</code></p></li>
+<li><p><code>extending</code></p></li>
+<li><p><code>from</code></p></li>
+<li><p><code>group</code></p></li>
+<li><p><code>having</code></p></li>
+<li><p><code>includes</code></p></li>
+<li><p><code>joins</code></p></li>
+<li><p><code>left_outer_joins</code></p></li>
+<li><p><code>limit</code></p></li>
+<li><p><code>lock</code></p></li>
+<li><p><code>none</code></p></li>
+<li><p><code>offset</code></p></li>
+<li><p><code>order</code></p></li>
+<li><p><code>preload</code></p></li>
+<li><p><code>readonly</code></p></li>
+<li><p><code>references</code></p></li>
+<li><p><code>reorder</code></p></li>
+<li><p><code>reverse_order</code></p></li>
+<li><p><code>select</code></p></li>
+<li><p><code>distinct</code></p></li>
+<li><p><code>where</code></p></li>
+</ul>
+<p>上面的所有方法都会返回 <code>ActiveRecord::Relation</code> 实例。</p><p><code>Model.find(options)</code> 执行的主要操作可以概括为：</p>
+<ul>
+<li><p>把提供的选项转换为等价的 SQL 查询。</p></li>
+<li><p>触发 SQL 查询并从数据库中检索对应的结果。</p></li>
+<li><p>为每个查询结果实例化对应的模型对象。</p></li>
+<li><p>当存在回调时，先调用 <code>after_find</code> 回调再调用 <code>after_initialize</code> 回调。</p></li>
+</ul>
+<h4 id="%E6%A3%80%E7%B4%A2%E5%8D%95%E4%B8%AA%E5%AF%B9%E8%B1%A1">1.1 检索单个对象</h4><p>Active Record 为检索单个对象提供了几个不同的方法。</p><h5 id="find%20%E6%96%B9%E6%B3%95">1.1.1 <code>find</code> 方法</h5><p>可以使用 <code>find</code> 方法检索指定主键对应的对象，指定主键时可以使用多个选项。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 查找主键（ID）为 10 的客户
+client = Client.find(10)
+# =&gt; #&lt;Client id: 10, first_name: "Ryan"&gt;
+
+</pre>
+</div>
+<p>和上面的代码等价的 SQL 是：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients WHERE (clients.id = 10) LIMIT 1
+
+</pre>
+</div>
+<p>如果没有找到匹配的记录，<code>find</code> 方法抛出 <code>ActiveRecord::RecordNotFound</code> 异常。</p><p>还可以使用 <code>find</code> 方法查询多个对象，方法是调用 <code>find</code> 方法并传入主键构成的数组。返回值是包含所提供的主键的所有匹配记录的数组。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 查找主键为 1 和 10 的客户
+client = Client.find([1, 10]) # Or even Client.find(1, 10)
+# =&gt; [#&lt;Client id: 1, first_name: "Lifo"&gt;, #&lt;Client id: 10, first_name: "Ryan"&gt;]
+
+</pre>
+</div>
+<p>和上面的代码等价的 SQL 是：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients WHERE (clients.id IN (1,10))
+
+</pre>
+</div>
+<div class="warning"><p>如果所提供的主键都没有匹配记录，那么 <code>find</code> 方法会抛出 <code>ActiveRecord::RecordNotFound</code> 异常。</p></div><h5 id="take%20%E6%96%B9%E6%B3%95">1.1.2 <code>take</code> 方法</h5><p><code>take</code> 方法检索一条记录而不考虑排序。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+client = Client.take
+# =&gt; #&lt;Client id: 1, first_name: "Lifo"&gt;
+
+</pre>
+</div>
+<p>和上面的代码等价的 SQL 是：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients LIMIT 1
+
+</pre>
+</div>
+<p>如果没有找到记录，<code>take</code> 方法返回 <code>nil</code>，而不抛出异常。</p><p><code>take</code> 方法接受数字作为参数，并返回不超过指定数量的查询结果。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+client = Client.take(2)
+# =&gt; [
+#   #&lt;Client id: 1, first_name: "Lifo"&gt;,
+#   #&lt;Client id: 220, first_name: "Sara"&gt;
+# ]
+
+</pre>
+</div>
+<p>和上面的代码等价的 SQL 是：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients LIMIT 2
+
+</pre>
+</div>
+<p><code>take!</code> 方法的行为和 <code>take</code> 方法类似，区别在于如果没有找到匹配的记录，<code>take!</code> 方法抛出 <code>ActiveRecord::RecordNotFound</code> 异常。</p><div class="info"><p>对于不同的数据库引擎，<code>take</code> 方法检索的记录可能不一样。</p></div><h5 id="first%20%E6%96%B9%E6%B3%95">1.1.3 <code>first</code> 方法</h5><p><code>first</code> 方法默认查找按主键排序的第一条记录。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+client = Client.first
+# =&gt; #&lt;Client id: 1, first_name: "Lifo"&gt;
+
+</pre>
+</div>
+<p>和上面的代码等价的 SQL 是：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients ORDER BY clients.id ASC LIMIT 1
+
+</pre>
+</div>
+<p>如果没有找到匹配的记录，<code>first</code> 方法返回 <code>nil</code>，而不抛出异常。</p><p>如果默认作用域 （请参阅 <a href="#%E5%BA%94%E7%94%A8%E9%BB%98%E8%AE%A4%E4%BD%9C%E7%94%A8%E5%9F%9F">应用默认作用域</a>）包含排序方法，<code>first</code> 方法会返回按照这个顺序排序的第一条记录。</p><p><code>first</code> 方法接受数字作为参数，并返回不超过指定数量的查询结果。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+client = Client.first(3)
+# =&gt; [
+#   #&lt;Client id: 1, first_name: "Lifo"&gt;,
+#   #&lt;Client id: 2, first_name: "Fifo"&gt;,
+#   #&lt;Client id: 3, first_name: "Filo"&gt;
+# ]
+
+</pre>
+</div>
+<p>和上面的代码等价的 SQL 是：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients ORDER BY clients.id ASC LIMIT 3
+
+</pre>
+</div>
+<p>对于使用 <code>order</code> 排序的集合，<code>first</code> 方法返回按照指定属性排序的第一条记录。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+client = Client.order(:first_name).first
+# =&gt; #&lt;Client id: 2, first_name: "Fifo"&gt;
+
+</pre>
+</div>
+<p>和上面的代码等价的 SQL 是：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients ORDER BY clients.first_name ASC LIMIT 1
+
+</pre>
+</div>
+<p><code>first!</code> 方法的行为和 <code>first</code> 方法类似，区别在于如果没有找到匹配的记录，<code>first!</code> 方法会抛出 <code>ActiveRecord::RecordNotFound</code> 异常。</p><h5 id="last%20%E6%96%B9%E6%B3%95">1.1.4 <code>last</code> 方法</h5><p><code>last</code> 方法默认查找按主键排序的最后一条记录。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+client = Client.last
+# =&gt; #&lt;Client id: 221, first_name: "Russel"&gt;
+
+</pre>
+</div>
+<p>和上面的代码等价的 SQL 是：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients ORDER BY clients.id DESC LIMIT 1
+
+</pre>
+</div>
+<p>如果没有找到匹配的记录，<code>last</code> 方法返回 <code>nil</code>，而不抛出异常。</p><p>如果默认作用域 （请参阅 <a href="#%E5%BA%94%E7%94%A8%E9%BB%98%E8%AE%A4%E4%BD%9C%E7%94%A8%E5%9F%9F">应用默认作用域</a>）包含排序方法，<code>last</code> 方法会返回按照这个顺序排序的最后一条记录。</p><p><code>last</code> 方法接受数字作为参数，并返回不超过指定数量的查询结果。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+client = Client.last(3)
+# =&gt; [
+#   #&lt;Client id: 219, first_name: "James"&gt;,
+#   #&lt;Client id: 220, first_name: "Sara"&gt;,
+#   #&lt;Client id: 221, first_name: "Russel"&gt;
+# ]
+
+</pre>
+</div>
+<p>和上面的代码等价的 SQL 是：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients ORDER BY clients.id DESC LIMIT 3
+
+</pre>
+</div>
+<p>对于使用 <code>order</code> 排序的集合，<code>last</code> 方法返回按照指定属性排序的最后一条记录。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+client = Client.order(:first_name).last
+# =&gt; #&lt;Client id: 220, first_name: "Sara"&gt;
+
+</pre>
+</div>
+<p>和上面的代码等价的 SQL 是：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients ORDER BY clients.first_name DESC LIMIT 1
+
+</pre>
+</div>
+<p><code>last!</code> 方法的行为和 <code>last</code> 方法类似，区别在于如果没有找到匹配的记录，<code>last!</code> 方法会抛出 <code>ActiveRecord::RecordNotFound</code> 异常。</p><h5 id="find_by%20%E6%96%B9%E6%B3%95">1.1.5 <code>find_by</code> 方法</h5><p><code>find_by</code> 方法查找匹配指定条件的第一条记录。 例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.find_by first_name: 'Lifo'
+# =&gt; #&lt;Client id: 1, first_name: "Lifo"&gt;
+
+Client.find_by first_name: 'Jon'
+# =&gt; nil
+
+</pre>
+</div>
+<p>上面的代码等价于：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where(first_name: 'Lifo').take
+
+</pre>
+</div>
+<p>和上面的代码等价的 SQL 是：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients WHERE (clients.first_name = 'Lifo') LIMIT 1
+
+</pre>
+</div>
+<p><code>find_by!</code> 方法的行为和 <code>find_by</code> 方法类似，区别在于如果没有找到匹配的记录，<code>find_by!</code> 方法会抛出 <code>ActiveRecord::RecordNotFound</code> 异常。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.find_by! first_name: 'does not exist'
+# =&gt; ActiveRecord::RecordNotFound
+
+</pre>
+</div>
+<p>上面的代码等价于：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where(first_name: 'does not exist').take!
+
+</pre>
+</div>
+<h4 id="%E6%89%B9%E9%87%8F%E6%A3%80%E7%B4%A2%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1">1.2 批量检索多个对象</h4><p>我们常常需要遍历大量记录，例如向大量用户发送时事通讯、导出数据等。</p><p>处理这类问题的方法看起来可能很简单：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 如果 users 表有几千行记录，这样做效率很低
+User.all.each do |user|
+  NewsMailer.weekly(user).deliver_now
+end
+
+</pre>
+</div>
+<p>但随着数据表越来越大，这种方法越来越行不通，因为 <code>User.all.each</code> 会使 Active Record 一次性取回整个数据表，为每条记录创建模型对象，并把整个模型对象数组保存在内存中。事实上，如果我们有大量记录，整个模型对象数组需要占用的空间可能会超过可用的内存容量。</p><p>Rails 提供了两种方法来解决这个问题，两种方法都是把整个记录分成多个对内存友好的批处理。第一种方法是通过 <code>find_each</code> 方法每次检索一批记录，然后逐一把每条记录作为模型传入块。第二种方法是通过 <code>find_in_batches</code> 方法每次检索一批记录，然后把这批记录整个作为模型数组传入块。</p><div class="info"><p><code>find_each</code> 和 <code>find_in_batches</code> 方法用于大量记录的批处理，这些记录数量很大以至于不适合一次性保存在内存中。如果只需要循环 1000 条记录，那么应该首选常规的 <code>find</code> 方法。</p></div><h5 id="find_each%20%E6%96%B9%E6%B3%95">1.2.1 <code>find_each</code> 方法</h5><p><code>find_each</code> 方法检索一批记录，然后逐一把每条记录作为模型传入块。在下面的例子中，<code>find_each</code> 方法取回 1000 条记录（<code>find_each</code> 和 <code>find_in_batches</code> 方法都默认一次检索 1000 条记录），然后逐一把每条记录作为模型传入块。这一过程会不断重复，直到完成所有记录的处理：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+User.find_each do |user|
+  NewsMailer.weekly(user).deliver_now
+end
+
+</pre>
+</div>
+<p>要想为 <code>find_each</code> 操作添加条件，我们可以链接其他 Active Record 方法，例如 <code>where</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+User.where(weekly_subscriber: true).find_each do |user|
+  NewsMailer.weekly(user).deliver_now
+end
+
+</pre>
+</div>
+<h6 id="find_each%20%E6%96%B9%E6%B3%95%E7%9A%84%E9%80%89%E9%A1%B9">1.2.1.1 <code>find_each</code> 方法的选项</h6><p><code>find_each</code> 方法可以使用 <code>find</code> 方法的大多数选项，但 <code>:order</code> 和 <code>:limit</code> 选项例外，它们是 <code>find_each</code> 方法内部使用的保留选项。</p><p><code>find_each</code> 方法还可以使用 <code>:batch_size</code>、<code>:start</code> 和 <code>:finish</code> 这三个附加选项。</p><p><strong><code>:batch_size</code></strong></p><p><code>:batch_size</code> 选项用于指明批量检索记录时一次检索多少条记录。例如，一次检索 5000 条记录：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+User.find_each(batch_size: 5000) do |user|
+  NewsMailer.weekly(user).deliver_now
+end
+
+</pre>
+</div>
+<p><strong><code>:start</code></strong></p><p>记录默认是按主键的升序方式取回的，这里的主键必须是整数。<code>:start</code> 选项用于配置想要取回的记录序列的第一个 ID，比这个 ID 小的记录都不会取回。这个选项有时候很有用，例如当需要恢复之前中断的批处理时，只需从最后一个取回的记录之后开始继续处理即可。</p><p>下面的例子把时事通讯发送给主键从 2000 开始的用户，一次检索 5000 条用户记录：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+User.find_each(start: 2000, batch_size: 5000) do |user|
+  NewsMailer.weekly(user).deliver_now
+end
+
+</pre>
+</div>
+<p><strong><code>:finish</code></strong></p><p>和 <code>:start</code> 选项类似，<code>:finish</code> 选项用于配置想要取回的记录序列的最后一个 ID，比这个 ID 大的记录都不会取回。这个选项有时候很有用，例如可以通过配置 <code>:start</code> 和 <code>:finish</code> 选项指明想要批处理的子记录集。</p><p>下面的例子把时事通讯发送给主键从 2000 到 10000 的用户，一次检索 5000 条用户记录：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+User.find_each(start: 2000, finish: 10000, batch_size: 5000) do |user|
+  NewsMailer.weekly(user).deliver_now
+end
+
+</pre>
+</div>
+<p>另一个例子是使用多个职程（worker）处理同一个进程队列。通过分别配置 <code>:start</code> 和 <code>:finish</code> 选项可以让每个职程每次都处理 10000 条记录。</p><h5 id="find_in_batches%20%E6%96%B9%E6%B3%95">1.2.2 <code>find_in_batches</code> 方法</h5><p><code>find_in_batches</code> 方法和 <code>find_each</code> 方法类似，两者都是批量检索记录。区别在于，<code>find_in_batches</code> 方法会把一批记录作为模型数组传入块，而不是像 <code>find_each</code> 方法那样逐一把每条记录作为模型传入块。下面的例子每次把 1000 张发票的数组一次性传入块（最后一次传入块的数组中的发票数量可能不到 1000）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 一次把 1000 张发票组成的数组传给 add_invoices
+Invoice.find_in_batches do |invoices|
+  export.add_invoices(invoices)
+end
+
+</pre>
+</div>
+<h6 id="find_in_batches%20%E6%96%B9%E6%B3%95%E7%9A%84%E9%80%89%E9%A1%B9">1.2.2.1 <code>find_in_batches</code> 方法的选项</h6><p>和 <code>find_each</code> 方法一样，<code>find_in_batches</code> 方法可以使用 <code>:batch_size</code>、<code>:start</code> 和 <code>:finish</code> 选项。</p><h3 id="%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2">2 条件查询</h3><p><code>where</code> 方法用于指明限制返回记录所使用的条件，相当于 SQL 语句的 <code>WHERE</code> 部分。条件可以使用字符串、数组或散列指定。</p><h4 id="%E7%BA%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9D%A1%E4%BB%B6">2.1 纯字符串条件</h4><p>可以直接用纯字符串为查找添加条件。例如，<code>Client.where("orders_count = '2'")</code> 会查找所有 <code>orders_count</code> 字段的值为 2 的客户记录。</p><div class="warning"><p>使用纯字符串创建条件存在容易受到 SQL 注入攻击的风险。例如，<code>Client.where("first_name LIKE '%#{params[:first_name]}%'")</code> 是不安全的。在下一节中我们会看到，使用数组创建条件是推荐的做法。</p></div><h4 id="%E6%95%B0%E7%BB%84%E6%9D%A1%E4%BB%B6">2.2 数组条件</h4><p>如果 <code>Client.where("orders_count = '2'")</code> 这个例子中的数字是变化的，比如说是从别处传递过来的参数，那么可以像下面这样进行查找：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where("orders_count = ?", params[:orders])
+
+</pre>
+</div>
+<p>Active Record 会把第一个参数作为条件字符串，并用之后的其他参数来替换条件字符串中的问号（<code>?</code>）。</p><p>我们还可以指定多个条件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where("orders_count = ? AND locked = ?", params[:orders], false)
+
+</pre>
+</div>
+<p>在上面的例子中，第一个问号会被替换为 <code>params[:orders]</code> 的值，第二个问号会被替换为 <code>false</code> 在 SQL 中对应的值，这个值是什么取决于所使用的数据库适配器。</p><p>强烈推荐使用下面这种写法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where("orders_count = ?", params[:orders])
+
+</pre>
+</div>
+<p>而不是：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where("orders_count = #{params[:orders]}")
+
+</pre>
+</div>
+<p>原因是出于参数的安全性考虑。把变量直接放入条件字符串会导致变量原封不动地传递给数据库，这意味着即使是恶意用户提交的变量也不会被转义。这样一来，整个数据库就处于风险之中，因为一旦恶意用户发现自己能够滥用数据库，他就可能做任何事情。所以，永远不要把参数直接放入条件字符串。</p><div class="info"><p>关于 SQL 注入的危险性的更多介绍，请参阅 <a href="security.html#sql-injection">安全指南</a>。</p></div><h5 id="%E6%9D%A1%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%8D%A0%E4%BD%8D%E7%AC%A6">2.2.1 条件中的占位符</h5><p>和问号占位符（<code>?</code>）类似，我们还可以在条件字符串中使用符号占位符，并通过散列提供符号对应的值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where("created_at &gt;= :start_date AND created_at &lt;= :end_date",
+  {start_date: params[:start_date], end_date: params[:end_date]})
+
+</pre>
+</div>
+<p>如果条件中有很多变量，那么上面这种写法的可读性更高。</p><h4 id="%E6%95%A3%E5%88%97%E6%9D%A1%E4%BB%B6">2.3 散列条件</h4><p>Active Record 还允许使用散列条件，以提高条件语句的可读性。使用散列条件时，散列的键指明需要限制的字段，键对应的值指明如何进行限制。</p><div class="note"><p>在散列条件中，只能进行相等性、范围和子集检查。</p></div><h5 id="%E7%9B%B8%E7%AD%89%E6%80%A7%E6%9D%A1%E4%BB%B6">2.3.1 相等性条件</h5><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where(locked: true)
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients WHERE (clients.locked = 1)
+
+</pre>
+</div>
+<p>其中字段名也可以是字符串：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where('locked' =&gt; true)
+
+</pre>
+</div>
+<p>对于 <code>belongs_to</code> 关联来说，如果使用 Active Record 对象作为值，就可以使用关联键来指定模型。这种方法也适用于多态关联。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.where(author: author)
+Author.joins(:articles).where(articles: { author: author })
+
+</pre>
+</div>
+<div class="note"><p>相等性条件中的值不能是符号。例如，<code>Client.where(status: :active)</code> 这种写法是错误的。</p></div><h5 id="%E8%8C%83%E5%9B%B4%E6%9D%A1%E4%BB%B6">2.3.2 范围条件</h5><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
+
+</pre>
+</div>
+<p>上面的代码会使用 <code>BETWEEN</code> SQL 表达式查找所有昨天创建的客户记录：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients WHERE (clients.created_at BETWEEN '2008-12-21 00:00:00' AND '2008-12-22 00:00:00')
+
+</pre>
+</div>
+<p>这是 <a href="#%E6%95%B0%E7%BB%84%E6%9D%A1%E4%BB%B6">数组条件</a>中那个示例代码的更简短的写法。</p><h5 id="%E5%AD%90%E9%9B%86%E6%9D%A1%E4%BB%B6">2.3.3 子集条件</h5><p>要想用 <code>IN</code> 表达式来查找记录，可以在散列条件中使用数组：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where(orders_count: [1,3,5])
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients WHERE (clients.orders_count IN (1,3,5))
+
+</pre>
+</div>
+<h4 id="NOT%20%E6%9D%A1%E4%BB%B6">2.4 NOT 条件</h4><p>可以用 <code>where.not</code> 创建 <code>NOT</code> SQL 查询：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where.not(locked: true)
+
+</pre>
+</div>
+<p>也就是说，先调用没有参数的 <code>where</code> 方法，然后马上链式调用 <code>not</code> 方法，就可以生成这个查询。上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients WHERE (clients.locked != 1)
+
+</pre>
+</div>
+<h3 id="%E6%8E%92%E5%BA%8F">3 排序</h3><p>要想按特定顺序从数据库中检索记录，可以使用 <code>order</code> 方法。</p><p>例如，如果想按 <code>created_at</code> 字段的升序方式取回记录：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.order(:created_at)
+# 或
+Client.order("created_at")
+
+</pre>
+</div>
+<p>还可以使用 <code>ASC</code>（升序） 或 <code>DESC</code>（降序） 指定排序方式：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.order(created_at: :desc)
+# 或
+Client.order(created_at: :asc)
+# 或
+Client.order("created_at DESC")
+# 或
+Client.order("created_at ASC")
+
+</pre>
+</div>
+<p>或按多个字段排序：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.order(orders_count: :asc, created_at: :desc)
+# 或
+Client.order(:orders_count, created_at: :desc)
+# 或
+Client.order("orders_count ASC, created_at DESC")
+# 或
+Client.order("orders_count ASC", "created_at DESC")
+
+</pre>
+</div>
+<p>如果多次调用 <code>order</code> 方法，后续排序会在第一次排序的基础上进行：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+Client.order("orders_count ASC").order("created_at DESC")
+# SELECT * FROM clients ORDER BY orders_count ASC, created_at DESC
+
+</pre>
+</div>
+<h3 id="%E9%80%89%E6%8B%A9%E7%89%B9%E5%AE%9A%E5%AD%97%E6%AE%B5">4 选择特定字段</h3><p><code>Model.find</code> 默认使用 <code>select *</code> 从结果集中选择所有字段。</p><p>可以使用 <code>select</code> 方法从结果集中选择字段的子集。</p><p>例如，只选择 <code>viewable_by</code> 和 <code>locked</code> 字段：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.select("viewable_by, locked")
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT viewable_by, locked FROM clients
+
+</pre>
+</div>
+<p>请注意，上面的代码初始化的模型对象只包含了所选择的字段，这时如果访问这个模型对象未包含的字段就会抛出异常：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+ActiveModel::MissingAttributeError: missing attribute: &lt;attribute&gt;
+
+</pre>
+</div>
+<p>其中 <code>&lt;attribute&gt;</code> 是我们想要访问的字段。<code>id</code> 方法不会引发 <code>ActiveRecord::MissingAttributeError</code> 异常，因此在使用关联时一定要小心，因为只有当 <code>id</code> 方法正常工作时关联才能正常工作。</p><p>在查询时如果想让某个字段的同值记录只出现一次，可以使用 <code>distinct</code> 方法添加唯一性约束：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.select(:name).distinct
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT DISTINCT name FROM clients
+
+</pre>
+</div>
+<p>唯一性约束在添加之后还可以删除：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+query = Client.select(:name).distinct
+# =&gt; 返回无重复的名字
+
+query.distinct(false)
+# =&gt; 返回所有名字，即使有重复
+
+</pre>
+</div>
+<h3 id="%E9%99%90%E9%87%8F%E5%92%8C%E5%81%8F%E7%A7%BB%E9%87%8F">5 限量和偏移量</h3><p>要想在 <code>Model.find</code> 生成的 SQL 语句中使用 <code>LIMIT</code> 子句，可以在关联上使用 <code>limit</code> 和 <code>offset</code> 方法。</p><p><code>limit</code> 方法用于指明想要取回的记录数量，<code>offset</code> 方法用于指明取回记录时在第一条记录之前要跳过多少条记录。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.limit(5)
+
+</pre>
+</div>
+<p>上面的代码会返回 5 条客户记录，因为没有使用 <code>offset</code> 方法，所以返回的这 5 条记录就是前 5 条记录。生成的 SQL 语句如下：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients LIMIT 5
+
+</pre>
+</div>
+<p>如果使用 <code>offset</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.limit(5).offset(30)
+
+</pre>
+</div>
+<p>这时会返回从第 31 条记录开始的 5 条记录。生成的 SQL 语句如下：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients LIMIT 5 OFFSET 30
+
+</pre>
+</div>
+<h3 id="%E5%88%86%E7%BB%84">6 分组</h3><p>要想在查找方法生成的 SQL 语句中使用 <code>GROUP BY</code> 子句，可以使用 <code>group</code> 方法。</p><p>例如，如果我们想根据订单创建日期查找订单记录：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Order.select("date(created_at) as ordered_date, sum(price) as total_price").group("date(created_at)")
+
+</pre>
+</div>
+<p>上面的代码会为数据库中同一天创建的订单创建 <code>Order</code> 对象。生成的 SQL 语句如下：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT date(created_at) as ordered_date, sum(price) as total_price
+FROM orders
+GROUP BY date(created_at)
+
+</pre>
+</div>
+<h4 id="%E5%88%86%E7%BB%84%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%80%BB%E6%95%B0">6.1 分组项目的总数</h4><p>要想得到一次查询中分组项目的总数，可以在调用 <code>group</code> 方法后调用 <code>count</code> 方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Order.group(:status).count
+# =&gt; { 'awaiting_approval' =&gt; 7, 'paid' =&gt; 12 }
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT COUNT (*) AS count_all, status AS status
+FROM "orders"
+GROUP BY status
+
+</pre>
+</div>
+<h3 id="having%20%E6%96%B9%E6%B3%95">7 <code>having</code> 方法</h3><p>SQL 语句用 <code>HAVING</code> 子句指明 <code>GROUP BY</code> 字段的约束条件。要想在 <code>Model.find</code> 生成的 SQL 语句中使用 <code>HAVING</code> 子句，可以使用 <code>having</code> 方法。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Order.select("date(created_at) as ordered_date, sum(price) as total_price").
+  group("date(created_at)").having("sum(price) &gt; ?", 100)
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT date(created_at) as ordered_date, sum(price) as total_price
+FROM orders
+GROUP BY date(created_at)
+HAVING sum(price) &gt; 100
+
+</pre>
+</div>
+<p>上面的查询会返回每个 <code>Order</code> 对象的日期和总价，查询结果按日期分组并排序，并且总价必须高于 100。</p><h3 id="%E6%9D%A1%E4%BB%B6%E8%A6%86%E7%9B%96">8 条件覆盖</h3><h4 id="unscope%20%E6%96%B9%E6%B3%95">8.1 <code>unscope</code> 方法</h4><p>可以使用 <code>unscope</code> 方法删除某些条件。 例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.where('id &gt; 10').limit(20).order('id asc').unscope(:order)
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM articles WHERE id &gt; 10 LIMIT 20
+
+# 没使用 `unscope` 之前的查询
+SELECT * FROM articles WHERE id &gt; 10 ORDER BY id asc LIMIT 20
+
+</pre>
+</div>
+<p>还可以使用 <code>unscope</code> 方法删除 <code>where</code> 方法中的某些条件。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.where(id: 10, trashed: false).unscope(where: :id)
+# SELECT "articles".* FROM "articles" WHERE trashed = 0
+
+</pre>
+</div>
+<p>在关联中使用 <code>unscope</code> 方法，会对整个关联造成影响：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.order('id asc').merge(Article.unscope(:order))
+# SELECT "articles".* FROM "articles"
+
+</pre>
+</div>
+<h4 id="only%20%E6%96%B9%E6%B3%95">8.2 <code>only</code> 方法</h4><p>可以使用 <code>only</code> 方法覆盖某些条件。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.where('id &gt; 10').limit(20).order('id desc').only(:order, :where)
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM articles WHERE id &gt; 10 ORDER BY id DESC
+
+# 没使用 `only` 之前的查询
+SELECT "articles".* FROM "articles" WHERE (id &gt; 10) ORDER BY id desc LIMIT 20
+
+</pre>
+</div>
+<h4 id="reorder%20%E6%96%B9%E6%B3%95">8.3 <code>reorder</code> 方法</h4><p>可以使用 <code>reorder</code> 方法覆盖默认作用域中的排序方式。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Article &lt; ApplicationRecord
+  has_many :comments, -&gt; { order('posted_at DESC') }
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.find(10).comments.reorder('name')
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM articles WHERE id = 10
+SELECT * FROM comments WHERE article_id = 10 ORDER BY name
+
+</pre>
+</div>
+<p>如果不使用 <code>reorder</code> 方法，那么会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM articles WHERE id = 10
+SELECT * FROM comments WHERE article_id = 10 ORDER BY posted_at DESC
+
+</pre>
+</div>
+<h4 id="reverse_order%20%E6%96%B9%E6%B3%95">8.4 <code>reverse_order</code> 方法</h4><p>可以使用 <code>reverse_order</code> 方法反转排序条件。</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+Client.where("orders_count &gt; 10").order(:name).reverse_order
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients WHERE orders_count &gt; 10 ORDER BY name DESC
+
+</pre>
+</div>
+<p>如果查询时没有使用 <code>order</code> 方法，那么 <code>reverse_order</code> 方法会使查询结果按主键的降序方式排序。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where("orders_count &gt; 10").reverse_order
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients WHERE orders_count &gt; 10 ORDER BY clients.id DESC
+
+</pre>
+</div>
+<p><code>reverse_order</code> 方法不接受任何参数。</p><h4 id="rewhere%20%E6%96%B9%E6%B3%95">8.5 <code>rewhere</code> 方法</h4><p>可以使用 <code>rewhere</code> 方法覆盖 <code>where</code> 方法中指定的条件。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.where(trashed: true).rewhere(trashed: false)
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM articles WHERE `trashed` = 0
+
+</pre>
+</div>
+<p>如果不使用 <code>rewhere</code> 方法而是再次使用 <code>where</code> 方法：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+Article.where(trashed: true).where(trashed: false)
+
+</pre>
+</div>
+<p>会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM articles WHERE `trashed` = 1 AND `trashed` = 0
+
+</pre>
+</div>
+<h3 id="%E7%A9%BA%E5%85%B3%E7%B3%BB">9 空关系</h3><p><code>none</code> 方法返回可以在链式调用中使用的、不包含任何记录的空关系。在这个空关系上应用后续条件链，会继续生成空关系。对于可能返回零结果、但又需要在链式调用中使用的方法或作用域，可以使用 <code>none</code> 方法来提供返回值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.none # 返回一个空 Relation 对象，而且不执行查询
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 下面的 visible_articles 方法期待返回一个空 Relation 对象
+@articles = current_user.visible_articles.where(name: params[:name])
+
+def visible_articles
+  case role
+  when 'Country Manager'
+    Article.where(country: country)
+  when 'Reviewer'
+    Article.published
+  when 'Bad User'
+    Article.none # =&gt; 如果这里返回 [] 或 nil，会导致调用方出错
+  end
+end
+
+</pre>
+</div>
+<h3 id="%E5%8F%AA%E8%AF%BB%E5%AF%B9%E8%B1%A1">10 只读对象</h3><p>在关联中使用 Active Record 提供的 <code>readonly</code> 方法，可以显式禁止修改任何返回对象。如果尝试修改只读对象，不但不会成功，还会抛出 <code>ActiveRecord::ReadOnlyRecord</code> 异常。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+client = Client.readonly.first
+client.visits += 1
+client.save
+
+</pre>
+</div>
+<p>在上面的代码中，<code>client</code> 被显式设置为只读对象，因此在更新 <code>client.visits</code> 的值后调用 <code>client.save</code> 会抛出 <code>ActiveRecord::ReadOnlyRecord</code> 异常。</p><h3 id="%E5%9C%A8%E6%9B%B4%E6%96%B0%E6%97%B6%E9%94%81%E5%AE%9A%E8%AE%B0%E5%BD%95">11 在更新时锁定记录</h3><p>在数据库中，锁定用于避免更新记录时的条件竞争，并确保原子更新。</p><p>Active Record 提供了两种锁定机制：</p>
+<ul>
+<li><p>乐观锁定</p></li>
+<li><p>悲观锁定</p></li>
+</ul>
+<h4 id="%E4%B9%90%E8%A7%82%E9%94%81%E5%AE%9A">11.1 乐观锁定</h4><p>乐观锁定允许多个用户访问并编辑同一记录，并假设数据发生冲突的可能性最小。其原理是检查读取记录后是否有其他进程尝试更新记录，如果有就抛出 <code>ActiveRecord::StaleObjectError</code> 异常，并忽略该更新。</p><h5 id="%E5%AD%97%E6%AE%B5%E7%9A%84%E4%B9%90%E8%A7%82%E9%94%81%E5%AE%9A">11.1.1 字段的乐观锁定</h5><p>为了使用乐观锁定，数据表中需要有一个整数类型的 <code>lock_version</code> 字段。每次更新记录时，Active Record 都会增加 <code>lock_version</code> 字段的值。如果更新请求中 <code>lock_version</code> 字段的值比当前数据库中 <code>lock_version</code> 字段的值小，更新请求就会失败，并抛出 <code>ActiveRecord::StaleObjectError</code> 异常。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+c1 = Client.find(1)
+c2 = Client.find(1)
+
+c1.first_name = "Michael"
+c1.save
+
+c2.name = "should fail"
+c2.save # 抛出 ActiveRecord::StaleObjectError
+
+</pre>
+</div>
+<p>抛出异常后，我们需要救援异常并处理冲突，或回滚，或合并，或应用其他业务逻辑来解决冲突。</p><p>通过设置 <code>ActiveRecord::Base.lock_optimistically = false</code> 可以关闭乐观锁定。</p><p>可以使用 <code>ActiveRecord::Base</code> 提供的 <code>locking_column</code> 类属性来覆盖 <code>lock_version</code> 字段名：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Client &lt; ApplicationRecord
+  self.locking_column = :lock_client_column
+end
+
+</pre>
+</div>
+<h4 id="%E6%82%B2%E8%A7%82%E9%94%81%E5%AE%9A">11.2 悲观锁定</h4><p>悲观锁定使用底层数据库提供的锁定机制。在创建关联时使用 <code>lock</code> 方法，会在选定字段上生成互斥锁。使用 <code>lock</code> 方法的关联通常被包装在事务中，以避免发生死锁。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Item.transaction do
+  i = Item.lock.first
+  i.name = 'Jones'
+  i.save!
+end
+
+</pre>
+</div>
+<p>对于 MySQL 后端，上面的会话会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SQL (0.2ms)   BEGIN
+Item Load (0.3ms)   SELECT * FROM `items` LIMIT 1 FOR UPDATE
+Item Update (0.4ms)   UPDATE `items` SET `updated_at` = '2009-02-07 18:05:56', `name` = 'Jones' WHERE `id` = 1
+SQL (0.8ms)   COMMIT
+
+</pre>
+</div>
+<p>要想支持其他锁定类型，可以直接传递 SQL 给 <code>lock</code> 方法。例如，MySQL 的 <code>LOCK IN SHARE MODE</code> 表达式在锁定记录时允许其他查询读取记录，这个表达式可以用作锁定选项：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Item.transaction do
+  i = Item.lock("LOCK IN SHARE MODE").find(1)
+  i.increment!(:views)
+end
+
+</pre>
+</div>
+<p>对于已有模型实例，可以启动事务并一次性获取锁：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+item = Item.first
+item.with_lock do
+  # 这个块在事务中调用
+  # item 已经锁定
+  item.increment!(:views)
+end
+
+</pre>
+</div>
+<h3 id="%E8%81%94%E7%BB%93%E8%A1%A8">12 联结表</h3><p>Active Record 提供了 <code>joins</code> 和 <code>left_outer_joins</code> 这两个查找方法，用于指明生成的 SQL 语句中的 <code>JOIN</code> 子句。其中，<code>joins</code> 方法用于 <code>INNER JOIN</code> 查询或定制查询，<code>left_outer_joins</code> 用于 <code>LEFT OUTER JOIN</code> 查询。</p><h4 id="joins%20%E6%96%B9%E6%B3%95">12.1 <code>joins</code> 方法</h4><p><code>joins</code> 方法有多种用法。</p><h5 id="%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%20SQL%20%E7%89%87%E6%AE%B5">12.1.1 使用字符串 SQL 片段</h5><p>在 <code>joins</code> 方法中可以直接用 SQL 指明 <code>JOIN</code> 子句：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Author.joins("INNER JOIN posts ON posts.author_id = author.id AND posts.published = 't'")
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT clients.* FROM clients INNER JOIN posts ON posts.author_id = author.id AND posts.published = 't'
+
+</pre>
+</div>
+<h5 id="%E4%BD%BF%E7%94%A8%E5%85%B7%E5%90%8D%E5%85%B3%E8%81%94%E6%95%B0%E7%BB%84%E6%88%96%E6%95%A3%E5%88%97">12.1.2 使用具名关联数组或散列</h5><p>使用 <code>joins</code> 方法时，Active Record 允许我们使用在模型上定义的关联的名称，作为指明这些关联的 <code>JOIN</code> 子句的快捷方式。</p><p>例如，假设有 <code>Category</code>、<code>Article</code>、<code>Comment</code>、<code>Guest</code> 和 <code>Tag</code> 这几个模型：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Category &lt; ApplicationRecord
+  has_many :articles
+end
+
+class Article &lt; ApplicationRecord
+  belongs_to :category
+  has_many :comments
+  has_many :tags
+end
+
+class Comment &lt; ApplicationRecord
+  belongs_to :article
+  has_one :guest
+end
+
+class Guest &lt; ApplicationRecord
+  belongs_to :comment
+end
+
+class Tag &lt; ApplicationRecord
+  belongs_to :article
+end
+
+</pre>
+</div>
+<p>下面几种用法都会使用 <code>INNER JOIN</code> 生成我们想要的关联查询。</p><p>（译者注：原文此处开始出现编号错误，由译者根据内容逻辑关系进行了修正。）</p><h6 id="%E5%8D%95%E4%B8%AA%E5%85%B3%E8%81%94%E7%9A%84%E8%81%94%E7%BB%93">12.1.2.1 单个关联的联结</h6><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Category.joins(:articles)
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT categories.* FROM categories
+  INNER JOIN articles ON articles.category_id = categories.id
+
+</pre>
+</div>
+<p>这个查询的意思是把所有包含了文章的（非空）分类作为一个 <code>Category</code> 对象返回。请注意，如果多篇文章同属于一个分类，那么这个分类会在 <code>Category</code> 对象中出现多次。要想让每个分类只出现一次，可以使用 <code>Category.joins(:articles).distinct</code>。</p><h6 id="%E5%A4%9A%E4%B8%AA%E5%85%B3%E8%81%94%E7%9A%84%E8%81%94%E7%BB%93">12.1.2.2 多个关联的联结</h6><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.joins(:category, :comments)
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT articles.* FROM articles
+  INNER JOIN categories ON articles.category_id = categories.id
+  INNER JOIN comments ON comments.article_id = articles.id
+
+</pre>
+</div>
+<p>这个查询的意思是把所有属于某个分类并至少拥有一条评论的文章作为一个 <code>Article</code> 对象返回。同样请注意，拥有多条评论的文章会在 <code>Article</code> 对象中出现多次。</p><h6 id="%E5%8D%95%E5%B1%82%E5%B5%8C%E5%A5%97%E5%85%B3%E8%81%94%E7%9A%84%E8%81%94%E7%BB%93">12.1.2.3 单层嵌套关联的联结</h6><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.joins(comments: :guest)
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT articles.* FROM articles
+  INNER JOIN comments ON comments.article_id = articles.id
+  INNER JOIN guests ON guests.comment_id = comments.id
+
+</pre>
+</div>
+<p>这个查询的意思是把所有拥有访客评论的文章作为一个 <code>Article</code> 对象返回。</p><h6 id="%E5%A4%9A%E5%B1%82%E5%B5%8C%E5%A5%97%E5%85%B3%E8%81%94%E7%9A%84%E8%81%94%E7%BB%93">12.1.2.4 多层嵌套关联的联结</h6><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Category.joins(articles: [{ comments: :guest }, :tags])
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT categories.* FROM categories
+  INNER JOIN articles ON articles.category_id = categories.id
+  INNER JOIN comments ON comments.article_id = articles.id
+  INNER JOIN guests ON guests.comment_id = comments.id
+  INNER JOIN tags ON tags.article_id = articles.id
+
+</pre>
+</div>
+<p>这个查询的意思是把所有包含文章的分类作为一个 <code>Category</code> 对象返回，其中这些文章都拥有访客评论并且带有标签。</p><h5 id="%E4%B8%BA%E8%81%94%E7%BB%93%E8%A1%A8%E6%8C%87%E6%98%8E%E6%9D%A1%E4%BB%B6">12.1.3 为联结表指明条件</h5><p>可以使用普通的数组和字符串条件作为关联数据表的条件。但如果想使用散列条件作为关联数据表的条件，就需要使用特殊语法了：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+time_range = (Time.now.midnight - 1.day)..Time.now.midnight
+Client.joins(:orders).where('orders.created_at' =&gt; time_range)
+
+</pre>
+</div>
+<p>还有一种更干净的替代语法，即嵌套使用散列条件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+time_range = (Time.now.midnight - 1.day)..Time.now.midnight
+Client.joins(:orders).where(orders: { created_at: time_range })
+
+</pre>
+</div>
+<p>这个查询会查找所有在昨天创建过订单的客户，在生成的 SQL 语句中同样使用了 <code>BETWEEN</code> SQL 表达式。</p><h4 id="left_outer_joins%20%E6%96%B9%E6%B3%95">12.2 <code>left_outer_joins</code> 方法</h4><p>如果想要选择一组记录，而不管它们是否具有关联记录，可以使用 <code>left_outer_joins</code> 方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Author.left_outer_joins(:posts).distinct.select('authors.*, COUNT(posts.*) AS posts_count').group('authors.id')
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT DISTINCT authors.*, COUNT(posts.*) AS posts_count FROM "authors"
+LEFT OUTER JOIN posts ON posts.author_id = authors.id GROUP BY authors.id
+
+</pre>
+</div>
+<p>这个查询的意思是返回所有作者和每位作者的帖子数，而不管这些作者是否发过帖子。</p><h3 id="%E5%8F%8A%E6%97%A9%E5%8A%A0%E8%BD%BD%E5%85%B3%E8%81%94">13 及早加载关联</h3><p>及早加载是一种用于加载 <code>Model.find</code> 返回对象的关联记录的机制，目的是尽可能减少查询次数。</p><p><strong>N + 1 查询问题</strong></p><p>假设有如下代码，查找 10 条客户记录并打印这些客户的邮编：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+clients = Client.limit(10)
+
+clients.each do |client|
+  puts client.address.postcode
+end
+
+</pre>
+</div>
+<p>上面的代码第一眼看起来不错，但实际上存在查询总次数较高的问题。这段代码总共需要执行 1（查找 10 条客户记录）+ 10（每条客户记录都需要加载地址）= 11 次查询。</p><p><strong>N + 1 查询问题的解决办法</strong></p><p>Active Record 允许我们提前指明需要加载的所有关联，这是通过在调用 <code>Model.find</code> 时指明 <code>includes</code> 方法实现的。通过指明 <code>includes</code> 方法，Active Record 会使用尽可能少的查询来加载所有已指明的关联。</p><p>回到之前 N + 1 查询问题的例子，我们重写其中的 <code>Client.limit(10)</code> 来使用及早加载：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+clients = Client.includes(:address).limit(10)
+
+clients.each do |client|
+  puts client.address.postcode
+end
+
+</pre>
+</div>
+<p>上面的代码只执行 2 次查询，而不是之前的 11 次查询：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients LIMIT 10
+SELECT addresses.* FROM addresses
+  WHERE (addresses.client_id IN (1,2,3,4,5,6,7,8,9,10))
+
+</pre>
+</div>
+<h4 id="%E5%8F%8A%E6%97%A9%E5%8A%A0%E8%BD%BD%E5%A4%9A%E4%B8%AA%E5%85%B3%E8%81%94">13.1 及早加载多个关联</h4><p>通过在 <code>includes</code> 方法中使用数组、散列或嵌套散列，Active Record 允许我们在一次 <code>Model.find</code> 调用中及早加载任意数量的关联。</p><h5 id="%E5%A4%9A%E4%B8%AA%E5%85%B3%E8%81%94%E7%9A%84%E6%95%B0%E7%BB%84">13.1.1 多个关联的数组</h5><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.includes(:category, :comments)
+
+</pre>
+</div>
+<p>上面的代码会加载所有文章、所有关联的分类和每篇文章的所有评论。</p><h5 id="%E5%B5%8C%E5%A5%97%E5%85%B3%E8%81%94%E7%9A%84%E6%95%A3%E5%88%97">13.1.2 嵌套关联的散列</h5><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Category.includes(articles: [{ comments: :guest }, :tags]).find(1)
+
+</pre>
+</div>
+<p>上面的代码会查找 ID 为 1 的分类，并及早加载所有关联的文章、这些文章关联的标签和评论，以及这些评论关联的访客。</p><h4 id="%E4%B8%BA%E5%85%B3%E8%81%94%E7%9A%84%E5%8F%8A%E6%97%A9%E5%8A%A0%E8%BD%BD%E6%8C%87%E6%98%8E%E6%9D%A1%E4%BB%B6">13.2 为关联的及早加载指明条件</h4><p>尽管 Active Record 允许我们像 <code>joins</code> 方法那样为关联的及早加载指明条件，但推荐的方式是使用<a href="#%E8%81%94%E7%BB%93%E8%A1%A8">联结</a>。</p><p>尽管如此，在必要时仍然可以用 <code>where</code> 方法来为关联的及早加载指明条件。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.includes(:comments).where(comments: { visible: true })
+
+</pre>
+</div>
+<p>上面的代码会生成使用 <code>LEFT OUTER JOIN</code> 子句的 SQL 语句，而 <code>joins</code> 方法会成生使用 <code>INNER JOIN</code> 子句的 SQL 语句。</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT "articles"."id" AS t0_r0, ... "comments"."updated_at" AS t1_r5 FROM "articles" LEFT OUTER JOIN "comments" ON "comments"."article_id" = "articles"."id" WHERE (comments.visible = 1)
+
+</pre>
+</div>
+<p>如果上面的代码没有使用 <code>where</code> 方法，就会生成常规的一组两条查询语句。</p><div class="note"><p>要想像上面的代码那样使用 <code>where</code> 方法，必须在 <code>where</code> 方法中使用散列。如果想要在 <code>where</code> 方法中使用字符串 SQL 片段，就必须用 <code>references</code> 方法强制使用联结表：</p></div><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.includes(:comments).where("comments.visible = true").references(:comments)
+
+</pre>
+</div>
+<p>通过在 <code>where</code> 方法中使用字符串 SQL 片段并使用 <code>references</code> 方法这种方式，即使一条评论都没有，所有文章仍然会被加载。而在使用 <code>joins</code> 方法（<code>INNER JOIN</code>）时，必须匹配关联条件，否则一条记录都不会返回。</p><h3 id="%E4%BD%9C%E7%94%A8%E5%9F%9F">14 作用域</h3><p>作用域允许我们把常用查询定义为方法，然后通过在关联对象或模型上调用方法来引用这些查询。fotnote:[“作用域”和“作用域方法”在本文中是一个意思。——译者注]在作用域中，我们可以使用之前介绍过的所有方法，如 <code>where</code>、<code>join</code> 和 <code>includes</code> 方法。所有作用域都会返回 <code>ActiveRecord::Relation</code> 对象，这样就可以继续在这个对象上调用其他方法（如其他作用域）。</p><p>要想定义简单的作用域，我们可以在类中通过 <code>scope</code> 方法定义作用域，并传入调用这个作用域时执行的查询。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Article &lt; ApplicationRecord
+  scope :published, -&gt; { where(published: true) }
+end
+
+</pre>
+</div>
+<p>通过上面这种方式定义作用域和通过定义类方法来定义作用域效果完全相同，至于使用哪种方式只是个人喜好问题：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Article &lt; ApplicationRecord
+  def self.published
+    where(published: true)
+  end
+end
+
+</pre>
+</div>
+<p>在作用域中可以链接其他作用域：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Article &lt; ApplicationRecord
+  scope :published,               -&gt; { where(published: true) }
+  scope :published_and_commented, -&gt; { published.where("comments_count &gt; 0") }
+end
+
+</pre>
+</div>
+<p>我们可以在模型上调用 <code>published</code> 作用域：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.published # =&gt; [published articles]
+
+</pre>
+</div>
+<p>或在多个 <code>Article</code> 对象组成的关联对象上调用 <code>published</code> 作用域：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+category = Category.first
+category.articles.published # =&gt; [published articles belonging to this category]
+
+</pre>
+</div>
+<h4 id="%E4%BC%A0%E5%85%A5%E5%8F%82%E6%95%B0">14.1 传入参数</h4><p>作用域可以接受参数：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Article &lt; ApplicationRecord
+  scope :created_before, -&gt;(time) { where("created_at &lt; ?", time) }
+end
+
+</pre>
+</div>
+<p>调用作用域和调用类方法一样：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.created_before(Time.zone.now)
+
+</pre>
+</div>
+<p>不过这只是复制了本该通过类方法提供给我们的的功能。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Article &lt; ApplicationRecord
+  def self.created_before(time)
+    where("created_at &lt; ?", time)
+  end
+end
+
+</pre>
+</div>
+<p>当作用域需要接受参数时，推荐改用类方法。使用类方法时，这些方法仍然可以在关联对象上访问：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+category.articles.created_before(time)
+
+</pre>
+</div>
+<h4 id="%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6">14.2 使用条件</h4><p>我们可以在作用域中使用条件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Article &lt; ApplicationRecord
+  scope :created_before, -&gt;(time) { where("created_at &lt; ?", time) if time.present? }
+end
+
+</pre>
+</div>
+<p>和之前的例子一样，作用域的这一行为也和类方法类似。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Article &lt; ApplicationRecord
+  def self.created_before(time)
+    where("created_at &lt; ?", time) if time.present?
+  end
+end
+
+</pre>
+</div>
+<p>不过有一点需要特别注意：不管条件的值是 <code>true</code> 还是 <code>false</code>，作用域总是返回 <code>ActiveRecord::Relation</code> 对象，而当条件是 <code>false</code> 时，类方法返回的是 <code>nil</code>。因此，当链接带有条件的类方法时，如果任何一个条件的值是 <code>false</code>，就会引发 <code>NoMethodError</code> 异常。</p><h4 id="%E5%BA%94%E7%94%A8%E9%BB%98%E8%AE%A4%E4%BD%9C%E7%94%A8%E5%9F%9F">14.3 应用默认作用域</h4><p>要想在模型的所有查询中应用作用域，我们可以在这个模型上使用 <code>default_scope</code> 方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Client &lt; ApplicationRecord
+  default_scope { where("removed_at IS NULL") }
+end
+
+</pre>
+</div>
+<p>应用默认作用域后，在这个模型上执行查询，会生成下面这样的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients WHERE removed_at IS NULL
+
+</pre>
+</div>
+<p>如果想用默认作用域做更复杂的事情，我们也可以把它定义为类方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Client &lt; ApplicationRecord
+  def self.default_scope
+    # 应该返回一个 ActiveRecord::Relation 对象
+  end
+end
+
+</pre>
+</div>
+<div class="note"><p>默认作用域在创建记录时同样起作用，但在更新记录时不起作用。例如：</p></div><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Client &lt; ApplicationRecord
+ default_scope { where(active: true) }
+end
+
+Client.new          # =&gt; #&lt;Client id: nil, active: true&gt;
+Client.unscoped.new # =&gt; #&lt;Client id: nil, active: nil&gt;
+
+</pre>
+</div>
+<h4 id="%E5%90%88%E5%B9%B6%E4%BD%9C%E7%94%A8%E5%9F%9F">14.4 合并作用域</h4><p>和 <code>WHERE</code> 子句一样，我们用 <code>AND</code> 来合并作用域。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ApplicationRecord
+  scope :active, -&gt; { where state: 'active' }
+  scope :inactive, -&gt; { where state: 'inactive' }
+end
+
+User.active.inactive
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'active' AND "users"."state" = 'inactive'
+
+</pre>
+</div>
+<p>我们可以混合使用 <code>scope</code> 和 <code>where</code> 方法，这样最后生成的 SQL 语句会使用 <code>AND</code> 连接所有条件。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+User.active.where(state: 'finished')
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'active' AND "users"."state" = 'finished'
+
+</pre>
+</div>
+<p>如果使用 <code>Relation#merge</code> 方法，那么在发生条件冲突时总是最后的 <code>WHERE</code> 子句起作用。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+User.active.merge(User.inactive)
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'inactive'
+
+</pre>
+</div>
+<p>有一点需要特别注意，<code>default_scope</code> 总是在所有 <code>scope</code> 和 <code>where</code> 之前起作用。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ApplicationRecord
+  default_scope { where state: 'pending' }
+  scope :active, -&gt; { where state: 'active' }
+  scope :inactive, -&gt; { where state: 'inactive' }
+end
+
+User.all
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'pending'
+
+User.active
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'pending' AND "users"."state" = 'active'
+
+User.where(state: 'inactive')
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'pending' AND "users"."state" = 'inactive'
+
+</pre>
+</div>
+<p>在上面的代码中我们可以看到，在 <code>scope</code> 条件和 <code>where</code> 条件中都合并了 <code>default_scope</code> 条件。</p><h4 id="%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E4%BD%9C%E7%94%A8%E5%9F%9F">14.5 删除所有作用域</h4><p>在需要时，可以使用 <code>unscoped</code> 方法删除作用域。如果在模型中定义了默认作用域，但在某次查询中又不想应用默认作用域，这时就可以使用 <code>unscoped</code> 方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.unscoped.load
+
+</pre>
+</div>
+<p><code>unscoped</code> 方法会删除所有作用域，仅在数据表上执行常规查询。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.unscoped.all
+# SELECT "clients".* FROM "clients"
+
+Client.where(published: false).unscoped.all
+# SELECT "clients".* FROM "clients"
+
+</pre>
+</div>
+<p><code>unscoped</code> 方法也接受块作为参数。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.unscoped {
+  Client.created_before(Time.zone.now)
+}
+
+</pre>
+</div>
+<h3 id="%E5%8A%A8%E6%80%81%E6%9F%A5%E6%89%BE%E6%96%B9%E6%B3%95">15 动态查找方法</h3><p>Active Record 为数据表中的每个字段（也称为属性）都提供了查找方法（也就是动态查找方法）。例如，对于 <code>Client</code> 模型的 <code>first_name</code> 字段，Active Record 会自动生成 <code>find_by_first_name</code> 查找方法。对于 <code>Client</code> 模型的 <code>locked</code> 字段，Active Record 会自动生成 <code>find_by_locked</code> 查找方法。</p><p>在调用动态查找方法时可以在末尾加上感叹号（<code>!</code>），例如 <code>Client.find_by_name!("Ryan")</code>，这样如果动态查找方法没有返回任何记录，就会抛出 <code>ActiveRecord::RecordNotFound</code> 异常。</p><p>如果想同时查询 <code>first_name</code> 和 <code>locked</code> 字段，可以在动态查找方法中用 <code>and</code> 把这两个字段连起来，例如 <code>Client.find_by_first_name_and_locked("Ryan", true)</code>。</p><h3 id="enum%20%E5%AE%8F">16 <code>enum</code> 宏</h3><p><code>enum</code> 宏把整数字段映射为一组可能的值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Book &lt; ApplicationRecord
+  enum availability: [:available, :unavailable]
+end
+
+</pre>
+</div>
+<p>上面的代码会自动创建用于查询模型的对应作用域，同时会添加用于转换状态和查询当前状态的方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 下面的示例只查询可用的图书
+Book.available
+# 或
+Book.where(availability: :available)
+
+book = Book.new(availability: :available)
+book.available?   # =&gt; true
+book.unavailable! # =&gt; true
+book.available?   # =&gt; false
+
+</pre>
+</div>
+<p>请访问 <a href="http://api.rubyonrails.org/classes/ActiveRecord/Enum.html">Rails API 文档</a>，查看 <code>enum</code> 宏的完整文档。</p><h3 id="%E7%90%86%E8%A7%A3%E6%96%B9%E6%B3%95%E9%93%BE">17 理解方法链</h3><p>Active Record 实现<a href="http://en.wikipedia.org/wiki/Method_chaining">方法链</a>的方式既简单又直接，有了方法链我们就可以同时使用多个 Active Record 方法。</p><p>当之前的方法调用返回 <code>ActiveRecord::Relation</code> 对象时，例如 <code>all</code>、<code>where</code> 和 <code>joins</code> 方法，我们就可以在语句中把方法连接起来。返回单个对象的方法（请参阅 <a href="#%E6%A3%80%E7%B4%A2%E5%8D%95%E4%B8%AA%E5%AF%B9%E8%B1%A1">检索单个对象</a>）必须位于语句的末尾。</p><p>下面给出了一些例子。本文无法涵盖所有的可能性，这里给出的只是很少的一部分例子。在调用 Active Record 方法时，查询不会立即生成并发送到数据库，这些操作只有在实际需要数据时才会执行。下面的每个例子都会生成一次查询。</p><h4 id="%E4%BB%8E%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E6%A3%80%E7%B4%A2%E8%BF%87%E6%BB%A4%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE">17.1 从多个数据表中检索过滤后的数据</h4><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Person
+  .select('people.id, people.name, comments.text')
+  .joins(:comments)
+  .where('comments.created_at &gt; ?', 1.week.ago)
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT people.id, people.name, comments.text
+FROM people
+INNER JOIN comments
+  ON comments.person_id = people.id
+WHERE comments.created_at = '2015-01-01'
+
+</pre>
+</div>
+<h4 id="%E4%BB%8E%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E6%A3%80%E7%B4%A2%E7%89%B9%E5%AE%9A%E7%9A%84%E6%95%B0%E6%8D%AE">17.2 从多个数据表中检索特定的数据</h4><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Person
+  .select('people.id, people.name, companies.name')
+  .joins(:company)
+  .find_by('people.name' =&gt; 'John') # this should be the last
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT people.id, people.name, companies.name
+FROM people
+INNER JOIN companies
+  ON companies.person_id = people.id
+WHERE people.name = 'John'
+LIMIT 1
+
+</pre>
+</div>
+<div class="note"><p>请注意，如果查询匹配多条记录，<code>find_by</code> 方法会取回第一条记录并忽略其他记录（如上面的 SQL 语句中的 <code>LIMIT 1</code>）。</p></div><h3 id="%E6%9F%A5%E6%89%BE%E6%88%96%E5%88%9B%E5%BB%BA%E6%96%B0%E5%AF%B9%E8%B1%A1">18 查找或创建新对象</h3><p>我们经常需要查找记录并在找不到记录时创建记录，这时我们可以使用 <code>find_or_create_by</code> 和 <code>find_or_create_by!</code> 方法。</p><h4 id="find_or_create_by%20%E6%96%B9%E6%B3%95">18.1 <code>find_or_create_by</code> 方法</h4><p><code>find_or_create_by</code> 方法检查具有指定属性的记录是否存在。如果记录不存在，就调用 <code>create</code> 方法创建记录。让我们看一个例子。</p><p>假设我们在查找名为“Andy”的用户记录，但是没找到，因此要创建这条记录。这时我们可以执行下面的代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.find_or_create_by(first_name: 'Andy')
+# =&gt; #&lt;Client id: 1, first_name: "Andy", orders_count: 0, locked: true, created_at: "2011-08-30 06:09:27", updated_at: "2011-08-30 06:09:27"&gt;
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients WHERE (clients.first_name = 'Andy') LIMIT 1
+BEGIN
+INSERT INTO clients (created_at, first_name, locked, orders_count, updated_at) VALUES ('2011-08-30 05:22:57', 'Andy', 1, NULL, '2011-08-30 05:22:57')
+COMMIT
+
+</pre>
+</div>
+<p><code>find_or_create_by</code> 方法会返回已存在的记录或新建的记录。在本例中，名为“Andy”的客户记录并不存在，因此会创建并返回这条记录。</p><p>新建记录不一定会保存到数据库，是否保存取决于验证是否通过（就像 <code>create</code> 方法那样）。</p><p>假设我们想在新建记录时把 <code>locked</code> 字段设置为 <code>false</code>，但又不想在查询中进行设置。例如，我们想查找名为“Andy”的客户记录，但这条记录并不存在，因此要创建这条记录并把 <code>locked</code> 字段设置为 <code>false</code>。</p><p>要完成这一操作有两种方式。第一种方式是使用 <code>create_with</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.create_with(locked: false).find_or_create_by(first_name: 'Andy')
+
+</pre>
+</div>
+<p>第二种方式是使用块：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.find_or_create_by(first_name: 'Andy') do |c|
+  c.locked = false
+end
+
+</pre>
+</div>
+<p>只有在创建客户记录时才会执行该块。第二次运行这段代码时（此时客户记录已创建），块会被忽略。</p><h4 id="find_or_create_by!%20%E6%96%B9%E6%B3%95">18.2 <code>find_or_create_by!</code> 方法</h4><p>我们也可以使用 <code>find_or_create_by!</code> 方法，这样如果新建记录是无效的就会抛出异常。本文不涉及数据验证，不过这里我们暂且假设已经在 <code>Client</code> 模型中添加了下面的数据验证：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+validates :orders_count, presence: true
+
+</pre>
+</div>
+<p>如果我们尝试新建客户记录，但忘了传递 <code>orders_count</code> 字段的值，新建记录就是无效的，因而会抛出下面的异常：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.find_or_create_by!(first_name: 'Andy')
+# =&gt; ActiveRecord::RecordInvalid: Validation failed: Orders count can't be blank
+
+</pre>
+</div>
+<h4 id="find_or_initialize_by%20%E6%96%B9%E6%B3%95">18.3 <code>find_or_initialize_by</code> 方法</h4><p><code>find_or_initialize_by</code> 方法的工作原理和 <code>find_or_create_by</code> 方法类似，区别之处在于前者调用的是 <code>new</code> 方法而不是 <code>create</code> 方法。这意味着新建模型实例在内存中创建，但没有保存到数据库。下面继续使用介绍 <code>find_or_create_by</code> 方法时使用的例子，我们现在想查找名为“Nick”的客户记录：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+nick = Client.find_or_initialize_by(first_name: 'Nick')
+# =&gt; #&lt;Client id: nil, first_name: "Nick", orders_count: 0, locked: true, created_at: "2011-08-30 06:09:27", updated_at: "2011-08-30 06:09:27"&gt;
+
+nick.persisted?
+# =&gt; false
+
+nick.new_record?
+# =&gt; true
+
+</pre>
+</div>
+<p>出现上面的执行结果是因为 <code>nick</code> 对象还没有保存到数据库。在上面的代码中，<code>find_or_initialize_by</code> 方法会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT * FROM clients WHERE (clients.first_name = 'Nick') LIMIT 1
+
+</pre>
+</div>
+<p>要想把 <code>nick</code> 对象保存到数据库，只需调用 <code>save</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+nick.save
+# =&gt; true
+
+</pre>
+</div>
+<h3 id="%E4%BD%BF%E7%94%A8%20SQL%20%E8%AF%AD%E5%8F%A5%E8%BF%9B%E8%A1%8C%E6%9F%A5%E6%89%BE">19 使用 SQL 语句进行查找</h3><p>要想直接使用 SQL 语句在数据表中查找记录，可以使用 <code>find_by_sql</code> 方法。<code>find_by_sql</code> 方法总是返回对象的数组，即使底层查询只返回了一条记录也是如此。例如，我们可以执行下面的查询：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.find_by_sql("SELECT * FROM clients
+  INNER JOIN orders ON clients.id = orders.client_id
+  ORDER BY clients.created_at desc")
+# =&gt;  [
+#   #&lt;Client id: 1, first_name: "Lucas" &gt;,
+#   #&lt;Client id: 2, first_name: "Jan" &gt;,
+#   ...
+# ]
+
+</pre>
+</div>
+<p><code>find_by_sql</code> 方法提供了对数据库进行定制查询并取回实例化对象的简单方式。</p><h4 id="select_all%20%E6%96%B9%E6%B3%95">19.1 <code>select_all</code> 方法</h4><p><code>find_by_sql</code> 方法有一个名为 <code>connection#select_all</code> 的近亲。和 <code>find_by_sql</code> 方法一样，<code>select_all</code> 方法也会使用定制的 SQL 语句从数据库中检索对象，区别在于 <code>select_all</code> 方法不会对这些对象进行实例化，而是返回一个散列构成的数组，其中每个散列表示一条记录。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.connection.select_all("SELECT first_name, created_at FROM clients WHERE id = '1'")
+# =&gt; [
+#   {"first_name"=&gt;"Rafael", "created_at"=&gt;"2012-11-10 23:23:45.281189"},
+#   {"first_name"=&gt;"Eileen", "created_at"=&gt;"2013-12-09 11:22:35.221282"}
+# ]
+
+</pre>
+</div>
+<h4 id="pluck%20%E6%96%B9%E6%B3%95">19.2 <code>pluck</code> 方法</h4><p><code>pluck</code> 方法用于在模型对应的底层数据表中查询单个或多个字段。它接受字段名的列表作为参数，并返回这些字段的值的数组，数组中的每个值都具有对应的数据类型。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where(active: true).pluck(:id)
+# SELECT id FROM clients WHERE active = 1
+# =&gt; [1, 2, 3]
+
+Client.distinct.pluck(:role)
+# SELECT DISTINCT role FROM clients
+# =&gt; ['admin', 'member', 'guest']
+
+Client.pluck(:id, :name)
+# SELECT clients.id, clients.name FROM clients
+# =&gt; [[1, 'David'], [2, 'Jeremy'], [3, 'Jose']]
+
+</pre>
+</div>
+<p>使用 <code>pluck</code> 方法，我们可以把下面的代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.select(:id).map { |c| c.id }
+# 或
+Client.select(:id).map(&amp;:id)
+# 或
+Client.select(:id, :name).map { |c| [c.id, c.name] }
+
+</pre>
+</div>
+<p>替换为：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.pluck(:id)
+# 或
+Client.pluck(:id, :name)
+
+</pre>
+</div>
+<p>和 <code>select</code> 方法不同，<code>pluck</code> 方法把数据库查询结果直接转换为 Ruby 数组，而不是构建 Active Record 对象。这意味着对于大型查询或常用查询，<code>pluck</code> 方法的性能更好。不过对于 <code>pluck</code> 方法，模型方法重载是不可用的。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Client &lt; ApplicationRecord
+  def name
+    "I am #{super}"
+  end
+end
+
+Client.select(:name).map &amp;:name
+# =&gt; ["I am David", "I am Jeremy", "I am Jose"]
+
+Client.pluck(:name)
+# =&gt; ["David", "Jeremy", "Jose"]
+
+</pre>
+</div>
+<p>此外，和 <code>select</code> 方法及其他 <code>Relation</code> 作用域不同，<code>pluck</code> 方法会触发即时查询，因此在 <code>pluck</code> 方法之前可以链接作用域，但在 <code>pluck</code> 方法之后不能链接作用域：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.pluck(:name).limit(1)
+# =&gt; NoMethodError: undefined method `limit' for #&lt;Array:0x007ff34d3ad6d8&gt;
+
+Client.limit(1).pluck(:name)
+# =&gt; ["David"]
+
+</pre>
+</div>
+<h4 id="ids%20%E6%96%B9%E6%B3%95">19.3 <code>ids</code> 方法</h4><p>使用 <code>ids</code> 方法可以获得关联的所有 ID，也就是数据表的主键。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Person.ids
+# SELECT id FROM people
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  self.primary_key = "person_id"
+end
+
+Person.ids
+# SELECT person_id FROM people
+
+</pre>
+</div>
+<h3 id="%E6%A3%80%E6%9F%A5%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8">20 检查对象是否存在</h3><p>要想检查对象是否存在，可以使用 <code>exists?</code> 方法。<code>exists?</code> 方法查询数据库的工作原理和 <code>find</code> 方法相同，但是 <code>find</code> 方法返回的是对象或对象集合，而 <code>exists?</code> 方法返回的是 <code>true</code> 或 <code>false</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.exists?(1)
+
+</pre>
+</div>
+<p><code>exists?</code> 方法也接受多个值作为参数，并且只要有一条对应记录存在就会返回 <code>true</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.exists?(id: [1,2,3])
+# 或
+Client.exists?(name: ['John', 'Sergei'])
+
+</pre>
+</div>
+<p>我们还可以在模型或关联上调用 <code>exists?</code> 方法，这时不需要任何参数。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where(first_name: 'Ryan').exists?
+
+</pre>
+</div>
+<p>只要存在一条名为“Ryan”的客户记录，上面的代码就会返回 <code>true</code>，否则返回 <code>false</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.exists?
+
+</pre>
+</div>
+<p>如果 <code>clients</code> 数据表是空的，上面的代码返回 <code>false</code>，否则返回 <code>true</code>。</p><p>我们还可以在模型或关联上调用 <code>any?</code> 和 <code>many?</code> 方法来检查对象是否存在。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 通过模型
+Article.any?
+Article.many?
+
+# 通过指定的作用域
+Article.recent.any?
+Article.recent.many?
+
+# 通过关系
+Article.where(published: true).any?
+Article.where(published: true).many?
+
+# 通过关联
+Article.first.categories.any?
+Article.first.categories.many?
+
+</pre>
+</div>
+<h3 id="%E8%AE%A1%E7%AE%97">21 计算</h3><p>在本节的前言中我们以 <code>count</code> 方法为例，例子中提到的所有选项对本节的各小节都适用。</p><p>所有用于计算的方法都可以直接在模型上调用：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.count
+# SELECT count(*) AS count_all FROM clients
+
+</pre>
+</div>
+<p>或者在关联上调用：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.where(first_name: 'Ryan').count
+# SELECT count(*) AS count_all FROM clients WHERE (first_name = 'Ryan')
+
+</pre>
+</div>
+<p>我们还可以在关联上执行各种查找方法来执行复杂的计算：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.includes("orders").where(first_name: 'Ryan', orders: { status: 'received' }).count
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 SQL 语句：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT count(DISTINCT clients.id) AS count_all FROM clients
+  LEFT OUTER JOIN orders ON orders.client_id = client.id WHERE
+  (clients.first_name = 'Ryan' AND orders.status = 'received')
+
+</pre>
+</div>
+<h4 id="count%20%E6%96%B9%E6%B3%95">21.1 <code>count</code> 方法</h4><p>要想知道模型对应的数据表中有多少条记录，可以使用 <code>Client.count</code> 方法，这个方法的返回值就是记录条数。如果想要知道特定记录的条数，例如具有 <code>age</code> 字段值的所有客户记录的条数，可以使用 <code>Client.count(:age)</code>。</p><p>关于 <code>count</code> 方法的选项的更多介绍，请参阅 <a href="#%E8%AE%A1%E7%AE%97">计算</a>。</p><h4 id="average%20%E6%96%B9%E6%B3%95">21.2 <code>average</code> 方法</h4><p>要想知道数据表中某个字段的平均值，可以在数据表对应的类上调用 <code>average</code> 方法。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.average("orders_count")
+
+</pre>
+</div>
+<p>上面的代码会返回表示 <code>orders_count</code> 字段平均值的数字（可能是浮点数，如 3.14159265）。</p><p>关于 <code>average</code> 方法的选项的更多介绍，请参阅 <a href="#%E8%AE%A1%E7%AE%97">计算</a>。</p><h4 id="minimum%20%E6%96%B9%E6%B3%95">21.3 <code>minimum</code> 方法</h4><p>要想查找数据表中某个字段的最小值，可以在数据表对应的类上调用 <code>minimum</code> 方法。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.minimum("age")
+
+</pre>
+</div>
+<p>关于 <code>minimum</code> 方法的选项的更多介绍，请参阅 <a href="#%E8%AE%A1%E7%AE%97">计算</a>。</p><h4 id="maximum%20%E6%96%B9%E6%B3%95">21.4 <code>maximum</code> 方法</h4><p>要想查找数据表中某个字段的最大值，可以在数据表对应的类上调用 <code>maximum</code> 方法。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.maximum("age")
+
+</pre>
+</div>
+<p>关于 <code>maximum</code> 方法的选项的更多介绍，请参阅 <a href="#%E8%AE%A1%E7%AE%97">计算</a>。</p><h4 id="sum%20%E6%96%B9%E6%B3%95">21.5 <code>sum</code> 方法</h4><p>要想知道数据表中某个字段的所有字段值之和，可以在数据表对应的类上调用 <code>sum</code> 方法。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Client.sum("orders_count")
+
+</pre>
+</div>
+<p>关于 <code>sum</code> 方法的选项的更多介绍，请参阅 <a href="#%E8%AE%A1%E7%AE%97">计算</a>。</p><h3 id="%E6%89%A7%E8%A1%8C%20EXPLAIN%20%E5%91%BD%E4%BB%A4">22 执行 <code>EXPLAIN</code> 命令</h3><p>我们可以在关联触发的查询上执行 <code>EXPLAIN</code> 命令。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+User.where(id: 1).joins(:articles).explain
+
+</pre>
+</div>
+<p>对于 MySQL 和 MariaDB 数据库后端，上面的代码会产生下面的输出结果：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+EXPLAIN for: SELECT `users`.* FROM `users` INNER JOIN `articles` ON `articles`.`user_id` = `users`.`id` WHERE `users`.`id` = 1
++----+-------------+----------+-------+---------------+
+| id | select_type | table    | type  | possible_keys |
++----+-------------+----------+-------+---------------+
+|  1 | SIMPLE      | users    | const | PRIMARY       |
+|  1 | SIMPLE      | articles | ALL   | NULL          |
++----+-------------+----------+-------+---------------+
++---------+---------+-------+------+-------------+
+| key     | key_len | ref   | rows | Extra       |
++---------+---------+-------+------+-------------+
+| PRIMARY | 4       | const |    1 |             |
+| NULL    | NULL    | NULL  |    1 | Using where |
++---------+---------+-------+------+-------------+
+
+2 rows in set (0.00 sec)
+
+</pre>
+</div>
+<p>Active Record 会模拟对应数据库的 shell 来打印输出结果。因此对于 PostgreSQL 数据库后端，同样的代码会产生下面的输出结果：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+EXPLAIN for: SELECT "users".* FROM "users" INNER JOIN "articles" ON "articles"."user_id" = "users"."id" WHERE "users"."id" = 1
+                                  QUERY PLAN
+------------------------------------------------------------------------------
+ Nested Loop Left Join  (cost=0.00..37.24 rows=8 width=0)
+   Join Filter: (articles.user_id = users.id)
+   -&gt;  Index Scan using users_pkey on users  (cost=0.00..8.27 rows=1 width=4)
+         Index Cond: (id = 1)
+   -&gt;  Seq Scan on articles  (cost=0.00..28.88 rows=8 width=4)
+         Filter: (articles.user_id = 1)
+(6 rows)
+
+</pre>
+</div>
+<p>及早加载在底层可能会触发多次查询，有的查询可能需要使用之前查询的结果。因此，<code>explain</code> 方法实际上先执行了查询，然后询问查询计划。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+User.where(id: 1).includes(:articles).explain
+
+</pre>
+</div>
+<p>对于 MySQL 和 MariaDB 数据库后端，上面的代码会产生下面的输出结果：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+EXPLAIN for: SELECT `users`.* FROM `users`  WHERE `users`.`id` = 1
++----+-------------+-------+-------+---------------+
+| id | select_type | table | type  | possible_keys |
++----+-------------+-------+-------+---------------+
+|  1 | SIMPLE      | users | const | PRIMARY       |
++----+-------------+-------+-------+---------------+
++---------+---------+-------+------+-------+
+| key     | key_len | ref   | rows | Extra |
++---------+---------+-------+------+-------+
+| PRIMARY | 4       | const |    1 |       |
++---------+---------+-------+------+-------+
+
+1 row in set (0.00 sec)
+
+EXPLAIN for: SELECT `articles`.* FROM `articles`  WHERE `articles`.`user_id` IN (1)
++----+-------------+----------+------+---------------+
+| id | select_type | table    | type | possible_keys |
++----+-------------+----------+------+---------------+
+|  1 | SIMPLE      | articles | ALL  | NULL          |
++----+-------------+----------+------+---------------+
++------+---------+------+------+-------------+
+| key  | key_len | ref  | rows | Extra       |
++------+---------+------+------+-------------+
+| NULL | NULL    | NULL |    1 | Using where |
++------+---------+------+------+-------------+
+
+
+1 row in set (0.00 sec)
+
+</pre>
+</div>
+<h4 id="%E5%AF%B9%20EXPLAIN%20%E5%91%BD%E4%BB%A4%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%E7%9A%84%E8%A7%A3%E9%87%8A">22.1 对 <code>EXPLAIN</code> 命令输出结果的解释</h4><p>对 <code>EXPLAIN</code> 命令输出结果的解释超出了本文的范畴。下面提供了一些有用链接：</p>
+<ul>
+<li><p>SQLite3：<a href="http://www.sqlite.org/eqp.html">对查询计划的解释</a></p></li>
+<li><p>MySQL：<a href="http://dev.mysql.com/doc/refman/5.7/en/explain-output.html">EXPLAIN 输出格式</a></p></li>
+<li><p>MariaDB：<a href="https://mariadb.com/kb/en/mariadb/explain/">EXPLAIN</a></p></li>
+<li><p>PostgreSQL：<a href="http://www.postgresql.org/docs/current/static/using-explain.html">使用 EXPLAIN</a></p></li>
+</ul>
+
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

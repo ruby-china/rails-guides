@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        More Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Return to home page">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">测试 Rails 应用</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档守则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布说明</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">测试 Rails 应用</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文档守则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布说明">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#RDoc">RDoc</a></li>
+<li><a href="#%E7%94%A8%E8%AF%8D">用词</a></li>
+<li><a href="#%E8%8B%B1%E8%AF%AD">英语</a></li>
+<li><a href="#%E7%89%9B%E6%B4%A5%E5%BC%8F%E9%80%97%E5%8F%B7">牛津式逗号</a></li>
+<li><a href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81">示例代码</a></li>
+<li><a href="#%E5%B8%83%E5%B0%94%E5%80%BC">布尔值</a></li>
+<li><a href="#%E6%96%87%E4%BB%B6%E5%90%8D">文件名</a></li>
+<li>
+<a href="#%E5%AD%97%E4%BD%93">字体</a>
+
+<ul>
+<li><a href="#%E7%AD%89%E5%AE%BD%E5%AD%97%E4%BD%93">等宽字体</a></li>
+<li><a href="#%E5%B8%B8%E8%A7%84%E5%AD%97%E4%BD%93">常规字体</a></li>
+</ul>
+</li>
+<li><a href="#%E6%8F%8F%E8%BF%B0%E5%88%97%E8%A1%A8">描述列表</a></li>
+<li><a href="#%E5%8A%A8%E6%80%81%E7%94%9F%E6%88%90%E7%9A%84%E6%96%B9%E6%B3%95">动态生成的方法</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95%E5%8F%AF%E8%A7%81%E6%80%A7">方法可见性</a></li>
+<li><a href="#%E8%80%83%E8%99%91%20Rails%20%E6%A0%88">考虑 Rails 栈</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h2>API 文档指导方针</h2><p>本文说明 Ruby on Rails 的 API 文档指导方针。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>如何编写有效的文档；</p></li>
+<li><p>为不同 Ruby 代码编写文档的风格指导方针。</p></li>
+</ul>
+<h3 id="RDoc">1 RDoc</h3><p><a href="http://api.rubyonrails.org/">Rails API 文档</a>使用 <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 生成。如果想生成 API 文档，要在 Rails 根目录中执行 <code>bundle install</code>，然后再执行：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bundle exec rake rdoc
+
+</pre>
+</div>
+<p>得到的 HTML 文件在 <code>./doc/rdoc</code> 目录中。</p><p>RDoc 的<a href="http://docs.seattlerb.org/rdoc/RDoc/Markup.html">标记</a>和<a href="http://docs.seattlerb.org/rdoc/RDoc/Parser/Ruby.html">额外的指令</a>参见文档。</p><h3 id="%E7%94%A8%E8%AF%8D">2 用词</h3><p>使用简单的陈述句。简短更好，要说到点子上。</p><p>使用现在时：“Returns a hash that…​”，而非“Returned a hash that…​”或“Will return a hash that…​”。</p><p>注释的第一个字母大写，后续内容遵守常规的标点符号规则：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+# Declares an attribute reader backed by an internally-named
+# instance variable.
+def attr_internal_reader(*attrs)
+  ...
+end
+
+</pre>
+</div>
+<p>使用通行的方式与读者交流，可以直言，也可以隐晦。使用当下推荐的习语。如有必要，调整内容的顺序，强调推荐的方式。文档应该说明最佳实践和现代的权威 Rails 用法。</p><p>文档应该简洁全面，要指明边缘情况。如果模块是匿名的呢？如果集合是空的呢？如果参数是 nil 呢？</p><p>Rails 组件的名称在单词之间有个空格，如“Active Support”。<code>ActiveRecord</code> 是一个 Ruby 模块，而 Active Record 是一个 ORM。所有 Rails 文档都应该始终使用正确的名称引用 Rails 组件。如果你在下一篇博客文章或演示文稿中这么做，人们会觉得你很正规。</p><p>拼写要正确：Arel、Test::Unit、RSpec、HTML、MySQL、JavaScript、ERB。如果不确定，请查看一些权威资料，如各自的官方文档。</p><p>“SQL”前面使用不定冠词“an”，如“an SQL statement”和“an SQLite database”。</p><p>避免使用“you”和“your”。例如，较之</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+If you need to use `return` statements in your callbacks, it is recommended that you explicitly define them as methods.
+
+</pre>
+</div>
+<p>这样写更好：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+If `return` is needed it is recommended to explicitly define a method.
+
+</pre>
+</div>
+<p>不过，使用代词指代虚构的人时，例如“有会话 cookie 的用户”，应该使用中性代词（they/their/them）。</p>
+<ul>
+<li><p>不用 he 或 she，用 they</p></li>
+<li><p>不用 him 或 her，用 them</p></li>
+<li><p>不用 his 或 her，用 their</p></li>
+<li><p>不用 his 或 hers，用 theirs</p></li>
+<li><p>不用 himself 或 herself，用 themselves</p></li>
+</ul>
+<h3 id="%E8%8B%B1%E8%AF%AD">3 英语</h3><p>请使用美式英语（color、center、modularize，等等）。美式英语与英式英语之间的拼写差异参见<a href="http://en.wikipedia.org/wiki/American_and_British_English_spelling_differences">这里</a>。</p><h3 id="%E7%89%9B%E6%B4%A5%E5%BC%8F%E9%80%97%E5%8F%B7">4 牛津式逗号</h3><p>请使用<a href="http://en.wikipedia.org/wiki/Serial_comma">牛津式逗号</a>（“red, white, and blue”，而非“red, white and blue”）。</p><h3 id="%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81">5 示例代码</h3><p>选择有意义的示例，说明基本用法和有趣的点或坑。</p><p>代码使用两个空格缩进，即根据标记在左外边距的基础上增加两个空格。示例应该遵守 <a href="contributing_to_ruby_on_rails.xml#follow-the-coding-conventions">Rails 编程约定</a>。</p><p>简短的文档无需明确使用“Examples”标注引入代码片段，直接跟在段后即可：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Converts a collection of elements into a formatted string by
+# calling +to_s+ on all elements and joining them.
+#
+#   Blog.all.to_formatted_s # =&gt; "First PostSecond PostThird Post"
+
+</pre>
+</div>
+<p>但是大段文档可以单独有个“Examples”部分：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# ==== Examples
+#
+#   Person.exists?(5)
+#   Person.exists?('5')
+#   Person.exists?(name: "David")
+#   Person.exists?(['name LIKE ?', "%#{query}%"])
+
+</pre>
+</div>
+<p>表达式的结果在表达式之后，使用 “# =&gt; ”给出，而且要纵向对齐：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# For checking if an integer is even or odd.
+#
+#   1.even? # =&gt; false
+#   1.odd?  # =&gt; true
+#   2.even? # =&gt; true
+#   2.odd?  # =&gt; false
+
+</pre>
+</div>
+<p>如果一行太长，结果可以放在下一行：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+#   label(:article, :title)
+#   # =&gt; &lt;label for="article_title"&gt;Title&lt;/label&gt;
+#
+#   label(:article, :title, "A short title")
+#   # =&gt; &lt;label for="article_title"&gt;A short title&lt;/label&gt;
+#
+#   label(:article, :title, "A short title", class: "title_label")
+#   # =&gt; &lt;label for="article_title" class="title_label"&gt;A short title&lt;/label&gt;
+
+</pre>
+</div>
+<p>不要使用打印方法，如 <code>puts</code> 或 <code>p</code> 给出结果。</p><p>常规的注释不使用箭头：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+#   polymorphic_url(record)  # same as comment_url(record)
+
+</pre>
+</div>
+<h3 id="%E5%B8%83%E5%B0%94%E5%80%BC">6 布尔值</h3><p>在判断方法或旗标中，尽量使用布尔语义，不要用具体的值。</p><p>如果所用的“true”或“false”与 Ruby 定义的一样，使用常规字体。<code>true</code> 和 <code>false</code> 两个单例要使用等宽字体。请不要使用“truthy”，Ruby 语言定义了什么是真什么是假，“true”和“false”就能表达技术意义，无需使用其他词代替。</p><p>通常，如非绝对必要，不要为单例编写文档。这样能阻止智能的结构，如 <code>!!</code> 或三元运算符，便于重构，而且代码不依赖方法返回的具体值。</p><p>例如：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+`config.action_mailer.perform_deliveries` specifies whether mail will actually be delivered and is true by default
+
+</pre>
+</div>
+<p>用户无需知道旗标具体的默认值，因此我们只说明它的布尔语义。</p><p>下面是一个判断方法的文档示例：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Returns true if the collection is empty.
+#
+# If the collection has been loaded
+# it is equivalent to &lt;tt&gt;collection.size.zero?&lt;/tt&gt;. If the
+# collection has not been loaded, it is equivalent to
+# &lt;tt&gt;collection.exists?&lt;/tt&gt;. If the collection has not already been
+# loaded and you are going to fetch the records anyway it is better to
+# check &lt;tt&gt;collection.length.zero?&lt;/tt&gt;.
+def empty?
+  if loaded?
+    size.zero?
+  else
+    @target.blank? &amp;&amp; !scope.exists?
+  end
+end
+
+</pre>
+</div>
+<p>这个 API 没有提到任何具体的值，知道它具有判断功能就够了。</p><h3 id="%E6%96%87%E4%BB%B6%E5%90%8D">7 文件名</h3><p>通常，文件名相对于应用的根目录：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config/routes.rb            # YES
+routes.rb                   # NO
+RAILS_ROOT/config/routes.rb # NO
+
+</pre>
+</div>
+<h3 id="%E5%AD%97%E4%BD%93">8 字体</h3><h4 id="%E7%AD%89%E5%AE%BD%E5%AD%97%E4%BD%93">8.1 等宽字体</h4><p>使用等宽字体编写：</p>
+<ul>
+<li><p>常量，尤其是类名和模块名</p></li>
+<li><p>方法名</p></li>
+<li><p>字面量，如 <code>nil</code>、<code>false</code>、<code>true</code>、<code>self</code></p></li>
+<li><p>符号</p></li>
+<li><p>方法的参数</p></li>
+<li><p>文件名</p></li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Array
+  # Calls +to_param+ on all its elements and joins the result with
+  # slashes. This is used by +url_for+ in Action Pack.
+  def to_param
+    collect { |e| e.to_param }.join '/'
+  end
+end
+
+</pre>
+</div>
+<div class="warning"><p>只有简单的内容才能使用 <code>+...+</code> 标记使用等宽字体，如常规的方法名、符号、路径（含有正斜线），等等。其他内容应该使用 <code>&lt;tt&gt;…​&lt;/tt&gt;</code>，尤其是带有命名空间的类名或模块名，如 <code>&lt;tt&gt;ActiveRecord::Base&lt;/tt&gt;</code>。</p></div><p>可以使用下述命令测试 RDoc 的输出：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ echo "+:to_param+" | rdoc --pipe
+# =&gt; &lt;p&gt;&lt;code&gt;:to_param&lt;/code&gt;&lt;/p&gt;
+
+</pre>
+</div>
+<h4 id="%E5%B8%B8%E8%A7%84%E5%AD%97%E4%BD%93">8.2 常规字体</h4><p>“true”和“false”是英语单词而不是 Ruby 关键字时，使用常规字体：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Runs all the validations within the specified context.
+# Returns true if no errors are found, false otherwise.
+#
+# If the argument is false (default is +nil+), the context is
+# set to &lt;tt&gt;:create&lt;/tt&gt; if &lt;tt&gt;new_record?&lt;/tt&gt; is true,
+# and to &lt;tt&gt;:update&lt;/tt&gt; if it is not.
+#
+# Validations with no &lt;tt&gt;:on&lt;/tt&gt; option will run no
+# matter the context. Validations with # some &lt;tt&gt;:on&lt;/tt&gt;
+# option will only run in the specified context.
+def valid?(context = nil)
+  ...
+end
+
+</pre>
+</div>
+<h3 id="%E6%8F%8F%E8%BF%B0%E5%88%97%E8%A1%A8">9 描述列表</h3><p>在选项、参数等列表中，在项目和描述之间使用一个连字符（而不是一个冒号，因为选项一般是符号）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# * &lt;tt&gt;:allow_nil&lt;/tt&gt; - Skip validation if attribute is +nil+.
+
+</pre>
+</div>
+<p>描述开头是大写字母，结尾有一个句号——这是标准的英语。</p><h3 id="%E5%8A%A8%E6%80%81%E7%94%9F%E6%88%90%E7%9A%84%E6%96%B9%E6%B3%95">10 动态生成的方法</h3><p>使用 <code>(module|class)_eval(STRING)</code> 创建的方法在旁边有个注释，举例说明生成的代码。这种注释与模板之间相距两个空格。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+for severity in Severity.constants
+  class_eval &lt;&lt;-EOT, __FILE__, __LINE__
+    def #{severity.downcase}(message = nil, progname = nil, &amp;block)  # def debug(message = nil, progname = nil, &amp;block)
+      add(#{severity}, message, progname, &amp;block)                    #   add(DEBUG, message, progname, &amp;block)
+    end                                                              # end
+                                                                     #
+    def #{severity.downcase}?                                        # def debug?
+      #{severity} &gt;= @level                                          #   DEBUG &gt;= @level
+    end                                                              # end
+  EOT
+end
+
+</pre>
+</div>
+<p>如果这样得到的行太长，比如说有 200 多列，把注释放在上方：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# def self.find_by_login_and_activated(*args)
+#   options = args.extract_options!
+#   ...
+# end
+self.class_eval %{
+  def self.#{method_id}(*args)
+    options = args.extract_options!
+    ...
+  end
+}
+
+</pre>
+</div>
+<h3 id="%E6%96%B9%E6%B3%95%E5%8F%AF%E8%A7%81%E6%80%A7">11 方法可见性</h3><p>为 Rails 编写文档时，要区分公开 API 和内部 API。</p><p>与多数库一样，Rails 使用 Ruby 提供的 <code>private</code> 关键字定义内部 API。然而，公开 API 遵照的约定稍有不同。不是所有公开方法都旨在供用户使用，Rails 使用 <code>:nodoc:</code> 指令注解内部 API 方法。</p><p>因此，在 Rails 中有些可见性为 <code>public</code> 的方法不是供用户使用的。</p><p><code>ActiveRecord::Core::ClassMethods#arel_table</code> 就是一例：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+module ActiveRecord::Core::ClassMethods
+  def arel_table #:nodoc:
+    # do some magic..
+  end
+end
+
+</pre>
+</div>
+<p>你可能想，“这是 <code>ActiveRecord::Core</code> 的一个公开类方法”，没错，但是 Rails 团队不希望用户使用这个方法。因此，他们把它标记为 <code>:nodoc:</code>，不包含在公开文档中。这样做，开发团队可以根据内部需要在发布新版本时修改这个方法。方法的名称可能会变，或者返回值有变化，也可能是整个类都不复存在——有太多不确定性，因此不应该在你的插件或应用中使用这个 API。如若不然，升级新版 Rails 时，你的应用或 gem 可能遭到破坏。</p><p>为 Rails 做贡献时一定要考虑清楚 API 是否供最终用户使用。未经完整的弃用循环之前，Rails 团队不会轻易对公开 API 做大的改动。如果没有定义为私有的（默认是内部 API），建议你使用 <code>:nodoc:</code> 标记所有内部的方法和类。API 稳定之后，可见性可以修改，但是为了向后兼容，公开 API 往往不宜修改。</p><p>使用 <code>:nodoc:</code> 标记一个类或模块表示里面的所有方法都是内部 API，不应该直接使用。</p><p>如果遇到 <code>:nodoc:</code>，一定要小心。在删除这一标记之前可以询问核心团队成员或者代码的作者。这种操作基本上都通过拉取请求处理，不能在 docrails 项目中删除。</p><p><code>:nodoc:</code> 不是为了标记方法或类缺少文档。内部的公开方法可能没有 <code>:nodoc:</code> 标记，这只是例外，可能是因为方法由私有变成公开时忘记了。遇到这种情况时应该通过一个拉取请求讨论，而且要具体情况具体分析，绝对不能直接在 docrails 中修改。</p><p>综上，Rails 团队使用 <code>:nodoc:</code> 标记供内部使用的可见性为公开的方法和类，对 API 可见性的修改要谨慎，必须先通过一个拉取请求讨论。</p><h3 id="%E8%80%83%E8%99%91%20Rails%20%E6%A0%88">12 考虑 Rails 栈</h3><p>为 Rails API 编写文档时，一定要记住所有内容都身处 Rails 栈中。</p><p>这意味着，方法或类的行为在不同的作用域或上下文中可能有所不同。</p><p>把整个栈考虑进来之后，行为在不同的地方可能有变。<code>ActionView::Helpers::AssetTagHelper#image_tag</code> 就是一例：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# image_tag("icon.png")
+#   # =&gt; &lt;img alt="Icon" src="/assets/icon.png" /&gt;
+
+</pre>
+</div>
+<p>虽然 <code>#image_tag</code> 的默认行为是返回 <code>/images/icon.png</code>，但是把整个 Rails 栈（包括 Asset Pipeline）考虑进来之后，可能会得到上述结果。</p><p>我们只关注考虑整个 Rails 默认栈的行为。</p><p>因此，我们要说明的是框架的行为，而不是单个方法。</p><p>如果你对 Rails 团队处理某个 API 的方式有疑问，别迟疑，在<a href="https://github.com/rails/rails/issues">问题追踪系统</a>中发一个工单，或者提交补丁。</p>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        More Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Return to home page">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">测试 Rails 应用</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档守则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布说明</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">测试 Rails 应用</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文档守则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布说明">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#Ajax%20%E7%AE%80%E4%BB%8B">Ajax 简介</a></li>
+<li><a href="#%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%20JavaScript">非侵入式 JavaScript</a></li>
+<li>
+<a href="#%E5%86%85%E7%BD%AE%E7%9A%84%E8%BE%85%E5%8A%A9%E6%96%B9%E6%B3%95">内置的辅助方法</a>
+
+<ul>
+<li><a href="#form_for"><code>form_for</code></a></li>
+<li><a href="#form_tag"><code>form_tag</code></a></li>
+<li><a href="#link_to"><code>link_to</code></a></li>
+<li><a href="#button_to"><code>button_to</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%A4%84%E7%90%86">服务器端处理</a>
+
+<ul>
+<li><a href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90">一个简单的例子</a></li>
+</ul>
+</li>
+<li>
+<a href="#Turbolinks">Turbolinks</a>
+
+<ul>
+<li><a href="#Turbolinks%20%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86">Turbolinks 的工作原理</a></li>
+<li><a href="#%E9%A1%B5%E9%9D%A2%E5%86%85%E5%AE%B9%E5%8F%98%E6%9B%B4%E4%BA%8B%E4%BB%B6">页面内容变更事件</a></li>
+</ul>
+</li>
+<li><a href="#%E5%85%B6%E4%BB%96%E8%B5%84%E6%BA%90">其他资源</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h2>在 Rails 中使用 JavaScript</h2><p>本文介绍 Rails 内建对 Ajax 和 JavaScript 等的支持，使用这些功能可以轻易地开发强大的 Ajax 动态应用。</p><p>本完本文后，您将学到：</p>
+<ul>
+<li><p>Ajax 基础知识；</p></li>
+<li><p>非侵入式 JavaScript；</p></li>
+<li><p>如何使用 Rails 内建的辅助方法；</p></li>
+<li><p>如何在服务器端处理 Ajax；</p></li>
+<li><p>Turbolinks gem。</p></li>
+</ul>
+<h3 id="Ajax%20%E7%AE%80%E4%BB%8B">1 Ajax 简介</h3><p>在理解 Ajax 之前，要先知道 Web 浏览器常规的工作原理。</p><p>在浏览器的地址栏中输入 <code>http://localhost:3000</code> 后，浏览器（客户端）会向服务器发起一个请求。然后浏览器处理响应，获取相关的静态资源文件，比如 JavaScript、样式表和图像，然后显示页面内容。点击链接后发生的事情也是如此：获取页面，获取静态资源，把全部内容放在一起，显示最终的网页。这个过程叫做“请求响应循环”。</p><p>JavaScript 也可以向服务器发起请求，并解析响应。而且还能更新网页中的内容。因此，JavaScript 程序员可以编写只更新部分内容的网页，而不用从服务器获取完整的页面数据。这是一种强大的技术，我们称之为 Ajax。</p><p>Rails 默认支持 CoffeeScript，后文所有的示例都用 CoffeeScript 编写。本文介绍的技术，在普通的 JavaScript 中也可以使用。</p><p>例如，下面这段 CoffeeScript 代码使用 jQuery 库发起一个 Ajax 请求：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$.ajax(url: "/test").done (html) -&gt;
+  $("#results").append html
+
+</pre>
+</div>
+<p>这段代码从 <code>/test</code> 地址上获取数据，然后把结果追加到 <code>div#results</code> 元素中。</p><p>Rails 内建了很多使用这种技术开发应用的功能，基本上无需自己动手编写上述代码。后文介绍 Rails 如何为开发这种应用提供协助，不过都构建在这种简单的技术之上。</p><h3 id="%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%20JavaScript">2 非侵入式 JavaScript</h3><p>Rails 使用一种叫做“非侵入式 JavaScript”（Unobtrusive JavaScript）的技术把 JavaScript 依附到 DOM 上。非侵入式 JavaScript 是前端开发社区推荐的做法，但有些教程可能会使用其他方式。</p><p>下面是编写 JavaScript 最简单的方式，你可能见过，这叫做“行间 JavaScript”：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;a href="#" onclick="this.style.backgroundColor='#990000'"&gt;Paint it red&lt;/a&gt;
+
+</pre>
+</div>
+<p>点击链接后，链接的背景会变成红色。这种用法的问题是，如果点击链接后想执行大量 JavaScript 代码怎么办？</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;a href="#" onclick="this.style.backgroundColor='#009900';this.style.color='#FFFFFF';"&gt;Paint it green&lt;/a&gt;
+
+</pre>
+</div>
+<p>太别扭了，不是吗？我们可以把处理点击的代码定义成一个函数，用 CoffeeScript 编写如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+@paintIt = (element, backgroundColor, textColor) -&gt;
+  element.style.backgroundColor = backgroundColor
+  if textColor?
+    element.style.color = textColor
+
+</pre>
+</div>
+<p>然后在页面中这么写：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;a href="#" onclick="paintIt(this, '#990000')"&gt;Paint it red&lt;/a&gt;
+
+</pre>
+</div>
+<p>这种方法好点儿，但是如果很多链接需要同样的效果该怎么办呢？</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;a href="#" onclick="paintIt(this, '#990000')"&gt;Paint it red&lt;/a&gt;
+&lt;a href="#" onclick="paintIt(this, '#009900', '#FFFFFF')"&gt;Paint it green&lt;/a&gt;
+&lt;a href="#" onclick="paintIt(this, '#000099', '#FFFFFF')"&gt;Paint it blue&lt;/a&gt;
+
+</pre>
+</div>
+<p>这样非常不符合 DRY 原则。为了解决这个问题，我们可以使用“事件”。在链接上添加一个 <code>data-*</code> 属性，然后把处理程序绑定到拥有这个属性的点击事件上：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+@paintIt = (element, backgroundColor, textColor) -&gt;
+  element.style.backgroundColor = backgroundColor
+  if textColor?
+    element.style.color = textColor
+
+$ -&gt;
+  $("a[data-background-color]").click (e) -&gt;
+    e.preventDefault()
+
+    backgroundColor = $(this).data("background-color")
+    textColor = $(this).data("text-color")
+    paintIt(this, backgroundColor, textColor)
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;a href="#" data-background-color="#990000"&gt;Paint it red&lt;/a&gt;
+&lt;a href="#" data-background-color="#009900" data-text-color="#FFFFFF"&gt;Paint it green&lt;/a&gt;
+&lt;a href="#" data-background-color="#000099" data-text-color="#FFFFFF"&gt;Paint it blue&lt;/a&gt;
+
+</pre>
+</div>
+<p>我们把这种方法称为“非侵入式 JavaScript”，因为 JavaScript 代码不再和 HTML 混合在一起。这样做正确分离了关注点，易于修改功能。我们可以轻易地把这种效果应用到其他链接上，只要添加相应的 <code>data</code> 属性即可。我们可以简化并拼接全部 JavaScript，然后在各个页面加载一个 JavaScript 文件，这样只在第一次请求时需要加载，后续请求都会直接从缓存中读取。“非侵入式 JavaScript”带来的好处太多了。</p><p>Rails 团队极力推荐使用这种方式编写 CoffeeScript（以及 JavaScript），而且你会发现很多代码库都采用了这种方式。</p><h3 id="%E5%86%85%E7%BD%AE%E7%9A%84%E8%BE%85%E5%8A%A9%E6%96%B9%E6%B3%95">3 内置的辅助方法</h3><p>Rails 提供了很多视图辅助方法协助你生成 HTML，如果想在元素上实现 Ajax 效果也没问题。</p><p>因为使用的是非侵入式 JavaScript，所以 Ajax 相关的辅助方法其实分成两部分，一部分是 JavaScript 代码，一部分是 Ruby 代码。</p><p>如果没有禁用 Asset Pipeline，<a href="https://github.com/rails/jquery-ujs/blob/master/src/rails.js">rails.js</a> 负责提供 JavaScript 代码，常规的 Ruby 视图辅助方法负责生成 DOM 标签。</p><h4 id="form_for">3.1 <code>form_for</code>
+</h4><p><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_for"><code>form_for</code> 方法</a>协助编写表单，可指定 <code>:remote</code> 选项，用法如下：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for(@article, remote: true) do |f| %&gt;
+  ...
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;form accept-charset="UTF-8" action="/articles" class="new_article" data-remote="true" id="new_article" method="post"&gt;
+  ...
+&lt;/form&gt;
+
+</pre>
+</div>
+<p>注意 <code>data-remote="true"</code> 属性，现在这个表单不会通过常规的方式提交，而是通过 Ajax 提交。</p><p>或许你并不需要一个只能填写内容的表单，而是想在表单提交成功后做些事情。为此，我们要绑定 <code>ajax:success</code> 事件。处理表单提交失败的程序要绑定到 <code>ajax:error</code> 事件上。例如：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$(document).ready -&gt;
+  $("#new_article").on("ajax:success", (e, data, status, xhr) -&gt;
+    $("#new_article").append xhr.responseText
+  ).on "ajax:error", (e, xhr, status, error) -&gt;
+    $("#new_article").append "&lt;p&gt;ERROR&lt;/p&gt;"
+
+</pre>
+</div>
+<p>显然你需要的功能比这要复杂，上面的例子只是个入门。关于事件的更多内容请阅读 <a href="https://github.com/rails/jquery-ujs/wiki/ajax">jquery-ujs 的维基</a>。</p><h4 id="form_tag">3.2 <code>form_tag</code>
+</h4><p><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-form_tag"><code>form_tag</code> 方法</a>的作用与 <code>form_for</code> 类似，也可指定 <code>:remote</code> 选项，如下所示：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_tag('/articles', remote: true) do %&gt;
+  ...
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;form accept-charset="UTF-8" action="/articles" data-remote="true" method="post"&gt;
+  ...
+&lt;/form&gt;
+
+</pre>
+</div>
+<p>其他用法都和 <code>form_for</code> 一样。详情参见文档。</p><h4 id="link_to">3.3 <code>link_to</code>
+</h4><p><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to"><code>link_to</code> 方法</a>用于生成链接，可以指定 <code>:remote</code> 选项，用法如下：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= link_to "an article", @article, remote: true %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;a href="/articles/1" data-remote="true"&gt;an article&lt;/a&gt;
+
+</pre>
+</div>
+<p>绑定的 Ajax 事件和 <code>form_for</code> 方法一样。下面举个例子。假如有一个文章列表，我们想只点击一个链接就删除所有文章。视图代码如下：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= link_to "Delete article", @article, remote: true, method: :delete %&gt;
+
+</pre>
+</div>
+<p>CoffeeScript 代码如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ -&gt;
+  $("a[data-remote]").on "ajax:success", (e, data, status, xhr) -&gt;
+    alert "The article was deleted."
+
+</pre>
+</div>
+<h4 id="button_to">3.4 <code>button_to</code>
+</h4><p><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to"><code>button_to</code> 方法</a>用于生成按钮，可以指定 <code>:remote</code> 选项，用法如下：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= button_to "An article", @article, remote: true %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;form action="/articles/1" class="button_to" data-remote="true" method="post"&gt;
+  &lt;input type="submit" value="An article" /&gt;
+&lt;/form&gt;
+
+</pre>
+</div>
+<p>因为生成的就是一个表单，所以 <code>form_for</code> 的全部信息都可使用。</p><h3 id="%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%A4%84%E7%90%86">4 服务器端处理</h3><p>Ajax 不仅涉及客户端，服务器端也要做处理。Ajax 请求一般不返回 HTML，而是 JSON。下面详细说明处理过程。</p><h4 id="%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90">4.1 一个简单的例子</h4><p>假设在网页中要显示一系列用户，还有一个新建用户的表单。控制器的 <code>index</code> 动作如下所示：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UsersController &lt; ApplicationController
+  def index
+    @users = User.all
+    @user = User.new
+  end
+  # ...
+
+</pre>
+</div>
+<p><code>index</code> 视图（<code>app/views/users/index.html.erb</code>）如下：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;b&gt;Users&lt;/b&gt;
+
+&lt;ul id="users"&gt;
+&lt;%= render @users %&gt;
+&lt;/ul&gt;
+
+&lt;br&gt;
+
+&lt;%= form_for(@user, remote: true) do |f| %&gt;
+  &lt;%= f.label :name %&gt;&lt;br&gt;
+  &lt;%= f.text_field :name %&gt;
+  &lt;%= f.submit %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p><code>app/views/users/_user.html.erb</code> 局部视图的内容如下：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;li&gt;&lt;%= user.name %&gt;&lt;/li&gt;
+
+</pre>
+</div>
+<p><code>index</code> 页面的上部显示用户列表，下部显示新建用户的表单。</p><p>下部的表单会调用 <code>UsersController</code> 的 <code>create</code> 动作。因为表单的 <code>remote</code> 选项为 <code>true</code>，所以发给 <code>UsersController</code> 的是 Ajax 请求，使用 JavaScript 处理。要想处理这个请求，控制器的 <code>create</code> 动作应该这么写：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/controllers/users_controller.rb
+# ......
+def create
+  @user = User.new(params[:user])
+
+  respond_to do |format|
+    if @user.save
+      format.html { redirect_to @user, notice: 'User was successfully created.' }
+      format.js   {}
+      format.json { render json: @user, status: :created, location: @user }
+    else
+      format.html { render action: "new" }
+      format.json { render json: @user.errors, status: :unprocessable_entity }
+    end
+  end
+end
+
+</pre>
+</div>
+<p>注意，在 <code>respond_to</code> 块中使用了 <code>format.js</code>，这样控制器才能响应 Ajax 请求。然后还要新建 <code>app/views/users/create.js.erb</code> 视图文件，编写发送响应以及在客户端执行的 JavaScript 代码。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+$("&lt;%= escape_javascript(render @user) %&gt;").appendTo("#users");
+
+</pre>
+</div>
+<h3 id="Turbolinks">5 Turbolinks</h3><p>Rails 提供了 <a href="https://github.com/turbolinks/turbolinks">Turbolinks 库</a>，它使用 Ajax 渲染页面，在多数应用中可以提升页面加载速度。</p><h4 id="Turbolinks%20%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86">5.1 Turbolinks 的工作原理</h4><p>Turbolinks 为页面中所有的 <code>&lt;a&gt;</code> 元素添加一个点击事件处理程序。如果浏览器支持 <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Manipulating_the_browser_history#The_pushState%28%29_method">PushState</a>，Turbolinks 会发起 Ajax 请求，解析响应，然后使用响应主体替换原始页面的整个 <code>&lt;body&gt;</code> 元素。最后，使用 PushState 技术更改页面的 URL，让新页面可刷新，并且有个精美的 URL。</p><p>要想使用 Turbolinks，只需将其加入 <code>Gemfile</code>，然后在 <code>app/assets/javascripts/application.js</code> 中加入 <code>//= require turbolinks</code>。</p><p>如果某个链接不想使用 Turbolinks，可以在链接中添加 <code>data-turbolinks="false"</code> 属性：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;a href="..." data-turbolinks="false"&gt;No turbolinks here&lt;/a&gt;.
+
+</pre>
+</div>
+<h4 id="%E9%A1%B5%E9%9D%A2%E5%86%85%E5%AE%B9%E5%8F%98%E6%9B%B4%E4%BA%8B%E4%BB%B6">5.2 页面内容变更事件</h4><p>编写 CoffeeScript 代码时，经常需要在页面加载时做一些事情。在 jQuery 中，我们可以这么写：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$(document).ready -&gt;
+  alert "page has loaded!"
+
+</pre>
+</div>
+<p>不过，Turbolinks 改变了常规的页面加载流程，不会触发这个事件。如果编写了类似上面的代码，要将其修改为：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$(document).on "turbolinks:load", -&gt;
+  alert "page has loaded!"
+
+</pre>
+</div>
+<p>其他可用事件的详细信息，参阅 <a href="https://github.com/turbolinks/turbolinks/blob/master/README.md">Turbolinks 的自述文件</a>。</p><h3 id="%E5%85%B6%E4%BB%96%E8%B5%84%E6%BA%90">6 其他资源</h3><p>下面列出一些链接，可以帮助你进一步学习：</p>
+<ul>
+<li><p><a href="https://github.com/rails/jquery-ujs/wiki">jquery-ujs 的维基</a></p></li>
+<li><p><a href="https://github.com/rails/jquery-ujs/wiki/External-articles">其他介绍 jquery-ujs 的文章</a></p></li>
+<li><p><a href="http://www.alfajango.com/blog/rails-3-remote-links-and-forms/">Rails 3 Remote Links and Forms: A Definitive Guide</a></p></li>
+<li><p><a href="http://railscasts.com/episodes/205-unobtrusive-javascript">Railscasts: Unobtrusive JavaScript</a></p></li>
+<li><p><a href="http://railscasts.com/episodes/390-turbolinks">Railscasts: Turbolinks</a></p></li>
+</ul>
+
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

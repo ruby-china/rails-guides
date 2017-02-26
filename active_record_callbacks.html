@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        More Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Return to home page">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">测试 Rails 应用</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档守则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布说明</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">测试 Rails 应用</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文档守则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布说明">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">对象的生命周期</a></li>
+<li>
+<a href="#%E5%9B%9E%E8%B0%83%E6%A6%82%E8%BF%B0">回调概述</a>
+
+<ul>
+<li><a href="#%E6%B3%A8%E5%86%8C%E5%9B%9E%E8%B0%83">注册回调</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%8F%AF%E7%94%A8%E7%9A%84%E5%9B%9E%E8%B0%83">可用的回调</a>
+
+<ul>
+<li><a href="#%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1">创建对象</a></li>
+<li><a href="#%E6%9B%B4%E6%96%B0%E5%AF%B9%E8%B1%A1">更新对象</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E5%AF%B9%E8%B1%A1">删除对象</a></li>
+<li><a href="#after_initialize%20%E5%92%8C%20after_find%20%E5%9B%9E%E8%B0%83"><code>after_initialize</code> 和 <code>after_find</code> 回调</a></li>
+<li><a href="#after_touch%20%E5%9B%9E%E8%B0%83"><code>after_touch</code> 回调</a></li>
+</ul>
+</li>
+<li><a href="#%E8%B0%83%E7%94%A8%E5%9B%9E%E8%B0%83">调用回调</a></li>
+<li><a href="#%E8%B7%B3%E8%BF%87%E5%9B%9E%E8%B0%83">跳过回调</a></li>
+<li><a href="#%E5%81%9C%E6%AD%A2%E6%89%A7%E8%A1%8C">停止执行</a></li>
+<li><a href="#%E5%85%B3%E8%81%94%E5%9B%9E%E8%B0%83">关联回调</a></li>
+<li>
+<a href="#%E6%9D%A1%E4%BB%B6%E5%9B%9E%E8%B0%83">条件回调</a>
+
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8%E7%AC%A6%E5%8F%B7%E4%BD%9C%E4%B8%BA%20:if%20%E5%92%8C%20:unless%20%E9%80%89%E9%A1%B9%E7%9A%84%E5%80%BC">使用符号作为 <code>:if</code> 和 <code>:unless</code> 选项的值</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BD%9C%E4%B8%BA%20:if%20%E5%92%8C%20:unless%20%E9%80%89%E9%A1%B9%E7%9A%84%E5%80%BC">使用字符串作为 <code>:if</code> 和 <code>:unless</code> 选项的值</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%20Proc%20%E4%BD%9C%E4%B8%BA%20:if%20%E5%92%8C%20:unless%20%E9%80%89%E9%A1%B9%E7%9A%84%E5%80%BC">使用 Proc 作为 <code>:if</code> 和 <code>:unless</code> 选项的值</a></li>
+<li><a href="#%E5%9C%A8%E6%9D%A1%E4%BB%B6%E5%9B%9E%E8%B0%83%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AA%E6%9D%A1%E4%BB%B6">在条件回调中使用多个条件</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9E%E8%B0%83%E7%B1%BB">回调类</a></li>
+<li><a href="#%E4%BA%8B%E5%8A%A1%E5%9B%9E%E8%B0%83">事务回调</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h2>Active Record 回调</h2><p>本文介绍如何介入 Active Record 对象的生命周期。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>Active Record 对象的生命周期；</p></li>
+<li><p>如何创建用于响应对象生命周期内事件的回调方法；</p></li>
+<li><p>如何把常用的回调封装到特殊的类中。</p></li>
+</ul>
+<h3 id="%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">1 对象的生命周期</h3><p>在 Rails 应用正常运作期间，对象可以被创建、更新或删除。Active Record 为对象的生命周期提供了钩子，使我们可以控制应用及其数据。</p><p>回调使我们可以在对象状态更改之前或之后触发逻辑。</p><h3 id="%E5%9B%9E%E8%B0%83%E6%A6%82%E8%BF%B0">2 回调概述</h3><p>回调是在对象生命周期的某些时刻被调用的方法。通过回调，我们可以编写在创建、保存、更新、删除、验证或从数据库中加载 Active Record 对象时执行的代码。</p><h4 id="%E6%B3%A8%E5%86%8C%E5%9B%9E%E8%B0%83">2.1 注册回调</h4><p>回调在使用之前需要注册。我们可以先把回调定义为普通方法，然后使用宏式类方法把这些普通方法注册为回调：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ApplicationRecord
+  validates :login, :email, presence: true
+
+  before_validation :ensure_login_has_a_value
+
+  protected
+    def ensure_login_has_a_value
+      if login.nil?
+        self.login = email unless email.blank?
+      end
+    end
+end
+
+</pre>
+</div>
+<p>宏式类方法也接受块。如果块中的代码短到可以放在一行里，可以考虑使用这种编程风格：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ApplicationRecord
+  validates :login, :email, presence: true
+
+  before_create do
+    self.name = login.capitalize if name.blank?
+  end
+end
+
+</pre>
+</div>
+<p>回调也可以注册为仅被某些生命周期事件触发：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ApplicationRecord
+  before_validation :normalize_name, on: :create
+
+  # :on 选项的值也可以是数组
+  after_validation :set_location, on: [ :create, :update ]
+
+  protected
+    def normalize_name
+      self.name = name.downcase.titleize
+    end
+
+    def set_location
+      self.location = LocationService.query(self)
+    end
+end
+
+</pre>
+</div>
+<p>通常应该把回调定义为受保护的方法或私有方法。如果把回调定义为公共方法，就可以从模型外部调用回调，这样做违反了对象封装原则。</p><h3 id="%E5%8F%AF%E7%94%A8%E7%9A%84%E5%9B%9E%E8%B0%83">3 可用的回调</h3><p>下面按照回调在 Rails 应用正常运作期间被调用的顺序，列出所有可用的 Active Record 回调。</p><h4 id="%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1">3.1 创建对象</h4>
+<ul>
+<li><p><code>before_validation</code></p></li>
+<li><p><code>after_validation</code></p></li>
+<li><p><code>before_save</code></p></li>
+<li><p><code>around_save</code></p></li>
+<li><p><code>before_create</code></p></li>
+<li><p><code>around_create</code></p></li>
+<li><p><code>after_create</code></p></li>
+<li><p><code>after_save</code></p></li>
+<li><p><code>after_commit/after_rollback</code></p></li>
+</ul>
+<h4 id="%E6%9B%B4%E6%96%B0%E5%AF%B9%E8%B1%A1">3.2 更新对象</h4>
+<ul>
+<li><p><code>before_validation</code></p></li>
+<li><p><code>after_validation</code></p></li>
+<li><p><code>before_save</code></p></li>
+<li><p><code>around_save</code></p></li>
+<li><p><code>before_update</code></p></li>
+<li><p><code>around_update</code></p></li>
+<li><p><code>after_update</code></p></li>
+<li><p><code>after_save</code></p></li>
+<li><p><code>after_commit/after_rollback</code></p></li>
+</ul>
+<h4 id="%E5%88%A0%E9%99%A4%E5%AF%B9%E8%B1%A1">3.3 删除对象</h4>
+<ul>
+<li><p><code>before_destroy</code></p></li>
+<li><p><code>around_destroy</code></p></li>
+<li><p><code>after_destroy</code></p></li>
+<li><p><code>after_commit/after_rollback</code></p></li>
+</ul>
+<div class="warning"><p>无论按什么顺序注册回调，在创建和更新对象时，<code>after_save</code> 回调总是在更明确的 <code>after_create</code> 和 <code>after_update</code> 回调之后被调用。</p></div><h4 id="after_initialize%20%E5%92%8C%20after_find%20%E5%9B%9E%E8%B0%83">3.4 <code>after_initialize</code> 和 <code>after_find</code> 回调</h4><p>当 Active Record 对象被实例化时，不管是通过直接使用 <code>new</code> 方法还是从数据库加载记录，都会调用 <code>after_initialize</code> 回调。使用这个回调可以避免直接覆盖 Active Record 的 <code>initialize</code> 方法。</p><p>当 Active Record 从数据库中加载记录时，会调用 <code>after_find</code> 回调。如果同时定义了 <code>after_initialize</code> 和 <code>after_find</code> 回调，会先调用 <code>after_find</code> 回调。</p><p><code>after_initialize</code> 和 <code>after_find</code> 回调没有对应的 <code>before_*</code> 回调，这两个回调的注册方式和其他 Active Record 回调一样。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ApplicationRecord
+  after_initialize do |user|
+    puts "You have initialized an object!"
+  end
+
+  after_find do |user|
+    puts "You have found an object!"
+  end
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+&gt;&gt; User.new
+You have initialized an object!
+=&gt; #&lt;User id: nil&gt;
+
+&gt;&gt; User.first
+You have found an object!
+You have initialized an object!
+=&gt; #&lt;User id: 1&gt;
+
+</pre>
+</div>
+<h4 id="after_touch%20%E5%9B%9E%E8%B0%83">3.5 <code>after_touch</code> 回调</h4><p>当我们在 Active Record 对象上调用 <code>touch</code> 方法时，会调用 <code>after_touch</code> 回调。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ApplicationRecord
+  after_touch do |user|
+    puts "You have touched an object"
+  end
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+&gt;&gt; u = User.create(name: 'Kuldeep')
+=&gt; #&lt;User id: 1, name: "Kuldeep", created_at: "2013-11-25 12:17:49", updated_at: "2013-11-25 12:17:49"&gt;
+
+&gt;&gt; u.touch
+You have touched an object
+=&gt; true
+
+</pre>
+</div>
+<p><code>after_touch</code> 回调可以和 <code>belongs_to</code> 一起使用：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Employee &lt; ApplicationRecord
+  belongs_to :company, touch: true
+  after_touch do
+    puts 'An Employee was touched'
+  end
+end
+
+class Company &lt; ApplicationRecord
+  has_many :employees
+  after_touch :log_when_employees_or_company_touched
+
+  private
+  def log_when_employees_or_company_touched
+    puts 'Employee/Company was touched'
+  end
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+&gt;&gt; @employee = Employee.last
+=&gt; #&lt;Employee id: 1, company_id: 1, created_at: "2013-11-25 17:04:22", updated_at: "2013-11-25 17:05:05"&gt;
+
+# triggers @employee.company.touch
+&gt;&gt; @employee.touch
+Employee/Company was touched
+An Employee was touched
+=&gt; true
+
+</pre>
+</div>
+<h3 id="%E8%B0%83%E7%94%A8%E5%9B%9E%E8%B0%83">4 调用回调</h3><p>下面这些方法会触发回调：</p>
+<ul>
+<li><p><code>create</code></p></li>
+<li><p><code>create!</code></p></li>
+<li><p><code>decrement!</code></p></li>
+<li><p><code>destroy</code></p></li>
+<li><p><code>destroy!</code></p></li>
+<li><p><code>destroy_all</code></p></li>
+<li><p><code>increment!</code></p></li>
+<li><p><code>save</code></p></li>
+<li><p><code>save!</code></p></li>
+<li><p><code>save(validate: false)</code></p></li>
+<li><p><code>toggle!</code></p></li>
+<li><p><code>update_attribute</code></p></li>
+<li><p><code>update</code></p></li>
+<li><p><code>update!</code></p></li>
+<li><p><code>valid?</code></p></li>
+</ul>
+<p>此外，下面这些查找方法会触发 <code>after_find</code> 回调：</p>
+<ul>
+<li><p><code>all</code></p></li>
+<li><p><code>first</code></p></li>
+<li><p><code>find</code></p></li>
+<li><p><code>find_by</code></p></li>
+<li><p><code>find_by_*</code></p></li>
+<li><p><code>find_by_*!</code></p></li>
+<li><p><code>find_by_sql</code></p></li>
+<li><p><code>last</code></p></li>
+</ul>
+<p>每次初始化类的新对象时都会触发 <code>after_initialize</code> 回调。</p><div class="note"><p><code>find_by_*</code> 和 <code>find_by_*!</code> 方法是为每个属性自动生成的动态查找方法。关于动态查找方法的更多介绍，请参阅 <a href="active_record_querying.html#%E5%8A%A8%E6%80%81%E6%9F%A5%E6%89%BE%E6%96%B9%E6%B3%95">动态查找方法</a>。</p></div><h3 id="%E8%B7%B3%E8%BF%87%E5%9B%9E%E8%B0%83">5 跳过回调</h3><p>和验证一样，我们可以跳过回调。使用下面这些方法可以跳过回调：</p>
+<ul>
+<li><p><code>decrement</code></p></li>
+<li><p><code>decrement_counter</code></p></li>
+<li><p><code>delete</code></p></li>
+<li><p><code>delete_all</code></p></li>
+<li><p><code>increment</code></p></li>
+<li><p><code>increment_counter</code></p></li>
+<li><p><code>toggle</code></p></li>
+<li><p><code>touch</code></p></li>
+<li><p><code>update_column</code></p></li>
+<li><p><code>update_columns</code></p></li>
+<li><p><code>update_all</code></p></li>
+<li><p><code>update_counters</code></p></li>
+</ul>
+<p>请慎重地使用这些方法，因为有些回调包含了重要的业务规则和应用逻辑，在不了解潜在影响的情况下就跳过回调，可能导致无效数据。</p><h3 id="%E5%81%9C%E6%AD%A2%E6%89%A7%E8%A1%8C">6 停止执行</h3><p>回调在模型中注册后，将被加入队列等待执行。这个队列包含了所有模型的验证、已注册的回调和将要执行的数据库操作。</p><p>整个回调链包装在一个事务中。如果任何一个 <code>before</code> 回调方法返回 <code>false</code> 或引发异常，整个回调链就会停止执行，同时发出 <code>ROLLBACK</code> 消息来回滚事务；而 <code>after</code> 回调方法只能通过引发异常来达到相同的效果。</p><div class="warning"><p>当回调链停止后，Rails 会重新抛出除了 <code>ActiveRecord::Rollback</code> 和 <code>ActiveRecord::RecordInvalid</code> 之外的其他异常。这可能导致那些预期 <code>save</code> 和 <code>update_attributes</code> 等方法（通常返回 <code>true</code> 或 <code>false</code> ）不会引发异常的代码出错。</p></div><h3 id="%E5%85%B3%E8%81%94%E5%9B%9E%E8%B0%83">7 关联回调</h3><p>回调不仅可以在模型关联中使用，还可以通过模型关联定义。假设有一个用户在博客中发表了多篇文章，现在我们要删除这个用户，那么这个用户的所有文章也应该删除，为此我们通过 <code>Article</code> 模型和 <code>User</code> 模型的关联来给 <code>User</code> 模型添加一个 <code>after_destroy</code> 回调：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ApplicationRecord
+  has_many :articles, dependent: :destroy
+end
+
+class Article &lt; ApplicationRecord
+  after_destroy :log_destroy_action
+
+  def log_destroy_action
+    puts 'Article destroyed'
+  end
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+&gt;&gt; user = User.first
+=&gt; #&lt;User id: 1&gt;
+&gt;&gt; user.articles.create!
+=&gt; #&lt;Article id: 1, user_id: 1&gt;
+&gt;&gt; user.destroy
+Article destroyed
+=&gt; #&lt;User id: 1&gt;
+
+</pre>
+</div>
+<h3 id="%E6%9D%A1%E4%BB%B6%E5%9B%9E%E8%B0%83">8 条件回调</h3><p>和验证一样，我们可以在满足指定条件时再调用回调方法。为此，我们可以使用 <code>:if</code> 和 <code>:unless</code> 选项，选项的值可以是符号、字符串、<code>Proc</code> 或数组。要想指定在哪些条件下调用回调，可以使用 <code>:if</code> 选项。要想指定在哪些条件下不调用回调，可以使用 <code>:unless</code> 选项。</p><h4 id="%E4%BD%BF%E7%94%A8%E7%AC%A6%E5%8F%B7%E4%BD%9C%E4%B8%BA%20:if%20%E5%92%8C%20:unless%20%E9%80%89%E9%A1%B9%E7%9A%84%E5%80%BC">8.1 使用符号作为 <code>:if</code> 和 <code>:unless</code> 选项的值</h4><p>可以使用符号作为 <code>:if</code> 和 <code>:unless</code> 选项的值，这个符号用于表示先于回调调用的断言方法。当使用 <code>:if</code> 选项时，如果断言方法返回 <code>false</code> 就不会调用回调；当使用 <code>:unless</code> 选项时，如果断言方法返回 <code>true</code> 就不会调用回调。使用符号作为 <code>:if</code> 和 <code>:unless</code> 选项的值是最常见的方式。在使用这种方式注册回调时，我们可以同时使用几个不同的断言，用于检查是否应该调用回调。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Order &lt; ApplicationRecord
+  before_save :normalize_card_number, if: :paid_with_card?
+end
+
+</pre>
+</div>
+<h4 id="%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BD%9C%E4%B8%BA%20:if%20%E5%92%8C%20:unless%20%E9%80%89%E9%A1%B9%E7%9A%84%E5%80%BC">8.2 使用字符串作为 <code>:if</code> 和 <code>:unless</code> 选项的值</h4><p>还可以使用字符串作为 <code>:if</code> 和 <code>:unless</code> 选项的值，这个字符串会通过 <code>eval</code> 方法执行，因此必须包含有效的 Ruby 代码。当字符串表示的条件非常短时我们才使用这种方式：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Order &lt; ApplicationRecord
+  before_save :normalize_card_number, if: "paid_with_card?"
+end
+
+</pre>
+</div>
+<h4 id="%E4%BD%BF%E7%94%A8%20Proc%20%E4%BD%9C%E4%B8%BA%20:if%20%E5%92%8C%20:unless%20%E9%80%89%E9%A1%B9%E7%9A%84%E5%80%BC">8.3 使用 Proc 作为 <code>:if</code> 和 <code>:unless</code> 选项的值</h4><p>最后，可以使用 Proc 作为 <code>:if</code> 和 <code>:unless</code> 选项的值。在验证方法非常短时最适合使用这种方式，这类验证方法通常只有一行代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Order &lt; ApplicationRecord
+  before_save :normalize_card_number,
+    if: Proc.new { |order| order.paid_with_card? }
+end
+
+</pre>
+</div>
+<h4 id="%E5%9C%A8%E6%9D%A1%E4%BB%B6%E5%9B%9E%E8%B0%83%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AA%E6%9D%A1%E4%BB%B6">8.4 在条件回调中使用多个条件</h4><p>在编写条件回调时，我们可以在同一个回调声明中混合使用 <code>:if</code> 和 <code>:unless</code> 选项：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Comment &lt; ApplicationRecord
+  after_create :send_email_to_author, if: :author_wants_emails?,
+    unless: Proc.new { |comment| comment.article.ignore_comments? }
+end
+
+</pre>
+</div>
+<h3 id="%E5%9B%9E%E8%B0%83%E7%B1%BB">9 回调类</h3><p>有时需要在其他模型中重用已有的回调方法，为了解决这个问题，Active Record 允许我们用类来封装回调方法。有了回调类，回调方法的重用就变得非常容易。</p><p>在下面的例子中，我们为 <code>PictureFile</code> 模型创建了 <code>PictureFileCallbacks</code> 回调类，在这个回调类中包含了 <code>after_destroy</code> 回调方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class PictureFileCallbacks
+  def after_destroy(picture_file)
+    if File.exist?(picture_file.filepath)
+      File.delete(picture_file.filepath)
+    end
+  end
+end
+
+</pre>
+</div>
+<p>在上面的代码中我们可以看到，当在回调类中声明回调方法时，回调方法接受模型对象作为参数。回调类定义之后就可以在模型中使用了：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class PictureFile &lt; ApplicationRecord
+  after_destroy PictureFileCallbacks.new
+end
+
+</pre>
+</div>
+<p>请注意，上面我们把回调声明为实例方法，因此需要实例化新的 <code>PictureFileCallbacks</code> 对象。当回调想要使用实例化的对象的状态时，这种声明方式特别有用。尽管如此，一般我们会把回调声明为类方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class PictureFileCallbacks
+  def self.after_destroy(picture_file)
+    if File.exist?(picture_file.filepath)
+      File.delete(picture_file.filepath)
+    end
+  end
+end
+
+</pre>
+</div>
+<p>如果把回调声明为类方法，就不需要实例化新的 <code>PictureFileCallbacks</code> 对象。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class PictureFile &lt; ApplicationRecord
+  after_destroy PictureFileCallbacks
+end
+
+</pre>
+</div>
+<p>我们可以根据需要在回调类中声明任意多个回调。</p><h3 id="%E4%BA%8B%E5%8A%A1%E5%9B%9E%E8%B0%83">10 事务回调</h3><p><code>after_commit</code> 和 <code>after_rollback</code> 这两个回调会在数据库事务完成时触发。它们和 <code>after_save</code> 回调非常相似，区别在于它们在数据库变更已经提交或回滚后才会执行，常用于 Active Record 模型需要和数据库事务之外的系统交互的场景。</p><p>例如，在前面的例子中，<code>PictureFile</code> 模型中的记录删除后，还要删除相应的文件。如果 <code>after_destroy</code> 回调执行后应用引发异常，事务就会回滚，文件会被删除，模型会保持不一致的状态。例如，假设在下面的代码中，<code>picture_file_2</code> 对象是无效的，那么调用 <code>save!</code> 方法会引发错误：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+PictureFile.transaction do
+  picture_file_1.destroy
+  picture_file_2.save!
+end
+
+</pre>
+</div>
+<p>通过使用 <code>after_commit</code> 回调，我们可以解决这个问题：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class PictureFile &lt; ApplicationRecord
+  after_commit :delete_picture_file_from_disk, on: [:destroy]
+
+  def delete_picture_file_from_disk
+    if File.exist?(filepath)
+      File.delete(filepath)
+    end
+  end
+end
+
+</pre>
+</div>
+<div class="note"><p><code>:on</code> 选项说明什么时候触发回调。如果不提供 <code>:on</code> 选项，那么每个动作都会触发回调。</p></div><p>由于只在执行创建、更新或删除动作时触发 <code>after_commit</code> 回调是很常见的，这些操作都拥有别名：</p>
+<ul>
+<li><p><code>after_create_commit</code></p></li>
+<li><p><code>after_update_commit</code></p></li>
+<li><p><code>after_destroy_commit</code></p></li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class PictureFile &lt; ApplicationRecord
+  after_destroy_commit :delete_picture_file_from_disk
+
+  def delete_picture_file_from_disk
+    if File.exist?(filepath)
+      File.delete(filepath)
+    end
+  end
+end
+
+</pre>
+</div>
+<div class="warning"><p>对于在事务中创建、更新或删除的模型，<code>after_commit</code> 和 <code>after_rollback</code> 回调一定会被调用。如果其中有一个回调引发异常，这个异常会被忽略，以避免干扰其他回调。因此，如果回调代码可能引发异常，就需要在回调中救援并进行适当处理。</p></div>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

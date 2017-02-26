@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        More Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Return to home page">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">测试 Rails 应用</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档守则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布说明</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">测试 Rails 应用</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文档守则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布说明">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li>
+<a href="#%E7%AE%80%E4%BB%8B">简介</a>
+
+<ul>
+<li><a href="#%E5%B1%9E%E6%80%A7%E6%96%B9%E6%B3%95">属性方法</a></li>
+<li><a href="#%E5%9B%9E%E8%B0%83">回调</a></li>
+<li><a href="#%E8%BD%AC%E6%8D%A2">转换</a></li>
+<li><a href="#%E5%BC%84%E8%84%8F">弄脏</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81">数据验证</a></li>
+<li><a href="#%E5%91%BD%E5%90%8D">命名</a></li>
+<li><a href="#%E6%A8%A1%E5%9E%8B">模型</a></li>
+<li><a href="#%E5%BA%8F%E5%88%97%E5%8C%96">序列化</a></li>
+<li><a href="#%E7%BF%BB%E8%AF%91">翻译</a></li>
+<li><a href="#lint%20%E6%B5%8B%E8%AF%95">lint 测试</a></li>
+<li><a href="#%E5%AE%89%E5%85%A8%E5%AF%86%E7%A0%81">安全密码</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h2>Active Model 基础</h2><p>本文简述模型类。Active Model 允许使用 Action Pack 辅助方法与普通的 Ruby 类交互。Active Model 还协助构建自定义的 ORM，可在 Rails 框架外部使用。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>Active Record 模型的行为；</p></li>
+<li><p>回调和数据验证的工作方式；</p></li>
+<li><p>序列化程序的工作方式；</p></li>
+<li><p>Active Model 与 Rails 国际化（i18n）框架的集成。</p></li>
+</ul>
+<div class="note"><p>本文原文尚未完工！</p></div><h3 id="%E7%AE%80%E4%BB%8B">1 简介</h3><p>Active Model 库包含很多模块，用于开发要在 Active Record 中存储的类。下面说明其中部分模块。</p><h4 id="%E5%B1%9E%E6%80%A7%E6%96%B9%E6%B3%95">1.1 属性方法</h4><p><code>ActiveModel::AttributeMethods</code> 模块可以为类中的方法添加自定义的前缀和后缀。它用于定义前缀和后缀，对象中的方法将使用它们。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  include ActiveModel::AttributeMethods
+
+  attribute_method_prefix 'reset_'
+  attribute_method_suffix '_highest?'
+  define_attribute_methods 'age'
+
+  attr_accessor :age
+
+  private
+    def reset_attribute(attribute)
+      send("#{attribute}=", 0)
+    end
+
+    def attribute_highest?(attribute)
+      send(attribute) &gt; 100
+    end
+end
+
+person = Person.new
+person.age = 110
+person.age_highest?  # =&gt; true
+person.reset_age     # =&gt; 0
+person.age_highest?  # =&gt; false
+
+</pre>
+</div>
+<h4 id="%E5%9B%9E%E8%B0%83">1.2 回调</h4><p><code>ActiveModel::Callbacks</code> 模块为 Active Record 提供回调，在某个时刻运行。定义回调之后，可以使用前置、后置和环绕方法包装。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  extend ActiveModel::Callbacks
+
+  define_model_callbacks :update
+
+  before_update :reset_me
+
+  def update
+    run_callbacks(:update) do
+      # 在对象上调用 update 时执行这个方法
+    end
+  end
+
+  def reset_me
+    # 在对象上调用 update 方法时执行这个方法
+    # 因为把它定义为 before_update 回调了
+  end
+end
+
+</pre>
+</div>
+<h4 id="%E8%BD%AC%E6%8D%A2">1.3 转换</h4><p>如果一个类定义了 <code>persisted?</code> 和 <code>id</code> 方法，可以在那个类中引入 <code>ActiveModel::Conversion</code> 模块，这样便能在类的对象上调用 Rails 提供的转换方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  include ActiveModel::Conversion
+
+  def persisted?
+    false
+  end
+
+  def id
+    nil
+  end
+end
+
+person = Person.new
+person.to_model == person  # =&gt; true
+person.to_key              # =&gt; nil
+person.to_param            # =&gt; nil
+
+</pre>
+</div>
+<h4 id="%E5%BC%84%E8%84%8F">1.4 弄脏</h4><p>如果修改了对象的一个或多个属性，但是没有保存，此时就把对象弄脏了。<code>ActiveModel::Dirty</code> 模块提供检查对象是否被修改的功能。它还提供了基于属性的存取方法。假如有个 <code>Person</code> 类，它有两个属性，<code>first_name</code> 和 <code>last_name</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  include ActiveModel::Dirty
+  define_attribute_methods :first_name, :last_name
+
+  def first_name
+    @first_name
+  end
+
+  def first_name=(value)
+    first_name_will_change!
+    @first_name = value
+  end
+
+  def last_name
+    @last_name
+  end
+
+  def last_name=(value)
+    last_name_will_change!
+    @last_name = value
+  end
+
+  def save
+    # 执行保存操作……
+    changes_applied
+  end
+end
+
+</pre>
+</div>
+<h5 id="%E7%9B%B4%E6%8E%A5%E6%9F%A5%E8%AF%A2%E5%AF%B9%E8%B1%A1%EF%BC%8C%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E8%A2%AB%E4%BF%AE%E6%94%B9%E7%9A%84%E5%B1%9E%E6%80%A7%E5%88%97%E8%A1%A8">1.4.1 直接查询对象，获取所有被修改的属性列表</h5><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+person = Person.new
+person.changed? # =&gt; false
+
+person.first_name = "First Name"
+person.first_name # =&gt; "First Name"
+
+# 如果修改属性后未保存，返回 true，否则返回 false
+person.changed? # =&gt; true
+
+# 返回修改之后没有保存的属性列表
+person.changed # =&gt; ["first_name"]
+
+# 返回一个属性散列，指明原来的值
+person.changed_attributes # =&gt; {"first_name"=&gt;nil}
+
+# 返回一个散列，键为修改的属性名，值是一个数组，包含旧值和新值
+person.changes # =&gt; {"first_name"=&gt;[nil, "First Name"]}
+
+</pre>
+</div>
+<h5 id="%E5%9F%BA%E4%BA%8E%E5%B1%9E%E6%80%A7%E7%9A%84%E5%AD%98%E5%8F%96%E6%96%B9%E6%B3%95">1.4.2 基于属性的存取方法</h5><p>判断具体的属性是否被修改了：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# attr_name_changed?
+person.first_name # =&gt; "First Name"
+person.first_name_changed? # =&gt; true
+
+</pre>
+</div>
+<p>查看属性之前的值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+person.first_name_was # =&gt; nil
+
+</pre>
+</div>
+<p>查看属性修改前后的值。如果修改了，返回一个数组，否则返回 <code>nil</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+person.first_name_change # =&gt; [nil, "First Name"]
+person.last_name_change # =&gt; nil
+
+</pre>
+</div>
+<h4 id="%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81">1.5 数据验证</h4><p><code>ActiveModel::Validations</code> 模块提供数据验证功能，这与 Active Record 中的类似。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  include ActiveModel::Validations
+
+  attr_accessor :name, :email, :token
+
+  validates :name, presence: true
+  validates_format_of :email, with: /\A([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})\z/i
+  validates! :token, presence: true
+end
+
+person = Person.new
+person.token = "2b1f325"
+person.valid?                        # =&gt; false
+person.name = 'vishnu'
+person.email = 'me'
+person.valid?                        # =&gt; false
+person.email = 'me@vishnuatrai.com'
+person.valid?                        # =&gt; true
+person.token = nil
+person.valid?                        # =&gt; raises ActiveModel::StrictValidationFailed
+
+</pre>
+</div>
+<h4 id="%E5%91%BD%E5%90%8D">1.6 命名</h4><p><code>ActiveModel::Naming</code> 添加一些类方法，便于管理命名和路由。这个模块定义了 <code>model_name</code> 类方法，它使用 <code>ActiveSupport::Inflector</code> 中的一些方法定义一些存取方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  extend ActiveModel::Naming
+end
+
+Person.model_name.name                # =&gt; "Person"
+Person.model_name.singular            # =&gt; "person"
+Person.model_name.plural              # =&gt; "people"
+Person.model_name.element             # =&gt; "person"
+Person.model_name.human               # =&gt; "Person"
+Person.model_name.collection          # =&gt; "people"
+Person.model_name.param_key           # =&gt; "person"
+Person.model_name.i18n_key            # =&gt; :person
+Person.model_name.route_key           # =&gt; "people"
+Person.model_name.singular_route_key  # =&gt; "person"
+
+</pre>
+</div>
+<h4 id="%E6%A8%A1%E5%9E%8B">1.7 模型</h4><p><code>ActiveModel::Model</code> 模块能让一个类立即能与 Action Pack 和 Action View 集成。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class EmailContact
+  include ActiveModel::Model
+
+  attr_accessor :name, :email, :message
+  validates :name, :email, :message, presence: true
+
+  def deliver
+    if valid?
+      # 发送电子邮件
+    end
+  end
+end
+
+</pre>
+</div>
+<p>引入 <code>ActiveModel::Model</code> 后，将获得以下功能：</p>
+<ul>
+<li><p>模型名称内省</p></li>
+<li><p>转换</p></li>
+<li><p>翻译</p></li>
+<li><p>数据验证</p></li>
+</ul>
+<p>还能像 Active Record 对象那样使用散列指定属性，初始化对象。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+email_contact = EmailContact.new(name: 'David',
+                                 email: 'david@example.com',
+                                 message: 'Hello World')
+email_contact.name       # =&gt; 'David'
+email_contact.email      # =&gt; 'david@example.com'
+email_contact.valid?     # =&gt; true
+email_contact.persisted? # =&gt; false
+
+</pre>
+</div>
+<p>只要一个类引入了 <code>ActiveModel::Model</code>，它就能像 Active Record 对象那样使用 <code>form_for</code>、<code>render</code> 和任何 Action View 辅助方法。</p><h4 id="%E5%BA%8F%E5%88%97%E5%8C%96">1.8 序列化</h4><p><code>ActiveModel::Serialization</code> 模块为对象提供基本的序列化支持。你要定义一个属性散列，包含想序列化的属性。属性名必须使用字符串，不能使用符号。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  include ActiveModel::Serialization
+
+  attr_accessor :name
+
+  def attributes
+    {'name' =&gt; nil}
+  end
+end
+
+</pre>
+</div>
+<p>这样就可以使用 <code>serializable_hash</code> 方法访问对象的序列化散列：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+person = Person.new
+person.serializable_hash   # =&gt; {"name"=&gt;nil}
+person.name = "Bob"
+person.serializable_hash   # =&gt; {"name"=&gt;"Bob"}
+
+</pre>
+</div>
+<h5 id="ActiveModel::Serializers">1.8.1 <code>ActiveModel::Serializers</code>
+</h5><p>Rails 提供了 <code>ActiveModel::Serializers::JSON</code> 序列化程序。这个模块自动引入 <code>ActiveModel::Serialization</code>。</p><h6 id="ActiveModel::Serializers::JSON">1.8.1.1 <code>ActiveModel::Serializers::JSON</code>
+</h6><p>若想使用 <code>ActiveModel::Serializers::JSON</code>，只需把 <code>ActiveModel::Serialization</code> 换成 <code>ActiveModel::Serializers::JSON</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  include ActiveModel::Serializers::JSON
+
+  attr_accessor :name
+
+  def attributes
+    {'name' =&gt; nil}
+  end
+end
+
+</pre>
+</div>
+<p>调用 <code>as_json</code> 方法即可访问模型的散列表示形式。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+person = Person.new
+person.as_json # =&gt; {"name"=&gt;nil}
+person.name = "Bob"
+person.as_json # =&gt; {"name"=&gt;"Bob"}
+
+</pre>
+</div>
+<p>若想使用 JSON 字符串定义模型的属性，要在类中定义 <code>attributes=</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  include ActiveModel::Serializers::JSON
+
+  attr_accessor :name
+
+  def attributes=(hash)
+    hash.each do |key, value|
+      send("#{key}=", value)
+    end
+  end
+
+  def attributes
+    {'name' =&gt; nil}
+  end
+end
+
+</pre>
+</div>
+<p>现在，可以使用 <code>from_json</code> 方法创建 <code>Person</code> 实例，并且设定属性：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+json = { name: 'Bob' }.to_json
+person = Person.new
+person.from_json(json) # =&gt; #&lt;Person:0x00000100c773f0 @name="Bob"&gt;
+person.name            # =&gt; "Bob"
+
+</pre>
+</div>
+<h4 id="%E7%BF%BB%E8%AF%91">1.9 翻译</h4><p><code>ActiveModel::Translation</code> 模块把对象与 Rails 国际化（i18n）框架集成起来。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  extend ActiveModel::Translation
+end
+
+</pre>
+</div>
+<p>使用 <code>human_attribute_name</code> 方法可以把属性名称变成对人类友好的格式。对人类友好的格式在本地化文件中定义。</p>
+<ul>
+<li>
+<p><code>config/locales/app.pt-BR.yml</code></p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+pt-BR:
+  activemodel:
+    attributes:
+      person:
+        name: 'Nome'
+
+</pre>
+</div>
+</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Person.human_attribute_name('name') # =&gt; "Nome"
+
+</pre>
+</div>
+<h4 id="lint%20%E6%B5%8B%E8%AF%95">1.10 lint 测试</h4><p><code>ActiveModel::Lint::Tests</code> 模块测试对象是否符合 Active Model API。</p>
+<ul>
+<li>
+<p><code>app/models/person.rb</code></p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  include ActiveModel::Model
+end
+
+</pre>
+</div>
+</li>
+<li>
+<p><code>test/models/person_test.rb</code></p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'test_helper'
+
+class PersonTest &lt; ActiveSupport::TestCase
+  include ActiveModel::Lint::Tests
+
+  setup do
+    @model = Person.new
+  end
+end
+
+</pre>
+</div>
+</li>
+</ul>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails test
+
+Run options: --seed 14596
+
+# Running:
+
+......
+
+Finished in 0.024899s, 240.9735 runs/s, 1204.8677 assertions/s.
+
+6 runs, 30 assertions, 0 failures, 0 errors, 0 skips
+
+</pre>
+</div>
+<p>为了使用 Action Pack，对象无需实现所有 API。这个模块只是提供一种指导，以防你需要全部功能。</p><h4 id="%E5%AE%89%E5%85%A8%E5%AF%86%E7%A0%81">1.11 安全密码</h4><p><code>ActiveModel::SecurePassword</code> 提供安全加密密码的功能。这个模块提供了 <code>has_secure_password</code> 类方法，它定义了一个名为 <code>password</code> 的存取方法，而且有相应的数据验证。</p><h5 id="%E8%A6%81%E6%B1%82">1.11.1 要求</h5><p><code>ActiveModel::SecurePassword</code> 依赖 <a href="https://github.com/codahale/bcrypt-ruby">bcrypt</a>，因此要在 <code>Gemfile</code> 中加入这个 gem，<code>ActiveModel::SecurePassword</code> 才能正确运行。为了使用安全密码，模型中必须定义一个名为 <code>password_digest</code> 的存取方法。<code>has_secure_password</code> 类方法会为 <code>password</code> 存取方法添加下述数据验证：</p>
+<ol>
+<li><p> 密码应该存在</p></li>
+<li><p> 密码应该等于密码确认</p></li>
+<li><p> 密码的最大长度为 72（<code>ActiveModel::SecurePassword</code> 依赖的 <code>bcrypt</code> 的要求）</p></li>
+</ol>
+<h5 id="%E7%A4%BA%E4%BE%8B">1.11.2 示例</h5><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  include ActiveModel::SecurePassword
+  has_secure_password
+  attr_accessor :password_digest
+end
+
+person = Person.new
+
+# 密码为空时
+person.valid? # =&gt; false
+
+# 密码确认与密码不匹配时
+person.password = 'aditya'
+person.password_confirmation = 'nomatch'
+person.valid? # =&gt; false
+
+# 密码长度超过 72 时
+person.password = person.password_confirmation = 'a' * 100
+person.valid? # =&gt; false
+
+# 所有数据验证都通过时
+person.password = person.password_confirmation = 'aditya'
+person.valid? # =&gt; true
+
+</pre>
+</div>
+
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

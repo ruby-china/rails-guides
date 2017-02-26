@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        More Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Return to home page">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">测试 Rails 应用</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档守则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布说明</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">测试 Rails 应用</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文档守则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布说明">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li>
+<a href="#%E5%87%86%E5%A4%87">准备</a>
+
+<ul>
+<li><a href="#%E7%94%9F%E6%88%90%20gem%20%E5%BC%8F%E6%8F%92%E4%BB%B6">生成 gem 式插件</a></li>
+</ul>
+</li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E6%96%B0%E7%94%9F%E6%88%90%E7%9A%84%E6%8F%92%E4%BB%B6">测试新生成的插件</a></li>
+<li><a href="#%E6%89%A9%E5%B1%95%E6%A0%B8%E5%BF%83%E7%B1%BB">扩展核心类</a></li>
+<li>
+<a href="#%E4%B8%BA%20Active%20Record%20%E6%B7%BB%E5%8A%A0%E2%80%9Cacts_as%E2%80%9D%E6%96%B9%E6%B3%95">为 Active Record 添加“acts_as”方法</a>
+
+<ul>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E7%B1%BB%E6%96%B9%E6%B3%95">添加一个类方法</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95">添加一个实例方法</a></li>
+</ul>
+</li>
+<li><a href="#%E7%94%9F%E6%88%90%E5%99%A8">生成器</a></li>
+<li><a href="#%E5%8F%91%E5%B8%83%20gem">发布 gem</a></li>
+<li><a href="#RDoc%20%E6%96%87%E6%A1%A3">RDoc 文档</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h2>Rails 插件开发简介</h2><p>Rails 插件是对核心框架的扩展或修改。插件有下述作用：</p>
+<ul>
+<li><p>供开发者分享突发奇想，但不破坏稳定的代码基</p></li>
+<li><p>碎片式架构，代码自成一体，能按照自己的日程表修正或更新</p></li>
+<li><p>核心开发者使用的外延工具，不必把每个新特性都集成到核心框架中</p></li>
+</ul>
+<p>读完本文后，您将学到：</p>
+<ul>
+<li><p>如何从零开始创建一个插件</p></li>
+<li><p>如何编写插件的代码和测试</p></li>
+</ul>
+<p>本文使用测试驱动开发方式编写一个插件，它具有下述功能：</p>
+<ul>
+<li><p>扩展 Ruby 核心类，如 Hash 和 String</p></li>
+<li><p>通过传统的 <code>acts_as</code> 插件形式为 <code>ApplicationRecord</code> 添加方法</p></li>
+<li><p>说明生成器放在插件的什么位置</p></li>
+</ul>
+<p>本文暂且假设你是热衷观察鸟类的人。你钟爱的鸟是绿啄木鸟（Yaffle），因此你想创建一个插件，供其他开发者分享心得。</p><div class="note"><p>本文原文尚未完工！</p></div><h3 id="%E5%87%86%E5%A4%87">1 准备</h3><p>目前，Rails 插件构建成 gem 的形式，叫做 gem 式插件（gemified plugin）。如果愿意，可以通过 RubyGems 和 Bundler 在多个 Rails 应用中共享。</p><h4 id="%E7%94%9F%E6%88%90%20gem%20%E5%BC%8F%E6%8F%92%E4%BB%B6">1.1 生成 gem 式插件</h4><p>Rails 自带一个 <code>rails plugin new</code> 命令，用于创建任何 Rails 扩展的骨架。这个命令还会生成一个虚设的 Rails 应用，用于运行集成测试。请使用下述命令创建这个插件：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails plugin new yaffle
+
+</pre>
+</div>
+<p>如果想查看用法和选项，执行下述命令：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails plugin new --help
+
+</pre>
+</div>
+<h3 id="%E6%B5%8B%E8%AF%95%E6%96%B0%E7%94%9F%E6%88%90%E7%9A%84%E6%8F%92%E4%BB%B6">2 测试新生成的插件</h3><p>进入插件所在的目录，运行 <code>bundle install</code> 命令，然后使用 <code>bin/test</code> 命令运行生成的一个测试。</p><p>你会看到下述输出：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+1 runs, 1 assertions, 0 failures, 0 errors, 0 skips
+
+</pre>
+</div>
+<p>这表明一切都正确生成了，接下来可以添加功能了。</p><h3 id="%E6%89%A9%E5%B1%95%E6%A0%B8%E5%BF%83%E7%B1%BB">3 扩展核心类</h3><p>本节说明如何为 String 类添加一个方法，让它在整个 Rails 应用中都可以使用。</p><p>这里，我们为 String 添加的方法名为 <code>to_squawk</code>。首先，创建一个测试文件，写入几个断言：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# yaffle/test/core_ext_test.rb
+
+require 'test_helper'
+
+class CoreExtTest &lt; ActiveSupport::TestCase
+  def test_to_squawk_prepends_the_word_squawk
+    assert_equal "squawk! Hello World", "Hello World".to_squawk
+  end
+end
+
+</pre>
+</div>
+<p>然后使用 <code>bin/test</code> 运行测试。这个测试应该失败，因为我们还没实现 <code>to_squawk</code> 方法。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+E
+
+Error:
+CoreExtTest#test_to_squawk_prepends_the_word_squawk:
+NoMethodError: undefined method `to_squawk' for "Hello World":String
+
+
+bin/test /path/to/yaffle/test/core_ext_test.rb:4
+
+.
+
+Finished in 0.003358s, 595.6483 runs/s, 297.8242 assertions/s.
+
+2 runs, 1 assertions, 0 failures, 1 errors, 0 skips
+
+</pre>
+</div>
+<p>很好，下面可以开始开发了。</p><p>在 <code>lib/yaffle.rb</code> 文件中添加 <code>require 'yaffle/core_ext'</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# yaffle/lib/yaffle.rb
+
+require 'yaffle/core_ext'
+
+module Yaffle
+end
+
+</pre>
+</div>
+<p>最后，创建 <code>core_ext.rb</code> 文件，添加 <code>to_squawk</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# yaffle/lib/yaffle/core_ext.rb
+
+String.class_eval do
+  def to_squawk
+    "squawk! #{self}".strip
+  end
+end
+
+</pre>
+</div>
+<p>为了测试方法的行为是否得当，在插件目录中使用 <code>bin/test</code> 运行单元测试：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+2 runs, 2 assertions, 0 failures, 0 errors, 0 skips
+
+</pre>
+</div>
+<p>为了实测一下，进入 <code>test/dummy</code> 目录，打开控制台：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails console
+&gt;&gt; "Hello World".to_squawk
+=&gt; "squawk! Hello World"
+
+</pre>
+</div>
+<h3 id="%E4%B8%BA%20Active%20Record%20%E6%B7%BB%E5%8A%A0%E2%80%9Cacts_as%E2%80%9D%E6%96%B9%E6%B3%95">4 为 Active Record 添加“acts_as”方法</h3><p>插件经常为模型添加名为 <code>acts_as_something</code> 的方法。这里，我们要编写一个名为 <code>acts_as_yaffle</code> 的方法，为 Active Record 添加 <code>squawk</code> 方法。</p><p>首先，创建几个文件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# yaffle/test/acts_as_yaffle_test.rb
+
+require 'test_helper'
+
+class ActsAsYaffleTest &lt; ActiveSupport::TestCase
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# yaffle/lib/yaffle.rb
+
+require 'yaffle/core_ext'
+require 'yaffle/acts_as_yaffle'
+
+module Yaffle
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# yaffle/lib/yaffle/acts_as_yaffle.rb
+
+module Yaffle
+  module ActsAsYaffle
+    # 在这里编写你的代码
+  end
+end
+
+</pre>
+</div>
+<h4 id="%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E7%B1%BB%E6%96%B9%E6%B3%95">4.1 添加一个类方法</h4><p>这个插件将为模型添加一个名为 <code>last_squawk</code> 的方法。然而，插件的用户可能已经在模型中定义了同名方法，做其他用途使用。这个插件将允许修改插件的名称，为此我们要添加一个名为 <code>yaffle_text_field</code> 的类方法。</p><p>首先，为预期行为编写一个失败测试：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# yaffle/test/acts_as_yaffle_test.rb
+
+require 'test_helper'
+
+class ActsAsYaffleTest &lt; ActiveSupport::TestCase
+  def test_a_hickwalls_yaffle_text_field_should_be_last_squawk
+    assert_equal "last_squawk", Hickwall.yaffle_text_field
+  end
+
+  def test_a_wickwalls_yaffle_text_field_should_be_last_tweet
+    assert_equal "last_tweet", Wickwall.yaffle_text_field
+  end
+end
+
+</pre>
+</div>
+<p>执行 <code>bin/test</code> 命令，应该看到下述输出：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+# Running:
+
+..E
+
+Error:
+ActsAsYaffleTest#test_a_wickwalls_yaffle_text_field_should_be_last_tweet:
+NameError: uninitialized constant ActsAsYaffleTest::Wickwall
+
+
+bin/test /path/to/yaffle/test/acts_as_yaffle_test.rb:8
+
+E
+
+Error:
+ActsAsYaffleTest#test_a_hickwalls_yaffle_text_field_should_be_last_squawk:
+NameError: uninitialized constant ActsAsYaffleTest::Hickwall
+
+
+bin/test /path/to/yaffle/test/acts_as_yaffle_test.rb:4
+
+
+
+Finished in 0.004812s, 831.2949 runs/s, 415.6475 assertions/s.
+
+4 runs, 2 assertions, 0 failures, 2 errors, 0 skips
+
+</pre>
+</div>
+<p>输出表明，我们想测试的模型（Hickwall 和 Wickwall）不存在。为此，可以在 <code>test/dummy</code> 目录中运行下述命令生成：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ cd test/dummy
+$ bin/rails generate model Hickwall last_squawk:string
+$ bin/rails generate model Wickwall last_squawk:string last_tweet:string
+
+</pre>
+</div>
+<p>然后，进入虚设的应用，迁移数据库，创建所需的数据库表。首先，执行：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ cd test/dummy
+$ bin/rails db:migrate
+
+</pre>
+</div>
+<p>同时，修改 Hickwall 和 Wickwall 模型，让它们知道自己的行为像绿啄木鸟。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# test/dummy/app/models/hickwall.rb
+
+class Hickwall &lt; ApplicationRecord
+  acts_as_yaffle
+end
+
+# test/dummy/app/models/wickwall.rb
+
+class Wickwall &lt; ApplicationRecord
+  acts_as_yaffle yaffle_text_field: :last_tweet
+end
+
+</pre>
+</div>
+<p>再添加定义 <code>acts_as_yaffle</code> 方法的代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# yaffle/lib/yaffle/acts_as_yaffle.rb
+
+module Yaffle
+  module ActsAsYaffle
+    extend ActiveSupport::Concern
+
+    included do
+    end
+
+    module ClassMethods
+      def acts_as_yaffle(options = {})
+        # your code will go here
+      end
+    end
+  end
+end
+
+# test/dummy/app/models/application_record.rb
+
+class ApplicationRecord &lt; ActiveRecord::Base
+  include Yaffle::ActsAsYaffle
+
+  self.abstract_class = true
+end
+
+</pre>
+</div>
+<p>然后，回到插件的根目录（<code>cd ../..</code>），使用 <code>bin/test</code> 再次运行测试：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+# Running:
+
+.E
+
+Error:
+ActsAsYaffleTest#test_a_hickwalls_yaffle_text_field_should_be_last_squawk:
+NoMethodError: undefined method `yaffle_text_field' for #&lt;Class:0x0055974ebbe9d8&gt;
+
+
+bin/test /path/to/yaffle/test/acts_as_yaffle_test.rb:4
+
+E
+
+Error:
+ActsAsYaffleTest#test_a_wickwalls_yaffle_text_field_should_be_last_tweet:
+NoMethodError: undefined method `yaffle_text_field' for #&lt;Class:0x0055974eb8cfc8&gt;
+
+
+bin/test /path/to/yaffle/test/acts_as_yaffle_test.rb:8
+
+.
+
+Finished in 0.008263s, 484.0999 runs/s, 242.0500 assertions/s.
+
+4 runs, 2 assertions, 0 failures, 2 errors, 0 skips
+
+</pre>
+</div>
+<p>快完工了……接下来实现 <code>acts_as_yaffle</code> 方法，让测试通过：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# yaffle/lib/yaffle/acts_as_yaffle.rb
+
+module Yaffle
+  module ActsAsYaffle
+    extend ActiveSupport::Concern
+
+    included do
+    end
+
+    module ClassMethods
+      def acts_as_yaffle(options = {})
+        cattr_accessor :yaffle_text_field
+        self.yaffle_text_field = (options[:yaffle_text_field] || :last_squawk).to_s
+      end
+    end
+  end
+end
+
+# test/dummy/app/models/application_record.rb
+
+class ApplicationRecord &lt; ActiveRecord::Base
+  include Yaffle::ActsAsYaffle
+
+  self.abstract_class = true
+end
+
+</pre>
+</div>
+<p>再次运行 <code>bin/test</code>，测试应该都能通过：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+4 runs, 4 assertions, 0 failures, 0 errors, 0 skips
+
+</pre>
+</div>
+<h4 id="%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95">4.2 添加一个实例方法</h4><p>这个插件能为任何模型添加调用 <code>acts_as_yaffle</code> 方法的 <code>squawk</code> 方法。<code>squawk</code> 方法的作用很简单，设定数据库中某个字段的值。</p><p>首先，为预期行为编写一个失败测试：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# yaffle/test/acts_as_yaffle_test.rb
+require 'test_helper'
+
+class ActsAsYaffleTest &lt; ActiveSupport::TestCase
+  def test_a_hickwalls_yaffle_text_field_should_be_last_squawk
+    assert_equal "last_squawk", Hickwall.yaffle_text_field
+  end
+
+  def test_a_wickwalls_yaffle_text_field_should_be_last_tweet
+    assert_equal "last_tweet", Wickwall.yaffle_text_field
+  end
+
+  def test_hickwalls_squawk_should_populate_last_squawk
+    hickwall = Hickwall.new
+    hickwall.squawk("Hello World")
+    assert_equal "squawk! Hello World", hickwall.last_squawk
+  end
+
+  def test_wickwalls_squawk_should_populate_last_tweet
+    wickwall = Wickwall.new
+    wickwall.squawk("Hello World")
+    assert_equal "squawk! Hello World", wickwall.last_tweet
+  end
+end
+
+</pre>
+</div>
+<p>运行测试，确保最后两个测试的失败消息中有“NoMethodError: undefined method `squawk'”。然后，按照下述方式修改 <code>acts_as_yaffle.rb</code> 文件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# yaffle/lib/yaffle/acts_as_yaffle.rb
+
+module Yaffle
+  module ActsAsYaffle
+    extend ActiveSupport::Concern
+
+    included do
+    end
+
+    module ClassMethods
+      def acts_as_yaffle(options = {})
+        cattr_accessor :yaffle_text_field
+        self.yaffle_text_field = (options[:yaffle_text_field] || :last_squawk).to_s
+
+        include Yaffle::ActsAsYaffle::LocalInstanceMethods
+      end
+    end
+
+    module LocalInstanceMethods
+      def squawk(string)
+        write_attribute(self.class.yaffle_text_field, string.to_squawk)
+      end
+    end
+  end
+end
+
+# test/dummy/app/models/application_record.rb
+
+class ApplicationRecord &lt; ActiveRecord::Base
+  include Yaffle::ActsAsYaffle
+
+  self.abstract_class = true
+end
+
+</pre>
+</div>
+<p>最后再运行一次 <code>bin/test</code>，应该看到：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+6 runs, 6 assertions, 0 failures, 0 errors, 0 skips
+
+</pre>
+</div>
+<div class="note"><p>这里使用 <code>write_attribute</code> 写入模型中的字段，这只是插件与模型交互的方式之一，并不总是应该使用它。例如，也可以使用：</p></div>
+<blockquote>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+send("#{self.class.yaffle_text_field}=", string.to_squawk)
+
+</pre>
+</div>
+</blockquote>
+<h3 id="%E7%94%9F%E6%88%90%E5%99%A8">5 生成器</h3><p>gem 中可以包含生成器，只需将其放在插件的 <code>lib/generators</code> 目录中。创建生成器的更多信息参见<a href="generators.html">创建及定制 Rails 生成器和模板</a>。</p><h3 id="%E5%8F%91%E5%B8%83%20gem">6 发布 gem</h3><p>正在开发的 gem 式插件可以通过 Git 仓库轻易分享。如果想与他人分享这个 Yaffle gem，只需把代码纳入一个 Git 仓库（如 GitHub），然后在想使用它的应用中，在 Gemfile 中添加一行代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+gem 'yaffle', git: 'git://github.com/yaffle_watcher/yaffle.git'
+
+</pre>
+</div>
+<p>运行 <code>bundle install</code> 之后，应用就可以使用插件提供的功能了。</p><p>gem 式插件准备好正式发布之后，可以发布到 <a href="http://www.rubygems.org/">RubyGems</a> 网站中。关于这个话题的详细信息，参阅“<a href="http://blog.thepete.net/2010/11/creating-and-publishing-your-first-ruby.html">Creating and Publishing Your First Ruby Gem</a>”一文。</p><h3 id="RDoc%20%E6%96%87%E6%A1%A3">7 RDoc 文档</h3><p>插件稳定后可以部署了，为了他人使用方便，一定要编写文档！幸好，为插件编写文档并不难。</p><p>首先，更新 README 文件，说明插件的用法。要包含以下几个要点：</p>
+<ul>
+<li><p>你的名字</p></li>
+<li><p>插件用法</p></li>
+<li><p>如何把插件的功能添加到应用中（举几个示例，说明常见用例）</p></li>
+<li><p>提醒、缺陷或小贴士，这样能节省用户的时间</p></li>
+</ul>
+<p>README 文件写好之后，为开发者将使用的方法添加 rdoc 注释。通常，还要为不在公开 API 中的代码添加 <code>#:nodoc:</code> 注释。</p><p>添加好注释之后，进入插件所在的目录，执行：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bundle exec rake rdoc
+
+</pre>
+</div>
+<h3 id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">8 参考资料</h3>
+<ul>
+<li><p><a href="https://github.com/radar/guides/blob/master/gem-development.md">Developing a RubyGem using Bundler</a></p></li>
+<li><p><a href="http://yehudakatz.com/2010/04/02/using-gemspecs-as-intended/">Using .gemspecs as Intended</a></p></li>
+<li><p><a href="http://guides.rubygems.org/specification-reference/">Gemspec Reference</a></p></li>
+</ul>
+
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

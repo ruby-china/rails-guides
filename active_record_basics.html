@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        More Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Return to home page">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">测试 Rails 应用</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档守则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布说明</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">测试 Rails 应用</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文档守则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布说明">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li>
+<a href="#Active%20Record%20%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F">Active Record 是什么？</a>
+
+<ul>
+<li><a href="#Active%20Record%20%E6%A8%A1%E5%BC%8F">Active Record 模式</a></li>
+<li><a href="#%E5%AF%B9%E8%B1%A1%E5%85%B3%E7%B3%BB%E6%98%A0%E5%B0%84">对象关系映射</a></li>
+<li><a href="#%E7%94%A8%E4%BD%9C%20ORM%20%E6%A1%86%E6%9E%B6%E7%9A%84%20Active%20Record">用作 ORM 框架的 Active Record</a></li>
+</ul>
+</li>
+<li>
+<a href="#Active%20Record%20%E4%B8%AD%E7%9A%84%E2%80%9C%E5%A4%9A%E7%BA%A6%E5%AE%9A%E5%B0%91%E9%85%8D%E7%BD%AE%E2%80%9D%E5%8E%9F%E5%88%99">Active Record 中的“多约定少配置”原则</a>
+
+<ul>
+<li><a href="#%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A">命名约定</a></li>
+<li><a href="#%E6%A8%A1%E5%BC%8F%E7%BA%A6%E5%AE%9A">模式约定</a></li>
+</ul>
+</li>
+<li><a href="#%E5%88%9B%E5%BB%BA%20Active%20Record%20%E6%A8%A1%E5%9E%8B">创建 Active Record 模型</a></li>
+<li><a href="#%E8%A6%86%E7%9B%96%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A">覆盖命名约定</a></li>
+<li>
+<a href="#CRUD%EF%BC%9A%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE">CRUD：读写数据</a>
+
+<ul>
+<li><a href="#%E5%88%9B%E5%BB%BA">创建</a></li>
+<li><a href="#%E8%AF%BB%E5%8F%96">读取</a></li>
+<li><a href="#%E6%9B%B4%E6%96%B0">更新</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4">删除</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81">数据验证</a></li>
+<li><a href="#%E5%9B%9E%E8%B0%83">回调</a></li>
+<li><a href="#%E8%BF%81%E7%A7%BB">迁移</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h2>Active Record 基础</h2><p>本文简介 Active Record。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>对象关系映射（Object Relational Mapping，ORM）和 Active Record 是什么，以及如何在 Rails 中使用；</p></li>
+<li><p>Active Record 在 MVC 中的作用；</p></li>
+<li><p>如何使用 Active Record 模型处理保存在关系型数据库中的数据；</p></li>
+<li><p>Active Record 模式（schema）的命名约定；</p></li>
+<li><p>数据库迁移，数据验证和回调。</p></li>
+</ul>
+<h3 id="Active%20Record%20%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F">1 Active Record 是什么？</h3><p>Active Record 是 <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC</a> 中的 M（模型），负责处理数据和业务逻辑。Active Record 负责创建和使用需要持久存入数据库中的数据。Active Record 实现了 Active Record 模式，是一种对象关系映射系统。</p><h4 id="Active%20Record%20%E6%A8%A1%E5%BC%8F">1.1 Active Record 模式</h4><p><a href="http://www.martinfowler.com/eaaCatalog/activeRecord.html">Active Record 模式</a>出自 Martin Fowler 写的《<a href="https://book.douban.com/subject/4826290/">企业应用架构模式</a>》一书。在 Active Record 模式中，对象中既有持久存储的数据，也有针对数据的操作。Active Record 模式把数据存取逻辑作为对象的一部分，处理对象的用户知道如何把数据写入数据库，还知道如何从数据库中读出数据。</p><h4 id="%E5%AF%B9%E8%B1%A1%E5%85%B3%E7%B3%BB%E6%98%A0%E5%B0%84">1.2 对象关系映射</h4><p>对象关系映射（ORM）是一种技术手段，把应用中的对象和关系型数据库中的数据表连接起来。使用 ORM，应用中对象的属性和对象之间的关系可以通过一种简单的方法从数据库中获取，无需直接编写 SQL 语句，也不过度依赖特定的数据库种类。</p><h4 id="%E7%94%A8%E4%BD%9C%20ORM%20%E6%A1%86%E6%9E%B6%E7%9A%84%20Active%20Record">1.3 用作 ORM 框架的 Active Record</h4><p>Active Record 提供了很多功能，其中最重要的几个如下：</p>
+<ul>
+<li><p>表示模型和其中的数据；</p></li>
+<li><p>表示模型之间的关系；</p></li>
+<li><p>通过相关联的模型表示继承层次结构；</p></li>
+<li><p>持久存入数据库之前，验证模型；</p></li>
+<li><p>以面向对象的方式处理数据库操作。</p></li>
+</ul>
+<h3 id="Active%20Record%20%E4%B8%AD%E7%9A%84%E2%80%9C%E5%A4%9A%E7%BA%A6%E5%AE%9A%E5%B0%91%E9%85%8D%E7%BD%AE%E2%80%9D%E5%8E%9F%E5%88%99">2 Active Record 中的“多约定少配置”原则</h3><p>使用其他编程语言或框架开发应用时，可能必须要编写很多配置代码。大多数 ORM 框架都是这样。但是，如果遵循 Rails 的约定，创建 Active Record 模型时不用做多少配置（有时甚至完全不用配置）。Rails 的理念是，如果大多数情况下都要使用相同的方式配置应用，那么就应该把这定为默认的方式。所以，只有约定无法满足要求时，才要额外配置。</p><h4 id="%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A">2.1 命名约定</h4><p>默认情况下，Active Record 使用一些命名约定，查找模型和数据库表之间的映射关系。Rails 把模型的类名转换成复数，然后查找对应的数据表。例如，模型类名为 <code>Book</code>，数据表就是 <code>books</code>。Rails 提供的单复数转换功能很强大，常见和不常见的转换方式都能处理。如果类名由多个单词组成，应该按照 Ruby 的约定，使用驼峰式命名法，这时对应的数据库表将使用下划线分隔各单词。因此：</p>
+<ul>
+<li><p>数据库表名：复数，下划线分隔单词（例如 <code>book_clubs</code>）</p></li>
+<li><p>模型类名：单数，每个单词的首字母大写（例如 <code>BookClub</code>）</p></li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th>模型/类</th>
+<th>表/模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Article</td>
+<td>articles</td>
+</tr>
+<tr>
+<td>LineItem</td>
+<td>line_items</td>
+</tr>
+<tr>
+<td>Deer</td>
+<td>deers</td>
+</tr>
+<tr>
+<td>Mouse</td>
+<td>mice</td>
+</tr>
+<tr>
+<td>Person</td>
+<td>people</td>
+</tr>
+</tbody>
+</table>
+<h4 id="%E6%A8%A1%E5%BC%8F%E7%BA%A6%E5%AE%9A">2.2 模式约定</h4><p>根据字段的作用不同，Active Record 对数据库表中的字段命名也做了相应的约定：</p>
+<ul>
+<li><p><strong>外键</strong>：使用 <code>singularized_table_name_id</code> 形式命名，例如 <code>item_id</code>，<code>order_id</code>。创建模型关联后，Active Record 会查找这个字段；</p></li>
+<li><p><strong>主键</strong>：默认情况下，Active Record 使用整数字段 <code>id</code> 作为表的主键。使用 <a href="active_record_migrations.xml#active-record-migrations">Active Record 迁移</a>创建数据库表时，会自动创建这个字段；</p></li>
+</ul>
+<p>还有一些可选的字段，能为 Active Record 实例添加更多的功能：</p>
+<ul>
+<li><p><code>created_at</code>：创建记录时，自动设为当前的日期和时间；</p></li>
+<li><p><code>updated_at</code>：更新记录时，自动设为当前的日期和时间；</p></li>
+<li><p><code>lock_version</code>：在模型中添加<a href="http://api.rubyonrails.org/classes/ActiveRecord/Locking.html">乐观锁</a>；</p></li>
+<li><p><code>type</code>：让模型使用<a href="http://api.rubyonrails.org/classes/ActiveRecord/Base.html#class-ActiveRecord::Base-label-Single+table+inheritance">单表继承</a>；</p></li>
+<li><p><code>(association_name)_type</code>：存储<a href="association_basics.xml#polymorphic-associations">多态关联</a>的类型；</p></li>
+<li><p><code>(table_name)_count</code>：缓存所关联对象的数量。比如说，一个 <code>Article</code> 有多个 <code>Comment</code>，那么 <code>comments_count</code> 列存储各篇文章现有的评论数量；</p></li>
+</ul>
+<div class="note"><p>虽然这些字段是可选的，但在 Active Record 中是被保留的。如果想使用相应的功能，就不要把这些保留字段用作其他用途。例如，<code>type</code> 这个保留字段是用来指定数据库表使用单表继承（Single Table Inheritance，STI）的。如果不用单表继承，请使用其他的名称，例如“context”，这也能表明数据的作用。</p></div><h3 id="%E5%88%9B%E5%BB%BA%20Active%20Record%20%E6%A8%A1%E5%9E%8B">3 创建 Active Record 模型</h3><p>创建 Active Record 模型的过程很简单，只要继承 <code>ApplicationRecord</code> 类就行了：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Product &lt; ApplicationRecord
+end
+
+</pre>
+</div>
+<p>上面的代码会创建 <code>Product</code> 模型，对应于数据库中的 <code>products</code> 表。同时，<code>products</code> 表中的字段也映射到 <code>Product</code> 模型实例的属性上。假如 <code>products</code> 表由下面的 SQL 语句创建：</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+CREATE TABLE products (
+   id int(11) NOT NULL auto_increment,
+   name varchar(255),
+   PRIMARY KEY  (id)
+);
+
+</pre>
+</div>
+<p>按照这样的数据表结构，可以编写下面的代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+p = Product.new
+p.name = "Some Book"
+puts p.name # "Some Book"
+
+</pre>
+</div>
+<h3 id="%E8%A6%86%E7%9B%96%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A">4 覆盖命名约定</h3><p>如果想使用其他的命名约定，或者在 Rails 应用中使用即有的数据库可以吗？没问题，默认的约定能轻易覆盖。</p><p><code>ApplicationRecord</code> 继承自 <code>ActiveRecord::Base</code>，后者定义了一系列有用的方法。使用 <code>ActiveRecord::Base.table_name=</code> 方法可以指定要使用的表名：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Product &lt; ApplicationRecord
+  self.table_name = "my_products"
+end
+
+</pre>
+</div>
+<p>如果这么做，还要调用 <code>set_fixture_class</code> 方法，手动指定固件（my_products.yml）的类名：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ProductTest &lt; ActiveSupport::TestCase
+  set_fixture_class my_products: Product
+  fixtures :my_products
+  ...
+end
+
+</pre>
+</div>
+<p>还可以使用 <code>ActiveRecord::Base.primary_key=</code> 方法指定表的主键：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Product &lt; ApplicationRecord
+  self.primary_key = "product_id"
+end
+
+</pre>
+</div>
+<h3 id="CRUD%EF%BC%9A%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE">5 CRUD：读写数据</h3><p>CURD 是四种数据操作的简称：C 表示创建，R 表示读取，U 表示更新，D 表示删除。Active Record 自动创建了处理数据表中数据的方法。</p><h4 id="%E5%88%9B%E5%BB%BA">5.1 创建</h4><p>Active Record 对象可以使用散列创建，在块中创建，或者创建后手动设置属性。<code>new</code> 方法创建一个新对象，<code>create</code> 方法创建新对象，并将其存入数据库。</p><p>例如，<code>User</code> 模型中有两个属性，<code>name</code> 和 <code>occupation</code>。调用 <code>create</code> 方法会创建一个新记录，并将其存入数据库：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+user = User.create(name: "David", occupation: "Code Artist")
+
+</pre>
+</div>
+<p><code>new</code> 方法实例化一个新对象，但不保存：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+user = User.new
+user.name = "David"
+user.occupation = "Code Artist"
+
+</pre>
+</div>
+<p>调用 <code>user.save</code> 可以把记录存入数据库。</p><p>最后，如果在 <code>create</code> 和 <code>new</code> 方法中使用块，会把新创建的对象拉入块中，初始化对象：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+user = User.new do |u|
+  u.name = "David"
+  u.occupation = "Code Artist"
+end
+
+</pre>
+</div>
+<h4 id="%E8%AF%BB%E5%8F%96">5.2 读取</h4><p>Active Record 为读取数据库中的数据提供了丰富的 API。下面举例说明。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 返回所有用户组成的集合
+users = User.all
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 返回第一个用户
+user = User.first
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 返回第一个名为 David 的用户
+david = User.find_by(name: 'David')
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 查找所有名为 David，职业为 Code Artists 的用户，而且按照 created_at 反向排列
+users = User.where(name: 'David', occupation: 'Code Artist').order(created_at: :desc)
+
+</pre>
+</div>
+<p><a href="active_record_querying.html">Active Record 查询接口</a>会详细介绍查询 Active Record 模型的方法。</p><h4 id="%E6%9B%B4%E6%96%B0">5.3 更新</h4><p>检索到 Active Record 对象后，可以修改其属性，然后再将其存入数据库。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+user = User.find_by(name: 'David')
+user.name = 'Dave'
+user.save
+
+</pre>
+</div>
+<p>还有种使用散列的简写方式，指定属性名和属性值，例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+user = User.find_by(name: 'David')
+user.update(name: 'Dave')
+
+</pre>
+</div>
+<p>一次更新多个属性时使用这种方法最方便。如果想批量更新多个记录，可以使用类方法 <code>update_all</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+User.update_all "max_login_attempts = 3, must_change_password = 'true'"
+
+</pre>
+</div>
+<h4 id="%E5%88%A0%E9%99%A4">5.4 删除</h4><p>类似地，检索到 Active Record 对象后还可以将其销毁，从数据库中删除。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+user = User.find_by(name: 'David')
+user.destroy
+
+</pre>
+</div>
+<h3 id="%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81">6 数据验证</h3><p>在存入数据库之前，Active Record 还可以验证模型。模型验证有很多方法，可以检查属性值是否不为空，是否是唯一的、没有在数据库中出现过，等等。</p><p>把数据存入数据库之前进行验证是十分重要的步骤，所以调用 <code>save</code> 和 <code>update</code> 方法时会做数据验证。验证失败时返回 <code>false</code>，此时不会对数据库做任何操作。这两个方法都有对应的爆炸方法（<code>save!</code> 和 <code>update!</code>）。爆炸方法要严格一些，如果验证失败，抛出 <code>ActiveRecord::RecordInvalid</code> 异常。下面举个简单的例子：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ApplicationRecord
+  validates :name, presence: true
+end
+
+user = User.new
+user.save  # =&gt; false
+user.save! # =&gt; ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
+
+</pre>
+</div>
+<p><a href="active_record_validations.html">Active Record 数据验证</a>会详细介绍数据验证。</p><h3 id="%E5%9B%9E%E8%B0%83">7 回调</h3><p>Active Record 回调用于在模型生命周期的特定事件上绑定代码，相应的事件发生时，执行绑定的代码。例如创建新纪录时、更新记录时、删除记录时，等等。<a href="active_record_callbacks.html">Active Record 回调</a>会详细介绍回调。</p><h3 id="%E8%BF%81%E7%A7%BB">8 迁移</h3><p>Rails 提供了一个 DSL（Domain-Specific Language）用来处理数据库模式，叫做“迁移”。迁移的代码存储在特定的文件中，通过 <code>rails</code> 命令执行，可以用在 Active Record 支持的所有数据库上。下面这个迁移新建一个表：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class CreatePublications &lt; ActiveRecord::Migration[5.0]
+  def change
+    create_table :publications do |t|
+      t.string :title
+      t.text :description
+      t.references :publication_type
+      t.integer :publisher_id
+      t.string :publisher_type
+      t.boolean :single_issue
+
+      t.timestamps
+    end
+    add_index :publications, :publication_type_id
+  end
+end
+
+</pre>
+</div>
+<p>Rails 会跟踪哪些迁移已经应用到数据库上，还提供了回滚功能。为了创建表，要执行 <code>rails db:migrate</code> 命令。如果想回滚，则执行 <code>rails db:rollback</code> 命令。</p><p>注意，上面的代码与具体的数据库种类无关，可用于 MySQL、PostgreSQL、Oracle 等数据库。关于迁移的详细介绍，参阅<a href="active_record_migrations.html">Active Record 迁移</a>。</p>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

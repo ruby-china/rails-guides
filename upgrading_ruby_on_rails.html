@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        More Ruby on Rails
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="Return to home page">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">测试 Rails 应用</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档守则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布说明</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">测试 Rails 应用</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文档守则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南守则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布说明">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布说明</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布说明</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布说明</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布说明</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布说明</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布说明</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布说明</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布说明</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布说明</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li>
+<a href="#%E4%B8%80%E8%88%AC%E5%BB%BA%E8%AE%AE">一般建议</a>
+
+<ul>
+<li><a href="#%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E5%BA%A6">测试覆盖度</a></li>
+<li><a href="#%E5%8D%87%E7%BA%A7%E8%BF%87%E7%A8%8B">升级过程</a></li>
+<li><a href="#Ruby%20%E7%89%88%E6%9C%AC">Ruby 版本</a></li>
+<li><a href="#update%20%E4%BB%BB%E5%8A%A1"><code>update</code> 任务</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E4%BB%8E%20Rails%204.2%20%E5%8D%87%E7%BA%A7%E5%88%B0%205.0">从 Rails 4.2 升级到 5.0</a>
+
+<ul>
+<li><a href="#%E8%A6%81%E6%B1%82%20Ruby%202.2.2+">要求 Ruby 2.2.2+</a></li>
+<li><a href="#%E7%8E%B0%E5%9C%A8%20Active%20Record%20%E6%A8%A1%E5%9E%8B%E9%BB%98%E8%AE%A4%E7%BB%A7%E6%89%BF%E8%87%AA%20ApplicationRecord">现在 Active Record 模型默认继承自 ApplicationRecord</a></li>
+<li><a href="#%E9%80%9A%E8%BF%87%20throw(:abort)%20%E5%81%9C%E6%AD%A2%E5%9B%9E%E8%B0%83%E9%93%BE">通过 <code>throw(:abort)</code> 停止回调链</a></li>
+<li><a href="#%E7%8E%B0%E5%9C%A8%20ActiveJob%20%E9%BB%98%E8%AE%A4%E7%BB%A7%E6%89%BF%E8%87%AA%20ApplicationJob">现在 ActiveJob 默认继承自 ApplicationJob</a></li>
+<li><a href="#Rails%20%E6%8E%A7%E5%88%B6%E5%99%A8%E6%B5%8B%E8%AF%95">Rails 控制器测试</a></li>
+<li><a href="#%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E5%90%AF%E5%8A%A8%E5%90%8E%E4%B8%8D%E5%86%8D%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD">在生产环境启动后不再自动加载</a></li>
+<li><a href="#XML%20%E5%BA%8F%E5%88%97%E5%8C%96">XML 序列化</a></li>
+<li><a href="#%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81%E6%97%A7%E7%9A%84%20mysql%20%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%82%E9%85%8D%E5%99%A8">不再支持旧的 <code>mysql</code> 数据库适配器</a></li>
+<li><a href="#%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81%20debugger">不再支持 debugger</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%20bin/rails%20%E8%BF%90%E8%A1%8C%E4%BB%BB%E5%8A%A1%E5%92%8C%E6%B5%8B%E8%AF%95">使用 bin/rails 运行任务和测试</a></li>
+<li><a href="#ActionController::Parameters%20%E4%B8%8D%E5%86%8D%E7%BB%A7%E6%89%BF%E8%87%AA%20HashWithIndifferentAccess"><code>ActionController::Parameters</code> 不再继承自 <code>HashWithIndifferentAccess</code></a></li>
+<li><a href="#protect_from_forgery%20%E7%9A%84%E9%80%89%E9%A1%B9%E7%8E%B0%E5%9C%A8%E9%BB%98%E8%AE%A4%E4%B8%BA%20prepend:%20false"><code>protect_from_forgery</code> 的选项现在默认为 <code>prepend: false</code></a></li>
+<li><a href="#%E9%BB%98%E8%AE%A4%E7%9A%84%E6%A8%A1%E6%9D%BF%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F%E7%8E%B0%E5%9C%A8%E6%98%AF%20raw">默认的模板处理程序现在是 raw</a></li>
+<li><a href="#%E4%B8%BA%E6%A8%A1%E6%9D%BF%E4%BE%9D%E8%B5%96%E6%B7%BB%E5%8A%A0%E9%80%9A%E9%85%8D%E7%AC%A6%E5%8C%B9%E9%85%8D">为模板依赖添加通配符匹配</a></li>
+<li><a href="#%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81%20protected_attributes%20gem">不再支持 <code>protected_attributes</code> gem</a></li>
+<li><a href="#%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81%20activerecord-deprecated_finders%20gem">不再支持 <code>activerecord-deprecated_finders</code> gem</a></li>
+<li><a href="#ActiveSupport::TestCase%20%E7%8E%B0%E5%9C%A8%E9%BB%98%E8%AE%A4%E9%9A%8F%E6%9C%BA%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95"><code>ActiveSupport::TestCase</code> 现在默认随机运行测试</a></li>
+<li><a href="#ActionController::Live%20%E5%8F%98%E4%B8%BA%E4%B8%80%E4%B8%AA%20Concern"><code>ActionController::Live</code> 变为一个 <code>Concern</code></a></li>
+<li><a href="#%E6%A1%86%E6%9E%B6%E7%9A%84%E6%96%B0%E9%BB%98%E8%AE%A4%E5%80%BC">框架的新默认值</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E4%BB%8E%20Rails%204.1%20%E5%8D%87%E7%BA%A7%E5%88%B0%204.2">从 Rails 4.1 升级到 4.2</a>
+
+<ul>
+<li><a href="#Web%20Console">Web Console</a></li>
+<li><a href="#responders%20gem"><code>responders</code> gem</a></li>
+<li><a href="#%E4%BA%8B%E5%8A%A1%E5%9B%9E%E8%B0%83%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86">事务回调中的错误处理</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%9A%84%E8%BF%90%E8%A1%8C%E9%A1%BA%E5%BA%8F">测试用例的运行顺序</a></li>
+<li><a href="#%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E5%B1%9E%E6%80%A7">序列化的属性</a></li>
+<li><a href="#%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E7%9A%84%E6%97%A5%E5%BF%97%E7%AD%89%E7%BA%A7">生产环境的日志等级</a></li>
+<li><a href="#%E5%9C%A8%20Rails%20%E6%A8%A1%E6%9D%BF%E4%B8%AD%E4%BD%BF%E7%94%A8%20after_bundle">在 Rails 模板中使用 <code>after_bundle</code></a></li>
+<li><a href="#rails-html-sanitizer">rails-html-sanitizer</a></li>
+<li><a href="#Rails%20DOM%20%E6%B5%8B%E8%AF%95">Rails DOM 测试</a></li>
+<li><a href="#%E9%81%AE%E8%94%BD%E7%9C%9F%E4%BC%AA%E4%BB%A4%E7%89%8C">遮蔽真伪令牌</a></li>
+<li><a href="#Action%20Mailer">Action Mailer</a></li>
+<li><a href="#%E6%94%AF%E6%8C%81%E5%A4%96%E9%94%AE">支持外键</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E4%BB%8E%20Rails%204.0%20%E5%8D%87%E7%BA%A7%E5%88%B0%204.1">从 Rails 4.0 升级到 4.1</a>
+
+<ul>
+<li><a href="#%E4%BF%9D%E6%8A%A4%E8%BF%9C%E7%A8%8B%20%3Cscript%3E%20%E6%A0%87%E7%AD%BE%E5%85%8D%E5%8F%97%20CSRF%20%E6%94%BB%E5%87%BB">保护远程 <code>&lt;script&gt;</code> 标签免受 CSRF 攻击</a></li>
+<li><a href="#Spring">Spring</a></li>
+<li><a href="#config/secrets.yml"><code>config/secrets.yml</code></a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E8%BE%85%E5%8A%A9%E6%96%B9%E6%B3%95%E7%9A%84%E5%8F%98%E5%8C%96">测试辅助方法的变化</a></li>
+<li><a href="#cookies%20%E5%BA%8F%E5%88%97%E5%8C%96%E7%A8%8B%E5%BA%8F">cookies 序列化程序</a></li>
+<li><a href="#%E9%97%AA%E7%8E%B0%E6%B6%88%E6%81%AF%E7%BB%93%E6%9E%84%E7%9A%84%E5%8F%98%E5%8C%96">闪现消息结构的变化</a></li>
+<li><a href="#JSON%20%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F%E7%9A%84%E5%8F%98%E5%8C%96">JSON 处理方式的变化</a></li>
+<li><a href="#%E8%A1%8C%E5%86%85%E5%9B%9E%E8%B0%83%E5%9D%97%E4%B8%AD%20return%20%E7%9A%84%E7%94%A8%E6%B3%95">行内回调块中 <code>return</code> 的用法</a></li>
+<li><a href="#Active%20Record%20%E5%9B%BA%E4%BB%B6%E4%B8%AD%E5%AE%9A%E4%B9%89%E7%9A%84%E6%96%B9%E6%B3%95">Active Record 固件中定义的方法</a></li>
+<li><a href="#i18n%20%E5%BC%BA%E5%88%B6%E6%A3%80%E6%9F%A5%E5%8F%AF%E7%94%A8%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%8C%96">i18n 强制检查可用的本地化</a></li>
+<li><a href="#%E5%9C%A8%20Relation%20%E4%B8%8A%E8%B0%83%E7%94%A8%E7%9A%84%E5%8F%AF%E5%8F%98%E6%96%B9%E6%B3%95">在 Relation 上调用的可变方法</a></li>
+<li><a href="#%E9%BB%98%E8%AE%A4%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%9A%84%E5%8F%98%E5%8C%96">默认作用域的变化</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B8%B2%E6%9F%93%E5%86%85%E5%AE%B9">使用字符串渲染内容</a></li>
+<li><a href="#PostgreSQL%20%E7%9A%84%20json%20%E5%92%8C%20hstore%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">PostgreSQL 的 json 和 hstore 数据类型</a></li>
+<li><a href="#ActiveSupport::Callbacks%20%E6%98%8E%E7%A1%AE%E8%A6%81%E6%B1%82%E4%BD%BF%E7%94%A8%E5%9D%97"><code>ActiveSupport::Callbacks</code> 明确要求使用块</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E4%BB%8E%20Rails%203.2%20%E5%8D%87%E7%BA%A7%E5%88%B0%204.0">从 Rails 3.2 升级到 4.0</a>
+
+<ul>
+<li><a href="#HTTP%20PATCH">HTTP PATCH</a></li>
+<li><a href="#Gemfile">Gemfile</a></li>
+<li><a href="#vendor/plugins">vendor/plugins</a></li>
+<li><a href="#Active%20Record">Active Record</a></li>
+<li><a href="#Active%20Resource">Active Resource</a></li>
+<li><a href="#Active%20Model">Active Model</a></li>
+<li><a href="#Action%20Pack">Action Pack</a></li>
+<li><a href="#Active%20Support">Active Support</a></li>
+<li><a href="#%E8%BE%85%E5%8A%A9%E6%96%B9%E6%B3%95%E7%9A%84%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F">辅助方法的加载顺序</a></li>
+<li><a href="#Active%20Record%20%E8%A7%82%E6%B5%8B%E5%99%A8%E5%92%8C%20Action%20Controller%20%E6%B8%85%E6%B4%81%E5%99%A8">Active Record 观测器和 Action Controller 清洁器</a></li>
+<li><a href="#sprockets-rails">sprockets-rails</a></li>
+<li><a href="#sass-rails">sass-rails</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h2>Ruby on Rails 升级指南</h2><p>本文说明把 Ruby on Rails 升级到新版本的步骤。各个版本的发布记中也有升级步骤。</p><h3 id="%E4%B8%80%E8%88%AC%E5%BB%BA%E8%AE%AE">1 一般建议</h3><p>计划升级现有项目之前，应该确定有升级的必要。你要考虑几个因素：对新功能的需求，难于支持旧代码，以及你的时间和技能，等等。</p><h4 id="%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E5%BA%A6">1.1 测试覆盖度</h4><p>为了确保升级后应用依然能正常运行，最好的方式是具有足够的测试覆盖度。如果没有自动化测试保障应用，你就要自己花时间检查有变化的部分。对升级 Rails 来说，你要检查应用的每个功能。不要给自己找麻烦，在升级之前一定要保障有足够的测试覆盖度。</p><h4 id="%E5%8D%87%E7%BA%A7%E8%BF%87%E7%A8%8B">1.2 升级过程</h4><p>升级 Rails 版本时，最好放慢脚步，一次升级一个小版本，充分利用弃用提醒。Rails 版本号的格式是“大版本.小版本.补丁版本”。大版本和小版本允许修改公开 API，因此可能导致你的应用出错。补丁版本只修正缺陷，不改变公开 API。</p><p>升级过程如下：</p>
+<ol>
+<li><p> 编写测试，确保能通过。</p></li>
+<li><p> 升级到当前版本的最新补丁版本。</p></li>
+<li><p> 修正测试和弃用的功能。</p></li>
+<li><p> 升级到下一个小版本的补丁版本。</p></li>
+</ol>
+<p>重复上述过程，直到你所选的版本为止。每次升级版本都要修改 <code>Gemfile</code> 中的 Rails 版本号（以及其他需要升级的 gem），再运行 <code>bundle update</code>。然后，运行下文所述的 <code>update</code> 任务，更新配置文件。最后运行测试。</p><p>Rails 的所有版本在<a href="https://rubygems.org/gems/rails/versions">这个页面</a>中列出。</p><h4 id="Ruby%20%E7%89%88%E6%9C%AC">1.3 Ruby 版本</h4><p>发布新版 Rails 时，一般会紧跟最新的 Ruby 版本：</p>
+<ul>
+<li><p>Rails 5 要求 Ruby 2.2.2 或以上版本</p></li>
+<li><p>Rails 4 建议使用 Ruby 2.0，要求 1.9.3 或以上版本</p></li>
+<li><p>Rails 3.2.x 是支持 Ruby 1.8.7 的最后一个版本</p></li>
+<li><p>Rails 3 及以上版本要求 Ruby 1.8.7 或以上版本。官方不再支持之前的 Ruby 版本，应该尽早升级。</p></li>
+</ul>
+<div class="info"><p>Ruby 1.8.7 p248 和 p249 有一些缺陷，会导致 Rails 崩溃。 Ruby Enterprise Edition 1.8.7-2010.02 修正了这些缺陷。对 1.9 系列来说，1.9.1 完全不能用，因此如果你使用 1.9.x 的话，应该直接跳到 1.9.3。</p></div><h4 id="update%20%E4%BB%BB%E5%8A%A1">1.4 <code>update</code> 任务</h4><p>Rails 提供了 <code>app:update</code> 任务（4.2 及之前的版本是 <code>rails:update</code>）。更新 <code>Gemfile</code> 中的 Rails 版本号之后，运行这个任务。这个任务在交互式会话中协助你创建新文件和修改旧文件。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails app:update
+   identical  config/boot.rb
+       exist  config
+    conflict  config/routes.rb
+Overwrite /myapp/config/routes.rb? (enter "h" for help) [Ynaqdh]
+       force  config/routes.rb
+    conflict  config/application.rb
+Overwrite /myapp/config/application.rb? (enter "h" for help) [Ynaqdh]
+       force  config/application.rb
+    conflict  config/environment.rb
+...
+
+</pre>
+</div>
+<p>别忘了检查差异，以防有意料之外的改动。</p><h3 id="%E4%BB%8E%20Rails%204.2%20%E5%8D%87%E7%BA%A7%E5%88%B0%205.0">2 从 Rails 4.2 升级到 5.0</h3><p>Rails 5.0 的变动参见<a href="5_0_release_notes.xml#ruby-on-rails-5-0-release-notes">发布记</a>。</p><h4 id="%E8%A6%81%E6%B1%82%20Ruby%202.2.2+">2.1 要求 Ruby 2.2.2+</h4><p>从 Ruby on Rails 5.0 开始，只支持 Ruby 2.2.2+。升级之前，确保你使用的是 Ruby 2.2.2 或以上版本。</p><h4 id="%E7%8E%B0%E5%9C%A8%20Active%20Record%20%E6%A8%A1%E5%9E%8B%E9%BB%98%E8%AE%A4%E7%BB%A7%E6%89%BF%E8%87%AA%20ApplicationRecord">2.2 现在 Active Record 模型默认继承自 ApplicationRecord</h4><p>在 Rails 4.2 中，Active Record 模型继承自 <code>ActiveRecord::Base</code>。在 Rails 5.0 中，所有模型继承自 <code>ApplicationRecord</code>。</p><p>现在，<code>ApplicationRecord</code> 是应用中所有模型的超类，而不是 <code>ActionController::Base</code>，这样结构就与 <code>ApplicationController</code> 一样了，因此可以在一个地方为应用中的所有模型配置行为。</p><p>从 Rails 4.2 升级到 5.0 时，要在 <code>app/models/</code> 目录中创建 <code>application_record.rb</code> 文件，写入下述内容：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ApplicationRecord &lt; ActiveRecord::Base
+  self.abstract_class = true
+end
+
+</pre>
+</div>
+<p>然后让所有模型继承它。</p><h4 id="%E9%80%9A%E8%BF%87%20throw(:abort)%20%E5%81%9C%E6%AD%A2%E5%9B%9E%E8%B0%83%E9%93%BE">2.3 通过 <code>throw(:abort)</code> 停止回调链</h4><p>在 Rails 4.2 中，如果 Active Record 和 Active Model 中的一个前置回调返回 <code>false</code>，整个回调链停止。也就是说，后续前置回调不会执行，回调中的操作也不执行。</p><p>在 Rails 5.0 中，Active Record 和 Active Model 中的前置回调返回 <code>false</code> 时不再停止回调链。如果想停止，要调用 <code>throw(:abort)</code>。</p><p>从 Rails 4.2 升级到 5.0 时，返回 <code>false</code> 的前置回调依然会停止回调链，但是你会收到一个弃用提醒，告诉你未来会像前文所述那样变化。</p><p>准备妥当之后，可以在 <code>config/application.rb</code> 文件中添加下述配置，启用新的行为（弃用消息不再显示）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+ActiveSupport.halt_callback_chains_on_return_false = false
+
+</pre>
+</div>
+<p>注意，这个选项不影响 Active Support 回调，因为不管返回什么值，这种回调链都不停止。</p><p>详情参见 <a href="https://github.com/rails/rails/pull/17227">#17227 工单</a>。</p><h4 id="%E7%8E%B0%E5%9C%A8%20ActiveJob%20%E9%BB%98%E8%AE%A4%E7%BB%A7%E6%89%BF%E8%87%AA%20ApplicationJob">2.4 现在 ActiveJob 默认继承自 ApplicationJob</h4><p>在 Rails 4.2 中，Active Job 类继承自 <code>ActiveJob::Base</code>。在 Rails 5.0 中，这一行为变了，现在继承自 <code>ApplicationJob</code>。</p><p>从 Rails 4.2 升级到 5.0 时，要在 <code>app/jobs/</code> 目录中创建 <code>application_job.rb</code> 文件，写入下述内容：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ApplicationJob &lt; ActiveJob::Base
+end
+
+</pre>
+</div>
+<p>然后让所有作业类继承它。</p><p>详情参见 <a href="https://github.com/rails/rails/pull/19034">#19034 工单</a>。</p><h4 id="Rails%20%E6%8E%A7%E5%88%B6%E5%99%A8%E6%B5%8B%E8%AF%95">2.5 Rails 控制器测试</h4><p><code>assigns</code> 和 <code>assert_template</code> 提取到 <code>rails-controller-testing</code> gem 中了。如果想继续在控制器测试中使用这两个方法，把 <code>gem 'rails-controller-testing'</code> 添加到 <code>Gemfile</code> 中。</p><p>如果使用 RSpec 做测试，还要做些配置，详情参见这个 gem 的文档。</p><h4 id="%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E5%90%AF%E5%8A%A8%E5%90%8E%E4%B8%8D%E5%86%8D%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD">2.6 在生产环境启动后不再自动加载</h4><p>现在，在生产环境启动后默认不再自动加载。</p><p>及早加载发生在应用的启动过程中，因此顶层常量不受影响，依然能自动加载，无需引入相应的文件。</p><p>层级较深的常量与常规的代码定义体一样，只在运行时执行，因此也不受影响，因为定义它们的文件在启动过程中及早加载了。</p><p>针对这一变化，大多数应用都无需改动。在少有的情况下，如果生产环境需要自动加载，把 <code>Rails.application.config.enable_dependency_loading</code> 设为 <code>true</code>。</p><h4 id="XML%20%E5%BA%8F%E5%88%97%E5%8C%96">2.7 XML 序列化</h4><p><code>ActiveModel::Serializers::Xml</code> 从 Rails 中提取出来，变成 <code>activemodel-serializers-xml</code> gem 了。如果想继续在应用中使用 XML 序列化，把 <code>gem 'activemodel-serializers-xml'</code> 添加到 <code>Gemfile</code> 中。</p><h4 id="%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81%E6%97%A7%E7%9A%84%20mysql%20%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%82%E9%85%8D%E5%99%A8">2.8 不再支持旧的 <code>mysql</code> 数据库适配器</h4><p>Rails 5 不再支持旧的 <code>mysql</code> 数据库适配器。多数用户应该换用 <code>mysql2</code>。找到维护人员之后，会作为一个单独的 gem 发布。</p><h4 id="%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81%20debugger">2.9 不再支持 debugger</h4><p>Rails 5 要求的 Ruby 2.2 不支持 <code>debugger</code>。换用 <code>byebug</code>。</p><h4 id="%E4%BD%BF%E7%94%A8%20bin/rails%20%E8%BF%90%E8%A1%8C%E4%BB%BB%E5%8A%A1%E5%92%8C%E6%B5%8B%E8%AF%95">2.10 使用 bin/rails 运行任务和测试</h4><p>Rails 5 支持使用 <code>bin/rails</code> 运行任务和测试。一般来说，还有相应的 rake 任务，但有些完全移过来了。</p><p>新的测试运行程序使用 <code>bin/rails test</code> 运行。</p><p><code>rake dev:cache</code> 现在变成了 <code>rails dev:cache</code>。</p><p>执行 <code>bin/rails</code> 命令查看所有可用的命令。</p><h4 id="ActionController::Parameters%20%E4%B8%8D%E5%86%8D%E7%BB%A7%E6%89%BF%E8%87%AA%20HashWithIndifferentAccess">2.11 <code>ActionController::Parameters</code> 不再继承自 <code>HashWithIndifferentAccess</code>
+</h4><p>现在，应用中的 <code>params</code> 不再返回散列。如果已经在参数上调用了 <code>permit</code>，无需做任何修改。如果使用 <code>slice</code> 及其他需要读取散列的方法，而不管是否调用了 <code>permitted?</code>，需要更新应用，首先调用 <code>permit</code>，然后转换成散列。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+params.permit([:proceed_to, :return_to]).to_h
+
+</pre>
+</div>
+<h4 id="protect_from_forgery%20%E7%9A%84%E9%80%89%E9%A1%B9%E7%8E%B0%E5%9C%A8%E9%BB%98%E8%AE%A4%E4%B8%BA%20prepend:%20false">2.12 <code>protect_from_forgery</code> 的选项现在默认为 <code>prepend: false</code>
+</h4><p><code>protect_from_forgery</code> 的选项现在默认为 <code>prepend: false</code>，这意味着，在应用中调用 <code>protect_from_forgery</code> 时，会插入回调链。如果始终想让 <code>protect_from_forgery</code> 先运行，应该修改应用，使用 <code>protect_from_forgery prepend: true</code>。</p><h4 id="%E9%BB%98%E8%AE%A4%E7%9A%84%E6%A8%A1%E6%9D%BF%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F%E7%8E%B0%E5%9C%A8%E6%98%AF%20raw">2.13 默认的模板处理程序现在是 raw</h4><p>文件扩展名中没有模板处理程序的，现在使用 raw 处理程序。以前，Rails 使用 ERB 模板处理程序渲染这种文件。</p><p>如果不想让 raw 处理程序处理文件，应该添加文件扩展名，让相应的模板处理程序解析。</p><h4 id="%E4%B8%BA%E6%A8%A1%E6%9D%BF%E4%BE%9D%E8%B5%96%E6%B7%BB%E5%8A%A0%E9%80%9A%E9%85%8D%E7%AC%A6%E5%8C%B9%E9%85%8D">2.14 为模板依赖添加通配符匹配</h4><p>现在可以使用通配符匹配模板依赖。例如，如果像下面这样定义模板：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% # Template Dependency: recordings/threads/events/subscribers_changed %&gt;
+&lt;% # Template Dependency: recordings/threads/events/completed %&gt;
+&lt;% # Template Dependency: recordings/threads/events/uncompleted %&gt;
+
+</pre>
+</div>
+<p>现在可以使用通配符一次调用所有依赖：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% # Template Dependency: recordings/threads/events/* %&gt;
+
+</pre>
+</div>
+<h4 id="%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81%20protected_attributes%20gem">2.15 不再支持 <code>protected_attributes</code> gem</h4><p>Rails 5 不再支持 <code>protected_attributes</code> gem。</p><h4 id="%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81%20activerecord-deprecated_finders%20gem">2.16 不再支持 <code>activerecord-deprecated_finders</code> gem</h4><p>Rails 5 不再支持 <code>activerecord-deprecated_finders</code> gem。</p><h4 id="ActiveSupport::TestCase%20%E7%8E%B0%E5%9C%A8%E9%BB%98%E8%AE%A4%E9%9A%8F%E6%9C%BA%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95">2.17 <code>ActiveSupport::TestCase</code> 现在默认随机运行测试</h4><p>应用中的测试现在默认的运行顺序是 <code>:random</code>，不再是 <code>:sorted</code>。如果想改回 <code>:sorted</code>，使用下述配置选项：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# config/environments/test.rb
+Rails.application.configure do
+  config.active_support.test_order = :sorted
+end
+
+</pre>
+</div>
+<h4 id="ActionController::Live%20%E5%8F%98%E4%B8%BA%E4%B8%80%E4%B8%AA%20Concern">2.18 <code>ActionController::Live</code> 变为一个 <code>Concern</code>
+</h4><p>如果在引入控制器的模块中引入了 <code>ActionController::Live</code>，还应该使用 <code>ActiveSupport::Concern</code> 扩展模块。或者，也可以使用 <code>self.included</code> 钩子在引入 <code>StreamingSupport</code> 之后直接把 <code>ActionController::Live</code> 引入控制器。</p><p>这意味着，如果应用有自己的流模块，下述代码在生产环境不可用：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# This is a work-around for streamed controllers performing authentication with Warden/Devise.
+# See https://github.com/plataformatec/devise/issues/2332
+# Authenticating in the router is another solution as suggested in that issue
+class StreamingSupport
+  include ActionController::Live # this won't work in production for Rails 5
+  # extend ActiveSupport::Concern # unless you uncomment this line.
+
+  def process(name)
+    super(name)
+  rescue ArgumentError =&gt; e
+    if e.message == 'uncaught throw :warden'
+      throw :warden
+    else
+      raise e
+    end
+  end
+end
+
+</pre>
+</div>
+<h4 id="%E6%A1%86%E6%9E%B6%E7%9A%84%E6%96%B0%E9%BB%98%E8%AE%A4%E5%80%BC">2.19 框架的新默认值</h4><h5 id="Active%20Record%20belongs_to_required_by_default%20%E9%80%89%E9%A1%B9">2.19.1 Active Record <code>belongs_to_required_by_default</code> 选项</h5><p>如果关联不存在，<code>belongs_to</code> 现在默认触发验证错误。</p><p>这一行为可在具体的关联中使用 <code>optional: true</code> 选项禁用。</p><p>新应用默认自动配置这一行为。如果现有项目想使用这一特性，可以在初始化脚本中启用：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.active_record.belongs_to_required_by_default = true
+
+</pre>
+</div>
+<h5 id="%E6%AF%8F%E4%B8%AA%E8%A1%A8%E5%8D%95%E9%83%BD%E6%9C%89%E8%87%AA%E5%B7%B1%E7%9A%84%20CSRF%20%E4%BB%A4%E7%89%8C">2.19.2 每个表单都有自己的 CSRF 令牌</h5><p>现在，Rails 5 支持每个表单有自己的 CSRF 令牌，从而降低 JavaScript 创建的表单遭受代码注入攻击的风险。启用这个选项后，应用中的表单都有自己的 CSRF 令牌，专门针对那个表单的动作和方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_controller.per_form_csrf_tokens = true
+
+</pre>
+</div>
+<h5 id="%E4%BC%AA%E9%80%A0%E4%BF%9D%E6%8A%A4%E6%A3%80%E6%9F%A5%E6%BA%90">2.19.3 伪造保护检查源</h5><p>现在，可以配置应用检查 HTTP <code>Origin</code> 首部和网站的源，增加一道 CSRF 防线。把下述配置选项设为 <code>true</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_controller.forgery_protection_origin_check = true
+
+</pre>
+</div>
+<h5 id="%E5%85%81%E8%AE%B8%E9%85%8D%E7%BD%AE%20Action%20Mailer%20%E9%98%9F%E5%88%97%E7%9A%84%E5%90%8D%E7%A7%B0">2.19.4 允许配置 Action Mailer 队列的名称</h5><p>默认的邮件程序队列名为 <code>mailers</code>。这个配置选项允许你全局修改队列名称。在配置文件中添加下述内容：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_mailer.deliver_later_queue_name = :new_queue_name
+
+</pre>
+</div>
+<h5 id="Action%20Mailer%20%E8%A7%86%E5%9B%BE%E6%94%AF%E6%8C%81%E7%89%87%E6%AE%B5%E7%BC%93%E5%AD%98">2.19.5 Action Mailer 视图支持片段缓存</h5><p>在配置文件中设定 <code>config.action_mailer.perform_caching</code> 选项，决定是否让 Action Mailer 视图支持缓存。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_mailer.perform_caching = true
+
+</pre>
+</div>
+<h5 id="%E9%85%8D%E7%BD%AE%20db:structure:dump%20%E7%9A%84%E8%BE%93%E5%87%BA">2.19.6 配置 <code>db:structure:dump</code> 的输出</h5><p>如果使用 <code>schema_search_path</code> 或者其他 PostgreSQL 扩展，可以控制如何转储数据库模式。设为 <code>:all</code> 生成全部转储，设为 <code>:schema_search_path</code> 从模式搜索路径中生成转储。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.active_record.dump_schemas = :all
+
+</pre>
+</div>
+<h5 id="%E9%85%8D%E7%BD%AE%20SSL%20%E9%80%89%E9%A1%B9%E4%B8%BA%E5%AD%90%E5%9F%9F%E5%90%8D%E5%90%AF%E7%94%A8%20HSTS">2.19.7 配置 SSL 选项为子域名启用 HSTS</h5><p>在配置文件中设定下述选项，为子域名启用 HSTS：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.ssl_options = { hsts: { subdomains: true } }
+
+</pre>
+</div>
+<h5 id="%E4%BF%9D%E7%95%99%E6%8E%A5%E6%94%B6%E8%80%85%E7%9A%84%E6%97%B6%E5%8C%BA">2.19.8 保留接收者的时区</h5><p>使用 Ruby 2.4 时，调用 <code>to_time</code> 时可以保留接收者的时区：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+ActiveSupport.to_time_preserves_timezone = false
+
+</pre>
+</div>
+<h3 id="%E4%BB%8E%20Rails%204.1%20%E5%8D%87%E7%BA%A7%E5%88%B0%204.2">3 从 Rails 4.1 升级到 4.2</h3><h4 id="Web%20Console">3.1 Web Console</h4><p>首先，把 <code>gem 'web-console', '~&gt; 2.0'</code> 添加到 <code>Gemfile</code> 的 <code>:development</code> 组里（升级时不含这个 gem），然后执行 <code>bundle install</code> 命令。安装好之后，可以在任何想使用 Web Console 的视图里调用辅助方法 <code>&lt;%= console %&gt;</code>。开发环境的错误页面中也有 Web Console。</p><h4 id="responders%20gem">3.2 <code>responders</code> gem</h4><p><code>respond_with</code> 实例方法和 <code>respond_to</code> 类方法已经提取到 <code>responders</code> gem 中。如果想使用这两个方法，只需把 <code>gem 'responders', '~&gt; 2.0'</code> 添加到 <code>Gemfile</code> 中。如果依赖中没有 <code>responders</code> gem，无法调用二者。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/controllers/users_controller.rb
+
+class UsersController &lt; ApplicationController
+  respond_to :html, :json
+
+  def show
+    @user = User.find(params[:id])
+    respond_with @user
+  end
+end
+
+</pre>
+</div>
+<p><code>respond_to</code> 实例方法不受影响，无需添加额外的 gem：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/controllers/users_controller.rb
+
+class UsersController &lt; ApplicationController
+  def show
+    @user = User.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json { render json: @user }
+    end
+  end
+end
+
+</pre>
+</div>
+<p>详情参见 <a href="https://github.com/rails/rails/pull/16526">#16526 工单</a>。</p><h4 id="%E4%BA%8B%E5%8A%A1%E5%9B%9E%E8%B0%83%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86">3.3 事务回调中的错误处理</h4><p>目前，Active Record 压制 <code>after_rollback</code> 或 <code>after_commit</code> 回调抛出的错误，只将其输出到日志里。在下一版中，这些错误不再得到压制，而像其他 Active Record 回调一样正常冒泡。</p><p>你定义的 <code>after_rollback</code> 或 <code>after_commit</code> 回调会收到一个弃用提醒，说明这一变化。如果你做好了迎接新行为的准备，可以在 <code>config/application.rb</code> 文件中添加下述配置，不再发出弃用提醒：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.active_record.raise_in_transactional_callbacks = true
+
+</pre>
+</div>
+<p>详情参见 <a href="https://github.com/rails/rails/pull/14488">#14488</a> 和 <a href="https://github.com/rails/rails/pull/16537">#16537 工单</a>。</p><h4 id="%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%9A%84%E8%BF%90%E8%A1%8C%E9%A1%BA%E5%BA%8F">3.4 测试用例的运行顺序</h4><p>在 Rails 5.0 中，测试用例将默认以随机顺序运行。为了抢先使用这一个改变，Rails 4.2 引入了一个新配置选项，即 <code>active_support.test_order</code>，用于指定测试的运行顺序。你可以将其设为 <code>:sorted</code>，继续使用目前的行为，或者设为 <code>:random</code>，使用未来的行为。</p><p>如果不为这个选项设定一个值，Rails 会发出弃用提醒。如果不想看到弃用提醒，在测试环境的配置文件中添加下面这行：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# config/environments/test.rb
+Rails.application.configure do
+  config.active_support.test_order = :sorted # 如果愿意，也可以设为 `:random`
+end
+
+</pre>
+</div>
+<h4 id="%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E5%B1%9E%E6%80%A7">3.5 序列化的属性</h4><p>使用定制的编码器时（如 <code>serialize :metadata, JSON</code>），如果把 <code>nil</code> 赋值给序列化的属性，存入数据库中的值是 <code>NULL</code>，而不是通过编码器传递的 <code>nil</code> 值（例如，使用 <code>JSON</code> 编码器时的 <code>"null"</code>）。</p><h4 id="%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E7%9A%84%E6%97%A5%E5%BF%97%E7%AD%89%E7%BA%A7">3.6 生产环境的日志等级</h4><p>Rails 5 将把生产环境的默认日志等级改为 <code>:debug</code>（以前是 <code>:info</code>）。若想继续使用目前的默认值，在 <code>production.rb</code> 文件中添加下面这行：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Set to `:info` to match the current default, or set to `:debug` to opt-into
+# the future default.
+config.log_level = :info
+
+</pre>
+</div>
+<h4 id="%E5%9C%A8%20Rails%20%E6%A8%A1%E6%9D%BF%E4%B8%AD%E4%BD%BF%E7%94%A8%20after_bundle">3.7 在 Rails 模板中使用 <code>after_bundle</code>
+</h4><p>如果你的 Rails 模板把所有文件纳入版本控制，无法添加生成的 binstubs，因为模板在 Bundler 之前执行：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# template.rb
+generate(:scaffold, "person name:string")
+route "root to: 'people#index'"
+rake("db:migrate")
+
+git :init
+git add: "."
+git commit: %Q{ -m 'Initial commit' }
+
+</pre>
+</div>
+<p>现在，你可以把 <code>git</code> 调用放在 <code>after_bundle</code> 块中，在生成 binstubs 之后执行：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# template.rb
+generate(:scaffold, "person name:string")
+route "root to: 'people#index'"
+rake("db:migrate")
+
+after_bundle do
+  git :init
+  git add: "."
+  git commit: %Q{ -m 'Initial commit' }
+end
+
+</pre>
+</div>
+<h4 id="rails-html-sanitizer">3.8 rails-html-sanitizer</h4><p>现在，净化应用中的 HTML 片段有了新的选择。古老的 html-scanner 方式正式弃用，换成了 <a href="https://github.com/rails/rails-html-sanitizer">rails-html-sanitizer</a>。</p><p>因此，<code>sanitize</code>、<code>sanitize_css</code>、<code>strip_tags</code> 和 <code>strip_links</code> 等方法现在有了新的实现方式。</p><p>新的净化程序内部使用 <a href="https://github.com/flavorjones/loofah">Loofah</a>，而它使用 Nokogiri。Nokogiri 包装了使用 C 和 Java 编写的 XML 解析器，因此不管使用哪个 Ruby 版本，净化的过程应该都很快。</p><p>新版本更新了 <code>sanitize</code>，它接受一个 <code>Loofah::Scrubber</code> 对象，提供强有力的清洗功能。清洗程序的示例参见<a href="https://github.com/flavorjones/loofah#loofahscrubber">这里</a>。</p><p>此外，还添加了两个新清洗程序：<code>PermitScrubber</code> 和 <code>TargetScrubber</code>。详情参阅 <a href="https://github.com/rails/rails-html-sanitizer#rails-html-sanitizers"><code>rails-html-sanitizer</code> gem 的自述文件</a>。</p><p><code>PermitScrubber</code> 和 <code>TargetScrubber</code> 的文档说明了如何完全控制何时以及如何剔除元素。</p><p>如果应用想使用旧的净化程序，把 <code>rails-deprecated_sanitizer</code> 添加到 <code>Gemfile</code> 中：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+gem 'rails-deprecated_sanitizer'
+
+</pre>
+</div>
+<h4 id="Rails%20DOM%20%E6%B5%8B%E8%AF%95">3.9 Rails DOM 测试</h4><p><code>TagAssertions</code> 模块（包含 <code>assert_tag</code> 等方法）已经弃用，换成了 <code>SelectorAssertions</code> 模块的 <code>assert_select</code> 方法。新的方法提取到 <a href="https://github.com/rails/rails-dom-testing"><code>rails-dom-testing</code></a> gem 中了。</p><h4 id="%E9%81%AE%E8%94%BD%E7%9C%9F%E4%BC%AA%E4%BB%A4%E7%89%8C">3.10 遮蔽真伪令牌</h4><p>为了防范 SSL 攻击，<code>form_authenticity_token</code> 现在做了遮蔽，每次请求都不同。因此，验证令牌时先解除遮蔽，然后再解密。所以，验证非 Rails 表单发送的，而且依赖静态会话 CSRF 令牌的请求时，要考虑这一点。</p><h4 id="Action%20Mailer">3.11 Action Mailer</h4><p>以前，在邮件程序类上调用邮件程序方法会直接执行相应的实例方法。引入 Active Job 和 <code>#deliver_later</code> 之后，情况变了。在 Rails 4.2 中，实例方法延后到调用 <code>deliver_now</code> 或 <code>deliver_later</code> 时才执行。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Notifier &lt; ActionMailer::Base
+  def notify(user, ...)
+    puts "Called"
+    mail(to: user.email, ...)
+  end
+end
+
+mail = Notifier.notify(user, ...) # 此时 Notifier#notify 还未执行
+mail = mail.deliver_now           # 打印“Called”
+
+</pre>
+</div>
+<p>对大多数应用来说，这不会导致明显的差别。然而，如果非邮件程序方法要同步执行，而以前依靠同步代理行为的话，应该将其定义为邮件程序类的类方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Notifier &lt; ActionMailer::Base
+  def self.broadcast_notifications(users, ...)
+    users.each { |user| Notifier.notify(user, ...) }
+  end
+end
+
+</pre>
+</div>
+<h4 id="%E6%94%AF%E6%8C%81%E5%A4%96%E9%94%AE">3.12 支持外键</h4><p>迁移 DSL 做了扩充，支持定义外键。如果你以前使用 foreigner gem，可以考虑把它删掉了。注意，Rails 对外键的支持没有 foreigner 全面。这意味着，不是每一个 foreigner 定义都可以完全替换成 Rails 中相应的迁移 DSL。</p><p>替换的过程如下：</p>
+<ol>
+<li><p> 从 <code>Gemfile</code> 中删除 <code>gem "foreigner"</code>。</p></li>
+<li><p> 执行 <code>bundle install</code> 命令。</p></li>
+<li><p> 执行 <code>bin/rake db:schema:dump</code> 命令。</p></li>
+<li><p> 确保 <code>db/schema.rb</code> 文件中包含每一个外键定义，而且有所需的选项。</p></li>
+</ol>
+<h3 id="%E4%BB%8E%20Rails%204.0%20%E5%8D%87%E7%BA%A7%E5%88%B0%204.1">4 从 Rails 4.0 升级到 4.1</h3><h4 id="%E4%BF%9D%E6%8A%A4%E8%BF%9C%E7%A8%8B%20%3Cscript%3E%20%E6%A0%87%E7%AD%BE%E5%85%8D%E5%8F%97%20CSRF%20%E6%94%BB%E5%87%BB">4.1 保护远程 <code>&lt;script&gt;</code> 标签免受 CSRF 攻击</h4><p>或者“我的测试为什么失败了！？”“我的 <code>&lt;script&gt;</code> 小部件不能用了！！！”</p><p>现在，跨站请求伪造（Cross-site request forgery，CSRF）涵盖获取 JavaScript 响应的 GET 请求。这样能防止第三方网站通过 <code>&lt;script&gt;</code> 标签引用你的 JavaScript，获取敏感数据。</p><p>因此，使用下述代码的功能测试和集成测试现在会触发 CSRF 保护：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get :index, format: :js
+
+</pre>
+</div>
+<p>换成下述代码，明确测试 <code>XmlHttpRequest</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+xhr :get, :index, format: :js
+
+</pre>
+</div>
+<p>注意，站内的 <code>&lt;script&gt;</code> 标签也认为是跨源的，因此默认被阻拦。如果确实想使用 <code>&lt;script&gt;</code> 加载 JavaScript，必须在动作中明确指明跳过 CSRF 保护。</p><h4 id="Spring">4.2 Spring</h4><p>如果想使用 Spring 预加载应用，要这么做：</p>
+<ol>
+<li><p> 把 <code>gem 'spring', group: :development</code> 添加到 <code>Gemfile</code> 中。</p></li>
+<li><p> 执行 <code>bundle install</code> 命令，安装 Spring。</p></li>
+<li><p> 执行 <code>bundle exec spring binstub --all</code>，用 Spring 运行 binstub。</p></li>
+</ol>
+<div class="note"><p>用户定义的 Rake 任务默认在开发环境中运行。如果想在其他环境中运行，查阅 <a href="https://github.com/rails/spring#rake">Spring 的自述文件</a>。</p></div><h4 id="config/secrets.yml">4.3 <code>config/secrets.yml</code>
+</h4><p>若想使用新增的 <code>secrets.yml</code> 文件存储应用的机密信息，要这么做：</p>
+<ol>
+<li>
+<p> 在 <code>config</code> 文件夹中创建 <code>secrets.yml</code> 文件，写入下述内容：</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+development:
+  secret_key_base:
+
+test:
+  secret_key_base:
+
+production:
+  secret_key_base: &lt;%= ENV["SECRET_KEY_BASE"] %&gt;
+
+</pre>
+</div>
+</li>
+<li><p> 使用 <code>secret_token.rb</code> 初始化脚本中的 <code>secret_key_base</code> 设定 <code>SECRET_KEY_BASE</code> 环境变量，供生产环境中的用户使用。此外，还可以直接复制 <code>secret_key_base</code> 的值，把 <code>&lt;%= ENV["SECRET_KEY_BASE"] %&gt;</code> 替换掉。</p></li>
+<li><p> 删除 <code>secret_token.rb</code> 初始化脚本。</p></li>
+<li><p> 运行 <code>rake secret</code> 任务，为开发环境和测试环境生成密钥。</p></li>
+<li><p> 重启服务器。</p></li>
+</ol>
+<h4 id="%E6%B5%8B%E8%AF%95%E8%BE%85%E5%8A%A9%E6%96%B9%E6%B3%95%E7%9A%84%E5%8F%98%E5%8C%96">4.4 测试辅助方法的变化</h4><p>如果测试辅助方法中有调用 <code>ActiveRecord::Migration.check_pending!</code>，可以将其删除了。现在，引入 <code>rails/test_help</code> 文件时会自动做此项检查，不过留着那一行代码也没什么危害。</p><h4 id="cookies%20%E5%BA%8F%E5%88%97%E5%8C%96%E7%A8%8B%E5%BA%8F">4.5 cookies 序列化程序</h4><p>使用 Rails 4.1 之前的版本创建的应用使用 <code>Marshal</code> 序列化签名和加密的 cookie 值。若想使用新的基于 JSON 的格式，创建一个初始化脚本，写入下述内容：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Rails.application.config.action_dispatch.cookies_serializer = :hybrid
+
+</pre>
+</div>
+<p>这样便能平顺地从现在的 <code>Marshal</code> 序列化形式改成基于 JSON 的格式。</p><p>使用 <code>:json</code> 或 <code>:hybrid</code> 序列化程序时要注意，不是所有 Ruby 对象都能序列化成 JSON。例如，<code>Date</code> 和 <code>Time</code> 对象序列化成字符串，散列的键序列化成字符串。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class CookiesController &lt; ApplicationController
+  def set_cookie
+    cookies.encrypted[:expiration_date] = Date.tomorrow # =&gt; Thu, 20 Mar 2014
+    redirect_to action: 'read_cookie'
+  end
+
+  def read_cookie
+    cookies.encrypted[:expiration_date] # =&gt; "2014-03-20"
+  end
+end
+
+</pre>
+</div>
+<p>建议只在 cookie 中存储简单的数据（字符串和数字）。如果存储复杂的对象，在后续请求中读取 cookie 时要自己动手转换。</p><p>如果使用 cookie 会话存储器，<code>session</code> 和 <code>flash</code> 散列也是如此。</p><h4 id="%E9%97%AA%E7%8E%B0%E6%B6%88%E6%81%AF%E7%BB%93%E6%9E%84%E7%9A%84%E5%8F%98%E5%8C%96">4.6 闪现消息结构的变化</h4><p>闪现消息的键会<a href="https://github.com/rails/rails/commit/a668beffd64106a1e1fedb71cc25eaaa11baf0c1">整形成字符串</a>，不过依然可以使用符号或字符串访问。迭代闪现消息时始终使用字符串键：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+flash["string"] = "a string"
+flash[:symbol] = "a symbol"
+
+# Rails &lt; 4.1
+flash.keys # =&gt; ["string", :symbol]
+
+# Rails &gt;= 4.1
+flash.keys # =&gt; ["string", "symbol"]
+
+</pre>
+</div>
+<p>一定要使用字符串比较闪现消息的键。</p><h4 id="JSON%20%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F%E7%9A%84%E5%8F%98%E5%8C%96">4.7 JSON 处理方式的变化</h4><p>Rails 4.1 对 JSON 的处理方式做了几项修改。</p><h5 id="%E5%88%A0%E9%99%A4%20MultiJSON">4.7.1 删除 MultiJSON</h5><p><a href="https://github.com/rails/rails/pull/10576">MultiJSON 结束历史使命</a>，Rails 把它删除了。</p><p>如果你的应用现在直接依赖 MultiJSON，有几种解决方法：</p>
+<ol>
+<li><p> 把 <code>multi_json</code> gem 添加到 <code>Gemfile</code> 中。注意，未来这种方法可能失效。</p></li>
+<li><p> 摒除 MultiJSON，换用 <code>obj.to_json</code> 和 <code>JSON.parse(str)</code>。</p></li>
+</ol>
+<div class="warning"><p>不要直接把 <code>MultiJson.dump</code> 和 <code>MultiJson.load</code> 换成 <code>JSON.dump</code> 和 <code>JSON.load</code>。这两个 JSON gem API 的作用是序列化和反序列化任意的 Ruby 对象，一般<a href="http://www.ruby-doc.org/stdlib-2.2.2/libdoc/json/rdoc/JSON.html#method-i-load">不安全</a>。</p></div><h5 id="JSON%20gem%20%E7%9A%84%E5%85%BC%E5%AE%B9%E6%80%A7">4.7.2 JSON gem 的兼容性</h5><p>由于历史原因，Rails 有些 JSON gem 的兼容性问题。在 Rails 应用中使用 <code>JSON.generate</code> 和 <code>JSON.dump</code> 可能导致意料之外的错误。</p><p>Rails 4.1 修正了这些问题：在 JSON gem 之外提供了单独的编码器。JSON gem 的 API 现在能正常使用了，但是不能访问任何 Rails 专用的功能。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class FooBar
+  def as_json(options = nil)
+    { foo: 'bar' }
+  end
+end
+
+&gt;&gt; FooBar.new.to_json # =&gt; "{\"foo\":\"bar\"}"
+&gt;&gt; JSON.generate(FooBar.new, quirks_mode: true) # =&gt; "\"#&lt;FooBar:0x007fa80a481610&gt;\""
+
+</pre>
+</div>
+<h5 id="%E6%96%B0%E7%9A%84%20JSON%20%E7%BC%96%E7%A0%81%E5%99%A8">4.7.3 新的 JSON 编码器</h5><p>Rails 4.1 重写了 JSON 编码器，充分利用了 JSON gem。对多数应用来说，这一变化没有显著影响。然而，在重写的过程中从编码器中移除了下述功能：</p>
+<ol>
+<li><p> 环形数据结构检测</p></li>
+<li><p> 对 <code>encode_json</code> 钩子的支持</p></li>
+<li><p> 把 <code>BigDecimal</code> 对象编码成数字而不是字符串的选项</p></li>
+</ol>
+<p>如果你的应用依赖这些功能，可以把 <a href="https://github.com/rails/activesupport-json_encoder"><code>activesupport-json_encoder</code></a> gem 添加到 <code>Gemfile</code> 中。</p><h5 id="%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1%E7%9A%84%20JSON%20%E8%A1%A8%E8%BF%B0">4.7.4 时间对象的 JSON 表述</h5><p>在包含时间组件的对象（<code>Time</code>、<code>DateTime</code>、<code>ActiveSupport::TimeWithZone</code>）上调用 <code>#as_json</code>，现在返回值的默认精度是毫秒。如果想继续使用旧的行为，不含毫秒，在一个初始化脚本中设定下述选项：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+ActiveSupport::JSON::Encoding.time_precision = 0
+
+</pre>
+</div>
+<h4 id="%E8%A1%8C%E5%86%85%E5%9B%9E%E8%B0%83%E5%9D%97%E4%B8%AD%20return%20%E7%9A%84%E7%94%A8%E6%B3%95">4.8 行内回调块中 <code>return</code> 的用法</h4><p>以前，Rails 允许在行内回调块中像下面这样使用 <code>return</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ReadOnlyModel &lt; ActiveRecord::Base
+  before_save { return false } # BAD
+end
+
+</pre>
+</div>
+<p>这种行为一直没得到广泛支持。由于 <code>ActiveSupport::Callbacks</code> 内部的变化，Rails 4.1 不再允许这么做。如果在行内回调块中使用 <code>return</code>，执行回调时会抛出 <code>LocalJumpError</code> 异常。</p><p>使用 <code>return</code> 的行内回调块可以重构成求取返回值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ReadOnlyModel &lt; ActiveRecord::Base
+  before_save { false } # GOOD
+end
+
+</pre>
+</div>
+<p>如果想使用 <code>return</code>，建议定义为方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ReadOnlyModel &lt; ActiveRecord::Base
+  before_save :before_save_callback # GOOD
+
+  private
+    def before_save_callback
+      return false
+    end
+end
+
+</pre>
+</div>
+<p>这一变化影响使用回调的多数地方，包括 Active Record 和 Active Model 回调，以及 Action Controller 的过滤器（如 <code>before_action</code>）。</p><p>详情参见<a href="https://github.com/rails/rails/pull/13271">这个拉取请求</a>。</p><h4 id="Active%20Record%20%E5%9B%BA%E4%BB%B6%E4%B8%AD%E5%AE%9A%E4%B9%89%E7%9A%84%E6%96%B9%E6%B3%95">4.9 Active Record 固件中定义的方法</h4><p>Rails 4.1 在各自的上下文中处理各个固件中的 ERB，因此一个附件中定义的辅助方法，无法在另一个固件中使用。</p><p>在多个固件中使用的辅助方法应该在 <code>test_helper.rb</code> 文件的一个模块中定义，然后使用新的 <code>ActiveRecord::FixtureSet.context_class</code> 引入。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module FixtureFileHelpers
+  def file_sha(path)
+    Digest::SHA2.hexdigest(File.read(Rails.root.join('test/fixtures', path)))
+  end
+end
+ActiveRecord::FixtureSet.context_class.include FixtureFileHelpers
+
+</pre>
+</div>
+<h4 id="i18n%20%E5%BC%BA%E5%88%B6%E6%A3%80%E6%9F%A5%E5%8F%AF%E7%94%A8%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%8C%96">4.10 i18n 强制检查可用的本地化</h4><p>现在，Rails 4.1 默认把 i18n 的 <code>enforce_available_locales</code> 选项设为 <code>true</code>。这意味着，传给它的所有本地化都必须在 <code>available_locales</code> 列表中声明。</p><p>如果想禁用这一行为（让 i18n 接受任何本地化选项），在应用的配置文件中添加下述选项：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.i18n.enforce_available_locales = false
+
+</pre>
+</div>
+<p>注意，这个选项是一项安全措施，为的是确保不把用户的输入作为本地化信息，除非这个信息之前是已知的。因此，除非有十足的原因，否则不建议禁用这个选项。</p><h4 id="%E5%9C%A8%20Relation%20%E4%B8%8A%E8%B0%83%E7%94%A8%E7%9A%84%E5%8F%AF%E5%8F%98%E6%96%B9%E6%B3%95">4.11 在 Relation 上调用的可变方法</h4><p><code>Relation</code> 不再提供可变方法，如 <code>#map!</code> 和 <code>#delete_if</code>。如果想使用这些方法，调用 <code>#to_a</code> 把它转换成数组。</p><p>这样改的目的是避免奇怪的缺陷，以及防止代码意图不明。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 现在不能这么写
+Author.where(name: 'Hank Moody').compact!
+
+# 要这么写
+authors = Author.where(name: 'Hank Moody').to_a
+authors.compact!
+
+</pre>
+</div>
+<h4 id="%E9%BB%98%E8%AE%A4%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%9A%84%E5%8F%98%E5%8C%96">4.12 默认作用域的变化</h4><p>默认作用域不再能够使用链式条件覆盖。</p><p>在之前的版本中，模型中的 <code>default_scope</code> 会被同一字段的链式条件覆盖。现在，与其他作用域一样，变成了合并。</p><p>以前：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ActiveRecord::Base
+  default_scope { where state: 'pending' }
+  scope :active, -&gt; { where state: 'active' }
+  scope :inactive, -&gt; { where state: 'inactive' }
+end
+
+User.all
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'pending'
+
+User.active
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'active'
+
+User.where(state: 'inactive')
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'inactive'
+
+</pre>
+</div>
+<p>现在：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ActiveRecord::Base
+  default_scope { where state: 'pending' }
+  scope :active, -&gt; { where state: 'active' }
+  scope :inactive, -&gt; { where state: 'inactive' }
+end
+
+User.all
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'pending'
+
+User.active
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'pending' AND "users"."state" = 'active'
+
+User.where(state: 'inactive')
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'pending' AND "users"."state" = 'inactive'
+
+</pre>
+</div>
+<p>如果想使用以前的行为，要使用 <code>unscoped</code>、<code>unscope</code>、<code>rewhere</code> 或 <code>except</code> 把 <code>default_scope</code> 定义的条件移除。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ActiveRecord::Base
+  default_scope { where state: 'pending' }
+  scope :active, -&gt; { unscope(where: :state).where(state: 'active') }
+  scope :inactive, -&gt; { rewhere state: 'inactive' }
+end
+
+User.all
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'pending'
+
+User.active
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'active'
+
+User.inactive
+# SELECT "users".* FROM "users" WHERE "users"."state" = 'inactive'
+
+</pre>
+</div>
+<h4 id="%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B8%B2%E6%9F%93%E5%86%85%E5%AE%B9">4.13 使用字符串渲染内容</h4><p>Rails 4.1 为 <code>render</code> 引入了 <code>:plain</code>、<code>:html</code> 和 <code>:body</code> 选项。现在，建议使用这三个选项渲染字符串内容，因为这样可以指定响应的内容类型。</p>
+<ul>
+<li><p><code>render :plain</code> 把内容类型设为 <code>text/plain</code></p></li>
+<li><p><code>render :html</code> 把内容类型设为 <code>text/html</code></p></li>
+<li><p><code>render :body</code> 不设定内容类型首部</p></li>
+</ul>
+<p>从安全角度来看，如果响应主体中没有任何标记，应该使用 <code>render :plain</code>，因为多数浏览器会转义响应中不安全的内容。</p><p>未来的版本会弃用 <code>render :text</code>。所以，请开始使用更精准的 <code>:plain</code>、<code>:html</code> 和 <code>:body</code> 选项。使用 <code>render :text</code> 可能有安全风险，因为发送的内容类型是 <code>text/html</code>。</p><h4 id="PostgreSQL%20%E7%9A%84%20json%20%E5%92%8C%20hstore%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">4.14 PostgreSQL 的 json 和 hstore 数据类型</h4><p>Rails 4.1 把 <code>json</code> 和 <code>hstore</code> 列映射成键为字符串的 Ruby 散列。之前的版本使用 <code>HashWithIndifferentAccess</code>。这意味着，不再支持使用符号访问。建立在 <code>json</code> 或 <code>hstore</code> 列之上的 <code>store_accessors</code> 也是如此。确保要始终使用字符串键。</p><h4 id="ActiveSupport::Callbacks%20%E6%98%8E%E7%A1%AE%E8%A6%81%E6%B1%82%E4%BD%BF%E7%94%A8%E5%9D%97">4.15 <code>ActiveSupport::Callbacks</code> 明确要求使用块</h4><p>现在，Rails 4.1 明确要求调用 <code>ActiveSupport::Callbacks.set_callback</code> 时传入一个块。之所以这样要求，是因为 4.1 版大范围重写了 <code>ActiveSupport::Callbacks</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Rails 4.0
+set_callback :save, :around, -&gt;(r, &amp;block) { stuff; result = block.call; stuff }
+
+# Rails 4.1
+set_callback :save, :around, -&gt;(r, block) { stuff; result = block.call; stuff }
+
+</pre>
+</div>
+<h3 id="%E4%BB%8E%20Rails%203.2%20%E5%8D%87%E7%BA%A7%E5%88%B0%204.0">5 从 Rails 3.2 升级到 4.0</h3><p>如果你的应用目前使用的版本低于 3.2.x，应该先升级到 3.2，再升级到 4.0。</p><p>下述说明针对升级到 Rails 4.0。</p><h4 id="HTTP%20PATCH">5.1 HTTP PATCH</h4><p>现在，Rails 4.0 使用 <code>PATCH</code> 作为更新 REST 式资源（在 <code>config/routes.rb</code> 中声明）的主要 HTTP 动词。<code>update</code> 动作仍然在用，而且 <code>PUT</code> 请求继续交给 <code>update</code> 动作处理。因此，如果你只使用 REST 式路由，无需做任何修改。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :users
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @user do |f| %&gt;
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UsersController &lt; ApplicationController
+  def update
+    # 无需修改，首选 PATCH，但是 PUT 依然能用
+  end
+end
+
+</pre>
+</div>
+<p>然而，如果使用 <code>form_for</code> 更新资源，而且用的是使用 <code>PUT</code> HTTP 方法的自定义路由，要做修改：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :users, do
+  put :update_name, on: :member
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for [ :update_name, @user ] do |f| %&gt;
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UsersController &lt; ApplicationController
+  def update_name
+    # 需要修改，因为 form_for 会尝试使用不存在的 PATCH 路由
+  end
+end
+
+</pre>
+</div>
+<p>如果动作不在公开的 API 中，可以直接修改 HTTP 方法，把 <code>put</code> 路由改用 <code>patch</code>。</p><p>在 Rails 4 中，针对 <code>/users/:id</code> 的 <code>PUT</code> 请求交给 <code>update</code> 动作处理。因此，如果 API 使用 PUT 请求，依然能用。路由器也会把针对 <code>/users/:id</code> 的 <code>PATCH</code> 请求交给 <code>update</code> 动作处理。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :users do
+  patch :update_name, on: :member
+end
+
+</pre>
+</div>
+<p>如果动作在公开的 API 中，不能修改所用的 HTTP 方法，此时可以修改表单，让它使用 <code>PUT</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for [ :update_name, @user ], method: :put do |f| %&gt;
+
+</pre>
+</div>
+<p>关于 <code>PATCH</code> 请求，以及为什么这样改，请阅读 Rails 博客中的<a href="http://weblog.rubyonrails.org/2012/2/26/edge-rails-patch-is-the-new-primary-http-method-for-updates/">这篇文章</a>。</p><h5 id="%E5%85%B3%E4%BA%8E%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B">5.1.1 关于媒体类型</h5><p><code>PATCH</code> 动词规范的勘误指出，<a href="http://www.rfc-editor.org/errata_search.php?rfc=5789"><code>PATCH</code> 请求应该使用“diff”媒体类型</a>。<a href="http://tools.ietf.org/html/rfc6902">JSON Patch</a> 就是这样的格式。虽然 Rails 原生不支持 JSON Patch，不过添加这一支持也不难：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 在控制器中
+def update
+  respond_to do |format|
+    format.json do
+      # 执行局部更新
+      @article.update params[:article]
+    end
+
+    format.json_patch do
+      # 执行复杂的更新
+    end
+  end
+end
+
+# 在 config/initializers/json_patch.rb 文件中
+Mime::Type.register 'application/json-patch+json', :json_patch
+
+</pre>
+</div>
+<p>JSON Patch 最近才收录到 RFC 中，因此还没有多少好的 Ruby 库。Aaron Patterson 开发的 <a href="https://github.com/tenderlove/hana">hana</a> 是一个，但是没有支持规范最近的几项修改。</p><h4 id="Gemfile">5.2 Gemfile</h4><p>Rails 4.0 删除了 <code>Gemfile</code> 的 <code>assets</code> 分组。升级时，要把那一行删除。此外，还要更新应用配置（<code>config/application.rb</code>）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(*Rails.groups)
+
+</pre>
+</div>
+<h4 id="vendor/plugins">5.3 vendor/plugins</h4><p>Rails 4.0 不再支持从 <code>vendor/plugins</code> 目录中加载插件。插件应该制成 gem，添加到 <code>Gemfile</code> 中。如果不想制成 gem，可以移到其他位置，例如 <code>lib/my_plugin/*</code>，然后添加相应的初始化脚本 <code>config/initializers/my_plugin.rb</code>。</p><h4 id="Active%20Record">5.4 Active Record</h4>
+<ul>
+<li><p>Rails 4.0 从 Active Record 中删除了标识映射（identity map），因为<a href="https://github.com/rails/rails/commit/302c912bf6bcd0fa200d964ec2dc4a44abe328a6">与关联有些不一致</a>。如果你启动了这个功能，要把这个没有作用的配置删除：<code>config.active_record.identity_map</code>。</p></li>
+<li><p>关联集合的 <code>delete</code> 方法的参数现在除了记录之外还可以使用 <code>Integer</code> 或 <code>String</code>，基本与 <code>destroy</code> 方法一样。以前，传入这样的参数时会抛出 <code>ActiveRecord::AssociationTypeMismatch</code> 异常。从 Rails 4.0 开始，<code>delete</code> 在删除记录之前会自动查找指定 ID 对应的记录。</p></li>
+<li><p>在 Rails 4.0 中，如果修改了列或表的名称，相关的索引也会重命名。现在无需编写迁移重命名索引了。</p></li>
+<li><p>Rails 4.0 把 <code>serialized_attributes</code> 和 <code>attr_readonly</code> 改成只有类方法版本了。别再使用实例方法版本了，因为已经弃用。应该把实例方法版本改成类方法版本，例如把 <code>self.serialized_attributes</code> 改成 <code>self.class.serialized_attributes</code>。</p></li>
+<li><p>使用默认的编码器时，把 <code>nil</code> 赋值给序列化的属性在数据库中保存的是 <code>NULL</code>，而不是通过 <code>YAML ("--- \n…​\n")</code> 传递 <code>nil</code> 值。</p></li>
+<li><p>Rails 4.0 删除了 <code>attr_accessible</code> 和 <code>attr_protected</code>，换成了健壮参数（strong parameter）。平滑升级可以使用 <a href="https://github.com/rails/protected_attributes"><code>protected_attributes</code></a> gem。</p></li>
+<li><p>如果不使用 <code>protected_attributes</code> gem，可以把与它有关的选项都删除，例如 <code>whitelist_attributes</code> 或 <code>mass_assignment_sanitizer</code>。</p></li>
+<li>
+<p>Rails 4.0 要求作用域使用可调用的对象，如 Proc 或 lambda：</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+scope :active, where(active: true)
+
+# 变成
+scope :active, -&gt; { where active: true }
+
+</pre>
+</div>
+</li>
+<li><p>Rails 4.0 弃用了 <code>ActiveRecord::Fixtures</code>，改成了 <code>ActiveRecord::FixtureSet</code>。</p></li>
+<li><p>Rails 4.0 弃用了 <code>ActiveRecord::TestCase</code>，改成了 <code>ActiveSupport::TestCase</code>。</p></li>
+<li><p>Rails 4.0 弃用了以前基于散列的查找方法 API。这意味着，不能再给查找方法传入选项了。例如，<code>Book.find(:all, conditions: { name: '1984' })</code> 已经弃用，改成了 <code>Book.where(name: '1984')</code>。</p></li>
+<li>
+<p>除了 <code>find_by_…​</code> 和 <code>find_by_…​!</code>，其他动态查找方法都弃用了。新旧变化如下：</p>
+<ul>
+<li>  <code>find_all_by_…​</code> 变成 <code>where(…​)</code>
+</li>
+<li>  <code>find_last_by_…​</code> 变成 <code>where(…​).last</code>
+</li>
+<li>  <code>scoped_by_…​</code> 变成 <code>where(…​)</code>
+</li>
+<li>  <code>find_or_initialize_by_…​</code> 变成 <code>find_or_initialize_by(…​)</code>
+</li>
+<li>  <code>find_or_create_by_…​</code> 变成 <code>find_or_create_by(…​)</code>
+</li>
+</ul>
+</li>
+<li><p>注意，<code>where(…​)</code> 返回一个关系，而不像旧的查找方法那样返回一个数组。如果需要使用数组，调用 <code>where(…​).to_a</code>。</p></li>
+<li><p>等价的方法所执行的 SQL 语句可能与以前的实现不同。</p></li>
+<li><p>如果想使用旧的查找方法，可以使用 <a href="https://github.com/rails/activerecord-deprecated_finders"><code>activerecord-deprecated_finders</code></a> gem。</p></li>
+<li>
+<p>Rails 4.0 修改了 <code>has_and_belongs_to_many</code> 关联默认的联结表名，把第二个表名中的相同前缀去掉。现有的 <code>has_and_belongs_to_many</code> 关联，如果表名中有共用的前缀，要使用 <code>join_table</code> 选项指定。例如：</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+CatalogCategory &lt; ActiveRecord::Base
+  has_and_belongs_to_many :catalog_products, join_table: 'catalog_categories_catalog_products'
+end
+
+CatalogProduct &lt; ActiveRecord::Base
+  has_and_belongs_to_many :catalog_categories, join_table: 'catalog_categories_catalog_products'
+end
+
+</pre>
+</div>
+</li>
+<li><p>注意，前缀含命名空间，因此 <code>Catalog::Category</code> 和 <code>Catalog::Product</code>，或者 <code>Catalog::Category</code> 和 <code>CatalogProduct</code> 之间的关联也要以同样的方式修改。</p></li>
+</ul>
+<h4 id="Active%20Resource">5.5 Active Resource</h4><p>Rails 4.0 把 Active Resource 提取出来，制成了单独的 gem。如果想继续使用这个功能，把 <a href="https://github.com/rails/activeresource"><code>activeresource</code></a> gem 添加到 <code>Gemfile</code> 中。</p><h4 id="Active%20Model">5.6 Active Model</h4>
+<ul>
+<li><p>Rails 4.0 修改了 <code>ActiveModel::Validations::ConfirmationValidator</code> 错误的依附方式。现在，如果二次确认验证失败，错误依附到 <code>:#{attribute}_confirmation</code> 上，而不是 <code>attribute</code>。</p></li>
+<li>
+<p>Rails 4.0 把 <code>ActiveModel::Serializers::JSON.include_root_in_json</code> 的默认值改成 <code>false</code> 了。现在 Active Model 序列化程序和 Active Record 对象具有相同的默认行为。这意味着，可以把 <code>config/initializers/wrap_parameters.rb</code> 文件中的下述选项注释掉或删除：</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Disable root element in JSON by default.
+# ActiveSupport.on_load(:active_record) do
+#   self.include_root_in_json = false
+# end
+
+</pre>
+</div>
+</li>
+</ul>
+<h4 id="Action%20Pack">5.7 Action Pack</h4>
+<ul>
+<li>
+<p>Rails 4.0 引入了 <code>ActiveSupport::KeyGenerator</code>，使用它生成和验证签名 cookie 等。Rails 3.x 生成的现有签名 cookie，如果有 <code>secret_token</code>，并且添加了 <code>secret_key_base</code>，会自动升级。</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# config/initializers/secret_token.rb
+Myapp::Application.config.secret_token = 'existing secret token'
+Myapp::Application.config.secret_key_base = 'new secret key base'
+
+</pre>
+</div>
+<p>注意，完全升级到 Rails 4.x，而且确定不再降级到 Rails 3.x之后再设定 <code>secret_key_base</code>。这是因为使用 Rails 4.x 中的新 <code>secret_key_base</code> 签名的 cookie 与 Rails 3.x 不兼容。你可以留着 <code>secret_token</code>，不设定新的 <code>secret_key_base</code>，把弃用消息忽略，等到完全升级好了再改。</p>
+<p>如果使用外部应用或 JavaScript 读取 Rails 应用的签名会话 cookie（或一般的签名 cookie），解耦之后才应该设定 <code>secret_key_base</code>。</p>
+</li>
+<li>
+<p>如果设定了 <code>secret_key_base</code>，Rails 4.0 会加密基于 cookie 的会话内容。Rails 3.x 签名基于 cookie 的会话，但是不加密。签名的 cookie 是“安全的”，因为会确认是不是由应用生成的，无法篡改。然而，终端用户能看到内容，而加密后则无法查看，而且性能没有重大损失。</p>
+<p>改成加密会话 cookie 的详情参见 <a href="https://github.com/rails/rails/pull/9978">#9978 拉取请求</a>。</p>
+</li>
+<li><p>Rails 4.0 删除了 <code>ActionController::Base.asset_path</code> 选项，改用 Asset Pipeline 功能。</p></li>
+<li><p>Rails 4.0 弃用了 <code>ActionController::Base.page_cache_extension</code> 选项，换成 <code>ActionController::Base.default_static_extension</code>。</p></li>
+<li><p>Rails 4.0 从 Action Pack 中删除了动作和页面缓存。如果想在控制器中使用 <code>caches_action</code>，要添加 <code>actionpack-action_caching</code> gem，想使用 <code>caches_page</code>，要添加 <code>actionpack-page_caching</code> gem。</p></li>
+<li><p>Rails 4.0 删除了 XML 参数解析器。若想使用，要添加 <code>actionpack-xml_parser</code> gem。</p></li>
+<li><p>Rails 4.0 修改了默认的 <code>layout</code> 查找集，使用返回 <code>nil</code> 的符号或 proc。如果不想使用布局，返回 <code>false</code>。</p></li>
+<li><p>Rails 4.0 把默认的 memcached 客户端由 <code>memcache-client</code> 改成了 <code>dalli</code>。若想升级，只需把 <code>gem 'dalli'</code> 添加到 <code>Gemfile</code> 中。</p></li>
+<li><p>Rails 4.0 弃用了控制器中的 <code>dom_id</code> 和 <code>dom_class</code> 方法（在视图中可以继续使用）。若想使用，要引入 <code>ActionView::RecordIdentifier</code> 模块。</p></li>
+<li><p>Rails 4.0 弃用了 <code>link_to</code> 辅助方法的 <code>:confirm</code> 选项。现在应该使用 <code>data</code> 属性（如 <code>data: { confirm: 'Are you sure?' }</code>）。基于这个辅助方法的辅助方法（如 <code>link_to_if</code> 或 <code>link_to_unless</code>）也受影响。</p></li>
+<li><p>Rails 4.0 改变了 <code>assert_generates</code>、<code>assert_recognizes</code> 和 <code>assert_routing</code> 的工作方式。现在，这三个断言抛出 <code>Assertion</code>，而不是 <code>ActionController::RoutingError</code>。</p></li>
+<li>
+<p>如果具名路由的名称有冲突，Rails 4.0 抛出 <code>ArgumentError</code>。自己定义具名路由，或者由 <code>resources</code> 生成都可能触发这一错误。下面两例中的 <code>example_path</code> 路由有冲突：</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'one' =&gt; 'test#example', as: :example
+get 'two' =&gt; 'test#example', as: :example
+
+resources :examples
+get 'clashing/:id' =&gt; 'test#example', as: :example
+
+</pre>
+</div>
+<p>在第一例中，可以为两个路由起不同的名称。在第二例中，可以使用 <code>resources</code> 方法提供的 <code>only</code> 或 <code>except</code> 选项，限制生成的路由。详情参见<a href="routing.html#%E9%99%90%E5%88%B6%E6%89%80%E5%88%9B%E5%BB%BA%E7%9A%84%E8%B7%AF%E7%94%B1">路由指南</a>。</p>
+</li>
+<li>
+<p>Rails 4.0 还改变了含有 Unicode 字符的路由的处理方式。现在，可以直接在路由中使用 Unicode 字符。如果以前这样做过，要做修改。例如：</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get Rack::Utils.escape('こんにちは'), controller: 'welcome', action: 'index'
+
+</pre>
+</div>
+<p>要改成：</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'こんにちは', controller: 'welcome', action: 'index'
+
+</pre>
+</div>
+</li>
+<li>
+<p>Rails 4.0 要求使用 <code>match</code> 定义的路由必须指定请求方法。例如：</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Rails 3.x
+match '/' =&gt; 'root#index'
+
+# 改成
+match '/' =&gt; 'root#index', via: :get
+
+# 或
+get '/' =&gt; 'root#index'
+
+</pre>
+</div>
+</li>
+<li>
+<p>Rails 4.0 删除了 <code>ActionDispatch::BestStandardsSupport</code> 中间件。根据<a href="http://msdn.microsoft.com/en-us/library/jj676915(v=vs.85).aspx">这篇文章</a>，<code>&lt;!DOCTYPE html&gt;</code> 就能触发标准模式。此外，ChromeFrame 首部移到 <code>config.action_dispatch.default_headers</code> 中了。</p>
+<p>注意，还必须把对这个中间件的引用从应用的代码中删除，例如：</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 抛出异常
+config.middleware.insert_before(Rack::Lock, ActionDispatch::BestStandardsSupport)
+
+</pre>
+</div>
+<p>此外，还要把环境配置中的 <code>config.action_dispatch.best_standards_support</code> 选项删除（如果有的话）。</p>
+</li>
+<li><p>在 Rails 4.0 中，预先编译好的静态资源不再自动从 <code>vendor/assets</code> 和 <code>lib/assets</code> 中复制 JS 和 CSS 之外的静态文件。Rails 应用和引擎开发者应该把静态资源文件放在 <code>app/assets</code> 目录中，或者配置 <code>config.assets.precompile</code> 选项。</p></li>
+<li><p>在 Rails 4.0 中，如果动作无法处理请求的格式，抛出 <code>ActionController::UnknownFormat</code> 异常。默认情况下，这个异常的处理方式是返回“406 Not Acceptable”响应，不过现在可以覆盖。在 Rails 3 中始终返回“406 Not Acceptable”响应，不可覆盖。</p></li>
+<li><p>在 Rails 4.0 中，如果 <code>ParamsParser</code> 无法解析请求参数，抛出 <code>ActionDispatch::ParamsParser::ParseError</code> 异常。你应该捕获这个异常，而不是具体的异常，如 <code>MultiJson::DecodeError</code>。</p></li>
+<li><p>在 Rails 4.0 中，如果挂载引擎的 URL 有前缀，<code>SCRIPT_NAME</code> 能正确嵌套。现在不用设定 <code>default_url_options[:script_name]</code> 选项覆盖 URL 前缀了。</p></li>
+<li><p>Rails 4.0 弃用了 <code>ActionController::Integration</code>，改成了 <code>ActionDispatch::Integration</code>。</p></li>
+<li><p>Rails 4.0 弃用了 <code>ActionController::IntegrationTest</code>，改成了 <code>ActionDispatch::IntegrationTest</code>。</p></li>
+<li><p>Rails 4.0 弃用了 <code>ActionController::PerformanceTest</code>，改成了 <code>ActionDispatch::PerformanceTest</code>。</p></li>
+<li><p>Rails 4.0 弃用了 <code>ActionController::AbstractRequest</code>，改成了 <code>ActionDispatch::Request</code>。</p></li>
+<li><p>Rails 4.0 弃用了 <code>ActionController::Request</code>，改成了 <code>ActionDispatch::Request</code>。</p></li>
+<li><p>Rails 4.0 弃用了 <code>ActionController::AbstractResponse</code>，改成了 <code>ActionDispatch::Response</code>。</p></li>
+<li><p>Rails 4.0 弃用了 <code>ActionController::Response</code>，改成了 <code>ActionDispatch::Response</code>。</p></li>
+<li><p>Rails 4.0 弃用了 <code>ActionController::Routing</code>，改成了 <code>ActionDispatch::Routing</code>。</p></li>
+</ul>
+<h4 id="Active%20Support">5.8 Active Support</h4><p>Rails 4.0 删除了 <code>ERB::Util#json_escape</code> 的别名 <code>j</code>，因为已经把它用作 <code>ActionView::Helpers::JavaScriptHelper#escape_javascript</code> 的别名。</p><h4 id="%E8%BE%85%E5%8A%A9%E6%96%B9%E6%B3%95%E7%9A%84%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F">5.9 辅助方法的加载顺序</h4><p>Rails 4.0 改变了从不同目录中加载辅助方法的顺序。以前，先找到所有目录，然后按字母表顺序排序。升级到 Rails 4.0 之后，辅助方法的目录顺序依旧，只在各自的目录中按字母表顺序加载。如果没有使用 <code>helpers_path</code> 参数，这一变化只影响从引擎中加载辅助方法的方式。如果看重顺序，升级后应该检查辅助方法是否可用。如果想修改加载引擎的顺序，可以使用 <code>config.railties_order=</code> 方法。</p><h4 id="Active%20Record%20%E8%A7%82%E6%B5%8B%E5%99%A8%E5%92%8C%20Action%20Controller%20%E6%B8%85%E6%B4%81%E5%99%A8">5.10 Active Record 观测器和 Action Controller 清洁器</h4><p><code>ActiveRecord::Observer</code> 和 <code>ActionController::Caching::Sweeper</code> 提取到 <code>rails-observers</code> gem 中了。如果要使用它们，要添加 <code>rails-observers</code> gem。</p><h4 id="sprockets-rails">5.11 sprockets-rails</h4>
+<ul>
+<li><p><code>assets:precompile:primary</code> 和 <code>assets:precompile:all</code> 删除了。改用 <code>assets:precompile</code>。</p></li>
+<li>
+<p><code>config.assets.compress</code> 选项要改成 <code>config.assets.js_compressor</code>，例如：</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.js_compressor = :uglifier
+
+</pre>
+</div>
+</li>
+</ul>
+<h4 id="sass-rails">5.12 sass-rails</h4>
+<ul>
+<li>
+<code>asset-url</code> 不再接受两个参数。例如，<code>asset-url("rails.png", image)</code> 变成了 <code>asset-url("rails.png")</code>。</li>
+</ul>
+<div class="note"><p><a href="http://guides.rubyonrails.org/upgrading_ruby_on_rails.html">英语原文</a>还有从 Rails 3.0 升级到 3.1 及从 3.1 升级到 3.2 的说明，由于版本太旧，不再翻译，敬请谅解。——译者注</p></div>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>
