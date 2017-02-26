@@ -24,16 +24,17 @@
   <% end %>
   <div id="topNav">
     <div class="wrapper">
-      <strong class="more-info-label">More at <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
       <span class="red-button more-info-button">
         More Ruby on Rails
       </span>
       <ul class="more-info-links s-hidden">
-        <li class="more-info"><a href="http://weblog.rubyonrails.org/">Blog</a></li>
-        <li class="more-info"><a href="http://guides.rubyonrails.org/">Guides</a></li>
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
         <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
-        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">Ask for help</a></li>
-        <li class="more-info"><a href="https://github.com/rails/rails">Contribute on GitHub</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
       </ul>
     </div>
   </div>
@@ -41,9 +42,9 @@
     <div class="wrapper clearfix">
       <h1><a href="index.html" title="Return to home page">Guides.rubyonrails.org</a></h1>
       <ul class="nav">
-        <li><a class="nav-item" href="index.html">Home</a></li>
+        <li><a class="nav-item" href="index.html">首页</a></li>
         <li class="guides-index guides-index-large">
-          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">Guides Index</a>
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
           <div id="guides" class="clearfix" style="display: none;">
             <hr />
             <% ['L', 'R'].each do |position| %>
@@ -58,11 +59,11 @@
             <% end %>
           </div>
         </li>
-        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribute</a></li>
-        <li><a class="nav-item" href="credits.html">Credits</a></li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
         <li class="guides-index guides-index-small">
           <select class="guides-index-item nav-item">
-            <option value="index.html">Guides Index</option>
+            <option value="index.html">指南索引</option>
             <% docs_for_menu.each do |section| %>
               <optgroup label="<%= section['name'] %>">
                 <% finished_documents(section['documents']).each do |document| %>
@@ -90,28 +91,24 @@
       <div id="mainCol">
         <%= yield.html_safe %>
 
-        <h3>Feedback</h3>
+        <h3>反馈</h3>
         <p>
-          You're encouraged to help improve the quality of this guide.
+          我们鼓励您帮助提高本指南的质量。
         </p>
         <p>
-          Please contribute if you see any typos or factual errors.
-          To get started, you can read our <%= link_to 'documentation contributions', 'http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation' %> section.
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<%= link_to '文档贡献', 'http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation' %>指南。
         </p>
         <p>
-          You may also find incomplete content, or stuff that is not up to date.
-          Please do add any missing documentation for master. Make sure to check
-          <%= link_to 'Edge Guides','http://edgeguides.rubyonrails.org' %> first to verify
-          if the issues are already fixed or not on the master branch.
-          Check the <%= link_to 'Ruby on Rails Guides Guidelines', 'ruby_on_rails_guides_guidelines.html' %>
-          for style and conventions.
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <%= link_to 'Edge Guides','http://edgeguides.rubyonrails.org' %> 是否已经修复。
+          关于用语约定，请查看<%= link_to 'Ruby on Rails 指南指导', 'ruby_on_rails_guides_guidelines.html' %>。
         </p>
         <p>
-          If for whatever reason you spot something to fix but cannot patch it yourself, please
-          <%= link_to 'open an issue', 'https://github.com/rails/rails/issues' %>.
+          无论什么原因，如果你发现了问题但无法修补它，请<%= link_to '创建 issue', 'https://github.com/rails/rails/issues' %>。
         </p>
-        <p>And last but not least, any kind of discussion regarding Ruby on Rails
-          documentation is very welcome in the <%= link_to 'rubyonrails-docs mailing list', 'http://groups.google.com/group/rubyonrails-docs' %>.
+        <p>
+          最后，欢迎到 <%= link_to 'rubyonrails-docs 邮件列表', 'http://groups.google.com/group/rubyonrails-docs' %>参与任何有关 Ruby on Rails 文档的讨论。
         </p>
       </div>
     </div>
