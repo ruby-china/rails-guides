@@ -329,7 +329,7 @@ GET /clients?ids[]=1&amp;ids[]=2&amp;ids[]=3
 
 </pre>
 </div>
-<div class="note"><p>“[”和“]”这两个符号不允许出现在 URL 中，所以上面的地址会被编码成 <code>/clients?ids%5b%5d=1&amp;ids%5b%5d=2&amp;ids%5b%5d=3</code>。多数情况下，无需你费心，浏览器会代为编码，接收到这样的请求后，Rails 也会自动解码。如果你要手动向服务器发送这样的请求，就要留心了。</p></div><p>此时，<code>params[:ids]</code> 的值是 <code>["1", "2", "3"]</code>。注意，参数的值始终是字符串，Rails 不会尝试转换类型。</p><div class="note"><p>默认情况下，基于安全考虑，参数中的 <code>[nil]</code> 和 <code>[nil, nil, …​]</code> 会替换成 <code>[]</code>。详情参见 <a href="security.html#unsafe-query-generation">Ruby on Rails 安全指南</a>。</p></div><p>若想发送一个散列，要在方括号内指定键名：</p><div class="code_container">
+<div class="note"><p>“[”和“]”这两个符号不允许出现在 URL 中，所以上面的地址会被编码成 <code>/clients?ids%5b%5d=1&amp;ids%5b%5d=2&amp;ids%5b%5d=3</code>。多数情况下，无需你费心，浏览器会代为编码，接收到这样的请求后，Rails 也会自动解码。如果你要手动向服务器发送这样的请求，就要留心了。</p></div><p>此时，<code>params[:ids]</code> 的值是 <code>["1", "2", "3"]</code>。注意，参数的值始终是字符串，Rails 不会尝试转换类型。</p><div class="note"><p>默认情况下，基于安全考虑，参数中的 <code>[nil]</code> 和 <code>[nil, nil, …​]</code> 会替换成 <code>[]</code>。详情参见 <a href="security.html#%E7%94%9F%E6%88%90%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E6%9F%A5%E8%AF%A2">Ruby on Rails 安全指南</a>。</p></div><p>若想发送一个散列，要在方括号内指定键名：</p><div class="code_container">
 <pre class="brush: xml; gutter: false; toolbar: false">
 &lt;form accept-charset="UTF-8" action="/clients" method="post"&gt;
   &lt;input type="text" name="client[name]" value="Acme" /&gt;

@@ -651,7 +651,7 @@ Client.where("orders_count = #{params[:orders]}")
 
 </pre>
 </div>
-<p>原因是出于参数的安全性考虑。把变量直接放入条件字符串会导致变量原封不动地传递给数据库，这意味着即使是恶意用户提交的变量也不会被转义。这样一来，整个数据库就处于风险之中，因为一旦恶意用户发现自己能够滥用数据库，他就可能做任何事情。所以，永远不要把参数直接放入条件字符串。</p><div class="info"><p>关于 SQL 注入的危险性的更多介绍，请参阅 <a href="security.html#sql-injection">安全指南</a>。</p></div><h5 id="%E6%9D%A1%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%8D%A0%E4%BD%8D%E7%AC%A6">2.2.1 条件中的占位符</h5><p>和问号占位符（<code>?</code>）类似，我们还可以在条件字符串中使用符号占位符，并通过散列提供符号对应的值：</p><div class="code_container">
+<p>原因是出于参数的安全性考虑。把变量直接放入条件字符串会导致变量原封不动地传递给数据库，这意味着即使是恶意用户提交的变量也不会被转义。这样一来，整个数据库就处于风险之中，因为一旦恶意用户发现自己能够滥用数据库，他就可能做任何事情。所以，永远不要把参数直接放入条件字符串。</p><div class="info"><p>关于 SQL 注入的危险性的更多介绍，请参阅 <a href="security.html#SQL%20%E6%B3%A8%E5%85%A5">安全指南</a>。</p></div><h5 id="%E6%9D%A1%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%8D%A0%E4%BD%8D%E7%AC%A6">2.2.1 条件中的占位符</h5><p>和问号占位符（<code>?</code>）类似，我们还可以在条件字符串中使用符号占位符，并通过散列提供符号对应的值：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 Client.where("created_at &gt;= :start_date AND created_at &lt;= :end_date",
   {start_date: params[:start_date], end_date: params[:end_date]})

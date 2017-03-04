@@ -230,7 +230,7 @@
 <li><p>如何启动开发服务器；</p></li>
 <li><p>如果在交互式 shell 中测试对象；</p></li>
 </ul>
-<div class="note"><p>阅读本文前请阅读<a href="getting_started.xml#getting-started-with-rails">getting_started.xml</a>，掌握一些 Rails 基础知识。</p></div><h3 id="%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%9F%BA%E7%A1%80">1 命令行基础</h3><p>有些命令在 Rails 开发过程中经常会用到，下面按照使用频率倒序列出：</p>
+<div class="note"><p>阅读本文前请阅读<a href="getting_started.html">Rails 入门</a>，掌握一些 Rails 基础知识。</p></div><h3 id="%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%9F%BA%E7%A1%80">1 命令行基础</h3><p>有些命令在 Rails 开发过程中经常会用到，下面按照使用频率倒序列出：</p>
 <ul>
 <li><p><code>rails console</code></p></li>
 <li><p><code>rails server</code></p></li>
@@ -436,7 +436,7 @@ $ bin/rails db:migrate
 
 </pre>
 </div>
-<div class="info"><p>介绍一下单元测试。单元测试是用来测试和做断言的代码。在单元测试中，我们只关注代码的一小部分，例如模型中的一个方法，测试其输入和输出。单元测试是你的好伙伴，你逐渐会意识到，单元测试的程度越高，生活的质量越高。真的。关于单元测试的详情，参阅<a href="testing.xml#a-guide-to-testing-rails-applications">testing.xml</a>。</p></div><p>我们来看一下 Rails 创建的界面。</p><div class="code_container">
+<div class="info"><p>介绍一下单元测试。单元测试是用来测试和做断言的代码。在单元测试中，我们只关注代码的一小部分，例如模型中的一个方法，测试其输入和输出。单元测试是你的好伙伴，你逐渐会意识到，单元测试的程度越高，生活的质量越高。真的。关于单元测试的详情，参阅<a href="testing.html">Rails 应用测试指南</a>。</p></div><p>我们来看一下 Rails 创建的界面。</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ bin/rails server
 
@@ -583,7 +583,7 @@ Database schema version   20110805173523
 </div>
 <h4 id="assets">2.2 <code>assets</code>
 </h4><p><code>bin/rails assets:precompile</code> 用于预编译 <code>app/assets</code> 文件夹中的静态资源文件。<code>bin/rails assets:clean</code> 用于把之前编译好的静态资源文件删除。滚动部署时应该执行 <code>assets:clean</code>，以防仍然链接旧的静态资源文件。</p><p>如果想完全清空 <code>public/assets</code> 目录，可以使用 <code>bin/rails assets:clobber</code>。</p><h4 id="db">2.3 <code>db</code>
-</h4><p><code>bin/rails</code> 命名空间 <code>db:</code> 中最常用的任务是 <code>migrate</code> 和 <code>create</code>，这两个任务会尝试运行所有迁移相关的任务（<code>up</code>、<code>down</code>、<code>redo</code>、<code>reset</code>）。<code>bin/rails db:version</code> 在排查问题时很有用，它会输出数据库的当前版本。</p><p>关于数据库迁移的进一步说明，参阅<a href="active_record_migrations.xml#active-record-migrations">active_record_migrations.xml</a>。</p><h4 id="notes">2.4 <code>notes</code>
+</h4><p><code>bin/rails</code> 命名空间 <code>db:</code> 中最常用的任务是 <code>migrate</code> 和 <code>create</code>，这两个任务会尝试运行所有迁移相关的任务（<code>up</code>、<code>down</code>、<code>redo</code>、<code>reset</code>）。<code>bin/rails db:version</code> 在排查问题时很有用，它会输出数据库的当前版本。</p><p>关于数据库迁移的进一步说明，参阅<a href="active_record_migrations.html">Active Record 迁移</a>。</p><h4 id="notes">2.4 <code>notes</code>
 </h4><p><code>bin/rails notes</code> 在代码中搜索以 FIXME、OPTIMIZE 或 TODO 开头的注释。搜索的文件类型包括 <code>.builder</code>、<code>.rb</code>、<code>.rake</code>、<code>.yml</code>、<code>.yaml</code>、<code>.ruby</code>、<code>.css</code>、<code>.js</code> 和 <code>.erb</code>，搜索的注解包括默认的和自定义的。</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ bin/rails notes
@@ -639,7 +639,7 @@ spec/models/user_spec.rb:
 </div>
 <h4 id="routes">2.5 <code>routes</code>
 </h4><p><code>rails routes</code> 列出应用中定义的所有路由，可为解决路由问题提供帮助，还可以让你对应用中的所有 URL 有个整体了解。</p><h4 id="test">2.6 <code>test</code>
-</h4><div class="info"><p>Rails 中的单元测试详情，参见<a href="testing.xml#a-guide-to-testing-rails-applications">testing.xml</a>。</p></div><p>Rails 提供了一个名为 Minitest 的测试组件。Rails 的稳定性由测试决定。<code>test:</code> 命名空间中的任务可用于运行各种测试。</p><h4 id="tmp">2.7 <code>tmp</code>
+</h4><div class="info"><p>Rails 中的单元测试详情，参见<a href="testing.html">Rails 应用测试指南</a>。</p></div><p>Rails 提供了一个名为 Minitest 的测试组件。Rails 的稳定性由测试决定。<code>test:</code> 命名空间中的任务可用于运行各种测试。</p><h4 id="tmp">2.7 <code>tmp</code>
 </h4><p><code>Rails.root/tmp</code> 目录和 *nix 系统中的 <code>/tmp</code> 目录作用相同，用于存放临时文件，例如 PID 文件和缓存的动作等。</p><p><code>tmp:</code> 命名空间中的任务可以清理或创建 <code>Rails.root/tmp</code> 目录：</p>
 <ul>
 <li><p><code>rails tmp:cache:clear</code> 清空 <code>tmp/cache</code> 目录；</p></li>

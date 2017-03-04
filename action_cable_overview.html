@@ -175,14 +175,478 @@
     <div class="wrapper">
       
 
-      
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#Pub/Sub%20%E6%98%AF%E4%BB%80%E4%B9%88">Pub/Sub 是什么</a></li>
+<li>
+<a href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%BB%84%E4%BB%B6">服务器端组件</a>
+
+<ul>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%BB%84%E4%BB%B6-%E8%BF%9E%E6%8E%A5">连接</a></li>
+<li><a href="#%E9%A2%91%E9%81%93">频道</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%84%E4%BB%B6">客户端组件</a>
+
+<ul>
+<li><a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%84%E4%BB%B6-%E8%BF%9E%E6%8E%A5">连接</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E4%BA%A4%E4%BA%92">客户端-服务器的交互</a>
+
+<ul>
+<li><a href="#%E6%B5%81%EF%BC%88stream%EF%BC%89">流（stream）</a></li>
+<li><a href="#%E5%B9%BF%E6%92%AD">广播</a></li>
+<li><a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E4%BA%A4%E4%BA%92-%E8%AE%A2%E9%98%85">订阅</a></li>
+<li><a href="#%E5%90%91%E9%A2%91%E9%81%93%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0">向频道传递参数</a></li>
+<li><a href="#%E6%B6%88%E6%81%AF%E9%87%8D%E6%92%AD">消息重播</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%85%A8%E6%A0%88%E7%A4%BA%E4%BE%8B">全栈示例</a>
+
+<ul>
+<li><a href="#%E4%BE%8B%201%EF%BC%9A%E7%94%A8%E6%88%B7%E5%9C%A8%E7%BA%BF%E7%8A%B6%E6%80%81%EF%BC%88user%20appearance%EF%BC%89">例 1：用户在线状态（user appearance）</a></li>
+<li><a href="#%E4%BE%8B%202%EF%BC%9A%E6%8E%A5%E6%94%B6%E6%96%B0%E7%9A%84%20Web%20%E9%80%9A%E7%9F%A5">例 2：接收新的 Web 通知</a></li>
+<li><a href="#%E6%9B%B4%E5%AE%8C%E6%95%B4%E7%9A%84%E4%BE%8B%E5%AD%90">更完整的例子</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E9%85%8D%E7%BD%AE">配置</a>
+
+<ul>
+<li><a href="#%E8%AE%A2%E9%98%85%E9%80%82%E9%85%8D%E5%99%A8">订阅适配器</a></li>
+<li><a href="#%E5%85%81%E8%AE%B8%E7%9A%84%E8%AF%B7%E6%B1%82%E6%9D%A5%E6%BA%90">允许的请求来源</a></li>
+<li><a href="#%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE">用户配置</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96%E9%85%8D%E7%BD%AE">其他配置</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E8%BF%90%E8%A1%8C%E7%8B%AC%E7%AB%8B%E7%9A%84%20Cable%20%E6%9C%8D%E5%8A%A1%E5%99%A8">运行独立的 Cable 服务器</a>
+
+<ul>
+<li><a href="#%E5%92%8C%E5%BA%94%E7%94%A8%E4%B8%80%E8%B5%B7%E8%BF%90%E8%A1%8C">和应用一起运行</a></li>
+<li><a href="#%E7%8B%AC%E7%AB%8B%E8%BF%90%E8%A1%8C">独立运行</a></li>
+<li><a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">注意事项</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB">依赖关系</a></li>
+<li><a href="#%E9%83%A8%E7%BD%B2">部署</a></li>
+</ol>
+
+          </div>
+
     </div>
   </div>
 
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Action Cable 概览</h2>
+        <h2>Action Cable 概览</h2><p>本文介绍 Action Cable 的工作原理，以及在 Rails 应用中如何通过 WebSocket 实现实时功能。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>如何设置 Action Cable；</p></li>
+<li><p>如何设置频道（channel）；</p></li>
+<li><p>Action Cable 的部署和架构设置。</p></li>
+</ul>
+<h3 id="%E7%AE%80%E4%BB%8B">1 简介</h3><p>Action Cable 将 <a href="https://en.wikipedia.org/wiki/WebSocket">WebSocket</a> 与 Rails 应用的其余部分无缝集成。有了 Action Cable，我们就可以用 Ruby 语言，以 Rails 风格实现实时功能，并且保持高性能和可扩展性。Action Cable 为此提供了全栈支持，包括客户端 JavaScript 框架和服务器端 Ruby 框架。同时，我们也能够通过 Action Cable 访问使用 Active Record 或其他 ORM 编写的所有模型。</p><h3 id="Pub/Sub%20%E6%98%AF%E4%BB%80%E4%B9%88">2 Pub/Sub 是什么</h3><p><a href="https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">Pub/Sub</a>，也就是发布/订阅，是指在消息队列中，信息发送者（发布者）把数据发送给某一类接收者（订阅者），而不必单独指定接收者。Action Cable 通过发布/订阅的方式在服务器和多个客户端之间通信。</p><h3 id="%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%BB%84%E4%BB%B6">3 服务器端组件</h3><h4 id="%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%BB%84%E4%BB%B6-%E8%BF%9E%E6%8E%A5">3.1 连接</h4><p>连接是客户端-服务器通信的基础。每当服务器接受一个 WebSocket，就会实例化一个连接对象。所有频道订阅（channel subscription）都是在继承连接对象的基础上创建的。连接本身并不处理身份验证和授权之外的任何应用逻辑。WebSocket 连接的客户端被称为连接用户（connection consumer）。每当用户新打开一个浏览器标签、窗口或设备，对应地都会新建一个用户-连接对（consumer-connection pair）。</p><p>连接是 <code>ApplicationCable::Connection</code> 类的实例。对连接的授权就是在这个类中完成的，对于能够识别的用户，才会继续建立连接。</p><h5 id="%E8%BF%9E%E6%8E%A5%E8%AE%BE%E7%BD%AE">3.1.1 连接设置</h5><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/channels/application_cable/connection.rb
+module ApplicationCable
+  class Connection &lt; ActionCable::Connection::Base
+    identified_by :current_user
+
+    def connect
+      self.current_user = find_verified_user
+    end
+
+    protected
+      def find_verified_user
+        if current_user = User.find_by(id: cookies.signed[:user_id])
+          current_user
+        else
+          reject_unauthorized_connection
+        end
+      end
+  end
+end
+
+</pre>
+</div>
+<p>其中 <code>identified_by</code> 用于声明连接标识符，连接标识符稍后将用于查找指定连接。注意，在声明连接标识符的同时，在基于连接创建的频道实例上，会自动创建同名委托（delegate）。</p><p>上述例子假设我们已经在应用的其他部分完成了用户身份验证，并且在验证成功后设置了经过用户 ID 签名的 cookie。</p><p>尝试建立新连接时，会自动把 cookie 发送给连接实例，用于设置 <code>current_user</code>。通过使用 <code>current_user</code> 标识连接，我们稍后就能够检索指定用户打开的所有连接（如果删除用户或取消对用户的授权，该用户打开的所有连接都会断开）。</p><h4 id="%E9%A2%91%E9%81%93">3.2 频道</h4><p>和常规 MVC 中的控制器类似，频道用于封装逻辑工作单元。默认情况下，Rails 会把 <code>ApplicationCable::Channel</code> 类作为频道的父类，用于封装频道之间共享的逻辑。</p><h5 id="%E7%88%B6%E9%A2%91%E9%81%93%E8%AE%BE%E7%BD%AE">3.2.1 父频道设置</h5><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/channels/application_cable/channel.rb
+module ApplicationCable
+  class Channel &lt; ActionCable::Channel::Base
+  end
+end
+
+</pre>
+</div>
+<p>接下来我们要创建自己的频道类。例如，可以创建 <code>ChatChannel</code> 和 <code>AppearanceChannel</code> 类：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/channels/chat_channel.rb
+class ChatChannel &lt; ApplicationCable::Channel
+end
+
+# app/channels/appearance_channel.rb
+class AppearanceChannel &lt; ApplicationCable::Channel
+end
+
+</pre>
+</div>
+<p>这样用户就可以订阅频道了，订阅一个或两个都行。</p><h5 id="%E9%A2%91%E9%81%93-%E8%AE%A2%E9%98%85">3.2.2 订阅</h5><p>订阅频道的用户称为订阅者。用户创建的连接称为（频道）订阅。订阅基于连接用户（订阅者）发送的标识符创建，生成的消息将发送到这些订阅。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/channels/chat_channel.rb
+class ChatChannel &lt; ApplicationCable::Channel
+  # 当用户成为此频道的订阅者时调用
+  def subscribed
+  end
+end
+
+</pre>
+</div>
+<h3 id="%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%84%E4%BB%B6">4 客户端组件</h3><h4 id="%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%84%E4%BB%B6-%E8%BF%9E%E6%8E%A5">4.1 连接</h4><p>用户需要在客户端创建连接实例。下面这段由 Rails 默认生成的 JavaScript 代码，正是用于在客户端创建连接实例：</p><h5 id="%E8%BF%9E%E6%8E%A5%E7%94%A8%E6%88%B7">4.1.1 连接用户</h5><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+// app/assets/javascripts/cable.js
+//= require action_cable
+//= require_self
+//= require_tree ./channels
+
+(function() {
+  this.App || (this.App = {});
+
+  App.cable = ActionCable.createConsumer();
+}).call(this);
+
+</pre>
+</div>
+<p>上述代码会创建连接用户，并将通过默认的 <code>/cable</code> 地址和服务器建立连接。我们还需要从现有订阅中至少选择一个感兴趣的订阅，否则将无法建立连接。</p><h5 id="%E8%AE%A2%E9%98%85%E8%80%85">4.1.2 订阅者</h5><p>一旦订阅了某个频道，用户也就成为了订阅者：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/assets/javascripts/cable/subscriptions/chat.coffee
+App.cable.subscriptions.create { channel: "ChatChannel", room: "Best Room" }
+
+# app/assets/javascripts/cable/subscriptions/appearance.coffee
+App.cable.subscriptions.create { channel: "AppearanceChannel" }
+
+</pre>
+</div>
+<p>上述代码创建了订阅，稍后我们还要描述如何处理接收到的数据。</p><p>作为订阅者，用户可以多次订阅同一个频道。例如，用户可以同时订阅多个聊天室：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+App.cable.subscriptions.create { channel: "ChatChannel", room: "1st Room" }
+App.cable.subscriptions.create { channel: "ChatChannel", room: "2nd Room" }
+
+</pre>
+</div>
+<h3 id="%E5%AE%A2%E6%88%B7%E7%AB%AF-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E4%BA%A4%E4%BA%92">5 客户端-服务器的交互</h3><h4 id="%E6%B5%81%EF%BC%88stream%EF%BC%89">5.1 流（stream）</h4><p>频道把已发布内容（即广播）发送给订阅者，是通过所谓的“流”机制实现的。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/channels/chat_channel.rb
+class ChatChannel &lt; ApplicationCable::Channel
+  def subscribed
+    stream_from "chat_#{params[:room]}"
+  end
+end
+
+</pre>
+</div>
+<p>有了和模型关联的流，就可以从模型和频道生成所需的广播。下面的例子用于订阅评论频道，以接收 <code>Z2lkOi8vVGVzdEFwcC9Qb3N0LzE</code> 这样的广播：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class CommentsChannel &lt; ApplicationCable::Channel
+  def subscribed
+    post = Post.find(params[:id])
+    stream_for post
+  end
+end
+
+</pre>
+</div>
+<p>向评论频道发送广播的方式如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+CommentsChannel.broadcast_to(@post, @comment)
+
+</pre>
+</div>
+<h4 id="%E5%B9%BF%E6%92%AD">5.2 广播</h4><p>广播是指发布/订阅的链接，也就是说，当频道订阅者使用流接收某个广播时，发布者发布的内容会被直接发送给订阅者。</p><p>广播也是时间相关的在线队列。如果用户未使用流（即未订阅频道），稍后就无法接收到广播。</p><p>在 Rails 应用的其他部分也可以发送广播：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+WebNotificationsChannel.broadcast_to(
+  current_user,
+  title: 'New things!',
+  body: 'All the news fit to print'
+)
+
+</pre>
+</div>
+<p>调用 <code>WebNotificationsChannel.broadcast_to</code> 将向当前订阅适配器（默认为 Redis）的发布/订阅队列推送一条消息，并为每个用户设置不同的广播名。对于 ID 为 1 的用户，广播名是 <code>web_notifications_1</code>。</p><p>通过调用 <code>received</code> 回调方法，频道会使用流把到达 <code>web_notifications_1</code> 的消息直接发送给客户端。</p><h4 id="%E5%AE%A2%E6%88%B7%E7%AB%AF-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E4%BA%A4%E4%BA%92-%E8%AE%A2%E9%98%85">5.3 订阅</h4><p>订阅频道的用户，称为订阅者。用户创建的连接称为（频道）订阅。订阅基于连接用户（订阅者）发送的标识符创建，收到的消息将被发送到这些订阅。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+# app/assets/javascripts/cable/subscriptions/chat.coffee
+# 假设我们已经获得了发送 Web 通知的权限
+App.cable.subscriptions.create { channel: "ChatChannel", room: "Best Room" },
+  received: (data) -&gt;
+    @appendLine(data)
+
+  appendLine: (data) -&gt;
+    html = @createLine(data)
+    $("[data-chat-room='Best Room']").append(html)
+
+  createLine: (data) -&gt;
+    """
+    &lt;article class="chat-line"&gt;
+      &lt;span class="speaker"&gt;#{data["sent_by"]}&lt;/span&gt;
+      &lt;span class="body"&gt;#{data["body"]}&lt;/span&gt;
+    &lt;/article&gt;
+    """
+
+</pre>
+</div>
+<h4 id="%E5%90%91%E9%A2%91%E9%81%93%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0">5.4 向频道传递参数</h4><p>创建订阅时，可以从客户端向服务器端传递参数。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/channels/chat_channel.rb
+class ChatChannel &lt; ApplicationCable::Channel
+  def subscribed
+    stream_from "chat_#{params[:room]}"
+  end
+end
+
+</pre>
+</div>
+<p>传递给 <code>subscriptions.create</code> 方法并作为第一个参数的对象，将成为频道的参数散列。其中必需包含 <code>channel</code> 关键字：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+# app/assets/javascripts/cable/subscriptions/chat.coffee
+App.cable.subscriptions.create { channel: "ChatChannel", room: "Best Room" },
+  received: (data) -&gt;
+    @appendLine(data)
+
+  appendLine: (data) -&gt;
+    html = @createLine(data)
+    $("[data-chat-room='Best Room']").append(html)
+
+  createLine: (data) -&gt;
+    """
+    &lt;article class="chat-line"&gt;
+      &lt;span class="speaker"&gt;#{data["sent_by"]}&lt;/span&gt;
+      &lt;span class="body"&gt;#{data["body"]}&lt;/span&gt;
+    &lt;/article&gt;
+    """
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 在应用的某个部分中调用，例如 NewCommentJob
+ChatChannel.broadcast_to(
+  "chat_#{room}",
+  sent_by: 'Paul',
+  body: 'This is a cool chat app.'
+)
+
+</pre>
+</div>
+<h4 id="%E6%B6%88%E6%81%AF%E9%87%8D%E6%92%AD">5.5 消息重播</h4><p>一个客户端向其他已连接客户端重播自己收到的消息，是一种常见用法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/channels/chat_channel.rb
+class ChatChannel &lt; ApplicationCable::Channel
+  def subscribed
+    stream_from "chat_#{params[:room]}"
+  end
+
+  def receive(data)
+    ActionCable.server.broadcast("chat_#{params[:room]}", data)
+  end
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+# app/assets/javascripts/cable/subscriptions/chat.coffee
+App.chatChannel = App.cable.subscriptions.create { channel: "ChatChannel", room: "Best Room" },
+  received: (data) -&gt;
+    # data =&gt; { sent_by: "Paul", body: "This is a cool chat app." }
+
+App.chatChannel.send({ sent_by: "Paul", body: "This is a cool chat app." })
+
+</pre>
+</div>
+<p>所有已连接的客户端，包括发送消息的客户端在内，都将收到重播的消息。注意，重播时使用的参数与订阅频道时使用的参数相同。</p><h3 id="%E5%85%A8%E6%A0%88%E7%A4%BA%E4%BE%8B">6 全栈示例</h3><p>本节的两个例子都需要进行下列设置：</p>
+<ol>
+<li><p> 设置连接；</p></li>
+<li><p> 设置父频道；</p></li>
+<li><p> 连接用户。</p></li>
+</ol>
+<h4 id="%E4%BE%8B%201%EF%BC%9A%E7%94%A8%E6%88%B7%E5%9C%A8%E7%BA%BF%E7%8A%B6%E6%80%81%EF%BC%88user%20appearance%EF%BC%89">6.1 例 1：用户在线状态（user appearance）</h4><p>下面是一个关于频道的简单例子，用于跟踪用户是否在线，以及用户所在的页面。（常用于显示用户在线状态，例如当用户在线时，在用户名旁边显示绿色小圆点。）</p><p>在服务器端创建在线状态频道（appearance channel）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/channels/appearance_channel.rb
+class AppearanceChannel &lt; ApplicationCable::Channel
+  def subscribed
+    current_user.appear
+  end
+
+  def unsubscribed
+    current_user.disappear
+  end
+
+  def appear(data)
+    current_user.appear(on: data['appearing_on'])
+  end
+
+  def away
+    current_user.away
+  end
+end
+
+</pre>
+</div>
+<p>订阅创建后，会触发 <code>subscribed</code> 回调方法，这时可以提示说“当前用户上线了”。上线/下线 API 的后端可以是 Redis、数据库或其他解决方案。</p><p>在客户端创建在线状态频道订阅：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+# app/assets/javascripts/cable/subscriptions/appearance.coffee
+App.cable.subscriptions.create "AppearanceChannel",
+  # 当服务器上的订阅可用时调用
+  connected: -&gt;
+    @install()
+    @appear()
+
+  # 当 WebSocket 连接关闭时调用
+  disconnected: -&gt;
+    @uninstall()
+
+  # 当服务器拒绝订阅时调用
+  rejected: -&gt;
+    @uninstall()
+
+  appear: -&gt;
+    # 在服务器上调用 `AppearanceChannel#appear(data)`
+    @perform("appear", appearing_on: $("main").data("appearing-on"))
+
+  away: -&gt;
+    # 在服务器上调用 `AppearanceChannel#away`
+    @perform("away")
+
+
+  buttonSelector = "[data-behavior~=appear_away]"
+
+  install: -&gt;
+    $(document).on "page:change.appearance", =&gt;
+      @appear()
+
+    $(document).on "click.appearance", buttonSelector, =&gt;
+      @away()
+      false
+
+    $(buttonSelector).show()
+
+  uninstall: -&gt;
+    $(document).off(".appearance")
+    $(buttonSelector).hide()
+
+</pre>
+</div>
+<h5 id="%E5%AE%A2%E6%88%B7%E7%AB%AF-%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BA%A4%E4%BA%92">6.1.1 客户端-服务器交互</h5>
+<ol>
+<li><p> <strong>客户端</strong>通过 <code>App.cable = ActionCable.createConsumer("ws://cable.example.com")</code>（位于 <code>cable.js</code> 文件中）连接到<strong>服务器</strong>。<strong>服务器</strong>通过 <code>current_user</code> 标识此连接。</p></li>
+<li><p> <strong>客户端</strong>通过 <code>App.cable.subscriptions.create(channel: "AppearanceChannel")</code>（位于 <code>appearance.coffee</code> 文件中）订阅在线状态频道。</p></li>
+<li><p> <strong>服务器</strong>发现在线状态频道创建了一个新订阅，于是调用 <code>subscribed</code> 回调方法，也即在 <code>current_user</code> 对象上调用 <code>appear</code> 方法。</p></li>
+<li><p> <strong>客户端</strong>发现订阅创建成功，于是调用 <code>connected</code> 方法（位于 <code>appearance.coffee</code> 文件中），也即依次调用 <code>@install</code> 和 <code>@appear</code>。<code>@appear</code> 会调用服务器上的 <code>AppearanceChannel#appear(data)</code> 方法，同时提供 <code>{ appearing_on: $("main").data("appearing-on") }</code> 数据散列。之所以能够这样做，是因为服务器端的频道实例会自动暴露类上声明的所有公共方法（回调除外），从而使远程过程能够通过订阅的 <code>perform</code> 方法调用它们。</p></li>
+<li><p> <strong>服务器</strong>接收向在线状态频道的 <code>appear</code> 动作发起的请求，此频道基于连接创建，连接由 <code>current_user</code>（位于 <code>appearance_channel.rb</code> 文件中）标识。<strong>服务器</strong>通过 <code>:appearing_on</code> 键从数据散列中检索数据，将其设置为 <code>:on</code> 键的值并传递给 <code>current_user.appear</code>。</p></li>
+</ol>
+<h4 id="%E4%BE%8B%202%EF%BC%9A%E6%8E%A5%E6%94%B6%E6%96%B0%E7%9A%84%20Web%20%E9%80%9A%E7%9F%A5">6.2 例 2：接收新的 Web 通知</h4><p>上一节中在线状态的例子，演示了如何把服务器功能暴露给客户端，以便在客户端通过 WebSocket 连接调用这些功能。但是 WebSocket 的伟大之处在于，它是一条双向通道。因此，在本节的例子中，我们要看一看服务器如何调用客户端上的动作。</p><p>本节所举的例子是一个 Web 通知频道（Web notification channel），允许我们在广播到正确的流时触发客户端 Web 通知。</p><p>创建服务器端 Web 通知频道：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/channels/web_notifications_channel.rb
+class WebNotificationsChannel &lt; ApplicationCable::Channel
+  def subscribed
+    stream_for current_user
+  end
+end
+
+</pre>
+</div>
+<p>创建客户端 Web 通知频道订阅：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+# app/assets/javascripts/cable/subscriptions/web_notifications.coffee
+# 客户端假设我们已经获得了发送 Web 通知的权限
+App.cable.subscriptions.create "WebNotificationsChannel",
+  received: (data) -&gt;
+    new Notification data["title"], body: data["body"]
+
+</pre>
+</div>
+<p>在应用的其他部分向 Web 通知频道实例发送内容广播：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 在应用的某个部分中调用，例如 NewCommentJob
+WebNotificationsChannel.broadcast_to(
+  current_user,
+  title: 'New things!',
+  body: 'All the news fit to print'
+)
+
+</pre>
+</div>
+<p>调用 <code>WebNotificationsChannel.broadcast_to</code> 将向当前订阅适配器的发布/订阅队列推送一条消息，并为每个用户设置不同的广播名。对于 ID 为 1 的用户，广播名是 <code>web_notifications_1</code>。</p><p>通过调用 <code>received</code> 回调方法，频道会用流把到达 <code>web_notifications_1</code> 的消息直接发送给客户端。作为参数传递的数据散列，将作为第二个参数传递给服务器端的广播调用，数据在传输前使用 JSON 进行编码，到达服务器后由 <code>received</code> 解码。</p><h4 id="%E6%9B%B4%E5%AE%8C%E6%95%B4%E7%9A%84%E4%BE%8B%E5%AD%90">6.3 更完整的例子</h4><p>关于在 Rails 应用中设置 Action Cable 并添加频道的完整例子，参见 <a href="https://github.com/rails/actioncable-examples">rails/actioncable-examples</a> 仓库。</p><h3 id="%E9%85%8D%E7%BD%AE">7 配置</h3><p>使用 Action Cable 时，有两个选项必需配置：订阅适配器和允许的请求来源。</p><h4 id="%E8%AE%A2%E9%98%85%E9%80%82%E9%85%8D%E5%99%A8">7.1 订阅适配器</h4><p>默认情况下，Action Cable 会查找 <code>config/cable.yml</code> 这个配置文件。该文件必须为每个 Rails 环境指定适配器和 URL 地址。关于适配器的更多介绍，请参阅 <a href="#%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB">依赖关系</a>。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+development:
+  adapter: async
+
+test:
+  adapter: async
+
+production:
+  adapter: redis
+  url: redis://10.10.3.153:6381
+
+</pre>
+</div>
+<h4 id="%E5%85%81%E8%AE%B8%E7%9A%84%E8%AF%B7%E6%B1%82%E6%9D%A5%E6%BA%90">7.2 允许的请求来源</h4><p>Action Cable 仅接受来自指定来源的请求。这些来源是在服务器配置文件中以数组的形式设置的，每个来源既可以是字符串，也可以是正则表达式。对于每个请求，都要对其来源进行检查，看是否和允许的请求来源相匹配。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_cable.allowed_request_origins = ['http://rubyonrails.com', %r{http://ruby.*}]
+
+</pre>
+</div>
+<p>若想禁用来源检查，允许任何来源的请求：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_cable.disable_request_forgery_protection = true
+
+</pre>
+</div>
+<p>在开发环境中，Action Cable 默认允许来自 localhost:3000 的所有请求。</p><h4 id="%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE">7.3 用户配置</h4><p>要想配置 URL 地址，可以在 HTML 布局文件的 <code>&lt;head&gt;</code> 元素中添加 <code>action_cable_meta_tag</code> 标签。这个标签会使用环境配置文件中 <code>config.action_cable.url</code> 选项设置的 URL 地址或路径。</p><h4 id="%E5%85%B6%E4%BB%96%E9%85%8D%E7%BD%AE">7.4 其他配置</h4><p>另一个常见的配置选项，是应用于每个连接记录器的日志标签。下面是 Basecamp 使用的配置：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_cable.log_tags = [
+  -&gt; request { request.env['bc.account_id'] || "no-account" },
+  :action_cable,
+  -&gt; request { request.uuid }
+]
+
+</pre>
+</div>
+<p>关于所有配置选项的完整列表，请参阅 <code>ActionCable::Server::Configuration</code> 类的 API 文档。</p><p>还要注意，服务器提供的数据库连接在数量上至少应该和职程（worker）相等。职程池的默认大小为 100，也就是说数据库连接数量至少为 100。职程池的大小可以通过 <code>config/database.yml</code> 文件中的 <code>pool</code> 属性设置。</p><h3 id="%E8%BF%90%E8%A1%8C%E7%8B%AC%E7%AB%8B%E7%9A%84%20Cable%20%E6%9C%8D%E5%8A%A1%E5%99%A8">8 运行独立的 Cable 服务器</h3><h4 id="%E5%92%8C%E5%BA%94%E7%94%A8%E4%B8%80%E8%B5%B7%E8%BF%90%E8%A1%8C">8.1 和应用一起运行</h4><p>Action Cable 可以和 Rails 应用一起运行。例如，要想监听 <code>/websocket</code> 上的 WebSocket 请求，可以通过 <code>config.action_cable.mount_path</code> 选项指定监听路径：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# config/application.rb
+class Application &lt; Rails::Application
+  config.action_cable.mount_path = '/websocket'
+end
+
+</pre>
+</div>
+<p>在布局文件中调用 <code>action_cable_meta_tag</code> 后，就可以使用 <code>App.cable = ActionCable.createConsumer()</code> 连接到 Cable 服务器。可以通过 <code>createConsumer</code> 方法的第一个参数指定自定义路径（例如，<code>App.cable =
+ActionCable.createConsumer("/websocket")</code>）。</p><p>对于我们创建的每个服务器实例，以及由服务器派生的每个职程，都会新建对应的 Action Cable 实例，通过 Redis 可以在不同连接之间保持消息同步。</p><h4 id="%E7%8B%AC%E7%AB%8B%E8%BF%90%E8%A1%8C">8.2 独立运行</h4><p>Cable 服务器可以和普通应用服务器分离。此时，Cable 服务器仍然是 Rack 应用，只不过是单独的 Rack 应用罢了。推荐的基本设置如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# cable/config.ru
+require_relative 'config/environment'
+Rails.application.eager_load!
+
+run ActionCable.server
+
+</pre>
+</div>
+<p>然后用 <code>bin/cable</code> 中的一个 binstub 命令启动服务器：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+#!/bin/bash
+bundle exec puma -p 28080 cable/config.ru
+
+</pre>
+</div>
+<p>上述代码在 28080 端口上启动 Cable 服务器。</p><h4 id="%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">8.3 注意事项</h4><p>WebSocket 服务器没有访问会话的权限，但可以访问 cookie，而在处理身份验证时需要用到 cookie。<a href="http://www.rubytutorial.io/actioncable-devise-authentication">这篇文章</a>介绍了如何使用 Devise 验证身份。</p><h3 id="%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB">9 依赖关系</h3><p>Action Cable 提供了用于处理发布/订阅内部逻辑的订阅适配器接口，默认包含异步、内联、PostgreSQL、事件 Redis 和非事件 Redis 适配器。新建 Rails 应用的默认适配器是异步（async）适配器。</p><p>对 Ruby gem 的依赖包括 <a href="https://github.com/faye/websocket-driver-ruby">websocket-driver</a>、<a href="https://github.com/celluloid/nio4r">nio4r</a> 和 <a href="https://github.com/ruby-concurrency/concurrent-ruby">concurrent-ruby</a>。</p><h3 id="%E9%83%A8%E7%BD%B2">10 部署</h3><p>Action Cable 由 WebSocket 和线程组成。其中框架管道和用户指定频道的职程，都是通过 Ruby 提供的原生线程支持来处理的。这意味着，只要不涉及线程安全问题，我们就可以使用常规 Rails 线程模型的所有功能。</p><p>Action Cable 服务器实现了Rack 套接字劫持 API（Rack socket hijacking API），因此无论应用服务器是否是多线程的，都能够通过多线程模式管理内部连接。</p><p>因此，Action Cable 可以和流行的应用服务器一起使用，例如 Unicorn、Puma 和 Passenger。</p>
 
         <h3>反馈</h3>
         <p>
