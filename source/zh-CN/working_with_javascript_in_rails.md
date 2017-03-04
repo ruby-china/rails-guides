@@ -15,6 +15,8 @@
 
 - Turbolinks gem。
 
+--------------------------------------------------------------------------------
+
 Ajax 简介
 ---------
 
@@ -331,5 +333,3 @@ $(document).on "turbolinks:load", ->
 - [Railscasts: Unobtrusive JavaScript](http://railscasts.com/episodes/205-unobtrusive-javascript)
 
 - [Railscasts: Turbolinks](http://railscasts.com/episodes/390-turbolinks)
-
-

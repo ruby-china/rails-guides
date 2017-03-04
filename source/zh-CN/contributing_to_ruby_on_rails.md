@@ -19,6 +19,8 @@ Ruby on Rails 不是某一个人的框架。这些年，有成百上千个人为
 
 [Rails 的自述文件](https://github.com/rails/rails/blob/master/README.md)说道，参与 Rails 及其子项目代码基开发的人，参与问题追踪系统、聊天室和邮件列表的人，都要遵守 Rails 的[行为准则](http://rubyonrails.org/conduct/)。
 
+--------------------------------------------------------------------------------
+
 报告错误
 --------
 
