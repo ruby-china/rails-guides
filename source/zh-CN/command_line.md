@@ -11,7 +11,7 @@ Rails 命令行
 
 - 如果在交互式 shell 中测试对象；
 
-NOTE: 阅读本文前请阅读[getting\_started.xml](getting_started.xml#getting-started-with-rails)，掌握一些 Rails 基础知识。
+NOTE: 阅读本文前请阅读[Rails 入门](getting_started.html)，掌握一些 Rails 基础知识。
 
 命令行基础
 ----------
@@ -266,7 +266,7 @@ $ bin/rails db:migrate
 ==  CreateHighScores: migrated (0.0019s) ======================================
 ```
 
-TIP: 介绍一下单元测试。单元测试是用来测试和做断言的代码。在单元测试中，我们只关注代码的一小部分，例如模型中的一个方法，测试其输入和输出。单元测试是你的好伙伴，你逐渐会意识到，单元测试的程度越高，生活的质量越高。真的。关于单元测试的详情，参阅[testing.xml](testing.xml#a-guide-to-testing-rails-applications)。
+TIP: 介绍一下单元测试。单元测试是用来测试和做断言的代码。在单元测试中，我们只关注代码的一小部分，例如模型中的一个方法，测试其输入和输出。单元测试是你的好伙伴，你逐渐会意识到，单元测试的程度越高，生活的质量越高。真的。关于单元测试的详情，参阅[Rails 应用测试指南](testing.html)。
 
 我们来看一下 Rails 创建的界面。
 
@@ -450,7 +450,7 @@ Database schema version   20110805173523
 
 `bin/rails` 命名空间 `db:` 中最常用的任务是 `migrate` 和 `create`，这两个任务会尝试运行所有迁移相关的任务（`up`、`down`、`redo`、`reset`）。`bin/rails db:version` 在排查问题时很有用，它会输出数据库的当前版本。
 
-关于数据库迁移的进一步说明，参阅[active\_record\_migrations.xml](active_record_migrations.xml#active-record-migrations)。
+关于数据库迁移的进一步说明，参阅[Active Record 迁移](active_record_migrations.html)。
 
 ### `notes`
 
@@ -515,7 +515,7 @@ spec/models/user_spec.rb:
 
 ### `test`
 
-TIP: Rails 中的单元测试详情，参见[testing.xml](testing.xml#a-guide-to-testing-rails-applications)。
+TIP: Rails 中的单元测试详情，参见[Rails 应用测试指南](testing.html)。
 
 Rails 提供了一个名为 Minitest 的测试组件。Rails 的稳定性由测试决定。`test:` 命名空间中的任务可用于运行各种测试。
 

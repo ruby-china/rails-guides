@@ -415,7 +415,7 @@ MySQL 适配器添加了一个配置选项：
 
 - `config.action_dispatch.encrypted_signed_cookie_salt` 设定签名加密 cookie 的盐值。默认为 `'signed encrypted cookie'`。
 
-- `config.action_dispatch.perform_deep_munge` 配置是否在参数上调用 `deep_munge` 方法。详情参见 [安全指南](security.html#unsafe-query-generation)。默认为 `true`。
+- `config.action_dispatch.perform_deep_munge` 配置是否在参数上调用 `deep_munge` 方法。详情参见 [安全指南](security.html#生成不安全的查询)。默认为 `true`。
 
 - `config.action_dispatch.rescue_responses` 设定异常与 HTTP 状态的对应关系。其值为一个散列，指定异常和状态之间的映射。默认的定义如下：
 

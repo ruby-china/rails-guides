@@ -1117,7 +1117,7 @@ NOTE: 在 `active_support/core_ext/class/subclasses.rb` 文件中定义。
 
 #### 引子
 
-把数据插入 HTML 模板要格外小心。例如，不能原封不动地把 `@review.title` 内插到 HTML 页面中。假如标题是“Flanagan & Matz rules!”，得到的输出格式就不对，因为 & 会转义成“&amp;”。更糟的是，如果应用编写不当，这可能留下严重的安全漏洞，因为用户可以注入恶意的 HTML，设定精心编造的标题。关于这个问题的详情，请阅读 [安全指南](security.html#cross-site-scripting-xss)对跨站脚本的说明。
+把数据插入 HTML 模板要格外小心。例如，不能原封不动地把 `@review.title` 内插到 HTML 页面中。假如标题是“Flanagan & Matz rules!”，得到的输出格式就不对，因为 & 会转义成“&amp;”。更糟的是，如果应用编写不当，这可能留下严重的安全漏洞，因为用户可以注入恶意的 HTML，设定精心编造的标题。关于这个问题的详情，请阅读 [安全指南](security.html#跨站脚本（XSS）)对跨站脚本的说明。
 
 #### 安全字符串
 
