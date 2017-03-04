@@ -1,42 +1,37 @@
-API Documentation Guidelines
-============================
+API 文档指导方针
+================
 
-This guide documents the Ruby on Rails API documentation guidelines.
+本文说明 Ruby on Rails 的 API 文档指导方针。
 
-After reading this guide, you will know:
+读完本文后，您将学到：
 
-* How to write effective prose for documentation purposes.
-* Style guidelines for documenting different kinds of Ruby code.
+- 如何编写有效的文档；
 
---------------------------------------------------------------------------------
+- 为不同 Ruby 代码编写文档的风格指导方针。
 
 RDoc
 ----
 
-The [Rails API documentation](http://api.rubyonrails.org) is generated with
-[RDoc](http://docs.seattlerb.org/rdoc/).
+[Rails API 文档](http://api.rubyonrails.org/)使用 [RDoc](http://docs.seattlerb.org/rdoc/) 生成。如果想生成 API 文档，要在 Rails 根目录中执行 `bundle install`，然后再执行：
 
-```bash
-  bundle exec rake rdoc
+```sh
+$ bundle exec rake rdoc
 ```
 
-Resulting HTML files can be found in the ./doc/rdoc directory.
+得到的 HTML 文件在 `./doc/rdoc` 目录中。
 
-Please consult the RDoc documentation for help with the
-[markup](http://docs.seattlerb.org/rdoc/RDoc/Markup.html),
-and also take into account these [additional
-directives](http://docs.seattlerb.org/rdoc/RDoc/Parser/Ruby.html).
+RDoc 的[标记](http://docs.seattlerb.org/rdoc/RDoc/Markup.html)和[额外的指令](http://docs.seattlerb.org/rdoc/RDoc/Parser/Ruby.html)参见文档。
 
-Wording
--------
+用词
+----
 
-Write simple, declarative sentences. Brevity is a plus: get to the point.
+使用简单的陈述句。简短更好，要说到点子上。
 
-Write in present tense: "Returns a hash that...", rather than "Returned a hash that..." or "Will return a hash that...".
+使用现在时：“Returns a hash that…​”，而非“Returned a hash that…​”或“Will return a hash that…​”。
 
-Start comments in upper case. Follow regular punctuation rules:
+注释的第一个字母大写，后续内容遵守常规的标点符号规则：
 
-```ruby
+```sh
 # Declares an attribute reader backed by an internally-named
 # instance variable.
 def attr_internal_reader(*attrs)
@@ -44,51 +39,54 @@ def attr_internal_reader(*attrs)
 end
 ```
 
-Communicate to the reader the current way of doing things, both explicitly and implicitly. Use the idioms recommended in edge. Reorder sections to emphasize favored approaches if needed, etc. The documentation should be a model for best practices and canonical, modern Rails usage.
+使用通行的方式与读者交流，可以直言，也可以隐晦。使用当下推荐的习语。如有必要，调整内容的顺序，强调推荐的方式。文档应该说明最佳实践和现代的权威 Rails 用法。
 
-Documentation has to be concise but comprehensive. Explore and document edge cases. What happens if a module is anonymous? What if a collection is empty? What if an argument is nil?
+文档应该简洁全面，要指明边缘情况。如果模块是匿名的呢？如果集合是空的呢？如果参数是 nil 呢？
 
-The proper names of Rails components have a space in between the words, like "Active Support". `ActiveRecord` is a Ruby module, whereas Active Record is an ORM. All Rails documentation should consistently refer to Rails components by their proper name, and if in your next blog post or presentation you remember this tidbit and take it into account that'd be phenomenal.
+Rails 组件的名称在单词之间有个空格，如“Active Support”。`ActiveRecord` 是一个 Ruby 模块，而 Active Record 是一个 ORM。所有 Rails 文档都应该始终使用正确的名称引用 Rails 组件。如果你在下一篇博客文章或演示文稿中这么做，人们会觉得你很正规。
 
-Spell names correctly: Arel, Test::Unit, RSpec, HTML, MySQL, JavaScript, ERB. When in doubt, please have a look at some authoritative source like their official documentation.
+拼写要正确：Arel、Test::Unit、RSpec、HTML、MySQL、JavaScript、ERB。如果不确定，请查看一些权威资料，如各自的官方文档。
 
-Use the article "an" for "SQL", as in "an SQL statement". Also "an SQLite database".
+“SQL”前面使用不定冠词“an”，如“an SQL statement”和“an SQLite database”。
 
-Prefer wordings that avoid "you"s and "your"s. For example, instead of
+避免使用“you”和“your”。例如，较之
 
-```markdown
-If you need to use `return` statements in your callbacks, it is recommended that you explicitly define them as methods.
-```
+    If you need to use `return` statements in your callbacks, it is recommended that you explicitly define them as methods.
 
-use this style:
+这样写更好：
 
-```markdown
-If `return` is needed it is recommended to explicitly define a method.
-```
+    If `return` is needed it is recommended to explicitly define a method.
 
-That said, when using pronouns in reference to a hypothetical person, such as "a
-user with a session cookie", gender neutral pronouns (they/their/them) should be
-used. Instead of:
+不过，使用代词指代虚构的人时，例如“有会话 cookie 的用户”，应该使用中性代词（they/their/them）。
 
-* he or she... use they.
-* him or her... use them.
-* his or her... use their.
-* his or hers... use theirs.
-* himself or herself... use themselves.
+- 不用 he 或 she，用 they
 
-English
--------
+- 不用 him 或 her，用 them
 
-Please use American English (<em>color</em>, <em>center</em>, <em>modularize</em>, etc). See [a list of American and British English spelling differences here](http://en.wikipedia.org/wiki/American_and_British_English_spelling_differences).
+- 不用 his 或 her，用 their
 
-Example Code
-------------
+- 不用 his 或 hers，用 theirs
 
-Choose meaningful examples that depict and cover the basics as well as interesting points or gotchas.
+- 不用 himself 或 herself，用 themselves
 
-Use two spaces to indent chunks of code--that is, for markup purposes, two spaces with respect to the left margin. The examples themselves should use [Rails coding conventions](contributing_to_ruby_on_rails.html#follow-the-coding-conventions).
+英语
+----
 
-Short docs do not need an explicit "Examples" label to introduce snippets; they just follow paragraphs:
+请使用美式英语（color、center、modularize，等等）。美式英语与英式英语之间的拼写差异参见[这里](http://en.wikipedia.org/wiki/American_and_British_English_spelling_differences)。
+
+牛津式逗号
+----------
+
+请使用[牛津式逗号](http://en.wikipedia.org/wiki/Serial_comma)（“red, white, and blue”，而非“red, white and blue”）。
+
+示例代码
+--------
+
+选择有意义的示例，说明基本用法和有趣的点或坑。
+
+代码使用两个空格缩进，即根据标记在左外边距的基础上增加两个空格。示例应该遵守 [Rails 编程约定](contributing_to_ruby_on_rails.xml#follow-the-coding-conventions)。
+
+简短的文档无需明确使用“Examples”标注引入代码片段，直接跟在段后即可：
 
 ```ruby
 # Converts a collection of elements into a formatted string by
@@ -97,7 +95,7 @@ Short docs do not need an explicit "Examples" label to introduce snippets; they 
 #   Blog.all.to_formatted_s # => "First PostSecond PostThird Post"
 ```
 
-On the other hand, big chunks of structured documentation may have a separate "Examples" section:
+但是大段文档可以单独有个“Examples”部分：
 
 ```ruby
 # ==== Examples
@@ -108,10 +106,10 @@ On the other hand, big chunks of structured documentation may have a separate "E
 #   Person.exists?(['name LIKE ?', "%#{query}%"])
 ```
 
-The results of expressions follow them and are introduced by "# => ", vertically aligned:
+表达式的结果在表达式之后，使用 “\# =&gt; ”给出，而且要纵向对齐：
 
 ```ruby
-# For checking if a fixnum is even or odd.
+# For checking if an integer is even or odd.
 #
 #   1.even? # => false
 #   1.odd?  # => true
@@ -119,7 +117,7 @@ The results of expressions follow them and are introduced by "# => ", vertically
 #   2.odd?  # => false
 ```
 
-If a line is too long, the comment may be placed on the next line:
+如果一行太长，结果可以放在下一行：
 
 ```ruby
 #   label(:article, :title)
@@ -132,39 +130,30 @@ If a line is too long, the comment may be placed on the next line:
 #   # => <label for="article_title" class="title_label">A short title</label>
 ```
 
-Avoid using any printing methods like `puts` or `p` for that purpose.
+不要使用打印方法，如 `puts` 或 `p` 给出结果。
 
-On the other hand, regular comments do not use an arrow:
+常规的注释不使用箭头：
 
 ```ruby
 #   polymorphic_url(record)  # same as comment_url(record)
 ```
 
-Booleans
---------
+布尔值
+------
 
-In predicates and flags prefer documenting boolean semantics over exact values.
+在判断方法或旗标中，尽量使用布尔语义，不要用具体的值。
 
-When "true" or "false" are used as defined in Ruby use regular font. The
-singletons `true` and `false` need fixed-width font. Please avoid terms like
-"truthy", Ruby defines what is true and false in the language, and thus those
-words have a technical meaning and need no substitutes.
+如果所用的“true”或“false”与 Ruby 定义的一样，使用常规字体。`true` 和 `false` 两个单例要使用等宽字体。请不要使用“truthy”，Ruby 语言定义了什么是真什么是假，“true”和“false”就能表达技术意义，无需使用其他词代替。
 
-As a rule of thumb, do not document singletons unless absolutely necessary. That
-prevents artificial constructs like `!!` or ternaries, allows refactors, and the
-code does not need to rely on the exact values returned by methods being called
-in the implementation.
+通常，如非绝对必要，不要为单例编写文档。这样能阻止智能的结构，如 `!!` 或三元运算符，便于重构，而且代码不依赖方法返回的具体值。
 
-For example:
+例如：
 
-```markdown
-`config.action_mailer.perform_deliveries` specifies whether mail will actually be delivered and is true by default
-```
+    `config.action_mailer.perform_deliveries` specifies whether mail will actually be delivered and is true by default
 
-the user does not need to know which is the actual default value of the flag,
-and so we only document its boolean semantics.
+用户无需知道旗标具体的默认值，因此我们只说明它的布尔语义。
 
-An example with a predicate:
+下面是一个判断方法的文档示例：
 
 ```ruby
 # Returns true if the collection is empty.
@@ -184,33 +173,37 @@ def empty?
 end
 ```
 
-The API is careful not to commit to any particular value, the method has
-predicate semantics, that's enough.
+这个 API 没有提到任何具体的值，知道它具有判断功能就够了。
 
-File Names
-----------
+文件名
+------
 
-As a rule of thumb, use filenames relative to the application root:
+通常，文件名相对于应用的根目录：
 
-```
+```ruby
 config/routes.rb            # YES
 routes.rb                   # NO
 RAILS_ROOT/config/routes.rb # NO
 ```
 
-Fonts
------
+字体
+----
 
-### Fixed-width Font
+### 等宽字体
 
-Use fixed-width fonts for:
+使用等宽字体编写：
 
-* Constants, in particular class and module names.
-* Method names.
-* Literals like `nil`, `false`, `true`, `self`.
-* Symbols.
-* Method parameters.
-* File names.
+- 常量，尤其是类名和模块名
+
+- 方法名
+
+- 字面量，如 `nil`、`false`、`true`、`self`
+
+- 符号
+
+- 方法的参数
+
+- 文件名
 
 ```ruby
 class Array
@@ -222,21 +215,18 @@ class Array
 end
 ```
 
-WARNING: Using `+...+` for fixed-width font only works with simple content like
-ordinary method names, symbols, paths (with forward slashes), etc. Please use
-`<tt>...</tt>` for everything else, notably class or module names with a
-namespace as in `<tt>ActiveRecord::Base</tt>`.
+WARNING: 只有简单的内容才能使用 `+...+` 标记使用等宽字体，如常规的方法名、符号、路径（含有正斜线），等等。其他内容应该使用 `<tt>…​</tt>`，尤其是带有命名空间的类名或模块名，如 `<tt>ActiveRecord::Base</tt>`。
 
-You can quickly test the RDoc output with the following command:
+可以使用下述命令测试 RDoc 的输出：
 
-```
+```sh
 $ echo "+:to_param+" | rdoc --pipe
-#=> <p><code>:to_param</code></p>
+# => <p><code>:to_param</code></p>
 ```
 
-### Regular Font
+### 常规字体
 
-When "true" and "false" are English words rather than Ruby keywords use a regular font:
+“true”和“false”是英语单词而不是 Ruby 关键字时，使用常规字体：
 
 ```ruby
 # Runs all the validations within the specified context.
@@ -254,21 +244,21 @@ def valid?(context = nil)
 end
 ```
 
-Description Lists
------------------
+描述列表
+--------
 
-In lists of options, parameters, etc. use a hyphen between the item and its description (reads better than a colon because normally options are symbols):
+在选项、参数等列表中，在项目和描述之间使用一个连字符（而不是一个冒号，因为选项一般是符号）：
 
 ```ruby
 # * <tt>:allow_nil</tt> - Skip validation if attribute is +nil+.
 ```
 
-The description starts in upper case and ends with a full stop-it's standard English.
+描述开头是大写字母，结尾有一个句号——这是标准的英语。
 
-Dynamically Generated Methods
------------------------------
+动态生成的方法
+--------------
 
-Methods created with `(module|class)_eval(STRING)` have a comment by their side with an instance of the generated code. That comment is 2 spaces away from the template:
+使用 `(module|class)_eval(STRING)` 创建的方法在旁边有个注释，举例说明生成的代码。这种注释与模板之间相距两个空格。
 
 ```ruby
 for severity in Severity.constants
@@ -284,7 +274,7 @@ for severity in Severity.constants
 end
 ```
 
-If the resulting lines are too wide, say 200 columns or more, put the comment above the call:
+如果这样得到的行太长，比如说有 200 多列，把注释放在上方：
 
 ```ruby
 # def self.find_by_login_and_activated(*args)
@@ -299,18 +289,18 @@ self.class_eval %{
 }
 ```
 
-Method Visibility
------------------
+方法可见性
+----------
 
-When writing documentation for Rails, it's important to understand the difference between public user-facing API vs internal API.
+为 Rails 编写文档时，要区分公开 API 和内部 API。
 
-Rails, like most libraries, uses the private keyword from Ruby for defining internal API. However, public API follows a slightly different convention. Instead of assuming all public methods are designed for user consumption, Rails uses the `:nodoc:` directive to annotate these kinds of methods as internal API.
+与多数库一样，Rails 使用 Ruby 提供的 `private` 关键字定义内部 API。然而，公开 API 遵照的约定稍有不同。不是所有公开方法都旨在供用户使用，Rails 使用 `:nodoc:` 指令注解内部 API 方法。
 
-This means that there are methods in Rails with `public` visibility that aren't meant for user consumption.
+因此，在 Rails 中有些可见性为 `public` 的方法不是供用户使用的。
 
-An example of this is `ActiveRecord::Core::ClassMethods#arel_table`:
+`ActiveRecord::Core::ClassMethods#arel_table` 就是一例：
 
-```ruby
+```sh
 module ActiveRecord::Core::ClassMethods
   def arel_table #:nodoc:
     # do some magic..
@@ -318,44 +308,36 @@ module ActiveRecord::Core::ClassMethods
 end
 ```
 
-If you thought, "this method looks like a public class method for `ActiveRecord::Core`", you were right. But actually the Rails team doesn't want users to rely on this method. So they mark it as `:nodoc:` and it's removed from public documentation. The reasoning behind this is to allow the team to change these methods according to their internal needs across releases as they see fit. The name of this method could change, or the return value, or this entire class may disappear; there's no guarantee and so you shouldn't depend on this API in your plugins or applications. Otherwise, you risk your app or gem breaking when you upgrade to a newer release of Rails.
+你可能想，“这是 `ActiveRecord::Core` 的一个公开类方法”，没错，但是 Rails 团队不希望用户使用这个方法。因此，他们把它标记为 `:nodoc:`，不包含在公开文档中。这样做，开发团队可以根据内部需要在发布新版本时修改这个方法。方法的名称可能会变，或者返回值有变化，也可能是整个类都不复存在——有太多不确定性，因此不应该在你的插件或应用中使用这个 API。如若不然，升级新版 Rails 时，你的应用或 gem 可能遭到破坏。
 
-As a contributor, it's important to think about whether this API is meant for end-user consumption. The Rails team is committed to not making any breaking changes to public API across releases without going through a full deprecation cycle. It's recommended that you `:nodoc:` any of your internal methods/classes unless they're already private (meaning visibility), in which case it's internal by default. Once the API stabilizes the visibility can change, but changing public API is much harder due to backwards compatibility.
+为 Rails 做贡献时一定要考虑清楚 API 是否供最终用户使用。未经完整的弃用循环之前，Rails 团队不会轻易对公开 API 做大的改动。如果没有定义为私有的（默认是内部 API），建议你使用 `:nodoc:` 标记所有内部的方法和类。API 稳定之后，可见性可以修改，但是为了向后兼容，公开 API 往往不宜修改。
 
-A class or module is marked with `:nodoc:` to indicate that all methods are internal API and should never be used directly.
+使用 `:nodoc:` 标记一个类或模块表示里面的所有方法都是内部 API，不应该直接使用。
 
-If you come across an existing `:nodoc:` you should tread lightly. Consider asking someone from the core team or author of the code before removing it. This should almost always happen through a pull request instead of the docrails project.
+如果遇到 `:nodoc:`，一定要小心。在删除这一标记之前可以询问核心团队成员或者代码的作者。这种操作基本上都通过拉取请求处理，不能在 docrails 项目中删除。
 
-A `:nodoc:` should never be added simply because a method or class is missing documentation. There may be an instance where an internal public method wasn't given a `:nodoc:` by mistake, for example when switching a method from private to public visibility. When this happens it should be discussed over a PR on a case-by-case basis and never committed directly to docrails.
+`:nodoc:` 不是为了标记方法或类缺少文档。内部的公开方法可能没有 `:nodoc:` 标记，这只是例外，可能是因为方法由私有变成公开时忘记了。遇到这种情况时应该通过一个拉取请求讨论，而且要具体情况具体分析，绝对不能直接在 docrails 中修改。
 
-To summarize, the Rails team uses `:nodoc:` to mark publicly visible methods and classes for internal use; changes to the visibility of API should be considered carefully and discussed over a pull request first.
+综上，Rails 团队使用 `:nodoc:` 标记供内部使用的可见性为公开的方法和类，对 API 可见性的修改要谨慎，必须先通过一个拉取请求讨论。
 
-Regarding the Rails Stack
--------------------------
+考虑 Rails 栈
+-------------
 
-When documenting parts of Rails API, it's important to remember all of the
-pieces that go into the Rails stack.
+为 Rails API 编写文档时，一定要记住所有内容都身处 Rails 栈中。
 
-This means that behavior may change depending on the scope or context of the
-method or class you're trying to document.
+这意味着，方法或类的行为在不同的作用域或上下文中可能有所不同。
 
-In various places there is different behavior when you take the entire stack
-into account, one such example is
-`ActionView::Helpers::AssetTagHelper#image_tag`:
+把整个栈考虑进来之后，行为在不同的地方可能有变。`ActionView::Helpers::AssetTagHelper#image_tag` 就是一例：
 
 ```ruby
 # image_tag("icon.png")
 #   # => <img alt="Icon" src="/assets/icon.png" />
 ```
 
-Although the default behavior for `#image_tag` is to always return
-`/images/icon.png`, we take into account the full Rails stack (including the
-Asset Pipeline) we may see the result seen above.
+虽然 `#image_tag` 的默认行为是返回 `/images/icon.png`，但是把整个 Rails 栈（包括 Asset Pipeline）考虑进来之后，可能会得到上述结果。
 
-We're only concerned with the behavior experienced when using the full default
-Rails stack.
+我们只关注考虑整个 Rails 默认栈的行为。
 
-In this case, we want to document the behavior of the _framework_, and not just
-this specific method.
+因此，我们要说明的是框架的行为，而不是单个方法。
 
-If you have a question on how the Rails team handles certain API, don't hesitate to open a ticket or send a patch to the [issue tracker](https://github.com/rails/rails/issues).
+如果你对 Rails 团队处理某个 API 的方式有疑问，别迟疑，在[问题追踪系统](https://github.com/rails/rails/issues)中发一个工单，或者提交补丁。

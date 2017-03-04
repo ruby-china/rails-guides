@@ -1,53 +1,44 @@
-Active Support Instrumentation
-==============================
+Active Support 监测程序
+=======================
 
-Active Support is a part of core Rails that provides Ruby language extensions, utilities and other things. One of the things it includes is an instrumentation API that can be used inside an application to measure certain actions that occur within Ruby code, such as that inside a Rails application or the framework itself. It is not limited to Rails, however. It can be used independently in other Ruby scripts if it is so desired.
+Active Support 是 Rails 核心的一部分，提供 Ruby 语言扩展、实用方法等。其中包括一份监测 API，在应用中可以用它测度 Ruby 代码（如 Rails 应用或框架自身）中的特定操作。不过，这个 API 不限于只能在 Rails 中使用，如果愿意，也可以在其他 Ruby 脚本中使用。
 
-In this guide, you will learn how to use the instrumentation API inside of Active Support to measure events inside of Rails and other Ruby code.
+本文教你如何使用 Active Support 中的监测 API 测度 Rails 和其他 Ruby 代码中的事件。
 
-After reading this guide, you will know:
+读完本文后，您将学到：
 
-* What instrumentation can provide.
-* The hooks inside the Rails framework for instrumentation.
-* Adding a subscriber to a hook.
-* Building a custom instrumentation implementation.
+- 使用监测程序能做什么；
 
---------------------------------------------------------------------------------
+- Rails 框架为监测提供的钩子；
 
-Introduction to instrumentation
--------------------------------
+- 订阅钩子；
 
-The instrumentation API provided by Active Support allows developers to provide hooks which other developers may hook into. There are several of these within the Rails framework, as described below in (TODO: link to section detailing each hook point). With this API, developers can choose to be notified when certain events occur inside their application or another piece of Ruby code.
+- 自定义监测点。
 
-For example, there is a hook provided within Active Record that is called every time Active Record uses an SQL query on a database. This hook could be **subscribed** to, and used to track the number of queries during a certain action. There's another hook around the processing of an action of a controller. This could be used, for instance, to track how long a specific action has taken.
+NOTE: 本文原文尚未完工！
 
-You are even able to create your own events inside your application which you can later subscribe to.
+监测程序简介
+------------
 
-Rails framework hooks
----------------------
+Active Support 提供的监测 API 允许开发者提供钩子，供其他开发者订阅。在 Rails 框架中，有很多。通过这个 API，开发者可以选择在应用或其他 Ruby 代码中发生特定事件时接收通知。
 
-Within the Ruby on Rails framework, there are a number of hooks provided for common events. These are detailed below.
+例如，Active Record 中有一个钩子，在每次使用 SQL 查询数据库时调用。开发者可以订阅这个钩子，记录特定操作执行的查询次数。还有一个钩子在控制器的动作执行前后调用，记录动作的执行时间。
+
+在应用中甚至还可以自己创建事件，然后订阅。
+
+Rails 框架中的钩子
+------------------
+
+Ruby on Rails 框架为很多常见的事件提供了钩子。下面详述。
 
 Action Controller
 -----------------
 
-### write_fragment.action_controller
+### write\_fragment.action\_controller
 
-| Key    | Value            |
-| ------ | ---------------- |
-| `:key` | The complete key |
-
-```ruby
-{
-  key: 'posts/1-dashboard-view'
-}
-```
-
-### read_fragment.action_controller
-
-| Key    | Value            |
-| ------ | ---------------- |
-| `:key` | The complete key |
+| 键 | 值 |
+|---|---|
+| :key | 完整的键 |
 
 ```ruby
 {
@@ -55,23 +46,11 @@ Action Controller
 }
 ```
 
-### expire_fragment.action_controller
+### read\_fragment.action\_controller
 
-| Key    | Value            |
-| ------ | ---------------- |
-| `:key` | The complete key |
-
-```ruby
-{
-  key: 'posts/1-dashboard-view'
-}
-```
-
-### exist_fragment?.action_controller
-
-| Key    | Value            |
-| ------ | ---------------- |
-| `:key` | The complete key |
+| 键 | 值 |
+|---|---|
+| :key | 完整的键 |
 
 ```ruby
 {
@@ -79,11 +58,35 @@ Action Controller
 }
 ```
 
-### write_page.action_controller
+### expire\_fragment.action\_controller
 
-| Key     | Value             |
-| ------- | ----------------- |
-| `:path` | The complete path |
+| 键 | 值 |
+|---|---|
+| :key | 完整的键 |
+
+```ruby
+{
+  key: 'posts/1-dashboard-view'
+}
+```
+
+### exist\_fragment?.action\_controller
+
+| 键 | 值 |
+|---|---|
+| :key | 完整的键 |
+
+```ruby
+{
+  key: 'posts/1-dashboard-view'
+}
+```
+
+### write\_page.action\_controller
+
+| 键 | 值 |
+|---|---|
+| :path | 完整的路径 |
 
 ```ruby
 {
@@ -91,11 +94,11 @@ Action Controller
 }
 ```
 
-### expire_page.action_controller
+### expire\_page.action\_controller
 
-| Key     | Value             |
-| ------- | ----------------- |
-| `:path` | The complete path |
+| 键 | 值 |
+|---|---|
+| :path | 完整的路径 |
 
 ```ruby
 {
@@ -103,45 +106,51 @@ Action Controller
 }
 ```
 
-### start_processing.action_controller
+### start\_processing.action\_controller
 
-| Key           | Value                                                     |
-| ------------- | --------------------------------------------------------- |
-| `:controller` | The controller name                                       |
-| `:action`     | The action                                                |
-| `:params`     | Hash of request parameters without any filtered parameter |
-| `:format`     | html/js/json/xml etc                                      |
-| `:method`     | HTTP request verb                                         |
-| `:path`       | Request path                                              |
+| 键 | 值 |
+|---|---|
+| :controller | 控制器名 |
+| :action | 动作名 |
+| :params | 请求参数散列，不过滤 |
+| :headers | 请求首部 |
+| :format | html、js、json、xml 等 |
+| :method | HTTP 请求方法 |
+| :path | 请求路径 |
 
 ```ruby
 {
   controller: "PostsController",
   action: "new",
   params: { "action" => "new", "controller" => "posts" },
+  headers: #<ActionDispatch::Http::Headers:0x0055a67a519b88>,
   format: :html,
   method: "GET",
   path: "/posts/new"
 }
 ```
 
-### process_action.action_controller
+### process\_action.action\_controller
 
-| Key             | Value                                                     |
-| --------------- | --------------------------------------------------------- |
-| `:controller`   | The controller name                                       |
-| `:action`       | The action                                                |
-| `:params`       | Hash of request parameters without any filtered parameter |
-| `:format`       | html/js/json/xml etc                                      |
-| `:method`       | HTTP request verb                                         |
-| `:path`         | Request path                                              |
-| `:view_runtime` | Amount spent in view in ms                                |
+| 键 | 值 |
+|---|---|
+| :controller | 控制器名 |
+| :action | 动作名 |
+| :params | 请求参数散列，不过滤 |
+| :headers | 请求首部 |
+| :format | html、js、json、xml 等 |
+| :method | HTTP 请求方法 |
+| :path | 请求路径 |
+| :status | HTTP 状态码 |
+| :view_runtime | 花在视图上的时间量（ms） |
+| :db_runtime | 执行数据库查询的时间量（ms） |
 
 ```ruby
 {
   controller: "PostsController",
   action: "index",
   params: {"action" => "index", "controller" => "posts"},
+  headers: #<ActionDispatch::Http::Headers:0x0055a67a519b88>,
   format: :html,
   method: "GET",
   path: "/posts",
@@ -151,24 +160,24 @@ Action Controller
 }
 ```
 
-### send_file.action_controller
+### send\_file.action\_controller
 
-| Key     | Value                     |
-| ------- | ------------------------- |
-| `:path` | Complete path to the file |
+| 键 | 值 |
+|---|---|
+| :path | 文件的完整路径 |
 
-INFO. Additional keys may be added by the caller.
+TIP: 调用方可以添加额外的键。
 
-### send_data.action_controller
+### send\_data.action\_controller
 
-`ActionController` does not had any specific information to the payload. All options are passed through to the payload.
+`ActionController` 在载荷（payload）中没有任何特定的信息。所有选项都传到载荷中。
 
-### redirect_to.action_controller
+### redirect\_to.action\_controller
 
-| Key         | Value              |
-| ----------- | ------------------ |
-| `:status`   | HTTP response code |
-| `:location` | URL to redirect to |
+| 键 | 值 |
+|---|---|
+| :status | HTTP 响应码 |
+| :location | 重定向的 URL |
 
 ```ruby
 {
@@ -177,11 +186,11 @@ INFO. Additional keys may be added by the caller.
 }
 ```
 
-### halted_callback.action_controller
+### halted\_callback.action\_controller
 
-| Key       | Value                         |
-| --------- | ----------------------------- |
-| `:filter` | Filter that halted the action |
+| 键 | 值 |
+|---|---|
+| :filter | 过滤暂停的动作 |
 
 ```ruby
 {
@@ -192,12 +201,12 @@ INFO. Additional keys may be added by the caller.
 Action View
 -----------
 
-### render_template.action_view
+### render\_template.action\_view
 
-| Key           | Value                 |
-| ------------- | --------------------- |
-| `:identifier` | Full path to template |
-| `:layout`     | Applicable layout     |
+| 键 | 值 |
+|---|---|
+| :identifier | 模板的完整路径 |
+| :layout | 使用的布局 |
 
 ```ruby
 {
@@ -206,30 +215,49 @@ Action View
 }
 ```
 
-### render_partial.action_view
+### render-partial-action-view
 
-| Key           | Value                 |
-| ------------- | --------------------- |
-| `:identifier` | Full path to template |
+| 键 | 值 |
+|---|---|
+| :identifier | 模板的完整路径 |
 
 ```ruby
 {
-  identifier: "/Users/adam/projects/notifications/app/views/posts/_form.html.erb",
+  identifier: "/Users/adam/projects/notifications/app/views/posts/_form.html.erb"
+}
+```
+
+### render\_collection.action\_view
+
+| 键 | 值 |
+|---|---|
+| :identifier | 模板的完整路径 |
+| :count | 集合的大小 |
+| :cache_hits | 从缓存中获取的局部视图数量 |
+
+仅当渲染集合时设定了 `cached: true` 选项，才有 `:cache_hits` 键。
+
+```ruby
+{
+  identifier: "/Users/adam/projects/notifications/app/views/posts/_post.html.erb",
+  count: 3,
+  cache_hits: 0
 }
 ```
 
 Active Record
-------------
+-------------
 
-### sql.active_record
+### sql.active\_record
 
-| Key          | Value                 |
-| ------------ | --------------------- |
-| `:sql`       | SQL statement         |
-| `:name`      | Name of the operation |
-| `:object_id` | `self.object_id`      |
+| 键 | 值 |
+|---|---|
+| :sql | SQL 语句 |
+| :name | 操作的名称 |
+| :connection_id | self.object_id |
+| :binds | 绑定的参数 |
 
-INFO. The adapters will add their own data as well.
+TIP: 适配器也会添加数据。
 
 ```ruby
 {
@@ -240,56 +268,36 @@ INFO. The adapters will add their own data as well.
 }
 ```
 
-### identity.active_record
+### instantiation.active\_record
 
-| Key              | Value                                     |
-| ---------------- | ----------------------------------------- |
-| `:line`          | Primary Key of object in the identity map |
-| `:name`          | Record's class                            |
-| `:connection_id` | `self.object_id`                          |
+| 键 | 值 |
+|---|---|
+| :record_count | 实例化记录的数量 |
+| :class_name | 记录所属的类 |
+
+```ruby
+{
+  record_count: 1,
+  class_name: "User"
+}
+```
 
 Action Mailer
 -------------
 
-### receive.action_mailer
+### receive.action\_mailer
 
-| Key           | Value                                        |
-| ------------- | -------------------------------------------- |
-| `:mailer`     | Name of the mailer class                     |
-| `:message_id` | ID of the message, generated by the Mail gem |
-| `:subject`    | Subject of the mail                          |
-| `:to`         | To address(es) of the mail                   |
-| `:from`       | From address of the mail                     |
-| `:bcc`        | BCC addresses of the mail                    |
-| `:cc`         | CC addresses of the mail                     |
-| `:date`       | Date of the mail                             |
-| `:mail`       | The encoded form of the mail                 |
-
-```ruby
-{
-  mailer: "Notification",
-  message_id: "4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail",
-  subject: "Rails Guides",
-  to: ["users@rails.com", "ddh@rails.com"],
-  from: ["me@rails.com"],
-  date: Sat, 10 Mar 2012 14:18:09 +0100,
-  mail: "..." # omitted for brevity
-}
-```
-
-### deliver.action_mailer
-
-| Key           | Value                                        |
-| ------------- | -------------------------------------------- |
-| `:mailer`     | Name of the mailer class                     |
-| `:message_id` | ID of the message, generated by the Mail gem |
-| `:subject`    | Subject of the mail                          |
-| `:to`         | To address(es) of the mail                   |
-| `:from`       | From address of the mail                     |
-| `:bcc`        | BCC addresses of the mail                    |
-| `:cc`         | CC addresses of the mail                     |
-| `:date`       | Date of the mail                             |
-| `:mail`       | The encoded form of the mail                 |
+| 键 | 值 |
+|---|---|
+| :mailer | 邮件程序类的名称 |
+| :message_id | 邮件的 ID，由 Mail gem 生成 |
+| :subject | 邮件的主题 |
+| :to | 邮件的收件地址 |
+| :from | 邮件的发件地址 |
+| :bcc | 邮件的密送地址 |
+| :cc | 邮件的抄送地址 |
+| :date | 发送邮件的日期 |
+| :mail | 邮件的编码形式 |
 
 ```ruby
 {
@@ -299,58 +307,56 @@ Action Mailer
   to: ["users@rails.com", "ddh@rails.com"],
   from: ["me@rails.com"],
   date: Sat, 10 Mar 2012 14:18:09 +0100,
-  mail: "..." # omitted for brevity
+  mail: "..." # 为了节省空间，省略
 }
 ```
 
-ActiveResource
---------------
+### deliver.action\_mailer
 
-### request.active_resource
+| 键 | 值 |
+|---|---|
+| :mailer | 邮件程序类的名称 |
+| :message_id | 邮件的 ID，由 Mail gem 生成 |
+| :subject | 邮件的主题 |
+| :to | 邮件的收件地址 |
+| :from | 邮件的发件地址 |
+| :bcc | 邮件的密送地址 |
+| :cc | 邮件的抄送地址 |
+| :date | 发送邮件的日期 |
+| :mail | 邮件的编码形式 |
 
-| Key            | Value                |
-| -------------- | -------------------- |
-| `:method`      | HTTP method          |
-| `:request_uri` | Complete URI         |
-| `:result`      | HTTP response object |
+```ruby
+{
+  mailer: "Notification",
+  message_id: "4f5b5491f1774_181b23fc3d4434d38138e5@mba.local.mail",
+  subject: "Rails Guides",
+  to: ["users@rails.com", "ddh@rails.com"],
+  from: ["me@rails.com"],
+  date: Sat, 10 Mar 2012 14:18:09 +0100,
+  mail: "..." # 为了节省空间，省略
+}
+```
 
 Active Support
 --------------
 
-### cache_read.active_support
+### cache\_read.active\_support
 
-| Key                | Value                                             |
-| ------------------ | ------------------------------------------------- |
-| `:key`             | Key used in the store                             |
-| `:hit`             | If this read is a hit                             |
-| `:super_operation` | :fetch is added when a read is used with `#fetch` |
+| 键 | 值 |
+|---|---|
+| :key | 存储器中使用的键 |
+| :hit | 是否读取了缓存 |
+| :super_operation | 如果使用 #fetch 读取了，添加 :fetch |
 
-### cache_generate.active_support
+### cache\_generate.active\_support
 
-This event is only used when `#fetch` is called with a block.
+仅当使用块调用 `#fetch` 时使用这个事件。
 
-| Key    | Value                 |
-| ------ | --------------------- |
-| `:key` | Key used in the store |
+| 键 | 值 |
+|---|---|
+| :key | 存储器中使用的键 |
 
-INFO. Options passed to fetch will be merged with the payload when writing to the store
-
-```ruby
-{
-  key: 'name-of-complicated-computation'
-}
-```
-
-
-### cache_fetch_hit.active_support
-
-This event is only used when `#fetch` is called with a block.
-
-| Key    | Value                 |
-| ------ | --------------------- |
-| `:key` | Key used in the store |
-
-INFO. Options passed to fetch will be merged with the payload.
+TIP: 写入存储器时，传给 `fetch` 的选项会合并到载荷中。
 
 ```ruby
 {
@@ -358,25 +364,15 @@ INFO. Options passed to fetch will be merged with the payload.
 }
 ```
 
-### cache_write.active_support
+### cache\_fetch\_hit.active\_support
 
-| Key    | Value                 |
-| ------ | --------------------- |
-| `:key` | Key used in the store |
+仅当使用块调用 `#fetch` 时使用这个事件。
 
-INFO. Cache stores may add their own keys
+| 键 | 值 |
+|---|---|
+| :key | 存储器中使用的键 |
 
-```ruby
-{
-  key: 'name-of-complicated-computation'
-}
-```
-
-### cache_delete.active_support
-
-| Key    | Value                 |
-| ------ | --------------------- |
-| `:key` | Key used in the store |
+TIP: 传给 `fetch` 的选项会合并到载荷中。
 
 ```ruby
 {
@@ -384,60 +380,119 @@ INFO. Cache stores may add their own keys
 }
 ```
 
-### cache_exist?.active_support
+### cache\_write.active\_support
 
-| Key    | Value                 |
-| ------ | --------------------- |
-| `:key` | Key used in the store |
+| 键 | 值 |
+|---|---|
+| :key | 存储器中使用的键 |
+
+TIP: 缓存存储器可能会添加其他键。
 
 ```ruby
 {
   key: 'name-of-complicated-computation'
 }
 ```
+
+### cache\_delete.active\_support
+
+| 键 | 值 |
+|---|---|
+| :key | 存储器中使用的键 |
+
+```ruby
+{
+  key: 'name-of-complicated-computation'
+}
+```
+
+### cache\_exist?.active\_support
+
+| 键 | 值 |
+|---|---|
+| :key | 存储器中使用的键 |
+
+```ruby
+{
+  key: 'name-of-complicated-computation'
+}
+```
+
+Active Job
+----------
+
+### enqueue\_at.active\_job
+
+| 键 | 值 |
+|---|---|
+| :adapter | 处理作业的 QueueAdapter 对象 |
+| :job | 作业对象 |
+
+### enqueue.active\_job
+
+| 键 | 值 |
+|---|---|
+| :adapter | 处理作业的 QueueAdapter 对象 |
+| :job | 作业对象 |
+
+### perform\_start.active\_job
+
+| 键 | 值 |
+|---|---|
+| :adapter | 处理作业的 QueueAdapter 对象 |
+| :job | 作业对象 |
+
+### perform.active\_job
+
+| 键 | 值 |
+|---|---|
+| :adapter | 处理作业的 QueueAdapter 对象 |
+| :job | 作业对象 |
 
 Railties
 --------
 
-### load_config_initializer.railties
+### load\_config\_initializer.railties
 
-| Key            | Value                                                 |
-| -------------- | ----------------------------------------------------- |
-| `:initializer` | Path to loaded initializer from `config/initializers` |
+| 键 | 值 |
+|---|---|
+| :initializer | 从 config/initializers 中加载的初始化脚本的路径 |
 
 Rails
 -----
 
 ### deprecation.rails
 
-| Key          | Value                           |
-| ------------ | ------------------------------- |
-| `:message`   | The deprecation warning         |
-| `:callstack` | Where the deprecation came from |
+| 键 | 值 |
+|---|---|
+| :message | 弃用提醒 |
+| :callstack | 弃用的位置 |
 
-Subscribing to an event
------------------------
+订阅事件
+--------
 
-Subscribing to an event is easy. Use `ActiveSupport::Notifications.subscribe` with a block to
-listen to any notification.
+订阅事件是件简单的事，在 `ActiveSupport::Notifications.subscribe` 的块中监听通知即可。
 
-The block receives the following arguments:
+这个块接收下述参数：
 
-* The name of the event
-* Time when it started
-* Time when it finished
-* An unique ID for this event
-* The payload (described in previous sections)
+- 事件的名称
+
+- 开始时间
+
+- 结束时间
+
+- 事件的唯一 ID
+
+- 载荷（参见前述各节）
 
 ```ruby
 ActiveSupport::Notifications.subscribe "process_action.action_controller" do |name, started, finished, unique_id, data|
-  # your own custom stuff
+  # 自己编写的其他代码
   Rails.logger.info "#{name} Received!"
 end
 ```
 
-Defining all those block arguments each time can be tedious. You can easily create an `ActiveSupport::Notifications::Event`
-from block arguments like this:
+每次都定义这些块参数很麻烦，我们可以使用 `ActiveSupport::Notifications::Event` 创建块参数，如下：
 
 ```ruby
 ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
@@ -451,7 +506,7 @@ ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*a
 end
 ```
 
-Most times you only care about the data itself. Here is a shortcut to just get the data.
+多数时候，我们只关注数据本身。下面是只获取数据的简洁方式：
 
 ```ruby
 ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
@@ -460,32 +515,28 @@ ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*a
 end
 ```
 
-You may also subscribe to events matching a regular expression. This enables you to subscribe to
-multiple events at once. Here's you could subscribe to everything from `ActionController`.
+此外，还可以订阅匹配正则表达式的事件。这样可以一次订阅多个事件。下面是订阅 `ActionController` 中所有事件的方式：
 
 ```ruby
 ActiveSupport::Notifications.subscribe /action_controller/ do |*args|
-  # inspect all ActionController events
+  # 审查所有 ActionController 事件
 end
 ```
 
-Creating custom events
-----------------------
+自定义事件
+----------
 
-Adding your own events is easy as well. `ActiveSupport::Notifications` will take care of
-all the heavy lifting for you. Simply call `instrument` with a `name`, `payload` and a block.
-The notification will be sent after the block returns. `ActiveSupport` will generate the start and end times
-as well as the unique ID. All data passed into the `instrument` call will make it into the payload.
+自己添加事件也很简单，繁重的工作都由 `ActiveSupport::Notifications` 代劳，我们只需调用 `instrument`，并传入 `name`、`payload` 和一个块。通知在块返回后发送。`ActiveSupport` 会生成起始时间和唯一的 ID。传给 `instrument` 调用的所有数据都会放入载荷中。
 
-Here's an example:
+下面举个例子：
 
 ```ruby
 ActiveSupport::Notifications.instrument "my.custom.event", this: :data do
-  # do your custom stuff here
+  # 自己编写的其他代码
 end
 ```
 
-Now you can listen to this event with:
+然后可以使用下述代码监听这个事件：
 
 ```ruby
 ActiveSupport::Notifications.subscribe "my.custom.event" do |name, started, finished, unique_id, data|
@@ -493,5 +544,4 @@ ActiveSupport::Notifications.subscribe "my.custom.event" do |name, started, fini
 end
 ```
 
-You should follow Rails conventions when defining your own events. The format is: `event.library`.
-If you application is sending Tweets, you should create an event named `tweet.twitter`.
+自己定义事件时，应该遵守 Rails 的约定。事件名称的格式是 `event.library`。如果应用发送推文，应该把事件命名为 `tweet.twitter`。

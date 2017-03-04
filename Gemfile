@@ -1,14 +1,6 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
 
-gem 'activesupport'
-
-gem 'actionpack'
-
-group :doc do
-  gem 'redcarpet'
-end
-
-gem 'nokogiri'
-
-gem 'rake'
-
+gem 'rails', '5.0.1'
+gem 'redcarpet'
+gem 'kindlerb', '0.1.1'

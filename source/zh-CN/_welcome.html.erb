@@ -1,14 +1,24 @@
 <h2>Ruby on Rails 指南 (<%= @edge ? @version[0, 7] : @version %>)</h2>
-<br>
-<p>基于 Rails 4.1 翻译而成。</p>
-<!-- <p>
-  这些指南基于 Rails 的 <a href="https://github.com/rails/rails/tree/<%= @version %>">master</a> 分支翻译而成。
-</p> -->
-<p>Rails Guides 涵盖 Rails 的方方面面，文章内容深入浅出，易于理解，是 Rails 入门、开发的必备参考。</p>
-<!-- <p>
-  稳定版本的指南（Rails 4.1.4），请参考
-  <a href="http://guides.rubyonrails.org">http://guides.rubyonrails.org</a>。
-</p> -->
+
+<% if @edge %>
 <p>
-  其它版本：<a href="http://guides.rubyonrails.org/v4.0.8/">Rails 4.0.8</a>、<a href="http://guides.rubyonrails.org/v3.2.19/">Rails 3.2.19</a>、<a href="http://guides.rubyonrails.org/v2.3.11/">Rails 2.3.11</a>。
+  These are <b>Edge Guides</b>, based on the current <a href="https://github.com/rails/rails/tree/<%= @version %>">master</a> branch.
+</p>
+<p>
+  If you are looking for the ones for the stable version, please check
+  <a href="http://guides.rubyonrails.org">http://guides.rubyonrails.org</a> instead.
+</p>
+<% else %>
+<p>
+  这是 Rails 5.0 的最新指南，基于 <a href="https://github.com/rails/rails/tree/<%= @version %>"><%= @version %></a>。
+  这份指南旨在使您立即获得 Rails 的生产力，并帮助您了解所有组件如何组合在一起。
+</p>
+<% end %>
+<p>
+早前版本的指南：
+<a href="http://guides.rubyonrails.org/v4.2/">Rails 4.2</a>，
+<a href="http://guides.rubyonrails.org/v4.1/">Rails 4.1</a>，
+<a href="http://guides.rubyonrails.org/v4.0/">Rails 4.0</a>，
+<a href="http://guides.rubyonrails.org/v3.2/">Rails 3.2</a>，和
+<a href="http://guides.rubyonrails.org/v2.3/">Rails 2.3</a>。
 </p>

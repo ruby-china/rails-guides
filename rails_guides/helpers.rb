@@ -7,11 +7,7 @@ module RailsGuides
       result = content_tag(:dt, link)
 
       if options[:work_in_progress]
-        result << content_tag(:dd, '原文撰写中', :class => 'work-in-progress')
-      end
-
-      if options[:needs_translation]
-        result << content_tag(:dd, '待翻译', :class => 'work-in-progress')
+        result << content_tag(:dd, 'Work in progress', :class => 'work-in-progress')
       end
 
       result << content_tag(:dd, capture(&block))
@@ -19,11 +15,7 @@ module RailsGuides
     end
 
     def documents_by_section
-      if ENV['GUIDES_LANGUAGE'] == 'zh-CN'
-        @documents_by_section ||= YAML.load_file(File.expand_path('../../source/documents_zh-CN.yaml', __FILE__))
-      else
-        @documents_by_section ||= YAML.load_file(File.expand_path('../../source/documents.yaml', __FILE__))
-      end
+      @documents_by_section ||= YAML.load_file(File.expand_path("../../source/#{@lang ? @lang + '/' : ''}documents.yaml", __FILE__))
     end
 
     def documents_flat

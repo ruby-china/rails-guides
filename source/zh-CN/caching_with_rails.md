@@ -1,153 +1,214 @@
-Rails 缓存简介
-=============
+Rails 缓存概览
+==============
 
-本文要教你如果避免频繁查询数据库，在最短的时间内把真正需要的内容返回给客户端。
+本文简述如何使用缓存提升 Rails 应用的速度。
 
-读完本文，你将学到：
+缓存是指存储请求-响应循环中生成的内容，在类似请求的响应中复用。
 
-* 页面和动作缓存（在 Rails 4 中被提取成单独的 gem）；
-* 片段缓存；
-* 存储缓存的方法；
-* Rails 对条件 GET 请求的支持；
+通常，缓存是提升应用性能最有效的方式。通过缓存，在单个服务器中使用单个数据库的网站可以承受数千个用户并发访问。
 
---------------------------------------------------------------------------------
+Rails 自带了一些缓存功能。本文说明它们的适用范围和作用。掌握这些技术之后，你的 Rails 应用能承受大量访问，而不必花大量时间生成响应，或者支付高昂的服务器账单。
 
-缓存基础
--------
+读完本文后，您将学到：
 
-本节介绍三种缓存技术：页面，动作和片段。Rails 默认支持片段缓存。如果想使用页面缓存和动作缓存，要在 `Gemfile` 中加入 `actionpack-page_caching` 和 `actionpack-action_caching`。
+- 片段缓存和俄罗斯套娃缓存；
 
-在开发环境中若想使用缓存，要把 `config.action_controller.perform_caching` 选项设为 `true`。这个选项一般都在各环境的设置文件（`config/environments/*.rb`）中设置，在开发环境和测试环境默认是禁用的，在生产环境中默认是开启的。
+- 如何管理缓存依赖；
+
+- 不同的缓存存储器；
+
+- 对条件 GET 请求的支持。
+
+基本缓存
+--------
+
+本节简介三种缓存技术：页面缓存（page caching）、动作缓存（action caching）和片段缓存（fragment caching）。Rails 默认提供了片段缓存。如果想使用页面缓存或动作缓存，要把 `actionpack-page_caching` 或 `actionpack-action_caching` 添加到 `Gemfile` 中。
+
+默认情况下，缓存只在生产环境启用。如果想在本地启用缓存，要在相应的 `config/environments/*.rb` 文件中把 `config.action_controller.perform_caching` 设为 `true`。
 
 ```ruby
 config.action_controller.perform_caching = true
 ```
 
+NOTE: 修改 `config.action_controller.perform_caching` 的值只对 Action Controller 组件提供的缓存有影响。例如，对低层缓存没影响，[下文详述](#低层缓存)。
+
 ### 页面缓存
 
-页面缓存机制允许网页服务器（Apache 或 Nginx 等）直接处理请求，不经 Rails 处理。这么做显然速度超快，但并不适用于所有情况（例如需要身份认证的页面）。服务器直接从文件系统上伺服文件，所以缓存过期是一个很棘手的问题。
+页面缓存时 Rails 提供的一种缓存机制，让 Web 服务器（如 Apache 和 NGINX）直接伺服生成的页面，而不经由 Rails 栈处理。虽然这种缓存的速度超快，但是不适用于所有情况（例如需要验证身份的页面）。此外，因为 Web 服务器直接从文件系统中伺服文件，所以你要自行实现缓存失效机制。
 
-NOTE: Rails 4 删除了对页面缓存的支持，如想使用就得安装 [actionpack-page_caching gem](https://github.com/rails/actionpack-page_caching)。最新推荐的缓存方法参见 [DHH 对键基缓存过期的介绍](http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works)。
+TIP: Rails 4 删除了页面缓存。参见 [actionpack-page\_caching gem](https://github.com/rails/actionpack-page_caching)。
 
 ### 动作缓存
 
-如果动作上有前置过滤器就不能使用页面缓存，例如需要身份认证的页面，这时需要使用动作缓存。动作缓存和页面缓存的工作方式差不多，但请求还是会经由 Rails 处理，所以在伺服缓存之前会执行前置过滤器。使用动作缓存可以执行身份认证等限制，然后再从缓存中取出结果返回客户端。
+有前置过滤器的动作不能使用页面缓存，例如需要验证身份的页面。此时，应该使用动作缓存。动作缓存的工作原理与页面缓存类似，不过入站请求会经过 Rails 栈处理，以便运行前置过滤器，然后再伺服缓存。这样，可以做身份验证和其他限制，同时还能从缓存的副本中伺服结果。
 
-NOTE: Rails 4 删除了对动作缓存的支持，如想使用就得安装 [actionpack-action_caching gem](https://github.com/rails/actionpack-action_caching)。最新推荐的缓存方法参见 [DHH 对键基缓存过期的介绍](http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works)。
+TIP: Rails 4 删除了动作缓存。参见 [actionpack-action\_caching gem](https://github.com/rails/actionpack-action_caching)。最新推荐的做法参见 DHH 写的“[How key-based cache expiration works](https://signalvnoise.com/posts/3113-how-key-based-cache-expiration-works)”一文。
 
 ### 片段缓存
 
-如果能缓存整个页面或动作的内容，再伺服给客户端，这个世界就完美了。但是，动态网页程序的页面一般都由很多部分组成，使用的缓存机制也不尽相同。在动态生成的页面中，不同的内容要使用不同的缓存方式和过期日期。为此，Rails 提供了一种缓存机制叫做“片段缓存”。
+动态 Web 应用一般使用不同的组件构建页面，不是所有组件都能使用同一种缓存机制。如果页面的不同部分需要使用不同的缓存机制，在不同的条件下失效，可以使用片段缓存。
 
-片段缓存把视图逻辑的一部分打包放在 `cache` 块中，后续请求都会从缓存中伺服这部分内容。
+片段缓存把视图逻辑的一部分放在 `cache` 块中，下次请求使用缓存存储器中的副本伺服。
 
-例如，如果想实时显示网站的订单，而且不想缓存这部分内容，但想缓存显示所有可选商品的部分，就可以使用下面这段代码：
+例如，如果想缓存页面中的各个商品，可以使用下述代码：
 
 ```erb
-<% Order.find_recent.each do |o| %>
-  <%= o.buyer.name %> bought <%= o.product.name %>
-<% end %>
-
-<% cache do %>
-  All available products:
-  <% Product.all.each do |p| %>
-    <%= link_to p.name, product_url(p) %>
+<% @products.each do |product| %>
+  <% cache product do %>
+    <%= render product %>
   <% end %>
 <% end %>
 ```
 
-上述代码中的 `cache` 块会绑定到调用它的动作上，输出到动作缓存的所在位置。因此，如果要在动作中使用多个片段缓存，就要使用 `action_suffix` 为 `cache` 块指定前缀：
+首次访问这个页面时，Rails 会创建一个具有唯一键的缓存条目。缓存键类似下面这种：
+
+    views/products/1-201505056193031061005000/bea67108094918eeba42cd4a6e786901
+
+中间的数字是 `product_id` 加上商品记录的 `updated_at` 属性中存储的时间戳。Rails 使用时间戳确保不伺服过期的数据。如果 `updated_at` 的值变了，Rails 会生成一个新键，然后在那个键上写入一个新缓存，旧键上的旧缓存不再使用。这叫基于键的失效方式。
+
+视图片段有变化时（例如视图的 HTML 有变），缓存的片段也失效。缓存键末尾那个字符串是模板树摘要，是基于缓存的视图片段的内容计算的 MD5 哈希值。如果视图片段有变化，MD5 哈希值就变了，因此现有文件失效。
+
+TIP: Memcached 等缓存存储器会自动删除旧的缓存文件。
+
+如果想在特定条件下缓存一个片段，可以使用 `cache_if` 或 `cache_unless`：
 
 ```erb
-<% cache(action: 'recent', action_suffix: 'all_products') do %>
-  All available products:
-```
-
-`expire_fragment` 方法可以把缓存设为过期，例如：
-
-```ruby
-expire_fragment(controller: 'products', action: 'recent', action_suffix: 'all_products')
-```
-
-如果不想把缓存绑定到调用它的动作上，调用 `cahce` 方法时可以使用全局片段名：
-
-```erb
-<% cache('all_available_products') do %>
-  All available products:
+<% cache_if admin?, product do %>
+  <%= render product %>
 <% end %>
 ```
 
-在 `ProductsController` 的所有动作中都可以使用片段名调用这个片段缓存，而且过期的设置方式不变：
+#### 集合缓存
 
-```ruby
-expire_fragment('all_available_products')
+`render` 辅助方法还能缓存渲染集合的单个模板。这甚至比使用 `each` 的前述示例更好，因为是一次性读取所有缓存模板的，而不是一次读取一个。若想缓存集合，渲染集合时传入 `cached: true` 选项：
+
+```erb
+<%= render partial: 'products/product', collection: @products, cached: true %>
 ```
 
-如果不想手动设置片段缓存过期，而想每次更新商品后自动过期，可以定义一个帮助方法：
+上述代码中所有的缓存模板一次性获取，速度更快。此外，尚未缓存的模板也会写入缓存，在下次渲染时获取。
+
+### 俄罗斯套娃缓存
+
+有时，可能想把缓存的片段嵌套在其他缓存的片段里。这叫俄罗斯套娃缓存（Russian doll caching）。
+
+俄罗斯套娃缓存的优点是，更新单个商品后，重新生成外层片段时，其他内存片段可以复用。
+
+前一节说过，如果缓存的文件对应的记录的 `updated_at` 属性值变了，缓存的文件失效。但是，内层嵌套的片段不失效。
+
+对下面的视图来说：
+
+```erb
+<% cache product do %>
+  <%= render product.games %>
+<% end %>
+```
+
+而它渲染这个视图：
+
+```erb
+<% cache game do %>
+  <%= render game %>
+<% end %>
+```
+
+如果游戏的任何一个属性变了，`updated_at` 的值会设为当前时间，因此缓存失效。然而，商品对象的 `updated_at` 属性不变，因此它的缓存不失效，从而导致应用伺服过期的数据。为了解决这个问题，可以使用 `touch` 方法把模型绑在一起：
 
 ```ruby
-module ProductsHelper
-  def cache_key_for_products
-    count          = Product.count
-    max_updated_at = Product.maximum(:updated_at).try(:utc).try(:to_s, :number)
-    "products/all-#{count}-#{max_updated_at}"
-  end
+class Product < ApplicationRecord
+  has_many :games
+end
+
+class Game < ApplicationRecord
+  belongs_to :product, touch: true
 end
 ```
 
-这个方法生成一个缓存键，用于所有商品的缓存。在视图中可以这么做：
+把 `touch` 设为 `true` 后，导致游戏的 `updated_at` 变化的操作，也会修改关联的商品的 `updated_at` 属性，从而让缓存失效。
 
-```erb
-<% cache(cache_key_for_products) do %>
-  All available products:
-<% end %>
-```
+### 管理依赖
 
-如果想在满足某个条件时缓存片段，可以使用 `cache_if` 或 `cache_unless` 方法：
+为了正确地让缓存失效，要正确地定义缓存依赖。Rails 足够智能，能处理常见的情况，无需自己指定。但是有时需要处理自定义的辅助方法（以此为例），因此要自行定义。
 
-```erb
-<% cache_if (condition, cache_key_for_products) do %>
-  All available products:
-<% end %>
-```
+#### 隐式依赖
 
-缓存的键名还可使用 Active Record 模型：
-
-```erb
-<% Product.all.each do |p| %>
-  <% cache(p) do %>
-    <%= link_to p.name, product_url(p) %>
-  <% end %>
-<% end %>
-```
-
-Rails 会在模型上调用 `cache_key` 方法，返回一个字符串，例如 `products/23-20130109142513`。键名中包含模型名，ID 以及 `updated_at` 字段的时间戳。所以更新商品后会自动生成一个新片段缓存，因为键名变了。
-
-上述两种缓存机制还可以结合在一起使用，这叫做“俄罗斯套娃缓存”（Russian Doll Caching）：
-
-```erb
-<% cache(cache_key_for_products) do %>
-  All available products:
-  <% Product.all.each do |p| %>
-    <% cache(p) do %>
-      <%= link_to p.name, product_url(p) %>
-    <% end %>
-  <% end %>
-<% end %>
-```
-
-之所以叫“俄罗斯套娃缓存”，是因为嵌套了多个片段缓存。这种缓存的优点是，更新单个商品后，重新生成外层片段缓存时可以继续使用内层片段缓存。
-
-### 底层缓存
-
-有时不想缓存视图片段，只想缓存特定的值或者查询结果。Rails 中的缓存机制可以存储各种信息。
-
-实现底层缓存最有效地方式是使用 `Rails.cache.fetch` 方法。这个方法既可以从缓存中读取数据，也可以把数据写入缓存。传入单个参数时，读取指定键对应的值。传入代码块时，会把代码块的计算结果存入缓存的指定键中，然后返回计算结果。
-
-以下面的代码为例。程序中有个 `Product` 模型，其中定义了一个实例方法，用来查询竞争对手网站上的商品价格。这个方法的返回结果最好使用底层缓存：
+多数模板依赖可以从模板中的 `render` 调用中推导出来。下面举例说明 `ActionView::Digestor` 知道如何解码的 `render` 调用：
 
 ```ruby
-class Product < ActiveRecord::Base
+render partial: "comments/comment", collection: commentable.comments
+render "comments/comments"
+render 'comments/comments'
+render('comments/comments')
+
+render "header" => render("comments/header")
+
+render(@topic)         => render("topics/topic")
+render(topics)         => render("topics/topic")
+render(message.topics) => render("topics/topic")
+```
+
+而另一方面，有些调用要做修改方能让缓存正确工作。例如，如果传入自定义的集合，要把下述代码：
+
+```ruby
+render @project.documents.where(published: true)
+```
+
+改为：
+
+```ruby
+render partial: "documents/document", collection: @project.documents.where(published: true)
+```
+
+#### 显式依赖
+
+有时，模板依赖推导不出来。在辅助方法中渲染时经常是这样。下面举个例子：
+
+```erb
+<%= render_sortable_todolists @project.todolists %>
+```
+
+此时，要使用一种特殊的注释格式：
+
+```erb
+<%# Template Dependency: todolists/todolist %>
+<%= render_sortable_todolists @project.todolists %>
+```
+
+某些情况下，例如设置单表继承，可能要显式定义一堆依赖。此时无需写出每个模板，可以使用通配符匹配一个目录中的全部模板：
+
+```erb
+<%# Template Dependency: events/* %>
+<%= render_categorizable_events @person.events %>
+```
+
+对集合缓存来说，如果局部模板不是以干净的缓存调用开头，依然可以使用集合缓存，不过要在模板中的任意位置添加一种格式特殊的注释，如下所示：
+
+```erb
+<%# Template Collection: notification %>
+<% my_helper_that_calls_cache(some_arg, notification) do %>
+  <%= notification.name %>
+<% end %>
+```
+
+#### 外部依赖
+
+如果在缓存的块中使用辅助方法，而后更新了辅助方法，还要更新缓存。具体方法不限，只要能改变模板文件的 MD5 值就行。推荐的方法之一是添加一个注释，如下所示：
+
+```erb
+<%# Helper Dependency Updated: Jul 28, 2015 at 7pm %>
+<%= some_helper_method(person) %>
+```
+
+### 低层缓存
+
+有时需要缓存特定的值或查询结果，而不是缓存视图片段。Rails 的缓存机制能存储任何类型的信息。
+
+实现低层缓存最有效的方式是使用 `Rails.cache.fetch` 方法。这个方法既能读取也能写入缓存。传入单个参数时，获取指定的键，返回缓存中的值。传入块时，在指定键上缓存块的结果，并返回结果。
+
+下面举个例子。应用中有个 `Product` 模型，它有个实例方法，在竞争网站中查找商品的价格。这个方法返回的数据特别适合使用低层缓存：
+
+```ruby
+class Product < ApplicationRecord
   def competing_price
     Rails.cache.fetch("#{cache_key}/competing_price", expires_in: 12.hours) do
       Competitor::API.find_price(id)
@@ -156,11 +217,11 @@ class Product < ActiveRecord::Base
 end
 ```
 
-NOTE: 注意，在这个例子中使用了 `cache_key` 方法，所以得到的缓存键名是这种形式：`products/233-20140225082222765838000/competing_price`。`cache_key` 方法根据模型的 `id` 和 `updated_at` 属性生成键名。这是最常见的做法，因为商品更新后，缓存就失效了。一般情况下，使用底层缓存保存实例的相关信息时，都要生成缓存键。
+NOTE: 注意，这个示例使用了 `cache_key` 方法，因此得到的缓存键类似这种：`products/233-20140225082222765838000/competing_price`。`cache_key` 方法根据模型的 `id` 和 `updated_at` 属性生成一个字符串。这是常见的约定，有个好处是，商品更新后缓存自动失效。一般来说，使用低层缓存缓存实例层信息时，需要生成缓存键。
 
 ### SQL 缓存
 
-查询缓存是 Rails 的一个特性，把每次查询的结果缓存起来，如果在同一次请求中遇到相同的查询，直接从缓存中读取结果，不用再次查询数据库。
+查询缓存是 Rails 提供的一个功能，把各个查询的结果集缓存起来。如果在同一个请求中遇到了相同的查询，Rails 会使用缓存的结果集，而不再次到数据库中运行查询。
 
 例如：
 
@@ -168,159 +229,133 @@ NOTE: 注意，在这个例子中使用了 `cache_key` 方法，所以得到的�
 class ProductsController < ApplicationController
 
   def index
-    # Run a find query
+    # 运行查找查询
     @products = Product.all
 
     ...
 
-    # Run the same query again
+    # 再次运行相同的查询
     @products = Product.all
   end
 
 end
 ```
 
-缓存的存储方式
-------------
+再次运行相同的查询时，根本不会发给数据库。首次运行查询得到的结果存储在查询缓存中（内存里），第二次查询从内存中获取。
 
-Rails 为动作缓存和片段缓存提供了不同的存储方式。
+然而要知道，查询缓存在动作开头创建，到动作末尾销毁，只在动作的存续时间内存在。如果想持久化存储查询结果，使用低层缓存也能实现。
 
-TIP: 页面缓存全部存储在硬盘中。
+缓存存储器
+----------
 
-### 设置
+Rails 为存储缓存数据（SQL 缓存和页面缓存除外）提供了不同的存储器。
 
-程序默认使用的缓存存储方式可以在文件 `config/application.rb` 的 `Application` 类中或者环境设置文件（`config/environments/*.rb`）的 `Application.configure` 代码块中调用 `config.cache_store=` 方法设置。该方法的第一个参数是存储方式，后续参数都是传给对应存储方式构造器的参数。
+### 配置
 
-```ruby
-config.cache_store = :memory_store
-```
-
-NOTE: 在设置代码块外部可以调用 `ActionController::Base.cache_store` 方法设置存储方式。
-
-缓存中的数据通过 `Rails.cache` 方法获取。
-
-### ActiveSupport::Cache::Store
-
-这个类提供了在 Rails 中和缓存交互的基本方法。这是个抽象类，不能直接使用，应该使用针对各存储引擎的具体实现。Rails 实现了几种存储方式，介绍参见后几节。
-
-和缓存交互常用的方法有：`read`，`write`，`delete`，`exist?`，`fetch`。`fetch` 方法接受一个代码块，如果缓存中有对应的数据，将其返回；否则，执行代码块，把结果写入缓存。
-
-Rails 实现的所有存储方式都共用了下面几个选项。这些选项可以传给构造器，也可传给不同的方法，和缓存中的记录交互。
-
-* `:namespace`：在缓存存储中创建命名空间。如果和其他程序共用同一个存储，可以使用这个选项。
-
-* `:compress`：是否压缩缓存。便于在低速网络中传输大型缓存记录。
-
-* `:compress_threshold`：结合 `:compress` 选项使用，设定一个阈值，低于这个值就不压缩缓存。默认为 16 KB。
-
-* `:expires_in`：为缓存记录设定一个过期时间，单位为秒，过期后把记录从缓存中删除。
-
-* `:race_condition_ttl`：结合 `:expires_in` 选项使用。缓存过期后，禁止多个进程同时重新生成同一个缓存记录（叫做 dog pile effect），从而避免条件竞争。这个选项设置一个秒数，在这个时间之后才能再次使用重新生成的新值。如果设置了 `:expires_in` 选项，最好也设置这个选项。
-
-### ActiveSupport::Cache::MemoryStore
-
-这种存储方式在 Ruby 进程中把缓存保存在内存中。存储空间的大小由 `:size` 选项指定，默认为 32MB。如果超出分配的大小，系统会清理缓存，把最不常使用的记录删除。
+`config.cache_store` 配置选项用于设定应用的默认缓存存储器。可以设定其他参数，传给缓存存储器的构造方法：
 
 ```ruby
 config.cache_store = :memory_store, { size: 64.megabytes }
 ```
 
-如果运行多个 Rails 服务器进程（使用 mongrel_cluster 或 Phusion Passenger 时），进程间无法共用缓存数据。这种存储方式不适合在大型程序中使用，不过很适合只有几个服务器进程的小型、低流量网站，也可在开发环境和测试环境中使用。
+NOTE: 此外，还可以在配置块外部调用 `ActionController::Base.cache_store`。
 
-### ActiveSupport::Cache::FileStore
+缓存存储器通过 `Rails.cache` 访问。
 
-这种存储方式使用文件系统保存缓存。缓存文件的存储位置必须在初始化时指定。
+### `ActiveSupport::Cache::Store`
 
-```ruby
-config.cache_store = :file_store, "/path/to/cache/directory"
-```
+这个类是在 Rails 中与缓存交互的基础。这是个抽象类，不能直接使用。你必须根据存储器引擎具体实现这个类。Rails 提供了几个实现，说明如下。
 
-使用这种存储方式，同一主机上的服务器进程之间可以共用缓存。运行在不同主机上的服务器进程之间也可以通过共享的文件系统共用缓存，但这种用法不是最好的方式，因此不推荐使用。这种存储方式适合在只用了一到两台主机的中低流量网站中使用。
+主要调用的方法有 `read`、`write`、`delete`、`exist?` 和 `fetch`。`fetch` 方法接受一个块，返回缓存中现有的值，或者把新值写入缓存。
 
-注意，如果不定期清理，缓存会不断增多，最终会用完硬盘空间。
+所有缓存实现有些共用的选项，可以传给构造方法，或者传给与缓存条目交互的各个方法。
 
-这是默认使用的缓存存储方式。
+- `:namespace`：在缓存存储器中创建命名空间。如果与其他应用共用同一个缓存存储器，这个选项特别有用。
 
-### ActiveSupport::Cache::MemCacheStore
+- `:compress`：指定压缩缓存。通过缓慢的网络传输大量缓存时用得着。
 
-这种存储方式使用 Danga 开发的 `memcached` 服务器，为程序提供一个中心化的缓存存储。Rails 默认使用附带安装的 `dalli` gem 实现这种存储方式。这是目前在生产环境中使用最广泛的缓存存储方式，可以提供单个缓存存储，或者共享的缓存集群，性能高，冗余度低。
+- `:compress_threshold`：与 `:compress` 选项搭配使用，指定一个阈值，未达到时不压缩缓存。默认为 16 千字节。
 
-初始化时要指定集群中所有 memcached 服务器的地址。如果没有指定地址，默认运行在本地主机的默认端口上，这对大型网站来说不是个好主意。
+- `:expires_in`：为缓存条目设定失效时间（秒数），失效后自动从缓存中删除。
 
-在这种缓存存储中使用 `write` 和 `fetch` 方法还可指定两个额外的选项，充分利用 memcached 的特有功能。指定 `:raw` 选项可以直接把没有序列化的数据传给 memcached 服务器。在这种类型的数据上可以使用 memcached 的原生操作，例如 `increment` 和 `decrement`。如果不想让 memcached 覆盖已经存在的记录，可以指定 `:unless_exist` 选项。
+- `:race_condition_ttl`：与 `:expires_in` 选项搭配使用。避免多个进程同时重新生成相同的缓存条目（也叫 dog pile effect），防止让缓存条目过期时出现条件竞争。这个选项设定在重新生成新值时失效的条目还可以继续使用多久（秒数）。如果使用 `:expires_in` 选项， 最好也设定这个选项。
 
-```ruby
-config.cache_store = :mem_cache_store, "cache-1.example.com", "cache-2.example.com"
-```
+#### 自定义缓存存储器
 
-### ActiveSupport::Cache::EhcacheStore
+缓存存储器可以自己定义，只需扩展 `ActiveSupport::Cache::Store` 类，实现相应的方法。这样，你可以把任何缓存技术带到你的 Rails 应用中。
 
-如果在 JRuby 平台上运行程序，可以使用 Terracotta 开发的 Ehcache 存储缓存。Ehcache 是使用 Java 开发的开源缓存存储，同时也提供企业版，增强了稳定性、操作便利性，以及商用支持。使用这种存储方式要先安装 `jruby-ehcache-rails3` gem（1.1.0 及以上版本）。
-
-```ruby
-config.cache_store = :ehcache_store
-```
-
-初始化时，可以使用 `:ehcache_config` 选项指定 Ehcache 设置文件的位置（默认为 Rails 程序根目录中的 `ehcache.xml`），还可使用 `:cache_name` 选项定制缓存名（默认为 `rails_cache`）。
-
-使用 `write` 方法时，除了可以使用通用的 `:expires_in` 选项之外，还可指定 `:unless_exist` 选项，让 Ehcache 使用 `putIfAbsent` 方法代替 `put` 方法，不覆盖已经存在的记录。除此之外，`write` 方法还可接受 [Ehcache Element 类](http://ehcache.org/apidocs/net/sf/ehcache/Element.html)开放的所有属性，包括：
-
-| 属性                        | 参数类型             | 说明                                                         |
-| --------------------------- | ------------------- | ----------------------------------------------------------- |
-| elementEvictionData         | ElementEvictionData | 设置元素的 eviction 数据实例                                  |
-| eternal                     | boolean             | 设置元素是否为 eternal                                        |
-| timeToIdle, tti             | int                 | 设置空闲时间                                                 |
-| timeToLive, ttl, expires_in | int                 | 设置在线时间                                                 |
-| version                     | long                | 设置 ElementAttributes 对象的 `version` 属性                  |
-
-这些选项通过 Hash 传给 `write` 方法，可以使用驼峰式或者下划线分隔形式。例如：
-
-```ruby
-Rails.cache.write('key', 'value', time_to_idle: 60.seconds, timeToLive: 600.seconds)
-caches_action :index, expires_in: 60.seconds, unless_exist: true
-```
-
-关于 Ehcache 更多的介绍，请访问 <http://ehcache.org/>。关于如何在运行于 JRuby 平台之上的 Rails 中使用 Ehcache，请访问 <http://ehcache.org/documentation/jruby.html>。
-
-### ActiveSupport::Cache::NullStore
-
-这种存储方式只可在开发环境和测试环境中使用，并不会存储任何数据。如果在开发过程中必须和 `Rails.cache` 交互，而且会影响到修改代码后的效果，使用这种存储方式尤其方便。使用这种存储方式时调用 `fetch` 和 `read` 方法没有实际作用。
-
-```ruby
-config.cache_store = :null_store
-```
-
-### 自建存储方式
-
-要想自建缓存存储方式，可以继承 `ActiveSupport::Cache::Store` 类，并实现相应的方法。自建存储方式时，可以使用任何缓存技术。
-
-使用自建的存储方式，把 `cache_store` 设为类的新实例即可。
+若想使用自定义的缓存存储器，只需把 `cache_store` 设为自定义类的实例：
 
 ```ruby
 config.cache_store = MyCacheStore.new
 ```
 
-### 缓存键
+### `ActiveSupport::Cache::MemoryStore`
 
-缓存中使用的键可以是任意对象，只要能响应 `:cache_key` 或 `:to_param` 方法即可。如果想生成自定义键，可以在类中定义 `:cache_key` 方法。Active Record 根据类名和记录的 ID 生成缓存键。
-
-缓存键也可使用 Hash 或者数组。
+这个缓存存储器把缓存条目放在内存中，与 Ruby 进程放在一起。可以把 `:size` 选项传给构造方法，指定缓存的大小限制（默认为 32Mb）。超过分配的大小后，会清理缓存，把最不常用的条目删除。
 
 ```ruby
-# This is a legal cache key
+config.cache_store = :memory_store, { size: 64.megabytes }
+```
+
+如果运行多个 Ruby on Rails 服务器进程（例如使用 mongrel\_cluster 或 Phusion Passenger），各个实例之间无法共享缓存数据。这个缓存存储器不适合大型应用使用。不过，适合只有几个服务器进程的低流量小型应用使用，也适合在开发环境和测试环境中使用。
+
+### `ActiveSupport::Cache::FileStore`
+
+这个缓存存储器使用文件系统存储缓存条目。初始化这个存储器时，必须指定存储文件的目录：
+
+```ruby
+config.cache_store = :file_store, "/path/to/cache/directory"
+```
+
+使用这个缓存存储器时，在同一台主机中运行的多个服务器进程可以共享缓存。这个缓存存储器适合一到两个主机的中低流量网站使用。运行在不同主机中的多个服务器进程若想共享缓存，可以使用共享的文件系统，但是不建议这么做。
+
+缓存量一直增加，直到填满磁盘，所以建议你定期清理旧缓存条目。
+
+这是默认的缓存存储器。
+
+### `ActiveSupport::Cache::MemCacheStore`
+
+这个缓存存储器使用 Danga 的 `memcached` 服务器为应用提供中心化缓存。Rails 默认使用自带的 `dalli` gem。这是生产环境的网站目前最常使用的缓存存储器。通过它可以实现单个共享的缓存集群，效率很高，有较好的冗余。
+
+初始化这个缓存存储器时，要指定集群中所有 memcached 服务器的地址。如果不指定，假定 memcached 运行在本地的默认端口上，但是对大型网站来说，这样做并不好。
+
+这个缓存存储器的 `write` 和 `fetch` 方法接受两个额外的选项，以便利用 memcached 的独有特性。指定 `:raw` 时，直接把值发给服务器，不做序列化。值必须是字符串或数字。memcached 的直接操作，如 `increment` 和 `decrement`，只能用于原始值。还可以指定 `:unless_exist` 选项，不让 memcached 覆盖现有条目。
+
+```ruby
+config.cache_store = :mem_cache_store, "cache-1.example.com", "cache-2.example.com"
+```
+
+### `ActiveSupport::Cache::NullStore`
+
+这个缓存存储器只应该在开发或测试环境中使用，它并不存储任何信息。在开发环境中，如果代码直接与 `Rails.cache` 交互，但是缓存可能对代码的结果有影响，可以使用这个缓存存储器。在这个缓存存储器上调用 `fetch` 和 `read` 方法不返回任何值。
+
+```ruby
+config.cache_store = :null_store
+```
+
+缓存键
+------
+
+缓存中使用的键可以是能响应 `cache_key` 或 `to_param` 方法的任何对象。如果想定制生成键的方式，可以覆盖 `cache_key` 方法。Active Record 根据类名和记录 ID 生成缓存键。
+
+缓存键的值可以是散列或数组：
+
+```ruby
+# 这是一个有效的缓存键
 Rails.cache.read(site: "mysite", owners: [owner_1, owner_2])
 ```
 
-`Rails.cache` 方法中使用的键和保存到存储引擎中的键并不一样。保存时，可能会根据命名空间或引擎的限制做修改。也就是说，不能使用 `memcache-client` gem 调用 `Rails.cache` 方法保存缓存再尝试读取缓存。不过，无需担心会超出 memcached 的大小限制，或者违反句法规则。
+`Rails.cache` 使用的键与存储引擎使用的并不相同，存储引擎使用的键可能含有命名空间，或者根据后端的限制做调整。这意味着，使用 `Rails.cache` 存储值时使用的键可能无法用于供 `dalli` gem 获取缓存条目。然而，你也无需担心会超出 memcached 的大小限制，或者违背句法规则。
 
-支持条件 GET 请求
----------------
+对条件 GET 请求的支持
+---------------------
 
-条件请求是 HTTP 规范的一个特性，网页服务器告诉浏览器 GET 请求的响应自上次请求以来没有发生变化，可以直接读取浏览器缓存中的副本。
+条件 GET 请求是 HTTP 规范的一个特性，以此告诉 Web 浏览器，GET 请求的响应自上次请求之后没有变化，可以放心从浏览器的缓存中读取。
 
-条件请求通过 `If-None-Match` 和 `If-Modified-Since` 报头实现，这两个报头的值分别是内容的唯一 ID 和上次修改内容的时间戳，在服务器和客户端之间来回传送。如果浏览器发送的请求中内容 ID（ETag）或上次修改时间戳和服务器上保存的值一样，服务器只需返回一个空响应，并把状态码设为未修改。
+为此，要传递 `HTTP_IF_NONE_MATCH` 和 `HTTP_IF_MODIFIED_SINCE` 首部，其值分别为唯一的内容标识符和上一次改动时的时间戳。浏览器发送的请求，如果内容标识符（etag）或上一次修改的时间戳与服务器中的版本匹配，那么服务器只需返回一个空响应，把状态设为未修改。
 
-服务器负责查看上次修改时间戳和 `If-None-Match` 报头的值，决定是否返回完整的响应。在 Rails 中使用条件 GET 请求很简单：
+服务器（也就是我们自己）要负责查看最后修改时间戳和 `HTTP_IF_NONE_MATCH` 首部，判断要不要返回完整的响应。既然 Rails 支持条件 GET 请求，那么这个任务就非常简单：
 
 ```ruby
 class ProductsController < ApplicationController
@@ -328,40 +363,44 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find(params[:id])
 
-    # If the request is stale according to the given timestamp and etag value
-    # (i.e. it needs to be processed again) then execute this block
+    # 如果根据指定的时间戳和 etag 值判断请求的内容过期了
+    # （即需要重新处理）执行这个块
     if stale?(last_modified: @product.updated_at.utc, etag: @product.cache_key)
       respond_to do |wants|
-        # ... normal response processing
+        # ... 正常处理响应
       end
     end
 
-    # If the request is fresh (i.e. it's not modified) then you don't need to do
-    # anything. The default render checks for this using the parameters
-    # used in the previous call to stale? and will automatically send a
-    # :not_modified. So that's it, you're done.
+    # 如果请求的内容还新鲜（即未修改），无需做任何事
+    # render 默认使用前面 stale? 中的参数做检查，会自动发送 :not_modified 响应
+    # 就这样，工作结束
   end
 end
 ```
 
-如果不想使用 Hash，还可直接传入模型实例，Rails 会调用 `updated_at` 和 `cache_key` 方法分别设置 `last_modified` 和 `etag`：
+除了散列，还可以传入模型。Rails 会使用 `updated_at` 和 `cache_key` 方法设定 `last_modified` 和 `etag`：
 
 ```ruby
 class ProductsController < ApplicationController
   def show
     @product = Product.find(params[:id])
-    respond_with(@product) if stale?(@product)
+
+    if stale?(@product)
+      respond_to do |wants|
+        # ... 正常处理响应
+      end
+    end
   end
 end
 ```
 
-如果没有使用特殊的方式处理响应，使用默认的渲染机制（例如，没有使用 `respond_to` 代码块，或者没有手动调用 `render` 方法），还可使用十分便利的 `fresh_when` 方法：
+如果无需特殊处理响应，而且使用默认的渲染机制（即不使用 `respond_to`，或者不自己调用 `render`），可以使用 `fresh_when` 简化这个过程：
 
 ```ruby
 class ProductsController < ApplicationController
 
-  # This will automatically send back a :not_modified if the request is fresh,
-  # and will render the default template (product.*) if it's stale.
+  # 如果请求的内容是新鲜的，自动返回 :not_modified
+  # 否则渲染默认的模板（product.*）
 
   def show
     @product = Product.find(params[:id])
@@ -369,3 +408,37 @@ class ProductsController < ApplicationController
   end
 end
 ```
+
+### 强 Etag 与弱 Etag
+
+Rails 默认生成弱 ETag。这种 Etag 允许语义等效但主体不完全匹配的响应具有相同的 Etag。如果响应主体有微小改动，而不想重新渲染页面，可以使用这种 Etag。
+
+为了与强 Etag 区别，弱 Etag 前面有 `W/`。
+
+    W/"618bbc92e2d35ea1945008b42799b0e7" => 弱 ETag
+    "618bbc92e2d35ea1945008b42799b0e7"   => 强 ETag
+
+与弱 Etag 不同，强 Etag 要求响应完全一样，不能有一个字节的差异。在大型视频或 PDF 文件内部做 Range 查询时用得到。有些 CDN，如 Akamai，只支持强 Etag。如果确实想生成强 Etag，可以这么做：
+
+```ruby
+class ProductsController < ApplicationController
+  def show
+    @product = Product.find(params[:id])
+    fresh_when last_modified: @product.published_at.utc, strong_etag: @product
+  end
+end
+```
+
+也可以直接在响应上设定强 Etag：
+
+```ruby
+response.strong_etag = response.body
+# => "618bbc92e2d35ea1945008b42799b0e7"
+```
+
+参考资源
+--------
+
+- [DHH 写的文章：How key-based cache expiration works](https://signalvnoise.com/posts/3113-how-key-based-cache-expiration-works)
+
+- [Railscast 中介绍缓存摘要的视频](http://railscasts.com/episodes/387-cache-digests)

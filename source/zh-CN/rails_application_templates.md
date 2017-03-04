@@ -1,73 +1,73 @@
-Rails应用模版
-===========================
+Rails 应用模板
+==============
 
-应用模版是一个包括使用DSL添加gems/initializers等操作的普通Ruby文件.可以很方便的在你的应用中创建。
+应用模板是包含 DSL 的 Ruby 文件，作用是为新建的或现有的 Rails 项目添加 gem 和初始化脚本等。
 
-读完本章节，你将会学到：
+读完本文后，您将学到：
 
-* 如何使用模版生成/个性化一个应用。
-* 如何使用Rails的模版API编写可复用的应用模版。
+- 如何使用模板生成和定制 Rails 应用；
 
+- 如何使用 Rails Templates API 编写可复用的应用模板。
 
---------------------------------------------------------------------------------
+用法
+----
 
-模版应用简介
------
+若想使用模板，调用 Rails 生成器时把模板的位置传给 `-m` 选项。模板的位置可以是文件路径，也可以是 URL。
 
-为了使用一个模版，你需要为Rails应用生成器在生成新应用时提供一个'-m'选项来配置模版的路径。该路径可以是本地文件路径也可以是URL地址。
-
-```bash
+```sh
 $ rails new blog -m ~/template.rb
 $ rails new blog -m http://example.com/template.rb
 ```
 
-你可以使用rake的任务命令`rails:template`为Rails应用配置模版。模版的文件路径需要通过名为'LOCATION'的环境变量设定。再次强调，这个路径可以是本地文件路径也可以是URL地址：
+可以使用 `app:template` 任务在现有的 Rails 应用中使用模板。模板的位置要通过 `LOCATION` 环境变量指定。同样，模板的位置可以是文件路径，也可以是 URL。
 
-```bash
-$ bin/rake rails:template LOCATION=~/template.rb
-$ bin/rake rails:template LOCATION=http://example.com/template.rb
+```sh
+$ bin/rails app:template LOCATION=~/template.rb
+$ bin/rails app:template LOCATION=http://example.com/template.rb
 ```
 
-模版API
-------------
+Templates API
+-------------
 
-Rails模版API很容易理解，下面我们来看一个典型的模版例子：
+Rails Templates API 易于理解。下面是一个典型的 Rails 模板：
 
 ```ruby
 # template.rb
 generate(:scaffold, "person name:string")
 route "root to: 'people#index'"
-rake("db:migrate")
+rails_command("db:migrate")
 
-git :init
-git add: "."
-git commit: %Q{ -m 'Initial commit' }
+after_bundle do
+  git :init
+  git add: "."
+  git commit: %Q{ -m 'Initial commit' }
+end
 ```
 
-下面的章节将详细介绍模版API的主要方法：
+下面各小节简介这个 API 提供的主要方法。
 
-### gem(*args)
+### `gem(*args)`
 
-向一个Rails应用的`Gemfile`配置文件添加一个'gem'实体。
-举个例子，如果你的应用的依赖项包含`bj` 和 `nokogiri`等gem ： 
+在生成的应用的 `Gemfile` 中添加指定的 `gem` 条目。
+
+例如，如果应用依赖 `bj` 和 `nokogiri`：
 
 ```ruby
 gem "bj"
 gem "nokogiri"
 ```
 
-需要注意的是上述代码不会安装gem文件到你的应用里，你需要运行`bundle install` 命令来安装它们。
+请注意，这么做不会为你安装 gem，你要执行 `bundle install` 命令安装。
 
-```bash
-bundle install
+```sh
+$ bundle install
 ```
 
-### gem_group(*names, &block)
+### `gem_group(*names, &block)`
 
-将gem实体嵌套在一个组里。
+把指定的 gem 条目放在一个分组中。
 
-比如，如果你只希望在`development`和`test`组里面使用`rspec-rails`，可以这么做 ： 
-
+例如，如果只想在 `development` 和 `test` 组中加载 `rspec-rails`：
 
 ```ruby
 gem_group :development, :test do
@@ -75,33 +75,41 @@ gem_group :development, :test do
 end
 ```
 
-### add_source(source, options = {})
+### `add_source(source, options={}, &block)`
 
-为Rails应用的`Gemfile`文件指定数据源。
+在生成的应用的 `Gemfile` 中添加指定的源。
 
-举个例子。如果你需要从`"http://code.whytheluckystiff.net"`下载一个gem： 
+例如，如果想安装 `"http://code.whytheluckystiff.net"` 源中的 gem：
 
 ```ruby
 add_source "http://code.whytheluckystiff.net"
 ```
 
-### environment/application(data=nil, options={}, &block)
+如果提供块，块中的 gem 条目放在指定的源分组里：
 
-为`Application`在`config/application.rb`中添加一行内容。
+```ruby
+add_source "http://gems.github.com/" do
+  gem "rspec-rails"
+end
+```
 
-如果声明了`options[:env]`参数，那么这一行会在`config/environments`添加。
+### `environment`/`application(data=nil, options={}, &block)`
+
+在 `config/application.rb` 文件中的 `Application` 类里添加一行代码。
+
+如果指定了 `options[:env]`，代码添加到 `config/environments` 目录中对应的文件中。
 
 ```ruby
 environment 'config.action_mailer.default_url_options = {host: "http://yourwebsite.example.com"}', env: 'production'
 ```
 
-可以使用一个 'block'标志代替`data`参数。
+`data` 参数的位置可以使用块。
 
-### vendor/lib/file/initializer(filename, data = nil, &block)
+### `vendor`/`lib`/`file`/`initializer(filename, data = nil, &block)`
 
-为一个应用的`config/initializers`目录添加初始化器。
+在生成的应用的 `config/initializers` 目录中添加一个初始化脚本。
 
-假如你喜欢使用`Object#not_nil?` 和 `Object#not_blank?`：
+假设你想使用 `Object#not_nil?` 和 `Object#not_blank?` 方法：
 
 ```ruby
 initializer 'bloatlol.rb', <<-CODE
@@ -117,9 +125,9 @@ initializer 'bloatlol.rb', <<-CODE
 CODE
 ```
 
-一般来说，`lib()`方法会在 `lib/` 目录下创建一个文件，而`vendor()`方法会在`vendor/`目录下创建一个文件。
+类似地，`lib()` 方法在 `lib/ directory` 目录中创建一个文件，`vendor()` 方法在 `vendor/` 目录中创建一个文件。
 
-甚至可以用`Rails.root`的`file()`方法创建所有Rails应用必须的文件和目录。
+此外还有个 `file()` 方法，它的参数是一个相对于 `Rails.root` 的路径，用于创建所需的目录和文件：
 
 ```ruby
 file 'app/components/foo.rb', <<-CODE
@@ -128,11 +136,11 @@ file 'app/components/foo.rb', <<-CODE
 CODE
 ```
 
-上述操作会在`app/components`目录下创建一个 `foo.rb` 文件。
+上述代码会创建 `app/components` 目录，然后在里面创建 `foo.rb` 文件。
 
-### rakefile(filename, data = nil, &block)
+### `rakefile(filename, data = nil, &block)`
 
-在 `lib/tasks`目录下创建一个新的rake文件执行任务： 
+在 `lib/tasks` 目录中创建一个 Rake 文件，写入指定的任务：
 
 ```ruby
 rakefile("bootstrap.rake") do
@@ -146,49 +154,55 @@ rakefile("bootstrap.rake") do
 end
 ```
 
-上述代码将在`lib/tasks/bootstrap.rake`中创建一个`boot:strap`任务。 
+上述代码会创建 `lib/tasks/bootstrap.rake` 文件，写入 `boot:strap` rake 任务。
 
-### generate(what, *args)
+### `generate(what, *args)`
 
-通过给定参数执行生成器操作：
+运行指定的 Rails 生成器，并传入指定的参数。
 
 ```ruby
 generate(:scaffold, "person", "name:string", "address:text", "age:number")
 ```
 
-### run(command)
+### `run(command)`
 
-执行命令行命令，和你在命令行终端敲命令效果一样。比如你想删除`README.rdoc`文件：
+运行任意命令。作用类似于反引号。假如你想删除 `README.rdoc` 文件：
 
 ```ruby
 run "rm README.rdoc"
 ```
 
-### rake(command, options = {})
+### `rails_command(command, options = {})`
 
-执行Rails应用的rake任务，比如你想迁移数据库：
-
-```ruby
-rake "db:migrate"
-```
-
-你也可以在不同的Rails应用环境中执行rake任务：
+在 Rails 应用中运行指定的任务。假如你想迁移数据库：
 
 ```ruby
-rake "db:migrate", env: 'production'
+rails_command "db:migrate"
 ```
 
-### route(routing_code)
+还可以在不同的 Rails 环境中运行任务：
 
-在`config/routes.rb`文件中添加一个路径实体。比如我们之前为某个人生成了一些简单的页面并且把 `README.rdoc`删除了。现在我们可以把应用的`PeopleController#index`设置为默认页面：
+```ruby
+rails_command "db:migrate", env: 'production'
+```
+
+还能以超级用户的身份运行任务：
+
+```ruby
+rails_command "log:clear", sudo: true
+```
+
+### `route(routing_code)`
+
+在 `config/routes.rb` 文件中添加一条路由规则。在前面几节中，我们使用脚手架生成了 Person 资源，还删除了 `README.rdoc` 文件。现在，把 `PeopleController#index` 设为应用的首页：
 
 ```ruby
 route "root to: 'person#index'"
 ```
 
-### inside(dir)
+### `inside(dir)`
 
-允许你在指定目录执行命令。举个例子，你如果希望将一个外部应用添加到你的新应用中，可以这么做：
+在指定的目录中执行命令。假如你有一份最新版 Rails，想通过符号链接指向 `rails` 命令，可以这么做：
 
 ```ruby
 inside('vendor') do
@@ -196,9 +210,9 @@ inside('vendor') do
 end
 ```
 
-### ask(question)
+### `ask(question)`
 
-`ask()`方法为你提供了一个机会去获取用户反馈。比如你希望用户在你的新应用'shiny library'提交用户反馈意见： 
+`ask()` 方法获取用户的反馈，供模板使用。假如你想让用户为新添加的库起个响亮的名称：
 
 ```ruby
 lib_name = ask("What do you want to call the shiny library ?")
@@ -210,18 +224,18 @@ lib lib_name, <<-CODE
 CODE
 ```
 
-### yes?(question) or no?(question)
+### `yes?(question)` 或 `no?(question)`
 
-这些方法是根据用户的选择之后做一些操作的。比如你的用户希望停止Rails应用，你可以这么做：
+这两个方法用于询问用户问题，然后根据用户的回答决定流程。假如你想在用户同意时才冰封 Rails：
 
 ```ruby
-rake("rails:freeze:gems") if yes?("Freeze rails gems?")
-# no?(question) acts just the opposite.
+rails_command("rails:freeze:gems") if yes?("Freeze rails gems?")
+# no?(question) 的作用正好相反
 ```
 
-### git(:command)
+### `git(:command)`
 
-Rails模版允许你运行任何git命令：
+在 Rails 模板中可以运行任意 Git 命令：
 
 ```ruby
 git :init
@@ -229,12 +243,26 @@ git add: "."
 git commit: "-a -m 'Initial commit'"
 ```
 
-高级应用
---------------
+### `after_bundle(&block)`
 
-应用模版是在`Rails::Generators::AppGenerator`实例的上下文环境中执行的，它使用`apply` 动作来执行操作[Thor](https://github.com/erikhuda/thor/blob/master/lib/thor/actions.rb#L207)。这意味着你可以根据需要扩展它的功能。
+注册一个回调，在安装好 gem 并生成 binstubs 之后执行。可以用来把生成的文件纳入版本控制：
 
-比如重载`source_paths`方法实现把本地路径添加到你的模版应用中。那么类似`copy_file`方法会在你的模版路径中识别相对路径参数。
+```ruby
+after_bundle do
+  git :init
+  git add: '.'
+  git commit: "-a -m 'Initial commit'"
+end
+```
+
+即便传入 `--skip-bundle` 和（或） `--skip-spring` 选项，也会执行这个回调。
+
+高级用法
+--------
+
+应用模板在 `Rails::Generators::AppGenerator` 实例的上下文中运行，用到了 [Thor 提供的 `apply` 方法](https://github.com/erikhuda/thor/blob/master/lib/thor/actions.rb#L207)。因此，你可以扩展或修改这个实例，满足自己的需求。
+
+例如，覆盖指定模板位置的 `source_paths` 方法。现在，`copy_file` 等方法能接受相对于模板位置的相对路径。
 
 ```ruby
 def source_paths

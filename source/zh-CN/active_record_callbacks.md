@@ -3,32 +3,32 @@ Active Record 回调
 
 本文介绍如何介入 Active Record 对象的生命周期。
 
-读完本文，你将学到：
+读完本文后，您将学到：
 
-* Active Record 对象的生命周期；
-* 如何编写回调方法响应对象声明周期内发生的事件；
-* 如何把常用的回调封装到特殊的类中；
+- Active Record 对象的生命周期；
 
---------------------------------------------------------------------------------
+- 如何创建用于响应对象生命周期内事件的回调方法；
+
+- 如何把常用的回调封装到特殊的类中。
 
 对象的生命周期
-------------
+--------------
 
-在 Rails 程序运行过程中，对象可以被创建、更新和销毁。Active Record 为对象的生命周期提供了很多钩子，让你控制程序及其数据。
+在 Rails 应用正常运作期间，对象可以被创建、更新或删除。Active Record 为对象的生命周期提供了钩子，使我们可以控制应用及其数据。
 
-回调可以在对象的状态改变之前或之后触发指定的逻辑操作。
+回调使我们可以在对象状态更改之前或之后触发逻辑。
 
-回调简介
--------
+回调概述
+--------
 
-回调是在对象生命周期的特定时刻执行的方法。回调方法可以在 Active Record 对象创建、保存、更新、删除、验证或从数据库中读出时执行。
+回调是在对象生命周期的某些时刻被调用的方法。通过回调，我们可以编写在创建、保存、更新、删除、验证或从数据库中加载 Active Record 对象时执行的代码。
 
 ### 注册回调
 
-在使用回调之前，要先注册。回调方法的定义和普通的方法一样，然后使用类方法注册：
+回调在使用之前需要注册。我们可以先把回调定义为普通方法，然后使用宏式类方法把这些普通方法注册为回调：
 
 ```ruby
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   validates :login, :email, presence: true
 
   before_validation :ensure_login_has_a_value
@@ -42,10 +42,10 @@ class User < ActiveRecord::Base
 end
 ```
 
-这种类方法还可以接受一个代码块。如果操作可以使用一行代码表述，可以考虑使用代码块形式。
+宏式类方法也接受块。如果块中的代码短到可以放在一行里，可以考虑使用这种编程风格：
 
 ```ruby
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   validates :login, :email, presence: true
 
   before_create do
@@ -54,18 +54,18 @@ class User < ActiveRecord::Base
 end
 ```
 
-注册回调时可以指定只在对象生命周期的特定事件发生时执行：
+回调也可以注册为仅被某些生命周期事件触发：
 
 ```ruby
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   before_validation :normalize_name, on: :create
 
-  # :on takes an array as well
+  # :on 选项的值也可以是数组
   after_validation :set_location, on: [ :create, :update ]
 
   protected
     def normalize_name
-      self.name = self.name.downcase.titleize
+      self.name = name.downcase.titleize
     end
 
     def set_location
@@ -74,53 +74,75 @@ class User < ActiveRecord::Base
 end
 ```
 
-一般情况下，都把回调方法定义为受保护的方法或私有方法。如果定义成公共方法，回调就可以在模型外部调用，违背了对象封装原则。
+通常应该把回调定义为受保护的方法或私有方法。如果把回调定义为公共方法，就可以从模型外部调用回调，这样做违反了对象封装原则。
 
 可用的回调
----------
+----------
 
-下面列出了所有可用的 Active Record 回调，按照执行各操作时触发的顺序：
+下面按照回调在 Rails 应用正常运作期间被调用的顺序，列出所有可用的 Active Record 回调。
 
 ### 创建对象
 
-* `before_validation`
-* `after_validation`
-* `before_save`
-* `around_save`
-* `before_create`
-* `around_create`
-* `after_create`
-* `after_save`
+- `before_validation`
+
+- `after_validation`
+
+- `before_save`
+
+- `around_save`
+
+- `before_create`
+
+- `around_create`
+
+- `after_create`
+
+- `after_save`
+
+- `after_commit/after_rollback`
 
 ### 更新对象
 
-* `before_validation`
-* `after_validation`
-* `before_save`
-* `around_save`
-* `before_update`
-* `around_update`
-* `after_update`
-* `after_save`
+- `before_validation`
 
-### 销毁对象
+- `after_validation`
 
-* `before_destroy`
-* `around_destroy`
-* `after_destroy`
+- `before_save`
 
-WARNING: 创建和更新对象时都会触发 `after_save`，但不管注册的顺序，总在 `after_create` 和 `after_update` 之后执行。
+- `around_save`
 
-### `after_initialize` 和 `after_find`
+- `before_update`
 
-`after_initialize` 回调在 Active Record 对象初始化时执行，包括直接使用 `new` 方法初始化和从数据库中读取记录。`after_initialize` 回调不用直接重定义 Active Record 的 `initialize` 方法。
+- `around_update`
 
-`after_find` 回调在从数据库中读取记录时执行。如果同时注册了 `after_find` 和 `after_initialize` 回调，`after_find` 会先执行。
+- `after_update`
 
-`after_initialize` 和 `after_find` 没有对应的 `before_*` 回调，但可以像其他回调一样注册。
+- `after_save`
+
+- `after_commit/after_rollback`
+
+### 删除对象
+
+- `before_destroy`
+
+- `around_destroy`
+
+- `after_destroy`
+
+- `after_commit/after_rollback`
+
+WARNING: 无论按什么顺序注册回调，在创建和更新对象时，`after_save` 回调总是在更明确的 `after_create` 和 `after_update` 回调之后被调用。
+
+### `after_initialize` 和 `after_find` 回调
+
+当 Active Record 对象被实例化时，不管是通过直接使用 `new` 方法还是从数据库加载记录，都会调用 `after_initialize` 回调。使用这个回调可以避免直接覆盖 Active Record 的 `initialize` 方法。
+
+当 Active Record 从数据库中加载记录时，会调用 `after_find` 回调。如果同时定义了 `after_initialize` 和 `after_find` 回调，会先调用 `after_find` 回调。
+
+`after_initialize` 和 `after_find` 回调没有对应的 `before_*` 回调，这两个回调的注册方式和其他 Active Record 回调一样。
 
 ```ruby
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   after_initialize do |user|
     puts "You have initialized an object!"
   end
@@ -129,7 +151,9 @@ class User < ActiveRecord::Base
     puts "You have found an object!"
   end
 end
+```
 
+```irb
 >> User.new
 You have initialized an object!
 => #<User id: nil>
@@ -140,17 +164,19 @@ You have initialized an object!
 => #<User id: 1>
 ```
 
-### `after_touch`
+### `after_touch` 回调
 
-`after_touch` 回调在触碰 Active Record 对象时执行。
+当我们在 Active Record 对象上调用 `touch` 方法时，会调用 `after_touch` 回调。
 
 ```ruby
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   after_touch do |user|
     puts "You have touched an object"
   end
 end
+```
 
+```irb
 >> u = User.create(name: 'Kuldeep')
 => #<User id: 1, name: "Kuldeep", created_at: "2013-11-25 12:17:49", updated_at: "2013-11-25 12:17:49">
 
@@ -159,17 +185,17 @@ You have touched an object
 => true
 ```
 
-可以结合 `belongs_to` 一起使用：
+`after_touch` 回调可以和 `belongs_to` 一起使用：
 
 ```ruby
-class Employee < ActiveRecord::Base
+class Employee < ApplicationRecord
   belongs_to :company, touch: true
   after_touch do
     puts 'An Employee was touched'
   end
 end
 
-class Company < ActiveRecord::Base
+class Company < ApplicationRecord
   has_many :employees
   after_touch :log_when_employees_or_company_touched
 
@@ -178,7 +204,9 @@ class Company < ActiveRecord::Base
     puts 'Employee/Company was touched'
   end
 end
+```
 
+```irb
 >> @employee = Employee.last
 => #<Employee id: 1, company_id: 1, created_at: "2013-11-25 17:04:22", updated_at: "2013-11-25 17:05:05">
 
@@ -189,151 +217,185 @@ An Employee was touched
 => true
 ```
 
-执行回调
--------
+调用回调
+--------
 
-下面的方法会触发执行回调：
+下面这些方法会触发回调：
 
-* `create`
-* `create!`
-* `decrement!`
-* `destroy`
-* `destroy!`
-* `destroy_all`
-* `increment!`
-* `save`
-* `save!`
-* `save(validate: false)`
-* `toggle!`
-* `update_attribute`
-* `update`
-* `update!`
-* `valid?`
+- `create`
 
-`after_find` 回调由以下查询方法触发执行：
+- `create!`
 
-* `all`
-* `first`
-* `find`
-* `find_by`
-* `find_by_*`
-* `find_by_*!`
-* `find_by_sql`
-* `last`
+- `decrement!`
 
-`after_initialize` 回调在新对象初始化时触发执行。
+- `destroy`
 
-NOTE: `find_by_*` 和 `find_by_*!` 是为每个属性生成的动态查询方法，详情参见“[动态查询方法](active_record_querying.html#dynamic-finders)”一节。
+- `destroy!`
+
+- `destroy_all`
+
+- `increment!`
+
+- `save`
+
+- `save!`
+
+- `save(validate: false)`
+
+- `toggle!`
+
+- `update_attribute`
+
+- `update`
+
+- `update!`
+
+- `valid?`
+
+此外，下面这些查找方法会触发 `after_find` 回调：
+
+- `all`
+
+- `first`
+
+- `find`
+
+- `find_by`
+
+- `find_by_*`
+
+- `find_by_*!`
+
+- `find_by_sql`
+
+- `last`
+
+每次初始化类的新对象时都会触发 `after_initialize` 回调。
+
+NOTE: `find_by_*` 和 `find_by_*!` 方法是为每个属性自动生成的动态查找方法。关于动态查找方法的更多介绍，请参阅 [动态查找方法](active_record_querying.html#动态查找方法)。
 
 跳过回调
 --------
 
-和数据验证一样，回调也可跳过，使用下列方法即可：
+和验证一样，我们可以跳过回调。使用下面这些方法可以跳过回调：
 
-* `decrement`
-* `decrement_counter`
-* `delete`
-* `delete_all`
-* `increment`
-* `increment_counter`
-* `toggle`
-* `touch`
-* `update_column`
-* `update_columns`
-* `update_all`
-* `update_counters`
+- `decrement`
 
-使用这些方法是要特别留心，因为重要的业务逻辑可能在回调中完成。如果没弄懂回调的作用直接跳过，可能导致数据不合法。
+- `decrement_counter`
 
-终止执行
+- `delete`
+
+- `delete_all`
+
+- `increment`
+
+- `increment_counter`
+
+- `toggle`
+
+- `touch`
+
+- `update_column`
+
+- `update_columns`
+
+- `update_all`
+
+- `update_counters`
+
+请慎重地使用这些方法，因为有些回调包含了重要的业务规则和应用逻辑，在不了解潜在影响的情况下就跳过回调，可能导致无效数据。
+
+停止执行
 --------
 
-在模型中注册回调后，回调会加入一个执行队列。这个队列中包含模型的数据验证，注册的回调，以及要执行的数据库操作。
+回调在模型中注册后，将被加入队列等待执行。这个队列包含了所有模型的验证、已注册的回调和将要执行的数据库操作。
 
-整个回调链包含在一个事务中。如果任何一个 `before_*` 回调方法返回 `false` 或抛出异常，整个回调链都会终止执行，撤销事务；而 `after_*` 回调只有抛出异常才能达到相同的效果。
+整个回调链包装在一个事务中。如果任何一个 `before` 回调方法返回 `false` 或引发异常，整个回调链就会停止执行，同时发出 `ROLLBACK` 消息来回滚事务；而 `after` 回调方法只能通过引发异常来达到相同的效果。
 
-WARNING: `ActiveRecord::Rollback` 之外的异常在回调链终止之后，还会由 Rails 再次抛出。抛出 `ActiveRecord::Rollback` 之外的异常，可能导致不应该抛出异常的方法（例如 `save` 和 `update_attributes`，应该返回 `true` 或 `false`）无法执行。
+WARNING: 当回调链停止后，Rails 会重新抛出除了 `ActiveRecord::Rollback` 和 `ActiveRecord::RecordInvalid` 之外的其他异常。这可能导致那些预期 `save` 和 `update_attributes` 等方法（通常返回 `true` 或 `false` ）不会引发异常的代码出错。
 
 关联回调
--------
+--------
 
-回调能在模型关联中使用，甚至可由关联定义。假如一个用户发布了多篇文章，如果用户删除了，他发布的文章也应该删除。下面我们在 `Post` 模型中注册一个 `after_destroy` 回调，应用到 `User` 模型上：
+回调不仅可以在模型关联中使用，还可以通过模型关联定义。假设有一个用户在博客中发表了多篇文章，现在我们要删除这个用户，那么这个用户的所有文章也应该删除，为此我们通过 `Article` 模型和 `User` 模型的关联来给 `User` 模型添加一个 `after_destroy` 回调：
 
 ```ruby
-class User < ActiveRecord::Base
-  has_many :posts, dependent: :destroy
+class User < ApplicationRecord
+  has_many :articles, dependent: :destroy
 end
 
-class Post < ActiveRecord::Base
+class Article < ApplicationRecord
   after_destroy :log_destroy_action
 
   def log_destroy_action
-    puts 'Post destroyed'
+    puts 'Article destroyed'
   end
 end
+```
 
+```irb
 >> user = User.first
 => #<User id: 1>
->> user.posts.create!
-=> #<Post id: 1, user_id: 1>
+>> user.articles.create!
+=> #<Article id: 1, user_id: 1>
 >> user.destroy
-Post destroyed
+Article destroyed
 => #<User id: 1>
 ```
 
 条件回调
--------
+--------
 
-和数据验证类似，也可以在满足指定条件时再调用回调方法。条件通过 `:if` 和 `:unless` 选项指定，选项的值可以是 Symbol、字符串、`Proc` 或数组。`:if` 选项指定什么时候调用回调。如果要指定何时不调用回调，使用 `:unless` 选项。
+和验证一样，我们可以在满足指定条件时再调用回调方法。为此，我们可以使用 `:if` 和 `:unless` 选项，选项的值可以是符号、字符串、`Proc` 或数组。要想指定在哪些条件下调用回调，可以使用 `:if` 选项。要想指定在哪些条件下不调用回调，可以使用 `:unless` 选项。
 
-### 使用 Symbol
+### 使用符号作为 `:if` 和 `:unless` 选项的值
 
-:if 和 :unless 选项的值为 Symbol 时，表示要在调用回调之前执行对应的判断方法。使用 `:if` 选项时，如果判断方法返回 `false`，就不会调用回调；使用 `:unless` 选项时，如果判断方法返回 `true`，就不会调用回调。Symbol 是最常用的设置方式。使用这种方式注册回调时，可以使用多个判断方法检查是否要调用回调。
+可以使用符号作为 `:if` 和 `:unless` 选项的值，这个符号用于表示先于回调调用的断言方法。当使用 `:if` 选项时，如果断言方法返回 `false` 就不会调用回调；当使用 `:unless` 选项时，如果断言方法返回 `true` 就不会调用回调。使用符号作为 `:if` 和 `:unless` 选项的值是最常见的方式。在使用这种方式注册回调时，我们可以同时使用几个不同的断言，用于检查是否应该调用回调。
 
 ```ruby
-class Order < ActiveRecord::Base
+class Order < ApplicationRecord
   before_save :normalize_card_number, if: :paid_with_card?
 end
 ```
 
-### 使用字符串
+### 使用字符串作为 `:if` 和 `:unless` 选项的值
 
-`:if` 和 `:unless` 选项的值还可以是字符串，但必须是 RUby 代码，传入 `eval` 方法中执行。当字符串表示的条件非常短时才应该是使用这种形式。
+还可以使用字符串作为 `:if` 和 `:unless` 选项的值，这个字符串会通过 `eval` 方法执行，因此必须包含有效的 Ruby 代码。当字符串表示的条件非常短时我们才使用这种方式：
 
 ```ruby
-class Order < ActiveRecord::Base
+class Order < ApplicationRecord
   before_save :normalize_card_number, if: "paid_with_card?"
 end
 ```
 
-### 使用 Proc
+### 使用 Proc 作为 `:if` 和 `:unless` 选项的值
 
-`:if` 和 `:unless` 选项的值还可以是 Proc 对象。这种形式最适合用在一行代码能表示的条件上。
+最后，可以使用 Proc 作为 `:if` 和 `:unless` 选项的值。在验证方法非常短时最适合使用这种方式，这类验证方法通常只有一行代码：
 
 ```ruby
-class Order < ActiveRecord::Base
+class Order < ApplicationRecord
   before_save :normalize_card_number,
     if: Proc.new { |order| order.paid_with_card? }
 end
 ```
 
-### 回调的多重条件
+### 在条件回调中使用多个条件
 
-注册条件回调时，可以同时使用 `:if` 和 `:unless` 选项：
+在编写条件回调时，我们可以在同一个回调声明中混合使用 `:if` 和 `:unless` 选项：
 
 ```ruby
-class Comment < ActiveRecord::Base
+class Comment < ApplicationRecord
   after_create :send_email_to_author, if: :author_wants_emails?,
-    unless: Proc.new { |comment| comment.post.ignore_comments? }
+    unless: Proc.new { |comment| comment.article.ignore_comments? }
 end
 ```
 
 回调类
 ------
 
-有时回调方法可以在其他模型中重用，我们可以将其封装在类中。
+有时需要在其他模型中重用已有的回调方法，为了解决这个问题，Active Record 允许我们用类来封装回调方法。有了回调类，回调方法的重用就变得非常容易。
 
-在下面这个例子中，我们为 `PictureFile` 模型定义了一个 `after_destroy` 回调：
+在下面的例子中，我们为 `PictureFile` 模型创建了 `PictureFileCallbacks` 回调类，在这个回调类中包含了 `after_destroy` 回调方法：
 
 ```ruby
 class PictureFileCallbacks
@@ -345,15 +407,15 @@ class PictureFileCallbacks
 end
 ```
 
-在类中定义回调方法时（如上），可把模型对象作为参数传入。然后可以在模型中使用这个回调：
+在上面的代码中我们可以看到，当在回调类中声明回调方法时，回调方法接受模型对象作为参数。回调类定义之后就可以在模型中使用了：
 
 ```ruby
-class PictureFile < ActiveRecord::Base
+class PictureFile < ApplicationRecord
   after_destroy PictureFileCallbacks.new
 end
 ```
 
-注意，因为回调方法被定义成实例方法，所以要实例化 `PictureFileCallbacks`。如果回调要使用实例化对象的状态，使用这种定义方式很有用。不过，一般情况下，定义为类方法更说得通：
+请注意，上面我们把回调声明为实例方法，因此需要实例化新的 `PictureFileCallbacks` 对象。当回调想要使用实例化的对象的状态时，这种声明方式特别有用。尽管如此，一般我们会把回调声明为类方法：
 
 ```ruby
 class PictureFileCallbacks
@@ -365,22 +427,22 @@ class PictureFileCallbacks
 end
 ```
 
-如果按照这种方式定义回调方法，就不用实例化 `PictureFileCallbacks`：
+如果把回调声明为类方法，就不需要实例化新的 `PictureFileCallbacks` 对象。
 
 ```ruby
-class PictureFile < ActiveRecord::Base
+class PictureFile < ApplicationRecord
   after_destroy PictureFileCallbacks
 end
 ```
 
-在回调类中可以定义任意数量的回调方法。
+我们可以根据需要在回调类中声明任意多个回调。
 
 事务回调
--------
+--------
 
-还有两个回调会在数据库事务完成时触发：`after_commit` 和 `after_rollback`。这两个回调和 `after_save` 很像，只不过在数据库操作提交或回滚之前不会执行。如果模型要和数据库事务之外的系统交互，就可以使用这两个回调。
+`after_commit` 和 `after_rollback` 这两个回调会在数据库事务完成时触发。它们和 `after_save` 回调非常相似，区别在于它们在数据库变更已经提交或回滚后才会执行，常用于 Active Record 模型需要和数据库事务之外的系统交互的场景。
 
-例如，在前面的例子中，`PictureFile` 模型中的记录删除后，还要删除相应的文件。如果执行 `after_destroy` 回调之后程序抛出了异常，事务就会回滚，文件会被删除，但模型的状态前后不一致。假设在下面的代码中，`picture_file_2` 是不合法的，那么调用 `save!` 方法会抛出异常。
+例如，在前面的例子中，`PictureFile` 模型中的记录删除后，还要删除相应的文件。如果 `after_destroy` 回调执行后应用引发异常，事务就会回滚，文件会被删除，模型会保持不一致的状态。例如，假设在下面的代码中，`picture_file_2` 对象是无效的，那么调用 `save!` 方法会引发错误：
 
 ```ruby
 PictureFile.transaction do
@@ -389,10 +451,10 @@ PictureFile.transaction do
 end
 ```
 
-使用 `after_commit` 回调可以解决这个问题。
+通过使用 `after_commit` 回调，我们可以解决这个问题：
 
 ```ruby
-class PictureFile < ActiveRecord::Base
+class PictureFile < ApplicationRecord
   after_commit :delete_picture_file_from_disk, on: [:destroy]
 
   def delete_picture_file_from_disk
@@ -403,6 +465,26 @@ class PictureFile < ActiveRecord::Base
 end
 ```
 
-NOTE: `:on` 选项指定什么时候出发回调。如果不设置 `:on` 选项，每各个操作都会触发回调。
+NOTE: `:on` 选项说明什么时候触发回调。如果不提供 `:on` 选项，那么每个动作都会触发回调。
 
-WARNING: `after_commit` 和 `after_rollback` 回调确保模型的创建、更新和销毁等操作在事务中完成。如果这两个回调抛出了异常，会被忽略，因此不会干扰其他回调。因此，如果回调可能抛出异常，就要做适当的补救和处理。
+由于只在执行创建、更新或删除动作时触发 `after_commit` 回调是很常见的，这些操作都拥有别名：
+
+- `after_create_commit`
+
+- `after_update_commit`
+
+- `after_destroy_commit`
+
+```ruby
+class PictureFile < ApplicationRecord
+  after_destroy_commit :delete_picture_file_from_disk
+
+  def delete_picture_file_from_disk
+    if File.exist?(filepath)
+      File.delete(filepath)
+    end
+  end
+end
+```
+
+WARNING: 对于在事务中创建、更新或删除的模型，`after_commit` 和 `after_rollback` 回调一定会被调用。如果其中有一个回调引发异常，这个异常会被忽略，以避免干扰其他回调。因此，如果回调代码可能引发异常，就需要在回调中救援并进行适当处理。

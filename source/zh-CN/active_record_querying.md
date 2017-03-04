@@ -1,28 +1,34 @@
-Active Record 查询
-==================
+Active Record 查询接口
+======================
 
-本文介绍使用 Active Record 从数据库中获取数据的不同方法。
+本文介绍使用 Active Record 从数据库中检索数据的不同方法。
 
-读完本文，你将学到：
+读完本文后，您将学到：
 
-* 如何使用各种方法查找满足条件的记录；
-* 如何指定查找记录的排序方式，获取哪些属性，分组等；
-* 获取数据时如何使用按需加载介绍数据库查询数；
-* 如何使用动态查询方法；
-* 如何检查某个记录是否存在；
-* 如何在 Active Record 模型中做各种计算；
-* 如何执行 EXPLAIN 命令；
+- 如何使用各种方法和条件查找记录；
 
---------------------------------------------------------------------------------
+- 如何指定所查找记录的排序方式、想要检索的属性、分组方式和其他特性；
 
-如果习惯使用 SQL 查询数据库，会发现在 Rails 中执行相同的查询有更好的方式。大多数情况下，在 Active Record 中无需直接使用 SQL。
+- 如何使用预先加载以减少数据检索所需的数据库查询的数量；
 
-文中的实例代码会用到下面一个或多个模型：
+- 如何使用动态查找方法；
 
-TIP: 下面所有的模型除非有特别说明之外，都使用 `id` 做主键。
+- 如何通过方法链来连续使用多个 Active Record 方法；
+
+- 如何检查某个记录是否存在；
+
+- 如何在 Active Record 模型上做各种计算；
+
+- 如何在关联上执行 `EXPLAIN` 命令。
+
+如果你习惯直接使用 SQL 来查找数据库记录，那么你通常会发现 Rails 为执行相同操作提供了更好的方式。在大多数情况下，Active Record 使你无需使用 SQL。
+
+本文中的示例代码会用到下面的一个或多个模型：
+
+TIP: 除非另有说明，下面所有模型都使用 `id` 作为主键。
 
 ```ruby
-class Client < ActiveRecord::Base
+class Client < ApplicationRecord
   has_one :address
   has_many :orders
   has_and_belongs_to_many :roles
@@ -30,143 +36,272 @@ end
 ```
 
 ```ruby
-class Address < ActiveRecord::Base
+class Address < ApplicationRecord
   belongs_to :client
 end
 ```
 
 ```ruby
-class Order < ActiveRecord::Base
+class Order < ApplicationRecord
   belongs_to :client, counter_cache: true
 end
 ```
 
 ```ruby
-class Role < ActiveRecord::Base
+class Role < ApplicationRecord
   has_and_belongs_to_many :clients
 end
 ```
 
-Active Record 会代你执行数据库查询，可以兼容大多数数据库（MySQL，PostgreSQL 和 SQLite 等）。不管使用哪种数据库，所用的 Active Record 方法都是一样的。
+Active Record 会为你执行数据库查询，它和大多数数据库系统兼容，包括 MySQL、MariaDB、PostgreSQL 和 SQLite。不管使用哪个数据库系统，Active Record 方法的用法总是相同的。
 
-从数据库中获取对象
----------------
+从数据库中检索对象
+------------------
 
-Active Record 提供了很多查询方法，用来从数据库中获取对象。每个查询方法都接可接受参数，不用直接写 SQL 就能在数据库中执行指定的查询。
+Active Record 提供了几个用于从数据库中检索对象的查找方法。查找方法接受参数并执行指定的数据库查询，使我们无需直接编写 SQL。
 
-这些方法是：
+下面列出这些查找方法：
 
-* `find`
-* `create_with`
-* `distinct`
-* `eager_load`
-* `extending`
-* `from`
-* `group`
-* `having`
-* `includes`
-* `joins`
-* `limit`
-* `lock`
-* `none`
-* `offset`
-* `order`
-* `preload`
-* `readonly`
-* `references`
-* `reorder`
-* `reverse_order`
-* `select`
-* `uniq`
-* `where`
+- `find`
 
-上述所有方法都返回一个 `ActiveRecord::Relation` 实例。
+- `create_with`
 
-`Model.find(options)` 方法执行的主要操作概括如下：
+- `distinct`
 
-* 把指定的选项转换成等价的 SQL 查询语句；
-* 执行 SQL 查询，从数据库中获取结果；
-* 为每个查询结果实例化一个对应的模型对象；
-* 如果有 `after_find` 回调，再执行 `after_find` 回调；
+- `eager_load`
 
-### 获取单个对象
+- `extending`
 
-在 Active Record 中获取单个对象有好几种方法。
+- `from`
 
-#### 使用主键
+- `group`
 
-使用 `Model.find(primary_key)` 方法可以获取指定主键对应的对象。例如：
+- `having`
+
+- `includes`
+
+- `joins`
+
+- `left_outer_joins`
+
+- `limit`
+
+- `lock`
+
+- `none`
+
+- `offset`
+
+- `order`
+
+- `preload`
+
+- `readonly`
+
+- `references`
+
+- `reorder`
+
+- `reverse_order`
+
+- `select`
+
+- `distinct`
+
+- `where`
+
+上面的所有方法都会返回 `ActiveRecord::Relation` 实例。
+
+`Model.find(options)` 执行的主要操作可以概括为：
+
+- 把提供的选项转换为等价的 SQL 查询。
+
+- 触发 SQL 查询并从数据库中检索对应的结果。
+
+- 为每个查询结果实例化对应的模型对象。
+
+- 当存在回调时，先调用 `after_find` 回调再调用 `after_initialize` 回调。
+
+### 检索单个对象
+
+Active Record 为检索单个对象提供了几个不同的方法。
+
+#### `find` 方法
+
+可以使用 `find` 方法检索指定主键对应的对象，指定主键时可以使用多个选项。例如：
 
 ```ruby
-# Find the client with primary key (id) 10.
+# 查找主键（ID）为 10 的客户
 client = Client.find(10)
 # => #<Client id: 10, first_name: "Ryan">
 ```
 
-和上述方法等价的 SQL 查询是：
+和上面的代码等价的 SQL 是：
 
 ```sql
 SELECT * FROM clients WHERE (clients.id = 10) LIMIT 1
 ```
 
-如果未找到匹配的记录，`Model.find(primary_key)` 会抛出 `ActiveRecord::RecordNotFound` 异常。
+如果没有找到匹配的记录，`find` 方法抛出 `ActiveRecord::RecordNotFound` 异常。
 
-#### `take`
+还可以使用 `find` 方法查询多个对象，方法是调用 `find` 方法并传入主键构成的数组。返回值是包含所提供的主键的所有匹配记录的数组。例如：
 
-`Model.take` 方法会获取一个记录，不考虑任何顺序。例如：
+```ruby
+# 查找主键为 1 和 10 的客户
+client = Client.find([1, 10]) # Or even Client.find(1, 10)
+# => [#<Client id: 1, first_name: "Lifo">, #<Client id: 10, first_name: "Ryan">]
+```
+
+和上面的代码等价的 SQL 是：
+
+```sql
+SELECT * FROM clients WHERE (clients.id IN (1,10))
+```
+
+WARNING: 如果所提供的主键都没有匹配记录，那么 `find` 方法会抛出 `ActiveRecord::RecordNotFound` 异常。
+
+#### `take` 方法
+
+`take` 方法检索一条记录而不考虑排序。例如：
 
 ```ruby
 client = Client.take
 # => #<Client id: 1, first_name: "Lifo">
 ```
 
-和上述方法等价的 SQL 查询是：
+和上面的代码等价的 SQL 是：
 
 ```sql
 SELECT * FROM clients LIMIT 1
 ```
 
-如果没找到记录，`Model.take` 不会抛出异常，而是返回 `nil`。
+如果没有找到记录，`take` 方法返回 `nil`，而不抛出异常。
 
-TIP: 获取的记录根据所用的数据库引擎会有所不同。
+`take` 方法接受数字作为参数，并返回不超过指定数量的查询结果。例如：
 
-#### `first`
+```ruby
+client = Client.take(2)
+# => [
+#   #<Client id: 1, first_name: "Lifo">,
+#   #<Client id: 220, first_name: "Sara">
+# ]
+```
 
-`Model.first` 获取按主键排序得到的第一个记录。例如：
+和上面的代码等价的 SQL 是：
+
+```sql
+SELECT * FROM clients LIMIT 2
+```
+
+`take!` 方法的行为和 `take` 方法类似，区别在于如果没有找到匹配的记录，`take!` 方法抛出 `ActiveRecord::RecordNotFound` 异常。
+
+TIP: 对于不同的数据库引擎，`take` 方法检索的记录可能不一样。
+
+#### `first` 方法
+
+`first` 方法默认查找按主键排序的第一条记录。例如：
 
 ```ruby
 client = Client.first
 # => #<Client id: 1, first_name: "Lifo">
 ```
 
-和上述方法等价的 SQL 查询是：
+和上面的代码等价的 SQL 是：
 
 ```sql
 SELECT * FROM clients ORDER BY clients.id ASC LIMIT 1
 ```
 
-`Model.first` 如果没找到匹配的记录，不会抛出异常，而是返回 `nil`。
+如果没有找到匹配的记录，`first` 方法返回 `nil`，而不抛出异常。
 
-#### `last`
+如果默认作用域 （请参阅 [应用默认作用域](#应用默认作用域)）包含排序方法，`first` 方法会返回按照这个顺序排序的第一条记录。
 
-`Model.last` 获取按主键排序得到的最后一个记录。例如：
+`first` 方法接受数字作为参数，并返回不超过指定数量的查询结果。例如：
+
+```ruby
+client = Client.first(3)
+# => [
+#   #<Client id: 1, first_name: "Lifo">,
+#   #<Client id: 2, first_name: "Fifo">,
+#   #<Client id: 3, first_name: "Filo">
+# ]
+```
+
+和上面的代码等价的 SQL 是：
+
+```sql
+SELECT * FROM clients ORDER BY clients.id ASC LIMIT 3
+```
+
+对于使用 `order` 排序的集合，`first` 方法返回按照指定属性排序的第一条记录。例如：
+
+```ruby
+client = Client.order(:first_name).first
+# => #<Client id: 2, first_name: "Fifo">
+```
+
+和上面的代码等价的 SQL 是：
+
+```sql
+SELECT * FROM clients ORDER BY clients.first_name ASC LIMIT 1
+```
+
+`first!` 方法的行为和 `first` 方法类似，区别在于如果没有找到匹配的记录，`first!` 方法会抛出 `ActiveRecord::RecordNotFound` 异常。
+
+#### `last` 方法
+
+`last` 方法默认查找按主键排序的最后一条记录。例如：
 
 ```ruby
 client = Client.last
 # => #<Client id: 221, first_name: "Russel">
 ```
 
-和上述方法等价的 SQL 查询是：
+和上面的代码等价的 SQL 是：
 
 ```sql
 SELECT * FROM clients ORDER BY clients.id DESC LIMIT 1
 ```
 
-`Model.last` 如果没找到匹配的记录，不会抛出异常，而是返回 `nil`。
+如果没有找到匹配的记录，`last` 方法返回 `nil`，而不抛出异常。
 
-#### `find_by`
+如果默认作用域 （请参阅 [应用默认作用域](#应用默认作用域)）包含排序方法，`last` 方法会返回按照这个顺序排序的最后一条记录。
 
-`Model.find_by` 获取满足条件的第一个记录。例如：
+`last` 方法接受数字作为参数，并返回不超过指定数量的查询结果。例如：
+
+```ruby
+client = Client.last(3)
+# => [
+#   #<Client id: 219, first_name: "James">,
+#   #<Client id: 220, first_name: "Sara">,
+#   #<Client id: 221, first_name: "Russel">
+# ]
+```
+
+和上面的代码等价的 SQL 是：
+
+```sql
+SELECT * FROM clients ORDER BY clients.id DESC LIMIT 3
+```
+
+对于使用 `order` 排序的集合，`last` 方法返回按照指定属性排序的最后一条记录。例如：
+
+```ruby
+client = Client.order(:first_name).last
+# => #<Client id: 220, first_name: "Sara">
+```
+
+和上面的代码等价的 SQL 是：
+
+```sql
+SELECT * FROM clients ORDER BY clients.first_name DESC LIMIT 1
+```
+
+`last!` 方法的行为和 `last` 方法类似，区别在于如果没有找到匹配的记录，`last!` 方法会抛出 `ActiveRecord::RecordNotFound` 异常。
+
+#### `find_by` 方法
+
+`find_by` 方法查找匹配指定条件的第一条记录。 例如：
 
 ```ruby
 Client.find_by first_name: 'Lifo'
@@ -176,463 +311,371 @@ Client.find_by first_name: 'Jon'
 # => nil
 ```
 
-等价于：
+上面的代码等价于：
 
 ```ruby
 Client.where(first_name: 'Lifo').take
 ```
 
-#### `take!`
-
-`Model.take!` 方法会获取一个记录，不考虑任何顺序。例如：
-
-```ruby
-client = Client.take!
-# => #<Client id: 1, first_name: "Lifo">
-```
-
-和上述方法等价的 SQL 查询是：
+和上面的代码等价的 SQL 是：
 
 ```sql
-SELECT * FROM clients LIMIT 1
+SELECT * FROM clients WHERE (clients.first_name = 'Lifo') LIMIT 1
 ```
 
-如果未找到匹配的记录，`Model.take!` 会抛出 `ActiveRecord::RecordNotFound` 异常。
-
-#### `first!`
-
-`Model.first!` 获取按主键排序得到的第一个记录。例如：
+`find_by!` 方法的行为和 `find_by` 方法类似，区别在于如果没有找到匹配的记录，`find_by!` 方法会抛出 `ActiveRecord::RecordNotFound` 异常。例如：
 
 ```ruby
-client = Client.first!
-# => #<Client id: 1, first_name: "Lifo">
-```
-
-和上述方法等价的 SQL 查询是：
-
-```sql
-SELECT * FROM clients ORDER BY clients.id ASC LIMIT 1
-```
-
-如果未找到匹配的记录，`Model.first!` 会抛出 `ActiveRecord::RecordNotFound` 异常。
-
-#### `last!`
-
-`Model.last!` 获取按主键排序得到的最后一个记录。例如：
-
-```ruby
-client = Client.last!
-# => #<Client id: 221, first_name: "Russel">
-```
-
-和上述方法等价的 SQL 查询是：
-
-```sql
-SELECT * FROM clients ORDER BY clients.id DESC LIMIT 1
-```
-
-如果未找到匹配的记录，`Model.last!` 会抛出 `ActiveRecord::RecordNotFound` 异常。
-
-#### `find_by!`
-
-`Model.find_by!` 获取满足条件的第一个记录。如果没找到匹配的记录，会抛出 `ActiveRecord::RecordNotFound` 异常。例如：
-
-```ruby
-Client.find_by! first_name: 'Lifo'
-# => #<Client id: 1, first_name: "Lifo">
-
-Client.find_by! first_name: 'Jon'
+Client.find_by! first_name: 'does not exist'
 # => ActiveRecord::RecordNotFound
 ```
 
-等价于：
+上面的代码等价于：
 
 ```ruby
-Client.where(first_name: 'Lifo').take!
+Client.where(first_name: 'does not exist').take!
 ```
 
-### 获取多个对象
+### 批量检索多个对象
 
-#### 使用多个主键
+我们常常需要遍历大量记录，例如向大量用户发送时事通讯、导出数据等。
 
-`Model.find(array_of_primary_key)` 方法可接受一个由主键组成的数组，返回一个由主键对应记录组成的数组。例如：
+处理这类问题的方法看起来可能很简单：
 
 ```ruby
-# Find the clients with primary keys 1 and 10.
-client = Client.find([1, 10]) # Or even Client.find(1, 10)
-# => [#<Client id: 1, first_name: "Lifo">, #<Client id: 10, first_name: "Ryan">]
-```
-
-上述方法等价的 SQL 查询是：
-
-```sql
-SELECT * FROM clients WHERE (clients.id IN (1,10))
-```
-
-WARNING: 只要有一个主键的对应的记录未找到，`Model.find(array_of_primary_key)` 方法就会抛出 `ActiveRecord::RecordNotFound` 异常。
-
-#### take
-
-`Model.take(limit)` 方法获取 `limit` 个记录，不考虑任何顺序：
-
-```ruby
-Client.take(2)
-# => [#<Client id: 1, first_name: "Lifo">,
-      #<Client id: 2, first_name: "Raf">]
-```
-
-和上述方法等价的 SQL 查询是：
-
-```sql
-SELECT * FROM clients LIMIT 2
-```
-
-#### first
-
-`Model.first(limit)` 方法获取按主键排序的前 `limit` 个记录：
-
-```ruby
-Client.first(2)
-# => [#<Client id: 1, first_name: "Lifo">,
-      #<Client id: 2, first_name: "Raf">]
-```
-
-和上述方法等价的 SQL 查询是：
-
-```sql
-SELECT * FROM clients ORDER BY id ASC LIMIT 2
-```
-
-#### last
-
-`Model.last(limit)` 方法获取按主键降序排列的前 `limit` 个记录：
-
-```ruby
-Client.last(2)
-# => [#<Client id: 10, first_name: "Ryan">,
-      #<Client id: 9, first_name: "John">]
-```
-
-和上述方法等价的 SQL 查询是：
-
-```sql
-SELECT * FROM clients ORDER BY id DESC LIMIT 2
-```
-
-### 批量获取多个对象
-
-我们经常需要遍历由很多记录组成的集合，例如给大量用户发送邮件列表，或者导出数据。
-
-我们可能会直接写出如下的代码：
-
-```ruby
-# This is very inefficient when the users table has thousands of rows.
+# 如果 users 表有几千行记录，这样做效率很低
 User.all.each do |user|
-  NewsLetter.weekly_deliver(user)
+  NewsMailer.weekly(user).deliver_now
 end
 ```
 
-但这种方法在数据表很大时就有点不现实了，因为 `User.all.each` 会一次读取整个数据表，一行记录创建一个模型对象，然后把整个模型对象数组存入内存。如果记录数非常多，可能会用完内存。
+但随着数据表越来越大，这种方法越来越行不通，因为 `User.all.each` 会使 Active Record 一次性取回整个数据表，为每条记录创建模型对象，并把整个模型对象数组保存在内存中。事实上，如果我们有大量记录，整个模型对象数组需要占用的空间可能会超过可用的内存容量。
 
-Rails 为了解决这种问题提供了两个方法，把记录分成几个批次，不占用过多内存。第一个方法是 `find_each`，获取一批记录，然后分别把每个记录传入代码块。第二个方法是 `find_in_batches`，获取一批记录，然后把整批记录作为数组传入代码块。
+Rails 提供了两种方法来解决这个问题，两种方法都是把整个记录分成多个对内存友好的批处理。第一种方法是通过 `find_each` 方法每次检索一批记录，然后逐一把每条记录作为模型传入块。第二种方法是通过 `find_in_batches` 方法每次检索一批记录，然后把这批记录整个作为模型数组传入块。
 
-TIP: `find_each` 和 `find_in_batches` 方法的目的是分批处理无法一次载入内存的巨量记录。如果只想遍历几千个记录，更推荐使用常规的查询方法。
+TIP: `find_each` 和 `find_in_batches` 方法用于大量记录的批处理，这些记录数量很大以至于不适合一次性保存在内存中。如果只需要循环 1000 条记录，那么应该首选常规的 `find` 方法。
 
-#### `find_each`
+#### `find_each` 方法
 
-`find_each` 方法获取一批记录，然后分别把每个记录传入代码块。在下面的例子中，`find_each` 获取 1000 个记录，然后把每个记录传入代码块，直到所有记录都处理完为止：
+`find_each` 方法检索一批记录，然后逐一把每条记录作为模型传入块。在下面的例子中，`find_each` 方法取回 1000 条记录（`find_each` 和 `find_in_batches` 方法都默认一次检索 1000 条记录），然后逐一把每条记录作为模型传入块。这一过程会不断重复，直到完成所有记录的处理：
 
 ```ruby
 User.find_each do |user|
-  NewsLetter.weekly_deliver(user)
+  NewsMailer.weekly(user).deliver_now
+end
+```
+
+要想为 `find_each` 操作添加条件，我们可以链接其他 Active Record 方法，例如 `where` 方法：
+
+```ruby
+User.where(weekly_subscriber: true).find_each do |user|
+  NewsMailer.weekly(user).deliver_now
 end
 ```
 
 ##### `find_each` 方法的选项
 
-在 `find_each` 方法中可使用 `find` 方法的大多数选项，但不能使用 `:order` 和 `:limit`，因为这两个选项是保留给 `find_each` 内部使用的。
+`find_each` 方法可以使用 `find` 方法的大多数选项，但 `:order` 和 `:limit` 选项例外，它们是 `find_each` 方法内部使用的保留选项。
 
-`find_each` 方法还可使用另外两个选项：`:batch_size` 和 `:start`。
+`find_each` 方法还可以使用 `:batch_size`、`:start` 和 `:finish` 这三个附加选项。
 
 **`:batch_size`**
 
-`:batch_size` 选项指定在把各记录传入代码块之前，各批次获取的记录数量。例如，一个批次获取 5000 个记录：
+`:batch_size` 选项用于指明批量检索记录时一次检索多少条记录。例如，一次检索 5000 条记录：
 
 ```ruby
 User.find_each(batch_size: 5000) do |user|
-  NewsLetter.weekly_deliver(user)
+  NewsMailer.weekly(user).deliver_now
 end
 ```
 
 **`:start`**
 
-默认情况下，按主键的升序方式获取记录，其中主键的类型必须是整数。如果不想用最小的 ID，可以使用 `:start` 选项指定批次的起始 ID。例如，前面的批量处理中断了，但保存了中断时的 ID，就可以使用这个选项继续处理。
+记录默认是按主键的升序方式取回的，这里的主键必须是整数。`:start` 选项用于配置想要取回的记录序列的第一个 ID，比这个 ID 小的记录都不会取回。这个选项有时候很有用，例如当需要恢复之前中断的批处理时，只需从最后一个取回的记录之后开始继续处理即可。
 
-例如，在有 5000 个记录的批次中，只向主键大于 2000 的用户发送邮件列表，可以这么做：
+下面的例子把时事通讯发送给主键从 2000 开始的用户，一次检索 5000 条用户记录：
 
 ```ruby
 User.find_each(start: 2000, batch_size: 5000) do |user|
-  NewsLetter.weekly_deliver(user)
+  NewsMailer.weekly(user).deliver_now
 end
 ```
 
-还有一个例子是，使用多个 worker 处理同一个进程队列。如果需要每个 worker 处理 10000 个记录，就可以在每个 worker 中设置相应的 `:start` 选项。
+**`:finish`**
 
-#### `find_in_batches`
+和 `:start` 选项类似，`:finish` 选项用于配置想要取回的记录序列的最后一个 ID，比这个 ID 大的记录都不会取回。这个选项有时候很有用，例如可以通过配置 `:start` 和 `:finish` 选项指明想要批处理的子记录集。
 
-`find_in_batches` 方法和 `find_each` 类似，都获取一批记录。二者的不同点是，`find_in_batches` 把整批记录作为一个数组传入代码块，而不是单独传入各记录。在下面的例子中，会把 1000 个单据一次性传入代码块，让代码块后面的程序处理剩下的单据：
+下面的例子把时事通讯发送给主键从 2000 到 10000 的用户，一次检索 5000 条用户记录：
 
 ```ruby
-# Give add_invoices an array of 1000 invoices at a time
-Invoice.find_in_batches(include: :invoice_lines) do |invoices|
+User.find_each(start: 2000, finish: 10000, batch_size: 5000) do |user|
+  NewsMailer.weekly(user).deliver_now
+end
+```
+
+另一个例子是使用多个职程（worker）处理同一个进程队列。通过分别配置 `:start` 和 `:finish` 选项可以让每个职程每次都处理 10000 条记录。
+
+#### `find_in_batches` 方法
+
+`find_in_batches` 方法和 `find_each` 方法类似，两者都是批量检索记录。区别在于，`find_in_batches` 方法会把一批记录作为模型数组传入块，而不是像 `find_each` 方法那样逐一把每条记录作为模型传入块。下面的例子每次把 1000 张发票的数组一次性传入块（最后一次传入块的数组中的发票数量可能不到 1000）：
+
+```ruby
+# 一次把 1000 张发票组成的数组传给 add_invoices
+Invoice.find_in_batches do |invoices|
   export.add_invoices(invoices)
 end
 ```
 
-NOTE: `:include` 选项可以让指定的关联和模型一同加载。
-
 ##### `find_in_batches` 方法的选项
 
-`find_in_batches` 方法和 `find_each` 方法一样，可以使用 `:batch_size` 和 `:start` 选项，还可使用常规的 `find` 方法中的大多数选项，但不能使用 `:order` 和 `:limit` 选项，因为这两个选项保留给 `find_in_batches` 方法内部使用。
+和 `find_each` 方法一样，`find_in_batches` 方法可以使用 `:batch_size`、`:start` 和 `:finish` 选项。
 
 条件查询
--------
+--------
 
-`where` 方法用来指定限制获取记录的条件，用于 SQL 语句的 `WHERE` 子句。条件可使用字符串、数组或 Hash 指定。
+`where` 方法用于指明限制返回记录所使用的条件，相当于 SQL 语句的 `WHERE` 部分。条件可以使用字符串、数组或散列指定。
 
 ### 纯字符串条件
 
-如果查询时要使用条件，可以直接指定。例如 `Client.where("orders_count = '2'")`，获取 `orders_count` 字段为 `2` 的客户记录。
+可以直接用纯字符串为查找添加条件。例如，`Client.where("orders_count = '2'")` 会查找所有 `orders_count` 字段的值为 2 的客户记录。
 
-WARNING: 使用纯字符串指定条件可能导致 SQL 注入漏洞。例如，`Client.where("first_name LIKE '%#{params[:first_name]}%'")`，这里的条件就不安全。推荐使用的条件指定方式是数组，请阅读下一节。
+WARNING: 使用纯字符串创建条件存在容易受到 SQL 注入攻击的风险。例如，`Client.where("first_name LIKE '%#{params[:first_name]}%'")` 是不安全的。在下一节中我们会看到，使用数组创建条件是推荐的做法。
 
 ### 数组条件
 
-如果数字是在别处动态生成的话应该怎么处理呢？可用下面的查询：
+如果 `Client.where("orders_count = '2'")` 这个例子中的数字是变化的，比如说是从别处传递过来的参数，那么可以像下面这样进行查找：
 
 ```ruby
 Client.where("orders_count = ?", params[:orders])
 ```
 
-Active Record 会先处理第一个元素中的条件，然后使用后续元素替换第一个元素中的问号（`?`）。
+Active Record 会把第一个参数作为条件字符串，并用之后的其他参数来替换条件字符串中的问号（`?`）。
 
-指定多个条件的方式如下：
+我们还可以指定多个条件：
 
 ```ruby
 Client.where("orders_count = ? AND locked = ?", params[:orders], false)
 ```
 
-在这个例子中，第一个问号会替换成 `params[:orders]` 的值；第二个问号会替换成 `false` 在 SQL 中对应的值，具体的值视所用的适配器而定。
+在上面的例子中，第一个问号会被替换为 `params[:orders]` 的值，第二个问号会被替换为 `false` 在 SQL 中对应的值，这个值是什么取决于所使用的数据库适配器。
 
-下面这种形式
+强烈推荐使用下面这种写法：
 
 ```ruby
 Client.where("orders_count = ?", params[:orders])
 ```
 
-要比这种形式好
+而不是：
 
 ```ruby
 Client.where("orders_count = #{params[:orders]}")
 ```
 
-因为前者传入的参数更安全。直接在条件字符串中指定的条件会原封不动的传给数据库。也就是说，即使用户不怀好意，条件也会转义。如果这么做，整个数据库就处在一个危险境地，只要用户发现可以接触数据库，就能做任何想做的事。所以，千万别直接在条件字符串中使用参数。
+原因是出于参数的安全性考虑。把变量直接放入条件字符串会导致变量原封不动地传递给数据库，这意味着即使是恶意用户提交的变量也不会被转义。这样一来，整个数据库就处于风险之中，因为一旦恶意用户发现自己能够滥用数据库，他就可能做任何事情。所以，永远不要把参数直接放入条件字符串。
 
-TIP: 关于 SQL 注入更详细的介绍，请阅读“[Ruby on Rails 安全指南](security.html#sql-injection)”
+TIP: 关于 SQL 注入的危险性的更多介绍，请参阅 [安全指南](security.html#SQL 注入)。
 
 #### 条件中的占位符
 
-除了使用问号占位之外，在数组条件中还可使用键值对 Hash 形式的占位符：
+和问号占位符（`?`）类似，我们还可以在条件字符串中使用符号占位符，并通过散列提供符号对应的值：
 
 ```ruby
 Client.where("created_at >= :start_date AND created_at <= :end_date",
   {start_date: params[:start_date], end_date: params[:end_date]})
 ```
 
-如果条件中有很多参数，使用这种形式可读性更高。
+如果条件中有很多变量，那么上面这种写法的可读性更高。
 
-### Hash 条件
+### 散列条件
 
-Active Record 还允许使用 Hash 条件，提高条件语句的可读性。使用 Hash 条件时，传入 Hash 的键是要设定条件的字段，值是要设定的条件。
+Active Record 还允许使用散列条件，以提高条件语句的可读性。使用散列条件时，散列的键指明需要限制的字段，键对应的值指明如何进行限制。
 
-NOTE: 在 Hash 条件中只能指定相等。范围和子集这三种条件。
+NOTE: 在散列条件中，只能进行相等性、范围和子集检查。
 
-#### 相等
+#### 相等性条件
 
 ```ruby
 Client.where(locked: true)
 ```
 
-字段的名字还可使用字符串表示：
+上面的代码会生成下面的 SQL 语句：
+
+```sql
+SELECT * FROM clients WHERE (clients.locked = 1)
+```
+
+其中字段名也可以是字符串：
 
 ```ruby
 Client.where('locked' => true)
 ```
 
-在 `belongs_to` 关联中，如果条件中的值是模型对象，可用关联键表示。这种条件指定方式也可用于多态关联。
+对于 `belongs_to` 关联来说，如果使用 Active Record 对象作为值，就可以使用关联键来指定模型。这种方法也适用于多态关联。
 
 ```ruby
-Post.where(author: author)
-Author.joins(:posts).where(posts: { author: author })
+Article.where(author: author)
+Author.joins(:articles).where(articles: { author: author })
 ```
 
-NOTE: 条件的值不能为 Symbol。例如，不能这么指定条件：`Client.where(status: :active)`。
+NOTE: 相等性条件中的值不能是符号。例如，`Client.where(status: :active)` 这种写法是错误的。
 
-#### 范围
+#### 范围条件
 
 ```ruby
 Client.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
 ```
 
-指定这个条件后，会使用 SQL `BETWEEN` 子句查询昨天创建的客户：
+上面的代码会使用 `BETWEEN` SQL 表达式查找所有昨天创建的客户记录：
 
 ```sql
 SELECT * FROM clients WHERE (clients.created_at BETWEEN '2008-12-21 00:00:00' AND '2008-12-22 00:00:00')
 ```
 
-这段代码演示了[数组条件](#array-conditions)的简写形式。
+这是 [数组条件](#数组条件)中那个示例代码的更简短的写法。
 
-#### 子集
+#### 子集条件
 
-如果想使用 `IN` 子句查询记录，可以在 Hash 条件中使用数组：
+要想用 `IN` 表达式来查找记录，可以在散列条件中使用数组：
 
 ```ruby
 Client.where(orders_count: [1,3,5])
 ```
 
-上述代码生成的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
 SELECT * FROM clients WHERE (clients.orders_count IN (1,3,5))
 ```
 
-### `NOT` 条件
+### NOT 条件
 
-SQL `NOT` 查询可用 `where.not` 方法构建。
+可以用 `where.not` 创建 `NOT` SQL 查询：
 
 ```ruby
-Post.where.not(author: author)
+Client.where.not(locked: true)
 ```
 
-也即是说，这个查询首先调用没有参数的 `where` 方法，然后再调用 `not` 方法。
+也就是说，先调用没有参数的 `where` 方法，然后马上链式调用 `not` 方法，就可以生成这个查询。上面的代码会生成下面的 SQL 语句：
+
+```sql
+SELECT * FROM clients WHERE (clients.locked != 1)
+```
 
 排序
 ----
 
-要想按照特定的顺序从数据库中获取记录，可以使用 `order` 方法。
+要想按特定顺序从数据库中检索记录，可以使用 `order` 方法。
 
-例如，想按照 `created_at` 的升序方式获取一些记录，可以这么做：
+例如，如果想按 `created_at` 字段的升序方式取回记录：
 
 ```ruby
 Client.order(:created_at)
-# OR
+# 或
 Client.order("created_at")
 ```
 
-还可使用 `ASC` 或 `DESC` 指定排序方式：
+还可以使用 `ASC`（升序） 或 `DESC`（降序） 指定排序方式：
 
 ```ruby
 Client.order(created_at: :desc)
-# OR
+# 或
 Client.order(created_at: :asc)
-# OR
+# 或
 Client.order("created_at DESC")
-# OR
+# 或
 Client.order("created_at ASC")
 ```
 
-或者使用多个字段排序：
+或按多个字段排序：
 
 ```ruby
 Client.order(orders_count: :asc, created_at: :desc)
-# OR
+# 或
 Client.order(:orders_count, created_at: :desc)
-# OR
+# 或
 Client.order("orders_count ASC, created_at DESC")
-# OR
+# 或
 Client.order("orders_count ASC", "created_at DESC")
 ```
 
-如果想在不同的上下文中多次调用 `order`，可以在前一个 `order` 后再调用一次：
+如果多次调用 `order` 方法，后续排序会在第一次排序的基础上进行：
 
-```ruby
+```sql
 Client.order("orders_count ASC").order("created_at DESC")
 # SELECT * FROM clients ORDER BY orders_count ASC, created_at DESC
 ```
 
-查询指定字段
------------
+选择特定字段
+------------
 
-默认情况下，`Model.find` 使用 `SELECT *` 查询所有字段。
+`Model.find` 默认使用 `select *` 从结果集中选择所有字段。
 
-要查询部分字段，可使用 `select` 方法。
+可以使用 `select` 方法从结果集中选择字段的子集。
 
-例如，只查询 `viewable_by` 和 `locked` 字段：
+例如，只选择 `viewable_by` 和 `locked` 字段：
 
 ```ruby
 Client.select("viewable_by, locked")
 ```
 
-上述查询使用的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
 SELECT viewable_by, locked FROM clients
 ```
 
-使用时要注意，因为模型对象只会使用选择的字段初始化。如果字段不能初始化模型对象，会得到以下异常：
+请注意，上面的代码初始化的模型对象只包含了所选择的字段，这时如果访问这个模型对象未包含的字段就会抛出异常：
 
-```bash
-ActiveModel::MissingAttributeError: missing attribute: <attribute>
-```
+    ActiveModel::MissingAttributeError: missing attribute: <attribute>
 
-其中 `<attribute>` 是所查询的字段。`id` 字段不会抛出 `ActiveRecord::MissingAttributeError` 异常，所以在关联中使用时要注意，因为关联需要 `id` 字段才能正常使用。
+其中 `<attribute>` 是我们想要访问的字段。`id` 方法不会引发 `ActiveRecord::MissingAttributeError` 异常，因此在使用关联时一定要小心，因为只有当 `id` 方法正常工作时关联才能正常工作。
 
-如果查询时希望指定字段的同值记录只出现一次，可以使用 `distinct` 方法：
+在查询时如果想让某个字段的同值记录只出现一次，可以使用 `distinct` 方法添加唯一性约束：
 
 ```ruby
 Client.select(:name).distinct
 ```
 
-上述方法生成的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
 SELECT DISTINCT name FROM clients
 ```
 
-查询后还可以删除唯一性限制：
+唯一性约束在添加之后还可以删除：
 
 ```ruby
 query = Client.select(:name).distinct
-# => Returns unique names
+# => 返回无重复的名字
 
 query.distinct(false)
-# => Returns all names, even if there are duplicates
+# => 返回所有名字，即使有重复
 ```
 
-限量和偏移
----------
+限量和偏移量
+------------
 
-要想在 `Model.find` 方法中使用 SQL `LIMIT` 子句，可使用 `limit` 和 `offset` 方法。
+要想在 `Model.find` 生成的 SQL 语句中使用 `LIMIT` 子句，可以在关联上使用 `limit` 和 `offset` 方法。
 
-`limit` 方法指定获取的记录数量，`offset` 方法指定在返回结果之前跳过多少个记录。例如：
+`limit` 方法用于指明想要取回的记录数量，`offset` 方法用于指明取回记录时在第一条记录之前要跳过多少条记录。例如：
 
 ```ruby
 Client.limit(5)
 ```
 
-上述查询最大只会返回 5 各客户对象，因为没指定偏移，多以会返回数据表中的前 5 个记录。生成的 SQL 语句如下：
+上面的代码会返回 5 条客户记录，因为没有使用 `offset` 方法，所以返回的这 5 条记录就是前 5 条记录。生成的 SQL 语句如下：
 
 ```sql
 SELECT * FROM clients LIMIT 5
 ```
 
-再加上 `offset` 方法：
+如果使用 `offset` 方法：
 
 ```ruby
 Client.limit(5).offset(30)
 ```
 
-这时会从第 31 个记录开始，返回最多 5 个客户对象。生成的 SQL 语句如下：
+这时会返回从第 31 条记录开始的 5 条记录。生成的 SQL 语句如下：
 
 ```sql
 SELECT * FROM clients LIMIT 5 OFFSET 30
@@ -641,17 +684,15 @@ SELECT * FROM clients LIMIT 5 OFFSET 30
 分组
 ----
 
-要想在查询时使用 SQL `GROUP BY` 子句，可以使用 `group` 方法。
+要想在查找方法生成的 SQL 语句中使用 `GROUP BY` 子句，可以使用 `group` 方法。
 
-例如，如果想获取一组订单的创建日期，可以这么做：
+例如，如果我们想根据订单创建日期查找订单记录：
 
 ```ruby
 Order.select("date(created_at) as ordered_date, sum(price) as total_price").group("date(created_at)")
 ```
 
-上述查询会只会为相同日期下的订单创建一个 `Order` 对象。
-
-生成的 SQL 语句如下：
+上面的代码会为数据库中同一天创建的订单创建 `Order` 对象。生成的 SQL 语句如下：
 
 ```sql
 SELECT date(created_at) as ordered_date, sum(price) as total_price
@@ -659,19 +700,34 @@ FROM orders
 GROUP BY date(created_at)
 ```
 
-分组筛选
--------
+### 分组项目的总数
 
-SQL 使用 `HAVING` 子句指定 `GROUP BY` 分组的条件。在 `Model.find` 方法中可使用 `:having` 选项指定 `HAVING` 子句。
+要想得到一次查询中分组项目的总数，可以在调用 `group` 方法后调用 `count` 方法。
 
-例如：
+```ruby
+Order.group(:status).count
+# => { 'awaiting_approval' => 7, 'paid' => 12 }
+```
+
+上面的代码会生成下面的 SQL 语句：
+
+```sql
+SELECT COUNT (*) AS count_all, status AS status
+FROM "orders"
+GROUP BY status
+```
+
+`having` 方法
+-------------
+
+SQL 语句用 `HAVING` 子句指明 `GROUP BY` 字段的约束条件。要想在 `Model.find` 生成的 SQL 语句中使用 `HAVING` 子句，可以使用 `having` 方法。例如：
 
 ```ruby
 Order.select("date(created_at) as ordered_date, sum(price) as total_price").
   group("date(created_at)").having("sum(price) > ?", 100)
 ```
 
-生成的 SQL 如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
 SELECT date(created_at) as ordered_date, sum(price) as total_price
@@ -680,168 +736,170 @@ GROUP BY date(created_at)
 HAVING sum(price) > 100
 ```
 
-这个查询只会为同一天下的订单创建一个 `Order` 对象，而且这一天的订单总额要大于 $100。
+上面的查询会返回每个 `Order` 对象的日期和总价，查询结果按日期分组并排序，并且总价必须高于 100。
 
 条件覆盖
--------
+--------
 
-### `unscope`
+### `unscope` 方法
 
-如果要删除某个条件可使用 `unscope` 方法。例如：
+可以使用 `unscope` 方法删除某些条件。 例如：
 
 ```ruby
-Post.where('id > 10').limit(20).order('id asc').unscope(:order)
+Article.where('id > 10').limit(20).order('id asc').unscope(:order)
 ```
 
-生成的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
-SELECT * FROM posts WHERE id > 10 LIMIT 20
+SELECT * FROM articles WHERE id > 10 LIMIT 20
 
-# Original query without `unscope`
-SELECT * FROM posts WHERE id > 10 ORDER BY id asc LIMIT 20
+# 没使用 `unscope` 之前的查询
+SELECT * FROM articles WHERE id > 10 ORDER BY id asc LIMIT 20
 ```
 
-`unscope` 还可删除 `WHERE` 子句中的条件。例如：
+还可以使用 `unscope` 方法删除 `where` 方法中的某些条件。例如：
 
 ```ruby
-Post.where(id: 10, trashed: false).unscope(where: :id)
-# SELECT "posts".* FROM "posts" WHERE trashed = 0
+Article.where(id: 10, trashed: false).unscope(where: :id)
+# SELECT "articles".* FROM "articles" WHERE trashed = 0
 ```
 
-`unscope` 还可影响合并后的查询：
+在关联中使用 `unscope` 方法，会对整个关联造成影响：
 
 ```ruby
-Post.order('id asc').merge(Post.unscope(:order))
-# SELECT "posts".* FROM "posts"
+Article.order('id asc').merge(Article.unscope(:order))
+# SELECT "articles".* FROM "articles"
 ```
 
-### `only`
+### `only` 方法
 
-查询条件还可使用 `only` 方法覆盖。例如：
+可以使用 `only` 方法覆盖某些条件。例如：
 
 ```ruby
-Post.where('id > 10').limit(20).order('id desc').only(:order, :where)
+Article.where('id > 10').limit(20).order('id desc').only(:order, :where)
 ```
 
-执行的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
-SELECT * FROM posts WHERE id > 10 ORDER BY id DESC
+SELECT * FROM articles WHERE id > 10 ORDER BY id DESC
 
-# Original query without `only`
-SELECT "posts".* FROM "posts" WHERE (id > 10) ORDER BY id desc LIMIT 20
+# 没使用 `only` 之前的查询
+SELECT "articles".* FROM "articles" WHERE (id > 10) ORDER BY id desc LIMIT 20
 ```
 
-### `reorder`
+### `reorder` 方法
 
-`reorder` 方法覆盖原来的 `order` 条件。例如：
+可以使用 `reorder` 方法覆盖默认作用域中的排序方式。例如：
 
 ```ruby
-class Post < ActiveRecord::Base
-  ..
-  ..
+class Article < ApplicationRecord
   has_many :comments, -> { order('posted_at DESC') }
 end
-
-Post.find(10).comments.reorder('name')
 ```
-
-执行的 SQL 语句如下：
-
-```sql
-SELECT * FROM posts WHERE id = 10 ORDER BY name
-```
-
-没用 `reorder` 方法时执行的 SQL 语句如下：
-
-```sql
-SELECT * FROM posts WHERE id = 10 ORDER BY posted_at DESC
-```
-
-### `reverse_order`
-
-`reverse_order` 方法翻转 `ORDER` 子句的条件。
 
 ```ruby
+Article.find(10).comments.reorder('name')
+```
+
+上面的代码会生成下面的 SQL 语句：
+
+```sql
+SELECT * FROM articles WHERE id = 10
+SELECT * FROM comments WHERE article_id = 10 ORDER BY name
+```
+
+如果不使用 `reorder` 方法，那么会生成下面的 SQL 语句：
+
+```sql
+SELECT * FROM articles WHERE id = 10
+SELECT * FROM comments WHERE article_id = 10 ORDER BY posted_at DESC
+```
+
+### `reverse_order` 方法
+
+可以使用 `reverse_order` 方法反转排序条件。
+
+```sql
 Client.where("orders_count > 10").order(:name).reverse_order
 ```
 
-执行的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
 SELECT * FROM clients WHERE orders_count > 10 ORDER BY name DESC
 ```
 
-如果查询中没有使用 `ORDER` 子句，`reverse_order` 方法会按照主键的逆序查询：
+如果查询时没有使用 `order` 方法，那么 `reverse_order` 方法会使查询结果按主键的降序方式排序。
 
 ```ruby
 Client.where("orders_count > 10").reverse_order
 ```
 
-执行的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
 SELECT * FROM clients WHERE orders_count > 10 ORDER BY clients.id DESC
 ```
 
-这个方法**没有**参数。
+`reverse_order` 方法不接受任何参数。
 
-### `rewhere`
+### `rewhere` 方法
 
-`rewhere` 方法覆盖前面的 `where` 条件。例如：
-
-```ruby
-Post.where(trashed: true).rewhere(trashed: false)
-```
-
-执行的 SQL 语句如下：
-
-```sql
-SELECT * FROM posts WHERE `trashed` = 0
-```
-
-如果不使用 `rewhere` 方法，写成：
+可以使用 `rewhere` 方法覆盖 `where` 方法中指定的条件。例如：
 
 ```ruby
-Post.where(trashed: true).where(trashed: false)
+Article.where(trashed: true).rewhere(trashed: false)
 ```
 
-执行的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
-SELECT * FROM posts WHERE `trashed` = 1 AND `trashed` = 0
+SELECT * FROM articles WHERE `trashed` = 0
+```
+
+如果不使用 `rewhere` 方法而是再次使用 `where` 方法：
+
+```sql
+Article.where(trashed: true).where(trashed: false)
+```
+
+会生成下面的 SQL 语句：
+
+```sql
+SELECT * FROM articles WHERE `trashed` = 1 AND `trashed` = 0
 ```
 
 空关系
 ------
 
-`none` 返回一个可链接的关系，没有相应的记录。`none` 方法返回对象的后续条件查询，得到的还是空关系。如果想以可链接的方式响应可能无返回结果的方法或者作用域，可使用 `none` 方法。
+`none` 方法返回可以在链式调用中使用的、不包含任何记录的空关系。在这个空关系上应用后续条件链，会继续生成空关系。对于可能返回零结果、但又需要在链式调用中使用的方法或作用域，可以使用 `none` 方法来提供返回值。
 
 ```ruby
-Post.none # returns an empty Relation and fires no queries.
+Article.none # 返回一个空 Relation 对象，而且不执行查询
 ```
 
 ```ruby
-# The visible_posts method below is expected to return a Relation.
-@posts = current_user.visible_posts.where(name: params[:name])
+# 下面的 visible_articles 方法期待返回一个空 Relation 对象
+@articles = current_user.visible_articles.where(name: params[:name])
 
-def visible_posts
+def visible_articles
   case role
   when 'Country Manager'
-    Post.where(country: country)
+    Article.where(country: country)
   when 'Reviewer'
-    Post.published
+    Article.published
   when 'Bad User'
-    Post.none # => returning [] or nil breaks the caller code in this case
+    Article.none # => 如果这里返回 [] 或 nil，会导致调用方出错
   end
 end
 ```
 
 只读对象
--------
+--------
 
-Active Record 提供了 `readonly` 方法，禁止修改获取的对象。试图修改只读记录的操作不会成功，而且会抛出 `ActiveRecord::ReadOnlyRecord` 异常。
+在关联中使用 Active Record 提供的 `readonly` 方法，可以显式禁止修改任何返回对象。如果尝试修改只读对象，不但不会成功，还会抛出 `ActiveRecord::ReadOnlyRecord` 异常。
 
 ```ruby
 client = Client.readonly.first
@@ -849,25 +907,26 @@ client.visits += 1
 client.save
 ```
 
-因为把 `client` 设为了只读对象，所以上述代码调用 `client.save` 方法修改 `visits` 的值时会抛出 `ActiveRecord::ReadOnlyRecord` 异常。
+在上面的代码中，`client` 被显式设置为只读对象，因此在更新 `client.visits` 的值后调用 `client.save` 会抛出 `ActiveRecord::ReadOnlyRecord` 异常。
 
-更新时锁定记录
-------------
+在更新时锁定记录
+----------------
 
-锁定可以避免更新记录时的条件竞争，也能保证原子更新。
+在数据库中，锁定用于避免更新记录时的条件竞争，并确保原子更新。
 
 Active Record 提供了两种锁定机制：
 
-* 乐观锁定
-* 悲观锁定
+- 乐观锁定
+
+- 悲观锁定
 
 ### 乐观锁定
 
-乐观锁定允许多个用户编辑同一个记录，假设数据发生冲突的可能性最小。Rails 会检查读取记录后是否有其他程序在修改这个记录。如果检测到有其他程序在修改，就会抛出 `ActiveRecord::StaleObjectError` 异常，忽略改动。
+乐观锁定允许多个用户访问并编辑同一记录，并假设数据发生冲突的可能性最小。其原理是检查读取记录后是否有其他进程尝试更新记录，如果有就抛出 `ActiveRecord::StaleObjectError` 异常，并忽略该更新。
 
-**乐观锁定字段**
+#### 字段的乐观锁定
 
-为了使用乐观锁定，数据表中要有一个类型为整数的 `lock_version` 字段。每次更新记录时，Active Record 都会增加 `lock_version` 字段的值。如果更新请求中的 `lock_version` 字段值比数据库中的 `lock_version` 字段值小，会抛出 `ActiveRecord::StaleObjectError` 异常，更新失败。例如：
+为了使用乐观锁定，数据表中需要有一个整数类型的 `lock_version` 字段。每次更新记录时，Active Record 都会增加 `lock_version` 字段的值。如果更新请求中 `lock_version` 字段的值比当前数据库中 `lock_version` 字段的值小，更新请求就会失败，并抛出 `ActiveRecord::StaleObjectError` 异常。例如：
 
 ```ruby
 c1 = Client.find(1)
@@ -877,36 +936,34 @@ c1.first_name = "Michael"
 c1.save
 
 c2.name = "should fail"
-c2.save # Raises an ActiveRecord::StaleObjectError
+c2.save # 抛出 ActiveRecord::StaleObjectError
 ```
 
-抛出异常后，你要负责处理冲突，可以回滚操作、合并操作或者使用其他业务逻辑处理。
+抛出异常后，我们需要救援异常并处理冲突，或回滚，或合并，或应用其他业务逻辑来解决冲突。
 
-乐观锁定可以使用 `ActiveRecord::Base.lock_optimistically = false` 关闭。
+通过设置 `ActiveRecord::Base.lock_optimistically = false` 可以关闭乐观锁定。
 
-要想修改 `lock_version` 字段的名字，可以使用 `ActiveRecord::Base` 提供的 `locking_column` 类方法：
+可以使用 `ActiveRecord::Base` 提供的 `locking_column` 类属性来覆盖 `lock_version` 字段名：
 
 ```ruby
-class Client < ActiveRecord::Base
+class Client < ApplicationRecord
   self.locking_column = :lock_client_column
 end
 ```
 
 ### 悲观锁定
 
-悲观锁定使用底层数据库提供的锁定机制。使用 `lock` 方法构建的关系在所选记录上生成一个“互斥锁”（exclusive lock）。使用 `lock` 方法构建的关系一般都放入事务中，避免死锁。
-
-例如：
+悲观锁定使用底层数据库提供的锁定机制。在创建关联时使用 `lock` 方法，会在选定字段上生成互斥锁。使用 `lock` 方法的关联通常被包装在事务中，以避免发生死锁。例如：
 
 ```ruby
 Item.transaction do
   i = Item.lock.first
   i.name = 'Jones'
-  i.save
+  i.save!
 end
 ```
 
-在 MySQL 中，上述代码生成的 SQL 如下：
+对于 MySQL 后端，上面的会话会生成下面的 SQL 语句：
 
 ```sql
 SQL (0.2ms)   BEGIN
@@ -915,7 +972,7 @@ Item Update (0.4ms)   UPDATE `items` SET `updated_at` = '2009-02-07 18:05:56', `
 SQL (0.8ms)   COMMIT
 ```
 
-`lock` 方法还可以接受 SQL 语句，使用其他锁定类型。例如，MySQL 中有一个语句是 `LOCK IN SHARE MODE`，会锁定记录，但还是允许其他查询读取记录。要想使用这个语句，直接传入 `lock` 方法即可：
+要想支持其他锁定类型，可以直接传递 SQL 给 `lock` 方法。例如，MySQL 的 `LOCK IN SHARE MODE` 表达式在锁定记录时允许其他查询读取记录，这个表达式可以用作锁定选项：
 
 ```ruby
 Item.transaction do
@@ -924,160 +981,183 @@ Item.transaction do
 end
 ```
 
-如果已经创建了模型实例，可以在事务中加上这种锁定，如下所示：
+对于已有模型实例，可以启动事务并一次性获取锁：
 
 ```ruby
 item = Item.first
 item.with_lock do
-  # This block is called within a transaction,
-  # item is already locked.
+  # 这个块在事务中调用
+  # item 已经锁定
   item.increment!(:views)
 end
 ```
 
-连接数据表
----------
+联结表
+------
 
-Active Record 提供了一个查询方法名为 `joins`，用来指定 SQL `JOIN` 子句。`joins` 方法的用法有很多种。
+Active Record 提供了 `joins` 和 `left_outer_joins` 这两个查找方法，用于指明生成的 SQL 语句中的 `JOIN` 子句。其中，`joins` 方法用于 `INNER JOIN` 查询或定制查询，`left_outer_joins` 用于 `LEFT OUTER JOIN` 查询。
 
-### 使用字符串形式的 SQL 语句
+### `joins` 方法
 
-在 `joins` 方法中可以直接使用 `JOIN` 子句的 SQL：
+`joins` 方法有多种用法。
+
+#### 使用字符串 SQL 片段
+
+在 `joins` 方法中可以直接用 SQL 指明 `JOIN` 子句：
 
 ```ruby
-Client.joins('LEFT OUTER JOIN addresses ON addresses.client_id = clients.id')
+Author.joins("INNER JOIN posts ON posts.author_id = author.id AND posts.published = 't'")
 ```
 
-生成的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
-SELECT clients.* FROM clients LEFT OUTER JOIN addresses ON addresses.client_id = clients.id
+SELECT clients.* FROM clients INNER JOIN posts ON posts.author_id = author.id AND posts.published = 't'
 ```
 
-### 使用数组或 Hash 指定具名关联
+#### 使用具名关联数组或散列
 
-WARNING: 这种方法只用于 `INNER JOIN`。
+使用 `joins` 方法时，Active Record 允许我们使用在模型上定义的关联的名称，作为指明这些关联的 `JOIN` 子句的快捷方式。
 
-使用 `joins` 方法时，可以使用声明[关联](association_basics.html)时使用的关联名指定 `JOIN` 子句。
-
-例如，假如按照如下方式定义 `Category`、`Post`、`Comment`、`Guest` 和 `Tag` 模型：
+例如，假设有 `Category`、`Article`、`Comment`、`Guest` 和 `Tag` 这几个模型：
 
 ```ruby
-class Category < ActiveRecord::Base
-  has_many :posts
+class Category < ApplicationRecord
+  has_many :articles
 end
 
-class Post < ActiveRecord::Base
+class Article < ApplicationRecord
   belongs_to :category
   has_many :comments
   has_many :tags
 end
 
-class Comment < ActiveRecord::Base
-  belongs_to :post
+class Comment < ApplicationRecord
+  belongs_to :article
   has_one :guest
 end
 
-class Guest < ActiveRecord::Base
+class Guest < ApplicationRecord
   belongs_to :comment
 end
 
-class Tag < ActiveRecord::Base
-  belongs_to :post
+class Tag < ApplicationRecord
+  belongs_to :article
 end
 ```
 
-下面各种用法能都使用 `INNER JOIN` 子句生成正确的连接查询：
+下面几种用法都会使用 `INNER JOIN` 生成我们想要的关联查询。
 
-#### 连接单个关联
+（译者注：原文此处开始出现编号错误，由译者根据内容逻辑关系进行了修正。）
+
+##### 单个关联的联结
 
 ```ruby
-Category.joins(:posts)
+Category.joins(:articles)
 ```
 
-生成的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
 SELECT categories.* FROM categories
-  INNER JOIN posts ON posts.category_id = categories.id
+  INNER JOIN articles ON articles.category_id = categories.id
 ```
 
-用人类语言表达，上述查询的意思是，“使用文章的分类创建分类对象”。注意，分类对象可能有重复，因为多篇文章可能属于同一分类。如果不想出现重复，可使用 `Category.joins(:posts).uniq` 方法。
+这个查询的意思是把所有包含了文章的（非空）分类作为一个 `Category` 对象返回。请注意，如果多篇文章同属于一个分类，那么这个分类会在 `Category` 对象中出现多次。要想让每个分类只出现一次，可以使用 `Category.joins(:articles).distinct`。
 
-#### 连接多个关联
+##### 多个关联的联结
 
 ```ruby
-Post.joins(:category, :comments)
+Article.joins(:category, :comments)
 ```
 
-生成的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
-SELECT posts.* FROM posts
-  INNER JOIN categories ON posts.category_id = categories.id
-  INNER JOIN comments ON comments.post_id = posts.id
+SELECT articles.* FROM articles
+  INNER JOIN categories ON articles.category_id = categories.id
+  INNER JOIN comments ON comments.article_id = articles.id
 ```
 
-用人类语言表达，上述查询的意思是，“返回指定分类且至少有一个评论的所有文章”。注意，如果文章有多个评论，同个文章对象会出现多次。
+这个查询的意思是把所有属于某个分类并至少拥有一条评论的文章作为一个 `Article` 对象返回。同样请注意，拥有多条评论的文章会在 `Article` 对象中出现多次。
 
-#### 连接一层嵌套关联
+##### 单层嵌套关联的联结
 
 ```ruby
-Post.joins(comments: :guest)
+Article.joins(comments: :guest)
 ```
 
-生成的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
-SELECT posts.* FROM posts
-  INNER JOIN comments ON comments.post_id = posts.id
+SELECT articles.* FROM articles
+  INNER JOIN comments ON comments.article_id = articles.id
   INNER JOIN guests ON guests.comment_id = comments.id
 ```
 
-用人类语言表达，上述查询的意思是，“返回有一个游客发布评论的所有文章”。
+这个查询的意思是把所有拥有访客评论的文章作为一个 `Article` 对象返回。
 
-#### 连接多层嵌套关联
+##### 多层嵌套关联的联结
 
 ```ruby
-Category.joins(posts: [{ comments: :guest }, :tags])
+Category.joins(articles: [{ comments: :guest }, :tags])
 ```
 
-生成的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
 SELECT categories.* FROM categories
-  INNER JOIN posts ON posts.category_id = categories.id
-  INNER JOIN comments ON comments.post_id = posts.id
+  INNER JOIN articles ON articles.category_id = categories.id
+  INNER JOIN comments ON comments.article_id = articles.id
   INNER JOIN guests ON guests.comment_id = comments.id
-  INNER JOIN tags ON tags.post_id = posts.id
+  INNER JOIN tags ON tags.article_id = articles.id
 ```
 
-### 指定用于连接数据表上的条件
+这个查询的意思是把所有包含文章的分类作为一个 `Category` 对象返回，其中这些文章都拥有访客评论并且带有标签。
 
-作用在连接数据表上的条件可以使用[数组](#array-conditions)和[字符串](#pure-string-conditions)指定。[Hash 形式的条件]((#hash-conditions)使用的句法有点特殊：
+#### 为联结表指明条件
+
+可以使用普通的数组和字符串条件作为关联数据表的条件。但如果想使用散列条件作为关联数据表的条件，就需要使用特殊语法了：
 
 ```ruby
 time_range = (Time.now.midnight - 1.day)..Time.now.midnight
 Client.joins(:orders).where('orders.created_at' => time_range)
 ```
 
-还有一种更简洁的句法是使用嵌套 Hash：
+还有一种更干净的替代语法，即嵌套使用散列条件：
 
 ```ruby
 time_range = (Time.now.midnight - 1.day)..Time.now.midnight
 Client.joins(:orders).where(orders: { created_at: time_range })
 ```
 
-上述查询会获取昨天下订单的所有客户对象，再次用到了 SQL `BETWEEN` 语句。
+这个查询会查找所有在昨天创建过订单的客户，在生成的 SQL 语句中同样使用了 `BETWEEN` SQL 表达式。
 
-按需加载关联
------------
+### `left_outer_joins` 方法
 
-使用 `Model.find` 方法获取对象的关联记录时，按需加载机制会使用尽量少的查询次数。
+如果想要选择一组记录，而不管它们是否具有关联记录，可以使用 `left_outer_joins` 方法。
+
+```ruby
+Author.left_outer_joins(:posts).distinct.select('authors.*, COUNT(posts.*) AS posts_count').group('authors.id')
+```
+
+上面的代码会生成下面的 SQL 语句：
+
+```sql
+SELECT DISTINCT authors.*, COUNT(posts.*) AS posts_count FROM "authors"
+LEFT OUTER JOIN posts ON posts.author_id = authors.id GROUP BY authors.id
+```
+
+这个查询的意思是返回所有作者和每位作者的帖子数，而不管这些作者是否发过帖子。
+
+及早加载关联
+------------
+
+及早加载是一种用于加载 `Model.find` 返回对象的关联记录的机制，目的是尽可能减少查询次数。
 
 **N + 1 查询问题**
 
-假设有如下的代码，获取 10 个客户对象，并把客户的邮编打印出来
+假设有如下代码，查找 10 条客户记录并打印这些客户的邮编：
 
 ```ruby
 clients = Client.limit(10)
@@ -1087,13 +1167,13 @@ clients.each do |client|
 end
 ```
 
-上述代码初看起来很好，但问题在于查询的总次数。上述代码总共会执行 1（获取 10 个客户记录）+ 10（分别获取 10 个客户的地址）= *11* 次查询。
+上面的代码第一眼看起来不错，但实际上存在查询总次数较高的问题。这段代码总共需要执行 1（查找 10 条客户记录）+ 10（每条客户记录都需要加载地址）= 11 次查询。
 
-**N + 1 查询的解决办法**
+**N + 1 查询问题的解决办法**
 
-在 Active Record 中可以进一步指定要加载的所有关联，调用 `Model.find` 方法是使用 `includes` 方法实现。使用 `includes` 后，Active Record 会使用尽可能少的查询次数加载所有指定的关联。
+Active Record 允许我们提前指明需要加载的所有关联，这是通过在调用 `Model.find` 时指明 `includes` 方法实现的。通过指明 `includes` 方法，Active Record 会使用尽可能少的查询来加载所有已指明的关联。
 
-我们可以使用按需加载机制加载客户的地址，把 `Client.limit(10)` 改写成：
+回到之前 N + 1 查询问题的例子，我们重写其中的 `Client.limit(10)` 来使用及早加载：
 
 ```ruby
 clients = Client.includes(:address).limit(10)
@@ -1103,7 +1183,7 @@ clients.each do |client|
 end
 ```
 
-和前面的 **11** 次查询不同，上述代码只会执行 **2** 次查询：
+上面的代码只执行 2 次查询，而不是之前的 11 次查询：
 
 ```sql
 SELECT * FROM clients LIMIT 10
@@ -1111,129 +1191,194 @@ SELECT addresses.* FROM addresses
   WHERE (addresses.client_id IN (1,2,3,4,5,6,7,8,9,10))
 ```
 
-### 按需加载多个关联
+### 及早加载多个关联
 
-调用 `Model.find` 方法时，使用 `includes` 方法可以一次加载任意数量的关联，加载的关联可以通过数组、Hash、嵌套 Hash 指定。
+通过在 `includes` 方法中使用数组、散列或嵌套散列，Active Record 允许我们在一次 `Model.find` 调用中及早加载任意数量的关联。
 
-#### 用数组指定多个关联
-
-```ruby
-Post.includes(:category, :comments)
-```
-
-上述代码会加载所有文章，以及和每篇文章关联的分类和评论。
-
-#### 使用 Hash 指定嵌套关联
+#### 多个关联的数组
 
 ```ruby
-Category.includes(posts: [{ comments: :guest }, :tags]).find(1)
+Article.includes(:category, :comments)
 ```
 
-上述代码会获取 ID 为 1 的分类，按需加载所有关联的文章，文章的标签和评论，以及每个评论的 `guest` 关联。
+上面的代码会加载所有文章、所有关联的分类和每篇文章的所有评论。
 
-### 指定用于按需加载关联上的条件
-
-虽然 Active Record 允许使用 `joins` 方法指定用于按需加载关联上的条件，但是推荐的做法是使用[连接数据表](#joining-tables)。
-
-如果非要这么做，可以按照常规方式使用 `where` 方法。
+#### 嵌套关联的散列
 
 ```ruby
-Post.includes(:comments).where("comments.visible" => true)
+Category.includes(articles: [{ comments: :guest }, :tags]).find(1)
 ```
 
-上述代码生成的查询中会包含 `LEFT OUTER JOIN` 子句，而 `joins` 方法生成的查询使用的是 `INNER JOIN` 子句。
+上面的代码会查找 ID 为 1 的分类，并及早加载所有关联的文章、这些文章关联的标签和评论，以及这些评论关联的访客。
+
+### 为关联的及早加载指明条件
+
+尽管 Active Record 允许我们像 `joins` 方法那样为关联的及早加载指明条件，但推荐的方式是使用[联结](#联结表)。
+
+尽管如此，在必要时仍然可以用 `where` 方法来为关联的及早加载指明条件。
 
 ```ruby
-SELECT "posts"."id" AS t0_r0, ... "comments"."updated_at" AS t1_r5 FROM "posts" LEFT OUTER JOIN "comments" ON "comments"."post_id" = "posts"."id" WHERE (comments.visible = 1)
+Article.includes(:comments).where(comments: { visible: true })
 ```
 
-如果没指定 `where` 条件，上述代码会生成两个查询语句。
+上面的代码会生成使用 `LEFT OUTER JOIN` 子句的 SQL 语句，而 `joins` 方法会成生使用 `INNER JOIN` 子句的 SQL 语句。
 
-如果像上面的代码一样使用 `includes`，即使所有文章都没有评论，也会加载所有文章。使用 `joins` 方法（`INNER JOIN`）时，必须满足连接条件，否则不会得到任何记录。
+```sql
+SELECT "articles"."id" AS t0_r0, ... "comments"."updated_at" AS t1_r5 FROM "articles" LEFT OUTER JOIN "comments" ON "comments"."article_id" = "articles"."id" WHERE (comments.visible = 1)
+```
+
+如果上面的代码没有使用 `where` 方法，就会生成常规的一组两条查询语句。
+
+NOTE: 要想像上面的代码那样使用 `where` 方法，必须在 `where` 方法中使用散列。如果想要在 `where` 方法中使用字符串 SQL 片段，就必须用 `references` 方法强制使用联结表：
+
+```ruby
+Article.includes(:comments).where("comments.visible = true").references(:comments)
+```
+
+通过在 `where` 方法中使用字符串 SQL 片段并使用 `references` 方法这种方式，即使一条评论都没有，所有文章仍然会被加载。而在使用 `joins` 方法（`INNER JOIN`）时，必须匹配关联条件，否则一条记录都不会返回。
 
 作用域
 ------
 
-作用域把常用的查询定义成方法，在关联对象或模型上调用。在作用域中可以使用前面介绍的所有方法，例如 `where`、`joins` 和 `includes`。所有作用域方法都会返回一个 `ActiveRecord::Relation` 对象，允许继续调用其他方法（例如另一个作用域方法）。
+作用域允许我们把常用查询定义为方法，然后通过在关联对象或模型上调用方法来引用这些查询。fotnote:\[“作用域”和“作用域方法”在本文中是一个意思。——译者注\]在作用域中，我们可以使用之前介绍过的所有方法，如 `where`、`join` 和 `includes` 方法。所有作用域都会返回 `ActiveRecord::Relation` 对象，这样就可以继续在这个对象上调用其他方法（如其他作用域）。
 
-要想定义简单的作用域，可在类中调用 `scope` 方法，传入执行作用域时运行的代码：
+要想定义简单的作用域，我们可以在类中通过 `scope` 方法定义作用域，并传入调用这个作用域时执行的查询。
 
 ```ruby
-class Post < ActiveRecord::Base
+class Article < ApplicationRecord
   scope :published, -> { where(published: true) }
 end
 ```
 
-上述方式和直接定义类方法的作用一样，使用哪种方式只是个人喜好：
+通过上面这种方式定义作用域和通过定义类方法来定义作用域效果完全相同，至于使用哪种方式只是个人喜好问题：
 
 ```ruby
-class Post < ActiveRecord::Base
+class Article < ApplicationRecord
   def self.published
     where(published: true)
   end
 end
 ```
 
-作用域可以链在一起调用：
+在作用域中可以链接其他作用域：
 
 ```ruby
-class Post < ActiveRecord::Base
+class Article < ApplicationRecord
   scope :published,               -> { where(published: true) }
   scope :published_and_commented, -> { published.where("comments_count > 0") }
 end
 ```
 
-可以在模型类上调用 `published` 作用域：
+我们可以在模型上调用 `published` 作用域：
 
 ```ruby
-Post.published # => [published posts]
+Article.published # => [published articles]
 ```
 
-也可以在包含 `Post` 对象的关联上调用：
+或在多个 `Article` 对象组成的关联对象上调用 `published` 作用域：
 
 ```ruby
 category = Category.first
-category.posts.published # => [published posts belonging to this category]
+category.articles.published # => [published articles belonging to this category]
 ```
 
 ### 传入参数
 
-作用域可接受参数：
+作用域可以接受参数：
 
 ```ruby
-class Post < ActiveRecord::Base
+class Article < ApplicationRecord
   scope :created_before, ->(time) { where("created_at < ?", time) }
 end
 ```
 
-作用域的调用方法和类方法一样：
+调用作用域和调用类方法一样：
 
 ```ruby
-Post.created_before(Time.zone.now)
+Article.created_before(Time.zone.now)
 ```
 
-不过这就和类方法的作用一样了。
+不过这只是复制了本该通过类方法提供给我们的的功能。
 
 ```ruby
-class Post < ActiveRecord::Base
+class Article < ApplicationRecord
   def self.created_before(time)
     where("created_at < ?", time)
   end
 end
 ```
 
-如果作用域要接受参数，推荐直接使用类方法。有参数的作用域也可在关联对象上调用：
+当作用域需要接受参数时，推荐改用类方法。使用类方法时，这些方法仍然可以在关联对象上访问：
 
 ```ruby
-category.posts.created_before(time)
+category.articles.created_before(time)
+```
+
+### 使用条件
+
+我们可以在作用域中使用条件：
+
+```ruby
+class Article < ApplicationRecord
+  scope :created_before, ->(time) { where("created_at < ?", time) if time.present? }
+end
+```
+
+和之前的例子一样，作用域的这一行为也和类方法类似。
+
+```ruby
+class Article < ApplicationRecord
+  def self.created_before(time)
+    where("created_at < ?", time) if time.present?
+  end
+end
+```
+
+不过有一点需要特别注意：不管条件的值是 `true` 还是 `false`，作用域总是返回 `ActiveRecord::Relation` 对象，而当条件是 `false` 时，类方法返回的是 `nil`。因此，当链接带有条件的类方法时，如果任何一个条件的值是 `false`，就会引发 `NoMethodError` 异常。
+
+### 应用默认作用域
+
+要想在模型的所有查询中应用作用域，我们可以在这个模型上使用 `default_scope` 方法。
+
+```ruby
+class Client < ApplicationRecord
+  default_scope { where("removed_at IS NULL") }
+end
+```
+
+应用默认作用域后，在这个模型上执行查询，会生成下面这样的 SQL 语句：
+
+```sql
+SELECT * FROM clients WHERE removed_at IS NULL
+```
+
+如果想用默认作用域做更复杂的事情，我们也可以把它定义为类方法：
+
+```ruby
+class Client < ApplicationRecord
+  def self.default_scope
+    # 应该返回一个 ActiveRecord::Relation 对象
+  end
+end
+```
+
+NOTE: 默认作用域在创建记录时同样起作用，但在更新记录时不起作用。例如：
+
+```ruby
+class Client < ApplicationRecord
+ default_scope { where(active: true) }
+end
+
+Client.new          # => #<Client id: nil, active: true>
+Client.unscoped.new # => #<Client id: nil, active: nil>
 ```
 
 ### 合并作用域
 
-和 `where` 方法一样，作用域也可通过 `AND` 合并查询条件：
+和 `WHERE` 子句一样，我们用 `AND` 来合并作用域。
 
 ```ruby
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   scope :active, -> { where state: 'active' }
   scope :inactive, -> { where state: 'inactive' }
 end
@@ -1242,24 +1387,24 @@ User.active.inactive
 # SELECT "users".* FROM "users" WHERE "users"."state" = 'active' AND "users"."state" = 'inactive'
 ```
 
-作用域还可以 `where` 一起使用，生成的 SQL 语句会使用 `AND` 连接所有条件。
+我们可以混合使用 `scope` 和 `where` 方法，这样最后生成的 SQL 语句会使用 `AND` 连接所有条件。
 
 ```ruby
 User.active.where(state: 'finished')
 # SELECT "users".* FROM "users" WHERE "users"."state" = 'active' AND "users"."state" = 'finished'
 ```
 
-如果不想让最后一个 `WHERE` 子句获得优先权，可以使用 `Relation#merge` 方法。
+如果使用 `Relation#merge` 方法，那么在发生条件冲突时总是最后的 `WHERE` 子句起作用。
 
 ```ruby
 User.active.merge(User.inactive)
 # SELECT "users".* FROM "users" WHERE "users"."state" = 'inactive'
 ```
 
-使用作用域时要注意，`default_scope` 会添加到作用域和 `where` 方法指定的条件之前。
+有一点需要特别注意，`default_scope` 总是在所有 `scope` 和 `where` 之前起作用。
 
 ```ruby
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   default_scope { where state: 'pending' }
   scope :active, -> { where state: 'active' }
   scope :inactive, -> { where state: 'inactive' }
@@ -1275,45 +1420,27 @@ User.where(state: 'inactive')
 # SELECT "users".* FROM "users" WHERE "users"."state" = 'pending' AND "users"."state" = 'inactive'
 ```
 
-如上所示，`default_scope` 中的条件添加到了 `active` 和 `where` 之前。
-
-### 指定默认作用域
-
-如果某个作用域要用在模型的所有查询中，可以在模型中使用 `default_scope` 方法指定。
-
-```ruby
-class Client < ActiveRecord::Base
-  default_scope { where("removed_at IS NULL") }
-end
-```
-
-执行查询时使用的 SQL 语句如下：
-
-```sql
-SELECT * FROM clients WHERE removed_at IS NULL
-```
-
-如果默认作用域中的条件比较复杂，可以使用类方法的形式定义：
-
-```ruby
-class Client < ActiveRecord::Base
-  def self.default_scope
-    # Should return an ActiveRecord::Relation.
-  end
-end
-```
+在上面的代码中我们可以看到，在 `scope` 条件和 `where` 条件中都合并了 `default_scope` 条件。
 
 ### 删除所有作用域
 
-如果基于某些原因想删除作用域，可以使用 `unscoped` 方法。如果模型中定义了 `default_scope`，而在这个作用域中不需要使用，就可以使用 `unscoped` 方法。
+在需要时，可以使用 `unscoped` 方法删除作用域。如果在模型中定义了默认作用域，但在某次查询中又不想应用默认作用域，这时就可以使用 `unscoped` 方法。
 
 ```ruby
 Client.unscoped.load
 ```
 
-`unscoped` 方法会删除所有作用域，在数据表中执行常规查询。
+`unscoped` 方法会删除所有作用域，仅在数据表上执行常规查询。
 
-注意，不能在作用域后链式调用 `unscoped`，这时可以使用代码块形式的 `unscoped` 方法：
+```ruby
+Client.unscoped.all
+# SELECT "clients".* FROM "clients"
+
+Client.where(published: false).unscoped.all
+# SELECT "clients".* FROM "clients"
+```
+
+`unscoped` 方法也接受块作为参数。
 
 ```ruby
 Client.unscoped {
@@ -1321,34 +1448,109 @@ Client.unscoped {
 }
 ```
 
-动态查询方法
------------
+动态查找方法
+------------
 
-Active Record 为数据表中的每个字段都提供了一个查询方法。例如，在 `Client` 模型中有个 `first_name` 字段，那么 Active Record 就会生成 `find_by_first_name` 方法。如果在 `Client` 模型中有个 `locked` 字段，就有一个 `find_by_locked` 方法。
+Active Record 为数据表中的每个字段（也称为属性）都提供了查找方法（也就是动态查找方法）。例如，对于 `Client` 模型的 `first_name` 字段，Active Record 会自动生成 `find_by_first_name` 查找方法。对于 `Client` 模型的 `locked` 字段，Active Record 会自动生成 `find_by_locked` 查找方法。
 
-在这些动态生成的查询方法后，可以加上感叹号（`!`），例如 `Client.find_by_name!("Ryan")`。此时，如果找不到记录就会抛出 `ActiveRecord::RecordNotFound` 异常。
+在调用动态查找方法时可以在末尾加上感叹号（`!`），例如 `Client.find_by_name!("Ryan")`，这样如果动态查找方法没有返回任何记录，就会抛出 `ActiveRecord::RecordNotFound` 异常。
 
-如果想同时查询 `first_name` 和 `locked` 字段，可以用 `and` 把两个字段连接起来，获得所需的查询方法，例如 `Client.find_by_first_name_and_locked("Ryan", true)`。
+如果想同时查询 `first_name` 和 `locked` 字段，可以在动态查找方法中用 `and` 把这两个字段连起来，例如 `Client.find_by_first_name_and_locked("Ryan", true)`。
 
-查找或构建新对象
---------------
+`enum` 宏
+---------
 
-NOTE: 某些动态查询方法在 Rails 4.0 中已经启用，会在 Rails 4.1 中删除。推荐的做法是使用 Active Record 作用域。废弃的方法可以在这个 gem 中查看：<https://github.com/rails/activerecord-deprecated_finders>。
+`enum` 宏把整数字段映射为一组可能的值。
 
-我们经常需要在查询不到记录时创建一个新记录。这种需求可以使用 `find_or_create_by` 或 `find_or_create_by!` 方法实现。
+```ruby
+class Book < ApplicationRecord
+  enum availability: [:available, :unavailable]
+end
+```
 
-### `find_or_create_by`
+上面的代码会自动创建用于查询模型的对应作用域，同时会添加用于转换状态和查询当前状态的方法。
 
-`find_or_create_by` 方法首先检查指定属性对应的记录是否存在，如果不存在就调用 `create` 方法。我们来看一个例子。
+```ruby
+# 下面的示例只查询可用的图书
+Book.available
+# 或
+Book.where(availability: :available)
 
-假设你想查找一个名为“Andy”的客户，如果这个客户不存在就新建。这个需求可以使用下面的代码完成：
+book = Book.new(availability: :available)
+book.available?   # => true
+book.unavailable! # => true
+book.available?   # => false
+```
+
+请访问 [Rails API 文档](http://api.rubyonrails.org/classes/ActiveRecord/Enum.html)，查看 `enum` 宏的完整文档。
+
+理解方法链
+----------
+
+Active Record 实现[方法链](http://en.wikipedia.org/wiki/Method_chaining)的方式既简单又直接，有了方法链我们就可以同时使用多个 Active Record 方法。
+
+当之前的方法调用返回 `ActiveRecord::Relation` 对象时，例如 `all`、`where` 和 `joins` 方法，我们就可以在语句中把方法连接起来。返回单个对象的方法（请参阅 [检索单个对象](#检索单个对象)）必须位于语句的末尾。
+
+下面给出了一些例子。本文无法涵盖所有的可能性，这里给出的只是很少的一部分例子。在调用 Active Record 方法时，查询不会立即生成并发送到数据库，这些操作只有在实际需要数据时才会执行。下面的每个例子都会生成一次查询。
+
+### 从多个数据表中检索过滤后的数据
+
+```ruby
+Person
+  .select('people.id, people.name, comments.text')
+  .joins(:comments)
+  .where('comments.created_at > ?', 1.week.ago)
+```
+
+上面的代码会生成下面的 SQL 语句：
+
+```sql
+SELECT people.id, people.name, comments.text
+FROM people
+INNER JOIN comments
+  ON comments.person_id = people.id
+WHERE comments.created_at = '2015-01-01'
+```
+
+### 从多个数据表中检索特定的数据
+
+```ruby
+Person
+  .select('people.id, people.name, companies.name')
+  .joins(:company)
+  .find_by('people.name' => 'John') # this should be the last
+```
+
+上面的代码会生成下面的 SQL 语句：
+
+```sql
+SELECT people.id, people.name, companies.name
+FROM people
+INNER JOIN companies
+  ON companies.person_id = people.id
+WHERE people.name = 'John'
+LIMIT 1
+```
+
+NOTE: 请注意，如果查询匹配多条记录，`find_by` 方法会取回第一条记录并忽略其他记录（如上面的 SQL 语句中的 `LIMIT 1`）。
+
+查找或创建新对象
+----------------
+
+我们经常需要查找记录并在找不到记录时创建记录，这时我们可以使用 `find_or_create_by` 和 `find_or_create_by!` 方法。
+
+### `find_or_create_by` 方法
+
+`find_or_create_by` 方法检查具有指定属性的记录是否存在。如果记录不存在，就调用 `create` 方法创建记录。让我们看一个例子。
+
+假设我们在查找名为“Andy”的用户记录，但是没找到，因此要创建这条记录。这时我们可以执行下面的代码：
 
 ```ruby
 Client.find_or_create_by(first_name: 'Andy')
 # => #<Client id: 1, first_name: "Andy", orders_count: 0, locked: true, created_at: "2011-08-30 06:09:27", updated_at: "2011-08-30 06:09:27">
 ```
 
-上述方法生成的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
 SELECT * FROM clients WHERE (clients.first_name = 'Andy') LIMIT 1
@@ -1357,19 +1559,19 @@ INSERT INTO clients (created_at, first_name, locked, orders_count, updated_at) V
 COMMIT
 ```
 
-`find_or_create_by` 方法返回现有的记录或者新建的记录。在上面的例子中，名为“Andy”的客户不存在，所以会新建一个记录，然后将其返回。
+`find_or_create_by` 方法会返回已存在的记录或新建的记录。在本例中，名为“Andy”的客户记录并不存在，因此会创建并返回这条记录。
 
-新纪录可能没有存入数据库，这取决于是否能通过数据验证（就像 `create` 方法一样）。
+新建记录不一定会保存到数据库，是否保存取决于验证是否通过（就像 `create` 方法那样）。
 
-假设创建新记录时，要把 `locked` 属性设为 `false`，但不想在查询中设置。例如，我们要查询一个名为“Andy”的客户，如果这个客户不存在就新建一个，而且 `locked` 属性为 `false`。
+假设我们想在新建记录时把 `locked` 字段设置为 `false`，但又不想在查询中进行设置。例如，我们想查找名为“Andy”的客户记录，但这条记录并不存在，因此要创建这条记录并把 `locked` 字段设置为 `false`。
 
-这种需求有两种实现方法。第一种，使用 `create_with` 方法：
+要完成这一操作有两种方式。第一种方式是使用 `create_with` 方法：
 
 ```ruby
 Client.create_with(locked: false).find_or_create_by(first_name: 'Andy')
 ```
 
-第二种，使用代码块：
+第二种方式是使用块：
 
 ```ruby
 Client.find_or_create_by(first_name: 'Andy') do |c|
@@ -1377,30 +1579,30 @@ Client.find_or_create_by(first_name: 'Andy') do |c|
 end
 ```
 
-代码块中的代码只会在创建客户之后执行。再次运行这段代码时，会忽略代码块中的代码。
+只有在创建客户记录时才会执行该块。第二次运行这段代码时（此时客户记录已创建），块会被忽略。
 
-### `find_or_create_by!`
+### `find_or_create_by!` 方法
 
-还可使用 `find_or_create_by!` 方法，如果新纪录不合法，会抛出异常。本文不涉及数据验证，假设已经在 `Client` 模型中定义了下面的验证：
+我们也可以使用 `find_or_create_by!` 方法，这样如果新建记录是无效的就会抛出异常。本文不涉及数据验证，不过这里我们暂且假设已经在 `Client` 模型中添加了下面的数据验证：
 
 ```ruby
 validates :orders_count, presence: true
 ```
 
-如果创建新 `Client` 对象时没有指定 `orders_count` 属性的值，这个对象就是不合法的，会抛出以下异常：
+如果我们尝试新建客户记录，但忘了传递 `orders_count` 字段的值，新建记录就是无效的，因而会抛出下面的异常：
 
 ```ruby
 Client.find_or_create_by!(first_name: 'Andy')
 # => ActiveRecord::RecordInvalid: Validation failed: Orders count can't be blank
 ```
 
-### `find_or_initialize_by`
+### `find_or_initialize_by` 方法
 
-`find_or_initialize_by` 方法和 `find_or_create_by` 的作用差不多，但不调用 `create` 方法，而是 `new` 方法。也就是说新建的模型实例在内存中，没有存入数据库。继续使用前面的例子，现在我们要查询的客户名为“Nick”：
+`find_or_initialize_by` 方法的工作原理和 `find_or_create_by` 方法类似，区别之处在于前者调用的是 `new` 方法而不是 `create` 方法。这意味着新建模型实例在内存中创建，但没有保存到数据库。下面继续使用介绍 `find_or_create_by` 方法时使用的例子，我们现在想查找名为“Nick”的客户记录：
 
 ```ruby
 nick = Client.find_or_initialize_by(first_name: 'Nick')
-# => <Client id: nil, first_name: "Nick", orders_count: 0, locked: true, created_at: "2011-08-30 06:09:27", updated_at: "2011-08-30 06:09:27">
+# => #<Client id: nil, first_name: "Nick", orders_count: 0, locked: true, created_at: "2011-08-30 06:09:27", updated_at: "2011-08-30 06:09:27">
 
 nick.persisted?
 # => false
@@ -1409,43 +1611,52 @@ nick.new_record?
 # => true
 ```
 
-因为对象不会存入数据库，上述代码生成的 SQL 语句如下：
+出现上面的执行结果是因为 `nick` 对象还没有保存到数据库。在上面的代码中，`find_or_initialize_by` 方法会生成下面的 SQL 语句：
 
 ```sql
 SELECT * FROM clients WHERE (clients.first_name = 'Nick') LIMIT 1
 ```
 
-如果想把对象存入数据库，调用 `save` 方法即可：
+要想把 `nick` 对象保存到数据库，只需调用 `save` 方法：
 
 ```ruby
 nick.save
 # => true
 ```
 
-使用 SQL 语句查询
-----------------
+使用 SQL 语句进行查找
+---------------------
 
-如果想使用 SQL 语句查询数据表中的记录，可以使用 `find_by_sql` 方法。就算只找到一个记录，`find_by_sql` 方法也会返回一个由记录组成的数组。例如，可以运行下面的查询：
+要想直接使用 SQL 语句在数据表中查找记录，可以使用 `find_by_sql` 方法。`find_by_sql` 方法总是返回对象的数组，即使底层查询只返回了一条记录也是如此。例如，我们可以执行下面的查询：
 
 ```ruby
 Client.find_by_sql("SELECT * FROM clients
   INNER JOIN orders ON clients.id = orders.client_id
   ORDER BY clients.created_at desc")
+# =>  [
+#   #<Client id: 1, first_name: "Lucas" >,
+#   #<Client id: 2, first_name: "Jan" >,
+#   ...
+# ]
 ```
 
-`find_by_sql` 方法提供了一种定制查询的简单方式。
+`find_by_sql` 方法提供了对数据库进行定制查询并取回实例化对象的简单方式。
 
-### `select_all`
+### `select_all` 方法
 
-`find_by_sql` 方法有一个近亲，名为 `connection#select_all`。和 `find_by_sql` 一样，`select_all` 方法会使用 SQL 语句查询数据库，获取记录，但不会初始化对象。`select_all` 返回的结果是一个由 Hash 组成的数组，每个 Hash 表示一个记录。
+`find_by_sql` 方法有一个名为 `connection#select_all` 的近亲。和 `find_by_sql` 方法一样，`select_all` 方法也会使用定制的 SQL 语句从数据库中检索对象，区别在于 `select_all` 方法不会对这些对象进行实例化，而是返回一个散列构成的数组，其中每个散列表示一条记录。
 
 ```ruby
-Client.connection.select_all("SELECT * FROM clients WHERE id = '1'")
+Client.connection.select_all("SELECT first_name, created_at FROM clients WHERE id = '1'")
+# => [
+#   {"first_name"=>"Rafael", "created_at"=>"2012-11-10 23:23:45.281189"},
+#   {"first_name"=>"Eileen", "created_at"=>"2013-12-09 11:22:35.221282"}
+# ]
 ```
 
-### `pluck`
+### `pluck` 方法
 
-`pluck` 方法可以在模型对应的数据表中查询一个或多个字段，其参数是一组字段名，返回结果是由各字段的值组成的数组。
+`pluck` 方法用于在模型对应的底层数据表中查询单个或多个字段。它接受字段名的列表作为参数，并返回这些字段的值的数组，数组中的每个值都具有对应的数据类型。
 
 ```ruby
 Client.where(active: true).pluck(:id)
@@ -1461,28 +1672,28 @@ Client.pluck(:id, :name)
 # => [[1, 'David'], [2, 'Jeremy'], [3, 'Jose']]
 ```
 
-如下的代码：
+使用 `pluck` 方法，我们可以把下面的代码：
 
 ```ruby
 Client.select(:id).map { |c| c.id }
-# or
+# 或
 Client.select(:id).map(&:id)
-# or
+# 或
 Client.select(:id, :name).map { |c| [c.id, c.name] }
 ```
 
-可用 `pluck` 方法实现：
+替换为：
 
 ```ruby
 Client.pluck(:id)
-# or
+# 或
 Client.pluck(:id, :name)
 ```
 
-和 `select` 方法不一样，`pluck` 直接把查询结果转换成 Ruby 数组，不生成 Active Record 对象，可以提升大型查询或常用查询的执行效率。但 `pluck` 方法不会使用重新定义的属性方法处理查询结果。例如：
+和 `select` 方法不同，`pluck` 方法把数据库查询结果直接转换为 Ruby 数组，而不是构建 Active Record 对象。这意味着对于大型查询或常用查询，`pluck` 方法的性能更好。不过对于 `pluck` 方法，模型方法重载是不可用的。例如：
 
 ```ruby
-class Client < ActiveRecord::Base
+class Client < ApplicationRecord
   def name
     "I am #{super}"
   end
@@ -1495,7 +1706,7 @@ Client.pluck(:name)
 # => ["David", "Jeremy", "Jose"]
 ```
 
-而且，与 `select` 和其他 `Relation` 作用域不同的是，`pluck` 方法会直接执行查询，因此后面不能和其他作用域链在一起，但是可以链接到已经执行的作用域之后：
+此外，和 `select` 方法及其他 `Relation` 作用域不同，`pluck` 方法会触发即时查询，因此在 `pluck` 方法之前可以链接作用域，但在 `pluck` 方法之后不能链接作用域：
 
 ```ruby
 Client.pluck(:name).limit(1)
@@ -1505,9 +1716,9 @@ Client.limit(1).pluck(:name)
 # => ["David"]
 ```
 
-### `ids`
+### `ids` 方法
 
-`ids` 方法可以直接获取数据表的主键。
+使用 `ids` 方法可以获得关联的所有 ID，也就是数据表的主键。
 
 ```ruby
 Person.ids
@@ -1515,7 +1726,7 @@ Person.ids
 ```
 
 ```ruby
-class Person < ActiveRecord::Base
+class Person < ApplicationRecord
   self.primary_key = "person_id"
 end
 
@@ -1524,82 +1735,82 @@ Person.ids
 ```
 
 检查对象是否存在
---------------
+----------------
 
-如果只想检查对象是否存在，可以使用 `exists?` 方法。这个方法使用的数据库查询和 `find` 方法一样，但不会返回对象或对象集合，而是返回 `true` 或 `false`。
+要想检查对象是否存在，可以使用 `exists?` 方法。`exists?` 方法查询数据库的工作原理和 `find` 方法相同，但是 `find` 方法返回的是对象或对象集合，而 `exists?` 方法返回的是 `true` 或 `false`。
 
 ```ruby
 Client.exists?(1)
 ```
 
-`exists?` 方法可以接受多个值，但只要其中一个记录存在，就会返回 `true`。
+`exists?` 方法也接受多个值作为参数，并且只要有一条对应记录存在就会返回 `true`。
 
 ```ruby
 Client.exists?(id: [1,2,3])
-# or
+# 或
 Client.exists?(name: ['John', 'Sergei'])
 ```
 
-在模型或关系上调用 `exists?` 方法时，可以不指定任何参数。
+我们还可以在模型或关联上调用 `exists?` 方法，这时不需要任何参数。
 
 ```ruby
 Client.where(first_name: 'Ryan').exists?
 ```
 
-在上述代码中，只要有一个客户的 `first_name` 字段值为 `'Ryan'`，就会返回 `true`，否则返回 `false`。
+只要存在一条名为“Ryan”的客户记录，上面的代码就会返回 `true`，否则返回 `false`。
 
 ```ruby
 Client.exists?
 ```
 
-在上述代码中，如果 `clients` 表是空的，会返回 `false`，否则返回 `true`。
+如果 `clients` 数据表是空的，上面的代码返回 `false`，否则返回 `true`。
 
-在模型或关系中检查存在性时还可使用 `any?` 和 `many?` 方法。
+我们还可以在模型或关联上调用 `any?` 和 `many?` 方法来检查对象是否存在。
 
 ```ruby
-# via a model
-Post.any?
-Post.many?
+# 通过模型
+Article.any?
+Article.many?
 
-# via a named scope
-Post.recent.any?
-Post.recent.many?
+# 通过指定的作用域
+Article.recent.any?
+Article.recent.many?
 
-# via a relation
-Post.where(published: true).any?
-Post.where(published: true).many?
+# 通过关系
+Article.where(published: true).any?
+Article.where(published: true).many?
 
-# via an association
-Post.first.categories.any?
-Post.first.categories.many?
+# 通过关联
+Article.first.categories.any?
+Article.first.categories.many?
 ```
 
 计算
 ----
 
-这里先以 `count` 方法为例，所有的选项都可在后面各方法中使用。
+在本节的前言中我们以 `count` 方法为例，例子中提到的所有选项对本节的各小节都适用。
 
-所有计算型方法都可直接在模型上调用：
+所有用于计算的方法都可以直接在模型上调用：
 
 ```ruby
 Client.count
 # SELECT count(*) AS count_all FROM clients
 ```
 
-或者在关系上调用：
+或者在关联上调用：
 
 ```ruby
 Client.where(first_name: 'Ryan').count
 # SELECT count(*) AS count_all FROM clients WHERE (first_name = 'Ryan')
 ```
 
-执行复杂计算时还可使用各种查询方法：
+我们还可以在关联上执行各种查找方法来执行复杂的计算：
 
 ```ruby
 Client.includes("orders").where(first_name: 'Ryan', orders: { status: 'received' }).count
 ```
 
-上述代码执行的 SQL 语句如下：
+上面的代码会生成下面的 SQL 语句：
 
 ```sql
 SELECT count(DISTINCT clients.id) AS count_all FROM clients
@@ -1607,121 +1818,139 @@ SELECT count(DISTINCT clients.id) AS count_all FROM clients
   (clients.first_name = 'Ryan' AND orders.status = 'received')
 ```
 
-### 计数
+### `count` 方法
 
-如果想知道模型对应的数据表中有多少条记录，可以使用 `Client.count` 方法。如果想更精确的计算设定了 `age` 字段的记录数，可以使用 `Client.count(:age)`。
+要想知道模型对应的数据表中有多少条记录，可以使用 `Client.count` 方法，这个方法的返回值就是记录条数。如果想要知道特定记录的条数，例如具有 `age` 字段值的所有客户记录的条数，可以使用 `Client.count(:age)`。
 
-`count` 方法可用的选项[如前所述](#calculations)。
+关于 `count` 方法的选项的更多介绍，请参阅 [计算](#计算)。
 
-### 平均值
+### `average` 方法
 
-如果想查看某个字段的平均值，可以使用 `average` 方法。用法如下：
+要想知道数据表中某个字段的平均值，可以在数据表对应的类上调用 `average` 方法。例如：
 
 ```ruby
 Client.average("orders_count")
 ```
 
-这个方法会返回指定字段的平均值，得到的有可能是浮点数，例如 3.14159265。
+上面的代码会返回表示 `orders_count` 字段平均值的数字（可能是浮点数，如 3.14159265）。
 
-`average` 方法可用的选项[如前所述](#calculations)。
+关于 `average` 方法的选项的更多介绍，请参阅 [计算](#计算)。
 
-### 最小值
+### `minimum` 方法
 
-如果想查看某个字段的最小值，可以使用 `minimum` 方法。用法如下：
+要想查找数据表中某个字段的最小值，可以在数据表对应的类上调用 `minimum` 方法。例如：
 
 ```ruby
 Client.minimum("age")
 ```
 
-`minimum` 方法可用的选项[如前所述](#calculations)。
+关于 `minimum` 方法的选项的更多介绍，请参阅 [计算](#计算)。
 
-### 最大值
+### `maximum` 方法
 
-如果想查看某个字段的最大值，可以使用 `maximum` 方法。用法如下：
+要想查找数据表中某个字段的最大值，可以在数据表对应的类上调用 `maximum` 方法。例如：
 
 ```ruby
 Client.maximum("age")
 ```
 
-`maximum` 方法可用的选项[如前所述](#calculations)。
+关于 `maximum` 方法的选项的更多介绍，请参阅 [计算](#计算)。
 
-### 求和
+### `sum` 方法
 
-如果想查看所有记录中某个字段的总值，可以使用 `sum` 方法。用法如下：
+要想知道数据表中某个字段的所有字段值之和，可以在数据表对应的类上调用 `sum` 方法。例如：
 
 ```ruby
 Client.sum("orders_count")
 ```
 
-`sum` 方法可用的选项[如前所述](#calculations)。
+关于 `sum` 方法的选项的更多介绍，请参阅 [计算](#计算)。
 
-执行 EXPLAIN 命令
-----------------
+执行 `EXPLAIN` 命令
+-------------------
 
-可以在关系执行的查询中执行 EXPLAIN 命令。例如：
-
-```ruby
-User.where(id: 1).joins(:posts).explain
-```
-
-在 MySQL 中得到的输出如下：
-
-```
-EXPLAIN for: SELECT `users`.* FROM `users` INNER JOIN `posts` ON `posts`.`user_id` = `users`.`id` WHERE `users`.`id` = 1
-+----+-------------+-------+-------+---------------+---------+---------+-------+------+-------------+
-| id | select_type | table | type  | possible_keys | key     | key_len | ref   | rows | Extra       |
-+----+-------------+-------+-------+---------------+---------+---------+-------+------+-------------+
-|  1 | SIMPLE      | users | const | PRIMARY       | PRIMARY | 4       | const |    1 |             |
-|  1 | SIMPLE      | posts | ALL   | NULL          | NULL    | NULL    | NULL  |    1 | Using where |
-+----+-------------+-------+-------+---------------+---------+---------+-------+------+-------------+
-2 rows in set (0.00 sec)
-```
-
-Active Record 会按照所用数据库 shell 的方式输出结果。所以，相同的查询在 PostgreSQL 中得到的输出如下：
-
-```
-EXPLAIN for: SELECT "users".* FROM "users" INNER JOIN "posts" ON "posts"."user_id" = "users"."id" WHERE "users"."id" = 1
-                                  QUERY PLAN
-------------------------------------------------------------------------------
- Nested Loop Left Join  (cost=0.00..37.24 rows=8 width=0)
-   Join Filter: (posts.user_id = users.id)
-   ->  Index Scan using users_pkey on users  (cost=0.00..8.27 rows=1 width=4)
-         Index Cond: (id = 1)
-   ->  Seq Scan on posts  (cost=0.00..28.88 rows=8 width=4)
-         Filter: (posts.user_id = 1)
-(6 rows)
-```
-
-按需加载会触发多次查询，而且有些查询要用到之前查询的结果。鉴于此，`explain` 方法会真正执行查询，然后询问查询计划。例如：
+我们可以在关联触发的查询上执行 `EXPLAIN` 命令。例如：
 
 ```ruby
-User.where(id: 1).includes(:posts).explain
+User.where(id: 1).joins(:articles).explain
 ```
 
-在 MySQL 中得到的输出如下：
+对于 MySQL 和 MariaDB 数据库后端，上面的代码会产生下面的输出结果：
 
+    EXPLAIN for: SELECT `users`.* FROM `users` INNER JOIN `articles` ON `articles`.`user_id` = `users`.`id` WHERE `users`.`id` = 1
+    +----+-------------+----------+-------+---------------+
+    | id | select_type | table    | type  | possible_keys |
+    +----+-------------+----------+-------+---------------+
+    |  1 | SIMPLE      | users    | const | PRIMARY       |
+    |  1 | SIMPLE      | articles | ALL   | NULL          |
+    +----+-------------+----------+-------+---------------+
+    +---------+---------+-------+------+-------------+
+    | key     | key_len | ref   | rows | Extra       |
+    +---------+---------+-------+------+-------------+
+    | PRIMARY | 4       | const |    1 |             |
+    | NULL    | NULL    | NULL  |    1 | Using where |
+    +---------+---------+-------+------+-------------+
+
+    2 rows in set (0.00 sec)
+
+Active Record 会模拟对应数据库的 shell 来打印输出结果。因此对于 PostgreSQL 数据库后端，同样的代码会产生下面的输出结果：
+
+    EXPLAIN for: SELECT "users".* FROM "users" INNER JOIN "articles" ON "articles"."user_id" = "users"."id" WHERE "users"."id" = 1
+                                      QUERY PLAN
+    ------------------------------------------------------------------------------
+     Nested Loop Left Join  (cost=0.00..37.24 rows=8 width=0)
+       Join Filter: (articles.user_id = users.id)
+       ->  Index Scan using users_pkey on users  (cost=0.00..8.27 rows=1 width=4)
+             Index Cond: (id = 1)
+       ->  Seq Scan on articles  (cost=0.00..28.88 rows=8 width=4)
+             Filter: (articles.user_id = 1)
+    (6 rows)
+
+及早加载在底层可能会触发多次查询，有的查询可能需要使用之前查询的结果。因此，`explain` 方法实际上先执行了查询，然后询问查询计划。例如：
+
+```ruby
+User.where(id: 1).includes(:articles).explain
 ```
-EXPLAIN for: SELECT `users`.* FROM `users`  WHERE `users`.`id` = 1
-+----+-------------+-------+-------+---------------+---------+---------+-------+------+-------+
-| id | select_type | table | type  | possible_keys | key     | key_len | ref   | rows | Extra |
-+----+-------------+-------+-------+---------------+---------+---------+-------+------+-------+
-|  1 | SIMPLE      | users | const | PRIMARY       | PRIMARY | 4       | const |    1 |       |
-+----+-------------+-------+-------+---------------+---------+---------+-------+------+-------+
-1 row in set (0.00 sec)
 
-EXPLAIN for: SELECT `posts`.* FROM `posts`  WHERE `posts`.`user_id` IN (1)
-+----+-------------+-------+------+---------------+------+---------+------+------+-------------+
-| id | select_type | table | type | possible_keys | key  | key_len | ref  | rows | Extra       |
-+----+-------------+-------+------+---------------+------+---------+------+------+-------------+
-|  1 | SIMPLE      | posts | ALL  | NULL          | NULL | NULL    | NULL |    1 | Using where |
-+----+-------------+-------+------+---------------+------+---------+------+------+-------------+
-1 row in set (0.00 sec)
-```
+对于 MySQL 和 MariaDB 数据库后端，上面的代码会产生下面的输出结果：
 
-### 解读 EXPLAIN 命令的输出结果
+    EXPLAIN for: SELECT `users`.* FROM `users`  WHERE `users`.`id` = 1
+    +----+-------------+-------+-------+---------------+
+    | id | select_type | table | type  | possible_keys |
+    +----+-------------+-------+-------+---------------+
+    |  1 | SIMPLE      | users | const | PRIMARY       |
+    +----+-------------+-------+-------+---------------+
+    +---------+---------+-------+------+-------+
+    | key     | key_len | ref   | rows | Extra |
+    +---------+---------+-------+------+-------+
+    | PRIMARY | 4       | const |    1 |       |
+    +---------+---------+-------+------+-------+
 
-解读 EXPLAIN 命令的输出结果不在本文的范畴之内。下面列出的链接可以帮助你进一步了解相关知识：
+    1 row in set (0.00 sec)
 
-* SQLite3: [EXPLAIN QUERY PLAN](http://www.sqlite.org/eqp.html)
-* MySQL: [EXPLAIN 的输出格式](http://dev.mysql.com/doc/refman/5.6/en/explain-output.html)
-* PostgreSQL: [使用 EXPLAIN](http://www.postgresql.org/docs/current/static/using-explain.html)
+    EXPLAIN for: SELECT `articles`.* FROM `articles`  WHERE `articles`.`user_id` IN (1)
+    +----+-------------+----------+------+---------------+
+    | id | select_type | table    | type | possible_keys |
+    +----+-------------+----------+------+---------------+
+    |  1 | SIMPLE      | articles | ALL  | NULL          |
+    +----+-------------+----------+------+---------------+
+    +------+---------+------+------+-------------+
+    | key  | key_len | ref  | rows | Extra       |
+    +------+---------+------+------+-------------+
+    | NULL | NULL    | NULL |    1 | Using where |
+    +------+---------+------+------+-------------+
+
+
+    1 row in set (0.00 sec)
+
+### 对 `EXPLAIN` 命令输出结果的解释
+
+对 `EXPLAIN` 命令输出结果的解释超出了本文的范畴。下面提供了一些有用链接：
+
+- SQLite3：[对查询计划的解释](http://www.sqlite.org/eqp.html)
+
+- MySQL：[EXPLAIN 输出格式](http://dev.mysql.com/doc/refman/5.7/en/explain-output.html)
+
+- MariaDB：[EXPLAIN](https://mariadb.com/kb/en/mariadb/explain/)
+
+- PostgreSQL：[使用 EXPLAIN](http://www.postgresql.org/docs/current/static/using-explain.html)

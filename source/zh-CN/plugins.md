@@ -1,76 +1,68 @@
-Rails 插件入门
-====================================
+Rails 插件开发简介
+==================
 
-一个Rails插件既可以是核心框架库某个功能扩展，也可以是对核心框架库的修改。插件提供了如下功能：
+Rails 插件是对核心框架的扩展或修改。插件有下述作用：
 
+- 供开发者分享突发奇想，但不破坏稳定的代码基
 
-* 为开发者分享新特性又保证不影响稳定版本的功能提供了支持；
+- 碎片式架构，代码自成一体，能按照自己的日程表修正或更新
 
-* 松散的代码组织架构为修复、更新局部模块提供了支持；
+- 核心开发者使用的外延工具，不必把每个新特性都集成到核心框架中
 
-* 为核心成员开发局部模块功能特性提供了支持；
+读完本文后，您将学到：
 
+- 如何从零开始创建一个插件
 
-读完本章节，您将学到：
+- 如何编写插件的代码和测试
 
-* 如何构造一个简单的插件；
+本文使用测试驱动开发方式编写一个插件，它具有下述功能：
 
-* 如何为插件编写和运行测试用例；
+- 扩展 Ruby 核心类，如 Hash 和 String
 
+- 通过传统的 `acts_as` 插件形式为 `ApplicationRecord` 添加方法
 
-本指南将介绍如何通过测试驱动的方式开发插件：
+- 说明生成器放在插件的什么位置
 
-* 扩展核心类库功能，比如`Hash`和`String`；
+本文暂且假设你是热衷观察鸟类的人。你钟爱的鸟是绿啄木鸟（Yaffle），因此你想创建一个插件，供其他开发者分享心得。
 
-* 给`ActiveRecord::Base`添加`acts_as`插件功能；
+NOTE: 本文原文尚未完工！
 
-* 提供创建自定义插件必需的信息；
+准备
+----
 
+目前，Rails 插件构建成 gem 的形式，叫做 gem 式插件（gemified plugin）。如果愿意，可以通过 RubyGems 和 Bundler 在多个 Rails 应用中共享。
 
+### 生成 gem 式插件
 
-假定你是一名狂热的鸟类观察爱好者，你最喜欢的鸟是Yaffle，你希望创建一个插件和开发者们分享有关Yaffle的信息。  
+Rails 自带一个 `rails plugin new` 命令，用于创建任何 Rails 扩展的骨架。这个命令还会生成一个虚设的 Rails 应用，用于运行集成测试。请使用下述命令创建这个插件：
 
---------------------------------------------------------------------------------
-
-准备工作
------
-
-目前，Rails插件是被当作gem来使用的(gem化的插件)。不同Rails应用可以通过RubyGems和Bundler命令来使用他们。
-
-### 生成一个gem化的插件
-
-
-Rails使用`rails plugin new`命令为开发者创建各种Rails扩展，以确保它能使用一个简单Rails应用进行测试。创建插件的命令如下：
-
-```bash
-$ bin/rails plugin new yaffle
+```sh
+$ rails plugin new yaffle
 ```
 
-如下命令可以获取创建插件命令的使用方式：
+如果想查看用法和选项，执行下述命令：
 
-```bash
-$ bin/rails plugin --help
+```sh
+$ rails plugin new --help
 ```
 
-让新生成的插件支持测试
------------------------------------
+测试新生成的插件
+----------------
 
- 打开新生成插件所在的文件目录，然后在命令行模式下运行`bundle install`命令，使用`rake`命令生成测试环境。
+进入插件所在的目录，运行 `bundle install` 命令，然后使用 `bin/test` 命令运行生成的一个测试。
 
-你将看到如下代码：
+你会看到下述输出：
 
-```bash
-  2 tests, 2 assertions, 0 failures, 0 errors, 0 skips
-```
+    1 runs, 1 assertions, 0 failures, 0 errors, 0 skips
 
-上述内容告诉你一切就绪，可以开始为插件添加新特性了。
+这表明一切都正确生成了，接下来可以添加功能了。
 
-扩展核心类库
-----------------------
+扩展核心类
+----------
 
-本章节将介绍如何为`String`添加一个方法，并让它在你的Rails应用中生效。
+本节说明如何为 String 类添加一个方法，让它在整个 Rails 应用中都可以使用。
 
-下面我们将为`String`添加一个名为`to_squawk`的方法。开始前，我们可以先创建一些简单的测试函数：
+这里，我们为 String 添加的方法名为 `to_squawk`。首先，创建一个测试文件，写入几个断言：
 
 ```ruby
 # yaffle/test/core_ext_test.rb
@@ -84,18 +76,26 @@ class CoreExtTest < ActiveSupport::TestCase
 end
 ```
 
-运行`rake`命令运行测试，测试将返回错误信息，因为我们还没有完成`to_squawk`方法的功能实现：
+然后使用 `bin/test` 运行测试。这个测试应该失败，因为我们还没实现 `to_squawk` 方法。
 
-```bash
-    1) Error:
-  test_to_squawk_prepends_the_word_squawk(CoreExtTest):
-  NoMethodError: undefined method `to_squawk' for [Hello World](String)
-      test/core_ext_test.rb:5:in `test_to_squawk_prepends_the_word_squawk'
-```
+    E
 
-好吧，现在开始进入正题：
+    Error:
+    CoreExtTest#test_to_squawk_prepends_the_word_squawk:
+    NoMethodError: undefined method `to_squawk' for "Hello World":String
 
-在`lib/yaffle.rb`文件中, 添加 `require 'yaffle/core_ext'`：
+
+    bin/test /path/to/yaffle/test/core_ext_test.rb:4
+
+    .
+
+    Finished in 0.003358s, 595.6483 runs/s, 297.8242 assertions/s.
+
+    2 runs, 1 assertions, 0 failures, 1 errors, 0 skips
+
+很好，下面可以开始开发了。
+
+在 `lib/yaffle.rb` 文件中添加 `require 'yaffle/core_ext'`：
 
 ```ruby
 # yaffle/lib/yaffle.rb
@@ -106,7 +106,7 @@ module Yaffle
 end
 ```
 
-最后，新建一个`core_ext.rb`文件，并添加`to_squawk`方法：
+最后，创建 `core_ext.rb` 文件，添加 `to_squawk` 方法：
 
 ```ruby
 # yaffle/lib/yaffle/core_ext.rb
@@ -118,26 +118,24 @@ String.class_eval do
 end
 ```
 
-为了测试你的程序是否符合预期，可以在插件目录下运行`rake`命令，来测试一下。
+为了测试方法的行为是否得当，在插件目录中使用 `bin/test` 运行单元测试：
 
-```bash
-  3 tests, 3 assertions, 0 failures, 0 errors, 0 skips
-```
+    2 runs, 2 assertions, 0 failures, 0 errors, 0 skips
 
-看到上述内容后，用命令行导航到test/dummy目录，使用Rails控制台来做个测试：
+为了实测一下，进入 `test/dummy` 目录，打开控制台：
 
-```bash
+```sh
 $ bin/rails console
 >> "Hello World".to_squawk
 => "squawk! Hello World"
 ```
 
-为Active Record添加"acts_as"方法
-----------------------------------------
+为 Active Record 添加“acts\_as”方法
+-----------------------------------
 
-一般来说，在插件中为某模块添加方法的命名方式是`acts_as_something`，本例中我们将为Active Record添加一个名为`acts_as_yaffle`的方法实现`squawk` 功能。
+插件经常为模型添加名为 `acts_as_something` 的方法。这里，我们要编写一个名为 `acts_as_yaffle` 的方法，为 Active Record 添加 `squawk` 方法。
 
-首先，新建一些文件：
+首先，创建几个文件：
 
 ```ruby
 # yaffle/test/acts_as_yaffle_test.rb
@@ -163,16 +161,16 @@ end
 
 module Yaffle
   module ActsAsYaffle
-    # your code will go here
+    # 在这里编写你的代码
   end
 end
 ```
 
 ### 添加一个类方法
 
-假如插件的模块中有一个名为 `last_squawk` 的方法，与此同时，插件的使用者在其他模块也定义了一个名为 `last_squawk` 的方法，那么插件允许你添加一个类方法 `yaffle_text_field` 来改变插件内的 `last_squawk` 方法的名称。
+这个插件将为模型添加一个名为 `last_squawk` 的方法。然而，插件的用户可能已经在模型中定义了同名方法，做其他用途使用。这个插件将允许修改插件的名称，为此我们要添加一个名为 `yaffle_text_field` 的类方法。
 
-开始之前，先写一些测试用例来保证程序拥有符合预期的行为。
+首先，为预期行为编写一个失败测试：
 
 ```ruby
 # yaffle/test/acts_as_yaffle_test.rb
@@ -180,7 +178,6 @@ end
 require 'test_helper'
 
 class ActsAsYaffleTest < ActiveSupport::TestCase
-
   def test_a_hickwalls_yaffle_text_field_should_be_last_squawk
     assert_equal "last_squawk", Hickwall.yaffle_text_field
   end
@@ -188,62 +185,73 @@ class ActsAsYaffleTest < ActiveSupport::TestCase
   def test_a_wickwalls_yaffle_text_field_should_be_last_tweet
     assert_equal "last_tweet", Wickwall.yaffle_text_field
   end
-
 end
 ```
 
-运行`rake`命令，你将看到如下结果：
+执行 `bin/test` 命令，应该看到下述输出：
 
-```
-    1) Error:
-  test_a_hickwalls_yaffle_text_field_should_be_last_squawk(ActsAsYaffleTest):
-  NameError: uninitialized constant ActsAsYaffleTest::Hickwall
-      test/acts_as_yaffle_test.rb:6:in `test_a_hickwalls_yaffle_text_field_should_be_last_squawk'
+    # Running:
 
-    2) Error:
-  test_a_wickwalls_yaffle_text_field_should_be_last_tweet(ActsAsYaffleTest):
-  NameError: uninitialized constant ActsAsYaffleTest::Wickwall
-      test/acts_as_yaffle_test.rb:10:in `test_a_wickwalls_yaffle_text_field_should_be_last_tweet'
+    ..E
 
-  5 tests, 3 assertions, 0 failures, 2 errors, 0 skips
-```
+    Error:
+    ActsAsYaffleTest#test_a_wickwalls_yaffle_text_field_should_be_last_tweet:
+    NameError: uninitialized constant ActsAsYaffleTest::Wickwall
 
-上述内容告诉我们，我们没有提供必要的模块(Hickwall 和 Wickwall)进行测试。我们可以在test/dummy目录下使用命令生成必要的模块： 
 
-```bash
+    bin/test /path/to/yaffle/test/acts_as_yaffle_test.rb:8
+
+    E
+
+    Error:
+    ActsAsYaffleTest#test_a_hickwalls_yaffle_text_field_should_be_last_squawk:
+    NameError: uninitialized constant ActsAsYaffleTest::Hickwall
+
+
+    bin/test /path/to/yaffle/test/acts_as_yaffle_test.rb:4
+
+
+
+    Finished in 0.004812s, 831.2949 runs/s, 415.6475 assertions/s.
+
+    4 runs, 2 assertions, 0 failures, 2 errors, 0 skips
+
+输出表明，我们想测试的模型（Hickwall 和 Wickwall）不存在。为此，可以在 `test/dummy` 目录中运行下述命令生成：
+
+```sh
 $ cd test/dummy
 $ bin/rails generate model Hickwall last_squawk:string
 $ bin/rails generate model Wickwall last_squawk:string last_tweet:string
 ```
 
-接下来为简单应用创建测试数据库并做数据迁移：
+然后，进入虚设的应用，迁移数据库，创建所需的数据库表。首先，执行：
 
-```bash
+```sh
 $ cd test/dummy
-$ bin/rake db:migrate
+$ bin/rails db:migrate
 ```
 
-至此，修改Hickwall和Wickwall模块，把他们和yaffles关联起来：
+同时，修改 Hickwall 和 Wickwall 模型，让它们知道自己的行为像绿啄木鸟。
 
 ```ruby
 # test/dummy/app/models/hickwall.rb
 
-class Hickwall < ActiveRecord::Base
+class Hickwall < ApplicationRecord
   acts_as_yaffle
 end
 
 # test/dummy/app/models/wickwall.rb
 
-class Wickwall < ActiveRecord::Base
+class Wickwall < ApplicationRecord
   acts_as_yaffle yaffle_text_field: :last_tweet
 end
-
 ```
 
-同时定义`acts_as_yaffle`方法：
+再添加定义 `acts_as_yaffle` 方法的代码：
 
 ```ruby
 # yaffle/lib/yaffle/acts_as_yaffle.rb
+
 module Yaffle
   module ActsAsYaffle
     extend ActiveSupport::Concern
@@ -259,36 +267,51 @@ module Yaffle
   end
 end
 
-ActiveRecord::Base.send :include, Yaffle::ActsAsYaffle
+# test/dummy/app/models/application_record.rb
+
+class ApplicationRecord < ActiveRecord::Base
+  include Yaffle::ActsAsYaffle
+
+  self.abstract_class = true
+end
 ```
 
-在插件的根目录下运行`rake`命令：
+然后，回到插件的根目录（`cd ../..`），使用 `bin/test` 再次运行测试：
 
-```
-    1) Error:
-  test_a_hickwalls_yaffle_text_field_should_be_last_squawk(ActsAsYaffleTest):
-  NoMethodError: undefined method `yaffle_text_field' for #<Class:0x000001016661b8>
-      /Users/xxx/.rvm/gems/ruby-1.9.2-p136@xxx/gems/activerecord-3.0.3/lib/active_record/base.rb:1008:in `method_missing'
-      test/acts_as_yaffle_test.rb:5:in `test_a_hickwalls_yaffle_text_field_should_be_last_squawk'
+    # Running:
 
-    2) Error:
-  test_a_wickwalls_yaffle_text_field_should_be_last_tweet(ActsAsYaffleTest):
-  NoMethodError: undefined method `yaffle_text_field' for #<Class:0x00000101653748>
-      Users/xxx/.rvm/gems/ruby-1.9.2-p136@xxx/gems/activerecord-3.0.3/lib/active_record/base.rb:1008:in `method_missing'
-      test/acts_as_yaffle_test.rb:9:in `test_a_wickwalls_yaffle_text_field_should_be_last_tweet'
+    .E
 
-  5 tests, 3 assertions, 0 failures, 2 errors, 0 skips
+    Error:
+    ActsAsYaffleTest#test_a_hickwalls_yaffle_text_field_should_be_last_squawk:
+    NoMethodError: undefined method `yaffle_text_field' for #<Class:0x0055974ebbe9d8>
 
-```
 
-现在离目标已经很近了，我们来完成`acts_as_yaffle`方法，以便通过测试。
+    bin/test /path/to/yaffle/test/acts_as_yaffle_test.rb:4
+
+    E
+
+    Error:
+    ActsAsYaffleTest#test_a_wickwalls_yaffle_text_field_should_be_last_tweet:
+    NoMethodError: undefined method `yaffle_text_field' for #<Class:0x0055974eb8cfc8>
+
+
+    bin/test /path/to/yaffle/test/acts_as_yaffle_test.rb:8
+
+    .
+
+    Finished in 0.008263s, 484.0999 runs/s, 242.0500 assertions/s.
+
+    4 runs, 2 assertions, 0 failures, 2 errors, 0 skips
+
+快完工了……接下来实现 `acts_as_yaffle` 方法，让测试通过：
 
 ```ruby
 # yaffle/lib/yaffle/acts_as_yaffle.rb
 
 module Yaffle
   module ActsAsYaffle
-   extend ActiveSupport::Concern
+    extend ActiveSupport::Concern
 
     included do
     end
@@ -302,28 +325,30 @@ module Yaffle
   end
 end
 
-ActiveRecord::Base.send :include, Yaffle::ActsAsYaffle
+# test/dummy/app/models/application_record.rb
+
+class ApplicationRecord < ActiveRecord::Base
+  include Yaffle::ActsAsYaffle
+
+  self.abstract_class = true
+end
 ```
 
-运行`rake`命令后，你将看到所有测试都通过了:
+再次运行 `bin/test`，测试应该都能通过：
 
-```bash
-  5 tests, 5 assertions, 0 failures, 0 errors, 0 skips
-```
+    4 runs, 4 assertions, 0 failures, 0 errors, 0 skips
 
 ### 添加一个实例方法
 
-本插件将为所有Active Record对象添加一个名为`squawk`的方法，Active Record 对象通过调用`acts_as_yaffle`方法来间接调用插件的`squawk`方法。
-`squawk`方法将作为一个可赋值的字段与数据库关联起来。
+这个插件能为任何模型添加调用 `acts_as_yaffle` 方法的 `squawk` 方法。`squawk` 方法的作用很简单，设定数据库中某个字段的值。
 
-开始之前，可以先写一些测试用例来保证程序拥有符合预期的行为：
+首先，为预期行为编写一个失败测试：
 
 ```ruby
 # yaffle/test/acts_as_yaffle_test.rb
 require 'test_helper'
 
 class ActsAsYaffleTest < ActiveSupport::TestCase
-
   def test_a_hickwalls_yaffle_text_field_should_be_last_squawk
     assert_equal "last_squawk", Hickwall.yaffle_text_field
   end
@@ -346,7 +371,7 @@ class ActsAsYaffleTest < ActiveSupport::TestCase
 end
 ```
 
-运行测试后，确保测试结果中包含2个"NoMethodError: undefined method `squawk'"的测试错误，那么我们可以修改'acts_as_yaffle.rb'中的代码：
+运行测试，确保最后两个测试的失败消息中有“NoMethodError: undefined method \`squawk'”。然后，按照下述方式修改 `acts_as_yaffle.rb` 文件：
 
 ```ruby
 # yaffle/lib/yaffle/acts_as_yaffle.rb
@@ -375,63 +400,71 @@ module Yaffle
   end
 end
 
-ActiveRecord::Base.send :include, Yaffle::ActsAsYaffle
+# test/dummy/app/models/application_record.rb
+
+class ApplicationRecord < ActiveRecord::Base
+  include Yaffle::ActsAsYaffle
+
+  self.abstract_class = true
+end
 ```
 
-运行`rake`命令后，你将看到如下结果：
-```
-  7 tests, 7 assertions, 0 failures, 0 errors, 0 skips
-```
+最后再运行一次 `bin/test`，应该看到：
 
-提示： 使用`write_attribute`方法写入字段只是举例说明插件如何与模型交互，并非推荐的使用方法，你也可以用如下方法实现：
-```ruby
-send("#{self.class.yaffle_text_field}=", string.to_squawk)
-```
+    6 runs, 6 assertions, 0 failures, 0 errors, 0 skips
+
+NOTE: 这里使用 `write_attribute` 写入模型中的字段，这只是插件与模型交互的方式之一，并不总是应该使用它。例如，也可以使用：
+>
+> ``` ruby
+> send("#{self.class.yaffle_text_field}=", string.to_squawk)
+> ```
 
 生成器
-----------
+------
 
-插件可以方便的引用和创建生成器。关于创建生成器的更多信息，可以参考[Generators Guide](generators.html)
+gem 中可以包含生成器，只需将其放在插件的 `lib/generators` 目录中。创建生成器的更多信息参见[创建及定制 Rails 生成器和模板](generators.html)。
 
-发布Gem
--------------------
+发布 gem
+--------
 
-Gem插件可以通过Git代码托管库方便的在开发者之间分享。如果你希望分享Yaffle插件，那么可以将Yaffle放在Git代码托管库上。如果你想在Rails应用中使用Yaffle插件，那么可以在Rails应用的Gem文件中添加如下代码：
-
+正在开发的 gem 式插件可以通过 Git 仓库轻易分享。如果想与他人分享这个 Yaffle gem，只需把代码纳入一个 Git 仓库（如 GitHub），然后在想使用它的应用中，在 Gemfile 中添加一行代码：
 
 ```ruby
 gem 'yaffle', git: 'git://github.com/yaffle_watcher/yaffle.git'
 ```
 
-运行`bundle install`命令后，Yaffle插件就可以在你的Rails应用中使用了。
+运行 `bundle install` 之后，应用就可以使用插件提供的功能了。
 
-
-当gem作为一个正式版本分享时，它就可以被发布到[RubyGems](http://www.rubygems.org)上了。想要了解更多关于发布gem到RubyGems信息，可以参考[Creating and Publishing Your First Ruby Gem](http://blog.thepete.net/2010/11/creating-and-publishing-your-first-ruby.html)。
-
+gem 式插件准备好正式发布之后，可以发布到 [RubyGems](http://www.rubygems.org/) 网站中。关于这个话题的详细信息，参阅“[Creating and Publishing Your First Ruby Gem](http://blog.thepete.net/2010/11/creating-and-publishing-your-first-ruby.html)”一文。
 
 RDoc 文档
-------------------
+---------
 
-插件功能稳定并准备发布时，为用户提供一个使用说明文档是必要的。很幸运，为你的插件写一个文档很容易。
+插件稳定后可以部署了，为了他人使用方便，一定要编写文档！幸好，为插件编写文档并不难。
 
-首先更新说明文件以及如何使用你的插件等详细信息。文档主要包括以下几点：
+首先，更新 README 文件，说明插件的用法。要包含以下几个要点：
 
-* 你的名字
-* 安装指南
-* 如何安装gem到应用中(一些使用例子)
-* 警告,使用插件时需要注意的地方，这将为用户提供方便。
+- 你的名字
 
-当你的README文件写好以后，为用户提供所有与插件方法相关的rdoc注释。通常我们使用'#:nodoc:'注释不包含在公共API中的代码。 
+- 插件用法
 
-当你的注释编写好以后，可以到你的插件目录下运行如下命令：
+- 如何把插件的功能添加到应用中（举几个示例，说明常见用例）
 
-```bash
-$ bin/rake rdoc
+- 提醒、缺陷或小贴士，这样能节省用户的时间
+
+README 文件写好之后，为开发者将使用的方法添加 rdoc 注释。通常，还要为不在公开 API 中的代码添加 `#:nodoc:` 注释。
+
+添加好注释之后，进入插件所在的目录，执行：
+
+```sh
+$ bundle exec rake rdoc
 ```
 
-### 参考文献
+参考资料
+--------
 
-* [Developing a RubyGem using Bundler](https://github.com/radar/guides/blob/master/gem-development.md)
-* [Using .gemspecs as Intended](http://yehudakatz.com/2010/04/02/using-gemspecs-as-intended/)
-* [Gemspec Reference](http://docs.rubygems.org/read/chapter/20)
-* [GemPlugins: A Brief Introduction to the Future of Rails Plugins](http://www.intridea.com/blog/2008/6/11/gemplugins-a-brief-introduction-to-the-future-of-rails-plugins)
+- [Developing a RubyGem using Bundler](https://github.com/radar/guides/blob/master/gem-development.md)
+
+- [Using .gemspecs as Intended](http://yehudakatz.com/2010/04/02/using-gemspecs-as-intended/)
+
+- [Gemspec Reference](http://guides.rubygems.org/specification-reference/)

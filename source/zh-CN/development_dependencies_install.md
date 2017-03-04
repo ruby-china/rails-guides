@@ -1,239 +1,233 @@
-Development Dependencies Install
-================================
+安装开发依赖
+============
 
-This guide covers how to setup an environment for Ruby on Rails core development.
+本文说明如何搭建 Ruby on Rails 核心开发环境。
 
-After reading this guide, you will know:
+读完本文后，您将学到：
 
-* How to set up your machine for Rails development
-* How to run specific groups of unit tests from the Rails test suite
-* How the ActiveRecord portion of the Rails test suite operates
+- 如何设置你的设备供 Rails 开发；
 
---------------------------------------------------------------------------------
+- 如何运行 Rails 测试组件中特定的单元测试组；
 
-The Easy Way
-------------
+- Rails 测试组件中的 Active Record 部分是如何运作的。
 
-The easiest and recommended way to get a development environment ready to hack is to use the [Rails development box](https://github.com/rails/rails-dev-box).
+简单方式
+--------
 
-The Hard Way
-------------
+搭建开发环境最简单、也是推荐的方式是使用 [Rails 开发虚拟机](https://github.com/rails/rails-dev-box)。
 
-In case you can't use the Rails development box, see section above, these are the steps to manually build a development box for Ruby on Rails core development.
+笨拙方式
+--------
 
-### Install Git
+如果你不便使用 Rails 开发虚拟机，参见下述说明。这些步骤说明如何自己动手搭建开发环境，供 Ruby on Rails 核心开发使用。
 
-Ruby on Rails uses Git for source code control. The [Git homepage](http://git-scm.com/) has installation instructions. There are a variety of resources on the net that will help you get familiar with Git:
+### 安装 Git
 
-* [Try Git course](http://try.github.io/) is an interactive course that will teach you the basics.
-* The [official Documentation](http://git-scm.com/documentation) is pretty comprehensive and also contains some videos with the basics of Git
-* [Everyday Git](http://schacon.github.io/git/everyday.html) will teach you just enough about Git to get by.
-* The [PeepCode screencast](https://peepcode.com/products/git) on Git is easier to follow.
-* [GitHub](http://help.github.com) offers links to a variety of Git resources.
-* [Pro Git](http://git-scm.com/book) is an entire book about Git with a Creative Commons license.
+Ruby on Rails 使用 Git 做源码控制。Git 的安装说明参见[官网](http://git-scm.com/)。网上有很多学习 Git 的资源：
 
-### Clone the Ruby on Rails Repository
+- [Try Git](http://try.github.io/) 是个交互式课程，教你基本用法。
 
-Navigate to the folder where you want the Ruby on Rails source code (it will create its own `rails` subdirectory) and run:
+- [官方文档](http://git-scm.com/documentation)十分全面，也有一些 Git 基本用法的视频。
 
-```bash
+- [Everyday Git](http://schacon.github.io/git/everyday.html) 教你一些技能，足够日常使用。
+
+- [GitHub 帮助页面](http://help.github.com/)中有很多 Git 资源的链接。
+
+- [Pro Git](http://git-scm.com/book) 是一本讲解 Git 的书，基于知识共享许可证发布。
+
+### 克隆 Ruby on Rails 仓库
+
+进入你想保存 Ruby on Rails 源码的文件夹，然后执行（会创建 `rails` 子目录）：
+
+```sh
 $ git clone git://github.com/rails/rails.git
 $ cd rails
 ```
 
-### Set up and Run the Tests
+### 准备工作和运行测试
 
-The test suite must pass with any submitted code. No matter whether you are writing a new patch, or evaluating someone else's, you need to be able to run the tests.
+提交的代码必须通过测试组件。不管你是编写新的补丁，还是评估别人的代码，都要运行测试。
 
-Install first libxml2 and libxslt together with their development files for Nokogiri. In Ubuntu that's
+首先，安装 `sqlite3` gem 所需的 SQLite3 及其开发文件 。macOS 用户这么做：
 
-```bash
-$ sudo apt-get install libxml2 libxml2-dev libxslt1-dev
+```sh
+$ brew install sqlite3
 ```
 
-If you are on Fedora or CentOS, you can run
+Ubuntu 用户这么做：
 
-```bash
-$ sudo yum install libxml2 libxml2-devel libxslt libxslt-devel
-```
-
-If you are running Arch Linux, you're done with:
-
-```bash
-$ sudo pacman -S libxml2 libxslt
-```
-
-On FreeBSD, you just have to run:
-
-```bash
-# pkg_add -r libxml2 libxslt
-```
-
-Alternatively, you can install the `textproc/libxml2` and `textproc/libxslt`
-ports.
-
-If you have any problems with these libraries, you can install them manually by compiling the source code. Just follow the instructions at the [Red Hat/CentOS section of the Nokogiri tutorials](http://nokogiri.org/tutorials/installing_nokogiri.html#red_hat__centos) .
-
-Also, SQLite3 and its development files for the `sqlite3-ruby` gem - in Ubuntu you're done with just
-
-```bash
+```sh
 $ sudo apt-get install sqlite3 libsqlite3-dev
 ```
 
-And if you are on Fedora or CentOS, you're done with
+Fedora 或 CentOS 用户这么做：
 
-```bash
+```sh
 $ sudo yum install sqlite3 sqlite3-devel
 ```
 
-If you are on Arch Linux, you will need to run:
+Arch Linux 用户要这么做：
 
-```bash
+```sh
 $ sudo pacman -S sqlite
 ```
 
-For FreeBSD users, you're done with:
+FreeBSD 用户这么做：
 
-```bash
-# pkg_add -r sqlite3
+```sh
+# pkg install sqlite3
 ```
 
-Or compile the `databases/sqlite3` port.
+或者编译 `databases/sqlite3` port。
 
-Get a recent version of [Bundler](http://gembundler.com/)
+然后安装最新版 [Bundler](http://bundler.io/)：
 
-```bash
+```sh
 $ gem install bundler
 $ gem update bundler
 ```
 
-and run:
+再执行：
 
-```bash
+```sh
 $ bundle install --without db
 ```
 
-This command will install all dependencies except the MySQL and PostgreSQL Ruby drivers. We will come back to these soon.
+这个命令会安装除了 MySQL 和 PostgreSQL 的 Ruby 驱动之外的所有依赖。稍后再安装那两个驱动。
 
-NOTE: If you would like to run the tests that use memcached, you need to ensure that you have it installed and running.
+NOTE: 如果想运行使用 memcached 的测试，要安装并运行 memcached。
+>
+> 在 macOS 中可以使用 [Homebrew](http://brew.sh/) 安装 memcached：
+>
+> ``` sh
+> $ brew install memcached
+> ```
+>
+> 在 Ubuntu 中可以使用 apt-get 安装 memcached：
+>
+> ``` sh
+> $ sudo apt-get install memcached
+> ```
+>
+> 在 Fedora 或 CentOS 中这么做：
+>
+> ``` sh
+> $ sudo yum install memcached
+> ```
+>
+> 在 Arch Linux 中这么做：
+>
+> ``` sh
+> $ sudo pacman -S memcached
+> ```
+>
+> 在 FreeBSD 中这么做：
+>
+> ``` sh
+> # pkg install memcached
+> ```
+>
+> 或者编译 `databases/memcached` port。
 
-You can use [Homebrew](http://brew.sh/) to install memcached on OSX:
+安装好依赖之后，可以执行下述命令运行测试组件：
 
-```bash
-$ brew install memcached
-```
-
-On Ubuntu you can install it with apt-get:
-
-```bash
-$ sudo apt-get install memcached
-```
-
-Or use yum on Fedora or CentOS:
-
-```bash
-$ sudo yum install memcached
-```
-
-With the dependencies now installed, you can run the test suite with:
-
-```bash
+```sh
 $ bundle exec rake test
 ```
 
-You can also run tests for a specific component, like Action Pack, by going into its directory and executing the same command:
+还可以运行某个组件（如 Action Pack）的测试，方法是进入组件所在的目录，然后执行相同的命令：
 
-```bash
+```sh
 $ cd actionpack
 $ bundle exec rake test
 ```
 
-If you want to run the tests located in a specific directory use the `TEST_DIR` environment variable. For example, this will run the tests in the `railties/test/generators` directory only:
+如果想运行某个目录中的测试，使用 `TEST_DIR` 环境变量指定。例如，下述命令只运行 `railties/test/generators` 目录中的测试：
 
-```bash
+```sh
 $ cd railties
 $ TEST_DIR=generators bundle exec rake test
 ```
 
-You can run the tests for a particular file by using:
+可以像下面这样运行某个文件中的测试：
 
-```bash
+```sh
 $ cd actionpack
 $ bundle exec ruby -Itest test/template/form_helper_test.rb
 ```
 
-Or, you can run a single test in a particular file:
+还可以运行某个文件中的某个测试：
 
-```bash
+```sh
 $ cd actionpack
 $ bundle exec ruby -Itest path/to/test.rb -n test_name
 ```
 
-### Active Record Setup
+### 为 Active Record 做准备
 
-The test suite of Active Record attempts to run four times: once for SQLite3, once for each of the two MySQL gems (`mysql` and `mysql2`), and once for PostgreSQL. We are going to see now how to set up the environment for them.
+Active Record 的测试组件运行三次：一次针对 SQLite3，一次针对 MySQL，还有一次针对 PostgreSQL。下面说明如何为这三种数据库搭建环境。
 
-WARNING: If you're working with Active Record code, you _must_ ensure that the tests pass for at least MySQL, PostgreSQL, and SQLite3. Subtle differences between the various adapters have been behind the rejection of many patches that looked OK when tested only against MySQL.
+WARNING: 编写 Active Record 代码时，必须确保测试至少能在 MySQL、PostgreSQL 和 SQLite3 中通过。如果只使用 MySQL 测试，虽然测试能通过，但是不同适配器之间的差异没有考虑到。
 
-#### Database Configuration
+#### 数据库配置
 
-The Active Record test suite requires a custom config file: `activerecord/test/config.yml`. An example is provided in `activerecord/test/config.example.yml` which can be copied and used as needed for your environment.
+Active Record 测试组件需要一个配置文件：`activerecord/test/config.yml`。`activerecord/test/config.example.yml` 文件中有些示例。你可以复制里面的内容，然后根据你的环境修改。
 
-#### MySQL and PostgreSQL
+#### MySQL 和 PostgreSQL
 
-To be able to run the suite for MySQL and PostgreSQL we need their gems. Install first the servers, their client libraries, and their development files. In Ubuntu just run
+为了运行针对 MySQL 和 PostgreSQL 的测试组件，要安装相应的 gem。首先安装服务器、客户端库和开发文件。
 
-```bash
-$ sudo apt-get install mysql-server libmysqlclient15-dev
+在 macOS 中可以这么做：
+
+```sh
+$ brew install mysql
+$ brew install postgresql
+```
+
+然后按照 Homebrew 给出的说明做。
+
+在 Ubuntu 中只需这么做：
+
+```sh
+$ sudo apt-get install mysql-server libmysqlclient-dev
 $ sudo apt-get install postgresql postgresql-client postgresql-contrib libpq-dev
 ```
 
-On Fedora or CentOS, just run:
+在 Fedora 或 CentOS 中只需这么做：
 
-```bash
+```sh
 $ sudo yum install mysql-server mysql-devel
 $ sudo yum install postgresql-server postgresql-devel
 ```
 
-If you are running Arch Linux, MySQL isn't supported anymore so you will need to
-use MariaDB instead (see [this announcement](https://www.archlinux.org/news/mariadb-replaces-mysql-in-repositories/)):
+MySQL 不再支持 Arch Linux，因此你要使用 MariaDB（参见[这个声明](https://www.archlinux.org/news/mariadb-replaces-mysql-in-repositories/)）：
 
-```bash
+```sh
 $ sudo pacman -S mariadb libmariadbclient mariadb-clients
 $ sudo pacman -S postgresql postgresql-libs
 ```
 
-FreeBSD users will have to run the following:
+FreeBSD 用户要这么做：
 
-```bash
-# pkg_add -r mysql56-client mysql56-server
-# pkg_add -r postgresql92-client postgresql92-server
+```sh
+# pkg install mysql56-client mysql56-server
+# pkg install postgresql94-client postgresql94-server
 ```
 
-You can use [Homebrew](http://brew.sh/) to install MySQL and PostgreSQL on OSX:
+或者通过 port 安装（在 `databases` 文件夹中）。在安装 MySQL 的过程中如何遇到问题，请查阅 [MySQL 文档](http://dev.mysql.com/doc/refman/5.1/en/freebsd-installation.html)。
 
-```bash
-$ brew install mysql
-$ brew install postgresql
-```
-Follow instructions given by [Homebrew](http://brew.sh/) to start these.
+安装好之后，执行下述命令：
 
-Or install them through ports (they are located under the `databases` folder).
-If you run into troubles during the installation of MySQL, please see
-[the MySQL documentation](http://dev.mysql.com/doc/refman/5.1/en/freebsd-installation.html).
-
-After that, run:
-
-```bash
+```sh
 $ rm .bundle/config
 $ bundle install
 ```
 
-First, we need to delete `.bundle/config` because Bundler remembers in that file that we didn't want to install the "db" group (alternatively you can edit the file).
+首先，我们要删除 `.bundle/config` 文件，因为 Bundler 记得那个文件中的配置。我们前面配置了，不安装“db”分组（此外也可以修改那个文件）。
 
-In order to be able to run the test suite against MySQL you need to create a user named `rails` with privileges on the test databases:
+为了使用 MySQL 运行测试组件，我们要创建一个名为 `rails` 的用户，并且赋予它操作测试数据库的权限：
 
-```bash
+```sh
 $ mysql -uroot -p
 
 mysql> CREATE USER 'rails'@'localhost';
@@ -245,47 +239,48 @@ mysql> GRANT ALL PRIVILEGES ON inexistent_activerecord_unittest.*
        to 'rails'@'localhost';
 ```
 
-and create the test databases:
+然后创建测试数据库：
 
-```bash
+```sh
 $ cd activerecord
 $ bundle exec rake db:mysql:build
 ```
 
-PostgreSQL's authentication works differently. A simple way to set up the development environment for example is to run with your development account
-This is not needed when installed via [Homebrew](http://brew.sh).
+PostgreSQL 的身份验证方式有所不同。为了使用开发账户搭建开发环境，在 Linux 或 BSD 中要这么做：
 
-```bash
+```sh
 $ sudo -u postgres createuser --superuser $USER
 ```
-And for OS X (when installed via [Homebrew](http://brew.sh))
-```bash
+
+在 macOS 中这么做：
+
+```sh
 $ createuser --superuser $USER
 ```
 
-and then create the test databases with
+然后，执行下述命令创建测试数据库：
 
-```bash
+```sh
 $ cd activerecord
 $ bundle exec rake db:postgresql:build
 ```
 
-It is possible to build databases for both PostgreSQL and MySQL with
+可以执行下述命令创建 PostgreSQL 和 MySQL 的测试数据库：
 
-```bash
+```sh
 $ cd activerecord
 $ bundle exec rake db:create
 ```
 
-You can cleanup the databases using
+可以使用下述命令清理数据库：
 
-```bash
+```sh
 $ cd activerecord
 $ bundle exec rake db:drop
 ```
 
-NOTE: Using the rake task to create the test databases ensures they have the correct character set and collation.
+NOTE: 使用 rake 任务创建测试数据库能保障数据库使用正确的字符集和排序规则。
 
-NOTE: You'll see the following warning (or localized warning) during activating HStore extension in PostgreSQL 9.1.x or earlier: "WARNING: => is deprecated as an operator".
+NOTE: 在 PostgreSQL 9.1.x 及早期版本中激活 HStore 扩展会看到这个提醒（或本地化的提醒）：“WARNING: =&gt; is deprecated as an operator”。
 
-If you're using another database, check the file `activerecord/test/config.yml` or `activerecord/test/config.example.yml` for default connection information. You can edit `activerecord/test/config.yml` to provide different credentials on your machine if you must, but obviously you should not push any such changes back to Rails.
+如果使用其他数据库，默认的连接信息参见 `activerecord/test/config.yml` 或 `activerecord/test/config.example.yml` 文件。如果有必要，可以在你的设备中编辑 `activerecord/test/config.yml` 文件，提供不同的凭据。不过显然，不应该把这种改动推送回 Rails 仓库。

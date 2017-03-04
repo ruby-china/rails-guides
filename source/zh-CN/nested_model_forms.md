@@ -1,4 +1,4 @@
-Rails nested model forms
+Rails Nested Model Forms
 ========================
 
 Creating a form for a model _and_ its associations can become quite tedious. Therefore Rails provides helpers to assist in dealing with the complexities of generating these forms _and_ the required CRUD operations to create, update, and destroy associations.
@@ -30,7 +30,7 @@ For an ActiveRecord::Base model and association this writer method is commonly d
 #### has_one
 
 ```ruby
-class Person < ActiveRecord::Base
+class Person < ApplicationRecord
   has_one :address
   accepts_nested_attributes_for :address
 end
@@ -39,7 +39,7 @@ end
 #### belongs_to
 
 ```ruby
-class Person < ActiveRecord::Base
+class Person < ApplicationRecord
   belongs_to :firm
   accepts_nested_attributes_for :firm
 end
@@ -48,11 +48,14 @@ end
 #### has_many / has_and_belongs_to_many
 
 ```ruby
-class Person < ActiveRecord::Base
+class Person < ApplicationRecord
   has_many :projects
   accepts_nested_attributes_for :projects
 end
 ```
+
+NOTE: For greater detail on associations see [Active Record Associations](association_basics.html).
+For a complete reference on associations please visit the API documentation for [ActiveRecord::Associations::ClassMethods](http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html).
 
 ### Custom model
 
@@ -101,7 +104,7 @@ Consider the following typical RESTful controller which will prepare a new Perso
 class PeopleController < ApplicationController
   def new
     @person = Person.new
-    @person.built_address
+    @person.build_address
     2.times { @person.projects.build }
   end
 

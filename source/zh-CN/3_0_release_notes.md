@@ -1,3 +1,5 @@
+**DO NOT READ THIS FILE ON GITHUB, GUIDES ARE PUBLISHED ON http://guides.rubyonrails.org.**
+
 Ruby on Rails 3.0 Release Notes
 ===============================
 
@@ -15,7 +17,7 @@ Even if you don't give a hoot about any of our internal cleanups, Rails 3.0 is g
 
 On top of all that, we've tried our best to deprecate the old APIs with nice warnings. That means that you can move your existing application to Rails 3 without immediately rewriting all your old code to the latest best practices.
 
-These release notes cover the major upgrades, but don't include every little bug fix and change. Rails 3.0 consists of almost 4,000 commits by more than 250 authors! If you want to see everything, check out the [list of commits](http://github.com/rails/rails/commits/master) in the main Rails repository on GitHub.
+These release notes cover the major upgrades, but don't include every little bug fix and change. Rails 3.0 consists of almost 4,000 commits by more than 250 authors! If you want to see everything, check out the [list of commits](http://github.com/rails/rails/commits/3-0-stable) in the main Rails repository on GitHub.
 
 --------------------------------------------------------------------------------
 
@@ -57,7 +59,7 @@ Run `rails --help` for a list of all the options.
 
 ### Dependencies and config.gem
 
-The `config.gem` method is gone and has been replaced by using `bundler` and a `Gemfile`, see [Vendoring Gems](#vendoring-gems) below.
+The `config.gem` method is gone and has been replaced by using `bundler` and a `Gemfile`, see [Vendoring Gems](#Vendoring Gems) below.
 
 ### Upgrade Process
 
@@ -84,9 +86,9 @@ $ cd myapp
 
 ### Vendoring Gems
 
-Rails now uses a `Gemfile` in the application root to determine the gems you require for your application to start. This `Gemfile` is processed by the [Bundler](http://github.com/carlhuda/bundler,) which then installs all your dependencies. It can even install all the dependencies locally to your application so that it doesn't depend on the system gems.
+Rails now uses a `Gemfile` in the application root to determine the gems you require for your application to start. This `Gemfile` is processed by the [Bundler](http://github.com/bundler/bundler) which then installs all your dependencies. It can even install all the dependencies locally to your application so that it doesn't depend on the system gems.
 
-More information: - [bundler homepage](http://gembundler.com)
+More information: - [bundler homepage](http://bundler.io/)
 
 ### Living on the Edge
 
@@ -138,7 +140,7 @@ More Information: - [Rails Edge Architecture](http://yehudakatz.com/2009/06/11/r
 
 [Arel](http://github.com/brynary/arel) (or Active Relation) has been taken on as the underpinnings of Active Record and is now required for Rails. Arel provides an SQL abstraction that simplifies out Active Record and provides the underpinnings for the relation functionality in Active Record.
 
-More information: - [Why I wrote Arel](http://magicscalingsprinkles.wordpress.com/2010/01/28/why-i-wrote-arel/.)
+More information: - [Why I wrote Arel](https://web.archive.org/web/20120718093140/http://magicscalingsprinkles.wordpress.com/2010/01/28/why-i-wrote-arel/)
 
 
 ### Mail Extraction
@@ -211,7 +213,6 @@ Railties now deprecates:
 More information:
 
 * [Discovering Rails 3 generators](http://blog.plataformatec.com.br/2010/01/discovering-rails-3-generators)
-* [Making Generators for Rails 3 with Thor](http://caffeinedd.com/guides/331-making-generators-for-rails-3-with-thor)
 * [The Rails Module (in Rails 3)](http://litanyagainstfear.com/blog/2010/02/03/the-rails-module/)
 
 Action Pack
@@ -248,7 +249,7 @@ Deprecations:
 
 More Information:
 
-* [Render Options in Rails 3](http://www.engineyard.com/blog/2010/render-options-in-rails-3/)
+* [Render Options in Rails 3](https://blog.engineyard.com/2010/render-options-in-rails-3)
 * [Three reasons to love ActionController::Responder](http://weblog.rubyonrails.org/2009/8/31/three-reasons-love-responder)
 
 
@@ -298,7 +299,7 @@ Deprecations
 
 More Information:
 * [The Rails 3 Router: Rack it Up](http://yehudakatz.com/2009/12/26/the-rails-3-router-rack-it-up/)
-* [Revamped Routes in Rails 3](http://rizwanreza.com/2009/12/20/revamped-routes-in-rails-3)
+* [Revamped Routes in Rails 3](https://medium.com/fusion-of-thoughts/revamped-routes-in-rails-3-b6d00654e5b0)
 * [Generic Actions in Rails 3](http://yehudakatz.com/2009/12/20/generic-actions-in-rails-3/)
 
 
@@ -545,7 +546,7 @@ These are the main changes in Active Support:
 * `String#to_time` and `String#to_datetime` handle fractional seconds.
 * Added support to new callbacks for around filter object that respond to `:before` and `:after` used in before and after callbacks.
 * The `ActiveSupport::OrderedHash#to_a` method returns an ordered set of arrays. Matches Ruby 1.9's `Hash#to_a`.
-* `MissingSourceFile` exists as a constant but it is now just equals to `LoadError`.
+* `MissingSourceFile` exists as a constant but it is now just equal to `LoadError`.
 * Added `Class#class_attribute`, to be able to declare a class-level attribute whose value is inheritable and overwritable by subclasses.
 * Finally removed `DeprecatedCallbacks` in `ActiveRecord::Associations`.
 * `Object#metaclass` is now `Kernel#singleton_class` to match Ruby.

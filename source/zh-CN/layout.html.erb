@@ -1,12 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title><%= yield(:page_title) || 'Ruby on Rails 指南' %></title>
+<title><%= yield(:page_title) || 'Ruby on Rails Guides' %></title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -27,27 +26,25 @@
     <div class="wrapper">
       <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
       <span class="red-button more-info-button">
-        更多内容
+        More Ruby on Rails
       </span>
       <ul class="more-info-links s-hidden">
-        <li class="more-info"><a href="http://rubyonrails.org/">综览</a></li>
-        <li class="more-info"><a href="http://rubyonrails.org/download">下载</a></li>
-        <li class="more-info"><a href="http://rubyonrails.org/deploy">部署</a></li>
-        <li class="more-info"><a href="https://github.com/rails/rails">源码</a></li>
-        <li class="more-info"><a href="http://rubyonrails.org/screencasts">视频</a></li>
-        <li class="more-info"><a href="http://rubyonrails.org/documentation">文件</a></li>
-        <li class="more-info"><a href="http://rubyonrails.org/community">社群</a></li>
-        <li class="more-info"><a href="http://weblog.rubyonrails.org/">Blog</a></li>
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
       </ul>
     </div>
   </div>
   <div id="header">
     <div class="wrapper clearfix">
-      <h1><a href="index.html" title="回首页">Guides.rubyonrails.org</a></h1>
+      <h1><a href="index.html" title="Return to home page">Guides.rubyonrails.org</a></h1>
       <ul class="nav">
         <li><a class="nav-item" href="index.html">首页</a></li>
         <li class="guides-index guides-index-large">
-          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南目录</a>
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
           <div id="guides" class="clearfix" style="display: none;">
             <hr />
             <% ['L', 'R'].each do |position| %>
@@ -62,12 +59,11 @@
             <% end %>
           </div>
         </li>
-        <!-- <li><a class="nav-item" href="//github.com/docrails-tw/wiki">参与翻译</a></li> -->
-        <li><a class="nav-item" href="https://github.com/ruby-china/guides/blob/master/CONTRIBUTING.md">贡献</a></li>
-        <li><a class="nav-item" href="credits.html">致谢</a></li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
         <li class="guides-index guides-index-small">
           <select class="guides-index-item nav-item">
-            <option value="index.html">指南目录</option>
+            <option value="index.html">指南索引</option>
             <% docs_for_menu.each do |section| %>
               <optgroup label="<%= section['name'] %>">
                 <% finished_documents(section['documents']).each do |document| %>
@@ -78,7 +74,6 @@
           </select>
         </li>
       </ul>
-      </div>
     </div>
   </div>
   <hr class="hide" />
@@ -98,17 +93,25 @@
 
         <h3>反馈</h3>
         <p>
-          欢迎帮忙改善指南质量。
+          我们鼓励您帮助提高本指南的质量。
         </p>
         <p>
-          如发现任何错误，欢迎修正。开始贡献前，可先行阅读<%= link_to '贡献指南：文档', 'http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation' %>。
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<%= link_to '文档贡献', 'http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation' %>指南。
         </p>
-        <p>翻译如有错误，深感抱歉，欢迎 <%= link_to 'Fork', 'https://github.com/ruby-china/guides/fork' %> 修正，或至此处<%= link_to '回报', 'https://github.com/ruby-china/guides/issues/new' %>。</p>
         <p>
-          文章可能有未完成或过时的内容。请先检查 <%= link_to 'Edge Guides','http://edgeguides.rubyonrails.org' %> 来确定问题在 master 是否已经修掉了。再上 master 补上缺少的文件。内容参考 <%= link_to 'Ruby on Rails 指南准则', 'ruby_on_rails_guides_guidelines.html' %>来了解行文风格。
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <%= link_to 'Edge Guides','http://edgeguides.rubyonrails.org' %> 是否已经修复。
+          关于用语约定，请查看<%= link_to 'Ruby on Rails 指南指导', 'ruby_on_rails_guides_guidelines.html' %>。
         </p>
-        <p>最后，任何关于 Ruby on Rails 文档的讨论，欢迎到 <%= link_to 'rubyonrails-docs 邮件群组', 'http://groups.google.com/group/rubyonrails-docs' %>。
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<%= link_to '创建 issue', 'https://github.com/rails/rails/issues' %>。
         </p>
+        <p>
+          最后，欢迎到 <%= link_to 'rubyonrails-docs 邮件列表', 'http://groups.google.com/group/rubyonrails-docs' %>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
       </div>
     </div>
   </div>
@@ -123,25 +126,12 @@
   <script type="text/javascript" src="javascripts/jquery.min.js"></script>
   <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
   <script type="text/javascript" src="javascripts/guides.js"></script>
-  <script type="text/javascript" src="javascripts/syntaxhighlighter/shCore.js"></script>
-  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushRuby.js"></script>
-  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushXml.js"></script>
-  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushSql.js"></script>
-  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushPlain.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
   <script type="text/javascript">
-    SyntaxHighlighter.all();
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
     $(guidesIndex.bind);
-  </script>
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    // ga('create', '', 'ruby-china.github.io');
-    ga('require', 'displayfeatures');
-    ga('send', 'pageview');
-
   </script>
 </body>
 </html>

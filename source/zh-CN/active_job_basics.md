@@ -1,128 +1,158 @@
 Active Job 基础
-=================
+===============
 
-本文提供开始创建任务、将任务加入队列和后台执行任务的所有知识。
+本文全面说明创建、入队和执行后台作业的基础知识。
 
-读完本文，你将学到:
+读完本文后，您将学到：
 
-* 如何新建任务
-* 如何将任务加入队列
-* 如何在后台运行任务
-* 如何在应用中异步发送邮件
+- 如何创建作业；
 
---------------------------------------------------------------------------------
+- 如何入队作业；
 
+- 如何在后台运行作业；
 
- 简介
--------------
+- 如何在应用中异步发送电子邮件。
 
-Active Job 是用来声明任务，并把任务放到多种多样的队列后台中执行的框架。从定期地安排清理，费用账单到发送邮件，任何事情都可以是任务。任何可以切分为小的单元和并行执行的任务都可以用 Active Job 来执行。
+简介
+----
 
+Active Job 框架负责声明作业，在各种队列后端中运行。作业各种各样，可以是定期清理、账单支付和寄信。其实，任何可以分解且并行运行的工作都可以。
 
-Active Job 的目标
-----------------------
+Active Job 的作用
+-----------------
 
-主要是确保所有的 Rails 程序有一致任务框架，即便是以 “立即执行”的形式存在。然后可以基于 Active Job 来新建框架功能和其他的 RubyGems， 而不用担心多种任务后台，比如 Dalayed Job 和 Resque 之间 API 的差异。之后，选择队列后台更多会变成运维方面的考虑，这样就能切换后台而无需重写任务代码。
+主要作用是确保所有 Rails 应用都有作业基础设施。这样便可以在此基础上构建各种功能和其他 gem，而无需担心不同作业运行程序（如 Delayed Job 和 Resque）的 API 之间的差异。此外，选用哪个队列后端只是战术问题。而且，切换队列后端也不用重写作业。
 
+NOTE: Rails 默认实现了立即运行的队列运行程序。因此，队列中的各个作业会立即运行。
 
-创建一个任务
----------
+创建作业
+--------
 
-本节将会逐步地创建任务然后把任务加入队列中。
+本节逐步说明创建和入队作业的过程。
 
-### 创建任务
+### 创建作业
 
-Active Job 提供了 Rails 生成器来创建任务。以下代码会在 `app/jobs` 中新建一个任务,（并且会在 `test/jobs` 中创建测试用例）：
+Active Job 提供了一个 Rails 生成器，用于创建作业。下述命令在 `app/jobs` 目录中创建一个作业（还在 `test/jobs` 目录中创建相关的测试用例）：
 
-```bash
+```sh
 $ bin/rails generate job guests_cleanup
 invoke  test_unit
 create    test/jobs/guests_cleanup_job_test.rb
 create  app/jobs/guests_cleanup_job.rb
 ```
 
-也可以创建运行在一个特定队列上的任务：
+还可以创建在指定队列中运行的作业：
 
-```bash
+```sh
 $ bin/rails generate job guests_cleanup --queue urgent
 ```
 
-如果不想使用生成器，需要自己创建文件，并且替换掉 `app/jobs`。确保任务继承自 `ActiveJob::Base` 即可。
+如果不想使用生成器，可以自己动手在 `app/jobs` 目录中新建文件，不过要确保继承自 `ApplicationJob`。
 
-以下是一个任务示例:
+看一下作业：
 
 ```ruby
-class GuestsCleanupJob < ActiveJob::Base
+class GuestsCleanupJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
-    # Do something later
+  def perform(*guests)
+    # 稍后做些事情
   end
 end
 ```
 
-### 任务加入队列
+注意，`perform` 方法的参数是任意个。
 
-将任务加入到队列中：
+### 入队作业
+
+像下面这样入队作业：
 
 ```ruby
-# 将加入到队列系统中任务立即执行
-MyJob.perform_later record
+# 入队作业，作业在队列系统空闲时立即执行
+GuestsCleanupJob.perform_later guest
 ```
 
 ```ruby
-# 在明天中午执行加入队列的任务
-MyJob.set(wait_until: Date.tomorrow.noon).perform_later(record)
+# 入队作业，在明天中午执行
+GuestsCleanupJob.set(wait_until: Date.tomorrow.noon).perform_later(guest)
 ```
 
 ```ruby
-# 一星期后执行加入到队列的任务
-MyJob.set(wait: 1.week).perform_later(record)
+# 入队作业，在一周以后执行
+GuestsCleanupJob.set(wait: 1.week).perform_later(guest)
+```
+
+```ruby
+# `perform_now` 和 `perform_later` 会在幕后调用 `perform`
+# 因此可以传入任意个参数
+GuestsCleanupJob.perform_later(guest1, guest2, filter: 'some_filter')
 ```
 
 就这么简单！
 
+执行作业
+--------
 
-任务执行
--------
+在生产环境中入队和执行作业需要使用队列后端，即要为 Rails 提供一个第三方队列库。Rails 本身只提供了一个进程内队列系统，把作业存储在 RAM 中。如果进程崩溃，或者设备重启了，默认的异步后端会丢失所有作业。这对小型应用或不重要的作业来说没什么，但是生产环境中的多数应用应该挑选一个持久后端。
 
-如果没有设置连接器，任务会立即执行。
+### 后端
 
+Active Job 为多种队列后端（Sidekiq、Resque、Delayed Job，等等）内置了适配器。最新的适配器列表参见 [`ActiveJob::QueueAdapters` 的 API 文档](http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html)。
 
-### 后台
+### 设置后端
 
-Active Job 内建支持多种队列后台连接器（Sidekiq、Resque、Delayed Job 等）。最新的连接器的列表详见 [ActiveJob::QueueAdapters](http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html) 的 API 文件。
-
-
-### 设置后台
-
-设置队列后台很简单：
+队列后端易于设置：
 
 ```ruby
 # config/application.rb
 module YourApp
   class Application < Rails::Application
-    # Be sure to have the adapter's gem in your Gemfile and follow
-    # the adapter's specific installation and deployment instructions.
+    # 要把适配器的 gem 写入 Gemfile
+    # 请参照适配器的具体安装和部署说明
     config.active_job.queue_adapter = :sidekiq
   end
 end
 ```
 
+也可以在各个作业中配置后端：
+
+```ruby
+class GuestsCleanupJob < ApplicationJob
+  self.queue_adapter = :resque
+  #....
+end
+
+# 现在，这个作业使用 `resque` 作为后端队列适配器
+# 把 `config.active_job.queue_adapter` 配置覆盖了
+```
+
+### 启动后端
+
+Rails 应用中的作业并行运行，因此多数队列库要求为自己启动专用的队列服务（与启动 Rails 应用的服务不同）。启动队列后端的说明参见各个库的文档。
+
+下面列出部分文档：
+
+- [Sidekiq](https://github.com/mperham/sidekiq/wiki/Active-Job)
+
+- [Resque](https://github.com/resque/resque/wiki/ActiveJob)
+
+- [Sucker Punch](https://github.com/brandonhilkert/sucker_punch#active-job)
+
+- [Queue Classic](https://github.com/QueueClassic/queue_classic#active-job)
 
 队列
 ----
 
-大多数连接器支持多种队列。用 Active Job 可以安排任务运行在特定的队列：
+多数适配器支持多个队列。Active Job 允许把作业调度到具体的队列中：
 
 ```ruby
-class GuestsCleanupJob < ActiveJob::Base
+class GuestsCleanupJob < ApplicationJob
   queue_as :low_priority
   #....
 end
 ```
 
-在 `application.rb` 中通过  `config.active_job.queue_name_prefix` 来设置所有任务的队列名称的前缀。
+队列名称可以使用 `application.rb` 文件中的 `config.active_job.queue_name_prefix` 选项配置前缀：
 
 ```ruby
 # config/application.rb
@@ -132,18 +162,17 @@ module YourApp
   end
 end
 
-# app/jobs/guests_cleanup.rb
-class GuestsCleanupJob < ActiveJob::Base
+# app/jobs/guests_cleanup_job.rb
+class GuestsCleanupJob < ApplicationJob
   queue_as :low_priority
   #....
 end
 
-# Now your job will run on queue production_low_priority on your
-# production environment and on staging_low_priority on your staging
-# environment
+# 在生产环境中，作业在 production_low_priority 队列中运行
+# 在交付准备环境中，作业在 staging_low_priority 队列中运行
 ```
 
-默认队列名称的前缀是 `_`。可以设置 `config/application.rb` 里 `config.active_job.queue_name_delimiter` 的值来改变：
+默认的队列名称前缀分隔符是 `'_'`。这个值可以使用 `application.rb` 文件中的 `config.active_job.queue_name_delimiter` 选项修改：
 
 ```ruby
 # config/application.rb
@@ -154,27 +183,26 @@ module YourApp
   end
 end
 
-# app/jobs/guests_cleanup.rb
-class GuestsCleanupJob < ActiveJob::Base
+# app/jobs/guests_cleanup_job.rb
+class GuestsCleanupJob < ApplicationJob
   queue_as :low_priority
   #....
 end
 
-# Now your job will run on queue production.low_priority on your
-# production environment and on staging.low_priority on your staging
-# environment
+# 在生产环境中，作业在 production.low_priority 队列中运行
+# 在交付准备环境中，作业在 staging.low_priority 队列中运行
 ```
 
-如果想要更细致的控制任务的执行，可以传 `:queue` 选项给 `#set` 方法：
+如果想更进一步控制作业在哪个队列中运行，可以把 `:queue` 选项传给 `#set` 方法：
 
 ```ruby
 MyJob.set(queue: :another_queue).perform_later(record)
 ```
 
-为了在任务级别控制队列，可以传递一个块给 `#queue_as`。块会在任务的上下文中执行（所以能获得 `self.arguments`）并且必须返回队列的名字：
+如果想在作业层控制队列，可以把一个块传给 `#queue_as` 方法。那个块在作业的上下文中执行（因此可以访问 `self.arguments`），必须返回队列的名称：
 
 ```ruby
-class ProcessVideoJob < ActiveJob::Base
+class ProcessVideoJob < ApplicationJob
   queue_as do
     video = self.arguments.first
     if video.owner.premium?
@@ -185,74 +213,87 @@ class ProcessVideoJob < ActiveJob::Base
   end
 
   def perform(video)
-    # do process video
+    # 处理视频
   end
 end
 
 ProcessVideoJob.perform_later(Video.last)
 ```
 
-NOTE: 确认运行的队列后台“监听”队列的名称。某些后台需要明确的指定要“监听”队列的名称。
-
+NOTE: 确保队列后端“监听”着队列名称。某些后端要求指定要监听的队列。
 
 回调
----------
+----
 
-Active Job 在一个任务的生命周期里提供了钩子。回调允许在任务的生命周期中触发逻辑。
+Active Job 在作业的生命周期内提供了多个钩子。回调用于在作业的生命周期内触发逻辑。
 
 ### 可用的回调
 
-* `before_enqueue`
-* `around_enqueue`
-* `after_enqueue`
-* `before_perform`
-* `around_perform`
-* `after_perform`
+- `before_enqueue`
+
+- `around_enqueue`
+
+- `after_enqueue`
+
+- `before_perform`
+
+- `around_perform`
+
+- `after_perform`
 
 ### 用法
 
 ```ruby
-class GuestsCleanupJob < ActiveJob::Base
+class GuestsCleanupJob < ApplicationJob
   queue_as :default
 
   before_enqueue do |job|
-    # do something with the job instance
+    # 对作业实例做些事情
   end
 
   around_perform do |job, block|
-    # do something before perform
+    # 在执行之前做些事情
     block.call
-    # do something after perform
+    # 在执行之后做些事情
   end
 
   def perform
-    # Do something later
+    # 稍后做些事情
   end
 end
 ```
 
-
 Action Mailer
-----------------
+-------------
 
-现代网站应用中最常见的任务之一是，在请求响应周期外发送 Email，这样所有用户不需要焦急地等待邮件的发送。Active Job 集成到 Action Mailer 里了，所以能够简单的实现异步发送邮件：
+对现代的 Web 应用来说，最常见的作业是在请求-响应循环之外发送电子邮件，这样用户无需等待。Active Job 与 Action Mailer 是集成的，因此可以轻易异步发送电子邮件：
 
 ```ruby
-# If you want to send the email now use #deliver_now
+# 如需想现在发送电子邮件，使用 #deliver_now
 UserMailer.welcome(@user).deliver_now
 
-# If you want to send the email through Active Job use #deliver_later
+# 如果想通过 Active Job 发送电子邮件，使用 #deliver_later
 UserMailer.welcome(@user).deliver_later
 ```
 
+国际化
+------
 
-GlobalID
------------
-
-Active Job 支持 GlobalID 作为参数。这样传递运行中的 Active Record 对象到任务中，来取代通常需要序列化的 class/id 对。之前任务看起来是像这样：
+创建作业时，使用 `I18n.locale` 设置。如果异步发送电子邮件，可能用得到：
 
 ```ruby
-class TrashableCleanupJob < ActiveJob::Base
+I18n.locale = :eo
+
+UserMailer.welcome(@user).deliver_later # 使用世界语本地化电子邮件
+```
+
+GlobalID
+--------
+
+Active Job 支持参数使用 GlobalID。这样便可以把 Active Record 对象传给作业，而不用传递类和 ID，再自己反序列化。以前，要这么定义作业：
+
+```ruby
+class TrashableCleanupJob < ApplicationJob
   def perform(trashable_class, trashable_id, depth)
     trashable = trashable_class.constantize.find(trashable_id)
     trashable.cleanup(depth)
@@ -260,32 +301,44 @@ class TrashableCleanupJob < ActiveJob::Base
 end
 ```
 
-现在可以简化为:
+现在可以简化成这样：
 
 ```ruby
-class TrashableCleanupJob < ActiveJob::Base
+class TrashableCleanupJob < ApplicationJob
   def perform(trashable, depth)
     trashable.cleanup(depth)
   end
 end
 ```
 
+为此，模型类要混入 `GlobalID::Identification`。Active Record 模型类默认都混入了。
 
 异常
--------
+----
 
-Active Job 提供了在任务执行期间捕获异常的方法：
+Active Job 允许捕获执行作业过程中抛出的异常：
 
 ```ruby
-class GuestsCleanupJob < ActiveJob::Base
+class GuestsCleanupJob < ApplicationJob
   queue_as :default
 
   rescue_from(ActiveRecord::RecordNotFound) do |exception|
-   # do something with the exception
+   # 处理异常
   end
 
   def perform
-    # Do something later
+    # 稍后做些事情
   end
 end
 ```
+
+### 反序列化
+
+有了 GlobalID，可以序列化传给 `#perform` 方法的整个 Active Record 对象。
+
+如果在作业入队之后、调用 `#perform` 方法之前删除了传入的记录，Active Job 会抛出 `ActiveJob::DeserializationError` 异常。
+
+测试作业
+--------
+
+测试作业的详细说明参见 [测试指南](testing.html#测试作业)。
