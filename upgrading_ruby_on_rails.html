@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>Ruby on Rails 升级指南 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,7 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>Ruby on Rails 升级指南</h2><p>本文说明把 Ruby on Rails 升级到新版本的步骤。各个版本的发布记中也有升级步骤。</p>
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -280,7 +280,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Ruby on Rails 升级指南</h2><p>本文说明把 Ruby on Rails 升级到新版本的步骤。各个版本的发布记中也有升级步骤。</p><h3 id="%E4%B8%80%E8%88%AC%E5%BB%BA%E8%AE%AE">1 一般建议</h3><p>计划升级现有项目之前，应该确定有升级的必要。你要考虑几个因素：对新功能的需求，难于支持旧代码，以及你的时间和技能，等等。</p><h4 id="%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E5%BA%A6">1.1 测试覆盖度</h4><p>为了确保升级后应用依然能正常运行，最好的方式是具有足够的测试覆盖度。如果没有自动化测试保障应用，你就要自己花时间检查有变化的部分。对升级 Rails 来说，你要检查应用的每个功能。不要给自己找麻烦，在升级之前一定要保障有足够的测试覆盖度。</p><h4 id="%E5%8D%87%E7%BA%A7%E8%BF%87%E7%A8%8B">1.2 升级过程</h4><p>升级 Rails 版本时，最好放慢脚步，一次升级一个小版本，充分利用弃用提醒。Rails 版本号的格式是“大版本.小版本.补丁版本”。大版本和小版本允许修改公开 API，因此可能导致你的应用出错。补丁版本只修正缺陷，不改变公开 API。</p><p>升级过程如下：</p>
+        <h3 id="%E4%B8%80%E8%88%AC%E5%BB%BA%E8%AE%AE">1 一般建议</h3><p>计划升级现有项目之前，应该确定有升级的必要。你要考虑几个因素：对新功能的需求，难于支持旧代码，以及你的时间和技能，等等。</p><h4 id="%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E5%BA%A6">1.1 测试覆盖度</h4><p>为了确保升级后应用依然能正常运行，最好的方式是具有足够的测试覆盖度。如果没有自动化测试保障应用，你就要自己花时间检查有变化的部分。对升级 Rails 来说，你要检查应用的每个功能。不要给自己找麻烦，在升级之前一定要保障有足够的测试覆盖度。</p><h4 id="%E5%8D%87%E7%BA%A7%E8%BF%87%E7%A8%8B">1.2 升级过程</h4><p>升级 Rails 版本时，最好放慢脚步，一次升级一个小版本，充分利用弃用提醒。Rails 版本号的格式是“大版本.小版本.补丁版本”。大版本和小版本允许修改公开 API，因此可能导致你的应用出错。补丁版本只修正缺陷，不改变公开 API。</p><p>升级过程如下：</p>
 <ol>
 <li><p> 编写测试，确保能通过。</p></li>
 <li><p> 升级到当前版本的最新补丁版本。</p></li>

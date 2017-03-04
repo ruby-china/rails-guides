@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>表单辅助方法 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,17 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>表单辅助方法</h2><p>表单是 Web 应用中用户输入的基本界面。尽管如此，由于需要处理表单控件的名称和众多属性，编写和维护表单标记可能很快就会变得单调乏味。Rails 提供用于生成表单标记的视图辅助方法来消除这种复杂性。然而，由于这些辅助方法具有不同的用途和用法，开发者在使用之前需要知道它们之间的差异。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>如何在 Rails 应用中创建搜索表单和类似的不针对特定模型的通用表单；</p></li>
+<li><p>如何使用针对特定模型的表单来创建和修改对应的数据库记录；</p></li>
+<li><p>如何使用多种类型的数据生成选择列表；</p></li>
+<li><p>Rails 提供了哪些日期和时间辅助方法；</p></li>
+<li><p>上传文件的表单有什么特殊之处；</p></li>
+<li><p>如何用 <code>post</code> 方法把表单提交到外部资源并设置真伪令牌；</p></li>
+<li><p>如何创建复杂表单。</p></li>
+</ul>
+
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -259,17 +269,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>表单辅助方法</h2><p>表单是 Web 应用中用户输入的基本界面。尽管如此，由于需要处理表单控件的名称和众多属性，编写和维护表单标记可能很快就会变得单调乏味。Rails 提供用于生成表单标记的视图辅助方法来消除这种复杂性。然而，由于这些辅助方法具有不同的用途和用法，开发者在使用之前需要知道它们之间的差异。</p><p>读完本文后，您将学到：</p>
-<ul>
-<li><p>如何在 Rails 应用中创建搜索表单和类似的不针对特定模型的通用表单；</p></li>
-<li><p>如何使用针对特定模型的表单来创建和修改对应的数据库记录；</p></li>
-<li><p>如何使用多种类型的数据生成选择列表；</p></li>
-<li><p>Rails 提供了哪些日期和时间辅助方法；</p></li>
-<li><p>上传文件的表单有什么特殊之处；</p></li>
-<li><p>如何用 <code>post</code> 方法把表单提交到外部资源并设置真伪令牌；</p></li>
-<li><p>如何创建复杂表单。</p></li>
-</ul>
-<div class="note"><p>本文不是所有可用表单辅助方法及其参数的完整文档。关于表单辅助方法的完整介绍，请参阅 <a href="http://api.rubyonrails.org/">Rails API 文档</a>。</p></div><h3 id="%E5%A4%84%E7%90%86%E5%9F%BA%E6%9C%AC%E8%A1%A8%E5%8D%95">1 处理基本表单</h3><p><code>form_tag</code> 方法是最基本的表单辅助方法。</p><div class="code_container">
+        <div class="note"><p>本文不是所有可用表单辅助方法及其参数的完整文档。关于表单辅助方法的完整介绍，请参阅 <a href="http://api.rubyonrails.org/">Rails API 文档</a>。</p></div><h3 id="%E5%A4%84%E7%90%86%E5%9F%BA%E6%9C%AC%E8%A1%A8%E5%8D%95">1 处理基本表单</h3><p><code>form_tag</code> 方法是最基本的表单辅助方法。</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;%= form_tag do %&gt;
   Form contents

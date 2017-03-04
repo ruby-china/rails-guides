@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>Active Record 基础 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,15 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>Active Record 基础</h2><p>本文简介 Active Record。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>对象关系映射（Object Relational Mapping，ORM）和 Active Record 是什么，以及如何在 Rails 中使用；</p></li>
+<li><p>Active Record 在 MVC 中的作用；</p></li>
+<li><p>如何使用 Active Record 模型处理保存在关系型数据库中的数据；</p></li>
+<li><p>Active Record 模式（schema）的命名约定；</p></li>
+<li><p>数据库迁移，数据验证和回调。</p></li>
+</ul>
+
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -220,15 +228,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Active Record 基础</h2><p>本文简介 Active Record。</p><p>读完本文后，您将学到：</p>
-<ul>
-<li><p>对象关系映射（Object Relational Mapping，ORM）和 Active Record 是什么，以及如何在 Rails 中使用；</p></li>
-<li><p>Active Record 在 MVC 中的作用；</p></li>
-<li><p>如何使用 Active Record 模型处理保存在关系型数据库中的数据；</p></li>
-<li><p>Active Record 模式（schema）的命名约定；</p></li>
-<li><p>数据库迁移，数据验证和回调。</p></li>
-</ul>
-<h3 id="Active%20Record%20%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F">1 Active Record 是什么？</h3><p>Active Record 是 <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC</a> 中的 M（模型），负责处理数据和业务逻辑。Active Record 负责创建和使用需要持久存入数据库中的数据。Active Record 实现了 Active Record 模式，是一种对象关系映射系统。</p><h4 id="Active%20Record%20%E6%A8%A1%E5%BC%8F">1.1 Active Record 模式</h4><p><a href="http://www.martinfowler.com/eaaCatalog/activeRecord.html">Active Record 模式</a>出自 Martin Fowler 写的《<a href="https://book.douban.com/subject/4826290/">企业应用架构模式</a>》一书。在 Active Record 模式中，对象中既有持久存储的数据，也有针对数据的操作。Active Record 模式把数据存取逻辑作为对象的一部分，处理对象的用户知道如何把数据写入数据库，还知道如何从数据库中读出数据。</p><h4 id="%E5%AF%B9%E8%B1%A1%E5%85%B3%E7%B3%BB%E6%98%A0%E5%B0%84">1.2 对象关系映射</h4><p>对象关系映射（ORM）是一种技术手段，把应用中的对象和关系型数据库中的数据表连接起来。使用 ORM，应用中对象的属性和对象之间的关系可以通过一种简单的方法从数据库中获取，无需直接编写 SQL 语句，也不过度依赖特定的数据库种类。</p><h4 id="%E7%94%A8%E4%BD%9C%20ORM%20%E6%A1%86%E6%9E%B6%E7%9A%84%20Active%20Record">1.3 用作 ORM 框架的 Active Record</h4><p>Active Record 提供了很多功能，其中最重要的几个如下：</p>
+        <h3 id="Active%20Record%20%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F">1 Active Record 是什么？</h3><p>Active Record 是 <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC</a> 中的 M（模型），负责处理数据和业务逻辑。Active Record 负责创建和使用需要持久存入数据库中的数据。Active Record 实现了 Active Record 模式，是一种对象关系映射系统。</p><h4 id="Active%20Record%20%E6%A8%A1%E5%BC%8F">1.1 Active Record 模式</h4><p><a href="http://www.martinfowler.com/eaaCatalog/activeRecord.html">Active Record 模式</a>出自 Martin Fowler 写的《<a href="https://book.douban.com/subject/4826290/">企业应用架构模式</a>》一书。在 Active Record 模式中，对象中既有持久存储的数据，也有针对数据的操作。Active Record 模式把数据存取逻辑作为对象的一部分，处理对象的用户知道如何把数据写入数据库，还知道如何从数据库中读出数据。</p><h4 id="%E5%AF%B9%E8%B1%A1%E5%85%B3%E7%B3%BB%E6%98%A0%E5%B0%84">1.2 对象关系映射</h4><p>对象关系映射（ORM）是一种技术手段，把应用中的对象和关系型数据库中的数据表连接起来。使用 ORM，应用中对象的属性和对象之间的关系可以通过一种简单的方法从数据库中获取，无需直接编写 SQL 语句，也不过度依赖特定的数据库种类。</p><h4 id="%E7%94%A8%E4%BD%9C%20ORM%20%E6%A1%86%E6%9E%B6%E7%9A%84%20Active%20Record">1.3 用作 ORM 框架的 Active Record</h4><p>Active Record 提供了很多功能，其中最重要的几个如下：</p>
 <ul>
 <li><p>表示模型和其中的数据；</p></li>
 <li><p>表示模型之间的关系；</p></li>

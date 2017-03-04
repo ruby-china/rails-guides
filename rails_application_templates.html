@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>Rails 应用模板 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,12 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>Rails 应用模板</h2><p>应用模板是包含 DSL 的 Ruby 文件，作用是为新建的或现有的 Rails 项目添加 gem 和初始化脚本等。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>如何使用模板生成和定制 Rails 应用；</p></li>
+<li><p>如何使用 Rails Templates API 编写可复用的应用模板。</p></li>
+</ul>
+
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -211,12 +216,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Rails 应用模板</h2><p>应用模板是包含 DSL 的 Ruby 文件，作用是为新建的或现有的 Rails 项目添加 gem 和初始化脚本等。</p><p>读完本文后，您将学到：</p>
-<ul>
-<li><p>如何使用模板生成和定制 Rails 应用；</p></li>
-<li><p>如何使用 Rails Templates API 编写可复用的应用模板。</p></li>
-</ul>
-<h3 id="%E7%94%A8%E6%B3%95">1 用法</h3><p>若想使用模板，调用 Rails 生成器时把模板的位置传给 <code>-m</code> 选项。模板的位置可以是文件路径，也可以是 URL。</p><div class="code_container">
+        <h3 id="%E7%94%A8%E6%B3%95">1 用法</h3><p>若想使用模板，调用 Rails 生成器时把模板的位置传给 <code>-m</code> 选项。模板的位置可以是文件路径，也可以是 URL。</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ rails new blog -m ~/template.rb
 $ rails new blog -m http://example.com/template.rb

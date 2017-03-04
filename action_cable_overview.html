@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>Action Cable 概览 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,13 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>Action Cable 概览</h2><p>本文介绍 Action Cable 的工作原理，以及在 Rails 应用中如何通过 WebSocket 实现实时功能。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>如何设置 Action Cable；</p></li>
+<li><p>如何设置频道（channel）；</p></li>
+<li><p>Action Cable 的部署和架构设置。</p></li>
+</ul>
+
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -246,13 +252,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Action Cable 概览</h2><p>本文介绍 Action Cable 的工作原理，以及在 Rails 应用中如何通过 WebSocket 实现实时功能。</p><p>读完本文后，您将学到：</p>
-<ul>
-<li><p>如何设置 Action Cable；</p></li>
-<li><p>如何设置频道（channel）；</p></li>
-<li><p>Action Cable 的部署和架构设置。</p></li>
-</ul>
-<h3 id="%E7%AE%80%E4%BB%8B">1 简介</h3><p>Action Cable 将 <a href="https://en.wikipedia.org/wiki/WebSocket">WebSocket</a> 与 Rails 应用的其余部分无缝集成。有了 Action Cable，我们就可以用 Ruby 语言，以 Rails 风格实现实时功能，并且保持高性能和可扩展性。Action Cable 为此提供了全栈支持，包括客户端 JavaScript 框架和服务器端 Ruby 框架。同时，我们也能够通过 Action Cable 访问使用 Active Record 或其他 ORM 编写的所有模型。</p><h3 id="Pub/Sub%20%E6%98%AF%E4%BB%80%E4%B9%88">2 Pub/Sub 是什么</h3><p><a href="https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">Pub/Sub</a>，也就是发布/订阅，是指在消息队列中，信息发送者（发布者）把数据发送给某一类接收者（订阅者），而不必单独指定接收者。Action Cable 通过发布/订阅的方式在服务器和多个客户端之间通信。</p><h3 id="%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%BB%84%E4%BB%B6">3 服务器端组件</h3><h4 id="%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%BB%84%E4%BB%B6-%E8%BF%9E%E6%8E%A5">3.1 连接</h4><p>连接是客户端-服务器通信的基础。每当服务器接受一个 WebSocket，就会实例化一个连接对象。所有频道订阅（channel subscription）都是在继承连接对象的基础上创建的。连接本身并不处理身份验证和授权之外的任何应用逻辑。WebSocket 连接的客户端被称为连接用户（connection consumer）。每当用户新打开一个浏览器标签、窗口或设备，对应地都会新建一个用户-连接对（consumer-connection pair）。</p><p>连接是 <code>ApplicationCable::Connection</code> 类的实例。对连接的授权就是在这个类中完成的，对于能够识别的用户，才会继续建立连接。</p><h5 id="%E8%BF%9E%E6%8E%A5%E8%AE%BE%E7%BD%AE">3.1.1 连接设置</h5><div class="code_container">
+        <h3 id="%E7%AE%80%E4%BB%8B">1 简介</h3><p>Action Cable 将 <a href="https://en.wikipedia.org/wiki/WebSocket">WebSocket</a> 与 Rails 应用的其余部分无缝集成。有了 Action Cable，我们就可以用 Ruby 语言，以 Rails 风格实现实时功能，并且保持高性能和可扩展性。Action Cable 为此提供了全栈支持，包括客户端 JavaScript 框架和服务器端 Ruby 框架。同时，我们也能够通过 Action Cable 访问使用 Active Record 或其他 ORM 编写的所有模型。</p><h3 id="Pub/Sub%20%E6%98%AF%E4%BB%80%E4%B9%88">2 Pub/Sub 是什么</h3><p><a href="https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">Pub/Sub</a>，也就是发布/订阅，是指在消息队列中，信息发送者（发布者）把数据发送给某一类接收者（订阅者），而不必单独指定接收者。Action Cable 通过发布/订阅的方式在服务器和多个客户端之间通信。</p><h3 id="%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%BB%84%E4%BB%B6">3 服务器端组件</h3><h4 id="%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%BB%84%E4%BB%B6-%E8%BF%9E%E6%8E%A5">3.1 连接</h4><p>连接是客户端-服务器通信的基础。每当服务器接受一个 WebSocket，就会实例化一个连接对象。所有频道订阅（channel subscription）都是在继承连接对象的基础上创建的。连接本身并不处理身份验证和授权之外的任何应用逻辑。WebSocket 连接的客户端被称为连接用户（connection consumer）。每当用户新打开一个浏览器标签、窗口或设备，对应地都会新建一个用户-连接对（consumer-connection pair）。</p><p>连接是 <code>ApplicationCable::Connection</code> 类的实例。对连接的授权就是在这个类中完成的，对于能够识别的用户，才会继续建立连接。</p><h5 id="%E8%BF%9E%E6%8E%A5%E8%AE%BE%E7%BD%AE">3.1.1 连接设置</h5><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # app/channels/application_cable/connection.rb
 module ApplicationCable

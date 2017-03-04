@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>为 Ruby on Rails 做贡献 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,15 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>为 Ruby on Rails 做贡献</h2><p>本文介绍几种参与 Ruby on Rails 开发的方式。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>如何使用 GitHub 报告问题；</p></li>
+<li><p>如果克隆 master，运行测试组件；</p></li>
+<li><p>如何帮助解决现有问题；</p></li>
+<li><p>如何为 Ruby on Rails 文档做贡献；</p></li>
+<li><p>如何为 Ruby on Rails 代码做贡献。</p></li>
+</ul>
+<p>Ruby on Rails 不是某一个人的框架。这些年，有成百上千个人为 Ruby on Rails 做贡献，小到修正一个字符，大到调整重要的架构或文档——目的都是把 Ruby on Rails 变得更好，适合所有人使用。即便你现在不想编写代码或文档，也能通过其他方式做贡献，例如报告问题和测试补丁。</p><p><a href="https://github.com/rails/rails/blob/master/README.md">Rails 的自述文件</a>说道，参与 Rails 及其子项目代码基开发的人，参与问题追踪系统、聊天室和邮件列表的人，都要遵守 Rails 的<a href="http://rubyonrails.org/conduct/">行为准则</a>。</p>
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -233,15 +241,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>为 Ruby on Rails 做贡献</h2><p>本文介绍几种参与 Ruby on Rails 开发的方式。</p><p>读完本文后，您将学到：</p>
-<ul>
-<li><p>如何使用 GitHub 报告问题；</p></li>
-<li><p>如果克隆 master，运行测试组件；</p></li>
-<li><p>如何帮助解决现有问题；</p></li>
-<li><p>如何为 Ruby on Rails 文档做贡献；</p></li>
-<li><p>如何为 Ruby on Rails 代码做贡献。</p></li>
-</ul>
-<p>Ruby on Rails 不是某一个人的框架。这些年，有成百上千个人为 Ruby on Rails 做贡献，小到修正一个字符，大到调整重要的架构或文档——目的都是把 Ruby on Rails 变得更好，适合所有人使用。即便你现在不想编写代码或文档，也能通过其他方式做贡献，例如报告问题和测试补丁。</p><p><a href="https://github.com/rails/rails/blob/master/README.md">Rails 的自述文件</a>说道，参与 Rails 及其子项目代码基开发的人，参与问题追踪系统、聊天室和邮件列表的人，都要遵守 Rails 的<a href="http://rubyonrails.org/conduct/">行为准则</a>。</p><h3 id="%E6%8A%A5%E5%91%8A%E9%94%99%E8%AF%AF">1 报告错误</h3><p>Ruby on Rails 使用 <a href="https://github.com/rails/rails/issues">GitHub 的问题追踪系统</a>追踪问题（主要是解决缺陷和贡献新代码）。如果你发现 Ruby on Rails 有缺陷，首先应该发布到这个系统中。若想提交问题、评论问题或创建拉取请求， 你要注册一个 GitHub 账户（免费）。</p><div class="note"><p>Ruby on Rails 最新版的缺陷最受关注。此外，Rails 核心团队始终欢迎能对最新开发版做测试的人反馈。本文后面会说明如何测试最新开发版。</p></div><h4 id="%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%BC%BA%E9%99%B7%E6%8A%A5%E5%91%8A">1.1 创建一个缺陷报告</h4><p>如果你在 Ruby on Rails 中发现一个没有安全风险的问题，在 <a href="https://github.com/rails/rails/issues">GitHub 的问题追踪系统</a>中搜索一下，说不定已经有人报告了。如果之前没有人报告，接下来你要<a href="https://github.com/rails/rails/issues/new">创建一个</a>。（报告安全问题的方法参见下一节。）</p><p>问题报告应该包含标题，而且要使用简洁的语言描述问题。你应该尽量多提供相关的信息，而且至少要有一个代码示例，演示所述的问题。如果能提供一个单元测试，说明预期行为更好。你的目标是让你自己以及其他人能重现缺陷，找出修正方法。</p><p>然后，耐心等待。除非你报告的是紧急问题，会导致世界末日，否则你要等待可能有其他人也遇到同样的问题，与你一起去解决。不要期望你报告的问题能立即得到关注，有人立刻着手解决。像这样报告问题基本上是让自己迈出修正问题的第一步，并且让其他遇到同样问题的人复议。</p><h4 id="%E5%88%9B%E5%BB%BA%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%9A%84%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B">1.2 创建可执行的测试用例</h4><p>提供重现问题的方式有助于别人帮你确认、研究并最终解决问题。为此，你可以提供可执行的测试用例。为了简化这一过程，我们准备了几个缺陷报告模板供你参考：</p>
+        <h3 id="%E6%8A%A5%E5%91%8A%E9%94%99%E8%AF%AF">1 报告错误</h3><p>Ruby on Rails 使用 <a href="https://github.com/rails/rails/issues">GitHub 的问题追踪系统</a>追踪问题（主要是解决缺陷和贡献新代码）。如果你发现 Ruby on Rails 有缺陷，首先应该发布到这个系统中。若想提交问题、评论问题或创建拉取请求， 你要注册一个 GitHub 账户（免费）。</p><div class="note"><p>Ruby on Rails 最新版的缺陷最受关注。此外，Rails 核心团队始终欢迎能对最新开发版做测试的人反馈。本文后面会说明如何测试最新开发版。</p></div><h4 id="%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%BC%BA%E9%99%B7%E6%8A%A5%E5%91%8A">1.1 创建一个缺陷报告</h4><p>如果你在 Ruby on Rails 中发现一个没有安全风险的问题，在 <a href="https://github.com/rails/rails/issues">GitHub 的问题追踪系统</a>中搜索一下，说不定已经有人报告了。如果之前没有人报告，接下来你要<a href="https://github.com/rails/rails/issues/new">创建一个</a>。（报告安全问题的方法参见下一节。）</p><p>问题报告应该包含标题，而且要使用简洁的语言描述问题。你应该尽量多提供相关的信息，而且至少要有一个代码示例，演示所述的问题。如果能提供一个单元测试，说明预期行为更好。你的目标是让你自己以及其他人能重现缺陷，找出修正方法。</p><p>然后，耐心等待。除非你报告的是紧急问题，会导致世界末日，否则你要等待可能有其他人也遇到同样的问题，与你一起去解决。不要期望你报告的问题能立即得到关注，有人立刻着手解决。像这样报告问题基本上是让自己迈出修正问题的第一步，并且让其他遇到同样问题的人复议。</p><h4 id="%E5%88%9B%E5%BB%BA%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%9A%84%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B">1.2 创建可执行的测试用例</h4><p>提供重现问题的方式有助于别人帮你确认、研究并最终解决问题。为此，你可以提供可执行的测试用例。为了简化这一过程，我们准备了几个缺陷报告模板供你参考：</p>
 <ul>
 <li><p>报告 Active Record（模型、数据库）问题的模板：<a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_gem.rb">gem</a> / <a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_master.rb">master</a></p></li>
 <li><p>报告 Action Pack（控制器、路由）问题的模板：<a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_gem.rb">gem</a> / <a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_master.rb">master</a></p></li>

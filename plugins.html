@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>Rails 插件开发简介 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,24 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>Rails 插件开发简介</h2><p>Rails 插件是对核心框架的扩展或修改。插件有下述作用：</p>
+<ul>
+<li><p>供开发者分享突发奇想，但不破坏稳定的代码基</p></li>
+<li><p>碎片式架构，代码自成一体，能按照自己的日程表修正或更新</p></li>
+<li><p>核心开发者使用的外延工具，不必把每个新特性都集成到核心框架中</p></li>
+</ul>
+<p>读完本文后，您将学到：</p>
+<ul>
+<li><p>如何从零开始创建一个插件</p></li>
+<li><p>如何编写插件的代码和测试</p></li>
+</ul>
+<p>本文使用测试驱动开发方式编写一个插件，它具有下述功能：</p>
+<ul>
+<li><p>扩展 Ruby 核心类，如 Hash 和 String</p></li>
+<li><p>通过传统的 <code>acts_as</code> 插件形式为 <code>ApplicationRecord</code> 添加方法</p></li>
+<li><p>说明生成器放在插件的什么位置</p></li>
+</ul>
+<p>本文暂且假设你是热衷观察鸟类的人。你钟爱的鸟是绿啄木鸟（Yaffle），因此你想创建一个插件，供其他开发者分享心得。</p><div class="note"><p>本文原文尚未完工！</p></div>
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -209,24 +226,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Rails 插件开发简介</h2><p>Rails 插件是对核心框架的扩展或修改。插件有下述作用：</p>
-<ul>
-<li><p>供开发者分享突发奇想，但不破坏稳定的代码基</p></li>
-<li><p>碎片式架构，代码自成一体，能按照自己的日程表修正或更新</p></li>
-<li><p>核心开发者使用的外延工具，不必把每个新特性都集成到核心框架中</p></li>
-</ul>
-<p>读完本文后，您将学到：</p>
-<ul>
-<li><p>如何从零开始创建一个插件</p></li>
-<li><p>如何编写插件的代码和测试</p></li>
-</ul>
-<p>本文使用测试驱动开发方式编写一个插件，它具有下述功能：</p>
-<ul>
-<li><p>扩展 Ruby 核心类，如 Hash 和 String</p></li>
-<li><p>通过传统的 <code>acts_as</code> 插件形式为 <code>ApplicationRecord</code> 添加方法</p></li>
-<li><p>说明生成器放在插件的什么位置</p></li>
-</ul>
-<p>本文暂且假设你是热衷观察鸟类的人。你钟爱的鸟是绿啄木鸟（Yaffle），因此你想创建一个插件，供其他开发者分享心得。</p><div class="note"><p>本文原文尚未完工！</p></div><h3 id="%E5%87%86%E5%A4%87">1 准备</h3><p>目前，Rails 插件构建成 gem 的形式，叫做 gem 式插件（gemified plugin）。如果愿意，可以通过 RubyGems 和 Bundler 在多个 Rails 应用中共享。</p><h4 id="%E7%94%9F%E6%88%90%20gem%20%E5%BC%8F%E6%8F%92%E4%BB%B6">1.1 生成 gem 式插件</h4><p>Rails 自带一个 <code>rails plugin new</code> 命令，用于创建任何 Rails 扩展的骨架。这个命令还会生成一个虚设的 Rails 应用，用于运行集成测试。请使用下述命令创建这个插件：</p><div class="code_container">
+        <h3 id="%E5%87%86%E5%A4%87">1 准备</h3><p>目前，Rails 插件构建成 gem 的形式，叫做 gem 式插件（gemified plugin）。如果愿意，可以通过 RubyGems 和 Bundler 在多个 Rails 应用中共享。</p><h4 id="%E7%94%9F%E6%88%90%20gem%20%E5%BC%8F%E6%8F%92%E4%BB%B6">1.1 生成 gem 式插件</h4><p>Rails 自带一个 <code>rails plugin new</code> 命令，用于创建任何 Rails 扩展的骨架。这个命令还会生成一个虚设的 Rails 应用，用于运行集成测试。请使用下述命令创建这个插件：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ rails plugin new yaffle
 

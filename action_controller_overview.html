@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>Action Controller 概览 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,18 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>Action Controller 概览</h2><p>本文介绍控制器的工作原理，以及控制器在应用请求周期中扮演的角色。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>请求如何进入控制器；</p></li>
+<li><p>如何限制传入控制器的参数；</p></li>
+<li><p>为什么以及如何把数据存储在会话或 cookie 中；</p></li>
+<li><p>处理请求时，如何使用过滤器执行代码；</p></li>
+<li><p>如何使用 Action Controller 内置的 HTTP 身份验证功能；</p></li>
+<li><p>如何把数据流直接发送给用户的浏览器；</p></li>
+<li><p>如何过滤敏感信息，不写入应用的日志；</p></li>
+<li><p>如何处理请求过程中可能出现的异常。</p></li>
+</ul>
+
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -263,18 +274,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Action Controller 概览</h2><p>本文介绍控制器的工作原理，以及控制器在应用请求周期中扮演的角色。</p><p>读完本文后，您将学到：</p>
-<ul>
-<li><p>请求如何进入控制器；</p></li>
-<li><p>如何限制传入控制器的参数；</p></li>
-<li><p>为什么以及如何把数据存储在会话或 cookie 中；</p></li>
-<li><p>处理请求时，如何使用过滤器执行代码；</p></li>
-<li><p>如何使用 Action Controller 内置的 HTTP 身份验证功能；</p></li>
-<li><p>如何把数据流直接发送给用户的浏览器；</p></li>
-<li><p>如何过滤敏感信息，不写入应用的日志；</p></li>
-<li><p>如何处理请求过程中可能出现的异常。</p></li>
-</ul>
-<h3 id="%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E4%BD%9C%E7%94%A8">1 控制器的作用</h3><p>Action Controller 是 MVC 中的 C（控制器）。路由决定使用哪个控制器处理请求后，控制器负责解析请求，生成相应的输出。Action Controller 会代为处理大多数底层工作，使用智能的约定，让整个过程清晰明了。</p><p>在大多数按照 <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">REST</a> 架构开发的应用中，控制器会接收请求（开发者不可见），从模型中获取数据，或把数据写入模型，再通过视图生成 HTML。如果控制器需要做其他操作，也没问题，以上只不过是控制器的主要作用。</p><p>因此，控制器可以视作模型和视图的中间人，让模型中的数据可以在视图中使用，把数据显示给用户，再把用户提交的数据保存或更新到模型中。</p><div class="note"><p>路由的处理细节参阅<a href="routing.html">Rails 路由全解</a>。</p></div><h3 id="%E6%8E%A7%E5%88%B6%E5%99%A8%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A">2 控制器命名约定</h3><p>Rails 控制器的命名约定是，最后一个单词使用复数形式，但也有例外，比如 <code>ApplicationController</code>。例如：用 <code>ClientsController</code>，而不是 <code>ClientController</code>；用 <code>SiteAdminsController</code>，而不是 <code>SiteAdminController</code> 或 <code>SitesAdminsController</code>。</p><p>遵守这一约定便可享用默认的路由生成器（例如 <code>resources</code> 等），无需再指定 <code>:path</code> 或 <code>:controller</code> 选项，而且 URL 和路径的辅助方法也能保持一致性。详情参阅<a href="layouts_and_rendering.html">Rails 布局和视图渲染</a>。</p><div class="note"><p>控制器的命名约定与模型不同，模型的名字习惯使用单数形式。</p></div><h3 id="%E6%96%B9%E6%B3%95%E5%92%8C%E5%8A%A8%E4%BD%9C">3 方法和动作</h3><p>一个控制器是一个 Ruby 类，继承自 <code>ApplicationController</code>，和其他类一样，定义了很多方法。应用接到请求时，路由决定运行哪个控制器和哪个动作，然后 Rails 创建该控制器的实例，运行与动作同名的方法。</p><div class="code_container">
+        <h3 id="%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E4%BD%9C%E7%94%A8">1 控制器的作用</h3><p>Action Controller 是 MVC 中的 C（控制器）。路由决定使用哪个控制器处理请求后，控制器负责解析请求，生成相应的输出。Action Controller 会代为处理大多数底层工作，使用智能的约定，让整个过程清晰明了。</p><p>在大多数按照 <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">REST</a> 架构开发的应用中，控制器会接收请求（开发者不可见），从模型中获取数据，或把数据写入模型，再通过视图生成 HTML。如果控制器需要做其他操作，也没问题，以上只不过是控制器的主要作用。</p><p>因此，控制器可以视作模型和视图的中间人，让模型中的数据可以在视图中使用，把数据显示给用户，再把用户提交的数据保存或更新到模型中。</p><div class="note"><p>路由的处理细节参阅<a href="routing.html">Rails 路由全解</a>。</p></div><h3 id="%E6%8E%A7%E5%88%B6%E5%99%A8%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A">2 控制器命名约定</h3><p>Rails 控制器的命名约定是，最后一个单词使用复数形式，但也有例外，比如 <code>ApplicationController</code>。例如：用 <code>ClientsController</code>，而不是 <code>ClientController</code>；用 <code>SiteAdminsController</code>，而不是 <code>SiteAdminController</code> 或 <code>SitesAdminsController</code>。</p><p>遵守这一约定便可享用默认的路由生成器（例如 <code>resources</code> 等），无需再指定 <code>:path</code> 或 <code>:controller</code> 选项，而且 URL 和路径的辅助方法也能保持一致性。详情参阅<a href="layouts_and_rendering.html">Rails 布局和视图渲染</a>。</p><div class="note"><p>控制器的命名约定与模型不同，模型的名字习惯使用单数形式。</p></div><h3 id="%E6%96%B9%E6%B3%95%E5%92%8C%E5%8A%A8%E4%BD%9C">3 方法和动作</h3><p>一个控制器是一个 Ruby 类，继承自 <code>ApplicationController</code>，和其他类一样，定义了很多方法。应用接到请求时，路由决定运行哪个控制器和哪个动作，然后 Rails 创建该控制器的实例，运行与动作同名的方法。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class ClientsController &lt; ApplicationController
   def new

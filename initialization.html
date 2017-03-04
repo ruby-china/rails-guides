@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>Rails 初始化过程 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,14 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>Rails 初始化过程</h2><p>本文介绍 Rails 初始化过程的内部细节，内容较深，建议 Rails 高级开发者阅读。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>如何使用 <code>rails server</code>；</p></li>
+<li><p>Rails 初始化过程的时间表；</p></li>
+<li><p>引导过程中所需的不同文件的所在位置；</p></li>
+<li><p><code>Rails::Server</code> 接口的定义和使用方式。</p></li>
+</ul>
+<p>本文介绍默认情况下，Rails 应用初始化过程中的每一个方法调用，详细解释各个步骤的具体细节。本文将聚焦于使用 <code>rails server</code> 启动 Rails 应用时发生的事情。</p><div class="note"><p>除非另有说明，本文中出现的路径都是相对于 Rails 或 Rails 应用所在目录的相对路径。</p></div><div class="info"><p>如果想一边阅读本文一边查看 <a href="https://github.com/rails/rails">Rails 源代码</a>，推荐在 GitHub 中使用 <code>t</code> 快捷键打开文件查找器，以便快速查找相关文件。</p></div>
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -217,14 +224,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Rails 初始化过程</h2><p>本文介绍 Rails 初始化过程的内部细节，内容较深，建议 Rails 高级开发者阅读。</p><p>读完本文后，您将学到：</p>
-<ul>
-<li><p>如何使用 <code>rails server</code>；</p></li>
-<li><p>Rails 初始化过程的时间表；</p></li>
-<li><p>引导过程中所需的不同文件的所在位置；</p></li>
-<li><p><code>Rails::Server</code> 接口的定义和使用方式。</p></li>
-</ul>
-<p>本文介绍默认情况下，Rails 应用初始化过程中的每一个方法调用，详细解释各个步骤的具体细节。本文将聚焦于使用 <code>rails server</code> 启动 Rails 应用时发生的事情。</p><div class="note"><p>除非另有说明，本文中出现的路径都是相对于 Rails 或 Rails 应用所在目录的相对路径。</p></div><div class="info"><p>如果想一边阅读本文一边查看 <a href="https://github.com/rails/rails">Rails 源代码</a>，推荐在 GitHub 中使用 <code>t</code> 快捷键打开文件查找器，以便快速查找相关文件。</p></div><h3 id="%E5%90%AF%E5%8A%A8">1 启动</h3><p>首先介绍 Rails 应用引导和初始化的过程。我们可以通过 <code>rails console</code> 或 <code>rails server</code> 命令启动 Rails 应用。</p><h4 id="railties/exe/rails%20%E6%96%87%E4%BB%B6">1.1 <code>railties/exe/rails</code> 文件</h4><p><code>rails server</code> 命令中的 <code>rails</code> 是位于加载路径中的 Ruby 可执行文件。这个文件包含如下内容：</p><div class="code_container">
+        <h3 id="%E5%90%AF%E5%8A%A8">1 启动</h3><p>首先介绍 Rails 应用引导和初始化的过程。我们可以通过 <code>rails console</code> 或 <code>rails server</code> 命令启动 Rails 应用。</p><h4 id="railties/exe/rails%20%E6%96%87%E4%BB%B6">1.1 <code>railties/exe/rails</code> 文件</h4><p><code>rails server</code> 命令中的 <code>rails</code> 是位于加载路径中的 Ruby 可执行文件。这个文件包含如下内容：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 version = "&gt;= 0"
 load Gem.bin_path('railties', 'rails', version)

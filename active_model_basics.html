@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>Active Model 基础 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,14 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>Active Model 基础</h2><p>本文简述模型类。Active Model 允许使用 Action Pack 辅助方法与普通的 Ruby 类交互。Active Model 还协助构建自定义的 ORM，可在 Rails 框架外部使用。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>Active Record 模型的行为；</p></li>
+<li><p>回调和数据验证的工作方式；</p></li>
+<li><p>序列化程序的工作方式；</p></li>
+<li><p>Active Model 与 Rails 国际化（i18n）框架的集成。</p></li>
+</ul>
+<div class="note"><p>本文原文尚未完工！</p></div>
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -205,14 +212,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Active Model 基础</h2><p>本文简述模型类。Active Model 允许使用 Action Pack 辅助方法与普通的 Ruby 类交互。Active Model 还协助构建自定义的 ORM，可在 Rails 框架外部使用。</p><p>读完本文后，您将学到：</p>
-<ul>
-<li><p>Active Record 模型的行为；</p></li>
-<li><p>回调和数据验证的工作方式；</p></li>
-<li><p>序列化程序的工作方式；</p></li>
-<li><p>Active Model 与 Rails 国际化（i18n）框架的集成。</p></li>
-</ul>
-<div class="note"><p>本文原文尚未完工！</p></div><h3 id="%E7%AE%80%E4%BB%8B">1 简介</h3><p>Active Model 库包含很多模块，用于开发要在 Active Record 中存储的类。下面说明其中部分模块。</p><h4 id="%E5%B1%9E%E6%80%A7%E6%96%B9%E6%B3%95">1.1 属性方法</h4><p><code>ActiveModel::AttributeMethods</code> 模块可以为类中的方法添加自定义的前缀和后缀。它用于定义前缀和后缀，对象中的方法将使用它们。</p><div class="code_container">
+        <h3 id="%E7%AE%80%E4%BB%8B">1 简介</h3><p>Active Model 库包含很多模块，用于开发要在 Active Record 中存储的类。下面说明其中部分模块。</p><h4 id="%E5%B1%9E%E6%80%A7%E6%96%B9%E6%B3%95">1.1 属性方法</h4><p><code>ActiveModel::AttributeMethods</code> 模块可以为类中的方法添加自定义的前缀和后缀。它用于定义前缀和后缀，对象中的方法将使用它们。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class Person
   include ActiveModel::AttributeMethods

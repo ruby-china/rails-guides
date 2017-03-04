@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>Rails 国际化 API — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,26 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>Rails 国际化 API</h2><p>Rails（Rails 2.2 及以上版本）自带的 Ruby I18n（internationalization 的简写）gem，提供了易用、可扩展的框架，用于把应用翻译成英语之外的语言，或为应用提供多语言支持。</p><p>“国际化”（internationalization）过程通常是指，把所有字符串及本地化相关信息（例如日期或货币格式）从应用中抽取出来。“本地化”（localization）过程通常是指，翻译这些字符串并提供相关信息的本地格式。[1]</p><p>因此，在国际化 Rails 应用的过程中，我们需要：</p>
+<ul>
+<li><p>确保 Rails 提供了 I18n 支持；</p></li>
+<li><p>把区域设置字典（locale dictionary）的位置告诉 Rails；</p></li>
+<li><p>告诉 Rails 如何设置、保存和切换区域（locale）。</p></li>
+</ul>
+<p>在本地化 Rails 应用的过程中，我们可能需要完成下面三项工作：</p>
+<ul>
+<li><p>替换或补充 Rails 的默认区域设置，例如日期和时间格式、月份名称、Active Record 模型名等；</p></li>
+<li><p>从应用中抽取字符串，并放入字典，例如视图中的闪现信息（flash message）、静态文本等；</p></li>
+<li><p>把生成的字典储存在某个地方。</p></li>
+</ul>
+<p>本文介绍 Rails I18n API，并提供国际化 Rails 应用的入门教程。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>Rails 中 I18n 的工作原理；</p></li>
+<li><p>在 REST 式应用中正确使用 I18n 的几种方式；</p></li>
+<li><p>如何使用 I18n 翻译 Active Record 错误或 Action Mailer 电子邮件主题；</p></li>
+<li><p>用于进一步翻译应用的其他工具。</p></li>
+</ul>
+
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -243,26 +262,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Rails 国际化 API</h2><p>Rails（Rails 2.2 及以上版本）自带的 Ruby I18n（internationalization 的简写）gem，提供了易用、可扩展的框架，用于把应用翻译成英语之外的语言，或为应用提供多语言支持。</p><p>“国际化”（internationalization）过程通常是指，把所有字符串及本地化相关信息（例如日期或货币格式）从应用中抽取出来。“本地化”（localization）过程通常是指，翻译这些字符串并提供相关信息的本地格式。[1]</p><p>因此，在国际化 Rails 应用的过程中，我们需要：</p>
-<ul>
-<li><p>确保 Rails 提供了 I18n 支持；</p></li>
-<li><p>把区域设置字典（locale dictionary）的位置告诉 Rails；</p></li>
-<li><p>告诉 Rails 如何设置、保存和切换区域（locale）。</p></li>
-</ul>
-<p>在本地化 Rails 应用的过程中，我们可能需要完成下面三项工作：</p>
-<ul>
-<li><p>替换或补充 Rails 的默认区域设置，例如日期和时间格式、月份名称、Active Record 模型名等；</p></li>
-<li><p>从应用中抽取字符串，并放入字典，例如视图中的闪现信息（flash message）、静态文本等；</p></li>
-<li><p>把生成的字典储存在某个地方。</p></li>
-</ul>
-<p>本文介绍 Rails I18n API，并提供国际化 Rails 应用的入门教程。</p><p>读完本文后，您将学到：</p>
-<ul>
-<li><p>Rails 中 I18n 的工作原理；</p></li>
-<li><p>在 REST 式应用中正确使用 I18n 的几种方式；</p></li>
-<li><p>如何使用 I18n 翻译 Active Record 错误或 Action Mailer 电子邮件主题；</p></li>
-<li><p>用于进一步翻译应用的其他工具。</p></li>
-</ul>
-<div class="note"><p>Ruby I18n 框架提供了 Rails 应用国际化/本地化所需的全部必要支持。我们还可以使用各种 gem 来添加附加功能或特性。更多介绍请参阅 <a href="https://github.com/svenfuchs/rails-i18n">rails-18n gem</a>。</p></div><h3 id="Rails%20%E4%B8%AD%20I18n%20%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86">1 Rails 中 I18n 的工作原理</h3><p>国际化是一个复杂的问题。自然语言在很多方面（例如复数规则）有所不同，要想一次性提供解决所有问题的工具很难。因此，Rails I18n API 专注于：</p>
+        <div class="note"><p>Ruby I18n 框架提供了 Rails 应用国际化/本地化所需的全部必要支持。我们还可以使用各种 gem 来添加附加功能或特性。更多介绍请参阅 <a href="https://github.com/svenfuchs/rails-i18n">rails-18n gem</a>。</p></div><h3 id="Rails%20%E4%B8%AD%20I18n%20%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86">1 Rails 中 I18n 的工作原理</h3><p>国际化是一个复杂的问题。自然语言在很多方面（例如复数规则）有所不同，要想一次性提供解决所有问题的工具很难。因此，Rails I18n API 专注于：</p>
 <ul>
 <li><p>支持英语及类似语言</p></li>
 <li><p>易于定制和扩展，以支持其他语言</p></li>

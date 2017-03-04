@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>Rails 路由全解 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,15 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>Rails 路由全解</h2><p>本文介绍 Rails 路由面向用户的特性。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>如何理解 <code>config/routes.rb</code> 文件中的代码；</p></li>
+<li><p>如何使用推荐的资源式风格或 <code>match</code> 方法构建路由；</p></li>
+<li><p>控制器动作预期收到什么参数；</p></li>
+<li><p>如何使用路由辅助方法自动创建路径和 URL 地址；</p></li>
+<li><p>约束和 Rack 端点等高级技术。</p></li>
+</ul>
+
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -257,15 +265,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Rails 路由全解</h2><p>本文介绍 Rails 路由面向用户的特性。</p><p>读完本文后，您将学到：</p>
-<ul>
-<li><p>如何理解 <code>config/routes.rb</code> 文件中的代码；</p></li>
-<li><p>如何使用推荐的资源式风格或 <code>match</code> 方法构建路由；</p></li>
-<li><p>控制器动作预期收到什么参数；</p></li>
-<li><p>如何使用路由辅助方法自动创建路径和 URL 地址；</p></li>
-<li><p>约束和 Rack 端点等高级技术。</p></li>
-</ul>
-<h3 id="Rails%20%E8%B7%AF%E7%94%B1%E7%9A%84%E7%94%A8%E9%80%94">1 Rails 路由的用途</h3><p>Rails 路由能够识别 URL 地址，并把它们分派给控制器动作进行处理。它还能生成路径和 URL 地址，从而避免在视图中硬编码字符串。</p><h4 id="%E6%8A%8A%20URL%20%E5%9C%B0%E5%9D%80%E8%BF%9E%E6%8E%A5%E5%88%B0%E4%BB%A3%E7%A0%81">1.1 把 URL 地址连接到代码</h4><p>当 Rails 应用收到下面的请求时：</p><div class="code_container">
+        <h3 id="Rails%20%E8%B7%AF%E7%94%B1%E7%9A%84%E7%94%A8%E9%80%94">1 Rails 路由的用途</h3><p>Rails 路由能够识别 URL 地址，并把它们分派给控制器动作进行处理。它还能生成路径和 URL 地址，从而避免在视图中硬编码字符串。</p><h4 id="%E6%8A%8A%20URL%20%E5%9C%B0%E5%9D%80%E8%BF%9E%E6%8E%A5%E5%88%B0%E4%BB%A3%E7%A0%81">1.1 把 URL 地址连接到代码</h4><p>当 Rails 应用收到下面的请求时：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 GET /patients/17
 

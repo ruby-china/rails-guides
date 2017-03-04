@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>Active Support 核心扩展 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,14 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>Active Support 核心扩展</h2><p>Active Support 是 Ruby on Rails 的一个组件，扩展了 Ruby 语言，提供了一些实用功能。</p><p>Active Support 丰富了 Rails 使用的编程语言，目的是便于开发 Rails 应用以及 Rails 本身。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>核心扩展是什么；</p></li>
+<li><p>如何加载所有扩展；</p></li>
+<li><p>如何按需加载想用的扩展；</p></li>
+<li><p>Active Support 提供了哪些扩展。</p></li>
+</ul>
+
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -374,14 +381,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Active Support 核心扩展</h2><p>Active Support 是 Ruby on Rails 的一个组件，扩展了 Ruby 语言，提供了一些实用功能。</p><p>Active Support 丰富了 Rails 使用的编程语言，目的是便于开发 Rails 应用以及 Rails 本身。</p><p>读完本文后，您将学到：</p>
-<ul>
-<li><p>核心扩展是什么；</p></li>
-<li><p>如何加载所有扩展；</p></li>
-<li><p>如何按需加载想用的扩展；</p></li>
-<li><p>Active Support 提供了哪些扩展。</p></li>
-</ul>
-<h3 id="%E5%A6%82%E4%BD%95%E5%8A%A0%E8%BD%BD%E6%A0%B8%E5%BF%83%E6%89%A9%E5%B1%95">1 如何加载核心扩展</h3><h4 id="%E7%8B%AC%E7%AB%8B%E7%9A%84%20Active%20Support">1.1 独立的 Active Support</h4><p>为了减轻应用的负担，默认情况下 Active Support 不会加载任何功能。Active Support 中的各部分功能是相对独立的，可以只加载需要的功能，也可以方便地加载相互联系的功能，或者加载全部功能。</p><p>因此，只编写下面这个 <code>require</code> 语句，对象甚至无法响应 <code>blank?</code> 方法：</p><div class="code_container">
+        <h3 id="%E5%A6%82%E4%BD%95%E5%8A%A0%E8%BD%BD%E6%A0%B8%E5%BF%83%E6%89%A9%E5%B1%95">1 如何加载核心扩展</h3><h4 id="%E7%8B%AC%E7%AB%8B%E7%9A%84%20Active%20Support">1.1 独立的 Active Support</h4><p>为了减轻应用的负担，默认情况下 Active Support 不会加载任何功能。Active Support 中的各部分功能是相对独立的，可以只加载需要的功能，也可以方便地加载相互联系的功能，或者加载全部功能。</p><p>因此，只编写下面这个 <code>require</code> 语句，对象甚至无法响应 <code>blank?</code> 方法：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 require 'active_support'
 

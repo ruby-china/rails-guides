@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>创建及定制 Rails 生成器和模板 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,18 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>创建及定制 Rails 生成器和模板</h2><p>如果你打算改进自己的工作流程，Rails 生成器是必备工具。本文教你创建及定制生成器的方式。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>如何查看应用中有哪些生成器可用；</p></li>
+<li><p>如何使用模板创建生成器；</p></li>
+<li><p>在调用生成器之前，Rails 如何搜索生成器；</p></li>
+<li><p>Rails 内部如何使用模板生成 Rails 代码；</p></li>
+<li><p>如何通过创建新生成器定制脚手架；</p></li>
+<li><p>如何通过修改生成器模板定制脚手架；</p></li>
+<li><p>如何使用后备机制防范覆盖大量生成器；</p></li>
+<li><p>如何创建应用模板。</p></li>
+</ul>
+
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -218,18 +229,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>创建及定制 Rails 生成器和模板</h2><p>如果你打算改进自己的工作流程，Rails 生成器是必备工具。本文教你创建及定制生成器的方式。</p><p>读完本文后，您将学到：</p>
-<ul>
-<li><p>如何查看应用中有哪些生成器可用；</p></li>
-<li><p>如何使用模板创建生成器；</p></li>
-<li><p>在调用生成器之前，Rails 如何搜索生成器；</p></li>
-<li><p>Rails 内部如何使用模板生成 Rails 代码；</p></li>
-<li><p>如何通过创建新生成器定制脚手架；</p></li>
-<li><p>如何通过修改生成器模板定制脚手架；</p></li>
-<li><p>如何使用后备机制防范覆盖大量生成器；</p></li>
-<li><p>如何创建应用模板。</p></li>
-</ul>
-<h3 id="%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%8E%A5%E8%A7%A6">1 第一次接触</h3><p>使用 <code>rails</code> 命令创建应用时，使用的其实就是一个 Rails 生成器。创建应用之后，可以使用 <code>rails generator</code> 命令列出全部可用的生成器：</p><div class="code_container">
+        <h3 id="%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%8E%A5%E8%A7%A6">1 第一次接触</h3><p>使用 <code>rails</code> 命令创建应用时，使用的其实就是一个 Rails 生成器。创建应用之后，可以使用 <code>rails generator</code> 命令列出全部可用的生成器：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ rails new myapp
 $ cd myapp

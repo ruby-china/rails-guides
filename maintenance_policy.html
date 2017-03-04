@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>Ruby on Rails 的维护方针 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,10 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>Ruby on Rails 的维护方针</h2><p>对 Rails 框架的支持分为四种：新功能、缺陷修正、安全问题和严重安全问题。各自的处理方式如下，所有版本号都使用 <code>X.Y.Z</code> 格式。</p><p>Rails 遵照<a href="http://semver.org/">语义版本</a>更替版本号：</p><p>补丁版 Z<br>
+只修正缺陷，不改变 API，也不新增功能。安全修正可能例外。</p><p>小版本 Y<br>
+新增功能，可能改变 API（相当于语义版本中的大版本）。重大改变在之前的小版本或大版本中带有弃用提示。</p><p>大版本 X<br>
+新增功能，可能改变 API。Rails 的大版本和小版本之间的区别是对重大改变的处理方式不同，有时也有例外。</p>
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -193,10 +196,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Ruby on Rails 的维护方针</h2><p>对 Rails 框架的支持分为四种：新功能、缺陷修正、安全问题和严重安全问题。各自的处理方式如下，所有版本号都使用 <code>X.Y.Z</code> 格式。</p><p>Rails 遵照<a href="http://semver.org/">语义版本</a>更替版本号：</p><p>补丁版 Z<br>
-只修正缺陷，不改变 API，也不新增功能。安全修正可能例外。</p><p>小版本 Y<br>
-新增功能，可能改变 API（相当于语义版本中的大版本）。重大改变在之前的小版本或大版本中带有弃用提示。</p><p>大版本 X<br>
-新增功能，可能改变 API。Rails 的大版本和小版本之间的区别是对重大改变的处理方式不同，有时也有例外。</p><h3 id="%E6%96%B0%E5%8A%9F%E8%83%BD">1 新功能</h3><p>新功能只添加到 master 分支，不会包含在补丁版中。</p><h3 id="%E7%BC%BA%E9%99%B7%E4%BF%AE%E6%AD%A3">2 缺陷修正</h3><p>只有最新的发布系列接收缺陷修正。如果修正的缺陷足够多，值得发布新的 gem，从这个分支中获取代码。</p><p>如果核心团队中有人同意支持更多的发布系列，也会包含在支持的系列中——这是特殊情况。</p><p>目前支持的系列：<code>5.0.Z</code>、<code>4.2.Z</code>。</p><h3 id="%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98">3 安全问题</h3><p>发现安全问题时，当前发布系列和下一个最新版接收补丁和新版本。</p><p>新版代码从最近的发布版中获取，应用安全补丁之后发布。然后把安全补丁应用到 x-y-stable 分支。例如，1.2.3 安全发布在 1.2.2 版的基础上得来，然后再把安全补丁应用到 1-2-stable 分支。因此，如果你使用 Rails 的最新版，很容易升级安全修正版。</p><p>目前支持的系列：<code>5.0.Z</code>、<code>4.2.Z</code>。</p><h3 id="%E4%B8%A5%E9%87%8D%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98">4 严重安全问题</h3><p>发现严重安全问题时，会发布新版，最近的主发布系列也会接收补丁和新版。安全问题由核心团队甄别分类。</p><p>目前支持的系列：<code>5.0.Z</code>、<code>4.2.Z</code>。</p><h3 id="%E4%B8%8D%E6%94%AF%E6%8C%81%E7%9A%84%E5%8F%91%E5%B8%83%E7%B3%BB%E5%88%97">5 不支持的发布系列</h3><p>如果一个发布系列不再得到支持，你要自己负责处理缺陷和安全问题。我们可能会逆向移植，把修正代码发布到 Git 仓库中，但是不会发布新版本。如果你不想自己维护，应该升级到我们支持的版本。</p>
+        <h3 id="%E6%96%B0%E5%8A%9F%E8%83%BD">1 新功能</h3><p>新功能只添加到 master 分支，不会包含在补丁版中。</p><h3 id="%E7%BC%BA%E9%99%B7%E4%BF%AE%E6%AD%A3">2 缺陷修正</h3><p>只有最新的发布系列接收缺陷修正。如果修正的缺陷足够多，值得发布新的 gem，从这个分支中获取代码。</p><p>如果核心团队中有人同意支持更多的发布系列，也会包含在支持的系列中——这是特殊情况。</p><p>目前支持的系列：<code>5.0.Z</code>、<code>4.2.Z</code>。</p><h3 id="%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98">3 安全问题</h3><p>发现安全问题时，当前发布系列和下一个最新版接收补丁和新版本。</p><p>新版代码从最近的发布版中获取，应用安全补丁之后发布。然后把安全补丁应用到 x-y-stable 分支。例如，1.2.3 安全发布在 1.2.2 版的基础上得来，然后再把安全补丁应用到 1-2-stable 分支。因此，如果你使用 Rails 的最新版，很容易升级安全修正版。</p><p>目前支持的系列：<code>5.0.Z</code>、<code>4.2.Z</code>。</p><h3 id="%E4%B8%A5%E9%87%8D%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98">4 严重安全问题</h3><p>发现严重安全问题时，会发布新版，最近的主发布系列也会接收补丁和新版。安全问题由核心团队甄别分类。</p><p>目前支持的系列：<code>5.0.Z</code>、<code>4.2.Z</code>。</p><h3 id="%E4%B8%8D%E6%94%AF%E6%8C%81%E7%9A%84%E5%8F%91%E5%B8%83%E7%B3%BB%E5%88%97">5 不支持的发布系列</h3><p>如果一个发布系列不再得到支持，你要自己负责处理缺陷和安全问题。我们可能会逆向移植，把修正代码发布到 Git 仓库中，但是不会发布新版本。如果你不想自己维护，应该升级到我们支持的版本。</p>
 
         <h3>反馈</h3>
         <p>

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>在 Rails 中使用 JavaScript — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,15 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>在 Rails 中使用 JavaScript</h2><p>本文介绍 Rails 内建对 Ajax 和 JavaScript 等的支持，使用这些功能可以轻易地开发强大的 Ajax 动态应用。</p><p>本完本文后，您将学到：</p>
+<ul>
+<li><p>Ajax 基础知识；</p></li>
+<li><p>非侵入式 JavaScript；</p></li>
+<li><p>如何使用 Rails 内建的辅助方法；</p></li>
+<li><p>如何在服务器端处理 Ajax；</p></li>
+<li><p>Turbolinks gem。</p></li>
+</ul>
+
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -216,15 +224,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>在 Rails 中使用 JavaScript</h2><p>本文介绍 Rails 内建对 Ajax 和 JavaScript 等的支持，使用这些功能可以轻易地开发强大的 Ajax 动态应用。</p><p>本完本文后，您将学到：</p>
-<ul>
-<li><p>Ajax 基础知识；</p></li>
-<li><p>非侵入式 JavaScript；</p></li>
-<li><p>如何使用 Rails 内建的辅助方法；</p></li>
-<li><p>如何在服务器端处理 Ajax；</p></li>
-<li><p>Turbolinks gem。</p></li>
-</ul>
-<h3 id="Ajax%20%E7%AE%80%E4%BB%8B">1 Ajax 简介</h3><p>在理解 Ajax 之前，要先知道 Web 浏览器常规的工作原理。</p><p>在浏览器的地址栏中输入 <code>http://localhost:3000</code> 后，浏览器（客户端）会向服务器发起一个请求。然后浏览器处理响应，获取相关的静态资源文件，比如 JavaScript、样式表和图像，然后显示页面内容。点击链接后发生的事情也是如此：获取页面，获取静态资源，把全部内容放在一起，显示最终的网页。这个过程叫做“请求响应循环”。</p><p>JavaScript 也可以向服务器发起请求，并解析响应。而且还能更新网页中的内容。因此，JavaScript 程序员可以编写只更新部分内容的网页，而不用从服务器获取完整的页面数据。这是一种强大的技术，我们称之为 Ajax。</p><p>Rails 默认支持 CoffeeScript，后文所有的示例都用 CoffeeScript 编写。本文介绍的技术，在普通的 JavaScript 中也可以使用。</p><p>例如，下面这段 CoffeeScript 代码使用 jQuery 库发起一个 Ajax 请求：</p><div class="code_container">
+        <h3 id="Ajax%20%E7%AE%80%E4%BB%8B">1 Ajax 简介</h3><p>在理解 Ajax 之前，要先知道 Web 浏览器常规的工作原理。</p><p>在浏览器的地址栏中输入 <code>http://localhost:3000</code> 后，浏览器（客户端）会向服务器发起一个请求。然后浏览器处理响应，获取相关的静态资源文件，比如 JavaScript、样式表和图像，然后显示页面内容。点击链接后发生的事情也是如此：获取页面，获取静态资源，把全部内容放在一起，显示最终的网页。这个过程叫做“请求响应循环”。</p><p>JavaScript 也可以向服务器发起请求，并解析响应。而且还能更新网页中的内容。因此，JavaScript 程序员可以编写只更新部分内容的网页，而不用从服务器获取完整的页面数据。这是一种强大的技术，我们称之为 Ajax。</p><p>Rails 默认支持 CoffeeScript，后文所有的示例都用 CoffeeScript 编写。本文介绍的技术，在普通的 JavaScript 中也可以使用。</p><p>例如，下面这段 CoffeeScript 代码使用 jQuery 库发起一个 Ajax 请求：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $.ajax(url: "/test").done (html) -&gt;
   $("#results").append html

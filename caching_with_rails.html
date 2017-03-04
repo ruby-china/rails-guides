@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>Rails 缓存概览 — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,14 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>Rails 缓存概览</h2><p>本文简述如何使用缓存提升 Rails 应用的速度。</p><p>缓存是指存储请求-响应循环中生成的内容，在类似请求的响应中复用。</p><p>通常，缓存是提升应用性能最有效的方式。通过缓存，在单个服务器中使用单个数据库的网站可以承受数千个用户并发访问。</p><p>Rails 自带了一些缓存功能。本文说明它们的适用范围和作用。掌握这些技术之后，你的 Rails 应用能承受大量访问，而不必花大量时间生成响应，或者支付高昂的服务器账单。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>片段缓存和俄罗斯套娃缓存；</p></li>
+<li><p>如何管理缓存依赖；</p></li>
+<li><p>不同的缓存存储器；</p></li>
+<li><p>对条件 GET 请求的支持。</p></li>
+</ul>
+
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -222,14 +229,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Rails 缓存概览</h2><p>本文简述如何使用缓存提升 Rails 应用的速度。</p><p>缓存是指存储请求-响应循环中生成的内容，在类似请求的响应中复用。</p><p>通常，缓存是提升应用性能最有效的方式。通过缓存，在单个服务器中使用单个数据库的网站可以承受数千个用户并发访问。</p><p>Rails 自带了一些缓存功能。本文说明它们的适用范围和作用。掌握这些技术之后，你的 Rails 应用能承受大量访问，而不必花大量时间生成响应，或者支付高昂的服务器账单。</p><p>读完本文后，您将学到：</p>
-<ul>
-<li><p>片段缓存和俄罗斯套娃缓存；</p></li>
-<li><p>如何管理缓存依赖；</p></li>
-<li><p>不同的缓存存储器；</p></li>
-<li><p>对条件 GET 请求的支持。</p></li>
-</ul>
-<h3 id="%E5%9F%BA%E6%9C%AC%E7%BC%93%E5%AD%98">1 基本缓存</h3><p>本节简介三种缓存技术：页面缓存（page caching）、动作缓存（action caching）和片段缓存（fragment caching）。Rails 默认提供了片段缓存。如果想使用页面缓存或动作缓存，要把 <code>actionpack-page_caching</code> 或 <code>actionpack-action_caching</code> 添加到 <code>Gemfile</code> 中。</p><p>默认情况下，缓存只在生产环境启用。如果想在本地启用缓存，要在相应的 <code>config/environments/*.rb</code> 文件中把 <code>config.action_controller.perform_caching</code> 设为 <code>true</code>。</p><div class="code_container">
+        <h3 id="%E5%9F%BA%E6%9C%AC%E7%BC%93%E5%AD%98">1 基本缓存</h3><p>本节简介三种缓存技术：页面缓存（page caching）、动作缓存（action caching）和片段缓存（fragment caching）。Rails 默认提供了片段缓存。如果想使用页面缓存或动作缓存，要把 <code>actionpack-page_caching</code> 或 <code>actionpack-action_caching</code> 添加到 <code>Gemfile</code> 中。</p><p>默认情况下，缓存只在生产环境启用。如果想在本地启用缓存，要在相应的 <code>config/environments/*.rb</code> 文件中把 <code>config.action_controller.perform_caching</code> 设为 <code>true</code>。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 config.action_controller.perform_caching = true
 

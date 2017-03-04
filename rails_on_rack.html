@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Ruby on Rails Guides</title>
+<title>Rails on Rack — Ruby on Rails Guides</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -173,7 +173,13 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h2>Rails on Rack</h2><p>本文简介 Rails 与 Rack 的集成，以及与其他 Rack 组件的配合。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li><p>如何在 Rails 应用中使用 Rack 中间件；</p></li>
+<li><p>Action Pack 内部的中间件栈；</p></li>
+<li><p>如何自定义中间件栈。</p></li>
+</ul>
+<div class="warning"><p>本文假定你对 Rack 协议和相关概念有一定了解，例如中间件、URL 映射和 <code>Rack::Builder</code>。</p></div>
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
@@ -216,13 +222,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h2>Rails on Rack</h2><p>本文简介 Rails 与 Rack 的集成，以及与其他 Rack 组件的配合。</p><p>读完本文后，您将学到：</p>
-<ul>
-<li><p>如何在 Rails 应用中使用 Rack 中间件；</p></li>
-<li><p>Action Pack 内部的中间件栈；</p></li>
-<li><p>如何自定义中间件栈。</p></li>
-</ul>
-<div class="warning"><p>本文假定你对 Rack 协议和相关概念有一定了解，例如中间件、URL 映射和 <code>Rack::Builder</code>。</p></div><h3 id="Rack%20%E7%AE%80%E4%BB%8B">1 Rack 简介</h3><p>Rack 为使用 Ruby 开发的 Web 应用提供最简单的模块化接口，而且适应性强。Rack 使用最简单的方式包装 HTTP 请求和响应，从而抽象了 Web 服务器、Web 框架，以及二者之间的软件（称为中间件）的 API，统一成一个方法调用。</p>
+        <h3 id="Rack%20%E7%AE%80%E4%BB%8B">1 Rack 简介</h3><p>Rack 为使用 Ruby 开发的 Web 应用提供最简单的模块化接口，而且适应性强。Rack 使用最简单的方式包装 HTTP 请求和响应，从而抽象了 Web 服务器、Web 框架，以及二者之间的软件（称为中间件）的 API，统一成一个方法调用。</p>
 <ul>
 <li><a href="http://rack.github.io/">Rack API 文档</a></li>
 </ul>
