@@ -748,7 +748,7 @@ www.attacker.com 的日志文件中将出现类似这样的一条记录：
     http://www.cbsnews.com/stories/2002/02/15/weather_local/main501644.shtml?zipcode=1-->
       <script src=http://www.securitylab.ru/test/sc.js></script><!--
 
-##### 对策
+##### 跨站脚本对策
 
 TIP: 过滤恶意输入非常重要，但是转义 Web 应用的输出同样也很重要。
 
@@ -866,7 +866,7 @@ RedCloth.new("<a href='javascript:alert(1)'>hello</a>", [:filter_html]).to_html
 
 #### 对策
 
-建议将 RedCloth 和白名单输入过滤器结合使用，具体操作请参考 [对策](#对策)。
+建议将 RedCloth 和白名单输入过滤器结合使用，具体操作请参考 [跨站脚本对策](#跨站脚本对策)。
 
 ### Ajax 注入
 
