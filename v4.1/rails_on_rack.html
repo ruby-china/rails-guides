@@ -1,0 +1,465 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Rails on Rack — Ruby on Rails 指南</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://rubyonrails.org/">综览</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/download">下载</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/deploy">部署</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">源码</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/screencasts">视频</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/documentation">文件</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/community">社群</a></li>
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="回首页">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南目录</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单帮助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 简介</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 程序</a></dd>
+                <dd><a href="configuring.html">设置 Rails 程序</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">客制与新建 Rails 产生器</a></dd>
+                <dd><a href="rails_application_templates.html">Rails 应用程式模版</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文件准则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <!-- <li><a class="nav-item" href="//github.com/docrails-tw/wiki">参与翻译</a></li> -->
+        <li><a class="nav-item" href="https://github.com/ruby-china/guides/blob/master/CONTRIBUTING.md">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">致谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南目录</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单帮助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 简介</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 程序</option>
+                  <option value="configuring.html">设置 Rails 程序</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">客制与新建 Rails 产生器</option>
+                  <option value="rails_application_templates.html">Rails 应用程式模版</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文件准则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Rails on Rack</h2><p>本文介绍 Rails 和 Rack 的集成，以及与其他 Rack 组件的配合。</p><p>读完本文，你将学到：</p>
+<ul>
+<li>如何在 Rails 程序中使用中间件；</li>
+<li>Action Pack 内建的中间件；</li>
+<li>如何编写中间件；</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#rack-%E7%AE%80%E4%BB%8B">Rack 简介</a></li>
+<li>
+<a href="#rails-on-rack">Rails on Rack</a>
+
+<ul>
+<li><a href="#rails-%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84-rack-%E5%AF%B9%E8%B1%A1">Rails 程序中的 Rack 对象</a></li>
+<li><a href="#rails-server"><code>rails server</code></a></li>
+<li><a href="#rackup"><code>rackup</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#action-dispatcher-%E4%B8%AD%E9%97%B4%E4%BB%B6">Action Dispatcher 中间件</a>
+
+<ul>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E4%BD%BF%E7%94%A8%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%B6">查看使用的中间件</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E4%B8%AD%E9%97%B4%E4%BB%B6">设置中间件</a></li>
+<li><a href="#%E5%86%85%E9%83%A8%E4%B8%AD%E9%97%B4%E4%BB%B6">内部中间件</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%BA%90">参考资源</a>
+
+<ul>
+<li><a href="#%E5%AD%A6%E4%B9%A0">学习</a></li>
+<li><a href="#%E7%90%86%E8%A7%A3%E4%B8%AD%E9%97%B4%E4%BB%B6">理解中间件</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <div class="warning"><p>阅读本文之前需要了解 Rack 协议及相关概念，如中间件、URL 映射和 <code>Rack::Builder</code>。</p></div><h3 id="rack-简介">1 Rack 简介</h3><p>Rack 为使用 Ruby 开发的网页程序提供了小型模块化，适应性极高的接口。Rack 尽量使用最简单的方式封装 HTTP 请求和响应，为服务器、框架和二者之间的软件（中间件）提供了统一的 API，只要调用一个简单的方法就能完成一切操作。</p>
+<ul>
+<li><a href="http://rack.rubyforge.org/doc/">Rack API 文档</a></li>
+</ul>
+<p>详细解说 Rack 不是本文的目的，如果不知道 Rack 基础知识，可以阅读“<a href="#resources">参考资源</a>”一节。</p><h3 id="rails-on-rack">2 Rails on Rack</h3><h4 id="rails-程序中的-rack-对象">2.1 Rails 程序中的 Rack 对象</h4><p><code>ApplicationName::Application</code> 是 Rails 程序中最主要的 Rack 程序对象。任何支持 Rack 的服务器都应该使用 <code>ApplicationName::Application</code> 对象服务 Rails 程序。<code>Rails.application</code> 也指向 <code>ApplicationName::Application</code> 对象。</p><h4 id="rails-server">2.2 <code>rails server</code>
+</h4><p><code>rails server</code> 命令会创建 <code>Rack::Server</code> 对象并启动服务器。</p><p><code>rails server</code> 创建 <code>Rack::Server</code> 实例的方法如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Rails::Server.new.tap do |server|
+  require APP_PATH
+  Dir.chdir(Rails.application.root)
+  server.start
+end
+
+</pre>
+</div>
+<p><code>Rails::Server</code> 继承自 <code>Rack::Server</code>，使用下面的方式调用 <code>Rack::Server#start</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Server &lt; ::Rack::Server
+  def start
+    ...
+    super
+  end
+end
+
+</pre>
+</div>
+<p><code>Rails::Server</code> 加载中间件的方式如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def middleware
+  middlewares = []
+  middlewares &lt;&lt; [Rails::Rack::Debugger] if options[:debugger]
+  middlewares &lt;&lt; [::Rack::ContentLength]
+  Hash.new(middlewares)
+end
+
+</pre>
+</div>
+<p><code>Rails::Rack::Debugger</code> 基本上只在开发环境中有用。下表说明了加载的各中间件的用途：</p>
+<table>
+<thead>
+<tr>
+<th>中间件</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Rails::Rack::Debugger</code></td>
+<td>启用调试功能</td>
+</tr>
+<tr>
+<td><code>Rack::ContentLength</code></td>
+<td>计算响应的长度，单位为字节，然后设置 HTTP Content-Length 报头</td>
+</tr>
+</tbody>
+</table>
+<h4 id="rackup">2.3 <code>rackup</code>
+</h4><p>如果想用 <code>rackup</code> 代替 <code>rails server</code> 命令，可以在 Rails 程序根目录下的 <code>config.ru</code> 文件中写入下面的代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Rails.root/config.ru
+require ::File.expand_path('../config/environment', __FILE__)
+
+use Rails::Rack::Debugger
+use Rack::ContentLength
+run Rails.application
+
+</pre>
+</div>
+<p>然后使用下面的命令启动服务器：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rackup config.ru
+
+</pre>
+</div>
+<p>查看 <code>rackup</code> 的其他选项，可以执行下面的命令：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rackup --help
+
+</pre>
+</div>
+<h3 id="action-dispatcher-中间件">3 Action Dispatcher 中间件</h3><p>Action Dispatcher 中的很多组件都以 Rack 中间件的形式实现。<code>Rails::Application</code> 通过 <code>ActionDispatch::MiddlewareStack</code> 把内部和外部的中间件组合在一起，形成一个完整的 Rails Rack 程序。</p><div class="note"><p>在 Rails 中，<code>ActionDispatch::MiddlewareStack</code> 的作用和 <code>Rack::Builder</code> 一样，不过前者更灵活，也为满足 Rails 的需求加入了更多功能。</p></div><h4 id="查看使用的中间件">3.1 查看使用的中间件</h4><p>Rails 提供了一个 rake 任务，用来查看使用的中间件：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake middleware
+
+</pre>
+</div>
+<p>在新建的 Rails 程序中，可能会输出如下结果：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+use Rack::Sendfile
+use ActionDispatch::Static
+use Rack::Lock
+use #&lt;ActiveSupport::Cache::Strategy::LocalCache::Middleware:0x000000029a0838&gt;
+use Rack::Runtime
+use Rack::MethodOverride
+use ActionDispatch::RequestId
+use Rails::Rack::Logger
+use ActionDispatch::ShowExceptions
+use ActionDispatch::DebugExceptions
+use ActionDispatch::RemoteIp
+use ActionDispatch::Reloader
+use ActionDispatch::Callbacks
+use ActiveRecord::Migration::CheckPending
+use ActiveRecord::ConnectionAdapters::ConnectionManagement
+use ActiveRecord::QueryCache
+use ActionDispatch::Cookies
+use ActionDispatch::Session::CookieStore
+use ActionDispatch::Flash
+use ActionDispatch::ParamsParser
+use Rack::Head
+use Rack::ConditionalGet
+use Rack::ETag
+run MyApp::Application.routes
+
+</pre>
+</div>
+<p>这里列出的各中间件在“<a href="#internal-middleware-stack">内部中间件</a>”一节有详细介绍。</p><h4 id="设置中间件">3.2 设置中间件</h4><p>Rails 在 <code>application.rb</code> 或 <code>environments/&lt;environment&gt;.rb</code> 文件中提供了一个简单的设置项 <code>config.middleware</code>，可以在middleware堆栈中添加，修改和删除中间件 。</p><h5 id="添加新中间件">3.2.1 添加新中间件</h5><p>使用下面列出的任何一种方法都可以添加新中间件：</p>
+<ul>
+<li>
+<code>config.middleware.use(new_middleware, args)</code>：把新中间件添加到列表末尾；</li>
+<li>
+<code>config.middleware.insert_before(existing_middleware, new_middleware, args)</code>：在 <code>existing_middleware</code> 之前添加新中间件；</li>
+<li>
+<code>config.middleware.insert_after(existing_middleware, new_middleware, args)</code>：在 <code>existing_middleware</code> 之后添加新中间件；</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# config/application.rb
+
+# Push Rack::BounceFavicon at the bottom
+config.middleware.use Rack::BounceFavicon
+
+# Add Lifo::Cache after ActiveRecord::QueryCache.
+# Pass { page_cache: false } argument to Lifo::Cache.
+config.middleware.insert_after ActiveRecord::QueryCache, Lifo::Cache, page_cache: false
+
+</pre>
+</div>
+<h5 id="替换中间件">3.2.2 替换中间件</h5><p>使用 <code>config.middleware.swap</code> 可以替换middleware堆栈中的中间件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# config/application.rb
+
+# Replace ActionDispatch::ShowExceptions with Lifo::ShowExceptions
+config.middleware.swap ActionDispatch::ShowExceptions, Lifo::ShowExceptions
+
+</pre>
+</div>
+<h5 id="删除中间件">3.2.3 删除中间件</h5><p>在程序的设置文件中加入下面的代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# config/application.rb
+config.middleware.delete "Rack::Lock"
+
+</pre>
+</div>
+<p>现在查看所用的中间件，会发现 <code>Rack::Lock</code> 不在输出结果中。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake middleware
+(in /Users/lifo/Rails/blog)
+use ActionDispatch::Static
+use #&lt;ActiveSupport::Cache::Strategy::LocalCache::Middleware:0x00000001c304c8&gt;
+use Rack::Runtime
+...
+run Blog::Application.routes
+
+</pre>
+</div>
+<p>如果想删除会话相关的中间件，可以这么做：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# config/application.rb
+config.middleware.delete "ActionDispatch::Cookies"
+config.middleware.delete "ActionDispatch::Session::CookieStore"
+config.middleware.delete "ActionDispatch::Flash"
+
+</pre>
+</div>
+<p>删除浏览器相关的中间件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# config/application.rb
+config.middleware.delete "Rack::MethodOverride"
+
+</pre>
+</div>
+<h4 id="内部中间件">3.3 内部中间件</h4><p>Action Controller 的很多功能都以中间件的形式实现。下面解释个中间件的作用。</p><p><strong><code>Rack::Sendfile</code></strong>：设置服务器上的 X-Sendfile 报头。通过 <code>config.action_dispatch.x_sendfile_header</code> 选项设置。</p><p><strong><code>ActionDispatch::Static</code></strong>：用来服务静态资源文件。如果选项 <code>config.serve_static_assets</code> 为 <code>false</code>，则禁用这个中间件。</p><p><strong><code>Rack::Lock</code></strong>：把 <code>env["rack.multithread"]</code> 旗标设为 <code>false</code>，程序放入互斥锁中。</p><p><strong><code>ActiveSupport::Cache::Strategy::LocalCache::Middleware</code></strong>：在内存中保存缓存，非线程安全。</p><p><strong><code>Rack::Runtime</code></strong>：设置 X-Runtime 报头，即执行请求的时长，单位为秒。</p><p><strong><code>Rack::MethodOverride</code></strong>：如果指定了 <code>params[:_method]</code> 参数，会覆盖所用的请求方法。这个中间件实现了 PUT 和 DELETE 方法。</p><p><strong><code>ActionDispatch::RequestId</code></strong>：在响应中设置一个唯一的 X-Request-Id 报头，并启用 <code>ActionDispatch::Request#uuid</code> 方法。</p><p><strong><code>Rails::Rack::Logger</code></strong>：请求开始时提醒日志，请求完成后写入日志。</p><p><strong><code>ActionDispatch::ShowExceptions</code></strong>：补救程序抛出的所有异常，调用处理异常的程序，使用特定的格式显示给用户。</p><p><strong><code>ActionDispatch::DebugExceptions</code></strong>：如果在本地开发，把异常写入日志，并显示一个调试页面。</p><p><strong><code>ActionDispatch::RemoteIp</code></strong>：检查欺骗攻击的 IP。</p><p><strong><code>ActionDispatch::Reloader</code></strong>：提供“准备”和“清理”回调，协助开发环境中的代码重新加载功能。</p><p><strong><code>ActionDispatch::Callbacks</code></strong>：在处理请求之前调用“准备”回调。</p><p><strong><code>ActiveRecord::Migration::CheckPending</code></strong>：检查是否有待运行的迁移，如果有就抛出 <code>ActiveRecord::PendingMigrationError</code> 异常。</p><p><strong><code>ActiveRecord::ConnectionAdapters::ConnectionManagement</code></strong>：请求处理完成后，清理活跃的连接，除非在发起请求的环境中把 <code>rack.test</code> 设为 <code>true</code>。</p><p><strong><code>ActiveRecord::QueryCache</code></strong>：启用 Active Record 查询缓存。</p><p><strong><code>ActionDispatch::Cookies</code></strong>：设置请求的 cookies。</p><p><strong><code>ActionDispatch::Session::CookieStore</code></strong>：负责把会话存储在 cookies 中。</p><p><strong><code>ActionDispatch::Flash</code></strong>：设置 Flash 消息的键。只有设定了 <code>config.action_controller.session_store</code> 选项时才可用。</p><p><strong><code>ActionDispatch::ParamsParser</code></strong>：把请求中的参数出入 <code>params</code>。</p><p><strong><code>ActionDispatch::Head</code></strong>：把 HEAD 请求转换成 GET 请求，并处理。</p><p><strong><code>Rack::ConditionalGet</code></strong>：添加对“条件 GET”的支持，如果页面未修改，就不响应。</p><p><strong><code>Rack::ETag</code></strong>：为所有字符串类型的主体添加 ETags 报头。ETags 用来验证缓存。</p><div class="info"><p>设置 Rack 时可使用上述任意一个中间件。</p></div><h3 id="参考资源">4 参考资源</h3><h4 id="学习">4.1 学习</h4>
+<ul>
+<li><a href="http://rack.github.io">Rack 官网</a></li>
+<li><a href="http://chneukirchen.org/blog/archive/2007/02/introducing-rack.html">Rack 简介</a></li>
+<li><a href="http://m.onkey.org/ruby-on-rack-1-hello-rack">Ruby on Rack #1 - Hello Rack!</a></li>
+<li><a href="http://m.onkey.org/ruby-on-rack-2-the-builder">Ruby on Rack #2 - The Builder</a></li>
+</ul>
+<h4 id="理解中间件">4.2 理解中间件</h4>
+<ul>
+<li><a href="http://railscasts.com/episodes/151-rack-middleware">Railscast 介绍 Rack 中间件的视频</a></li>
+</ul>
+
+
+        <h3>反馈</h3>
+        <p>
+          欢迎帮忙改善指南质量。
+        </p>
+        <p>
+          如发现任何错误，欢迎修正。开始贡献前，可先行阅读<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">贡献指南：文档</a>。
+        </p>
+        <p>翻译如有错误，深感抱歉，欢迎 <a href="https://github.com/ruby-china/guides/fork">Fork</a> 修正，或至此处<a href="https://github.com/ruby-china/guides/issues/new">回报</a>。</p>
+        <p>
+          文章可能有未完成或过时的内容。请先检查 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 来确定问题在 master 是否已经修掉了。再上 master 补上缺少的文件。内容参考 <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a>来了解行文风格。
+        </p>
+        <p>最后，任何关于 Ruby on Rails 文档的讨论，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件群组</a>。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用<a href="https://creativecommons.org/licenses/by-sa/4.0/">创用 CC 姓名标示-相同方式分享 4.0 国际授权条款</a>授权。</p>
+<p>“Rails”、“Ruby on Rails”，以及 Rails logo 为 David Heinemeier Hansson 的商标。版权所有。</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shCore.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushRuby.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushXml.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushSql.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushPlain.js"></script>
+  <script type="text/javascript">
+    SyntaxHighlighter.all();
+    $(guidesIndex.bind);
+  </script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    // ga('create', '', 'ruby-china.github.io');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

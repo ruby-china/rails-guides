@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Active Model Basics — Ruby on Rails 指南</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://rubyonrails.org/">综览</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/download">下载</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/deploy">部署</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">源码</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/screencasts">视频</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/documentation">文件</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/community">社群</a></li>
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="回首页">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南目录</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单帮助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 简介</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 程序</a></dd>
+                <dd><a href="configuring.html">设置 Rails 程序</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">客制与新建 Rails 产生器</a></dd>
+                <dd><a href="rails_application_templates.html">Rails 应用程式模版</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文件准则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <!-- <li><a class="nav-item" href="//github.com/docrails-tw/wiki">参与翻译</a></li> -->
+        <li><a class="nav-item" href="https://github.com/ruby-china/guides/blob/master/CONTRIBUTING.md">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">致谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南目录</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单帮助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 简介</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 程序</option>
+                  <option value="configuring.html">设置 Rails 程序</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">客制与新建 Rails 产生器</option>
+                  <option value="rails_application_templates.html">Rails 应用程式模版</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文件准则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Active Model Basics</h2><p>This guide should provide you with all you need to get started using model classes. Active Model allows for Action Pack helpers to interact with non-Active Record models. Active Model also helps building custom ORMs for use outside of the Rails framework.</p><p>After reading this guide, you will know:</p>
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li>
+<a href="#introduction">Introduction</a>
+
+<ul>
+<li><a href="#attributemethods">AttributeMethods</a></li>
+<li><a href="#callbacks">Callbacks</a></li>
+<li><a href="#conversion">Conversion</a></li>
+<li><a href="#dirty">Dirty</a></li>
+<li><a href="#validations">Validations</a></li>
+<li><a href="#activemodel::naming">ActiveModel::Naming</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="introduction">1 Introduction</h3><p>Active Model is a library containing various modules used in developing frameworks that need to interact with the Rails Action Pack library. Active Model provides a known set of interfaces for usage in classes. Some of modules are explained below.</p><h4 id="attributemethods">1.1 AttributeMethods</h4><p>The AttributeMethods module can add custom prefixes and suffixes on methods of a class. It is used by defining the prefixes and suffixes and which methods on the object will use them.</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  include ActiveModel::AttributeMethods
+
+  attribute_method_prefix 'reset_'
+  attribute_method_suffix '_highest?'
+  define_attribute_methods 'age'
+
+  attr_accessor :age
+
+  private
+    def reset_attribute(attribute)
+      send("#{attribute}=", 0)
+    end
+
+    def attribute_highest?(attribute)
+      send(attribute) &gt; 100
+    end
+end
+
+person = Person.new
+person.age = 110
+person.age_highest?  # true
+person.reset_age     # 0
+person.age_highest?  # false
+
+</pre>
+</div>
+<h4 id="callbacks">1.2 Callbacks</h4><p>Callbacks gives Active Record style callbacks. This provides an ability to define callbacks which run at appropriate times. After defining callbacks, you can wrap them with before, after and around custom methods.</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  extend ActiveModel::Callbacks
+
+  define_model_callbacks :update
+
+  before_update :reset_me
+
+  def update
+    run_callbacks(:update) do
+      # This method is called when update is called on an object.
+    end
+  end
+
+  def reset_me
+    # This method is called when update is called on an object as a before_update callback is defined.
+  end
+end
+
+</pre>
+</div>
+<h4 id="conversion">1.3 Conversion</h4><p>If a class defines <code>persisted?</code> and <code>id</code> methods, then you can include the <code>Conversion</code> module in that class and call the Rails conversion methods on objects of that class.</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  include ActiveModel::Conversion
+
+  def persisted?
+    false
+  end
+
+  def id
+    nil
+  end
+end
+
+person = Person.new
+person.to_model == person  # =&gt; true
+person.to_key              # =&gt; nil
+person.to_param            # =&gt; nil
+
+</pre>
+</div>
+<h4 id="dirty">1.4 Dirty</h4><p>An object becomes dirty when it has gone through one or more changes to its attributes and has not been saved. This gives the ability to check whether an object has been changed or not. It also has attribute based accessor methods. Let's consider a Person class with attributes <code>first_name</code> and <code>last_name</code>:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'active_model'
+
+class Person
+  include ActiveModel::Dirty
+  define_attribute_methods :first_name, :last_name
+
+  def first_name
+    @first_name
+  end
+
+  def first_name=(value)
+    first_name_will_change!
+    @first_name = value
+  end
+
+  def last_name
+    @last_name
+  end
+
+  def last_name=(value)
+    last_name_will_change!
+    @last_name = value
+  end
+
+  def save
+    # do save work...
+    changes_applied
+  end
+end
+
+</pre>
+</div>
+<h5 id="querying-object-directly-for-its-list-of-all-changed-attributes.">1.4.1 Querying object directly for its list of all changed attributes.</h5><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+person = Person.new
+person.changed? # =&gt; false
+
+person.first_name = "First Name"
+person.first_name # =&gt; "First Name"
+
+# returns if any attribute has changed.
+person.changed? # =&gt; true
+
+# returns a list of attributes that have changed before saving.
+person.changed # =&gt; ["first_name"]
+
+# returns a hash of the attributes that have changed with their original values.
+person.changed_attributes # =&gt; {"first_name"=&gt;nil}
+
+# returns a hash of changes, with the attribute names as the keys, and the values will be an array of the old and new value for that field.
+person.changes # =&gt; {"first_name"=&gt;[nil, "First Name"]}
+
+</pre>
+</div>
+<h5 id="attribute-based-accessor-methods">1.4.2 Attribute based accessor methods</h5><p>Track whether the particular attribute has been changed or not.</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# attr_name_changed?
+person.first_name # =&gt; "First Name"
+person.first_name_changed? # =&gt; true
+
+</pre>
+</div>
+<p>Track what was the previous value of the attribute.</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# attr_name_was accessor
+person.first_name_was # =&gt; "First Name"
+
+</pre>
+</div>
+<p>Track both previous and current value of the changed attribute. Returns an array if changed, else returns nil.</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# attr_name_change
+person.first_name_change # =&gt; [nil, "First Name"]
+person.last_name_change # =&gt; nil
+
+</pre>
+</div>
+<h4 id="validations">1.5 Validations</h4><p>Validations module adds the ability to class objects to validate them in Active Record style.</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  include ActiveModel::Validations
+
+  attr_accessor :name, :email, :token
+
+  validates :name, presence: true
+  validates_format_of :email, with: /\A([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})\z/i
+  validates! :token, presence: true
+end
+
+person = Person.new(token: "2b1f325")
+person.valid?                        # =&gt; false
+person.name = 'vishnu'
+person.email = 'me'
+person.valid?                        # =&gt; false
+person.email = 'me@vishnuatrai.com'
+person.valid?                        # =&gt; true
+person.token = nil
+person.valid?                        # =&gt; raises ActiveModel::StrictValidationFailed
+
+</pre>
+</div>
+<h4 id="activemodel::naming">1.6 ActiveModel::Naming</h4><p>Naming adds a number of class methods which make the naming and routing
+easier to manage. The module defines the <code>model_name</code> class method which
+will define a number of accessors using some <code>ActiveSupport::Inflector</code> methods.</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  extend ActiveModel::Naming
+end
+
+Person.model_name.name                # =&gt; "Person"
+Person.model_name.singular            # =&gt; "person"
+Person.model_name.plural              # =&gt; "people"
+Person.model_name.element             # =&gt; "person"
+Person.model_name.human               # =&gt; "Person"
+Person.model_name.collection          # =&gt; "people"
+Person.model_name.param_key           # =&gt; "person"
+Person.model_name.i18n_key            # =&gt; :person
+Person.model_name.route_key           # =&gt; "people"
+Person.model_name.singular_route_key  # =&gt; "person"
+
+</pre>
+</div>
+
+
+        <h3>反馈</h3>
+        <p>
+          欢迎帮忙改善指南质量。
+        </p>
+        <p>
+          如发现任何错误，欢迎修正。开始贡献前，可先行阅读<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">贡献指南：文档</a>。
+        </p>
+        <p>翻译如有错误，深感抱歉，欢迎 <a href="https://github.com/ruby-china/guides/fork">Fork</a> 修正，或至此处<a href="https://github.com/ruby-china/guides/issues/new">回报</a>。</p>
+        <p>
+          文章可能有未完成或过时的内容。请先检查 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 来确定问题在 master 是否已经修掉了。再上 master 补上缺少的文件。内容参考 <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a>来了解行文风格。
+        </p>
+        <p>最后，任何关于 Ruby on Rails 文档的讨论，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件群组</a>。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用<a href="https://creativecommons.org/licenses/by-sa/4.0/">创用 CC 姓名标示-相同方式分享 4.0 国际授权条款</a>授权。</p>
+<p>“Rails”、“Ruby on Rails”，以及 Rails logo 为 David Heinemeier Hansson 的商标。版权所有。</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shCore.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushRuby.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushXml.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushSql.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushPlain.js"></script>
+  <script type="text/javascript">
+    SyntaxHighlighter.all();
+    $(guidesIndex.bind);
+  </script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    // ga('create', '', 'ruby-china.github.io');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

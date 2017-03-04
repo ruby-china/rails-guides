@@ -1,0 +1,837 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Asset Pipeline — Ruby on Rails 指南</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://rubyonrails.org/">综览</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/download">下载</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/deploy">部署</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">源码</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/screencasts">视频</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/documentation">文件</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/community">社群</a></li>
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="回首页">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南目录</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单帮助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 简介</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 程序</a></dd>
+                <dd><a href="configuring.html">设置 Rails 程序</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">客制与新建 Rails 产生器</a></dd>
+                <dd><a href="rails_application_templates.html">Rails 应用程式模版</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文件准则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <!-- <li><a class="nav-item" href="//github.com/docrails-tw/wiki">参与翻译</a></li> -->
+        <li><a class="nav-item" href="https://github.com/ruby-china/guides/blob/master/CONTRIBUTING.md">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">致谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南目录</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单帮助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 简介</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 程序</option>
+                  <option value="configuring.html">设置 Rails 程序</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">客制与新建 Rails 产生器</option>
+                  <option value="rails_application_templates.html">Rails 应用程式模版</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文件准则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Asset Pipeline</h2><p>本文介绍 Asset Pipeline。</p><p>读完本文，你将学到：</p>
+<ul>
+<li>Asset Pipeline 是什么以及其作用；</li>
+<li>如何合理组织程序的静态资源；</li>
+<li>Asset Pipeline 的优势；</li>
+<li>如何向 Asset Pipeline 中添加预处理器；</li>
+<li>如何在 gem 中打包静态资源；</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li>
+<a href="#asset-pipeline-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F">Asset Pipeline 是什么？</a>
+
+<ul>
+<li><a href="#%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD">主要功能</a></li>
+<li><a href="#%E6%8C%87%E7%BA%B9%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%85%B3%E5%BF%83%E5%AE%83%EF%BC%9F">指纹是什么，我为什么要关心它？</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-asset-pipeline">如何使用 Asset Pipeline</a>
+
+<ul>
+<li><a href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9B%B8%E5%85%B3%E7%9A%84%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90">控制器相关的静态资源</a></li>
+<li><a href="#%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E7%9A%84%E7%BB%84%E7%BB%87%E6%96%B9%E5%BC%8F">静态资源的组织方式</a></li>
+<li><a href="#%E9%93%BE%E6%8E%A5%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90">链接静态资源</a></li>
+<li><a href="#%E6%B8%85%E5%8D%95%E6%96%87%E4%BB%B6%E5%92%8C%E6%8C%87%E4%BB%A4">清单文件和指令</a></li>
+<li><a href="#%E9%A2%84%E5%A4%84%E7%90%86">预处理</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83">开发环境</a>
+
+<ul>
+<li><a href="#%E6%A3%80%E6%9F%A5%E8%BF%90%E8%A1%8C%E6%97%B6%E9%94%99%E8%AF%AF">检查运行时错误</a></li>
+<li><a href="#%E5%85%B3%E9%97%AD%E8%B0%83%E8%AF%95%E5%8A%9F%E8%83%BD">关闭调试功能</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83">生产环境</a>
+
+<ul>
+<li><a href="#%E4%BA%8B%E5%85%88%E7%BC%96%E8%AF%91%E5%A5%BD%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90">事先编译好静态资源</a></li>
+<li><a href="#%E5%9C%A8%E6%9C%AC%E5%9C%B0%E9%A2%84%E7%BC%96%E8%AF%91">在本地预编译</a></li>
+<li><a href="#%E5%AE%9E%E6%97%B6%E7%BC%96%E8%AF%91">实时编译</a></li>
+<li><a href="#cdn">CDN</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%AE%9A%E5%88%B6-asset-pipeline">定制 Asset Pipeline</a>
+
+<ul>
+<li><a href="#%E5%8E%8B%E7%BC%A9-css">压缩 CSS</a></li>
+<li><a href="#%E5%8E%8B%E7%BC%A9-javascript">压缩 JavaScript</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%A8%8B%E5%BA%8F">使用自己的压缩程序</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9-assets-%E7%9A%84%E8%B7%AF%E5%BE%84">修改 <code>assets</code> 的路径</a></li>
+<li><a href="#x-sendfile-%E6%8A%A5%E5%A4%B4">X-Sendfile 报头</a></li>
+</ul>
+</li>
+<li><a href="#%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E7%BC%93%E5%AD%98%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F">静态资源缓存的存储方式</a></li>
+<li><a href="#%E5%9C%A8-gem-%E4%B8%AD%E4%BD%BF%E7%94%A8%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90">在 gem 中使用静态资源</a></li>
+<li><a href="#%E6%8A%8A%E4%BB%A3%E7%A0%81%E5%BA%93%E6%88%96%E8%80%85-gem-%E5%8F%98%E6%88%90%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8">把代码库或者 gem 变成预处理器</a></li>
+<li><a href="#%E5%8D%87%E7%BA%A7%E6%97%A7%E7%89%88%E6%9C%AC-rails">升级旧版本 Rails</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="asset-pipeline-是什么？">1 Asset Pipeline 是什么？</h3><p>Asset Pipeline 提供了一个框架，用于连接、压缩 JavaScript 和 CSS 文件。还允许使用其他语言和预处理器编写 JavaScript 和 CSS，例如 CoffeeScript、Sass 和 ERB。</p><p>严格来说，Asset Pipeline 不是 Rails 4 的核心功能，已经从框架中提取出来，制成了 <a href="https://github.com/rails/sprockets-rails">sprockets-rails</a> gem。</p><p>Asset Pipeline 功能默认是启用的。</p><p>新建程序时如果想禁用 Asset Pipeline，可以在命令行中指定 <code>--skip-sprockets</code> 选项。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+rails new appname --skip-sprockets
+
+</pre>
+</div>
+<p>Rails 4 会自动把 <code>sass-rails</code>、<code>coffee-rails</code> 和 <code>uglifier</code> 三个 gem 加入 <code>Gemfile</code>。Sprockets 使用这三个 gem 压缩静态资源：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+gem 'sass-rails'
+gem 'uglifier'
+gem 'coffee-rails'
+
+</pre>
+</div>
+<p>指定 <code>--skip-sprockets</code> 命令行选项后，Rails 4 不会把 <code>sass-rails</code> 和 <code>uglifier</code> 加入 <code>Gemfile</code>。如果后续需要使用 Asset Pipeline，需要手动添加这些 gem。而且，指定 <code>--skip-sprockets</code> 命令行选项后，生成的 <code>config/application.rb</code> 文件也会有点不同，把加载 <code>sprockets/railtie</code> 的代码注释掉了。如果后续启用 Asset Pipeline，要把这行前面的注释去掉：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# require "sprockets/railtie"
+
+</pre>
+</div>
+<p><code>production.rb</code> 文件中有相应的选项设置静态资源的压缩方式：<code>config.assets.css_compressor</code> 针对 CSS，<code>config.assets.js_compressor</code> 针对 Javascript。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.css_compressor = :yui
+config.assets.js_compressor = :uglify
+
+</pre>
+</div>
+<div class="note"><p>如果 <code>Gemfile</code> 中有 <code>sass-rails</code>，就会自动用来压缩 CSS，无需设置 <code>config.assets.css_compressor</code> 选项。</p></div><h4 id="主要功能">1.1 主要功能</h4><p>Asset Pipeline 的第一个功能是连接静态资源，减少渲染页面时浏览器发起的请求数。浏览器对并行的请求数量有限制，所以较少的请求数可以提升程序的加载速度。</p><p>Sprockets 会把所有 JavaScript 文件合并到一个主 <code>.js</code> 文件中，把所有 CSS 文件合并到一个主 <code>.css</code> 文件中。后文会介绍，合并的方式可按需求随意定制。在生产环境中，Rails 会在文件名后加上 MD5 指纹，以便浏览器缓存，指纹变了缓存就会过期。修改文件的内容后，指纹会自动变化。</p><p>Asset Pipeline 的第二个功能是压缩静态资源。对 CSS 文件来说，会删除空白和注释。对 JavaScript 来说，可以做更复杂的处理。处理方式可以从内建的选项中选择，也可使用定制的处理程序。</p><p>Asset Pipeline 的第三个功能是允许使用高级语言编写静态资源，再使用预处理器转换成真正的静态资源。默认支持的高级语言有：用来编写 CSS 的 Sass，用来编写 JavaScript 的 CoffeeScript，以及 ERB。</p><h4 id="指纹是什么，我为什么要关心它？">1.2 指纹是什么，我为什么要关心它？</h4><p>指纹可以根据文件内容生成文件名。文件内容变化后，文件名也会改变。对于静态内容，或者很少改动的内容，在不同的服务器之间，不同的部署日期之间，使用指纹可以区别文件的两个版本内容是否一样。</p><p>如果文件名基于内容而定，而且文件名是唯一的，HTTP 报头会建议在所有可能的地方（CDN，ISP，网络设备，网页浏览器）存储一份该文件的副本。修改文件内容后，指纹会发生变化，因此远程客户端会重新请求文件。这种技术叫做“缓存爆裂”（cache busting）。</p><p>Sprockets 使用指纹的方式是在文件名中加入内容的哈希值，一般加在文件名的末尾。例如，<code>global.css</code> 加入指纹后的文件名如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+global-908e25f4bf641868d8683022a5b62f54.css
+
+</pre>
+</div>
+<p>Asset Pipeline 使用的就是这种指纹实现方式。</p><p>以前，Rails 使用内建的帮助方法，在文件名后加上一个基于日期生成的请求字符串，如下所示：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+/stylesheets/global.css?1309495796
+
+</pre>
+</div>
+<p>使用请求字符串有很多缺点：</p>
+<ol>
+<li><p> <strong>文件名只是请求字符串不同时，缓存并不可靠</strong><br>
+<a href="http://www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/">Steve Souders 建议</a>：不在要缓存的资源上使用请求字符串。他发现，使用请求字符串的文件不被缓存的可能性有 5-20%。有些 CDN 验证缓存时根本无法识别请求字符串。</p></li>
+<li><p> <strong>在多服务器环境中，不同节点上的文件名可能不同</strong><br>
+在 Rails 2.x 中，默认的请求字符串由文件的修改时间生成。静态资源文件部署到集群后，无法保证时间戳都是一样的，得到的值取决于使用哪台服务器处理请求。</p></li>
+<li><p> <strong>缓存验证失败过多</strong><br>
+部署新版代码时，所有静态资源文件的最后修改时间都变了。即便内容没变，客户端也要重新请求这些文件。</p></li>
+</ol>
+<p>使用指纹就无需再用请求字符串了，而且文件名基于文件内容，始终保持一致。</p><p>默认情况下，指纹只在生产环境中启用，其他环境都被禁用。可以设置 <code>config.assets.digest</code> 选项启用或禁用。</p><p>扩展阅读：</p>
+<ul>
+<li><a href="http://code.google.com/speed/page-speed/docs/caching.html">Optimize caching</a></li>
+<li><a href="http://www.stevesouders.com/blog/2008/08/23/revving-filenames-dont-use-querystring/">Revving Filenames: don't use querystring</a></li>
+</ul>
+<h3 id="如何使用-asset-pipeline">2 如何使用 Asset Pipeline</h3><p>在以前的 Rails 版本中，所有静态资源都放在 <code>public</code> 文件夹的子文件夹中，例如  <code>images</code>、<code>javascripts</code> 和 <code>stylesheets</code>。使用 Asset Pipeline 后，建议把静态资源放在 <code>app/assets</code> 文件夹中。这个文件夹中的文件会经由 Sprockets 中间件处理。</p><p>静态资源仍然可以放在 <code>public</code> 文件夹中，其中所有文件都会被程序或网页服务器视为静态文件。如果文件要经过预处理器处理，就得放在 <code>app/assets</code> 文件夹中。</p><p>默认情况下，在生产环境中，Rails 会把预先编译好的文件保存到 <code>public/assets</code> 文件夹中，网页服务器会把这些文件视为静态资源。在生产环境中，不会直接伺服 <code>app/assets</code> 文件夹中的文件。</p><h4 id="控制器相关的静态资源">2.1 控制器相关的静态资源</h4><p>生成脚手架或控制器时，Rails 会生成一个 JavaScript 文件（如果 <code>Gemfile</code> 中有 <code>coffee-rails</code>，会生成 CoffeeScript 文件）和 CSS 文件（如果 <code>Gemfile</code> 中有 <code>sass-rails</code>，会生成 SCSS 文件）。生成脚手架时，Rails 还会生成 <code>scaffolds.css</code> 文件（如果 <code>Gemfile</code> 中有 <code>sass-rails</code>，会生成 <code>scaffolds.css.scss</code> 文件）。</p><p>例如，生成 <code>ProjectsController</code> 时，Rails 会新建 <code>app/assets/javascripts/projects.js.coffee</code> 和 <code>app/assets/stylesheets/projects.css.scss</code> 两个文件。默认情况下，这两个文件立即就可以使用 <code>require_tree</code> 引入程序。关于 <code>require_tree</code> 的介绍，请阅读“<a href="#manifest-files-and-directives">清单文件和指令</a>”一节。</p><p>针对控制器的样式表和 JavaScript 文件也可只在相应的控制器中引入：</p><p><code>&lt;%= javascript_include_tag params[:controller] %&gt;</code> 或 <code>&lt;%= stylesheet_link_tag params[:controller] %&gt;</code></p><p>如果需要这么做，切记不要使用 <code>require_tree</code>。如果使用了这个指令，会多次引入相同的静态资源。</p><div class="warning"><p>预处理静态资源时要确保同时处理控制器相关的静态资源。默认情况下，不会自动编译 <code>.coffee</code> 和 <code>.scss</code> 文件。在开发环境中没什么问题，因为会自动编译。但在生产环境中会得到 500 错误，因为此时自动编译默认是关闭的。关于预编译的工作机理，请阅读“<a href="#precompiling-assets">事先编译好静态资源</a>”一节。</p></div><div class="note"><p>要想使用 CoffeeScript，必须安装支持 ExecJS 的运行时。如果使用 Mac OS X 和 Windows，系统中已经安装了 JavaScript 运行时。所有支持的 JavaScript 运行时参见 <a href="https://github.com/sstephenson/execjs#readme">ExecJS</a> 的文档。</p></div><p>在 <code>config/application.rb</code> 文件中加入以下代码可以禁止生成控制器相关的静态资源：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.generators do |g|
+  g.assets false
+end
+
+</pre>
+</div>
+<h4 id="静态资源的组织方式">2.2 静态资源的组织方式</h4><p>Asset Pipeline 的静态文件可以放在三个位置：<code>app/assets</code>，<code>lib/assets</code> 或 <code>vendor/assets</code>。</p>
+<ul>
+<li>
+<code>app/assets</code>：存放程序的静态资源，例如图片、JavaScript 和样式表；</li>
+<li>
+<code>lib/assets</code>：存放自己的代码库，或者共用代码库的静态资源；</li>
+<li>
+<code>vendor/assets</code>：存放他人的静态资源，例如 JavaScript 插件，或者 CSS 框架；</li>
+</ul>
+<div class="warning"><p>如果从 Rails 3 升级过来，请注意，<code>lib/assets</code> 和 <code>vendor/assets</code> 中的静态资源可以引入程序，但不在预编译的范围内。详情参见“<a href="#precompiling-assets">事先编译好静态资源</a>”一节。</p></div><h5 id="搜索路径">2.2.1 搜索路径</h5><p>在清单文件或帮助方法中引用静态资源时，Sprockets 会在默认的三个位置中查找对应的文件。</p><p>默认的位置是 <code>apps/assets</code> 文件夹中的 <code>images</code>、<code>javascripts</code> 和 <code>stylesheets</code> 三个子文件夹。这三个文件夹没什么特别之处，其实 Sprockets 会搜索 <code>apps/assets</code> 文件夹中的所有子文件夹。</p><p>例如，如下的文件：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+app/assets/javascripts/home.js
+lib/assets/javascripts/moovinator.js
+vendor/assets/javascripts/slider.js
+vendor/assets/somepackage/phonebox.js
+
+</pre>
+</div>
+<p>在清单文件中可以这么引用：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+//= require home
+//= require moovinator
+//= require slider
+//= require phonebox
+
+</pre>
+</div>
+<p>子文件夹中的静态资源也可引用：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+app/assets/javascripts/sub/something.js
+
+</pre>
+</div>
+<p>引用方式如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+//= require sub/something
+
+</pre>
+</div>
+<p>在 Rails 控制台中执行 <code>Rails.application.config.assets.paths</code>，可以查看所有的搜索路径。</p><p>除了标准的 <code>assets/*</code> 路径之外，还可以在 <code>config/application.rb</code> 文件中向 Asset Pipeline 添加其他路径。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.paths &lt;&lt; Rails.root.join("lib", "videoplayer", "flash")
+
+</pre>
+</div>
+<p>Sprockets 会按照搜索路径中各路径出现的顺序进行搜索。默认情况下，这意味着 <code>app/assets</code> 文件夹中的静态资源优先级较高，会遮盖 <code>lib</code> 和 <code>vendor</code> 文件夹中的相应文件。</p><p>有一点要注意，如果静态资源不会在清单文件中引入，就要添加到预编译的文件列表中，否则在生产环境中就无法访问文件。</p><h5 id="使用索引文件">2.2.2 使用索引文件</h5><p>在 Sprockets 中，名为 <code>index</code> 的文件（扩展名各异）有特殊作用。</p><p>例如，程序中使用了 jQuery 代码库和许多模块，都保存在 <code>lib/assets/javascripts/library_name</code> 文件夹中，那么 <code>lib/assets/javascripts/library_name/index.js</code> 文件的作用就是这个代码库的清单。在这个清单中可以按顺序列出所需的文件，或者干脆使用 <code>require_tree</code> 指令。</p><p>在程序的清单文件中，可以把这个库作为一个整体引入：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+//= require library_name
+
+</pre>
+</div>
+<p>这么做可以减少维护成本，保持代码整洁。</p><h4 id="链接静态资源">2.3 链接静态资源</h4><p>Sprockets 并没有为获取静态资源添加新的方法，还是使用熟悉的 <code>javascript_include_tag</code> 和 <code>stylesheet_link_tag</code>：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= stylesheet_link_tag "application", media: "all" %&gt;
+&lt;%= javascript_include_tag "application" %&gt;
+
+</pre>
+</div>
+<p>如果使用 Turbolinks（Rails 4 默认启用），加上 <code>data-turbolinks-track</code> 选项后，Turbolinks 会检查静态资源是否有更新，如果更新了就会将其载入页面：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" =&gt; true %&gt;
+&lt;%= javascript_include_tag "application", "data-turbolinks-track" =&gt; true %&gt;
+
+</pre>
+</div>
+<p>在普通的视图中可以像下面这样获取 <code>public/assets/images</code> 文件夹中的图片：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= image_tag "rails.png" %&gt;
+
+</pre>
+</div>
+<p>如果程序启用了 Asset Pipeline，且在当前环境中没有禁用，那么这个文件会经由 Sprockets 伺服。如果文件的存放位置是 <code>public/assets/rails.png</code>，则直接由网页服务器伺服。</p><p>如果请求的文件中包含 MD5 哈希，处理的方式还是一样。关于这个哈希是怎么生成的，请阅读“<a href="#in-production">在生产环境中</a>”一节。</p><p>Sprockets 还会检查 <code>config.assets.paths</code> 中指定的路径。<code>config.assets.paths</code> 包含标准路径和其他 Rails 引擎添加的路径。</p><p>图片还可以放入子文件夹中，获取时指定文件夹的名字即可：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= image_tag "icons/rails.png" %&gt;
+
+</pre>
+</div>
+<div class="warning"><p>如果预编译了静态资源（参见“<a href="#in-production">在生产环境中</a>”一节），链接不存在的资源（也包括链接到空字符串的情况）会在调用页面抛出异常。因此，在处理用户提交的数据时，使用 <code>image_tag</code> 等帮助方法要小心一点。</p></div><h5 id="css-和-erb">2.3.1 CSS 和 ERB</h5><p>Asset Pipeline 会自动执行 ERB 代码，所以如果在 CSS 文件名后加上扩展名 <code>erb</code>（例如 <code>application.css.erb</code>），那么在 CSS 规则中就可使用 <code>asset_path</code> 等帮助方法。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+.class { background-image: url(&lt;%= asset_path 'image.png' %&gt;) }
+
+</pre>
+</div>
+<p>Asset Pipeline 会计算出静态资源的真实路径。在上面的代码中，指定的图片要出现在加载路径中。如果在 <code>public/assets</code> 中有该文件带指纹版本，则会使用这个文件的路径。</p><p>如果想使用 <a href="http://en.wikipedia.org/wiki/Data_URI_scheme">data URI</a>（直接把图片数据内嵌在 CSS 文件中），可以使用 <code>asset_data_uri</code> 帮助方法。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+#logo { background: url(&lt;%= asset_data_uri 'logo.png' %&gt;) }
+
+</pre>
+</div>
+<p><code>asset_data_uri</code> 会把正确格式化后的 data URI 写入 CSS 文件。</p><p>注意，关闭标签不能使用 <code>-%&gt;</code> 形式。</p><h5 id="css-和-sass">2.3.2 CSS 和 Sass</h5><p>使用 Asset Pipeline，静态资源的路径要使用 <code>sass-rails</code> 提供的 <code>-url</code> 和 <code>-path</code> 帮助方法（在 Sass 中使用连字符，在 Ruby 中使用下划线）重写。这两种帮助方法可用于引用图片，字体，视频，音频，JavaScript 和样式表。</p>
+<ul>
+<li>
+<code>image-url("rails.png")</code> 编译成 <code>url(/assets/rails.png)</code>
+</li>
+<li>
+<code>image-path("rails.png")</code> 编译成 <code>"/assets/rails.png"</code>.</li>
+</ul>
+<p>还可使用通用方法：</p>
+<ul>
+<li>
+<code>asset-url("rails.png")</code> 编译成 <code>url(/assets/rails.png)</code>
+</li>
+<li>
+<code>asset-path("rails.png")</code> 编译成 <code>"/assets/rails.png"</code>
+</li>
+</ul>
+<h5 id="javascript/coffeescript-和-erb">2.3.3 JavaScript/CoffeeScript 和 ERB</h5><p>如果在 JavaScript 文件后加上扩展名 <code>erb</code>，例如 <code>application.js.erb</code>，就可以在 JavaScript 代码中使用帮助方法 <code>asset_path</code>：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$('#logo').attr({ src: "&lt;%= asset_path('logo.png') %&gt;" });
+
+</pre>
+</div>
+<p>Asset Pipeline 会计算出静态资源的真实路径。</p><p>类似地，如果在 CoffeeScript 文件后加上扩展名 <code>erb</code>，例如 <code>application.js.coffee.erb</code>，也可在代码中使用帮助方法 <code>asset_path</code>：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$('#logo').attr src: "&lt;%= asset_path('logo.png') %&gt;"
+
+</pre>
+</div>
+<h4 id="清单文件和指令">2.4 清单文件和指令</h4><p>Sprockets 通过清单文件决定要引入和伺服哪些静态资源。清单文件中包含一些指令，告知 Sprockets 使用哪些文件生成主 CSS 或 JavaScript 文件。Sprockets 会解析这些指令，加载指定的文件，如有需要还会处理文件，然后再把各个文件合并成一个文件，最后再压缩文件（如果 <code>Rails.application.config.assets.compress</code> 选项为 <code>true</code>）。只伺服一个文件可以大大减少页面加载时间，因为浏览器发起的请求数更少。压缩能减小文件大小，加快浏览器下载速度。</p><p>例如，新建的 Rails 4 程序中有个 <code>app/assets/javascripts/application.js</code> 文件，包含以下内容：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+// ...
+//= require jquery
+//= require jquery_ujs
+//= require_tree .
+
+</pre>
+</div>
+<p>在 JavaScript 文件中，Sprockets 的指令以 <code>//=</code> 开头。在上面的文件中，用到了 <code>require</code> 和 the <code>require_tree</code> 指令。<code>require</code> 指令告知 Sprockets 要加载的文件。在上面的文件中，加载了 Sprockets 搜索路径中的 <code>jquery.js</code> 和 <code>jquery_ujs.js</code> 两个文件。文件名后无需加上扩展名，在 <code>.js</code> 文件中 Sprockets 默认会加载 <code>.js</code> 文件。</p><p><code>require_tree</code> 指令告知 Sprockets 递归引入指定文件夹中的所有 JavaScript 文件。文件夹的路径必须相对于清单文件。也可使用 <code>require_directory</code> 指令加载指定文件夹中的所有 JavaScript 文件，但不会递归。</p><p>Sprockets 会按照从上至下的顺序处理指令，但 <code>require_tree</code> 引入的文件顺序是不可预期的，不要设想能得到一个期望的顺序。如果要确保某些 JavaScript 文件出现在其他文件之前，就要先在清单文件中引入。注意，<code>require</code> 等指令不会多次加载同一个文件。</p><p>Rails 还会生成 <code>app/assets/stylesheets/application.css</code> 文件，内容如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+/* ...
+*= require_self
+*= require_tree .
+*/
+
+</pre>
+</div>
+<p>不管创建新程序时有没有指定 <code>--skip-sprockets</code> 选项，Rails 4 都会生成 <code>app/assets/javascripts/application.js</code> 和 <code>app/assets/stylesheets/application.css</code>。这样如果后续需要使用 Asset Pipelining，操作就方便了。</p><p>样式表中使用的指令和 JavaScript 文件一样，不过加载的是样式表而不是 JavaScript 文件。<code>require_tree</code> 指令在 CSS 清单文件中的作用和在 JavaScript 清单文件中一样，从指定的文件夹中递归加载所有样式表。</p><p>上面的代码中还用到了 <code>require_self</code>。这么做可以把当前文件中的 CSS 加入调用 <code>require_self</code> 的位置。如果多次调用 <code>require_self</code>，只有最后一次调用有效。</p><div class="note"><p>如果想使用多个 Sass 文件，应该使用 <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#import">Sass 中的 <code>@import</code> 规则</a>，不要使用 Sprockets 指令。如果使用 Sprockets 指令，Sass 文件只出现在各自的作用域中，Sass 变量和混入只在定义所在文件中有效。为了达到 <code>require_tree</code> 指令的效果，可以使用通配符，例如 <code>@import "*"</code> 和 <code>@import "**/*"</code>。详情参见 <a href="https://github.com/rails/sass-rails#features">sass-rails 的文档</a>。</p></div><p>清单文件可以有多个。例如，<code>admin.css</code> 和 <code>admin.js</code> 这两个清单文件包含程序管理后台所需的 JS 和 CSS 文件。</p><p>CSS 清单中的指令也适用前面介绍的加载顺序。分别引入各文件，Sprockets 会按照顺序编译。例如，可以按照下面的方式合并三个 CSS 文件：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+/* ...
+*= require reset
+*= require layout
+*= require chrome
+*/
+
+</pre>
+</div>
+<h4 id="预处理">2.5 预处理</h4><p>静态资源的文件扩展名决定了使用哪个预处理器处理。如果使用默认的 gem，生成控制器或脚手架时，会生成 CoffeeScript 和 SCSS 文件，而不是普通的 JavaScript 和 CSS 文件。前文举过例子，生成 <code>projects</code> 控制器时会创建 <code>app/assets/javascripts/projects.js.coffee</code> 和 <code>app/assets/stylesheets/projects.css.scss</code> 两个文件。</p><p>在开发环境中，或者禁用 Asset Pipeline 时，这些文件会使用 <code>coffee-script</code> 和 <code>sass</code> 提供的预处理器处理，然后再发给浏览器。启用 Asset Pipeline 时，这些文件会先使用预处理器处理，然后保存到 <code>public/assets</code> 文件夹中，再由 Rails 程序或网页服务器伺服。</p><p>添加额外的扩展名可以增加预处理次数，预处理程序会按照扩展名从右至左的顺序处理文件内容。所以，扩展名的顺序要和处理的顺序一致。例如，名为 <code>app/assets/stylesheets/projects.css.scss.erb</code> 的样式表首先会使用 ERB 处理，然后是 SCSS，最后才以 CSS 格式发送给浏览器。JavaScript 文件类似，<code>app/assets/javascripts/projects.js.coffee.erb</code> 文件先由 ERB 处理，然后是 CoffeeScript，最后以 JavaScript 格式发送给浏览器。</p><p>记住，预处理器的执行顺序很重要。例如，名为 <code>app/assets/javascripts/projects.js.erb.coffee</code> 的文件首先由 CoffeeScript 处理，但是 CoffeeScript 预处理器并不懂 ERB 代码，因此会导致错误。</p><h3 id="开发环境">3 开发环境</h3><p>在开发环境中，Asset Pipeline 按照清单文件中指定的顺序伺服各静态资源。</p><p>清单 <code>app/assets/javascripts/application.js</code> 的内容如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+//= require core
+//= require projects
+//= require tickets
+
+</pre>
+</div>
+<p>生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;script src="/assets/core.js?body=1"&gt;&lt;/script&gt;
+&lt;script src="/assets/projects.js?body=1"&gt;&lt;/script&gt;
+&lt;script src="/assets/tickets.js?body=1"&gt;&lt;/script&gt;
+
+</pre>
+</div>
+<p>Sprockets 要求必须使用 <code>body</code> 参数。</p><h4 id="检查运行时错误">3.1 检查运行时错误</h4><p>默认情况下，在生产环境中 Asset Pipeline 会检查潜在的错误。要想禁用这一功能，可以做如下设置：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.raise_runtime_errors = false
+
+</pre>
+</div>
+<p><code>raise_runtime_errors</code> 设为 <code>false</code> 时，Sprockets 不会检查静态资源的依赖关系是否正确。遇到下面这种情况时，必须告知 Asset Pipeline 其中的依赖关系。</p><p>如果在 <code>application.css.erb</code> 中引用了 <code>logo.png</code>，如下所示：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+#logo { background: url(&lt;%= asset_data_uri 'logo.png' %&gt;) }
+
+</pre>
+</div>
+<p>就必须声明 <code>logo.png</code> 是 <code>application.css.erb</code> 的一个依赖件，这样重新编译图片时才会同时重新编译 CSS 文件。依赖关系可以使用 <code>//= depend_on_asset</code> 声明：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+//= depend_on_asset "logo.png"
+#logo { background: url(&lt;%= asset_data_uri 'logo.png' %&gt;) }
+
+</pre>
+</div>
+<p>如果没有这个声明，在生产环境中可能遇到难以查找的奇怪问题。<code>raise_runtime_errors</code> 设为 <code>true</code> 时，运行时会自动检查依赖关系。</p><h4 id="关闭调试功能">3.2 关闭调试功能</h4><p>在 <code>config/environments/development.rb</code> 中添加如下设置可以关闭调试功能：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.debug = false
+
+</pre>
+</div>
+<p>关闭调试功能后，Sprockets 会预处理所有文件，然后合并。关闭调试功能后，前文的清单文件生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;script src="/assets/application.js"&gt;&lt;/script&gt;
+
+</pre>
+</div>
+<p>服务器启动后，首次请求发出后会编译并缓存静态资源。Sprockets 会把 <code>Cache-Control</code> 报头设为 <code>must-revalidate</code>。再次请求时，浏览器会得到 304 (Not Modified) 响应。</p><p>如果清单中的文件内容发生了变化，服务器会返回重新编译后的文件。</p><p>调试功能可以在 Rails 帮助方法中启用：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= stylesheet_link_tag "application", debug: true %&gt;
+&lt;%= javascript_include_tag "application", debug: true %&gt;
+
+</pre>
+</div>
+<p>如果已经启用了调试模式，再使用 <code>:debug</code> 选项就有点多余了。</p><p>在开发环境中也可启用压缩功能，检查是否能正常运行。需要调试时再禁用压缩即可。</p><h3 id="生产环境">4 生产环境</h3><p>在生产环境中，Sprockets 使用前文介绍的指纹机制。默认情况下，Rails 认为静态资源已经事先编译好了，直接由网页服务器伺服。</p><p>在预先编译的过程中，会根据文件的内容生成 MD5，写入硬盘时把 MD5 加到文件名中。Rails 帮助方法会使用加上指纹的文件名代替清单文件中使用的文件名。</p><p>例如：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= javascript_include_tag "application" %&gt;
+&lt;%= stylesheet_link_tag "application" %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;script src="/assets/application-908e25f4bf641868d8683022a5b62f54.js"&gt;&lt;/script&gt;
+&lt;link href="/assets/application-4dd5b109ee3439da54f5bdfd78a80473.css" media="screen"
+rel="stylesheet" /&gt;
+
+</pre>
+</div>
+<p>注意，推出 Asset Pipeline 功能后不再使用 <code>:cache</code> 和 <code>:concat</code> 选项了，请从 <code>javascript_include_tag</code> 和 <code>stylesheet_link_tag</code> 标签上将其删除。</p><p>指纹由 <code>config.assets.digest</code> 初始化选项控制（生产环境默认为 <code>true</code>，其他环境为 <code>false</code>）。</p><div class="note"><p>一般情况下，请勿修改 <code>config.assets.digest</code> 的默认值。如果文件名中没有指纹，而且缓存报头的时间设置为很久以后，那么即使文件的内容变了，客户端也不会重新获取文件。</p></div><h4 id="事先编译好静态资源">4.1 事先编译好静态资源</h4><p>Rails 提供了一个 rake 任务用来编译清单文件中的静态资源和其他相关文件。</p><p>编译后的静态资源保存在 <code>config.assets.prefix</code> 选项指定的位置。默认是 <code>/assets</code> 文件夹。</p><p>部署时可以在服务器上执行这个任务，直接在服务器上编译静态资源。下一节会介绍如何在本地编译。</p><p>这个 rake 任务是：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ RAILS_ENV=production bundle exec rake assets:precompile
+
+</pre>
+</div>
+<p>Capistrano（v2.15.1 及以上版本）提供了一个配方，可在部署时编译静态资源。把下面这行加入 <code>Capfile</code> 文件即可：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+load 'deploy/assets'
+
+</pre>
+</div>
+<p>这个配方会把 <code>config.assets.prefix</code> 选项指定的文件夹链接到 <code>shared/assets</code>。如果 <code>shared/assets</code> 已经占用，就要修改部署任务。</p><p>在多次部署之间共用这个文件夹是十分重要的，这样只要缓存的页面可用，其中引用的编译后的静态资源就能正常使用。</p><p>默认编译的文件包括 <code>application.js</code>、<code>application.css</code> 以及 gem 中 <code>app/assets</code> 文件夹中的所有非 JS/CSS 文件（会自动加载所有图片）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[ Proc.new { |path, fn| fn =~ /app\/assets/ &amp;&amp; !%w(.js .css).include?(File.extname(path)) },
+/application.(css|js)$/ ]
+
+</pre>
+</div>
+<div class="note"><p>这个正则表达式表示最终要编译的文件。也就是说，JS/CSS 文件不包含在内。例如，因为 <code>.coffee</code> 和 <code>.scss</code> 文件能编译成 JS 和 CSS 文件，所以<strong>不在</strong>自动编译的范围内。</p></div><p>如果想编译其他清单，或者单独的样式表和 JavaScript，可以添加到 <code>config/application.rb</code> 文件中的 <code>precompile</code> 选项：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.precompile += ['admin.js', 'admin.css', 'swfObject.js']
+
+</pre>
+</div>
+<p>或者可以按照下面的方式，设置编译所有静态资源：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# config/application.rb
+config.assets.precompile &lt;&lt; Proc.new do |path|
+  if path =~ /\.(css|js)\z/
+    full_path = Rails.application.assets.resolve(path).to_path
+    app_assets_path = Rails.root.join('app', 'assets').to_path
+    if full_path.starts_with? app_assets_path
+      puts "including asset: " + full_path
+      true
+    else
+      puts "excluding asset: " + full_path
+      false
+    end
+  else
+    false
+  end
+end
+
+</pre>
+</div>
+<div class="note"><p>即便想添加 Sass 或 CoffeeScript 文件，也要把希望编译的文件名设为 .js 或 .css。</p></div><p>这个 rake 任务还会生成一个名为 <code>manifest-md5hash.json</code> 的文件，列出所有静态资源和对应的指纹。这样 Rails 帮助方法就不用再通过 Sprockets 获取指纹了。下面是一个 <code>manifest-md5hash.json</code> 文件内容示例：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{"files":{"application-723d1be6cc741a3aabb1cec24276d681.js":{"logical_path":"application.js","mtime":"2013-07-26T22:55:03-07:00","size":302506,
+"digest":"723d1be6cc741a3aabb1cec24276d681"},"application-12b3c7dd74d2e9df37e7cbb1efa76a6d.css":{"logical_path":"application.css","mtime":"2013-07-26T22:54:54-07:00","size":1560,
+"digest":"12b3c7dd74d2e9df37e7cbb1efa76a6d"},"application-1c5752789588ac18d7e1a50b1f0fd4c2.css":{"logical_path":"application.css","mtime":"2013-07-26T22:56:17-07:00","size":1591,
+"digest":"1c5752789588ac18d7e1a50b1f0fd4c2"},"favicon-a9c641bf2b81f0476e876f7c5e375969.ico":{"logical_path":"favicon.ico","mtime":"2013-07-26T23:00:10-07:00","size":1406,
+"digest":"a9c641bf2b81f0476e876f7c5e375969"},"my_image-231a680f23887d9dd70710ea5efd3c62.png":{"logical_path":"my_image.png","mtime":"2013-07-26T23:00:27-07:00","size":6646,
+"digest":"231a680f23887d9dd70710ea5efd3c62"}},"assets"{"application.js":
+"application-723d1be6cc741a3aabb1cec24276d681.js","application.css":
+"application-1c5752789588ac18d7e1a50b1f0fd4c2.css",
+"favicon.ico":"favicona9c641bf2b81f0476e876f7c5e375969.ico","my_image.png":
+"my_image-231a680f23887d9dd70710ea5efd3c62.png"}}
+
+</pre>
+</div>
+<p><code>manifest-md5hash.json</code> 文件的存放位置是 <code>config.assets.prefix</code> 选项指定位置（默认为 <code>/assets</code>）的根目录。</p><div class="note"><p>在生产环境中，如果找不到编译好的文件，会抛出 <code>Sprockets::Helpers::RailsHelper::AssetPaths::AssetNotPrecompiledError</code> 异常，并提示找不到哪个文件。</p></div><h5 id="把-expires-报头设置为很久以后">4.1.1 把 Expires 报头设置为很久以后</h5><p>编译好的静态资源存放在服务器的文件系统中，直接由网页服务器伺服。默认情况下，没有为这些文件设置一个很长的过期时间。为了能充分发挥指纹的作用，需要修改服务器的设置，添加相关的报头。</p><p>针对 Apache 的设置：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+# The Expires* directives requires the Apache module
+# `mod_expires` to be enabled.
+&lt;Location /assets/&gt;
+  # Use of ETag is discouraged when Last-Modified is present
+  Header unset ETag FileETag None
+  # RFC says only cache for 1 year
+  ExpiresActive On ExpiresDefault "access plus 1 year"
+&lt;/Location&gt;
+
+</pre>
+</div>
+<p>针对 Nginx 的设置：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+location ~ ^/assets/ {
+  expires 1y;
+  add_header Cache-Control public;
+
+  add_header ETag "";
+  break;
+}
+
+</pre>
+</div>
+<h5 id="gzip-压缩">4.1.2 GZip 压缩</h5><p>Sprockets 预编译文件时还会创建静态资源的 <a href="http://en.wikipedia.org/wiki/Gzip">gzip</a> 版本（.gz）。网页服务器一般使用中等压缩比例，不过因为预编译只发生一次，所以 Sprockets 会使用最大的压缩比例，尽量减少传输的数据大小。网页服务器可以设置成直接从硬盘伺服压缩版文件，无需直接压缩文件本身。</p><p>在 Nginx 中启动 <code>gzip_static</code> 模块后就能自动实现这一功能：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+location ~ ^/(assets)/  {
+  root /path/to/public;
+  gzip_static on; # to serve pre-gzipped version
+  expires max;
+  add_header Cache-Control public;
+}
+
+</pre>
+</div>
+<p>如果编译 Nginx 时加入了 <code>gzip_static</code> 模块，就能使用这个指令。Nginx 针对 Ubuntu/Debian 的安装包，以及 <code>nginx-light</code> 都会编译这个模块。否则就要手动编译：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+./configure --with-http_gzip_static_module
+
+</pre>
+</div>
+<p>如果编译支持 Phusion Passenger 的 Nginx，就必须加入这个命令行选项。</p><p>针对 Apache 的设置很复杂，请自行 Google。</p><h4 id="在本地预编译">4.2 在本地预编译</h4><p>为什么要在本地预编译静态文件呢？原因如下：</p>
+<ul>
+<li>可能无权限访问生产环境服务器的文件系统；</li>
+<li>可能要部署到多个服务器，避免重复编译；</li>
+<li>可能会经常部署，但静态资源很少改动；</li>
+</ul>
+<p>在本地预编译后，可以把编译好的文件纳入版本控制系统，再按照常规的方式部署。</p><p>不过有两点要注意：</p>
+<ul>
+<li>一定不能运行 Capistrano 部署任务来预编译静态资源；</li>
+<li>必须修改下面这个设置；</li>
+</ul>
+<p>在 <code>config/environments/development.rb</code> 中加入下面这行代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.prefix = "/dev-assets"
+
+</pre>
+</div>
+<p>修改 <code>prefix</code> 后，在开发环境中 Sprockets 会使用其他的 URL 伺服静态资源，把请求都交给 Sprockets 处理。但在生产环境中 <code>prefix</code> 仍是 <code>/assets</code>。如果没作上述修改，在生产环境中会从 <code>/assets</code> 伺服静态资源，除非再次编译，否则看不到文件的变化。</p><p>同时还要确保所需的压缩程序在生产环境中可用。</p><p>在本地预编译静态资源，这些文件就会出现在工作目录中，而且可以根据需要纳入版本控制系统。开发环境仍能按照预期正常运行。</p><h4 id="实时编译">4.3 实时编译</h4><p>某些情况下可能需要实时编译，此时静态资源直接由 Sprockets 处理。</p><p>要想使用实时编译，要做如下设置：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.compile = true
+
+</pre>
+</div>
+<p>初次请求时，Asset Pipeline 会编译静态资源，并缓存，这一过程前文已经提过了。引用文件时，会使用加上 MD5 哈希的文件名代替清单文件中的名字。</p><p>Sprockets 还会把 <code>Cache-Control</code> 报头设为 <code>max-age=31536000</code>。这个报头的意思是，服务器和客户端浏览器之间的缓存可以存储一年，以减少从服务器上获取静态资源的请求数量。静态资源的内容可能存在本地浏览器的缓存或者其他中间缓存中。</p><p>实时编译消耗的内存更多，比默认的编译方式性能更低，因此不推荐使用。</p><p>如果要把程序部署到没有安装 JavaScript 运行时的服务器，可以在 <code>Gemfile</code> 中加入：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+group :production do
+  gem 'therubyracer'
+end
+
+</pre>
+</div>
+<h4 id="cdn">4.4 CDN</h4><p>如果用 CDN 分发静态资源，要确保文件不会被缓存，因为缓存会导致问题。如果设置了 <code>config.action_controller.perform_caching = true</code>，<code>Rack::Cache</code> 会使用 <code>Rails.cache</code> 存储静态文件，很快缓存空间就会用完。</p><p>每种缓存的工作方式都不一样，所以要了解你所用 CDN 是如何处理缓存的，确保能和 Asset Pipeline 和谐相处。有时你会发现某些设置能导致诡异的表现，而有时又不会。例如，作为 HTTP 缓存使用时，Nginx 的默认设置就不会出现什么问题。</p><h3 id="定制-asset-pipeline">5 定制 Asset Pipeline</h3><h4 id="压缩-css">5.1 压缩 CSS</h4><p>压缩 CSS 的方式之一是使用 YUI。<a href="http://yui.github.io/yuicompressor/css.html">YUI CSS compressor</a> 提供了压缩功能。</p><p>下面这行设置会启用 YUI 压缩，在此之前要先安装 <code>yui-compressor</code> gem：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.css_compressor = :yui
+
+</pre>
+</div>
+<p>如果安装了 <code>sass-rails</code> gem，还可以使用其他的方式压缩 CSS：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.css_compressor = :sass
+
+</pre>
+</div>
+<h4 id="压缩-javascript">5.2 压缩 JavaScript</h4><p>压缩 JavaScript 的方式有：<code>:closure</code>，<code>:uglifier</code> 和 <code>:yui</code>。这三种方式分别需要安装 <code>closure-compiler</code>、<code>uglifier</code> 和 <code>yui-compressor</code>。</p><p>默认的 <code>Gemfile</code> 中使用的是 <a href="https://github.com/lautis/uglifier">uglifier</a>。这个 gem 使用 Ruby 包装了 <a href="https://github.com/mishoo/UglifyJS">UglifyJS</a>（为 NodeJS 开发）。uglifier 可以删除空白和注释，缩短本地变量名，还会做些微小的优化，例如把 <code>if...else</code> 语句改写成三元操作符形式。</p><p>下面这行设置使用 <code>uglifier</code> 压缩 JavaScript：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.js_compressor = :uglifier
+
+</pre>
+</div>
+<div class="note"><p>系统中要安装支持 <a href="https://github.com/sstephenson/execjs#readme">ExecJS</a> 的运行时才能使用 <code>uglifier</code>。Mac OS X 和 Windows 系统中已经安装了 JavaScript 运行时。
+I&gt;
+NOTE: <code>config.assets.compress</code> 初始化选项在 Rails 4 中不可用，即便设置了也没有效果。请分别使用 <code>config.assets.css_compressor</code> 和 <code>config.assets.js_compressor</code> 这两个选项设置 CSS 和 JavaScript 的压缩方式。</p></div><h4 id="使用自己的压缩程序">5.3 使用自己的压缩程序</h4><p>设置压缩 CSS 和 JavaScript 所用压缩程序的选项还可接受对象，这个对象必须能响应 <code>compress</code> 方法。<code>compress</code> 方法只接受一个字符串参数，返回值也必须是字符串。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Transformer
+  def compress(string)
+    do_something_returning_a_string(string)
+  end
+end
+
+</pre>
+</div>
+<p>要想使用这个压缩程序，请在 <code>application.rb</code> 中做如下设置：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.css_compressor = Transformer.new
+
+</pre>
+</div>
+<h4 id="修改-assets-的路径">5.4 修改 <code>assets</code> 的路径</h4><p>Sprockets 默认使用的公开路径是 <code>/assets</code>。</p><p>这个路径可以修改成其他值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.prefix = "/some_other_path"
+
+</pre>
+</div>
+<p>升级没使用 Asset Pipeline 的旧项目时，或者默认路径已有其他用途，或者希望指定一个新资源路径时，可以设置这个选项。</p><h4 id="x-sendfile-报头">5.5 X-Sendfile 报头</h4><p>X-Sendfile 报头的作用是让服务器忽略程序的响应，直接从硬盘上伺服指定的文件。默认情况下服务器不会发送这个报头，但在支持该报头的服务器上可以启用。启用后，会跳过响应直接由服务器伺服文件，速度更快。X-Sendfile 报头的用法参见 <a href="http://api.rubyonrails.org/classes/ActionController/DataStreaming.html#method-i-send_file">API 文档</a>。</p><p>Apache 和 Nginx 都支持这个报头，可以在 <code>config/environments/production.rb</code> 中启用：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
+# config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
+
+</pre>
+</div>
+<div class="warning"><p>如果升级现有程序，请把这两个设置写入 <code>production.rb</code>，以及其他类似生产环境的设置文件中。不能写入 <code>application.rb</code>。</p></div><div class="info"><p>详情参见生产环境所用服务器的文档：
+T&gt;
+TIP: - <a href="https://tn123.org/mod_xsendfile/">Apache</a>
+TIP: - <a href="http://wiki.nginx.org/XSendfile">Nginx</a></p></div><h3 id="静态资源缓存的存储方式">6 静态资源缓存的存储方式</h3><p>在开发环境和生产环境中，Sprockets 使用 Rails 默认的存储方式缓存静态资源。可以使用 <code>config.assets.cache_store</code> 设置使用其他存储方式：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.cache_store = :memory_store
+
+</pre>
+</div>
+<p>静态资源缓存可用的存储方式和程序的缓存存储一样。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.assets.cache_store = :memory_store, { size: 32.megabytes }
+
+</pre>
+</div>
+<h3 id="在-gem-中使用静态资源">7 在 gem 中使用静态资源</h3><p>静态资源也可由 gem 提供。</p><p>为 Rails 提供标准 JavaScript 代码库的 <code>jquery-rails</code> gem 是个很好的例子。这个 gem 中有个引擎类，继承自 <code>Rails::Engine</code>。添加这层继承关系后，Rails 就知道这个 gem 中可能包含静态资源文件，会把这个引擎中的 <code>app/assets</code>、<code>lib/assets</code> 和 <code>vendor/assets</code> 三个文件夹加入 Sprockets 的搜索路径中。</p><h3 id="把代码库或者-gem-变成预处理器">8 把代码库或者 gem 变成预处理器</h3><p>Sprockets 使用 <a href="https://github.com/rtomayko/tilt">Tilt</a> 作为不同模板引擎的通用接口。在你自己的 gem 中也可实现 Tilt 的模板协议。一般情况下，需要继承 <code>Tilt::Template</code> 类，然后重新定义 <code>prepare</code> 方法（初始化模板），以及 <code>evaluate</code> 方法（返回处理后的内容）。原始数据存储在 <code>data</code> 中。详情参见 <a href="https://github.com/rtomayko/tilt/blob/master/lib/tilt/template.rb"><code>Tilt::Template</code></a> 类的源码。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module BangBang
+  class Template &lt; ::Tilt::Template
+    def prepare
+      # Do any initialization here
+    end
+
+    # Adds a "!" to original template.
+    def evaluate(scope, locals, &amp;block)
+      "#{data}!"
+    end
+  end
+end
+
+</pre>
+</div>
+<p>上述代码定义了 <code>Template</code> 类，然后还需要关联模板文件的扩展名：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Sprockets.register_engine '.bang', BangBang::Template
+
+</pre>
+</div>
+<h3 id="升级旧版本-rails">9 升级旧版本 Rails</h3><p>从 Rails 3.0 或 Rails 2.x 升级，有一些问题要解决。首先，要把 <code>public/</code> 文件夹中的文件移到新位置。不同类型文件的存放位置参见“<a href="#asset-organization">静态资源的组织方式</a>”一节。</p><p>其次，避免 JavaScript 文件重复出现。因为从 Rails 3.1 开始，jQuery 是默认的 JavaScript 库，因此不用把 <code>jquery.js</code> 复制到 <code>app/assets</code> 文件夹中。Rails 会自动加载 jQuery。</p><p>然后，更新各环境的设置文件，添加默认设置。</p><p>在 <code>application.rb</code> 中加入：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Version of your assets, change this if you want to expire all your assets
+config.assets.version = '1.0'
+
+# Change the path that assets are served from config.assets.prefix = "/assets"
+
+</pre>
+</div>
+<p>在 <code>development.rb</code> 中加入：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Expands the lines which load the assets
+config.assets.debug = true
+
+</pre>
+</div>
+<p>在 <code>production.rb</code> 中加入：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Choose the compressors to use (if any) config.assets.js_compressor  =
+# :uglifier config.assets.css_compressor = :yui
+
+# Don't fallback to assets pipeline if a precompiled asset is missed
+config.assets.compile = false
+
+# Generate digests for assets URLs. This is planned for deprecation.
+config.assets.digest = true
+
+# Precompile additional assets (application.js, application.css, and all
+# non-JS/CSS are already added) config.assets.precompile += %w( search.js )
+
+</pre>
+</div>
+<p>Rails 4 不会在 <code>test.rb</code> 中添加 Sprockets 的默认设置，所以要手动添加。测试环境中以前的默认设置是：<code>config.assets.compile = true</code>，<code>config.assets.compress = false</code>，<code>config.assets.debug = false</code> 和 <code>config.assets.digest = false</code>。</p><p>最后，还要在 <code>Gemfile</code> 中加入以下 gem：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+gem 'sass-rails',   "~&gt; 3.2.3"
+gem 'coffee-rails', "~&gt; 3.2.1"
+gem 'uglifier'
+
+</pre>
+</div>
+
+
+        <h3>反馈</h3>
+        <p>
+          欢迎帮忙改善指南质量。
+        </p>
+        <p>
+          如发现任何错误，欢迎修正。开始贡献前，可先行阅读<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">贡献指南：文档</a>。
+        </p>
+        <p>翻译如有错误，深感抱歉，欢迎 <a href="https://github.com/ruby-china/guides/fork">Fork</a> 修正，或至此处<a href="https://github.com/ruby-china/guides/issues/new">回报</a>。</p>
+        <p>
+          文章可能有未完成或过时的内容。请先检查 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 来确定问题在 master 是否已经修掉了。再上 master 补上缺少的文件。内容参考 <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a>来了解行文风格。
+        </p>
+        <p>最后，任何关于 Ruby on Rails 文档的讨论，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件群组</a>。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用<a href="https://creativecommons.org/licenses/by-sa/4.0/">创用 CC 姓名标示-相同方式分享 4.0 国际授权条款</a>授权。</p>
+<p>“Rails”、“Ruby on Rails”，以及 Rails logo 为 David Heinemeier Hansson 的商标。版权所有。</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shCore.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushRuby.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushXml.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushSql.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushPlain.js"></script>
+  <script type="text/javascript">
+    SyntaxHighlighter.all();
+    $(guidesIndex.bind);
+  </script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    // ga('create', '', 'ruby-china.github.io');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

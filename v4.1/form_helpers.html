@@ -1,0 +1,1061 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>表单帮助方法 — Ruby on Rails 指南</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://rubyonrails.org/">综览</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/download">下载</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/deploy">部署</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">源码</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/screencasts">视频</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/documentation">文件</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/community">社群</a></li>
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="回首页">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南目录</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单帮助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 简介</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 程序</a></dd>
+                <dd><a href="configuring.html">设置 Rails 程序</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">客制与新建 Rails 产生器</a></dd>
+                <dd><a href="rails_application_templates.html">Rails 应用程式模版</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文件准则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <!-- <li><a class="nav-item" href="//github.com/docrails-tw/wiki">参与翻译</a></li> -->
+        <li><a class="nav-item" href="https://github.com/ruby-china/guides/blob/master/CONTRIBUTING.md">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">致谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南目录</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单帮助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 简介</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 程序</option>
+                  <option value="configuring.html">设置 Rails 程序</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">客制与新建 Rails 产生器</option>
+                  <option value="rails_application_templates.html">Rails 应用程式模版</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文件准则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>表单帮助方法</h2><p>表单是网页程序的基本组成部分，用于接收用户的输入。然而，由于表单中控件的名称和各种属性，使用标记语言难以编写和维护。Rails 提供了很多视图帮助方法简化表单的创建过程。因为各帮助方法的用途不一样，所以开发者在使用之前必须要知道相似帮助方法的差异。</p><p>读完本文，你将学到：</p>
+<ul>
+<li>如何创建搜索表单等不需要操作模型的普通表单；</li>
+<li>如何使用针对模型的表单创建和编辑数据库中的记录；</li>
+<li>如何使用各种类型的数据生成选择列表；</li>
+<li>如何使用 Rails 提供用于处理日期和时间的帮助方法；</li>
+<li>上传文件的表单有什么特殊之处；</li>
+<li>创建操作外部资源的案例；</li>
+<li>如何编写复杂的表单；</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li>
+<a href="#%E7%BC%96%E5%86%99%E7%AE%80%E5%8D%95%E7%9A%84%E8%A1%A8%E5%8D%95">编写简单的表单</a>
+
+<ul>
+<li><a href="#%E6%99%AE%E9%80%9A%E7%9A%84%E6%90%9C%E7%B4%A2%E8%A1%A8%E5%8D%95">普通的搜索表单</a></li>
+<li><a href="#%E8%B0%83%E7%94%A8-form_tag-%E6%97%B6%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AA-hash-%E5%8F%82%E6%95%B0">调用 <code>form_tag</code> 时使用多个 Hash 参数</a></li>
+<li><a href="#%E7%94%9F%E6%88%90%E8%A1%A8%E5%8D%95%E4%B8%AD%E6%8E%A7%E4%BB%B6%E7%9A%84%E5%B8%AE%E5%8A%A9%E6%96%B9%E6%B3%95">生成表单中控件的帮助方法</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96%E5%B8%AE%E5%8A%A9%E6%96%B9%E6%B3%95">其他帮助方法</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%A4%84%E7%90%86%E6%A8%A1%E5%9E%8B%E5%AF%B9%E8%B1%A1">处理模型对象</a>
+
+<ul>
+<li><a href="#%E6%A8%A1%E5%9E%8B%E5%AF%B9%E8%B1%A1%E5%B8%AE%E5%8A%A9%E6%96%B9%E6%B3%95">模型对象帮助方法</a></li>
+<li><a href="#%E6%8A%8A%E8%A1%A8%E5%8D%95%E7%BB%91%E5%AE%9A%E5%88%B0%E5%AF%B9%E8%B1%A1%E4%B8%8A">把表单绑定到对象上</a></li>
+<li><a href="#%E8%AE%B0%E5%BD%95%E8%BE%A8%E5%88%AB%E6%8A%80%E6%9C%AF">记录辨别技术</a></li>
+<li><a href="#%E8%A1%A8%E5%8D%95%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86-patch%EF%BC%8Cput-%E6%88%96-delete-%E8%AF%B7%E6%B1%82%EF%BC%9F">表单如何处理 PATCH，PUT 或 DELETE 请求？</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E9%80%89%E6%8B%A9%E5%88%97%E8%A1%A8">快速创建选择列表</a>
+
+<ul>
+<li><a href="#select-%E5%92%8C-option-%E6%A0%87%E7%AD%BE"><code>select</code> 和 <code>option</code> 标签</a></li>
+<li><a href="#%E5%A4%84%E7%90%86%E6%A8%A1%E5%9E%8B%E7%9A%84%E9%80%89%E6%8B%A9%E5%88%97%E8%A1%A8">处理模型的选择列表</a></li>
+<li><a href="#%E6%A0%B9%E6%8D%AE%E4%BB%BB%E6%84%8F%E5%AF%B9%E8%B1%A1%E7%BB%84%E6%88%90%E7%9A%84%E9%9B%86%E5%90%88%E5%88%9B%E5%BB%BA-option-%E6%A0%87%E7%AD%BE">根据任意对象组成的集合创建 <code>option</code> 标签</a></li>
+<li><a href="#%E6%97%B6%E5%8C%BA%E5%92%8C%E5%9B%BD%E5%AE%B6%E9%80%89%E6%8B%A9%E5%88%97%E8%A1%A8">时区和国家选择列表</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E4%BD%BF%E7%94%A8%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4%E8%A1%A8%E5%8D%95%E5%B8%AE%E5%8A%A9%E6%96%B9%E6%B3%95">使用日期和时间表单帮助方法</a>
+
+<ul>
+<li><a href="#%E7%8B%AC%E7%AB%8B%E7%9A%84%E5%B8%AE%E5%8A%A9%E6%96%B9%E6%B3%95">独立的帮助方法</a></li>
+<li><a href="#%E5%A4%84%E7%90%86%E6%A8%A1%E5%9E%8B%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B8%AE%E5%8A%A9%E6%96%B9%E6%B3%95">处理模型对象的帮助方法</a></li>
+<li><a href="#%E9%80%9A%E7%94%A8%E9%80%89%E9%A1%B9">通用选项</a></li>
+<li><a href="#%E5%8D%95%E4%B8%AA%E6%97%B6%E9%97%B4%E5%8D%95%E4%BD%8D%E9%80%89%E6%8B%A9%E5%88%97%E8%A1%A8">单个时间单位选择列表</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6">上传文件</a>
+
+<ul>
+<li><a href="#%E4%B8%8A%E4%BC%A0%E4%BA%86%E4%BB%80%E4%B9%88">上传了什么</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-ajax-%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6">使用 Ajax 上传文件</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%9A%E5%88%B6%E8%A1%A8%E5%8D%95%E6%9E%84%E9%80%A0%E5%99%A8">定制表单构造器</a></li>
+<li>
+<a href="#%E7%90%86%E8%A7%A3%E5%8F%82%E6%95%B0%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A">理解参数命名约定</a>
+
+<ul>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84">基本结构</a></li>
+<li><a href="#%E7%BB%93%E5%90%88%E5%9C%A8%E4%B8%80%E8%B5%B7%E4%BD%BF%E7%94%A8">结合在一起使用</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E8%A1%A8%E5%8D%95%E5%B8%AE%E5%8A%A9%E6%96%B9%E6%B3%95">使用表单帮助方法</a></li>
+</ul>
+</li>
+<li><a href="#%E5%A4%84%E7%90%86%E5%A4%96%E9%83%A8%E8%B5%84%E6%BA%90%E7%9A%84%E8%A1%A8%E5%8D%95">处理外部资源的表单</a></li>
+<li>
+<a href="#%E7%BC%96%E5%86%99%E5%A4%8D%E6%9D%82%E7%9A%84%E8%A1%A8%E5%8D%95">编写复杂的表单</a>
+
+<ul>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E6%A8%A1%E5%9E%8B">设置模型</a></li>
+<li><a href="#%E5%B5%8C%E5%A5%97%E8%A1%A8%E5%8D%95">嵌套表单</a></li>
+<li><a href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E7%AB%AF">控制器端</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E5%AF%B9%E8%B1%A1">删除对象</a></li>
+<li><a href="#%E9%81%BF%E5%85%8D%E5%88%9B%E5%BB%BA%E7%A9%BA%E8%AE%B0%E5%BD%95">避免创建空记录</a></li>
+<li><a href="#%E6%8C%89%E9%9C%80%E6%B7%BB%E5%8A%A0%E5%AD%97%E6%AE%B5">按需添加字段</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <div class="note"><p>本文的目的不是全面解说每个表单方法和其参数，完整的说明请阅读 <a href="http://api.rubyonrails.org/">Rails API 文档</a>。</p></div><h3 id="编写简单的表单">1 编写简单的表单</h3><p>最基本的表单帮助方法是 <code>form_tag</code>。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_tag do %&gt;
+  Form contents
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>像上面这样不传入参数时，<code>form_tag</code> 会创建一个 <code>&lt;form&gt;</code> 标签，提交表单后，向当前页面发起 POST 请求。假设当前页面是 <code>/home/index</code>，生成的 HTML 如下（为了提升可读性，添加了一些换行）：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;form accept-charset="UTF-8" action="/home/index" method="post"&gt;
+  &lt;div style="margin:0;padding:0"&gt;
+    &lt;input name="utf8" type="hidden" value="&amp;#x2713;" /&gt;
+    &lt;input name="authenticity_token" type="hidden" value="f755bb0ed134b76c432144748a6d4b7a7ddf2b71" /&gt;
+  &lt;/div&gt;
+  Form contents
+&lt;/form&gt;
+
+</pre>
+</div>
+<p>你会发现 HTML 中多了一个 <code>div</code> 元素，其中有两个隐藏的 <code>input</code> 元素。这个 <code>div</code> 元素很重要，没有就无法提交表单。第一个 <code>input</code> 元素的 <code>name</code> 属性值为 <code>utf8</code>，其作用是强制浏览器使用指定的编码处理表单，不管是 GET 还是 POST。第二个 <code>input</code> 元素的 <code>name</code> 属性值为 <code>authenticity_token</code>，这是 Rails 的一项安全措施，称为“跨站请求伪造保护”。<code>form_tag</code> 帮助方法会为每个非 GET 表单生成这个元素（表明启用了这项安全保护措施）。详情参阅“<a href="security.html#cross-site-request-forgery-csrf">Rails 安全指南</a>”。</p><div class="note"><p>为了行文简洁，后续代码没有包含这个 <code>div</code> 元素。</p></div><h4 id="普通的搜索表单">1.1 普通的搜索表单</h4><p>在网上见到最多的表单是搜索表单，搜索表单包含以下元素：</p>
+<ul>
+<li>
+<code>form</code> 元素，<code>action</code> 属性值为 <code>GET</code>；</li>
+<li>输入框的 <code>label</code> 元素；</li>
+<li>文本输入框 ；</li>
+<li>提交按钮；</li>
+</ul>
+<p>创建这样一个表单要分别使用帮助方法 <code>form_tag</code>、<code>label_tag</code>、<code>text_field_tag</code> 和 <code>submit_tag</code>，如下所示：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_tag("/search", method: "get") do %&gt;
+  &lt;%= label_tag(:q, "Search for:") %&gt;
+  &lt;%= text_field_tag(:q) %&gt;
+  &lt;%= submit_tag("Search") %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;form accept-charset="UTF-8" action="/search" method="get"&gt;
+  &lt;div style="margin:0;padding:0;display:inline"&gt;&lt;input name="utf8" type="hidden" value="&amp;#x2713;" /&gt;&lt;/div&gt;
+  &lt;label for="q"&gt;Search for:&lt;/label&gt;
+  &lt;input id="q" name="q" type="text" /&gt;
+  &lt;input name="commit" type="submit" value="Search" /&gt;
+&lt;/form&gt;
+
+</pre>
+</div>
+<div class="info"><p>表单中的每个 <code>input</code> 元素都有 ID 属性，其值和 <code>name</code> 属性的值一样（上例中是 <code>q</code>）。ID 可用于 CSS 样式或使用 JavaScript 处理表单控件。</p></div><p>除了 <code>text_field_tag</code> 和 <code>submit_tag</code> 之外，每个 HTML 表单控件都有对应的帮助方法。</p><div class="note"><p>搜索表单的请求类型一定要用 GET，这样用户才能把某个搜索结果页面加入收藏夹，以便后续访问。一般来说，Rails 建议使用合适的请求方法处理表单。</p></div><h4 id="调用-form_tag-时使用多个-hash-参数">1.2 调用 <code>form_tag</code> 时使用多个 Hash 参数</h4><p><code>form_tag</code> 方法可接受两个参数：表单提交地址和一个 Hash 选项。Hash 选项指定提交表单使用的请求方法和 HTML 选项，例如 <code>form</code> 元素的 <code>class</code> 属性。</p><p>和 <code>link_to</code> 方法一样，提交地址不一定非得使用字符串，也可使用一个由 URL 参数组成的 Hash，这个 Hash 经 Rails 路由转换成 URL 地址。这种情况下，<code>form_tag</code> 方法的两个参数都是 Hash，同时指定两个参数时很容易产生问题。假设写成下面这样：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+form_tag(controller: "people", action: "search", method: "get", class: "nifty_form")
+# =&gt; '&lt;form accept-charset="UTF-8" action="/people/search?method=get&amp;class=nifty_form" method="post"&gt;'
+
+</pre>
+</div>
+<p>在这段代码中，<code>method</code> 和 <code>class</code> 会作为生成 URL 的请求参数，虽然你想传入两个 Hash，但实际上只传入了一个。所以，你要把第一个 Hash（或两个 Hash）放在一对花括号中，告诉 Ruby 哪个是哪个，写成这样：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+form_tag({controller: "people", action: "search"}, method: "get", class: "nifty_form")
+# =&gt; '&lt;form accept-charset="UTF-8" action="/people/search" method="get" class="nifty_form"&gt;'
+
+</pre>
+</div>
+<h4 id="生成表单中控件的帮助方法">1.3 生成表单中控件的帮助方法</h4><p>Rails 提供了很多用来生成表单中控件的帮助方法，例如复选框，文本输入框和单选框。这些基本的帮助方法都以 <code>_tag</code> 结尾，例如 <code>text_field_tag</code> 和 <code>check_box_tag</code>，生成单个 <code>input</code> 元素。这些帮助方法的第一个参数都是 <code>input</code> 元素的 <code>name</code> 属性值。提交表单后，<code>name</code> 属性的值会随表单中的数据一起传入控制器，在控制器中可通过 <code>params</code> 这个 Hash 获取各输入框中的值。例如，如果表单中包含 <code>&lt;%= text_field_tag(:query) %&gt;</code>，就可以在控制器中使用 <code>params[:query]</code> 获取这个输入框中的值。</p><p>Rails 使用特定的规则生成 <code>input</code> 的 <code>name</code> 属性值，便于提交非标量值，例如数组和 Hash，这些值也可通过 <code>params</code> 获取。</p><p>各帮助方法的详细用法请查阅 <a href="http://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html">API 文档</a>。</p><h5 id="复选框">1.3.1 复选框</h5><p>复选框是一种表单控件，给用户一些选项，可用于启用或禁用某项功能。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= check_box_tag(:pet_dog) %&gt;
+&lt;%= label_tag(:pet_dog, "I own a dog") %&gt;
+&lt;%= check_box_tag(:pet_cat) %&gt;
+&lt;%= label_tag(:pet_cat, "I own a cat") %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;input id="pet_dog" name="pet_dog" type="checkbox" value="1" /&gt;
+&lt;label for="pet_dog"&gt;I own a dog&lt;/label&gt;
+&lt;input id="pet_cat" name="pet_cat" type="checkbox" value="1" /&gt;
+&lt;label for="pet_cat"&gt;I own a cat&lt;/label&gt;
+
+</pre>
+</div>
+<p><code>check_box_tag</code> 方法的第一个参数是 <code>name</code> 属性的值。第二个参数是 <code>value</code> 属性的值。选中复选框后，<code>value</code> 属性的值会包含在提交的表单数据中，因此可以通过 <code>params</code> 获取。</p><h5 id="单选框">1.3.2 单选框</h5><p>单选框有点类似复选框，但是各单选框之间是互斥的，只能选择一组中的一个：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= radio_button_tag(:age, "child") %&gt;
+&lt;%= label_tag(:age_child, "I am younger than 21") %&gt;
+&lt;%= radio_button_tag(:age, "adult") %&gt;
+&lt;%= label_tag(:age_adult, "I'm over 21") %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;input id="age_child" name="age" type="radio" value="child" /&gt;
+&lt;label for="age_child"&gt;I am younger than 21&lt;/label&gt;
+&lt;input id="age_adult" name="age" type="radio" value="adult" /&gt;
+&lt;label for="age_adult"&gt;I'm over 21&lt;/label&gt;
+
+</pre>
+</div>
+<p>和 <code>check_box_tag</code> 方法一样，<code>radio_button_tag</code> 方法的第二个参数也是 <code>value</code> 属性的值。因为两个单选框的 <code>name</code> 属性值一样（都是 <code>age</code>），所以用户只能选择其中一个单选框，<code>params[:age]</code> 的值不是 <code>"child"</code> 就是 <code>"adult"</code>。</p><div class="note"><p>复选框和单选框一定要指定 <code>label</code> 标签。<code>label</code> 标签可以为指定的选项框附加文字说明，还能增加选项框的点选范围，让用户更容易选中。</p></div><h4 id="其他帮助方法">1.4 其他帮助方法</h4><p>其他值得说明的表单控件包括：多行文本输入框，密码输入框，隐藏输入框，搜索关键字输入框，电话号码输入框，日期输入框，时间输入框，颜色输入框，日期时间输入框，本地日期时间输入框，月份输入框，星期输入框，URL 地址输入框，Email 地址输入框，数字输入框和范围输入框：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= text_area_tag(:message, "Hi, nice site", size: "24x6") %&gt;
+&lt;%= password_field_tag(:password) %&gt;
+&lt;%= hidden_field_tag(:parent_id, "5") %&gt;
+&lt;%= search_field(:user, :name) %&gt;
+&lt;%= telephone_field(:user, :phone) %&gt;
+&lt;%= date_field(:user, :born_on) %&gt;
+&lt;%= datetime_field(:user, :meeting_time) %&gt;
+&lt;%= datetime_local_field(:user, :graduation_day) %&gt;
+&lt;%= month_field(:user, :birthday_month) %&gt;
+&lt;%= week_field(:user, :birthday_week) %&gt;
+&lt;%= url_field(:user, :homepage) %&gt;
+&lt;%= email_field(:user, :address) %&gt;
+&lt;%= color_field(:user, :favorite_color) %&gt;
+&lt;%= time_field(:task, :started_at) %&gt;
+&lt;%= number_field(:product, :price, in: 1.0..20.0, step: 0.5) %&gt;
+&lt;%= range_field(:product, :discount, in: 1..100) %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;textarea id="message" name="message" cols="24" rows="6"&gt;Hi, nice site&lt;/textarea&gt;
+&lt;input id="password" name="password" type="password" /&gt;
+&lt;input id="parent_id" name="parent_id" type="hidden" value="5" /&gt;
+&lt;input id="user_name" name="user[name]" type="search" /&gt;
+&lt;input id="user_phone" name="user[phone]" type="tel" /&gt;
+&lt;input id="user_born_on" name="user[born_on]" type="date" /&gt;
+&lt;input id="user_meeting_time" name="user[meeting_time]" type="datetime" /&gt;
+&lt;input id="user_graduation_day" name="user[graduation_day]" type="datetime-local" /&gt;
+&lt;input id="user_birthday_month" name="user[birthday_month]" type="month" /&gt;
+&lt;input id="user_birthday_week" name="user[birthday_week]" type="week" /&gt;
+&lt;input id="user_homepage" name="user[homepage]" type="url" /&gt;
+&lt;input id="user_address" name="user[address]" type="email" /&gt;
+&lt;input id="user_favorite_color" name="user[favorite_color]" type="color" value="#000000" /&gt;
+&lt;input id="task_started_at" name="task[started_at]" type="time" /&gt;
+&lt;input id="product_price" max="20.0" min="1.0" name="product[price]" step="0.5" type="number" /&gt;
+&lt;input id="product_discount" max="100" min="1" name="product[discount]" type="range" /&gt;
+
+</pre>
+</div>
+<p>用户看不到隐藏输入框，但却和其他文本类输入框一样，能保存数据。隐藏输入框中的值可以通过 JavaScript 修改。</p><div class="note"><p>搜索关键字输入框，电话号码输入框，日期输入框，时间输入框，颜色输入框，日期时间输入框，本地日期时间输入框，月份输入框，星期输入框，URL 地址输入框，Email 地址输入框，数字输入框和范围输入框是 HTML5 提供的控件。如果想在旧版本的浏览器中保持体验一致，需要使用 HTML5 polyfill（使用 CSS 或 JavaScript 编写）。polyfill 虽<a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills">无不足之处</a>，但现今比较流行的工具是 <a href="http://www.modernizr.com/">Modernizr</a> 和 <a href="http://yepnopejs.com/">yepnope</a>，根据检测到的 HTML5 特性添加相应的功能。</p></div><div class="info"><p>如果使用密码输入框，或许还不想把其中的值写入日志。具体做法参见“<a href="security.html#logging">Rails 安全指南</a>”。</p></div><h3 id="处理模型对象">2 处理模型对象</h3><h4 id="模型对象帮助方法">2.1 模型对象帮助方法</h4><p>表单的一个特别常见的用途是编辑或创建模型对象。这时可以使用 <code>*_tag</code> 帮助方法，但是太麻烦了，每个元素都要设置正确的参数名称和默认值。Rails 提供了很多帮助方法可以简化这一过程，这些帮助方法没有 <code>_tag</code> 后缀，例如 <code>text_field</code> 和 <code>text_area</code>。</p><p>这些帮助方法的第一个参数是实例变量的名字，第二个参数是在对象上调用的方法名（一般都是模型的属性）。Rails 会把在对象上调用方法得到的值设为控件的 <code>value</code> 属性值，并且设置相应的 <code>name</code> 属性值。如果在控制器中定义了 <code>@person</code> 实例变量，其名字为“Henry”，在表单中有以下代码：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= text_field(:person, :name) %&gt;
+
+</pre>
+</div>
+<p>生成的结果如下：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;input id="person_name" name="person[name]" type="text" value="Henry"/&gt;
+
+</pre>
+</div>
+<p>提交表单后，用户输入的值存储在 <code>params[:person][:name]</code> 中。<code>params[:person]</code> 这个 Hash 可以传递给 <code>Person.new</code> 方法；如果 <code>@person</code> 是 <code>Person</code> 的实例，还可传递给 <code>@person.update</code>。一般来说，这些帮助方法的第二个参数是对象属性的名字，但 Rails 并不对此做强制要求，只要对象能响应 <code>name</code> 和 <code>name=</code> 方法即可。</p><div class="warning"><p>传入的参数必须是实例变量的名字，例如 <code>:person</code> 或 <code>"person"</code>，而不是模型对象的实例本身。</p></div><p>Rails 还提供了用于显示模型对象数据验证错误的帮助方法，详情参阅“<a href="active_record_validations.html#displaying-validation-errors-in-views">Active Record 数据验证</a>”一文。</p><h4 id="把表单绑定到对象上">2.2 把表单绑定到对象上</h4><p>虽然上述用法很方便，但却不是最好的使用方式。如果 <code>Person</code> 有很多要编辑的属性，我们就得不断重复编写要编辑对象的名字。我们想要的是能把表单绑定到对象上的方法，<code>form_for</code> 帮助方法就是为此而生。</p><p>假设有个用来处理文章的控制器 <code>app/controllers/articles_controller.rb</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def new
+  @article = Article.new
+end
+
+</pre>
+</div>
+<p>在 <code>new</code> 动作对应的视图 <code>app/views/articles/new.html.erb</code> 中可以像下面这样使用 <code>form_for</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @article, url: {action: "create"}, html: {class: "nifty_form"} do |f| %&gt;
+  &lt;%= f.text_field :title %&gt;
+  &lt;%= f.text_area :body, size: "60x12" %&gt;
+  &lt;%= f.submit "Create" %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>有几点要注意：</p>
+<ul>
+<li>
+<code>@article</code> 是要编辑的对象；</li>
+<li>
+<code>form_for</code> 方法的参数中只有一个 Hash。路由选项传入嵌套 Hash <code>:url</code> 中，HTML 选项传入嵌套 Hash <code>:html</code> 中。还可指定 <code>:namespace</code> 选项为 <code>form</code> 元素生成一个唯一的 ID 属性值。<code>:namespace</code> 选项的值会作为自动生成的 ID 的前缀。</li>
+<li>
+<code>form_for</code> 方法会拽入一个<strong>表单构造器</strong>对象（<code>f</code> 变量）；</li>
+<li>生成表单控件的帮助方法在表单构造器对象 <code>f</code> 上调用；</li>
+</ul>
+<p>上述代码生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;form accept-charset="UTF-8" action="/articles/create" method="post" class="nifty_form"&gt;
+  &lt;input id="article_title" name="article[title]" type="text" /&gt;
+  &lt;textarea id="article_body" name="article[body]" cols="60" rows="12"&gt;&lt;/textarea&gt;
+  &lt;input name="commit" type="submit" value="Create" /&gt;
+&lt;/form&gt;
+
+</pre>
+</div>
+<p><code>form_for</code> 方法的第一个参数指明通过 <code>params</code> 的哪个键获取表单中的数据。在上面的例子中，第一个参数名为 <code>article</code>，因此所有控件的 <code>name</code> 属性都是 <code>article[attribute_name]</code> 这种形式。所以，在 <code>create</code> 动作中，<code>params[:article]</code> 这个 Hash 有两个键：<code>:title</code> 和 <code>:body</code>。<code>name</code> 属性的重要性参阅“<a href="#understanding-parameter-naming-conventions">理解参数命名约定</a>”一节。</p><p>在表单构造器对象上调用帮助方法和在模型对象上调用的效果一样，唯有一点区别，无法指定编辑哪个模型对象，因为这由表单构造器负责。</p><p>使用 <code>fields_for</code> 帮助方法也可创建类似的绑定，但不会生成 <code>&lt;form&gt;</code> 标签。在同一表单中编辑多个模型对象时经常使用 <code>fields_for</code> 方法。例如，有个 <code>Person</code> 模型，和 <code>ContactDetail</code> 模型关联，编写如下的表单可以同时创建两个模型的对象：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @person, url: {action: "create"} do |person_form| %&gt;
+  &lt;%= person_form.text_field :name %&gt;
+  &lt;%= fields_for @person.contact_detail do |contact_details_form| %&gt;
+    &lt;%= contact_details_form.text_field :phone_number %&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;form accept-charset="UTF-8" action="/people/create" class="new_person" id="new_person" method="post"&gt;
+  &lt;input id="person_name" name="person[name]" type="text" /&gt;
+  &lt;input id="contact_detail_phone_number" name="contact_detail[phone_number]" type="text" /&gt;
+&lt;/form&gt;
+
+</pre>
+</div>
+<p><code>fields_for</code> 方法拽入的对象和 <code>form_for</code> 方法一样，都是表单构造器（其实在代码内部 <code>form_for</code> 会调用 <code>fields_for</code> 方法）。</p><h4 id="记录辨别技术">2.3 记录辨别技术</h4><p>用户可以直接处理程序中的 <code>Article</code> 模型，根据开发 Rails 的最佳实践，应该将其视为一个资源：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :articles
+
+</pre>
+</div>
+<div class="info"><p>声明资源有很多附属作用。资源的创建与使用请阅读“<a href="routing.html#resource-routing-the-rails-default">Rails 路由全解</a>”一文。</p></div><p>处理 REST 资源时，使用“记录辨别”技术可以简化 <code>form_for</code> 方法的调用。简单来说，你可以只把模型实例传给 <code>form_for</code>，让 Rails 查找模型名等其他信息：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+## Creating a new article
+# long-style:
+form_for(@article, url: articles_path)
+# same thing, short-style (record identification gets used):
+form_for(@article)
+
+## Editing an existing article
+# long-style:
+form_for(@article, url: article_path(@article), html: {method: "patch"})
+# short-style:
+form_for(@article)
+
+</pre>
+</div>
+<p>注意，不管记录是否存在，使用简短形式的 <code>form_for</code> 调用都很方便。记录辨别技术很智能，会调用 <code>record.new_record?</code> 方法检查是否为新记录；而且还能自动选择正确的提交地址，根据对象所属的类生成 <code>name</code> 属性的值。</p><p>Rails 还会自动设置 <code>class</code> 和 <code>id</code> 属性。在新建文章的表单中，<code>id</code> 和 <code>class</code> 属性的值都是 <code>new_article</code>。如果编辑 ID 为 23 的文章，表单的 <code>class</code> 为 <code>edit_article</code>，<code>id</code> 为 <code>edit_article_23</code>。为了行文简洁，后文会省略这些属性。</p><div class="warning"><p>如果在模型中使用单表继承（single-table inheritance，简称 STI），且只有父类声明为资源，子类就不能依赖记录辨别技术，必须指定模型名，<code>:url</code> 和 <code>:method</code> 选项。</p></div><h5 id="处理命名空间">2.3.1 处理命名空间</h5><p>如果在路由中使用了命名空间，<code>form_for</code> 方法也有相应的简写形式。如果程序中有个 <code>admin</code> 命名空间，表单可以写成：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+form_for [:admin, @article]
+
+</pre>
+</div>
+<p>这个表单会提交到命名空间 <code>admin</code> 中的 <code>ArticlesController</code>（更新文章时提交到 <code>admin_article_path(@article)</code>）。如果命名空间有很多层，句法类似：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+form_for [:admin, :management, @article]
+
+</pre>
+</div>
+<p>关于 Rails 路由的详细信息以及相关的约定，请阅读“<a href="routing.html">Rails 路由全解</a>”一文。</p><h4 id="表单如何处理-patch，put-或-delete-请求？">2.4 表单如何处理 PATCH，PUT 或 DELETE 请求？</h4><p>Rails 框架建议使用 REST 架构设计程序，因此除了 GET 和 POST 请求之外，还要处理 PATCH 和 DELETE 请求。但是大多数浏览器不支持从表单中提交 GET 和 POST 之外的请求。</p><p>为了解决这个问题，Rails 使用 POST 请求进行模拟，并在表单中加入一个名为 <code>_method</code> 的隐藏字段，其值表示真正希望使用的请求方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+form_tag(search_path, method: "patch")
+
+</pre>
+</div>
+<p>生成的 HTML 为：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;form accept-charset="UTF-8" action="/search" method="post"&gt;
+  &lt;div style="margin:0;padding:0"&gt;
+    &lt;input name="_method" type="hidden" value="patch" /&gt;
+    &lt;input name="utf8" type="hidden" value="&amp;#x2713;" /&gt;
+    &lt;input name="authenticity_token" type="hidden" value="f755bb0ed134b76c432144748a6d4b7a7ddf2b71" /&gt;
+  &lt;/div&gt;
+  ...
+
+</pre>
+</div>
+<p>处理提交的数据时，Rails 以 <code>_method</code> 的值为准，发起相应类型的请求（在这个例子中是 PATCH 请求）。</p><h3 id="快速创建选择列表">3 快速创建选择列表</h3><p>HTML 中的选择列表往往需要编写很多标记语言（每个选项都要创建一个 <code>option</code> 元素），因此最适合自动生成。</p><p>选择列表的标记语言如下所示：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;select name="city_id" id="city_id"&gt;
+  &lt;option value="1"&gt;Lisbon&lt;/option&gt;
+  &lt;option value="2"&gt;Madrid&lt;/option&gt;
+  ...
+  &lt;option value="12"&gt;Berlin&lt;/option&gt;
+&lt;/select&gt;
+
+</pre>
+</div>
+<p>这个列表列出了一组城市名。在程序内部只需要处理各选项的 ID，因此把各选项的 <code>value</code> 属性设为 ID。下面来看一下 Rails 为我们提供了哪些帮助方法。</p><h4 id="select-和-option-标签">3.1 <code>select</code> 和 <code>option</code> 标签</h4><p>最常见的帮助方法是 <code>select_tag</code>，如其名所示，其作用是生成 <code>select</code> 标签，其中可以包含一个由选项组成的字符串：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= select_tag(:city_id, '&lt;option value="1"&gt;Lisbon&lt;/option&gt;...') %&gt;
+
+</pre>
+</div>
+<p>这只是个开始，还无法动态生成 <code>option</code> 标签。<code>option</code> 标签可以使用帮助方法 <code>options_for_select</code> 生成：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= options_for_select([['Lisbon', 1], ['Madrid', 2], ...]) %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 为：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;option value="1"&gt;Lisbon&lt;/option&gt;
+&lt;option value="2"&gt;Madrid&lt;/option&gt;
+...
+
+</pre>
+</div>
+<p><code>options_for_select</code> 方法的第一个参数是一个嵌套数组，每个元素都有两个子元素：选项的文本（城市名）和选项的 <code>value</code> 属性值（城市 ID）。选项的 <code>value</code> 属性值会提交到控制器中。ID 的值经常表示数据库对象，但这个例子除外。</p><p>知道上述用法后，就可以结合 <code>select_tag</code> 和 <code>options_for_select</code> 两个方法生成所需的完整 HTML 标记：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= select_tag(:city_id, options_for_select(...)) %&gt;
+
+</pre>
+</div>
+<p><code>options_for_select</code> 方法还可预先选中一个选项，通过第二个参数指定：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= options_for_select([['Lisbon', 1], ['Madrid', 2], ...], 2) %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;option value="1"&gt;Lisbon&lt;/option&gt;
+&lt;option value="2" selected="selected"&gt;Madrid&lt;/option&gt;
+...
+
+</pre>
+</div>
+<p>当 Rails 发现生成的选项 <code>value</code> 属性值和指定的值一样时，就会在这个选项中加上 <code>selected</code> 属性。</p><div class="info"><p><code>options_for_select</code> 方法的第二个参数必须完全和需要选中的选项 <code>value</code> 属性值相等。如果 <code>value</code> 的值是整数 2，就不能传入字符串 <code>"2"</code>，必须传入数字 <code>2</code>。注意，从 <code>params</code> 中获取的值都是字符串。</p></div><p>使用 Hash 可以为选项指定任意属性：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= options_for_select([['Lisbon', 1, {'data-size' =&gt; '2.8 million'}], ['Madrid', 2, {'data-size' =&gt; '3.2 million'}]], 2) %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;option value="1" data-size="2.8 million"&gt;Lisbon&lt;/option&gt;
+&lt;option value="2" selected="selected" data-size="3.2 million"&gt;Madrid&lt;/option&gt;
+...
+
+</pre>
+</div>
+<h4 id="处理模型的选择列表">3.2 处理模型的选择列表</h4><p>大多数情况下，表单的控件用于处理指定的数据库模型，正如你所期望的，Rails 为此提供了很多用于生成选择列表的帮助方法。和其他表单帮助方法一样，处理模型时要去掉 <code>select_tag</code> 中的 <code>_tag</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# controller:
+@person = Person.new(city_id: 2)
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+# view:
+&lt;%= select(:person, :city_id, [['Lisbon', 1], ['Madrid', 2], ...]) %&gt;
+
+</pre>
+</div>
+<p>注意，第三个参数，选项数组，和传入 <code>options_for_select</code> 方法的参数一样。这种帮助方法的一个好处是，无需关心如何预先选中正确的城市，只要用户设置了所在城市，Rails 就会读取 <code>@person.city_id</code> 的值，为你代劳。</p><p>和其他帮助方法一样，如果要在绑定到 <code>@person</code> 对象上的表单构造器上使用 <code>select</code> 方法，相应的句法为：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+# select on a form builder
+&lt;%= f.select(:city_id, ...) %&gt;
+
+</pre>
+</div>
+<p><code>select</code> 帮助方法还可接受一个代码块：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= f.select(:city_id) do %&gt;
+  &lt;% [['Lisbon', 1], ['Madrid', 2]].each do |c| -%&gt;
+    &lt;%= content_tag(:option, c.first, value: c.last) %&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<div class="warning"><p>如果使用 <code>select</code> 方法（或类似的帮助方法，例如 <code>collection_select</code> 和 <code>select_tag</code>）处理 <code>belongs_to</code> 关联，必须传入外键名（在上例中是 <code>city_id</code>），而不是关联名。如果传入的是 <code>city</code> 而不是 <code>city_id</code>，把 <code>params</code> 传给 <code>Person.new</code> 或 <code>update</code> 方法时，会抛出异常：<code>ActiveRecord::AssociationTypeMismatch: City(#17815740) expected, got String(#1138750)</code>。这个要求还可以这么理解，表单帮助方法只能编辑模型的属性。此外还要知道，允许用户直接编辑外键具有潜在地安全隐患。</p></div><h4 id="根据任意对象组成的集合创建-option-标签">3.3 根据任意对象组成的集合创建 <code>option</code> 标签</h4><p>使用 <code>options_for_select</code> 方法生成 <code>option</code> 标签必须使用数组指定各选项的文本和值。如果有个 <code>City</code> 模型，想根据模型实例组成的集合生成 <code>option</code> 标签应该怎么做呢？一种方法是遍历集合，创建一个嵌套数组：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% cities_array = City.all.map { |city| [city.name, city.id] } %&gt;
+&lt;%= options_for_select(cities_array) %&gt;
+
+</pre>
+</div>
+<p>这种方法完全可行，但 Rails 提供了一个更简洁的帮助方法：<code>options_from_collection_for_select</code>。这个方法接受一个由任意对象组成的集合，以及另外两个参数：获取选项文本和值使用的方法。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= options_from_collection_for_select(City.all, :id, :name) %&gt;
+
+</pre>
+</div>
+<p>从这个帮助方法的名字中可以看出，它只生成 <code>option</code> 标签。如果想生成可使用的选择列表，和 <code>options_for_select</code> 方法一样要结合 <code>select_tag</code> 方法一起使用。<code>select</code> 方法集成了 <code>select_tag</code> 和 <code>options_for_select</code> 两个方法，类似地，处理集合时，可以使用 <code>collection_select</code> 方法，它集成了 <code>select_tag</code> 和 <code>options_from_collection_for_select</code> 两个方法。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= collection_select(:person, :city_id, City.all, :id, :name) %&gt;
+
+</pre>
+</div>
+<p><code>options_from_collection_for_select</code> 对 <code>collection_select</code> 来说，就像 <code>options_for_select</code> 与 <code>select</code> 的关系一样。</p><div class="note"><p>传入 <code>options_for_select</code> 方法的子数组第一个元素是选项文本，第二个元素是选项的值，但传入 <code>options_from_collection_for_select</code> 方法的第一个参数是获取选项值的方法，第二个才是获取选项文本的方法。</p></div><h4 id="时区和国家选择列表">3.4 时区和国家选择列表</h4><p>要想在 Rails 程序中实现时区相关的功能，就得询问用户其所在的时区。设定时区时可以使用 <code>collection_select</code> 方法根据预先定义的时区对象生成一个选择列表，也可以直接使用 <code>time_zone_select</code> 帮助方法：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= time_zone_select(:person, :time_zone) %&gt;
+
+</pre>
+</div>
+<p>如果想定制时区列表，可使用 <code>time_zone_options_for_select</code> 帮助方法。这两个方法可接受的参数请查阅 API 文档。</p><p>以前 Rails 还内置了 <code>country_select</code> 帮助方法，用于创建国家选择列表，但现在已经被提取出来做成了 <a href="https://github.com/stefanpenner/country_select">country_select</a> gem。使用这个 gem 时要注意，是否包含某个国家还存在争议（正因为此，Rails 才不想内置）。</p><h3 id="使用日期和时间表单帮助方法">4 使用日期和时间表单帮助方法</h3><p>你可以选择不使用生成 HTML5 日期和时间输入框的帮助方法，而使用生成日期和时间选择列表的帮助方法。生成日期和时间选择列表的帮助方法和其他表单帮助方法有两个重要的不同点：</p>
+<ul>
+<li>日期和时间不在单个 <code>input</code> 元素中输入，而是每个时间单位都有各自的元素，因此在 <code>params</code> 中就没有单个值能表示完整的日期和时间；</li>
+<li>其他帮助方法通过 <code>_tag</code> 后缀区分是独立的帮助方法还是操作模型对象的帮助方法。对日期和时间帮助方法来说，<code>select_date</code>、<code>select_time</code> 和 <code>select_datetime</code> 是独立的帮助方法，<code>date_select</code>、<code>time_select</code> 和 <code>datetime_select</code> 是相应的操作模型对象的帮助方法。</li>
+</ul>
+<p>这两类帮助方法都会为每个时间单位（年，月，日等）生成各自的选择列表。</p><h4 id="独立的帮助方法">4.1 独立的帮助方法</h4><p><code>select_*</code> 这类帮助方法的第一个参数是 <code>Date</code>、<code>Time</code> 或 <code>DateTime</code> 类的实例，并选中指定的日期时间。如果不指定，就使用当前日期时间。例如：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= select_date Date.today, prefix: :start_date %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下（为了行为简便，省略了各选项）：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;select id="start_date_year" name="start_date[year]"&gt; ... &lt;/select&gt;
+&lt;select id="start_date_month" name="start_date[month]"&gt; ... &lt;/select&gt;
+&lt;select id="start_date_day" name="start_date[day]"&gt; ... &lt;/select&gt;
+
+</pre>
+</div>
+<p>上面各控件会组成 <code>params[:start_date]</code>，其中包含名为 <code>:year</code>、<code>:month</code> 和 <code>:day</code> 的键。如果想获取 <code>Time</code> 或 <code>Date</code> 对象，要读取各时间单位的值，然后传入适当的构造方法中，例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i)
+
+</pre>
+</div>
+<p><code>:prefix</code> 选项的作用是指定从 <code>params</code> 中获取各时间组成部分的键名。在上例中，<code>:prefix</code> 选项的值是 <code>start_date</code>。如果不指定这个选项，就是用默认值 <code>date</code>。</p><h4 id="处理模型对象的帮助方法">4.2 处理模型对象的帮助方法</h4><p><code>select_date</code> 方法在更新或创建 Active Record 对象的表单中有点力不从心，因为 Active Record 期望 <code>params</code> 中的每个元素都对应一个属性。用于处理模型对象的日期和时间帮助方法会提交一个名字特殊的参数，Active Record 看到这个参数时就知道必须和其他参数结合起来传递给字段类型对应的构造方法。例如：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= date_select :person, :birth_date %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下（为了行为简介，省略了各选项）：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;select id="person_birth_date_1i" name="person[birth_date(1i)]"&gt; ... &lt;/select&gt;
+&lt;select id="person_birth_date_2i" name="person[birth_date(2i)]"&gt; ... &lt;/select&gt;
+&lt;select id="person_birth_date_3i" name="person[birth_date(3i)]"&gt; ... &lt;/select&gt;
+
+</pre>
+</div>
+<p>创建的 <code>params</code> Hash 如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{'person' =&gt; {'birth_date(1i)' =&gt; '2008', 'birth_date(2i)' =&gt; '11', 'birth_date(3i)' =&gt; '22'}}
+
+</pre>
+</div>
+<p>传递给 <code>Person.new</code>（或 <code>update</code>）方法时，Active Record 知道这些参数应该结合在一起组成 <code>birth_date</code> 属性，使用括号中的信息决定传给 <code>Date.civil</code> 等方法的顺序。</p><h4 id="通用选项">4.3 通用选项</h4><p>这两种帮助方法都使用同一组核心函数生成各选择列表，因此使用的选项基本一样。默认情况下，Rails 生成的年份列表包含本年前后五年。如果这个范围不能满足需求，可以使用 <code>:start_year</code> 和 <code>:end_year</code> 选项指定。更详细的可用选项列表请参阅 <a href="http://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html">API 文档</a>。</p><p>基本原则是，使用 <code>date_select</code> 方法处理模型对象，其他情况都使用 <code>select_date</code> 方法，例如在搜索表单中根据日期过滤搜索结果。</p><div class="note"><p>很多时候内置的日期选择列表不太智能，不能协助用户处理日期和星期几之间的对应关系。</p></div><h4 id="单个时间单位选择列表">4.4 单个时间单位选择列表</h4><p>有时只需显示日期中的一部分，例如年份或月份。为此，Rails 提供了一系列帮助方法，分别用于创建各时间单位的选择列表：<code>select_year</code>，<code>select_month</code>，<code>select_day</code>，<code>select_hour</code>，<code>select_minute</code>，<code>select_second</code>。各帮助方法的作用一目了然。默认情况下，这些帮助方法创建的选择列表 <code>name</code> 属性都跟时间单位的名称一样，例如，<code>select_year</code> 方法创建的 <code>select</code> 元素 <code>name</code> 属性值为 <code>year</code>，<code>select_month</code> 方法创建的 <code>select</code> 元素 <code>name</code> 属性值为 <code>month</code>，不过也可使用 <code>:field_name</code> 选项指定其他值。<code>:prefix</code> 选项的作用与在 <code>select_date</code> 和 <code>select_time</code> 方法中一样，且默认值也一样。</p><p>这些帮助方法的第一个参数指定选中哪个值，可以是 <code>Date</code>、<code>Time</code> 或 <code>DateTime</code> 类的实例（会从实例中获取对应的值），也可以是数字。例如：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= select_year(2009) %&gt;
+&lt;%= select_year(Time.now) %&gt;
+
+</pre>
+</div>
+<p>如果今年是 2009 年，那么上述两种用法生成的 HTML 是一样的。用户选择的值可以通过 <code>params[:date][:year]</code> 获取。</p><h3 id="上传文件">5 上传文件</h3><p>程序中一个常见的任务是上传某种文件，可以是用户的照片，或者 CSV 文件包含要处理的数据。处理文件上传功能时有一点要特别注意，表单的编码必须设为 <code>"multipart/form-data"</code>。如果使用 <code>form_for</code> 生成上传文件的表单，Rails 会自动加入这个编码。如果使用 <code>form_tag</code> 就得自己设置，如下例所示。</p><p>下面这两个表单都能用于上传文件：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_tag({action: :upload}, multipart: true) do %&gt;
+  &lt;%= file_field_tag 'picture' %&gt;
+&lt;% end %&gt;
+
+&lt;%= form_for @person do |f| %&gt;
+  &lt;%= f.file_field :picture %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>像往常一样，Rails 提供了两种帮助方法：独立的 <code>file_field_tag</code> 方法和处理模型的 <code>file_field</code> 方法。这两个方法和其他帮助方法唯一的区别是不能为文件选择框指定默认值，因为这样做没有意义。正如你所期望的，<code>file_field_tag</code> 方法上传的文件在 <code>params[:picture]</code> 中，<code>file_field</code> 方法上传的文件在 <code>params[:person][:picture]</code> 中。</p><h4 id="上传了什么">5.1 上传了什么</h4><p>存在 <code>params</code> Hash 中的对象其实是 <code>IO</code> 的子类，根据文件大小，可能是 <code>StringIO</code> 或者是存储在临时文件中的 <code>File</code> 实例。不管是哪个类，这个对象都有 <code>original_filename</code> 属性，其值为文件在用户电脑中的文件名；还有个 <code>content_type</code> 属性，其值为上传文件的 MIME 类型。下面这段代码把上传的文件保存在 <code>#{Rails.root}/public/uploads</code> 文件夹中，文件名和原始文件名一样（假设使用前面的表单上传）。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def upload
+  uploaded_io = params[:person][:picture]
+  File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+    file.write(uploaded_io.read)
+  end
+end
+
+</pre>
+</div>
+<p>文件上传完毕后可以做很多操作，例如把文件存储在某个地方（服务器的硬盘，Amazon S3 等）；把文件和模型关联起来；缩放图片，生成缩略图。这些复杂的操作已经超出了本文范畴。有很多代码库可以协助完成这些操作，其中两个广为人知的是 <a href="https://github.com/jnicklas/carrierwave">CarrierWave</a> 和 <a href="http://www.thoughtbot.com/projects/paperclip">Paperclip</a>。</p><div class="note"><p>如果用户没有选择文件，相应的参数为空字符串。</p></div><h4 id="使用-ajax-上传文件">5.2 使用 Ajax 上传文件</h4><p>异步上传文件和其他类型的表单不一样，仅在 <code>form_for</code> 方法中加入 <code>remote: true</code> 选项是不够的。在 Ajax 表单中，使用浏览器中的 JavaScript 进行序列化，但是 JavaScript 无法读取硬盘中的文件，因此文件无法上传。常见的解决方法是使用一个隐藏的 <code>iframe</code> 作为表单提交的目标。</p><h3 id="定制表单构造器">6 定制表单构造器</h3><p>前面说过，<code>form_for</code> 和 <code>fields_for</code> 方法拽入的对象是 <code>FormBuilder</code> 或其子类的实例。表单构造器中封装了用于显示单个对象表单元素的信息。你可以使用常规的方式使用各帮助方法，也可以继承 <code>FormBuilder</code> 类，添加其他的帮助方法。例如：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @person do |f| %&gt;
+  &lt;%= text_field_with_label f, :first_name %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>可以写成：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @person, builder: LabellingFormBuilder do |f| %&gt;
+  &lt;%= f.text_field :first_name %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>在此之前需要定义 <code>LabellingFormBuilder</code> 类，如下所示：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class LabellingFormBuilder &lt; ActionView::Helpers::FormBuilder
+  def text_field(attribute, options={})
+    label(attribute) + super
+  end
+end
+
+</pre>
+</div>
+<p>如果经常这么使用，可以定义 <code>labeled_form_for</code> 帮助方法，自动启用 <code>builder: LabellingFormBuilder</code> 选项。</p><p>所用的表单构造器还会决定执行下面这个渲染操作时会发生什么：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: f %&gt;
+
+</pre>
+</div>
+<p>如果 <code>f</code> 是 <code>FormBuilder</code> 类的实例，上述代码会渲染局部视图 <code>form</code>，并把传入局部视图的对象设为表单构造器。如果表单构造器是 <code>LabellingFormBuilder</code> 类的实例，则会渲染局部视图 <code>labelling_form</code>。</p><h3 id="理解参数命名约定">7 理解参数命名约定</h3><p>从前几节可以看出，表单提交的数据可以直接保存在 <code>params</code> Hash 中，或者嵌套在子 Hash 中。例如，在 <code>Person</code> 模型对应控制器的 <code>create</code> 动作中，<code>params[:person]</code> 一般是一个 Hash，保存创建 <code>Person</code> 实例的所有属性。<code>params</code> Hash 中也可以保存数组，或由 Hash 组成的数组，等等。</p><p>HTML 表单基本上不能处理任何结构化数据，提交的只是由普通的字符串组成的键值对。在程序中使用的数组参数和 Hash 参数是通过 Rails 的参数命名约定生成的。</p><div class="info"><p>如果想快速试验本节中的示例，可以在控制台中直接调用 Rack 的参数解析器。例如：
+T&gt;
+<code>ruby
+TIP: Rack::Utils.parse_query "name=fred&amp;phone=0123456789"
+TIP: # =&gt; {"name"=&gt;"fred", "phone"=&gt;"0123456789"}
+TIP:</code></p></div><h4 id="基本结构">7.1 基本结构</h4><p>数组和 Hash 是两种基本结构。获取 Hash 中值的方法和 <code>params</code> 一样。如果表单中包含以下控件：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;input id="person_name" name="person[name]" type="text" value="Henry"/&gt;
+
+</pre>
+</div>
+<p>得到的 <code>params</code> 值为：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+{'person' =&gt; {'name' =&gt; 'Henry'}}
+
+</pre>
+</div>
+<p>在控制器中可以使用 <code>params[:person][:name]</code> 获取提交的值。</p><p>Hash 可以随意嵌套，不限制层级，例如：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;input id="person_address_city" name="person[address][city]" type="text" value="New York"/&gt;
+
+</pre>
+</div>
+<p>得到的 <code>params</code> 值为：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{'person' =&gt; {'address' =&gt; {'city' =&gt; 'New York'}}}
+
+</pre>
+</div>
+<p>一般情况下 Rails 会忽略重复的参数名。如果参数名中包含空的方括号（<code>[]</code>），Rails 会将其组建成一个数组。如果想让用户输入多个电话号码，在表单中可以这么做：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;input name="person[phone_number][]" type="text"/&gt;
+&lt;input name="person[phone_number][]" type="text"/&gt;
+&lt;input name="person[phone_number][]" type="text"/&gt;
+
+</pre>
+</div>
+<p>得到的 <code>params[:person][:phone_number]</code> 就是一个数组。</p><h4 id="结合在一起使用">7.2 结合在一起使用</h4><p>上述命名约定可以结合起来使用，让 <code>params</code> 的某个元素值为数组（如前例），或者由 Hash 组成的数组。例如，使用下面的表单控件可以填写多个地址：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;input name="addresses[][line1]" type="text"/&gt;
+&lt;input name="addresses[][line2]" type="text"/&gt;
+&lt;input name="addresses[][city]" type="text"/&gt;
+
+</pre>
+</div>
+<p>得到的 <code>params[:addresses]</code> 值是一个由 Hash 组成的数组，Hash 中的键包括 <code>line1</code>、<code>line2</code> 和 <code>city</code>。如果 Rails 发现输入框的 <code>name</code> 属性值已经存在于当前 Hash 中，就会新建一个 Hash。</p><p>不过有个限制，虽然 Hash 可以嵌套任意层级，但数组只能嵌套一层。如果需要嵌套多层数组，可以使用 Hash 实现。例如，如果想创建一个包含模型对象的数组，可以创建一个 Hash，以模型对象的 ID、数组索引或其他参数为键。</p><div class="warning"><p>数组类型参数不能很好的在 <code>check_box</code> 帮助方法中使用。根据 HTML 规范，未选中的复选框不应该提交值。但是不管是否选中都提交值往往更便于处理。为此 <code>check_box</code> 方法额外创建了一个同名的隐藏 <code>input</code> 元素。如果没有选中复选框，只会提交隐藏 <code>input</code> 元素的值，如果选中则同时提交两个值，但复选框的值优先级更高。处理数组参数时重复提交相同的参数会让 Rails 迷惑，因为对 Rails 来说，见到重复的 <code>input</code> 值，就会创建一个新数组元素。所以更推荐使用 <code>check_box_tag</code> 方法，或者用 Hash 代替数组。</p></div><h4 id="使用表单帮助方法">7.3 使用表单帮助方法</h4><p>前面几节并没有使用 Rails 提供的表单帮助方法。你可以自己创建 <code>input</code> 元素的 <code>name</code> 属性，然后直接将其传递给 <code>text_field_tag</code> 等帮助方法。但是 Rails 提供了更高级的支持。本节介绍 <code>form_for</code> 和 <code>fields_for</code> 方法的 <code>name</code> 参数以及 <code>:index</code> 选项。</p><p>你可能会想编写一个表单，其中有很多字段，用于编辑某人的所有地址。例如：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @person do |person_form| %&gt;
+  &lt;%= person_form.text_field :name %&gt;
+  &lt;% @person.addresses.each do |address| %&gt;
+    &lt;%= person_form.fields_for address, index: address.id do |address_form|%&gt;
+      &lt;%= address_form.text_field :city %&gt;
+    &lt;% end %&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>假设这个人有两个地址，ID 分别为 23 和 45。那么上述代码生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;form accept-charset="UTF-8" action="/people/1" class="edit_person" id="edit_person_1" method="post"&gt;
+  &lt;input id="person_name" name="person[name]" type="text" /&gt;
+  &lt;input id="person_address_23_city" name="person[address][23][city]" type="text" /&gt;
+  &lt;input id="person_address_45_city" name="person[address][45][city]" type="text" /&gt;
+&lt;/form&gt;
+
+</pre>
+</div>
+<p>得到的 <code>params</code> Hash 如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{'person' =&gt; {'name' =&gt; 'Bob', 'address' =&gt; {'23' =&gt; {'city' =&gt; 'Paris'}, '45' =&gt; {'city' =&gt; 'London'}}}}
+
+</pre>
+</div>
+<p>Rails 之所以知道这些输入框中的值是 <code>person</code> Hash 的一部分，是因为我们在第一个表单构造器上调用了 <code>fields_for</code> 方法。指定 <code>:index</code> 选项的目的是告诉 Rails，其中的输入框 <code>name</code> 属性值不是 <code>person[address][city]</code>，而要在 <code>address</code> 和 <code>city</code> 索引之间插入 <code>:index</code> 选项对应的值（放入方括号中）。这么做很有用，因为便于分辨要修改的 <code>Address</code> 记录是哪个。<code>:index</code> 选项的值可以是具有其他意义的数字、字符串，甚至是 <code>nil</code>（此时会新建一个数组参数）。</p><p>如果想创建更复杂的嵌套，可以指定 <code>name</code> 属性的第一部分（前例中的 <code>person[address]</code>）：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= fields_for 'person[address][primary]', address, index: address do |address_form| %&gt;
+  &lt;%= address_form.text_field :city %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;input id="person_address_primary_1_city" name="person[address][primary][1][city]" type="text" value="bologna" /&gt;
+
+</pre>
+</div>
+<p>一般来说，最终得到的 <code>name</code> 属性值是 <code>fields_for</code> 或 <code>form_for</code> 方法的第一个参数加 <code>:index</code> 选项的值再加属性名。<code>:index</code> 选项也可直接传给 <code>text_field</code> 等帮助方法，但在表单构造器中指定可以避免代码重复。</p><p>为了简化句法，还可以不使用 <code>:index</code> 选项，直接在第一个参数后面加上 <code>[]</code>。这么做和指定 <code>index: address</code> 选项的作用一样，因此下面这段代码</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= fields_for 'person[address][primary][]', address do |address_form| %&gt;
+  &lt;%= address_form.text_field :city %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>生成的 HTML 和前面一样。</p><h3 id="处理外部资源的表单">8 处理外部资源的表单</h3><p>如果想把数据提交到外部资源，还是可以使用 Rails 提供的表单帮助方法。但有时需要为这些资源创建 <code>authenticity_token</code>。做法是把 <code>authenticity_token: 'your_external_token'</code> 作为选项传递给 <code>form_tag</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_tag 'http://farfar.away/form', authenticity_token: 'external_token') do %&gt;
+  Form contents
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>提交到外部资源的表单，其中可包含的字段有时受 API 的限制，例如支付网关。所有可能不用生成隐藏的 <code>authenticity_token</code> 字段，此时把 <code>:authenticity_token</code> 选项设为 <code>false</code> 即可：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_tag 'http://farfar.away/form', authenticity_token: false) do %&gt;
+  Form contents
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>以上技术也可用在 <code>form_for</code> 方法中：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @invoice, url: external_url, authenticity_token: 'external_token' do |f| %&gt;
+  Form contents
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>如果不想生成 <code>authenticity_token</code> 字段，可以这么做：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @invoice, url: external_url, authenticity_token: false do |f| %&gt;
+  Form contents
+&lt;% end %&gt;
+
+</pre>
+</div>
+<h3 id="编写复杂的表单">9 编写复杂的表单</h3><p>很多程序已经复杂到在一个表单中编辑一个对象已经无法满足需求了。例如，创建 <code>Person</code> 对象时还想让用户在同一个表单中创建多个地址（家庭地址，工作地址，等等）。以后编辑这个 <code>Person</code> 时，还想让用户根据需要添加、删除或修改地址。</p><h4 id="设置模型">9.1 设置模型</h4><p>Active Record 为此种需求在模型中提供了支持，通过 <code>accepts_nested_attributes_for</code> 方法实现：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ActiveRecord::Base
+  has_many :addresses
+  accepts_nested_attributes_for :addresses
+end
+
+class Address &lt; ActiveRecord::Base
+  belongs_to :person
+end
+
+</pre>
+</div>
+<p>这段代码会在 <code>Person</code> 对象上创建 <code>addresses_attributes=</code> 方法，用于创建、更新和删除地址（可选操作）。</p><h4 id="嵌套表单">9.2 嵌套表单</h4><p>使用下面的表单可以创建 <code>Person</code> 对象及其地址：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @person do |f| %&gt;
+  Addresses:
+  &lt;ul&gt;
+    &lt;%= f.fields_for :addresses do |addresses_form| %&gt;
+      &lt;li&gt;
+        &lt;%= addresses_form.label :kind %&gt;
+        &lt;%= addresses_form.text_field :kind %&gt;
+
+        &lt;%= addresses_form.label :street %&gt;
+        &lt;%= addresses_form.text_field :street %&gt;
+        ...
+      &lt;/li&gt;
+    &lt;% end %&gt;
+  &lt;/ul&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>如果关联支持嵌套属性，<code>fields_for</code> 方法会为关联中的每个元素执行一遍代码块。如果没有地址，就不执行代码块。一般的作法是在控制器中构建一个或多个空的子属性，这样至少会有一组字段显示出来。下面的例子会在新建 <code>Person</code> 对象的表单中显示两组地址字段。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def new
+  @person = Person.new
+  2.times { @person.addresses.build}
+end
+
+</pre>
+</div>
+<p><code>fields_for</code> 方法拽入一个表单构造器，参数的名字就是 <code>accepts_nested_attributes_for</code> 方法期望的。例如，如果用户填写了两个地址，提交的参数如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{
+  'person' =&gt; {
+    'name' =&gt; 'John Doe',
+    'addresses_attributes' =&gt; {
+      '0' =&gt; {
+        'kind' =&gt; 'Home',
+        'street' =&gt; '221b Baker Street'
+      },
+      '1' =&gt; {
+        'kind' =&gt; 'Office',
+        'street' =&gt; '31 Spooner Street'
+      }
+    }
+  }
+}
+
+</pre>
+</div>
+<p><code>:addresses_attributes</code>  Hash 的键是什么不重要，但至少不能相同。</p><p>如果关联的对象已经存在于数据库中，<code>fields_for</code> 方法会自动生成一个隐藏字段，<code>value</code> 属性的值为记录的 <code>id</code>。把 <code>include_id: false</code> 选项传递给 <code>fields_for</code> 方法可以禁止生成这个隐藏字段。如果自动生成的字段位置不对，导致 HTML 无法通过验证，或者在 ORM 关系中子对象不存在 <code>id</code> 字段，就可以禁止自动生成这个隐藏字段。</p><h4 id="控制器端">9.3 控制器端</h4><p>像往常一样，参数传递给模型之前，在控制器中要<a href="action_controller_overview.html#strong-parameters">过滤参数</a>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def create
+  @person = Person.new(person_params)
+  # ...
+end
+
+private
+  def person_params
+    params.require(:person).permit(:name, addresses_attributes: [:id, :kind, :street])
+  end
+
+</pre>
+</div>
+<h4 id="删除对象">9.4 删除对象</h4><p>如果允许用户删除关联的对象，可以把 <code>allow_destroy: true</code> 选项传递给 <code>accepts_nested_attributes_for</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ActiveRecord::Base
+  has_many :addresses
+  accepts_nested_attributes_for :addresses, allow_destroy: true
+end
+
+</pre>
+</div>
+<p>如果属性组成的 Hash 中包含 <code>_destroy</code> 键，且其值为 <code>1</code> 或 <code>true</code>，就会删除对象。下面这个表单允许用户删除地址：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @person do |f| %&gt;
+  Addresses:
+  &lt;ul&gt;
+    &lt;%= f.fields_for :addresses do |addresses_form| %&gt;
+      &lt;li&gt;
+        &lt;%= addresses_form.check_box :_destroy%&gt;
+        &lt;%= addresses_form.label :kind %&gt;
+        &lt;%= addresses_form.text_field :kind %&gt;
+        ...
+      &lt;/li&gt;
+    &lt;% end %&gt;
+  &lt;/ul&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>别忘了修改控制器中的参数白名单，允许使用 <code>_destroy</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def person_params
+  params.require(:person).
+    permit(:name, addresses_attributes: [:id, :kind, :street, :_destroy])
+end
+
+</pre>
+</div>
+<h4 id="避免创建空记录">9.5 避免创建空记录</h4><p>如果用户没有填写某些字段，最好将其忽略。此功能可以通过 <code>accepts_nested_attributes_for</code> 方法的 <code>:reject_if</code> 选项实现，其值为 Proc 对象。这个 Proc 对象会在通过表单提交的每一个属性 Hash 上调用。如果返回值为 <code>false</code>，Active Record 就不会为这个 Hash 构建关联对象。下面的示例代码只有当 <code>kind</code> 属性存在时才尝试构建地址对象：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ActiveRecord::Base
+  has_many :addresses
+  accepts_nested_attributes_for :addresses, reject_if: lambda {|attributes| attributes['kind'].blank?}
+end
+
+</pre>
+</div>
+<p>为了方便，可以把 <code>reject_if</code> 选项的值设为 <code>:all_blank</code>，此时创建的 Proc 会拒绝为 <code>_destroy</code> 之外其他属性都为空的 Hash 构建对象。</p><h4 id="按需添加字段">9.6 按需添加字段</h4><p>我们往往不想事先显示多组字段，而是当用户点击“添加新地址”按钮后再显示。Rails 并没有内建这种功能。生成新的字段时要确保关联数组的键是唯一的，一般可在 JavaScript 中使用当前时间。</p>
+
+        <h3>反馈</h3>
+        <p>
+          欢迎帮忙改善指南质量。
+        </p>
+        <p>
+          如发现任何错误，欢迎修正。开始贡献前，可先行阅读<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">贡献指南：文档</a>。
+        </p>
+        <p>翻译如有错误，深感抱歉，欢迎 <a href="https://github.com/ruby-china/guides/fork">Fork</a> 修正，或至此处<a href="https://github.com/ruby-china/guides/issues/new">回报</a>。</p>
+        <p>
+          文章可能有未完成或过时的内容。请先检查 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 来确定问题在 master 是否已经修掉了。再上 master 补上缺少的文件。内容参考 <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a>来了解行文风格。
+        </p>
+        <p>最后，任何关于 Ruby on Rails 文档的讨论，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件群组</a>。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用<a href="https://creativecommons.org/licenses/by-sa/4.0/">创用 CC 姓名标示-相同方式分享 4.0 国际授权条款</a>授权。</p>
+<p>“Rails”、“Ruby on Rails”，以及 Rails logo 为 David Heinemeier Hansson 的商标。版权所有。</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shCore.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushRuby.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushXml.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushSql.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushPlain.js"></script>
+  <script type="text/javascript">
+    SyntaxHighlighter.all();
+    $(guidesIndex.bind);
+  </script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    // ga('create', '', 'ruby-china.github.io');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

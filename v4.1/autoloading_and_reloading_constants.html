@@ -1,0 +1,1252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Autoloading and Reloading Constants — Ruby on Rails 指南</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://rubyonrails.org/">综览</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/download">下载</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/deploy">部署</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">源码</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/screencasts">视频</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/documentation">文件</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/community">社群</a></li>
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="回首页">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南目录</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单帮助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 简介</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 程序</a></dd>
+                <dd><a href="configuring.html">设置 Rails 程序</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">客制与新建 Rails 产生器</a></dd>
+                <dd><a href="rails_application_templates.html">Rails 应用程式模版</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文件准则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <!-- <li><a class="nav-item" href="//github.com/docrails-tw/wiki">参与翻译</a></li> -->
+        <li><a class="nav-item" href="https://github.com/ruby-china/guides/blob/master/CONTRIBUTING.md">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">致谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南目录</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单帮助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 简介</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 程序</option>
+                  <option value="configuring.html">设置 Rails 程序</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">客制与新建 Rails 产生器</option>
+                  <option value="rails_application_templates.html">Rails 应用程式模版</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文件准则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Autoloading and Reloading Constants</h2><p>This guide documents how constant autoloading and reloading works.</p><p>After reading this guide, you will know:</p>
+<ul>
+<li>Key aspects of Ruby constants</li>
+<li>What is <code>autoload_paths</code></li>
+<li>How constant autoloading works</li>
+<li>What is <code>require_dependency</code></li>
+<li>How constant reloading works</li>
+<li>Solutions to common autoloading gotchas</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#introduction">Introduction</a></li>
+<li>
+<a href="#constants-refresher">Constants Refresher</a>
+
+<ul>
+<li><a href="#nesting">Nesting</a></li>
+<li><a href="#class-and-module-definitions-are-constant-assignments">Class and Module Definitions are Constant Assignments</a></li>
+<li><a href="#constants-are-stored-in-modules">Constants are Stored in Modules</a></li>
+<li><a href="#resolution-algorithms">Resolution Algorithms</a></li>
+</ul>
+</li>
+<li>
+<a href="#vocabulary">Vocabulary</a>
+
+<ul>
+<li><a href="#parent-namespaces">Parent Namespaces</a></li>
+<li><a href="#loading-mechanism">Loading Mechanism</a></li>
+</ul>
+</li>
+<li><a href="#autoloading-availability">Autoloading Availability</a></li>
+<li><a href="#autoload_paths">autoload_paths</a></li>
+<li>
+<a href="#autoloading-algorithms">Autoloading Algorithms</a>
+
+<ul>
+<li><a href="#autoloading-algorithms-relative-references">Relative References</a></li>
+<li><a href="#autoloading-algorithms-qualified-references">Qualified References</a></li>
+<li><a href="#automatic-modules">Automatic Modules</a></li>
+<li><a href="#generic-procedure">Generic Procedure</a></li>
+</ul>
+</li>
+<li><a href="#require_dependency">require_dependency</a></li>
+<li><a href="#constant-reloading">Constant Reloading</a></li>
+<li><a href="#module#autoload-isn't-involved">Module#autoload isn't Involved</a></li>
+<li>
+<a href="#common-gotchas">Common Gotchas</a>
+
+<ul>
+<li><a href="#nesting-and-qualified-constants">Nesting and Qualified Constants</a></li>
+<li><a href="#autoloading-and-sti">Autoloading and STI</a></li>
+<li><a href="#autoloading-and-require">Autoloading and <code>require</code></a></li>
+<li><a href="#autoloading-and-initializers">Autoloading and Initializers</a></li>
+<li><a href="#require_dependency-and-initializers"><code>require_dependency</code> and Initializers</a></li>
+<li><a href="#when-constants-aren't-missed">When Constants aren't Missed</a></li>
+<li><a href="#autoloading-within-singleton-classes">Autoloading within Singleton Classes</a></li>
+<li><a href="#autoloading-in-basicobject">Autoloading in <code>BasicObject</code></a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="introduction">1 Introduction</h3><p>Ruby on Rails allows applications to be written as if their code was preloaded.</p><p>In a normal Ruby program classes need to load their dependencies:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'application_controller'
+require 'post'
+
+class PostsController &lt; ApplicationController
+  def index
+    @posts = Post.all
+  end
+end
+
+</pre>
+</div>
+<p>Our Rubyist instinct quickly sees some redundancy in there: If classes were
+defined in files matching their name, couldn't their loading be automated
+somehow? We could save scanning the file for dependencies, which is brittle.</p><p>Moreover, <code>Kernel#require</code> loads files once, but development is much more smooth
+if code gets refreshed when it changes without restarting the server. It would
+be nice to be able to use <code>Kernel#load</code> in development, and <code>Kernel#require</code> in
+production.</p><p>Indeed, those features are provided by Ruby on Rails, where we just write</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class PostsController &lt; ApplicationController
+  def index
+    @posts = Post.all
+  end
+end
+
+</pre>
+</div>
+<p>This guide documents how that works.</p><h3 id="constants-refresher">2 Constants Refresher</h3><p>While constants are trivial in most programming languages, they are a rich
+topic in Ruby.</p><p>It is beyond the scope of this guide to document Ruby constants, but we are
+nevertheless going to highlight a few key topics. Truly grasping the following
+sections is instrumental to understanding constant autoloading and reloading.</p><h4 id="nesting">2.1 Nesting</h4><p>Class and module definitions can be nested to create namespaces:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module XML
+  class SAXParser
+    # (1)
+  end
+end
+
+</pre>
+</div>
+<p>The <em>nesting</em> at any given place is the collection of enclosing nested class and
+module objects outwards. For example, in the previous example, the nesting at
+(1) is</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[XML::SAXParser, XML]
+
+</pre>
+</div>
+<p>It is important to understand that the nesting is composed of class and module
+<em>objects</em>, it has nothing to do with the constants used to access them, and is
+also unrelated to their names.</p><p>For instance, while this definition is similar to the previous one:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class XML::SAXParser
+  # (2)
+end
+
+</pre>
+</div>
+<p>the nesting in (2) is different:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[XML::SAXParser]
+
+</pre>
+</div>
+<p><code>XML</code> does not belong to it.</p><p>We can see in this example that the name of a class or module that belongs to a
+certain nesting does not necessarily correlate with the namespaces at the spot.</p><p>Even more, they are totally independent, take for instance</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module X::Y
+  module A::B
+    # (3)
+  end
+end
+
+</pre>
+</div>
+<p>The nesting in (3) consists of two module objects:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[A::B, X::Y]
+
+</pre>
+</div>
+<p>So, it not only doesn't end in <code>A</code>, which does not even belong to the nesting,
+but it also contains <code>X::Y</code>, which is independent from <code>A::B</code>.</p><p>The nesting is an internal stack maintained by the interpreter, and it gets
+modified according to these rules:</p>
+<ul>
+<li><p>The class object following a <code>class</code> keyword gets pushed when its body is
+executed, and popped after it.</p></li>
+<li><p>The module object following a <code>module</code> keyword gets pushed when its body is
+executed, and popped after it.</p></li>
+<li><p>A singleton class opened with <code>class &lt;&lt; object</code> gets pushed, and popped later.</p></li>
+<li><p>When any of the <code>*_eval</code> family of methods is called using a string argument,
+the singleton class of the receiver is pushed to the nesting of the eval'ed
+code.</p></li>
+<li><p>The nesting at the top-level of code interpreted by <code>Kernel#load</code> is empty
+unless the <code>load</code> call receives a true value as second argument, in which case
+a newly created anonymous module is pushed by Ruby.</p></li>
+</ul>
+<p>It is interesting to observe that blocks do not modify the stack. In particular
+the blocks that may be passed to <code>Class.new</code> and <code>Module.new</code> do not get the
+class or module being defined pushed to their nesting. That's one of the
+differences between defining classes and modules in one way or another.</p><p>The nesting at any given place can be inspected with <code>Module.nesting</code>.</p><h4 id="class-and-module-definitions-are-constant-assignments">2.2 Class and Module Definitions are Constant Assignments</h4><p>Let's suppose the following snippet creates a class (rather than reopening it):</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class C
+end
+
+</pre>
+</div>
+<p>Ruby creates a constant <code>C</code> in <code>Object</code> and stores in that constant a class
+object. The name of the class instance is "C", a string, named after the
+constant.</p><p>That is,</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Project &lt; ActiveRecord::Base
+end
+
+</pre>
+</div>
+<p>performs a constant assignment equivalent to</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Project = Class.new(ActiveRecord::Base)
+
+</pre>
+</div>
+<p>including setting the name of the class as a side-effect:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Project.name # =&gt; "Project"
+
+</pre>
+</div>
+<p>Constant assignment has a special rule to make that happen: if the object
+being assigned is an anonymous class or module, Ruby sets the object's name to
+the name of the constant.</p><div class="info"><p>From then on, what happens to the constant and the instance does not
+matter. For example, the constant could be deleted, the class object could be
+assigned to a different constant, be stored in no constant anymore, etc. Once
+the name is set, it doesn't change.</p></div><p>Similarly, module creation using the <code>module</code> keyword as in</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module Admin
+end
+
+</pre>
+</div>
+<p>performs a constant assignment equivalent to</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Admin = Module.new
+
+</pre>
+</div>
+<p>including setting the name as a side-effect:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Admin.name # =&gt; "Admin"
+
+</pre>
+</div>
+<div class="warning"><p>The execution context of a block passed to <code>Class.new</code> or <code>Module.new</code>
+is not entirely equivalent to the one of the body of the definitions using the
+<code>class</code> and <code>module</code> keywords. But both idioms result in the same constant
+assignment.</p></div><p>Thus, when one informally says "the <code>String</code> class", that really means: the
+class object stored in the constant called "String" in the class object stored
+in the <code>Object</code> constant. <code>String</code> is otherwise an ordinary Ruby constant and
+everything related to constants such as resolution algorithms applies to it.</p><p>Likewise, in the controller</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class PostsController &lt; ApplicationController
+  def index
+    @posts = Post.all
+  end
+end
+
+</pre>
+</div>
+<p><code>Post</code> is not syntax for a class. Rather, <code>Post</code> is a regular Ruby constant. If
+all is good, the constant evaluates to an object that responds to <code>all</code>.</p><p>That is why we talk about <em>constant</em> autoloading, Rails has the ability to
+load constants on the fly.</p><h4 id="constants-are-stored-in-modules">2.3 Constants are Stored in Modules</h4><p>Constants belong to modules in a very literal sense. Classes and modules have
+a constant table; think of it as a hash table.</p><p>Let's analyze an example to really understand what that means. While common
+abuses of language like "the <code>String</code> class" are convenient, the exposition is
+going to be precise here for didactic purposes.</p><p>Let's consider the following module definition:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module Colors
+  RED = '0xff0000'
+end
+
+</pre>
+</div>
+<p>First, when the <code>module</code> keyword is processed the interpreter creates a new
+entry in the constant table of the class object stored in the <code>Object</code> constant.
+Said entry associates the name "Colors" to a newly created module object.
+Furthermore, the interpreter sets the name of the new module object to be the
+string "Colors".</p><p>Later, when the body of the module definition is interpreted, a new entry is
+created in the constant table of the module object stored in the <code>Colors</code>
+constant. That entry maps the name "RED" to the string "0xff0000".</p><p>In particular, <code>Colors::RED</code> is totally unrelated to any other <code>RED</code> constant
+that may live in any other class or module object. If there were any, they
+would have separate entries in their respective constant tables.</p><p>Pay special attention in the previous paragraphs to the distinction between
+class and module objects, constant names, and value objects associated to them
+in constant tables.</p><h4 id="resolution-algorithms">2.4 Resolution Algorithms</h4><h5 id="resolution-algorithm-for-relative-constants">2.4.1 Resolution Algorithm for Relative Constants</h5><p>At any given place in the code, let's define <em>cref</em> to be the first element of
+the nesting if it is not empty, or <code>Object</code> otherwise.</p><p>Without getting too much into the details, the resolution algorithm for relative
+constant references goes like this:</p>
+<ol>
+<li><p>If the nesting is not empty the constant is looked up in its elements and in
+order. The ancestors of those elements are ignored.</p></li>
+<li><p>If not found, then the algorithm walks up the ancestor chain of the cref.</p></li>
+<li><p>If not found, <code>const_missing</code> is invoked on the cref. The default
+implementation of <code>const_missing</code> raises <code>NameError</code>, but it can be overridden.</p></li>
+</ol>
+<p>Rails autoloading <strong>does not emulate this algorithm</strong>, but its starting point is
+the name of the constant to be autoloaded, and the cref. See more in <a href="#autoloading-algorithms-relative-references">Relative
+References</a>.</p><h5 id="resolution-algorithm-for-qualified-constants">2.4.2 Resolution Algorithm for Qualified Constants</h5><p>Qualified constants look like this:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Billing::Invoice
+
+</pre>
+</div>
+<p><code>Billing::Invoice</code> is composed of two constants: <code>Billing</code> is relative and is
+resolved using the algorithm of the previous section.</p><div class="info"><p>Leading colons would make the first segment absolute rather than
+relative: <code>::Billing::Invoice</code>. That would force <code>Billing</code> to be looked up
+only as a top-level constant.</p></div><p><code>Invoice</code> on the other hand is qualified by <code>Billing</code> and we are going to see
+its resolution next. Let's call <em>parent</em> to that qualifying class or module
+object, that is, <code>Billing</code> in the example above. The algorithm for qualified
+constants goes like this:</p>
+<ol>
+<li><p>The constant is looked up in the parent and its ancestors.</p></li>
+<li><p>If the lookup fails, <code>const_missing</code> is invoked in the parent. The default
+implementation of <code>const_missing</code> raises <code>NameError</code>, but it can be overridden.</p></li>
+</ol>
+<p>As you see, this algorithm is simpler than the one for relative constants. In
+particular, the nesting plays no role here, and modules are not special-cased,
+if neither they nor their ancestors have the constants, <code>Object</code> is <strong>not</strong>
+checked.</p><p>Rails autoloading <strong>does not emulate this algorithm</strong>, but its starting point is
+the name of the constant to be autoloaded, and the parent. See more in
+<a href="#qualified-references">Qualified References</a>.</p><h3 id="vocabulary">3 Vocabulary</h3><h4 id="parent-namespaces">3.1 Parent Namespaces</h4><p>Given a string with a constant path we define its <em>parent namespace</em> to be the
+string that results from removing its rightmost segment.</p><p>For example, the parent namespace of the string "A::B::C" is the string "A::B",
+the parent namespace of "A::B" is "A", and the parent namespace of "A" is "".</p><p>The interpretation of a parent namespace when thinking about classes and modules
+is tricky though. Let's consider a module M named "A::B":</p>
+<ul>
+<li><p>The parent namespace, "A", may not reflect nesting at a given spot.</p></li>
+<li><p>The constant <code>A</code> may no longer exist, some code could have removed it from
+<code>Object</code>.</p></li>
+<li><p>If <code>A</code> exists, the class or module that was originally in <code>A</code> may not be there
+anymore. For example, if after a constant removal there was another constant
+assignment there would generally be a different object in there.</p></li>
+<li><p>In such case, it could even happen that the reassigned <code>A</code> held a new class or
+module called also "A"!</p></li>
+<li><p>In the previous scenarios M would no longer be reachable through <code>A::B</code> but
+the module object itself could still be alive somewhere and its name would
+still be "A::B".</p></li>
+</ul>
+<p>The idea of a parent namespace is at the core of the autoloading algorithms
+and helps explain and understand their motivation intuitively, but as you see
+that metaphor leaks easily. Given an edge case to reason about, take always into
+account that by "parent namespace" the guide means exactly that specific string
+derivation.</p><h4 id="loading-mechanism">3.2 Loading Mechanism</h4><p>Rails autoloads files with <code>Kernel#load</code> when <code>config.cache_classes</code> is false,
+the default in development mode, and with <code>Kernel#require</code> otherwise, the
+default in production mode.</p><p><code>Kernel#load</code> allows Rails to execute files more than once if <a href="#constant-reloading">constant
+reloading</a> is enabled.</p><p>This guide uses the word "load" freely to mean a given file is interpreted, but
+the actual mechanism can be <code>Kernel#load</code> or <code>Kernel#require</code> depending on that
+flag.</p><h3 id="autoloading-availability">4 Autoloading Availability</h3><p>Rails is always able to autoload provided its environment is in place. For
+example the <code>runner</code> command autoloads:</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails runner 'p User.column_names'
+["id", "email", "created_at", "updated_at"]
+
+</pre>
+</div>
+<p>The console autoloads, the test suite autoloads, and of course the application
+autoloads.</p><p>By default, Rails eager loads the application files when it boots in production
+mode, so most of the autoloading going on in development does not happen. But
+autoloading may still be triggered during eager loading.</p><p>For example, given</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class BeachHouse &lt; House
+end
+
+</pre>
+</div>
+<p>if <code>House</code> is still unknown when <code>app/models/beach_house.rb</code> is being eager
+loaded, Rails autoloads it.</p><h3 id="autoload_paths">5 autoload_paths</h3><p>As you probably know, when <code>require</code> gets a relative file name:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'erb'
+
+</pre>
+</div>
+<p>Ruby looks for the file in the directories listed in <code>$LOAD_PATH</code>. That is, Ruby
+iterates over all its directories and for each one of them checks whether they
+have a file called "erb.rb", or "erb.so", or "erb.o", or "erb.dll". If it finds
+any of them, the interpreter loads it and ends the search. Otherwise, it tries
+again in the next directory of the list. If the list gets exhausted, <code>LoadError</code>
+is raised.</p><p>We are going to cover how constant autoloading works in more detail later, but
+the idea is that when a constant like <code>Post</code> is hit and missing, if there's a
+<code>post.rb</code> file for example in <code>app/models</code> Rails is going to find it, evaluate
+it, and have <code>Post</code> defined as a side-effect.</p><p>Alright, Rails has a collection of directories similar to <code>$LOAD_PATH</code> in which
+to look up <code>post.rb</code>. That collection is called <code>autoload_paths</code> and by
+default it contains:</p>
+<ul>
+<li><p>All subdirectories of <code>app</code> in the application and engines. For example,
+<code>app/controllers</code>. They do not need to be the default ones, any custom
+directories like <code>app/workers</code> belong automatically to <code>autoload_paths</code>.</p></li>
+<li><p>Any existing second level directories called <code>app/*/concerns</code> in the
+application and engines.</p></li>
+<li><p>The directory <code>test/mailers/previews</code>.</p></li>
+</ul>
+<p>Also, this collection is configurable via <code>config.autoload_paths</code>. For example,
+<code>lib</code> was in the list years ago, but no longer is. An application can opt-in
+by adding this to <code>config/application.rb</code>:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.autoload_paths += "#{Rails.root}/lib"
+
+</pre>
+</div>
+<p>The value of <code>autoload_paths</code> can be inspected. In a just generated application
+it is (edited):</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails r 'puts ActiveSupport::Dependencies.autoload_paths'
+.../app/assets
+.../app/controllers
+.../app/helpers
+.../app/mailers
+.../app/models
+.../app/controllers/concerns
+.../app/models/concerns
+.../test/mailers/previews
+
+</pre>
+</div>
+<div class="info"><p><code>autoload_paths</code> is computed and cached during the initialization process.
+The application needs to be restarted to reflect any changes in the directory
+structure.</p></div><h3 id="autoloading-algorithms">6 Autoloading Algorithms</h3><h4 id="autoloading-algorithms-relative-references">6.1 Relative References</h4><p>A relative constant reference may appear in several places, for example, in</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class PostsController &lt; ApplicationController
+  def index
+    @posts = Post.all
+  end
+end
+
+</pre>
+</div>
+<p>all three constant references are relative.</p><h5 id="constants-after-the-class-and-module-keywords">6.1.1 Constants after the <code>class</code> and <code>module</code> Keywords</h5><p>Ruby performs a lookup for the constant that follows a <code>class</code> or <code>module</code>
+keyword because it needs to know if the class or module is going to be created
+or reopened.</p><p>If the constant is not defined at that point it is not considered to be a
+missing constant, autoloading is <strong>not</strong> triggered.</p><p>So, in the previous example, if <code>PostsController</code> is not defined when the file
+is interpreted Rails autoloading is not going to be triggered, Ruby will just
+define the controller.</p><h5 id="top-level-constants">6.1.2 Top-Level Constants</h5><p>On the contrary, if <code>ApplicationController</code> is unknown, the constant is
+considered missing and an autoload is going to be attempted by Rails.</p><p>In order to load <code>ApplicationController</code>, Rails iterates over <code>autoload_paths</code>.
+First checks if <code>app/assets/application_controller.rb</code> exists. If it does not,
+which is normally the case, it continues and finds
+<code>app/controllers/application_controller.rb</code>.</p><p>If the file defines the constant <code>ApplicationController</code> all is fine, otherwise
+<code>LoadError</code> is raised:</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+unable to autoload constant ApplicationController, expected
+&lt;full path to application_controller.rb&gt; to define it (LoadError)
+
+</pre>
+</div>
+<div class="info"><p>Rails does not require the value of autoloaded constants to be a class or
+module object. For example, if the file <code>app/models/max_clients.rb</code> defines
+<code>MAX_CLIENTS = 100</code> autoloading <code>MAX_CLIENTS</code> works just fine.</p></div><h5 id="namespaces">6.1.3 Namespaces</h5><p>Autoloading <code>ApplicationController</code> looks directly under the directories of
+<code>autoload_paths</code> because the nesting in that spot is empty. The situation of
+<code>Post</code> is different, the nesting in that line is <code>[PostsController]</code> and support
+for namespaces comes into play.</p><p>The basic idea is that given</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module Admin
+  class BaseController &lt; ApplicationController
+    @@all_roles = Role.all
+  end
+end
+
+</pre>
+</div>
+<p>to autoload <code>Role</code> we are going to check if it is defined in the current or
+parent namespaces, one at a time. So, conceptually we want to try to autoload
+any of</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+Admin::BaseController::Role
+Admin::Role
+Role
+
+</pre>
+</div>
+<p>in that order. That's the idea. To do so, Rails looks in <code>autoload_paths</code>
+respectively for file names like these:</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+admin/base_controller/role.rb
+admin/role.rb
+role.rb
+
+</pre>
+</div>
+<p>modulus some additional directory lookups we are going to cover soon.</p><div class="info"><p><code>'Constant::Name'.underscore</code> gives the relative path without extension of
+the file name where <code>Constant::Name</code> is expected to be defined.</p></div><p>Let's see how Rails autoloads the <code>Post</code> constant in the <code>PostsController</code>
+above assuming the application has a <code>Post</code> model defined in
+<code>app/models/post.rb</code>.</p><p>First it checks for <code>posts_controller/post.rb</code> in <code>autoload_paths</code>:</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+app/assets/posts_controller/post.rb
+app/controllers/posts_controller/post.rb
+app/helpers/posts_controller/post.rb
+...
+test/mailers/previews/posts_controller/post.rb
+
+</pre>
+</div>
+<p>Since the lookup is exhausted without success, a similar search for a directory
+is performed, we are going to see why in the <a href="#automatic-modules">next section</a>:</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+app/assets/posts_controller/post
+app/controllers/posts_controller/post
+app/helpers/posts_controller/post
+...
+test/mailers/previews/posts_controller/post
+
+</pre>
+</div>
+<p>If all those attempts fail, then Rails starts the lookup again in the parent
+namespace. In this case only the top-level remains:</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+app/assets/post.rb
+app/controllers/post.rb
+app/helpers/post.rb
+app/mailers/post.rb
+app/models/post.rb
+
+</pre>
+</div>
+<p>A matching file is found in <code>app/models/post.rb</code>. The lookup stops there and the
+file is loaded. If the file actually defines <code>Post</code> all is fine, otherwise
+<code>LoadError</code> is raised.</p><h4 id="autoloading-algorithms-qualified-references">6.2 Qualified References</h4><p>When a qualified constant is missing Rails does not look for it in the parent
+namespaces. But there is a caveat: When a constant is missing, Rails is
+unable to tell if the trigger was a relative reference or a qualified one.</p><p>For example, consider</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module Admin
+  User
+end
+
+</pre>
+</div>
+<p>and</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Admin::User
+
+</pre>
+</div>
+<p>If <code>User</code> is missing, in either case all Rails knows is that a constant called
+"User" was missing in a module called "Admin".</p><p>If there is a top-level <code>User</code> Ruby would resolve it in the former example, but
+wouldn't in the latter. In general, Rails does not emulate the Ruby constant
+resolution algorithms, but in this case it tries using the following heuristic:</p>
+<blockquote>
+<p>If none of the parent namespaces of the class or module has the missing
+constant then Rails assumes the reference is relative. Otherwise qualified.</p>
+</blockquote>
+<p>For example, if this code triggers autoloading</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Admin::User
+
+</pre>
+</div>
+<p>and the <code>User</code> constant is already present in <code>Object</code>, it is not possible that
+the situation is</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module Admin
+  User
+end
+
+</pre>
+</div>
+<p>because otherwise Ruby would have resolved <code>User</code> and no autoloading would have
+been triggered in the first place. Thus, Rails assumes a qualified reference and
+considers the file <code>admin/user.rb</code> and directory <code>admin/user</code> to be the only
+valid options.</p><p>In practice, this works quite well as long as the nesting matches all parent
+namespaces respectively and the constants that make the rule apply are known at
+that time.</p><p>However, autoloading happens on demand. If by chance the top-level <code>User</code> was
+not yet loaded, then Rails assumes a relative reference by contract.</p><p>Naming conflicts of this kind are rare in practice, but if one occurs,
+<code>require_dependency</code> provides a solution by ensuring that the constant needed
+to trigger the heuristic is defined in the conflicting place.</p><h4 id="automatic-modules">6.3 Automatic Modules</h4><p>When a module acts as a namespace, Rails does not require the application to
+defines a file for it, a directory matching the namespace is enough.</p><p>Suppose an application has a back office whose controllers are stored in
+<code>app/controllers/admin</code>. If the <code>Admin</code> module is not yet loaded when
+<code>Admin::UsersController</code> is hit, Rails needs first to autoload the constant
+<code>Admin</code>.</p><p>If <code>autoload_paths</code> has a file called <code>admin.rb</code> Rails is going to load that
+one, but if there's no such file and a directory called <code>admin</code> is found, Rails
+creates an empty module and assigns it to the <code>Admin</code> constant on the fly.</p><h4 id="generic-procedure">6.4 Generic Procedure</h4><p>Relative references are reported to be missing in the cref where they were hit,
+and qualified references are reported to be missing in their parent. (See
+<a href="#resolution-algorithm-for-relative-constants">Resolution Algorithm for Relative
+Constants</a> at the beginning of
+this guide for the definition of <em>cref</em>, and <a href="#resolution-algorithm-for-qualified-constants">Resolution Algorithm for Qualified
+Constants</a> for the definition of
+<em>parent</em>.)</p><p>The procedure to autoload constant <code>C</code> in an arbitrary situation is as follows:</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+if the class or module in which C is missing is Object
+  let ns = ''
+else
+  let M = the class or module in which C is missing
+
+  if M is anonymous
+    let ns = ''
+  else
+    let ns = M.name
+  end
+end
+
+loop do
+  # Look for a regular file.
+  for dir in autoload_paths
+    if the file "#{dir}/#{ns.underscore}/c.rb" exists
+      load/require "#{dir}/#{ns.underscore}/c.rb"
+
+      if C is now defined
+        return
+      else
+        raise LoadError
+      end
+    end
+  end
+
+  # Look for an automatic module.
+  for dir in autoload_paths
+    if the directory "#{dir}/#{ns.underscore}/c" exists
+      if ns is an empty string
+        let C = Module.new in Object and return
+      else
+        let C = Module.new in ns.constantize and return
+      end
+    end
+  end
+
+  if ns is empty
+    # We reached the top-level without finding the constant.
+    raise NameError
+  else
+    if C exists in any of the parent namespaces
+      # Qualified constants heuristic.
+      raise NameError
+    else
+      # Try again in the parent namespace.
+      let ns = the parent namespace of ns and retry
+    end
+  end
+end
+
+</pre>
+</div>
+<h3 id="require_dependency">7 require_dependency</h3><p>Constant autoloading is triggered on demand and therefore code that uses a
+certain constant may have it already defined or may trigger an autoload. That
+depends on the execution path and it may vary between runs.</p><p>There are times, however, in which you want to make sure a certain constant is
+known when the execution reaches some code. <code>require_dependency</code> provides a way
+to load a file using the current <a href="#loading-mechanism">loading mechanism</a>, and
+keeping track of constants defined in that file as if they were autoloaded to
+have them reloaded as needed.</p><p><code>require_dependency</code> is rarely needed, but see a couple of use-cases in
+<a href="#autoloading-and-sti">Autoloading and STI</a> and <a href="#when-constants-aren-t-missed">When Constants aren't
+Triggered</a>.</p><div class="warning"><p>Unlike autoloading, <code>require_dependency</code> does not expect the file to
+define any particular constant. Exploiting this behavior would be a bad practice
+though, file and constant paths should match.</p></div><h3 id="constant-reloading">8 Constant Reloading</h3><p>When <code>config.cache_classes</code> is false Rails is able to reload autoloaded
+constants.</p><p>For example, in you're in a console session and edit some file behind the
+scenes, the code can be reloaded with the <code>reload!</code> command:</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+&gt; reload!
+
+</pre>
+</div>
+<p>When the application runs, code is reloaded when something relevant to this
+logic changes. In order to do that, Rails monitors a number of things:</p>
+<ul>
+<li><p><code>config/routes.rb</code>.</p></li>
+<li><p>Locales.</p></li>
+<li><p>Ruby files under <code>autoload_paths</code>.</p></li>
+<li><p><code>db/schema.rb</code> and <code>db/structure.sql</code>.</p></li>
+</ul>
+<p>If anything in there changes, there is a middleware that detects it and reloads
+the code.</p><p>Autoloading keeps track of autoloaded constants. Reloading is implemented by
+removing them all from their respective classes and modules using
+<code>Module#remove_const</code>. That way, when the code goes on, those constants are
+going to be unknown again, and files reloaded on demand.</p><div class="info"><p>This is an all-or-nothing operation, Rails does not attempt to reload only
+what changed since dependencies between classes makes that really tricky.
+Instead, everything is wiped.</p></div><h3 id="module#autoload-isn't-involved">9 Module#autoload isn't Involved</h3><p><code>Module#autoload</code> provides a lazy way to load constants that is fully integrated
+with the Ruby constant lookup algorithms, dynamic constant API, etc. It is quite
+transparent.</p><p>Rails internals make extensive use of it to defer as much work as possible from
+the boot process. But constant autoloading in Rails is <strong>not</strong> implemented with
+<code>Module#autoload</code>.</p><p>One possible implementation based on <code>Module#autoload</code> would be to walk the
+application tree and issue <code>autoload</code> calls that map existing file names to
+their conventional constant name.</p><p>There are a number of reasons that prevent Rails from using that implementation.</p><p>For example, <code>Module#autoload</code> is only capable of loading files using <code>require</code>,
+so reloading would not be possible. Not only that, it uses an internal <code>require</code>
+which is not <code>Kernel#require</code>.</p><p>Then, it provides no way to remove declarations in case a file is deleted. If a
+constant gets removed with <code>Module#remove_const</code> its <code>autoload</code> is not triggered
+again. Also, it doesn't support qualified names, so files with namespaces should
+be interpreted during the walk tree to install their own <code>autoload</code> calls, but
+those files could have constant references not yet configured.</p><p>An implementation based on <code>Module#autoload</code> would be awesome but, as you see,
+at least as of today it is not possible. Constant autoloading in Rails is
+implemented with <code>Module#const_missing</code>, and that's why it has its own contract,
+documented in this guide.</p><h3 id="common-gotchas">10 Common Gotchas</h3><h4 id="nesting-and-qualified-constants">10.1 Nesting and Qualified Constants</h4><p>Let's consider</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module Admin
+  class UsersController &lt; ApplicationController
+    def index
+      @users = User.all
+    end
+  end
+end
+
+</pre>
+</div>
+<p>and</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Admin::UsersController &lt; ApplicationController
+  def index
+    @users = User.all
+  end
+end
+
+</pre>
+</div>
+<p>To resolve <code>User</code> Ruby checks <code>Admin</code> in the former case, but it does not in
+the latter because it does not belong to the nesting. (See <a href="#nesting">Nesting</a>
+and <a href="#resolution-algorithms">Resolution Algorithms</a>.)</p><p>Unfortunately Rails autoloading does not know the nesting in the spot where the
+constant was missing and so it is not able to act as Ruby would. In particular,
+<code>Admin::User</code> will get autoloaded in either case.</p><p>Albeit qualified constants with <code>class</code> and <code>module</code> keywords may technically
+work with autoloading in some cases, it is preferable to use relative constants
+instead:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module Admin
+  class UsersController &lt; ApplicationController
+    def index
+      @users = User.all
+    end
+  end
+end
+
+</pre>
+</div>
+<h4 id="autoloading-and-sti">10.2 Autoloading and STI</h4><p>Single Table Inheritance (STI) is a feature of Active Record that enables
+storing a hierarchy of models in one single table. The API of such models is
+aware of the hierarchy and encapsulates some common needs. For example, given
+these classes:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/models/polygon.rb
+class Polygon &lt; ActiveRecord::Base
+end
+
+# app/models/triangle.rb
+class Triangle &lt; Polygon
+end
+
+# app/models/rectangle.rb
+class Rectangle &lt; Polygon
+end
+
+</pre>
+</div>
+<p><code>Triangle.create</code> creates a row that represents a triangle, and
+<code>Rectangle.create</code> creates a row that represents a rectangle. If <code>id</code> is the
+ID of an existing record, <code>Polygon.find(id)</code> returns an object of the correct
+type.</p><p>Methods that operate on collections are also aware of the hierarchy. For
+example, <code>Polygon.all</code> returns all the records of the table, because all
+rectangles and triangles are polygons. Active Record takes care of returning
+instances of their corresponding class in the result set.</p><p>Types are autoloaded as needed. For example, if <code>Polygon.first</code> is a rectangle
+and <code>Rectangle</code> has not yet been loaded, Active Record autoloads it and the
+record is correctly instantiated.</p><p>All good, but if instead of performing queries based on the root class we need
+to work on some subclass, things get interesting.</p><p>While working with <code>Polygon</code> you do not need to be aware of all its descendants,
+because anything in the table is by definition a polygon, but when working with
+subclasses Active Record needs to be able to enumerate the types it is looking
+for. Let’s see an example.</p><p><code>Rectangle.all</code> only loads rectangles by adding a type constraint to the query:</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT "polygons".* FROM "polygons"
+WHERE "polygons"."type" IN ("Rectangle")
+
+</pre>
+</div>
+<p>Let’s introduce now a subclass of <code>Rectangle</code>:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/models/square.rb
+class Square &lt; Rectangle
+end
+
+</pre>
+</div>
+<p><code>Rectangle.all</code> should now return rectangles <strong>and</strong> squares:</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT "polygons".* FROM "polygons"
+WHERE "polygons"."type" IN ("Rectangle", "Square")
+
+</pre>
+</div>
+<p>But there’s a caveat here: How does Active Record know that the class <code>Square</code>
+exists at all?</p><p>Even if the file <code>app/models/square.rb</code> exists and defines the <code>Square</code> class,
+if no code yet used that class, <code>Rectangle.all</code> issues the query</p><div class="code_container">
+<pre class="brush: sql; gutter: false; toolbar: false">
+SELECT "polygons".* FROM "polygons"
+WHERE "polygons"."type" IN ("Rectangle")
+
+</pre>
+</div>
+<p>That is not a bug, the query includes all <em>known</em> descendants of <code>Rectangle</code>.</p><p>A way to ensure this works correctly regardless of the order of execution is to
+load the leaves of the tree by hand at the bottom of the file that defines the
+root class:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/models/polygon.rb
+class Polygon &lt; ActiveRecord::Base
+end
+require_dependency ‘square’
+
+</pre>
+</div>
+<p>Only the leaves that are <strong>at least grandchildren</strong> need to be loaded this
+way. Direct subclasses do not need to be preloaded. If the hierarchy is
+deeper, intermediate classes will be autoloaded recursively from the bottom
+because their constant will appear in the class definitions as superclass.</p><h4 id="autoloading-and-require">10.3 Autoloading and <code>require</code>
+</h4><p>Files defining constants to be autoloaded should never be <code>require</code>d:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'user' # DO NOT DO THIS
+
+class UsersController &lt; ApplicationController
+  ...
+end
+
+</pre>
+</div>
+<p>There are two possible gotchas here in development mode:</p>
+<ol>
+<li><p>If <code>User</code> is autoloaded before reaching the <code>require</code>, <code>app/models/user.rb</code>
+runs again because <code>load</code> does not update <code>$LOADED_FEATURES</code>.</p></li>
+<li><p>If the <code>require</code> runs first Rails does not mark <code>User</code> as an autoloaded
+constant and changes to <code>app/models/user.rb</code> aren't reloaded.</p></li>
+</ol>
+<p>Just follow the flow and use constant autoloading always, never mix
+autoloading and <code>require</code>. As a last resort, if some file absolutely needs to
+load a certain file use <code>require_dependency</code> to play nice with constant
+autoloading. This option is rarely needed in practice, though.</p><p>Of course, using <code>require</code> in autoloaded files to load ordinary 3rd party
+libraries is fine, and Rails is able to distinguish their constants, they are
+not marked as autoloaded.</p><h4 id="autoloading-and-initializers">10.4 Autoloading and Initializers</h4><p>Consider this assignment in <code>config/initializers/set_auth_service.rb</code>:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+AUTH_SERVICE = if Rails.env.production?
+  RealAuthService
+else
+  MockedAuthService
+end
+
+</pre>
+</div>
+<p>The purpose of this setup would be that the application uses the class that
+corresponds to the environment via <code>AUTH_SERVICE</code>. In development mode
+<code>MockedAuthService</code> gets autoloaded when the initializer runs. Let’s suppose
+we do some requests, change its implementation, and hit the application again.
+To our surprise the changes are not reflected. Why?</p><p>As <a href="#constant-reloading">we saw earlier</a>, Rails removes autoloaded constants,
+but <code>AUTH_SERVICE</code> stores the original class object. Stale, non-reachable
+using the original constant, but perfectly functional.</p><p>The following code summarizes the situation:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class C
+  def quack
+    'quack!'
+  end
+end
+
+X = C
+Object.instance_eval { remove_const(:C) }
+X.new.quack # =&gt; quack!
+X.name      # =&gt; C
+C           # =&gt; uninitialized constant C (NameError)
+
+</pre>
+</div>
+<p>Because of that, it is not a good idea to autoload constants on application
+initialization.</p><p>In the case above we could implement a dynamic access point:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/models/auth_service.rb
+class AuthService
+  if Rails.env.production?
+    def self.instance
+      RealAuthService
+    end
+  else
+    def self.instance
+      MockedAuthService
+    end
+  end
+end
+
+</pre>
+</div>
+<p>and have the application use <code>AuthService.instance</code> instead. <code>AuthService</code>
+would be loaded on demand and be autoload-friendly.</p><h4 id="require_dependency-and-initializers">10.5 <code>require_dependency</code> and Initializers</h4><p>As we saw before, <code>require_dependency</code> loads files in an autoloading-friendly
+way. Normally, though, such a call does not make sense in an initializer.</p><p>One could think about doing some <a href="#require-dependency"><code>require_dependency</code></a>
+calls in an initializer to make sure certain constants are loaded upfront, for
+example as an attempt to address the <a href="#autoloading-and-sti">gotcha with STIs</a>.</p><p>Problem is, in development mode <a href="#constant-reloading">autoloaded constants are wiped</a>
+if there is any relevant change in the file system. If that happens then
+we are in the very same situation the initializer wanted to avoid!</p><p>Calls to <code>require_dependency</code> have to be strategically written in autoloaded
+spots.</p><h4 id="when-constants-aren't-missed">10.6 When Constants aren't Missed</h4><h5 id="when-constants-aren't-missed-relative-references">10.6.1 Relative References</h5><p>Let's consider a flight simulator. The application has a default flight model</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/models/flight_model.rb
+class FlightModel
+end
+
+</pre>
+</div>
+<p>that can be overridden by each airplane, for instance</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/models/bell_x1/flight_model.rb
+module BellX1
+  class FlightModel &lt; FlightModel
+  end
+end
+
+# app/models/bell_x1/aircraft.rb
+module BellX1
+  class Aircraft
+    def initialize
+      @flight_model = FlightModel.new
+    end
+  end
+end
+
+</pre>
+</div>
+<p>The initializer wants to create a <code>BellX1::FlightModel</code> and nesting has
+<code>BellX1</code>, that looks good. But if the default flight model is loaded and the
+one for the Bell-X1 is not, the interpreter is able to resolve the top-level
+<code>FlightModel</code> and autoloading is thus not triggered for <code>BellX1::FlightModel</code>.</p><p>That code depends on the execution path.</p><p>These kind of ambiguities can often be resolved using qualified constants:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module BellX1
+  class Plane
+    def flight_model
+      @flight_model ||= BellX1::FlightModel.new
+    end
+  end
+end
+
+</pre>
+</div>
+<p>Also, <code>require_dependency</code> is a solution:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require_dependency 'bell_x1/flight_model'
+
+module BellX1
+  class Plane
+    def flight_model
+      @flight_model ||= FlightModel.new
+    end
+  end
+end
+
+</pre>
+</div>
+<h5 id="when-constants-aren't-missed-qualified-references">10.6.2 Qualified References</h5><p>Given</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/models/hotel.rb
+class Hotel
+end
+
+# app/models/image.rb
+class Image
+end
+
+# app/models/hotel/image.rb
+class Hotel
+  class Image &lt; Image
+  end
+end
+
+</pre>
+</div>
+<p>the expression <code>Hotel::Image</code> is ambiguous, depends on the execution path.</p><p>As <a href="#resolution-algorithm-for-qualified-constants">we saw before</a>, Ruby looks
+up the constant in <code>Hotel</code> and its ancestors. If <code>app/models/image.rb</code> has
+been loaded but <code>app/models/hotel/image.rb</code> hasn't, Ruby does not find <code>Image</code>
+in <code>Hotel</code>, but it does in <code>Object</code>:</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails r 'Image; p Hotel::Image' 2&gt;/dev/null
+Image # NOT Hotel::Image!
+
+</pre>
+</div>
+<p>The code evaluating <code>Hotel::Image</code> needs to make sure
+<code>app/models/hotel/image.rb</code> has been loaded, possibly with
+<code>require_dependency</code>.</p><p>In these cases the interpreter issues a warning though:</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+warning: toplevel constant Image referenced by Hotel::Image
+
+</pre>
+</div>
+<p>This surprising constant resolution can be observed with any qualifying class:</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+2.1.5 :001 &gt; String::Array
+(irb):1: warning: toplevel constant Array referenced by String::Array
+ =&gt; Array
+
+</pre>
+</div>
+<div class="warning"><p>To find this gotcha the qualifying namespace has to be a class,
+<code>Object</code> is not an ancestor of modules.</p></div><h4 id="autoloading-within-singleton-classes">10.7 Autoloading within Singleton Classes</h4><p>Let's suppose we have these class definitions:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# app/models/hotel/services.rb
+module Hotel
+  class Services
+  end
+end
+
+# app/models/hotel/geo_location.rb
+module Hotel
+  class GeoLocation
+    class &lt;&lt; self
+      Services
+    end
+  end
+end
+
+</pre>
+</div>
+<p>If <code>Hotel::Services</code> is known by the time <code>app/models/hotel/geo_location.rb</code>
+is being loaded, <code>Services</code> is resolved by Ruby because <code>Hotel</code> belongs to the
+nesting when the singleton class of <code>Hotel::GeoLocation</code> is opened.</p><p>But if <code>Hotel::Services</code> is not known, Rails is not able to autoload it, the
+application raises <code>NameError</code>.</p><p>The reason is that autoloading is triggered for the singleton class, which is
+anonymous, and as <a href="#generic-procedure">we saw before</a>, Rails only checks the
+top-level namespace in that edge case.</p><p>An easy solution to this caveat is to qualify the constant:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module Hotel
+  class GeoLocation
+    class &lt;&lt; self
+      Hotel::Services
+    end
+  end
+end
+
+</pre>
+</div>
+<h4 id="autoloading-in-basicobject">10.8 Autoloading in <code>BasicObject</code>
+</h4><p>Direct descendants of <code>BasicObject</code> do not have <code>Object</code> among their ancestors
+and cannot resolve top-level constants:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class C &lt; BasicObject
+  String # NameError: uninitialized constant C::String
+end
+
+</pre>
+</div>
+<p>When autoloading is involved that plot has a twist. Let's consider:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class C &lt; BasicObject
+  def user
+    User # WRONG
+  end
+end
+
+</pre>
+</div>
+<p>Since Rails checks the top-level namespace <code>User</code> gets autoloaded just fine the
+first time the <code>user</code> method is invoked. You only get the exception if the
+<code>User</code> constant is known at that point, in particular in a <em>second</em> call to
+<code>user</code>:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+c = C.new
+c.user # surprisingly fine, User
+c.user # NameError: uninitialized constant C::User
+
+</pre>
+</div>
+<p>because it detects a parent namespace already has the constant (see <a href="#qualified-references">Qualified
+References</a>.)</p><p>As with pure Ruby, within the body of a direct descendant of <code>BasicObject</code> use
+always absolute constant paths:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class C &lt; BasicObject
+  ::String # RIGHT
+
+  def user
+    ::User # RIGHT
+  end
+end
+
+</pre>
+</div>
+
+
+        <h3>反馈</h3>
+        <p>
+          欢迎帮忙改善指南质量。
+        </p>
+        <p>
+          如发现任何错误，欢迎修正。开始贡献前，可先行阅读<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">贡献指南：文档</a>。
+        </p>
+        <p>翻译如有错误，深感抱歉，欢迎 <a href="https://github.com/ruby-china/guides/fork">Fork</a> 修正，或至此处<a href="https://github.com/ruby-china/guides/issues/new">回报</a>。</p>
+        <p>
+          文章可能有未完成或过时的内容。请先检查 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 来确定问题在 master 是否已经修掉了。再上 master 补上缺少的文件。内容参考 <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a>来了解行文风格。
+        </p>
+        <p>最后，任何关于 Ruby on Rails 文档的讨论，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件群组</a>。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用<a href="https://creativecommons.org/licenses/by-sa/4.0/">创用 CC 姓名标示-相同方式分享 4.0 国际授权条款</a>授权。</p>
+<p>“Rails”、“Ruby on Rails”，以及 Rails logo 为 David Heinemeier Hansson 的商标。版权所有。</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shCore.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushRuby.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushXml.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushSql.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushPlain.js"></script>
+  <script type="text/javascript">
+    SyntaxHighlighter.all();
+    $(guidesIndex.bind);
+  </script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    // ga('create', '', 'ruby-china.github.io');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

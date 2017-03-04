@@ -1,0 +1,1054 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>引擎入门 — Ruby on Rails 指南</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://rubyonrails.org/">综览</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/download">下载</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/deploy">部署</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">源码</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/screencasts">视频</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/documentation">文件</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/community">社群</a></li>
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="回首页">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南目录</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单帮助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 简介</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 程序</a></dd>
+                <dd><a href="configuring.html">设置 Rails 程序</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">客制与新建 Rails 产生器</a></dd>
+                <dd><a href="rails_application_templates.html">Rails 应用程式模版</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文件准则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <!-- <li><a class="nav-item" href="//github.com/docrails-tw/wiki">参与翻译</a></li> -->
+        <li><a class="nav-item" href="https://github.com/ruby-china/guides/blob/master/CONTRIBUTING.md">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">致谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南目录</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单帮助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 简介</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 程序</option>
+                  <option value="configuring.html">设置 Rails 程序</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">客制与新建 Rails 产生器</option>
+                  <option value="rails_application_templates.html">Rails 应用程式模版</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文件准则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>引擎入门</h2><p>本章节中您将学习有关引擎的知识，以及引擎如何通过简洁易用的方式为Rails应用插上飞翔的翅膀。</p><p>通过学习本章节，您将获得如下知识：</p>
+<ul>
+<li>引擎是什么</li>
+<li>如何生成一个引擎</li>
+<li>为引擎添加特性</li>
+<li>为Rails应用添加引擎</li>
+<li>给Rails中的引擎提供重载功能</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#%E5%BC%95%E6%93%8E%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F-">引擎是什么？ </a></li>
+<li>
+<a href="#%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA%E5%BC%95%E6%93%8E">生成一个引擎</a>
+
+<ul>
+<li><a href="#%E5%BC%95%E6%93%8E%E6%8E%A2%E7%A7%98">引擎探秘</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%BC%95%E6%93%8E%E5%8A%9F%E8%83%BD%E7%AE%80%E4%BB%8B">引擎功能简介</a>
+
+<ul>
+<li><a href="#%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AAarticle-%E8%B5%84%E6%BA%90">生成一个Article 资源</a></li>
+<li><a href="#%E7%94%9F%E6%88%90%E8%AF%84%E8%AE%BA%E8%B5%84%E6%BA%90">生成评论资源</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%92%8Crails%E5%BA%94%E7%94%A8%E6%95%B4%E5%90%88">和Rails应用整合</a>
+
+<ul>
+<li><a href="#%E6%95%B4%E5%90%88%E5%89%8D%E7%9A%84%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C">整合前的准备工作</a></li>
+<li><a href="#%E5%BB%BA%E7%AB%8B%E5%BC%95%E6%93%8E">建立引擎</a></li>
+<li><a href="#%E8%AE%BF%E9%97%AErails%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E7%B1%BB">访问Rails应用中的类</a></li>
+<li><a href="#%E5%92%8Crails%E5%BA%94%E7%94%A8%E6%95%B4%E5%90%88-%E9%85%8D%E7%BD%AE%E5%BC%95%E6%93%8E">配置引擎</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%BC%95%E6%93%8E%E6%B5%8B%E8%AF%95">引擎测试</a>
+
+<ul>
+<li><a href="#%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95">功能测试</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96-">引擎优化 </a>
+
+<ul>
+<li><a href="#%E9%87%8D%E8%BD%BD%E6%A8%A1%E5%9E%8B%E5%92%8C%E6%8E%A7%E5%88%B6%E5%99%A8">重载模型和控制器</a></li>
+<li><a href="#%E8%A7%86%E5%9B%BE%E9%87%8D%E8%BD%BD">视图重载</a></li>
+<li><a href="#%E8%B7%AF%E5%BE%84">路径</a></li>
+<li><a href="#%E6%B8%B2%E6%9F%93%E9%A1%B5%E9%9D%A2%E7%9B%B8%E5%85%B3%E7%9A%84assets%E6%96%87%E4%BB%B6">渲染页面相关的Assets文件</a></li>
+<li><a href="#%E9%A1%B5%E9%9D%A2%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6%E5%88%86%E7%BB%84%E5%92%8C%E9%A2%84%E7%BC%96%E8%AF%91">页面资源文件分组和预编译</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96gem%E4%BE%9D%E8%B5%96%E9%A1%B9">其他Gem依赖项</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="引擎是什么？-">1 引擎是什么？ </h3><p>引擎可以被认为是一个可以为其宿主提供函数功能的中间件。一个Rails应用可以被看作一个"超级给力"的引擎，因为<code>Rails::Application</code> 类是继承自 <code>Rails::Engine</code>的。</p><p>从某种意义上说，引擎和Rails应用几乎可以说是双胞胎，差别很小。通过本章节的学习，你会发现引擎和Rails应用的结构几乎是一样的。</p><p>引擎和插件也是近亲，拥有相同的<code>lib</code>目录结构，并且都是使用<code>rails plugin new</code>命令生成。不同之处在于，一个引擎对于Rails来说是一个"发育完全的插件"(使用命令行生成引擎时会加<code>--full</code>选项)。在这里我们将使用几乎包含<code>--full</code>选项所有特性的<code>--mountable</code> 来代替。本章节中"发育完全的插件"和引擎是等价的。一个引擎可以是一个插件，但一个插件不能被看作是引擎。 </p><p>我们将创建一个叫"blorgh"的引擎。这个引擎将为其宿主提供添加主题和主题评论等功能。刚出生的"blorgh"引擎也许会显得孤单，不过用不了多久，我们将看到她和自己的小伙伴一起愉快的聊天。</p><p>引擎也可以离开他的应用宿主独立存在。这意味着一个应用可以通过一个路径助手获得一个<code>articles_path</code>方法，使用引擎也可以生成一个名为<code>articles_path</code>的方法，而且两者不会冲突。同理，控制器，模型，数据库表名都是属于不同命名空间的。接下来我们来讨论该如何实现。</p><p>你心里须清楚Rails应用是老大，引擎是老大的小弟。一个Rails应用在他的地盘里面是老大，引擎的作用只是锦上添花。</p><p>可以看看下面的一些优秀引擎项目,比如<a href="https://github.com/plataformatec/devise">Devise</a> ，一个为其宿主应用提供权限认证功能的引擎；<a href="https://github.com/radar/forem">Forem</a>, 一个提供论坛功能的引擎；<a href="https://github.com/spree/spree">Spree</a>，一个提供电子商务平台功能的引擎。<a href="https://github.com/refinery/refinerycms">RefineryCMS</a>, 一个 CMS 引擎 。</p><p>最后，大部分引擎开发工作离不开James Adam,Piotr Sarnacki 等Rails核心开发成员，以及很多默默无闻付出的人们。如果你见到他们，别忘了向他们致谢！ </p><h3 id="生成一个引擎">2 生成一个引擎</h3><p>为了生成一个引擎，你必须将生成插件命令和适当的选项配合使用。比如你要生成"blorgh"应用 ，你需要一个"mountable"引擎。那么在命令行终端你就要敲下如下代码： </p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails plugin new blorgh --mountable
+
+</pre>
+</div>
+<p>生成插件命令相关的帮助信息可以敲下面代码得到： </p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails plugin --help
+
+</pre>
+</div>
+<p><code>--mountable</code> 选项告诉生成器你想创建一个"mountable"，并且命名空间独立的引擎。如果你用选项<code>--full</code>的话，生成器几乎会做一样的操作。<code>--full</code> 选项告诉生成器你想创建一个引擎，包含如下结构： </p>
+<ul>
+<li>一个 <code>app</code> 目录树</li>
+<li>
+<p>一个 <code>config/routes.rb</code> 文件:</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Rails.application.routes.draw do
+end
+
+</pre>
+</div>
+</li>
+<li>
+<p>一个<code>lib/blorgh/engine.rb</code>文件，以及在一个标准的Rails应用文件目录的<code>config/application.rb</code>中的如下声明： </p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module Blorgh
+  class Engine &lt; ::Rails::Engine
+  end
+end
+
+</pre>
+</div>
+</li>
+</ul>
+<p><code>--mountable</code>选项会比<code>--full</code>选项多做的事情有:</p>
+<ul>
+<li>生成若干资源文件(<code>application.js</code> and <code>application.css</code>) </li>
+<li>添加一个命名空间为<code>ApplicationController</code> 的子集</li>
+<li>添加一个命名空间为<code>ApplicationHelper</code> 的子集</li>
+<li>添加 一个引擎的布局视图模版</li>
+<li>
+<p>在<code>config/routes.rb</code>中声明独立的命名空间 ；</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Blorgh::Engine.routes.draw do
+end
+
+</pre>
+</div>
+</li>
+</ul>
+<p>  在<code>lib/blorgh/engine.rb</code>中声明独立的命名空间: </p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+```ruby
+module Blorgh
+  class Engine &lt; ::Rails::Engine
+    isolate_namespace Blorgh
+  end
+end
+```
+
+</pre>
+</div>
+<p>除此之外，<code>--mountable</code>选项告诉生成器在引擎内部的 <code>test/dummy</code> 文件夹中创建一个简单应用，在<code>test/dummy/config/routes.rb</code>中添加简单应用的路径。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+mount Blorgh::Engine, at: "blorgh"
+
+</pre>
+</div>
+<h4 id="引擎探秘">2.1 引擎探秘</h4><h5 id="文件冲突">2.1.1 文件冲突</h5><p>在我们刚才创建的引擎根目录下有一个<code>blorgh.gemspec</code>文件。如果你想把引擎和Rails应用整合，那么接下来要做的是在目标Rails应用的<code>Gemfile</code>文件中添加如下代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+gem 'blorgh', path: "vendor/engines/blorgh"
+
+</pre>
+</div>
+<p>接下来别忘了运行<code>bundle install</code>命令，Bundler通过解析刚才在<code>Gemfile</code>文件中关于引擎的声明，会去解析引擎的<code>blorgh.gemspec</code>文件，以及<code>lib</code>文件夹中名为<code>lib/blorgh.rb</code>的文件，然后定义一个<code>Blorgh</code>模块:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require "blorgh/engine"
+
+module Blorgh
+end
+
+</pre>
+</div>
+<p>提示： 某些引擎会使用一个全局配置文件来配置引擎，这的确是个好主意，所以如果你提供了一个全局配置文件来配置引擎的模块，那么这会更好的将你的模块的功能封装起来。</p><p><code>lib/blorgh/engine.rb</code>文件中定义了引擎的基类。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module Blorgh
+  class Engine &lt; Rails::Engine
+    isolate_namespace Blorgh
+  end
+end
+
+</pre>
+</div>
+<p>因为引擎继承自<code>Rails::Engine</code>类，gem会通知Rails有一个引擎的特别路径，之后会正确的整合引擎到Rails应用中。会为Rails应用中的模型，控制器，视图和邮件等配置加载引擎的<code>app</code>目录路径。</p><p><code>isolate_namespace</code>方法必须拿出来单独谈谈。这个方法会把引擎模块中与控制器，模型，路径等模块内的同名组件隔离。如果没它的话，可能会把引擎的内部方法暴露给其它模块，这样会破坏引擎的封装性，可能会引发不可预期的风险，比如引擎的内部方法被其他模块重载。举个例子，如果没有用命名空间对模块进行隔离，各模块的helpers方法会发生冲突，那么引擎内部的helper方法会被Rails应用的控制器所调用。</p><p>提示：强烈建议您使用<code>isolate_namespace</code>方法定义引擎的模块，如果没使用它，这可能会在一个Rails应用中和其它模块冲突。</p><p>命名空间对于执行像<code>bin/rails g model</code>的命令意味者什么呢？ 比如<code>bin/rails g model article</code>，这个操作不会产生一个<code>Article</code>，而是<code>Blorgh::Article</code>。此外，模型的数据库表名也是命名空间化的，会用<code>blorgh_articles</code> 代替<code>articles</code>。与模型的命名空间类似，控制器中的 <code>ArticlesController</code>会被<code>Blorgh::ArticlesController</code>取代。而且和控制器相关的视图也会从<code>app/views/articles</code>变成<code>app/views/blorgh/articles</code>，邮件模块也是如此。</p><p>总而言之，路径同引擎一样也是有命名空间的，命名空间的重要性将会在本指南中的<a href="#routes">Routes</a>继续讨论。</p><h5 id="app-目录">2.1.2 <code>app</code> 目录</h5><p><code>app</code>内部的结构和一般的Rails应用差不多，都包含 <code>assets</code>, <code>controllers</code>, <code>helpers</code>,
+<code>mailers</code>, <code>models</code> and <code>views</code> 等文件。<code>helpers</code>, <code>mailers</code> and <code>models</code> 文件夹是空的，我们就不详谈了。我们将会在将来的章节中讨论引擎的模型的时候，深入介绍。</p><p><code>app/assets</code>文件夹包含<code>images</code>, <code>javascripts</code>和<code>stylesheets</code>，这些你在一个Rails应用中应该很熟悉了。不同在于，它们每个文件夹下包含一个和引擎同名的子目录，因为引擎是命名空间化的，那么assets也会遵循这一规定 。</p><p><code>app/controllers</code>文件夹下有一个<code>blorgh</code>文件夹，他包含一个名为<code>application_controller.rb</code>的文件。这个文件为引擎提供控制器的一般功能。<code>blorgh</code>文件夹是专属于<code>blorgh</code>引擎的，通过命名空间化的目录结构，可以很好的将引擎的控制器与外部隔离起来，免受其它引擎或Rails应用的影响。</p><p>提示：在引擎内部的<code>ApplicationController</code>类命名方式和Rails 应用类似是为了方便你将Rails应用和引擎整合。</p><p>最后，<code>app/views</code> 文件夹包含一个<code>layouts</code>文件。他包含一个<code>blorgh/application.html.erb</code>文件。这个文件可以为你的引擎定制视图。如果这个引擎被当作独立的组件使用，那么你可以通过这个视图文件来定制引擎的视图，就和Rails应用中的<code>app/views/layouts/application.html.erb</code>一样、</p><p>如果你不希望强制引擎的使用者使用你的布局样式，那么可以删除这个文件，使用其他控制器的视图文件。</p><h5 id="bin-目录">2.1.3 <code>bin</code> 目录</h5><p>这个目录包含了一个<code>bin/rails</code>文件，它为你像在Rails应用中使用<code>rails</code> 等命令提供了支持，比如为该引擎生成模型和视图等操作：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails g model
+
+</pre>
+</div>
+<p>必须要注意的是，在引擎内部使用命令行工具生成的组件都会自动调用 <code>isolate_namespace</code>方法，以达到组件命名空间化的目的。</p><h5 id="test目录">2.1.4 <code>test</code>目录</h5><p><code>test</code>目录是引擎执行测试的地方，为了方便测试，<code>test/dummy</code>内置了一个精简版本的Rails 应用，这个应用可以和引擎整合，方便测试，他在<code>test/dummy/config/routes.rb</code> 中的声明如下： </p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Rails.application.routes.draw do
+  mount Blorgh::Engine =&gt; "/blorgh"
+end
+
+</pre>
+</div>
+<p>mounts这行的意思是Rails应用只能通过<code>/blorgh</code>路径来访问引擎。</p><p>在测试目录下面有一个<code>test/integration</code>子目录，该子目录是为了实现引擎的的交互测试而存在的。其它的目录也可以如此创建。举个例子，你想为你的模型创建一个测试目录，那么他的文件结构和<code>test/models</code>是一样的。</p><h3 id="引擎功能简介">3 引擎功能简介</h3><p>本章中创建的引擎需要提供发布主题，  主题评论，关注<a href="getting_started.html">Getting Started
+Guide</a>某人是否有新主题发布等功能。</p><h4 id="生成一个article-资源">3.1 生成一个Article 资源</h4><p>一个博客引擎首先要做的是生成一个<code>Article</code> 模型和相关的控制器。为了快速生成这些，你可以使用Rails的generator和 scaffold命令来实现：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate scaffold article title:string text:text
+
+</pre>
+</div>
+<p>这个命令执行后会得到如下输出：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+invoke  active_record
+create    db/migrate/[timestamp]_create_blorgh_articles.rb
+create    app/models/blorgh/article.rb
+invoke    test_unit
+create      test/models/blorgh/article_test.rb
+create      test/fixtures/blorgh/articles.yml
+invoke  resource_route
+ route    resources :articles
+invoke  scaffold_controller
+create    app/controllers/blorgh/articles_controller.rb
+invoke    erb
+create      app/views/blorgh/articles
+create      app/views/blorgh/articles/index.html.erb
+create      app/views/blorgh/articles/edit.html.erb
+create      app/views/blorgh/articles/show.html.erb
+create      app/views/blorgh/articles/new.html.erb
+create      app/views/blorgh/articles/_form.html.erb
+invoke    test_unit
+create      test/controllers/blorgh/articles_controller_test.rb
+invoke    helper
+create      app/helpers/blorgh/articles_helper.rb
+invoke      test_unit
+create        test/helpers/blorgh/articles_helper_test.rb
+invoke  assets
+invoke    js
+create      app/assets/javascripts/blorgh/articles.js
+invoke    css
+create      app/assets/stylesheets/blorgh/articles.css
+invoke  css
+create    app/assets/stylesheets/scaffold.css
+
+</pre>
+</div>
+<p>scaffold生成器做的第一件事情是执行生成<code>active_record</code>操作，这将会为资源生成一个模型和迁移集，这里要注意的是，生成的迁移集的名字是 <code>create_blorgh_articles</code>而非Raisl应用中<code>create_articles</code>。这归功于<code>Blorgh::Engine</code>类中<code>isolate_namespace</code>方法。这里的模型也是命名空间化的，本来应该是<code>app/models/article.rb</code>，现在被 <code>app/models/blorgh/article.rb</code>取代。</p><p>接下来，模型的单元测试<code>test_unit</code>生成器会生成一个测试文件<code>test/models/blorgh/article_test.rb</code>(有别于<code>test/models/article_test.rb</code>)，和一个fixture<code>test/fixtures/blorgh/articles.yml</code>文件</p><p>接下来，该资源作为引擎的一部分会被插入<code>config/routes.rb</code>中。该引擎的资源<code>resources :articles</code>在<code>config/routes.rb</code>的声明如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Blorgh::Engine.routes.draw do
+  resources :articles
+end
+
+</pre>
+</div>
+<p>这里需要注意的是该资源的路径已经和引擎<code>Blorgh::Engine</code> 关联上了，就像普通的<code>YourApp::Application</code>一样。这样访问引擎的资源路径就被限制在特定的范围。可以提供给<a href="#test-directory">test directory</a>访问。这样也可以让引擎的资源与Rails应用隔离开来。具体的详情亏参考<a href="#routes">Routes</a>。</p><p>接下来，<code>scaffold_controller</code>生成器被触发了，生成一个名为<code>Blorgh::ArticlesController</code>的控制器(<code>app/controllers/blorgh/articles_controller.rb</code>)，以及和控制器相关的视图<code>app/views/blorgh/articles</code>。这个生成器同时也会自动为控制器生成一个测试用例(<code>test/controllers/blorgh/articles_controller_test.rb</code>)和帮助方法(<code>app/helpers/blorgh/articles_controller.rb</code>)。</p><p>生成器创建的所有对象几乎都是命名空间化的，控制器的类被定义在<code>Blorgh</code>模块中：  </p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module Blorgh
+  class ArticlesController &lt; ApplicationController
+    ...
+  end
+end
+
+</pre>
+</div>
+<p>提示：<code>Blorgh::ApplicationController</code>类继承了<code>ApplicationController</code>类，而非Rails应用的<code>ApplicationController</code>类。</p><p><code>app/helpers/blorgh/articles_helper.rb</code>中的helper模块也是命名空间化的：
+<code>ruby
+module Blorgh
+  module ArticlesHelper
+    ...
+  end
+end
+</code>
+这样有助于避免和其它引擎或应用的同名资源发生冲突。</p><p>最后，生成该资源相关的样式表和js脚本文件，文件路径分别是<code>app/assets/javascripts/blorgh/articles.js</code> 和
+<code>app/assets/stylesheets/blorgh/articles.css</code>。稍后你将了解如何使用它们。</p><p>一般情况下，基本的样式表并不会应用到引擎中，因为引擎的布局文件<code>app/views/layouts/blorgh/application.html.erb</code>并没载入。如果要让基本的样式表文件对引擎生效。必须在<code>&lt;head&gt;</code>标签内插入如下代码： </p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= stylesheet_link_tag "scaffold" %&gt;
+
+</pre>
+</div>
+<p>现在，你已经了解了在引擎根目录下使用 scaffold 生成器进行数据库创建和迁移的整个过程，接下来，在<code>test/dummy</code>目录下运行<code>rails server</code> 后，用浏览器打开<code>http://localhost:3000/blorgh/articles</code> 后，随便浏览一下，刚才你生成的第一个引擎的功能。</p><p>如果你喜欢在控制台工作，那么<code>rails console</code>就像一个Rails应用。记住：<code>Article</code>是命名空间化的，所以你必须使用<code>Blorgh::Article</code>来访问它。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+&gt;&gt; Blorgh::Article.find(1)
+=&gt; #&lt;Blorgh::Article id: 1 ...&gt;
+
+</pre>
+</div>
+<p>最后要做的一件事是让<code>articles</code>资源通过引擎的根目录就能访问。比如我打开<code>http://localhost:3000/blorgh</code>后，就能看到一个博客的主题列表。要实现这个目的，我们可以在引擎的<code>config/routes.rb</code>中做如下配置：  </p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+root to: "articles#index"
+
+</pre>
+</div>
+<p>现在人们不需要到引擎的<code>/articles</code>目录下浏览主题了，这意味着<code>http://localhost:3000/blorgh</code>获得的内容和<code>http://localhost:3000/blorgh/articles</code>是相同的。</p><h4 id="生成评论资源">3.2 生成评论资源</h4><p>现在，这个引擎可以创建一个新主题，那么自然需要能够评论的功能。为了实现这个功能，你需要生成一个评论模型，以及和评论相关的控制器，并修改主题的结构用以显示评论和添加评论。</p><p>在Rails应用的根目录下，运行模型生成器，生成一个<code>Comment</code>模型，相关的表包含下面两个字段：整型 <code>article_id</code>和文本<code>text</code>。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate model Comment article_id:integer text:text
+
+</pre>
+</div>
+<p>上述操作将会输出下面的信息：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+invoke  active_record
+create    db/migrate/[timestamp]_create_blorgh_comments.rb
+create    app/models/blorgh/comment.rb
+invoke    test_unit
+create      test/models/blorgh/comment_test.rb
+create      test/fixtures/blorgh/comments.yml
+
+</pre>
+</div>
+<p>生成器会生成必要的模型文件，由于是命名空间化的，所以会在<code>blorgh</code>目录下生成<code>Blorgh::Comment</code>类。然后使用数据迁移命令对blorgh_comments表进行操作：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake db:migrate
+
+</pre>
+</div>
+<p>为了在主题中显示评论，需要在<code>app/views/blorgh/articles/show.html.erb</code>的 "Edit" 按钮之前添加如下代码：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+&lt;h3&gt;Comments&lt;/h3&gt;
+&lt;%= render @article.comments %&gt;
+
+</pre>
+</div>
+<p>上述代码需要为评论在<code>Blorgh::Article</code>模型中添加一个"一对多"(<code>has_many</code>)的关联声明。为了添加上述声明，请打开<code>app/models/blorgh/article.rb</code>，并添加如下代码： </p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+has_many :comments
+
+</pre>
+</div>
+<p>修改过的模型关系是这样的：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module Blorgh
+  class Article &lt; ActiveRecord::Base
+    has_many :comments
+  end
+end
+
+</pre>
+</div>
+<p>提示：　因为　<code>一对多</code>(<code>has_many</code>) 的关联是在<code>Blorgh</code> 内部定义的，Rails明白你想为这些对象使用<code>Blorgh::Comment</code>模型。所以不需要特别使用类名来声明。</p><p>接下来，我们需要为主题提供一个表单提交评论，为了实现这个功能，请在 <code>app/views/blorgh/articles/show.html.erb</code> 中调用 <code>render @article.comments</code> 方法来显示表单:</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render "blorgh/comments/form" %&gt;
+
+</pre>
+</div>
+<p>接下来，上述代码中的表单必须存在才能被渲染，我们需要做的就是在<code>app/views/blorgh/comments</code>目录下创建一个<code>_form.html.erb</code>文件：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+&lt;h3&gt;New comment&lt;/h3&gt;
+&lt;%= form_for [@article, @article.comments.build] do |f| %&gt;
+  &lt;p&gt;
+    &lt;%= f.label :text %&gt;&lt;br&gt;
+    &lt;%= f.text_area :text %&gt;
+  &lt;/p&gt;
+  &lt;%= f.submit %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>当表单被提交后，它将通过路径<code>/articles/:article_id/comments</code>给引擎发送一个<code>POST</code>请求。现在这个路径还不存在，所以我们可以修改<code>config/routes.rb</code>中的<code>resources :articles</code>的相关路径来实现它:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :articles do
+  resources :comments
+end
+
+</pre>
+</div>
+<p>给表单请求创建一个和评论相关的嵌套路径。</p><p>现在路径创建好了，相关的控制器却不存在，为了创建它们，我们使用命令行工具来创建它们：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails g controller comments
+
+</pre>
+</div>
+<p>执行上述操作后，会输出下面的信息：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+create  app/controllers/blorgh/comments_controller.rb
+invoke  erb
+ exist    app/views/blorgh/comments
+invoke  test_unit
+create    test/controllers/blorgh/comments_controller_test.rb
+invoke  helper
+create    app/helpers/blorgh/comments_helper.rb
+invoke    test_unit
+create      test/helpers/blorgh/comments_helper_test.rb
+invoke  assets
+invoke    js
+create      app/assets/javascripts/blorgh/comments.js
+invoke    css
+create      app/assets/stylesheets/blorgh/comments.css
+
+</pre>
+</div>
+<p>表单通过路径<code>/articles/:article_id/comments</code>提交<code>POST</code>请求后，<code>Blorgh::CommentsController</code>会响应一个<code>create</code>动作。
+这个的动作在<code>app/controllers/blorgh/comments_controller.rb</code>的定义如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def create
+  @article = Article.find(params[:article_id])
+  @comment = @article.comments.create(comment_params)
+  flash[:notice] = "Comment has been created!"
+  redirect_to articles_path
+end
+
+private
+  def comment_params
+    params.require(:comment).permit(:text)
+  end
+
+</pre>
+</div>
+<p>最后，我们希望在浏览主题时显示和主题相关的评论，但是如果你现在想提交一条评论，会发现遇到如下错误：　</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+Missing partial blorgh/comments/comment with {:handlers=&gt;[:erb, :builder],
+:formats=&gt;[:html], :locale=&gt;[:en, :en]}. Searched in:   *
+"/Users/ryan/Sites/side_projects/blorgh/test/dummy/app/views"   *
+"/Users/ryan/Sites/side_projects/blorgh/app/views"
+
+</pre>
+</div>
+<p>显示上述错误是因为引擎无法知道和评论相关的内容。Rails 应用会首先去该应用的(<code>test/dummy</code>) <code>app/views</code>目录搜索，之后才会到引擎的<code>app/views</code> 目录下搜索匹配的内容。当找不到匹配的内容时，会抛出异常。引擎知道去<code>blorgh/comments/comment</code>目录下搜索，是因为模型对象是从<code>Blorgh::Comment</code>接收到请求的。</p><p>现在，为了显示评论，我们需要创建一个新文件 <code>app/views/blorgh/comments/_comment.html.erb</code>，并在该文件中添加如下代码：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= comment_counter + 1 %&gt;. &lt;%= comment.text %&gt;
+
+</pre>
+</div>
+<p>本地变量 <code>comment_counter</code>是通过<code>&lt;%= render @article.comments %&gt;</code>获取的。这个变量是评论计数器，用来显示评论总数。</p><p>现在，我们完成一个带评论功能的博客引擎后，接下来我们将介绍如何将引擎与Rails应用整合。</p><h3 id="和rails应用整合">4 和Rails应用整合</h3><p>在Rails应用中可以很方便的使用引擎，本节将介绍如何将引擎和Rails应用整合。当然通常会把引擎和Rails应中的<code>User</code>类关联起来。</p><h4 id="整合前的准备工作">4.1 整合前的准备工作</h4><p>首先，引擎需要在一个Rails应用中的<code>Gemfile</code>进行声明。如果我们无法知道Rails应用中是否有这些声明，那么我们可以在引擎目录之外创建一个新的Raisl应用：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails new unicorn
+
+</pre>
+</div>
+<p>一般而言，在Gemfile声明引擎和在Rails应用的一般Gem声明没有区别：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+gem 'devise'
+
+</pre>
+</div>
+<p>但是，假如你在自己的本地机器上开发<code>blorgh</code>引擎，那么你需要在<code>Gemfile</code>中特别声明<code>:path</code>项：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+gem 'blorgh', path: "/path/to/blorgh"
+
+</pre>
+</div>
+<p>运行<code>bundle</code>命令，安装gem 。 </p><p>如前所述，在<code>Gemfile</code>中声明的gem将会与Rails框架一起加载。应用会从引擎中加载 <code>lib/blorgh.rb</code>和<code>lib/blorgh/engine.rb</code>等与引擎相关的主要文件。</p><p>为了在Rails应用内部调用引擎，我们必须在Rails应用的<code>config/routes.rb</code>中做如下声明：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+mount Blorgh::Engine, at: "/blog"
+
+</pre>
+</div>
+<p>上述代码的意思是引擎将被整合到Rails应用中的"/blog"下。当Rails应用通过 <code>rails server</code>启动时，可通过<code>http://localhost:3000/blog</code>访问。</p><p>提示： 对于其他引擎，比如 <code>Devise</code> ，它在处理路径的方式上稍有不同，可以通过自定义的助手方法比如<code>devise_for</code>来处理路径。这些路径助理方法工作千篇一律，为引擎大部分功能提供预定义路径的个性化支持。</p><h4 id="建立引擎">4.2 建立引擎</h4><p>和引擎相关的两个<code>blorgh_articles</code> 和 <code>blorgh_comments</code>表需要迁移到Rails应用数据库中，以保证引擎的模型能正确查询。迁移引擎的数据可以使用下面的命令：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake blorgh:install:migrations
+
+</pre>
+</div>
+<p>如果你有多个引擎需要数据迁移，可以使用<code>railties:install:migrations</code>命令来实现：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake railties:install:migrations
+
+</pre>
+</div>
+<p>第一次运行上述命令的时候，将会从引擎中复制所有的迁移集。当下次运行的时候，他只会迁移没被迁移过的数据。第一次运行该命令会显示如下信息： </p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+Copied migration [timestamp_1]_create_blorgh_articles.rb from blorgh
+Copied migration [timestamp_2]_create_blorgh_comments.rb from blorgh
+
+</pre>
+</div>
+<p>第一个时间戳(<code>[timestamp_1]</code>)将会是当前时间，接着第二个时间戳(<code>[timestamp_2]</code>) 将会是当前时间+1妙。这样做的原因是之前已经为引擎做过数据迁移操作。</p><p>在Rails应用中为引擎做数据迁移可以简单的使用<code>rake db:migrate</code> 执行操作。当通过<code>http://localhost:3000/blog</code>访问引擎的时候，你会发现主题列表是空的。这是因为在应用中创建的表与在引擎中创建的表是不同的。接下来你将发现应用中的引擎和独立环境中的引擎有很多不同之处。</p><p>如果你只想对某一个引擎执行数据迁移操作，那么可以通过<code>SCOPE</code>声明来实现：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+rake db:migrate SCOPE=blorgh
+
+</pre>
+</div>
+<p>这将有利于你的引擎执行数据迁移的回滚操作。
+如果想让引擎的数据回到原始状态，那么可以执行下面的操作： </p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+rake db:migrate SCOPE=blorgh VERSION=0
+
+</pre>
+</div>
+<h4 id="访问rails应用中的类">4.3 访问Rails应用中的类</h4><h5 id="访问rails应用中的模型">4.3.1 访问Rails应用中的模型</h5><p>当一个引擎创建之后，那么就需要Rails应用提供一个专属的类，将引擎和Rails应用关联起来。在本例中，<code>blorgh</code>引擎需要Rails应用提供作者来发表主题和评论。</p><p>一个典型的Rails应用会有一个<code>User</code>类来实现发布主题和评论的功能。也许某些应用里面会用<code>Person</code>类来做这些事情。因此，引擎不应该硬编码到一个<code>User</code>类中。</p><p>为了简单起见，我们的应用将会使用<code>User</code>类来实现和引擎的关联。那么我们可以在应用中使用命令：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+rails g model user name:string
+
+</pre>
+</div>
+<p>在这里执行<code>rake db:migrate</code>命令是为了我们的应用中有<code>users</code>表，以备将来使用。</p><p>为了简单起见，主题表单也会添加一个新的字段<code>author_name</code>，这样方便用户填写他们的名字。
+当用户提交了他们的名字后，引擎将会判断是否存在该用户，如果不存在，就将该用户添加到数据库里面，并通过<code>User</code>对象把该用户和主题关联起来。</p><p>首先需要在引擎内部的<code>app/views/blorgh/articles/_form.html.erb</code>文件中添加
+<code>author_name</code>项。这些内容可以添加到<code>title</code>之前，代码如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+&lt;div class="field"&gt;
+  &lt;%= f.label :author_name %&gt;&lt;br&gt;
+  &lt;%= f.text_field :author_name %&gt;
+&lt;/div&gt;
+
+</pre>
+</div>
+<p>接下来我们需要更新<code>Blorgh::ArticleController#article_params</code>方法接受参数的格式：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def article_params
+  params.require(:article).permit(:title, :text, :author_name)
+end
+
+</pre>
+</div>
+<p>模型<code>Blorgh::Article</code>需要添加一些代码把<code>author_name</code>和<code>User</code>对象关联起来。以确保保存主题时，主题相关的 <code>author</code>也被同时保存了。同时我们需要为这个字段定义一个<code>attr_accessor</code>。以方便我们读取或设置它的属性。</p><p>上述工作完成后，你需要为<code>author_name</code>添加一个属性读写器(<code>attr_accessor</code>),调用在<code>app/models/blorgh/article.rb</code>的<code>before_save</code>方法以便关联。<code>author</code> 将会通过硬编码的方式和<code>User</code>关联：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+attr_accessor :author_name
+belongs_to :author, class_name: "User"
+
+before_save :set_author
+
+private
+  def set_author
+    self.author = User.find_or_create_by(name: author_name)
+  end
+
+</pre>
+</div>
+<p>和<code>author</code>关联的<code>User</code>类，成了引擎和Rails应用之间联系的纽带。与此同时，还需要把<code>blorgh_articles</code>和 <code>users</code> 表进行关联。因为通过<code>author</code>关联，那么需要给<code>blorgh_articles</code>表添加一个<code>author_id</code>字段来实现关联。</p><p>为了生成这个新字段，我们需要在引擎中执行如下操作：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails g migration add_author_id_to_blorgh_articles author_id:integer
+
+</pre>
+</div>
+<p>提示：假如数据迁移命令后面跟了一个字段声明。那么Rails会认为你想添加一个新字段到声明的表中，而无需做其他操作。</p><p>这个数据迁移操作必须在Rails应用中执行，为此，你必须保证是第一次在命令行中执行下面的操作：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake blorgh:install:migrations
+
+</pre>
+</div>
+<p>需要注意的是，这里只会发生一次数据迁移，这是因为前两个数据迁移拷贝已经执行过迁移操作了。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+NOTE Migration [timestamp]_create_blorgh_articles.rb from blorgh has been
+skipped. Migration with the same name already exists. NOTE Migration
+[timestamp]_create_blorgh_comments.rb from blorgh has been skipped. Migration
+with the same name already exists. Copied migration
+[timestamp]_add_author_id_to_blorgh_articles.rb from blorgh
+
+</pre>
+</div>
+<p>运行数据迁移命令：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake db:migrate
+
+</pre>
+</div>
+<p>现在所有准备工作都就绪了。上述操作实现了Rails应用中的<code>User</code>表和作者关联，引擎中的<code>blorgh_articles</code>表和主题关联。</p><p>最后，主题的作者将会显示在主题页面。在<code>app/views/blorgh/articles/show.html.erb</code>文件中的<code>Title</code>之前添加如下代码：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+&lt;p&gt;
+  &lt;b&gt;Author:&lt;/b&gt;
+  &lt;%= @article.author %&gt;
+&lt;/p&gt;
+
+</pre>
+</div>
+<p>使用<code>&lt;%=</code> 标签和<code>to_s</code>方法将会输出<code>@article.author</code>。默认情况下，这看上去很丑：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+#&lt;User:0x00000100ccb3b0&gt;
+
+</pre>
+</div>
+<p>这不是我们希望看到的，所以最好显示用户的名字。为此，我去需要给Rails应用中的<code>User</code>类添加<code>to_s</code>方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def to_s
+  name
+end
+
+</pre>
+</div>
+<p>现在，我们将看到主题的作者名字 。 </p><h5 id="与控制器交互">4.3.2 与控制器交互</h5><p>Rails应用的控制器一般都会和权限控制，会话变量访问模块共享代码，因为它们都是默认继承自
+ <code>ApplicationController</code>类。Rails的引擎因为是命名空间化的，和主应用独立的模块。所以每个引擎都会有自己的<code>ApplicationController</code>类。这样做有利于避免代码冲突，但很多时候，引擎控制器需要调用主应用的<code>ApplicationController</code>。这里有一个简单的方法是让引擎的控制器继承主应用的<code>ApplicationController</code>。我们的Blorgh引擎会在<code>app/controllers/blorgh/application_controller.rb</code>中实现上述操作：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Blorgh::ApplicationController &lt; ApplicationController
+end
+
+</pre>
+</div>
+<p>一般情况下，引擎的控制器是继承自<code>Blorgh::ApplicationController</code>，所以，做了上述改变后，引擎可以访问主应用的<code>ApplicationController</code>了，也就是说，它变成了主应用的一部分。</p><p>上述操作的一个必要条件是：和引擎相关的Rails应用必须包含一个<code>ApplicationController</code>类。</p><h4 id="和rails应用整合-配置引擎">4.4 配置引擎</h4><p>本章节将介绍如何让<code>User</code>类可配置化。下面我们将介绍配置引擎的细节。</p><h5 id="配置应用的配置文件">4.4.1 配置应用的配置文件</h5><p>接下来的内容我们将讲述如何让应用中诸如<code>User</code>的类对象为引擎提供定制化的服务。如前所述，引擎要访问应用中的类不一定每次都叫<code>User</code>，所以我来实现可定制化的访问，必须在引擎里面设置一个名为<code>author_class</code>和应用中的<code>User</code>类进行交互。</p><p>为了定义这个设置，你将在引擎的<code>Blorgh</code> 模块中声明一个<code>mattr_accessor</code>方法和<code>author_class</code>关联。在引擎中的<code>lib/blorgh.rb</code>代码如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+mattr_accessor :author_class
+
+</pre>
+</div>
+<p>这个方法的功能和它的兄弟<code>attr_accessor</code>和<code>cattr_accessor</code>功能类似，但是特别提供了一个方法，可以根据指定名字来对类或模块访问。我们使用它的时候，必须加上<code>Blorgh.author_class</code>前缀。</p><p>接下来要做的是通过新的设置器来选择<code>Blorgh::Article</code>的模型，将模型关联<code>belongs_to</code>(<code>app/models/blorgh/article.rb</code>)修改如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+belongs_to :author, class_name: Blorgh.author_class
+
+</pre>
+</div>
+<p>模型<code>Blorgh::Article</code>中的<code>set_author</code>方法也可以使用这个类：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+self.author = Blorgh.author_class.constantize.find_or_create_by(name: author_name)
+
+</pre>
+</div>
+<p>为了确保<code>author_class</code>调用<code>constantize</code>的结果一致，你需要重载<code>lib/blorgh.rb</code>中<code>Blorgh</code> 模块的<code>author_class</code>的get方法，确保在获取返回值之前调用<code>constantize</code>方法：
+<code>ruby
+def self.author_class
+  @@author_class.constantize
+end
+</code></p><p>上述代码将会让<code>set_author</code> 方法变成这样：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+self.author = Blorgh.author_class.find_or_create_by(name: author_name)
+
+</pre>
+</div>
+<p>总之，这样会更明确它的行为，<code>author_class</code>方法会保证返回一个<code>Class</code>对象。</p><p>我们让<code>author_class</code>方法返回一个<code>Class</code>替代<code>String</code>后，我们也必须修改<code>Blorgh::Article</code>模块中的<code>belongs_to</code>定义：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+belongs_to :author, class_name: Blorgh.author_class.to_s
+
+</pre>
+</div>
+<p>为了让这些配置在应用中生效，必须使用一个初始化器。使用初始化器可以保证这种配置在Rails应用调用引擎模块之前就生效，因为应用和引擎交互时也许需要用到某些配置。</p><p>在应用中的<code>config/initializers/blorgh.rb</code>添加一个新的初始化器，并添加如下代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Blorgh.author_class = "User"
+
+</pre>
+</div>
+<p>警告：使用<code>String</code>版本的类对象要比使用类对象本身更好。如果你使用类对象，Rails会尝试加载和类相关的数据库表。如果这个表不存在，就会抛出异常。所以，稍后在引擎中最好使用<code>String</code>类型，并且把类用<code>constantize</code>方法转换一下。</p><p>接下来我们创建一个新主题，除了让引擎读取<code>config/initializers/blorgh.rb</code>中的类信息之外，你将发现它和之前没什么区别，</p><p>这里对类没有严格的定义，只是提供了一个类必须做什么的指导。引擎也只是调用<code>find_or_create_by</code>方法来获取符合条件的类对象。当然这个对象也可以被其他对象引用。</p><h5 id="和rails应用整合-配置引擎-配置引擎">4.4.2 配置引擎</h5><p>在引擎内部，有很多配置引擎的方法，比如initializers, internationalization和其他配置项。一个Rails引擎和一个Rails应用具有很多相同的功能。实际上一个Rails应用就是一个超级引擎。</p><p>如果你想使用一个初始化器，必须在引擎载入之前使用，配置文件在<code>config/initializers</code> 目录下。这个目录的详细使用说明在<a href="configuring.html#initializers">Initializers section</a>中，它和一个应用中的<code>config/initializers</code>文件相对目录是一致的。可以把它当作一个Rails应用中的初始化器来配置。</p><p>关于本地文件，和一个应用中的目录类似，都在<code>config/locales</code>目录下。</p><h3 id="引擎测试">5 引擎测试</h3><p>生成一个引擎后，引擎内部的<code>test/dummy</code>目录下会生成一个简单的Rails应用。这个应用被用来给引擎提供集成测试环境。你可以扩展这个应用的功能来测试你的引擎。</p><p><code>test</code>目录将会被当作一个典型的Rails测试环境，允许单元测试，功能测试和交互测试。</p><h4 id="功能测试">5.1 功能测试</h4><p>在编写引擎的功能测试时，我们会假定这个引擎会在一个应用中使用。<code>test/dummy</code>目录中的应用和你引擎结构差不多。这是因为建立测试环境后，引擎需要一个宿主来测试它的功能，特别是控制器。这意味着你需要在一个控制器功能测试函数中下如下代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get :index
+
+</pre>
+</div>
+<p>这似乎不能称为函数，因为这个应用不知道如何给引擎发送的请求做响应，除非你明确告诉他怎么做。为此，你必须在请求的参数中加上<code>:use_route</code>选项来声明：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get :index, use_route: :blorgh
+
+</pre>
+</div>
+<p>上述代码会告诉Rails应用你想让它的控制器响应一个<code>GET</code>请求，并执行<code>index</code>动作，但是你最好使用引擎的路径来代替。 </p><p>另外一种方法是在你的测试总建立一个setup方法，把<code>Engine.routes</code>赋值给变量<code>@routes</code> 。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+setup do
+  @routes = Engine.routes
+end
+
+</pre>
+</div>
+<p>上诉操作也同时保证了引擎的url助手方法在你的测试中正常使用。</p><h3 id="引擎优化-">6 引擎优化 </h3><p>本章节将介绍在Rails应用中如何添加或重载引擎的MVC功能。</p><h4 id="重载模型和控制器">6.1 重载模型和控制器</h4><p>应用中的公共类可以扩展引擎的模型和控制器的功能。(因为模型和控制器类都继承了Rails应用的特定功能)应用中的公共类和引擎只是对模型和控制器根据需要进行了扩展。这种模式通常被称为装饰模式。</p><p>举个例子，<code>ActiveSupport::Concern</code>类使用<code>Class#class_eval</code>方法扩展了他的功能。</p><h5 id="装饰器的特点以及加载代码">6.1.1 装饰器的特点以及加载代码</h5><p>因为装饰器不是引用Rails应用本身，Rails自动载入系统不会识别和载入你的装饰器。这意味着你需要用代码声明他们。</p><p>这是一个简单的例子：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# lib/blorgh/engine.rb
+module Blorgh
+  class Engine &lt; ::Rails::Engine
+    isolate_namespace Blorgh
+
+    config.to_prepare do
+      Dir.glob(Rails.root + "app/decorators/**/*_decorator*.rb").each do |c|
+        require_dependency(c)
+      end
+    end
+  end
+end
+
+</pre>
+</div>
+<p>上述操作不会应用到当前的装饰器，但是在引擎中添加的内容不会影响你的应用。</p><h5 id="使用-class#class_eval-方法实现装饰模式">6.1.2 使用 Class#class_eval 方法实现装饰模式</h5><p><strong>添加</strong> <code>Article#time_since_created</code>方法:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# MyApp/app/decorators/models/blorgh/article_decorator.rb
+
+Blorgh::Article.class_eval do
+  def time_since_created
+    Time.current - created_at
+  end
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Blorgh/app/models/article.rb
+
+class Article &lt; ActiveRecord::Base
+  has_many :comments
+end
+
+</pre>
+</div>
+<p><strong>重载</strong> <code>Article#summary</code>方法:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# MyApp/app/decorators/models/blorgh/article_decorator.rb
+
+Blorgh::Article.class_eval do
+  def summary
+    "#{title} - #{truncate(text)}"
+  end
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Blorgh/app/models/article.rb
+
+class Article &lt; ActiveRecord::Base
+  has_many :comments
+  def summary
+    "#{title}"
+  end
+end
+
+</pre>
+</div>
+<h5 id="使用activesupport::concern类实现装饰模式">6.1.3 使用ActiveSupport::Concern类实现装饰模式</h5><p>使用<code>Class#class_eval</code>方法可以应付一些简单的修改。但是如果要实现更复杂的操作，你可以考虑使用<a href="http://edgeapi.rubyonrails.org/classes/ActiveSupport/Concern.html"><code>ActiveSupport::Concern</code></a>。<code>ActiveSupport::Concern</code>管理着所有独立模块的内部链接指令，并且允许你在运行时声明模块代码。</p><p><strong>添加</strong> <code>Article#time_since_created</code>方法和<strong>重载</strong> <code>Article#summary</code>方法:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# MyApp/app/models/blorgh/article.rb
+
+class Blorgh::Article &lt; ActiveRecord::Base
+  include Blorgh::Concerns::Models::Article
+
+  def time_since_created
+    Time.current - created_at
+  end
+
+  def summary
+    "#{title} - #{truncate(text)}"
+  end
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Blorgh/app/models/article.rb
+
+class Article &lt; ActiveRecord::Base
+  include Blorgh::Concerns::Models::Article
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Blorgh/lib/concerns/models/article
+
+module Blorgh::Concerns::Models::Article
+  extend ActiveSupport::Concern
+
+  # 'included do' causes the included code to be evaluated in the
+  # context where it is included (article.rb), rather than being
+  # executed in the module's context (blorgh/concerns/models/article).
+  included do
+    attr_accessor :author_name
+    belongs_to :author, class_name: "User"
+
+    before_save :set_author
+
+    private
+      def set_author
+        self.author = User.find_or_create_by(name: author_name)
+      end
+  end
+
+  def summary
+    "#{title}"
+  end
+
+  module ClassMethods
+    def some_class_method
+      'some class method string'
+    end
+  end
+end
+
+</pre>
+</div>
+<h4 id="视图重载">6.2 视图重载</h4><p>Rails在寻找一个需要渲染的视图时，首先会去寻找应用的<code>app/views</code>目录下的文件。如果找不到，那么就会去当前应用目录下的所有引擎中找<code>app/views</code>目录下的内容。</p><p>当一个应用被要求为<code>Blorgh::ArticlesController</code>的<code>index</code>动作渲染视图时，它首先会在应用目录下去找<code>app/views/blorgh/articles/index.html.erb</code>，如果找不到，它将深入引擎内部寻找。</p><p>你可以在应用中创建一个新的<code>app/views/blorgh/articles/index.html.erb</code>文件来重载这个视图。接下来你会看到你改过的视图内容。</p><p>修改<code>app/views/blorgh/articles/index.html.erb</code>中的内容，代码如下： </p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+&lt;h1&gt;Articles&lt;/h1&gt;
+&lt;%= link_to "New Article", new_article_path %&gt;
+&lt;% @articles.each do |article| %&gt;
+  &lt;h2&gt;&lt;%= article.title %&gt;&lt;/h2&gt;
+  &lt;small&gt;By &lt;%= article.author %&gt;&lt;/small&gt;
+  &lt;%= simple_format(article.text) %&gt;
+  &lt;hr&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<h4 id="路径">6.3 路径</h4><p>引擎中的路径默认是和Rails应用隔离开的。主要通过<code>Engine</code>类的<code>isolate_namespace</code>方法 实现的。这意味着引擎和Rails应可以拥有同名的路径，但却不会冲突。</p><p>引擎内部的<code>config/routes.rb</code>中的<code>Engine</code>类是这样绑定路径的：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Blorgh::Engine.routes.draw do
+  resources :articles
+end
+
+</pre>
+</div>
+<p>因为拥有相对独立的路径，如果你希望在应用内部链接到引擎的某个地方，你需要使用引擎的路径代理方法。如果调用普通的路径方法，比如<code>articles_path</code>等，将不会得到你希望的结果。</p><p>举个例子。下面的<code>articles_path</code>方法根据情况自动识别，并渲染来自应用或引擎的内容。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= link_to "Blog articles", articles_path %&gt;
+
+</pre>
+</div>
+<p>为了确保这个路径使用引擎的<code>articles_path</code>方法，我们必须使用路径代理方法来实现：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= link_to "Blog articles", blorgh.articles_path %&gt;
+
+</pre>
+</div>
+<p>如果你希望在引擎内部访问Rails应用的路径，可以使用<code>main_app</code>方法：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= link_to "Home", main_app.root_path %&gt;
+
+</pre>
+</div>
+<p>如果你在引擎中使用了上诉方法，那么这将一直指向Rails应用的根目录。如果你没有使用<code>main_app</code>的
+<code>routing proxy</code>路径代理调用方法，那么会根据调用源来指向引擎或Rails应用的根目录。</p><p>如果你引擎内的模板渲染想调用一个应用的路径帮助方法，这可能导致一个未定义的方法调用异常。如果你想解决这个问题，必须确保在引擎内部调用Rails应用的路径帮助方法时加上<code>main_app</code>前缀。</p><h4 id="渲染页面相关的assets文件">6.4 渲染页面相关的Assets文件</h4><p>引擎内部的Assets文件位置和Rails应用的的相似。因为引擎类是继承自<code>Rails::Engine</code>的。应用会自动去引擎的<code>aapp/assets</code>和<code>lib/assets</code>目录搜索和页面渲染相关的文件。</p><p>像其他引擎组件一样，assets文件是可以命名空间化的。这意味着如果你有一个名为<code>style.css</code>的话，那么他的存放路径是<code>app/assets/stylesheets/[engine name]/style.css</code>, 而非
+<code>app/assets/stylesheets/style.css</code>. 如果资源文件没有命名空间化，很有可能引擎的宿主中有一个和引擎同名的资源文件，这就会导致引擎相关的资源文件被忽略或覆盖。</p><p>假如你想在应用的中引用一个名为<code>app/assets/stylesheets/blorgh/style.css</code>文件， ，只需要使用<code>stylesheet_link_tag</code>就可以了：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= stylesheet_link_tag "blorgh/style.css" %&gt;
+
+</pre>
+</div>
+<p>你也可以在Asset Pipeline中声明你的资源文件是独立于其他资源文件的：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+/*
+ *= require blorgh/style
+*/
+
+</pre>
+</div>
+<p>提示： 如果你使用的是Sass或CoffeeScript语言，那么需要在你的引擎的<code>.gemspec</code>文件中设定相对路径。</p><h4 id="页面资源文件分组和预编译">6.5 页面资源文件分组和预编译</h4><p>在某些情况下，你的引擎内部用到的资源文件，在Rails应用宿主中是不会用到的。举个例子，你为引擎创建了一个管理页面，它只在引擎内部使用，在这种情况下，Rails应用宿主并不需要用到<code>admin.css</code> 和<code>admin.js</code>文件，只是gem内部的管理页面需要用到它们。那么应用宿主就没必要添加<code>"blorgh/admin.css"</code>到他的样式表文件中
+，这种情况下，你可以预编译这些文件。这会在你的引擎内部添加一个<code>rake assets:precompile</code>任务。</p><p>你可以在引擎的<code>engine.rb</code>中定义需要预编译的资源文件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+initializer "blorgh.assets.precompile" do |app|
+  app.config.assets.precompile += %w(admin.css admin.js)
+end
+
+</pre>
+</div>
+<p>想要了解更多详情，可以参考 <a href="asset_pipeline.html">Asset Pipeline guide</a></p><h4 id="其他gem依赖项">6.6 其他Gem依赖项</h4><p>一个引擎的相关依赖项会在引擎的根目录下的<code>.gemspec</code>中声明。因为引擎也许会被当作一个gem安装到Rails应用中。如果在<code>Gemfile</code>中声明依赖项，那么这些依赖项就会被认为不是一个普通Gem，所以他们不会被安装，这会导致引擎发生故障。</p><p>为了让引擎被当作一个普通的Gem安装，需要声明他的依赖项已经安装过了。那么可以在引擎根目录下的<code>.gemspec</code>文件中添加<code>Gem::Specification</code>配置项：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+s.add_dependency "moo"
+
+</pre>
+</div>
+<p>声明一个依赖项只作为开发应用时的依赖项，可以这么做： </p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+s.add_development_dependency "moo"
+
+</pre>
+</div>
+<p>所有的依赖项都会在执行<code>bundle install</code>命令时安装。gem开发环境的依赖项仅会在测试时用到。</p><p>注意，如果你希望引擎引用依赖项时马上引用。你应该在引擎初始化时就引用它们,比如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'other_engine/engine'
+require 'yet_another_engine/engine'
+
+module MyEngine
+  class Engine &lt; ::Rails::Engine
+  end
+end
+
+</pre>
+</div>
+
+
+        <h3>反馈</h3>
+        <p>
+          欢迎帮忙改善指南质量。
+        </p>
+        <p>
+          如发现任何错误，欢迎修正。开始贡献前，可先行阅读<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">贡献指南：文档</a>。
+        </p>
+        <p>翻译如有错误，深感抱歉，欢迎 <a href="https://github.com/ruby-china/guides/fork">Fork</a> 修正，或至此处<a href="https://github.com/ruby-china/guides/issues/new">回报</a>。</p>
+        <p>
+          文章可能有未完成或过时的内容。请先检查 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 来确定问题在 master 是否已经修掉了。再上 master 补上缺少的文件。内容参考 <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a>来了解行文风格。
+        </p>
+        <p>最后，任何关于 Ruby on Rails 文档的讨论，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件群组</a>。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用<a href="https://creativecommons.org/licenses/by-sa/4.0/">创用 CC 姓名标示-相同方式分享 4.0 国际授权条款</a>授权。</p>
+<p>“Rails”、“Ruby on Rails”，以及 Rails logo 为 David Heinemeier Hansson 的商标。版权所有。</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shCore.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushRuby.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushXml.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushSql.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushPlain.js"></script>
+  <script type="text/javascript">
+    SyntaxHighlighter.all();
+    $(guidesIndex.bind);
+  </script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    // ga('create', '', 'ruby-china.github.io');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

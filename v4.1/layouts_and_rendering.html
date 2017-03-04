@@ -1,0 +1,1489 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Rails 布局和视图渲染 — Ruby on Rails 指南</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://rubyonrails.org/">综览</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/download">下载</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/deploy">部署</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">源码</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/screencasts">视频</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/documentation">文件</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/community">社群</a></li>
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="回首页">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南目录</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单帮助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 简介</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 程序</a></dd>
+                <dd><a href="configuring.html">设置 Rails 程序</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">客制与新建 Rails 产生器</a></dd>
+                <dd><a href="rails_application_templates.html">Rails 应用程式模版</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文件准则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <!-- <li><a class="nav-item" href="//github.com/docrails-tw/wiki">参与翻译</a></li> -->
+        <li><a class="nav-item" href="https://github.com/ruby-china/guides/blob/master/CONTRIBUTING.md">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">致谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南目录</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单帮助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 简介</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 程序</option>
+                  <option value="configuring.html">设置 Rails 程序</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">客制与新建 Rails 产生器</option>
+                  <option value="rails_application_templates.html">Rails 应用程式模版</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文件准则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Rails 布局和视图渲染</h2><p>本文介绍 Action Controller 和 Action View 中布局的基本功能。</p><p>读完本文，你将学到：</p>
+<ul>
+<li>如何使用 Rails 内建的各种渲染方法；</li>
+<li>如何创建具有多个内容区域的布局；</li>
+<li>如何使用局部视图去除重复；</li>
+<li>如何使用嵌套布局（子模板）；</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#%E6%A6%82%E8%A7%88%EF%BC%9A%E5%90%84%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8D%8F%E4%BD%9C">概览：各组件之间的协作</a></li>
+<li>
+<a href="#%E5%88%9B%E5%BB%BA%E5%93%8D%E5%BA%94">创建响应</a>
+
+<ul>
+<li><a href="#%E6%B8%B2%E6%9F%93%E8%A7%86%E5%9B%BE">渲染视图</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-render-%E6%96%B9%E6%B3%95">使用 <code>render</code> 方法</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-redirect_to-%E6%96%B9%E6%B3%95">使用 <code>redirect_to</code> 方法</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-head-%E6%9E%84%E5%BB%BA%E5%8F%AA%E8%BF%94%E5%9B%9E%E6%8A%A5%E5%A4%B4%E7%9A%84%E5%93%8D%E5%BA%94">使用 <code>head</code> 构建只返回报头的响应</a></li>
+</ul>
+</li>
+<li>
+<a href="#%E5%B8%83%E5%B1%80%E7%BB%93%E6%9E%84">布局结构</a>
+
+<ul>
+<li><a href="#%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%A0%87%E7%AD%BE%E5%B8%AE%E5%8A%A9%E6%96%B9%E6%B3%95">静态资源标签帮助方法</a></li>
+<li><a href="#%E7%90%86%E8%A7%A3-yield">理解 <code>yield</code></a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-content_for-%E6%96%B9%E6%B3%95">使用 <code>content_for</code> 方法</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%B1%80%E9%83%A8%E8%A7%86%E5%9B%BE">使用局部视图</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%B5%8C%E5%A5%97%E5%B8%83%E5%B1%80">使用嵌套布局</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="概览：各组件之间的协作">1 概览：各组件之间的协作</h3><p>本文关注 MVC 架构中控制器和视图之间的交互。你可能已经知道，控制器的作用是处理请求，但经常会把繁重的操作交给模型完成。返回响应时，控制器会把一些操作交给视图完成。本文要说明的就是控制器交给视图的操作是怎么完成的。</p><p>总的来说，这个过程涉及到响应中要发送什么内容，以及调用哪个方法创建响应。如果响应是个完整的视图，Rails 还要做些额外工作，把视图套入布局，有时还要渲染局部视图。后文会详细介绍整个过程。</p><h3 id="创建响应">2 创建响应</h3><p>从控制器的角度来看，创建 HTTP 响应有三种方法：</p>
+<ul>
+<li>调用 <code>render</code> 方法，向浏览器发送一个完整的响应；</li>
+<li>调用 <code>redirect_to</code> 方法，向浏览器发送一个 HTTP 重定向状态码；</li>
+<li>调用 <code>head</code> 方法，向浏览器发送只含报头的响应；</li>
+</ul>
+<h4 id="渲染视图">2.1 渲染视图</h4><p>你可能已经听说过 Rails 的开发原则之一是“多约定，少配置”。默认渲染视图的处理就是这一原则的完美体现。默认情况下，Rails 中的控制器会渲染路由对应的视图。例如，有如下的 <code>BooksController</code> 代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class BooksController &lt; ApplicationController
+end
+
+</pre>
+</div>
+<p>在路由文件中有如下定义：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :books
+
+</pre>
+</div>
+<p>而且有个名为 <code>app/views/books/index.html.erb</code> 的视图文件：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;h1&gt;Books are coming soon!&lt;/h1&gt;
+
+</pre>
+</div>
+<p>那么，访问 <code>/books</code> 时，Rails 会自动渲染视图 <code>app/views/books/index.html.erb</code>，网页中会看到显示有“Books are coming soon!”。</p><p>网页中显示这些文字没什么用，所以后续你可能会创建一个 <code>Book</code> 模型，然后在 <code>BooksController</code> 中添加 <code>index</code> 动作：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class BooksController &lt; ApplicationController
+  def index
+    @books = Book.all
+  end
+end
+
+</pre>
+</div>
+<p>注意，基于“多约定，少配置”原则，在 <code>index</code> 动作末尾并没有指定要渲染视图，Rails 会自动在控制器的视图文件夹中寻找 <code>action_name.html.erb</code> 模板，然后渲染。在这个例子中，Rails 渲染的是 <code>app/views/books/index.html.erb</code> 文件。</p><p>如果要在视图中显示书籍的属性，可以使用 ERB 模板：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;h1&gt;Listing Books&lt;/h1&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Title&lt;/th&gt;
+    &lt;th&gt;Summary&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+  &lt;/tr&gt;
+
+&lt;% @books.each do |book| %&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;%= book.title %&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;%= book.content %&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;%= link_to "Show", book %&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;%= link_to "Edit", edit_book_path(book) %&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;%= link_to "Remove", book, method: :delete, data: { confirm: "Are you sure?" } %&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;% end %&gt;
+&lt;/table&gt;
+
+&lt;br&gt;
+
+&lt;%= link_to "New book", new_book_path %&gt;
+
+</pre>
+</div>
+<div class="note"><p>真正处理渲染过程的是 <code>ActionView::TemplateHandlers</code> 的子类。本文不做深入说明，但要知道，文件的扩展名决定了要使用哪个模板处理程序。从 Rails 2 开始，ERB 模板（含有嵌入式 Ruby 代码的 HTML）的标准扩展名是 <code>.erb</code>，Builder 模板（XML 生成器）的标准扩展名是 <code>.builder</code>。</p></div><h4 id="使用-render-方法">2.2 使用 <code>render</code> 方法</h4><p>大多数情况下，<code>ActionController::Base#render</code> 方法都能满足需求，而且还有多种定制方式，可以渲染 Rails 模板的默认视图、指定的模板、文件、行间代码或者什么也不渲染。渲染的内容格式可以是文本，JSON 或 XML。而且还可以设置响应的内容类型和 HTTP 状态码。</p><div class="info"><p>如果不想使用浏览器直接查看调用 <code>render</code> 方法得到的结果，可以使用 <code>render_to_string</code> 方法。<code>render_to_string</code> 和 <code>render</code> 的用法完全一样，不过不会把响应发送给浏览器，而是直接返回字符串。</p></div><h5 id="什么都不渲染">2.2.1 什么都不渲染</h5><p>或许 <code>render</code> 方法最简单的用法是什么也不渲染：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render nothing: true
+
+</pre>
+</div>
+<p>如果使用 cURL 查看请求，会得到一些输出：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ curl -i 127.0.0.1:3000/books
+HTTP/1.1 200 OK
+Connection: close
+Date: Sun, 24 Jan 2010 09:25:18 GMT
+Transfer-Encoding: chunked
+Content-Type: */*; charset=utf-8
+X-Runtime: 0.014297
+Set-Cookie: _blog_session=...snip...; path=/; HttpOnly
+Cache-Control: no-cache
+
+$
+
+</pre>
+</div>
+<p>可以看到，响应的主体是空的（<code>Cache-Control</code> 之后没有数据），但请求本身是成功的，因为 Rails 把响应码设为了“200 OK”。调用 <code>render</code> 方法时可以设置 <code>:status</code> 选项修改状态码。这种用法可在 Ajax 请求中使用，因为此时只需告知浏览器请求已经完成。</p><div class="info"><p>或许不应该使用 <code>render :nothing</code>，而要用后面介绍的 <code>head</code> 方法。<code>head</code> 方法用起来更灵活，而且只返回 HTTP 报头。</p></div><h5 id="渲染动作的视图">2.2.2 渲染动作的视图</h5><p>如果想渲染同个控制器中的其他模板，可以把视图的名字传递给 <code>render</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def update
+  @book = Book.find(params[:id])
+  if @book.update(book_params)
+    redirect_to(@book)
+  else
+    render "edit"
+  end
+end
+
+</pre>
+</div>
+<p>如果更新失败，会渲染同个控制器中的 <code>edit.html.erb</code> 模板。</p><p>如果不想用字符串，还可使用 Symbol 指定要渲染的动作：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def update
+  @book = Book.find(params[:id])
+  if @book.update(book_params)
+    redirect_to(@book)
+  else
+    render :edit
+  end
+end
+
+</pre>
+</div>
+<h5 id="渲染其他控制器中的动作模板">2.2.3 渲染其他控制器中的动作模板</h5><p>如果想渲染其他控制器中的模板该怎么做呢？还是使用 <code>render</code> 方法，指定模板的完整路径即可。例如，如果控制器 <code>AdminProductsController</code> 在 <code>app/controllers/admin</code> 文件夹中，可使用下面的方式渲染 <code>app/views/products</code> 文件夹中的模板：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render "products/show"
+
+</pre>
+</div>
+<p>因为参数中有个斜线，所以 Rails 知道这个视图属于另一个控制器。如果想让代码的意图更明显，可以使用 <code>:template</code> 选项（Rails 2.2 及先前版本必须这么做）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render template: "products/show"
+
+</pre>
+</div>
+<h5 id="渲染任意文件">2.2.4 渲染任意文件</h5><p><code>render</code> 方法还可渲染程序之外的视图（或许多个程序共用一套视图）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render "/u/apps/warehouse_app/current/app/views/products/show"
+
+</pre>
+</div>
+<p>因为参数以斜线开头，所以 Rails 将其视为一个文件。如果想让代码的意图更明显，可以使用 <code>:file</code> 选项（Rails 2.2+ 必须这么做）</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render file: "/u/apps/warehouse_app/current/app/views/products/show"
+
+</pre>
+</div>
+<p><code>:file</code> 选项的值是文件系统中的绝对路径。当然，你要对使用的文件拥有相应权限。</p><div class="note"><p>默认情况下，渲染文件时不会使用当前程序的布局。如果想让 Rails 把文件套入布局，要指定 <code>layout: true</code> 选项。</p></div><div class="info"><p>如果在 Windows 中运行 Rails，就必须使用 <code>:file</code> 选项指定文件的路径，因为 Windows 中的文件名和 Unix 格式不一样。</p></div><h5 id="小结">2.2.5 小结</h5><p>上述三种渲染方式的作用其实是一样的。在 <code>BooksController</code> 控制器的 <code>update</code> 动作中，如果更新失败后想渲染 <code>views/books</code> 文件夹中的 <code>edit.html.erb</code> 模板，下面这些用法都能达到这个目的：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render :edit
+render action: :edit
+render "edit"
+render "edit.html.erb"
+render action: "edit"
+render action: "edit.html.erb"
+render "books/edit"
+render "books/edit.html.erb"
+render template: "books/edit"
+render template: "books/edit.html.erb"
+render "/path/to/rails/app/views/books/edit"
+render "/path/to/rails/app/views/books/edit.html.erb"
+render file: "/path/to/rails/app/views/books/edit"
+render file: "/path/to/rails/app/views/books/edit.html.erb"
+
+</pre>
+</div>
+<p>你可以根据自己的喜好决定使用哪种方式，总的原则是，使用符合代码意图的最简单方式。</p><h5 id="使用-render-方法的-:inline-选项">2.2.6 使用 <code>render</code> 方法的 <code>:inline</code> 选项</h5><p>如果使用 <code>:inline</code> 选项指定了 ERB 代码，<code>render</code> 方法就不会渲染视图。如下所示的用法完全可行：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render inline: "&lt;% products.each do |p| %&gt;&lt;p&gt;&lt;%= p.name %&gt;&lt;/p&gt;&lt;% end %&gt;"
+
+</pre>
+</div>
+<div class="warning"><p>但是很少这么做。在控制器中混用 ERB 代码违反了 MVC 架构原则，也让程序的其他开发者难以理解程序的逻辑思路。请使用单独的 ERB 视图。</p></div><p>默认情况下，行间渲染使用 ERB 模板。你可以使用 <code>:type</code> 选项指定使用其他处理程序：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render inline: "xml.p {'Horrid coding practice!'}", type: :builder
+
+</pre>
+</div>
+<h5 id="渲染文本">2.2.7 渲染文本</h5><p>调用 <code>render</code> 方法时指定 <code>:plain</code> 选项，可以把没有标记语言的纯文本发给浏览器：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render plain: "OK"
+
+</pre>
+</div>
+<div class="info"><p>渲染纯文本主要用于 Ajax 或无需使用 HTML 的网络服务。</p></div><div class="note"><p>默认情况下，使用 <code>:plain</code> 选项渲染纯文本，不会套用程序的布局。如果想使用布局，可以指定 <code>layout: true</code> 选项。</p></div><h5 id="渲染-html">2.2.8 渲染 HTML</h5><p>调用 <code>render</code> 方法时指定 <code>:html</code> 选项，可以把 HTML 字符串发给浏览器：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render html: "&lt;strong&gt;Not Found&lt;/strong&gt;".html_safe
+
+</pre>
+</div>
+<div class="info"><p>这种方法可用来渲染 HTML 片段。如果标记很复杂，就要考虑使用模板文件了。</p></div><div class="note"><p>如果字符串对 HTML 不安全，会进行转义。</p></div><h5 id="渲染-json">2.2.9 渲染 JSON</h5><p>JSON 是一种 JavaScript 数据格式，很多 Ajax 库都用这种格式。Rails 内建支持把对象转换成 JSON，经渲染后再发送给浏览器。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render json: @product
+
+</pre>
+</div>
+<div class="info"><p>在需要渲染的对象上无需调用 <code>to_json</code> 方法，如果使用了 <code>:json</code> 选项，<code>render</code> 方法会自动调用 <code>to_json</code>。</p></div><h5 id="渲染-xml">2.2.10 渲染 XML</h5><p>Rails 也内建支持把对象转换成 XML，经渲染后再发回给调用者：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render xml: @product
+
+</pre>
+</div>
+<div class="info"><p>在需要渲染的对象上无需调用 <code>to_xml</code> 方法，如果使用了 <code>:xml</code> 选项，<code>render</code> 方法会自动调用 <code>to_xml</code>。</p></div><h5 id="渲染普通的-javascript">2.2.11 渲染普通的 JavaScript</h5><p>Rails 能渲染普通的 JavaScript：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render js: "alert('Hello Rails');"
+
+</pre>
+</div>
+<p>这种方法会把 MIME 设为 <code>text/javascript</code>，再把指定的字符串发给浏览器。</p><h5 id="渲染原始的主体">2.2.12 渲染原始的主体</h5><p>调用 <code>render</code> 方法时使用 <code>:body</code> 选项，可以不设置内容类型，把原始的内容发送给浏览器：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render body: "raw"
+
+</pre>
+</div>
+<div class="info"><p>只有不在意内容类型时才可使用这个选项。大多数时候，使用 <code>:plain</code> 或 <code>:html</code> 选项更合适。</p></div><div class="note"><p>如果没有修改，这种方式返回的内容类型是 <code>text/html</code>，因为这是 Action Dispatch 响应默认使用的内容类型。</p></div><h5 id="render-方法的选项">2.2.13 <code>render</code> 方法的选项</h5><p><code>render</code> 方法一般可接受四个选项：</p>
+<ul>
+<li><code>:content_type</code></li>
+<li><code>:layout</code></li>
+<li><code>:location</code></li>
+<li><code>:status</code></li>
+</ul>
+<h6 id=":content_type-选项">2.2.13.1 <code>:content_type</code> 选项</h6><p>默认情况下，Rails 渲染得到的结果内容类型为 <code>text/html</code>；如果使用 <code>:json</code> 选项，内容类型为 <code>application/json</code>；如果使用 <code>:xml</code> 选项，内容类型为 <code>application/xml</code>。如果需要修改内容类型，可使用 <code>:content_type</code> 选项</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render file: filename, content_type: "application/rss"
+
+</pre>
+</div>
+<h6 id=":layout-选项">2.2.13.2 <code>:layout</code> 选项</h6><p><code>render</code> 方法的大多数选项渲染得到的结果都会作为当前布局的一部分显示。后文会详细介绍布局。</p><p><code>:layout</code> 选项告知 Rails，在当前动作中使用指定的文件作为布局：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render layout: "special_layout"
+
+</pre>
+</div>
+<p>也可以告知 Rails 不使用布局：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render layout: false
+
+</pre>
+</div>
+<h6 id=":location-选项">2.2.13.3 <code>:location</code> 选项</h6><p><code>:location</code> 选项可以设置 HTTP <code>Location</code> 报头：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render xml: photo, location: photo_url(photo)
+
+</pre>
+</div>
+<h6 id=":status-选项">2.2.13.4 <code>:status</code> 选项</h6><p>Rails 会自动为生成的响应附加正确的 HTTP 状态码（大多数情况下是 <code>200 OK</code>）。使用 <code>:status</code> 选项可以修改状态码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render status: 500
+render status: :forbidden
+
+</pre>
+</div>
+<p>Rails 能理解数字状态码和对应的符号，如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>响应类别</th>
+<th>HTTP 状态码</th>
+<th>符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>信息</strong></td>
+<td>100</td>
+<td>:continue</td>
+</tr>
+<tr>
+<td></td>
+<td>101</td>
+<td>:switching_protocols</td>
+</tr>
+<tr>
+<td></td>
+<td>102</td>
+<td>:processing</td>
+</tr>
+<tr>
+<td><strong>成功</strong></td>
+<td>200</td>
+<td>:ok</td>
+</tr>
+<tr>
+<td></td>
+<td>201</td>
+<td>:created</td>
+</tr>
+<tr>
+<td></td>
+<td>202</td>
+<td>:accepted</td>
+</tr>
+<tr>
+<td></td>
+<td>203</td>
+<td>:non_authoritative_information</td>
+</tr>
+<tr>
+<td></td>
+<td>204</td>
+<td>:no_content</td>
+</tr>
+<tr>
+<td></td>
+<td>205</td>
+<td>:reset_content</td>
+</tr>
+<tr>
+<td></td>
+<td>206</td>
+<td>:partial_content</td>
+</tr>
+<tr>
+<td></td>
+<td>207</td>
+<td>:multi_status</td>
+</tr>
+<tr>
+<td></td>
+<td>208</td>
+<td>:already_reported</td>
+</tr>
+<tr>
+<td></td>
+<td>226</td>
+<td>:im_used</td>
+</tr>
+<tr>
+<td><strong>重定向</strong></td>
+<td>300</td>
+<td>:multiple_choices</td>
+</tr>
+<tr>
+<td></td>
+<td>301</td>
+<td>:moved_permanently</td>
+</tr>
+<tr>
+<td></td>
+<td>302</td>
+<td>:found</td>
+</tr>
+<tr>
+<td></td>
+<td>303</td>
+<td>:see_other</td>
+</tr>
+<tr>
+<td></td>
+<td>304</td>
+<td>:not_modified</td>
+</tr>
+<tr>
+<td></td>
+<td>305</td>
+<td>:use_proxy</td>
+</tr>
+<tr>
+<td></td>
+<td>306</td>
+<td>:reserved</td>
+</tr>
+<tr>
+<td></td>
+<td>307</td>
+<td>:temporary_redirect</td>
+</tr>
+<tr>
+<td></td>
+<td>308</td>
+<td>:permanent_redirect</td>
+</tr>
+<tr>
+<td><strong>客户端错误</strong></td>
+<td>400</td>
+<td>:bad_request</td>
+</tr>
+<tr>
+<td></td>
+<td>401</td>
+<td>:unauthorized</td>
+</tr>
+<tr>
+<td></td>
+<td>402</td>
+<td>:payment_required</td>
+</tr>
+<tr>
+<td></td>
+<td>403</td>
+<td>:forbidden</td>
+</tr>
+<tr>
+<td></td>
+<td>404</td>
+<td>:not_found</td>
+</tr>
+<tr>
+<td></td>
+<td>405</td>
+<td>:method_not_allowed</td>
+</tr>
+<tr>
+<td></td>
+<td>406</td>
+<td>:not_acceptable</td>
+</tr>
+<tr>
+<td></td>
+<td>407</td>
+<td>:proxy_authentication_required</td>
+</tr>
+<tr>
+<td></td>
+<td>408</td>
+<td>:request_timeout</td>
+</tr>
+<tr>
+<td></td>
+<td>409</td>
+<td>:conflict</td>
+</tr>
+<tr>
+<td></td>
+<td>410</td>
+<td>:gone</td>
+</tr>
+<tr>
+<td></td>
+<td>411</td>
+<td>:length_required</td>
+</tr>
+<tr>
+<td></td>
+<td>412</td>
+<td>:precondition_failed</td>
+</tr>
+<tr>
+<td></td>
+<td>413</td>
+<td>:request_entity_too_large</td>
+</tr>
+<tr>
+<td></td>
+<td>414</td>
+<td>:request_uri_too_long</td>
+</tr>
+<tr>
+<td></td>
+<td>415</td>
+<td>:unsupported_media_type</td>
+</tr>
+<tr>
+<td></td>
+<td>416</td>
+<td>:requested_range_not_satisfiable</td>
+</tr>
+<tr>
+<td></td>
+<td>417</td>
+<td>:expectation_failed</td>
+</tr>
+<tr>
+<td></td>
+<td>422</td>
+<td>:unprocessable_entity</td>
+</tr>
+<tr>
+<td></td>
+<td>423</td>
+<td>:locked</td>
+</tr>
+<tr>
+<td></td>
+<td>424</td>
+<td>:failed_dependency</td>
+</tr>
+<tr>
+<td></td>
+<td>426</td>
+<td>:upgrade_required</td>
+</tr>
+<tr>
+<td></td>
+<td>428</td>
+<td>:precondition_required</td>
+</tr>
+<tr>
+<td></td>
+<td>429</td>
+<td>:too_many_requests</td>
+</tr>
+<tr>
+<td></td>
+<td>431</td>
+<td>:request_header_fields_too_large</td>
+</tr>
+<tr>
+<td><strong>服务器错误</strong></td>
+<td>500</td>
+<td>:internal_server_error</td>
+</tr>
+<tr>
+<td></td>
+<td>501</td>
+<td>:not_implemented</td>
+</tr>
+<tr>
+<td></td>
+<td>502</td>
+<td>:bad_gateway</td>
+</tr>
+<tr>
+<td></td>
+<td>503</td>
+<td>:service_unavailable</td>
+</tr>
+<tr>
+<td></td>
+<td>504</td>
+<td>:gateway_timeout</td>
+</tr>
+<tr>
+<td></td>
+<td>505</td>
+<td>:http_version_not_supported</td>
+</tr>
+<tr>
+<td></td>
+<td>506</td>
+<td>:variant_also_negotiates</td>
+</tr>
+<tr>
+<td></td>
+<td>507</td>
+<td>:insufficient_storage</td>
+</tr>
+<tr>
+<td></td>
+<td>508</td>
+<td>:loop_detected</td>
+</tr>
+<tr>
+<td></td>
+<td>510</td>
+<td>:not_extended</td>
+</tr>
+<tr>
+<td></td>
+<td>511</td>
+<td>:network_authentication_required</td>
+</tr>
+</tbody>
+</table>
+<h5 id="查找布局">2.2.14 查找布局</h5><p>查找布局时，Rails 首先查看 <code>app/views/layouts</code> 文件夹中是否有和控制器同名的文件。例如，渲染 <code>PhotosController</code> 控制器中的动作会使用 <code>app/views/layouts/photos.html.erb</code>（或 <code>app/views/layouts/photos.builder</code>）。如果没找到针对控制器的布局，Rails 会使用 <code>app/views/layouts/application.html.erb</code> 或 <code>app/views/layouts/application.builder</code>。如果没有 <code>.erb</code> 布局，Rails 会使用 <code>.builder</code> 布局（如果文件存在）。Rails 还提供了多种方法用来指定单个控制器和动作使用的布局。</p><h6 id="指定控制器所用布局">2.2.14.1 指定控制器所用布局</h6><p>在控制器中使用 <code>layout</code> 方法，可以改写默认使用的布局约定。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ProductsController &lt; ApplicationController
+  layout "inventory"
+  #...
+end
+
+</pre>
+</div>
+<p>这么声明之后，<code>ProductsController</code> 渲染的所有视图都将使用 <code>app/views/layouts/inventory.html.erb</code> 文件作为布局。</p><p>要想指定整个程序使用的布局，可以在 <code>ApplicationController</code> 类中使用 <code>layout</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ApplicationController &lt; ActionController::Base
+  layout "main"
+  #...
+end
+
+</pre>
+</div>
+<p>这么声明之后，整个程序的视图都会使用 <code>app/views/layouts/main.html.erb</code> 文件作为布局。</p><h6 id="运行时选择布局">2.2.14.2 运行时选择布局</h6><p>可以使用一个 Symbol，在处理请求时选择布局：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ProductsController &lt; ApplicationController
+  layout :products_layout
+
+  def show
+    @product = Product.find(params[:id])
+  end
+
+  private
+    def products_layout
+      @current_user.special? ? "special" : "products"
+    end
+
+end
+
+</pre>
+</div>
+<p>如果当前用户是特殊用户，会使用一个特殊布局渲染产品视图。</p><p>还可使用行间方法，例如 Proc，决定使用哪个布局。如果使用 Proc，其代码块可以访问 <code>controller</code> 实例，这样就能根据当前请求决定使用哪个布局：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ProductsController &lt; ApplicationController
+  layout Proc.new { |controller| controller.request.xhr? ? "popup" : "application" }
+end
+
+</pre>
+</div>
+<h6 id="条件布局">2.2.14.3 条件布局</h6><p>在控制器中指定布局时可以使用 <code>:only</code> 和 <code>:except</code> 选项。这两个选项的值可以是一个方法名或者一个方法名数组，这些方法都是控制器中的动作：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ProductsController &lt; ApplicationController
+  layout "product", except: [:index, :rss]
+end
+
+</pre>
+</div>
+<p>这么声明后，除了 <code>rss</code> 和 <code>index</code> 动作之外，其他动作都使用 <code>product</code> 布局渲染视图。</p><h6 id="布局继承">2.2.14.4 布局继承</h6><p>布局声明按层级顺序向下顺延，专用布局比通用布局优先级高。例如：</p>
+<ul>
+<li>  <code>application_controller.rb</code>
+</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ApplicationController &lt; ActionController::Base
+  layout "main"
+end
+
+</pre>
+</div>
+
+<ul>
+<li>  <code>posts_controller.rb</code>
+</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class PostsController &lt; ApplicationController
+end
+
+</pre>
+</div>
+
+<ul>
+<li>  <code>special_posts_controller.rb</code>
+</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class SpecialPostsController &lt; PostsController
+  layout "special"
+end
+
+</pre>
+</div>
+
+<ul>
+<li>  <code>old_posts_controller.rb</code>
+</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class OldPostsController &lt; SpecialPostsController
+  layout false
+
+  def show
+    @post = Post.find(params[:id])
+  end
+
+  def index
+    @old_posts = Post.older
+    render layout: "old"
+  end
+  # ...
+end
+
+</pre>
+</div>
+<p>在这个程序中：</p>
+<ul>
+<li>一般情况下，视图使用 <code>main</code> 布局渲染；</li>
+<li>
+<code>PostsController#index</code> 使用 <code>main</code> 布局；</li>
+<li>
+<code>SpecialPostsController#index</code> 使用 <code>special</code> 布局；</li>
+<li>
+<code>OldPostsController#show</code> 不用布局；</li>
+<li>
+<code>OldPostsController#index</code> 使用 <code>old</code> 布局；</li>
+</ul>
+<h5 id="避免双重渲染错误">2.2.15 避免双重渲染错误</h5><p>大多数 Rails 开发者迟早都会看到一个错误消息：Can only render or redirect once per action（动作只能渲染或重定向一次）。这个提示很烦人，也很容易修正。出现这个错误的原因是，没有理解 <code>render</code> 的工作原理。</p><p>例如，下面的代码会导致这个错误：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def show
+  @book = Book.find(params[:id])
+  if @book.special?
+    render action: "special_show"
+  end
+  render action: "regular_show"
+end
+
+</pre>
+</div>
+<p>如果 <code>@book.special?</code> 的结果是 <code>true</code>，Rails 开始渲染，把 <code>@book</code> 变量导入 <code>special_show</code> 视图中。但是，<code>show</code> 动作并不会就此停止运行，当 Rails 运行到动作的末尾时，会渲染 <code>regular_show</code> 视图，导致错误出现。解决的办法很简单，确保在一次代码运行路线中只调用一次 <code>render</code> 或 <code>redirect_to</code> 方法。有一个语句可以提供帮助，那就是 <code>and return</code>。下面的代码对上述代码做了修改：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def show
+  @book = Book.find(params[:id])
+  if @book.special?
+    render action: "special_show" and return
+  end
+  render action: "regular_show"
+end
+
+</pre>
+</div>
+<p>千万别用 <code>&amp;&amp; return</code> 代替 <code>and return</code>，因为 Ruby 语言操作符优先级的关系，<code>&amp;&amp; return</code> 根本不起作用。</p><p>注意，<code>ActionController</code> 能检测到是否显式调用了 <code>render</code> 方法，所以下面这段代码不会出错：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def show
+  @book = Book.find(params[:id])
+  if @book.special?
+    render action: "special_show"
+  end
+end
+
+</pre>
+</div>
+<p>如果 <code>@book.special?</code> 的结果是 <code>true</code>，会渲染 <code>special_show</code> 视图，否则就渲染默认的 <code>show</code> 模板。</p><h4 id="使用-redirect_to-方法">2.3 使用 <code>redirect_to</code> 方法</h4><p>响应 HTTP 请求的另一种方法是使用 <code>redirect_to</code>。如前所述，<code>render</code> 告诉 Rails 构建响应时使用哪个视图（以及其他静态资源）。<code>redirect_to</code> 做的事情则完全不同：告诉浏览器向另一个地址发起新请求。例如，在程序中的任何地方使用下面的代码都可以重定向到 <code>photos</code> 控制器的 <code>index</code> 动作：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+redirect_to photos_url
+
+</pre>
+</div>
+<p><code>redirect_to</code> 方法的参数与 <code>link_to</code> 和 <code>url_for</code> 一样。有个特殊的重定向，返回到前一个页面：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+redirect_to :back
+
+</pre>
+</div>
+<h5 id="设置不同的重定向状态码">2.3.1 设置不同的重定向状态码</h5><p>调用 <code>redirect_to</code> 方法时，Rails 会把 HTTP 状态码设为 302，即临时重定向。如果想使用其他的状态码，例如 301（永久重定向），可以设置 <code>:status</code> 选项：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+redirect_to photos_path, status: 301
+
+</pre>
+</div>
+<p>和 <code>render</code> 方法的 <code>:status</code> 选项一样，<code>redirect_to</code> 方法的 <code>:status</code> 选项同样可使用数字状态码或符号。</p><h5 id="render-和-redirect_to-的区别">2.3.2 <code>render</code> 和 <code>redirect_to</code> 的区别</h5><p>有些经验不足的开发者会认为 <code>redirect_to</code> 方法是一种 <code>goto</code> 命令，把代码从一处转到别处。这么理解是<strong>不对</strong>的。执行到 <code>redirect_to</code> 方法时，代码会停止运行，等待浏览器发起新请求。你需要告诉浏览器下一个请求是什么，并返回 302 状态码。</p><p>下面通过实例说明。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def index
+  @books = Book.all
+end
+
+def show
+  @book = Book.find_by(id: params[:id])
+  if @book.nil?
+    render action: "index"
+  end
+end
+
+</pre>
+</div>
+<p>在这段代码中，如果 <code>@book</code> 变量的值为 <code>nil</code> 很可能会出问题。记住，<code>render :action</code> 不会执行目标动作中的任何代码，因此不会创建 <code>index</code> 视图所需的 <code>@books</code> 变量。修正方法之一是不渲染，使用重定向：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def index
+  @books = Book.all
+end
+
+def show
+  @book = Book.find_by(id: params[:id])
+  if @book.nil?
+    redirect_to action: :index
+  end
+end
+
+</pre>
+</div>
+<p>这样修改之后，浏览器会向 <code>index</code> 动作发起新请求，执行 <code>index</code> 方法中的代码，一切都能正常运行。</p><p>这种方法有个缺点，增加了浏览器的工作量。浏览器通过 <code>/books/1</code> 向 <code>show</code> 动作发起请求，控制器做了查询，但没有找到对应的图书，所以返回 302 重定向响应，告诉浏览器访问 <code>/books/</code>。浏览器收到指令后，向控制器的 <code>index</code> 动作发起新请求，控制器从数据库中取出所有图书，渲染 <code>index</code> 模板，将其返回浏览器，在屏幕上显示所有图书。</p><p>在小型程序中，额外增加的时间不是个问题。如果响应时间很重要，这个问题就值得关注了。下面举个虚拟的例子演示如何解决这个问题：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def index
+  @books = Book.all
+end
+
+def show
+  @book = Book.find_by(id: params[:id])
+  if @book.nil?
+    @books = Book.all
+    flash.now[:alert] = "Your book was not found"
+    render "index"
+  end
+end
+
+</pre>
+</div>
+<p>在这段代码中，如果指定 ID 的图书不存在，会从模型中取出所有图书，赋值给 <code>@books</code> 实例变量，然后直接渲染 <code>index.html.erb</code> 模板，并显示一个 Flash 消息，告知用户出了什么问题。</p><h4 id="使用-head-构建只返回报头的响应">2.4 使用 <code>head</code> 构建只返回报头的响应</h4><p><code>head</code> 方法可以只把报头发送给浏览器。还可使用意图更明确的 <code>render :nothing</code> 达到同样的目的。<code>head</code> 方法的参数是 HTTP 状态码的符号形式（参见<a href="#the-status-option">前文表格</a>），选项是一个 Hash，指定报头名和对应的值。例如，可以只返回报错的报头：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+head :bad_request
+
+</pre>
+</div>
+<p>生成的报头如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+HTTP/1.1 400 Bad Request
+Connection: close
+Date: Sun, 24 Jan 2010 12:15:53 GMT
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=utf-8
+X-Runtime: 0.013483
+Set-Cookie: _blog_session=...snip...; path=/; HttpOnly
+Cache-Control: no-cache
+
+</pre>
+</div>
+<p>或者使用其他 HTTP 报头提供其他信息：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+head :created, location: photo_path(@photo)
+
+</pre>
+</div>
+<p>生成的报头如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+HTTP/1.1 201 Created
+Connection: close
+Date: Sun, 24 Jan 2010 12:16:44 GMT
+Transfer-Encoding: chunked
+Location: /photos/1
+Content-Type: text/html; charset=utf-8
+X-Runtime: 0.083496
+Set-Cookie: _blog_session=...snip...; path=/; HttpOnly
+Cache-Control: no-cache
+
+</pre>
+</div>
+<h3 id="布局结构">3 布局结构</h3><p>Rails 渲染响应的视图时，会把视图和当前模板结合起来。查找当前模板的方法前文已经介绍过。在布局中可以使用三种工具把各部分合在一起组成完整的响应：</p>
+<ul>
+<li>静态资源标签</li>
+<li>
+<code>yield</code> 和 <code>content_for</code>
+</li>
+<li>局部视图</li>
+</ul>
+<h4 id="静态资源标签帮助方法">3.1 静态资源标签帮助方法</h4><p>静态资源帮助方法用来生成链接到 Feed、JavaScript、样式表、图片、视频和音频的 HTML 代码。Rails 提供了六个静态资源标签帮助方法：</p>
+<ul>
+<li><code>auto_discovery_link_tag</code></li>
+<li><code>javascript_include_tag</code></li>
+<li><code>stylesheet_link_tag</code></li>
+<li><code>image_tag</code></li>
+<li><code>video_tag</code></li>
+<li><code>audio_tag</code></li>
+</ul>
+<p>这六个帮助方法可以在布局或视图中使用，不过 <code>auto_discovery_link_tag</code>、<code>javascript_include_tag</code> 和 <code>stylesheet_link_tag</code> 最常出现在布局的 <code>&lt;head&gt;</code> 中。</p><div class="warning"><p>静态资源标签帮助方法不会检查指定位置是否存在静态资源，假定你知道自己在做什么，只负责生成对应的链接。</p></div><h5 id="使用-auto_discovery_link_tag-链接到-feed">3.1.1 使用 <code>auto_discovery_link_tag</code> 链接到 Feed</h5><p><code>auto_discovery_link_tag</code> 帮助方法生成的 HTML，大多数浏览器和 Feed 阅读器都能用来自动识别 RSS 或 Atom Feed。<code>auto_discovery_link_tag</code> 接受的参数包括链接的类型（<code>:rss</code> 或 <code>:atom</code>），传递给 <code>url_for</code> 的 Hash 选项，以及该标签使用的 Hash 选项：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= auto_discovery_link_tag(:rss, {action: "feed"},
+  {title: "RSS Feed"}) %&gt;
+
+</pre>
+</div>
+<p><code>auto_discovery_link_tag</code> 的标签选项有三个：</p>
+<ul>
+<li>
+<code>:rel</code>：指定链接 <code>rel</code> 属性的值，默认值为 <code>"alternate"</code>；</li>
+<li>
+<code>:type</code>：指定 MIME 类型，不过 Rails 会自动生成正确的 MIME 类型；</li>
+<li>
+<code>:title</code>：指定链接的标题，默认值是 <code>:type</code> 参数值的全大写形式，例如 <code>"ATOM"</code> 或 <code>"RSS"</code>；</li>
+</ul>
+<h5 id="使用-javascript_include_tag-链接-javascript-文件">3.1.2 使用 <code>javascript_include_tag</code> 链接 JavaScript 文件</h5><p><code>javascript_include_tag</code> 帮助方法为指定的每个资源生成 HTML <code>script</code> 标签。</p><p>如果启用了 <a href="asset_pipeline.html">Asset Pipeline</a>，这个帮助方法生成的链接指向 <code>/assets/javascripts/</code> 而不是 Rails 旧版中使用的 <code>public/javascripts</code>。链接的地址由 Asset Pipeline 伺服。</p><p>Rails 程序或引擎中的 JavaScript 文件可存放在三个位置：<code>app/assets</code>，<code>lib/assets</code> 或 <code>vendor/assets</code>。详细说明参见 Asset Pipeline 中的“<a href="asset_pipeline.html#asset-organization">静态资源的组织方式</a>”一节。</p><p>文件的地址可使用相对文档根目录的完整路径，或者是 URL。例如，如果想链接到 <code>app/assets</code>、<code>lib/assets</code> 或 <code>vendor/assets</code> 文件夹中名为 <code>javascripts</code> 的子文件夹中的文件，可以这么做：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= javascript_include_tag "main" %&gt;
+
+</pre>
+</div>
+<p>Rails 生成的 <code>script</code> 标签如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;script src='/assets/main.js'&gt;&lt;/script&gt;
+
+</pre>
+</div>
+<p>对这个静态资源的请求由 Sprockets gem 伺服。</p><p>同时引入 <code>app/assets/javascripts/main.js</code> 和 <code>app/assets/javascripts/columns.js</code> 可以这么做：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= javascript_include_tag "main", "columns" %&gt;
+
+</pre>
+</div>
+<p>引入 <code>app/assets/javascripts/main.js</code> 和 <code>app/assets/javascripts/photos/columns.js</code>：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= javascript_include_tag "main", "/photos/columns" %&gt;
+
+</pre>
+</div>
+<p>引入 <code>http://example.com/main.js</code>：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= javascript_include_tag "http://example.com/main.js" %&gt;
+
+</pre>
+</div>
+<h5 id="使用-stylesheet_link_tag-链接-css-文件">3.1.3 使用 <code>stylesheet_link_tag</code> 链接 CSS 文件</h5><p><code>stylesheet_link_tag</code> 帮助方法为指定的每个资源生成 HTML <code>&lt;link&gt;</code> 标签。</p><p>如果启用了 Asset Pipeline，这个帮助方法生成的链接指向 <code>/assets/stylesheets/</code>，由 Sprockets gem 伺服。样式表文件可以存放在三个位置：<code>app/assets</code>，<code>lib/assets</code> 或 <code>vendor/assets</code>。</p><p>文件的地址可使用相对文档根目录的完整路径，或者是 URL。例如，如果想链接到 <code>app/assets</code>、<code>lib/assets</code> 或 <code>vendor/assets</code> 文件夹中名为 <code>stylesheets</code> 的子文件夹中的文件，可以这么做：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= stylesheet_link_tag "main" %&gt;
+
+</pre>
+</div>
+<p>引入 <code>app/assets/stylesheets/main.css</code> 和 <code>app/assets/stylesheets/columns.css</code>：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= stylesheet_link_tag "main", "columns" %&gt;
+
+</pre>
+</div>
+<p>引入 <code>app/assets/stylesheets/main.css</code> 和 <code>app/assets/stylesheets/photos/columns.css</code>：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= stylesheet_link_tag "main", "photos/columns" %&gt;
+
+</pre>
+</div>
+<p>引入 <code>http://example.com/main.css</code>：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= stylesheet_link_tag "http://example.com/main.css" %&gt;
+
+</pre>
+</div>
+<p>默认情况下，<code>stylesheet_link_tag</code> 创建的链接属性为 <code>media="screen" rel="stylesheet"</code>。指定相应的选项（<code>:media</code>，<code>:rel</code>）可以重写默认值：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= stylesheet_link_tag "main_print", media: "print" %&gt;
+
+</pre>
+</div>
+<h5 id="使用-image_tag-链接图片">3.1.4 使用 <code>image_tag</code> 链接图片</h5><p><code>image_tag</code> 帮助方法为指定的文件生成 HTML <code>&lt;img /&gt;</code> 标签。默认情况下，文件存放在 <code>public/images</code> 文件夹中。</p><div class="warning"><p>注意，必须指定图片的扩展名。</p></div><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= image_tag "header.png" %&gt;
+
+</pre>
+</div>
+<p>可以指定图片的路径：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= image_tag "icons/delete.gif" %&gt;
+
+</pre>
+</div>
+<p>可以使用 Hash 指定额外的 HTML 属性：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= image_tag "icons/delete.gif", {height: 45} %&gt;
+
+</pre>
+</div>
+<p>可以指定一个Alt属性，在关闭图片的浏览器中显示。如果没指定Alt属性，Rails 会使用图片的文件名，去掉扩展名，并把首字母变成大写。例如，下面两个标签会生成相同的代码：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= image_tag "home.gif" %&gt;
+&lt;%= image_tag "home.gif", alt: "Home" %&gt;
+
+</pre>
+</div>
+<p>还可指定图片的大小，格式为“{width}x{height}”：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= image_tag "home.gif", size: "50x20" %&gt;
+
+</pre>
+</div>
+<p>除了上述特殊的选项外，还可在最后一个参数中指定标准的 HTML 属性，例如 <code>:class</code>、<code>:id</code> 或 <code>:name</code>：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= image_tag "home.gif", alt: "Go Home",
+                          id: "HomeImage",
+                          class: "nav_bar" %&gt;
+
+</pre>
+</div>
+<h5 id="使用-video_tag-链接视频">3.1.5 使用 <code>video_tag</code> 链接视频</h5><p><code>video_tag</code> 帮助方法为指定的文件生成 HTML5 <code>&lt;video&gt;</code> 标签。默认情况下，视频文件存放在 <code>public/videos</code> 文件夹中。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= video_tag "movie.ogg" %&gt;
+
+</pre>
+</div>
+<p>生成的代码如下：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;video src="/videos/movie.ogg" /&gt;
+
+</pre>
+</div>
+<p>和 <code>image_tag</code> 类似，视频的地址可以使用绝对路径，或者相对 <code>public/videos</code> 文件夹的路径。而且也可以指定 <code>size: "#{width}x#{height}"</code> 选项。<code>video_tag</code> 还可指定其他 HTML 属性，例如 <code>id</code>、<code>class</code> 等。</p><p><code>video_tag</code> 方法还可使用 HTML Hash 选项指定所有 <code>&lt;video&gt;</code> 标签的属性，包括：</p>
+<ul>
+<li>
+<code>poster: "image_name.png"</code>：指定视频播放前在视频的位置显示的图片；</li>
+<li>
+<code>autoplay: true</code>：页面加载后开始播放视频；</li>
+<li>
+<code>loop: true</code>：视频播完后再次播放；</li>
+<li>
+<code>controls: true</code>：为用户提供浏览器对视频的控制支持，用于和视频交互；</li>
+<li>
+<code>autobuffer: true</code>：页面加载时预先加载视频文件；</li>
+</ul>
+<p>把数组传递给 <code>video_tag</code> 方法可以指定多个视频：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= video_tag ["trailer.ogg", "movie.ogg"] %&gt;
+
+</pre>
+</div>
+<p>生成的代码如下：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;video&gt;&lt;source src="trailer.ogg" /&gt;&lt;source src="movie.ogg" /&gt;&lt;/video&gt;
+
+</pre>
+</div>
+<h5 id="使用-audio_tag-链接音频">3.1.6 使用 <code>audio_tag</code> 链接音频</h5><p><code>audio_tag</code> 帮助方法为指定的文件生成 HTML5 <code>&lt;audio&gt;</code> 标签。默认情况下，音频文件存放在 <code>public/audio</code> 文件夹中。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= audio_tag "music.mp3" %&gt;
+
+</pre>
+</div>
+<p>还可指定音频文件的路径：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= audio_tag "music/first_song.mp3" %&gt;
+
+</pre>
+</div>
+<p>还可使用 Hash 指定其他属性，例如 <code>:id</code>、<code>:class</code> 等。</p><p>和 <code>video_tag</code> 类似，<code>audio_tag</code> 也有特殊的选项：</p>
+<ul>
+<li>
+<code>autoplay: true</code>：页面加载后开始播放音频；</li>
+<li>
+<code>controls: true</code>：为用户提供浏览器对音频的控制支持，用于和音频交互；</li>
+<li>
+<code>autobuffer: true</code>：页面加载时预先加载音频文件；</li>
+</ul>
+<h4 id="理解-yield">3.2 理解 <code>yield</code>
+</h4><p>在布局中，<code>yield</code> 标明一个区域，渲染的视图会插入这里。最简单的情况是只有一个 <code>yield</code>，此时渲染的整个视图都会插入这个区域：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;html&gt;
+  &lt;head&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;%= yield %&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+</div>
+<p>布局中可以标明多个区域：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;html&gt;
+  &lt;head&gt;
+  &lt;%= yield :head %&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;%= yield %&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+</div>
+<p>视图的主体会插入未命名的 <code>yield</code> 区域。要想在具名 <code>yield</code> 区域插入内容，得使用 <code>content_for</code> 方法。</p><h4 id="使用-content_for-方法">3.3 使用 <code>content_for</code> 方法</h4><p><code>content_for</code> 方法在布局的具名 <code>yield</code> 区域插入内容。例如，下面的视图会在前一节的布局中插入内容：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% content_for :head do %&gt;
+  &lt;title&gt;A simple page&lt;/title&gt;
+&lt;% end %&gt;
+
+&lt;p&gt;Hello, Rails!&lt;/p&gt;
+
+</pre>
+</div>
+<p>套入布局后生成的 HTML 如下：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;html&gt;
+  &lt;head&gt;
+  &lt;title&gt;A simple page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;p&gt;Hello, Rails!&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+</div>
+<p>如果布局不同的区域需要不同的内容，例如侧边栏和底部，就可以使用 <code>content_for</code> 方法。<code>content_for</code> 方法还可用来在通用布局中引入特定页面使用的 JavaScript 文件或 CSS 文件。</p><h4 id="使用局部视图">3.4 使用局部视图</h4><p>局部视图可以把渲染过程分为多个管理方便的片段，把响应的某个特殊部分移入单独的文件。</p><h5 id="具名局部视图">3.4.1 具名局部视图</h5><p>在视图中渲染局部视图可以使用 <code>render</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+&lt;%= render "menu" %&gt;
+
+</pre>
+</div>
+<p>渲染这个视图时，会渲染名为 <code>_menu.html.erb</code> 的文件。注意文件名开头的下划线：局部视图的文件名开头有个下划线，用于和普通视图区分开，不过引用时无需加入下划线。即便从其他文件夹中引入局部视图，规则也是一样：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+&lt;%= render "shared/menu" %&gt;
+
+</pre>
+</div>
+<p>这行代码会引入 <code>app/views/shared/_menu.html.erb</code> 这个局部视图。</p><h5 id="使用局部视图简化视图">3.4.2 使用局部视图简化视图</h5><p>局部视图的一种用法是作为“子程序”（subroutine），把细节提取出来，以便更好地理解整个视图的作用。例如，有如下的视图：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render "shared/ad_banner" %&gt;
+
+&lt;h1&gt;Products&lt;/h1&gt;
+
+&lt;p&gt;Here are a few of our fine products:&lt;/p&gt;
+...
+
+&lt;%= render "shared/footer" %&gt;
+
+</pre>
+</div>
+<p>这里，局部视图 <code>_ad_banner.html.erb</code> 和 <code>_footer.html.erb</code> 可以包含程序多个页面共用的内容。在编写某个页面的视图时，无需关心这些局部视图中的详细内容。</p><div class="info"><p>程序所有页面共用的内容，可以直接在布局中使用局部视图渲染。</p></div><h5 id="局部布局">3.4.3 局部布局</h5><p>和视图可以使用布局一样，局部视图也可使用自己的布局文件。例如，可以这样调用局部视图：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: "link_area", layout: "graybar" %&gt;
+
+</pre>
+</div>
+<p>这行代码会使用 <code>_graybar.html.erb</code> 布局渲染局部视图 <code>_link_area.html.erb</code>。注意，局部布局的名字也以下划线开头，和局部视图保存在同个文件夹中（不在 <code>layouts</code> 文件夹中）。</p><p>还要注意，指定其他选项时，例如 <code>:layout</code>，必须明确地使用 <code>:partial</code> 选项。</p><h5 id="传递本地变量">3.4.4 传递本地变量</h5><p>本地变量可以传入局部视图，这么做可以把局部视图变得更强大、更灵活。例如，可以使用这种方法去除新建和编辑页面的重复代码，但仍然保有不同的内容：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;h1&gt;New zone&lt;/h1&gt;
+&lt;%= render partial: "form", locals: {zone: @zone} %&gt;
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;h1&gt;Editing zone&lt;/h1&gt;
+&lt;%= render partial: "form", locals: {zone: @zone} %&gt;
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for(zone) do |f| %&gt;
+  &lt;p&gt;
+    &lt;b&gt;Zone name&lt;/b&gt;&lt;br&gt;
+    &lt;%= f.text_field :name %&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;%= f.submit %&gt;
+  &lt;/p&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>虽然两个视图使用同一个局部视图，但 Action View 的 <code>submit</code> 帮助方法为 <code>new</code> 动作生成的提交按钮名为“Create Zone”，为 <code>edit</code> 动作生成的提交按钮名为“Update Zone”。</p><p>每个局部视图中都有个和局部视图同名的本地变量（去掉前面的下划线）。通过 <code>object</code> 选项可以把对象传给这个变量：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: "customer", object: @new_customer %&gt;
+
+</pre>
+</div>
+<p>在 <code>customer</code> 局部视图中，变量 <code>customer</code> 的值为父级视图中的 <code>@new_customer</code>。</p><p>如果要在局部视图中渲染模型实例，可以使用简写句法：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render @customer %&gt;
+
+</pre>
+</div>
+<p>假设实例变量 <code>@customer</code> 的值为 <code>Customer</code> 模型的实例，上述代码会渲染 <code>_customer.html.erb</code>，其中本地变量 <code>customer</code> 的值为父级视图中 <code>@customer</code> 实例变量的值。</p><h5 id="渲染集合">3.4.5 渲染集合</h5><p>渲染集合时使用局部视图特别方便。通过 <code>:collection</code> 选项把集合传给局部视图时，会把集合中每个元素套入局部视图渲染：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;h1&gt;Products&lt;/h1&gt;
+&lt;%= render partial: "product", collection: @products %&gt;
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;p&gt;Product Name: &lt;%= product.name %&gt;&lt;/p&gt;
+
+</pre>
+</div>
+<p>传入复数形式的集合时，在局部视图中可以使用和局部视图同名的变量引用集合中的成员。在上面的代码中，局部视图是 <code>_product</code>，在其中可以使用 <code>product</code> 引用渲染的实例。</p><p>渲染集合还有个简写形式。假设 <code>@products</code> 是 <code>product</code> 实例集合，在 <code>index.html.erb</code> 中可以直接写成下面的形式，得到的结果是一样的：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;h1&gt;Products&lt;/h1&gt;
+&lt;%= render @products %&gt;
+
+</pre>
+</div>
+<p>Rails 根据集合中各元素的模型名决定使用哪个局部视图。其实，集合中的元素可以来自不同的模型，Rails 会选择正确的局部视图进行渲染。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;h1&gt;Contacts&lt;/h1&gt;
+&lt;%= render [customer1, employee1, customer2, employee2] %&gt;
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;p&gt;Customer: &lt;%= customer.name %&gt;&lt;/p&gt;
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;p&gt;Employee: &lt;%= employee.name %&gt;&lt;/p&gt;
+
+</pre>
+</div>
+<p>在上面几段代码中，Rails 会根据集合中各成员所属的模型选择正确的局部视图。</p><p>如果集合为空，<code>render</code> 方法会返回 <code>nil</code>，所以最好提供替代文本。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;h1&gt;Products&lt;/h1&gt;
+&lt;%= render(@products) || "There are no products available." %&gt;
+
+</pre>
+</div>
+<h5 id="本地变量">3.4.6 本地变量</h5><p>要在局部视图中自定义本地变量的名字，调用局部视图时可通过 <code>:as</code> 选项指定：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: "product", collection: @products, as: :item %&gt;
+
+</pre>
+</div>
+<p>这样修改之后，在局部视图中可以使用本地变量 <code>item</code> 访问 <code>@products</code> 集合中的实例。</p><p>使用 <code>locals: {}</code> 选项可以把任意本地变量传入局部视图：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: "product", collection: @products,
+           as: :item, locals: {title: "Products Page"} %&gt;
+
+</pre>
+</div>
+<p>在局部视图中可以使用本地变量 <code>title</code>，其值为 <code>"Products Page"</code>。</p><div class="info"><p>在局部视图中还可使用计数器变量，变量名是在集合后加上 <code>_counter</code>。例如，渲染 <code>@products</code> 时，在局部视图中可以使用 <code>product_counter</code> 表示局部视图渲染了多少次。不过不能和 <code>as: :value</code> 一起使用。</p></div><p>在使用主局部视图渲染两个实例中间还可使用 <code>:spacer_template</code> 选项指定第二个局部视图。</p><h5 id="间隔模板">3.4.7 间隔模板</h5><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: @products, spacer_template: "product_ruler" %&gt;
+
+</pre>
+</div>
+<p>Rails 会在两次渲染 <code>_product</code>  局部视图之间渲染 <code>_product_ruler</code> 局部视图（不传入任何数据）。</p><h5 id="集合局部视图的布局">3.4.8 集合局部视图的布局</h5><p>渲染集合时也可使用 <code>:layout</code> 选项。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: "product", collection: @products, layout: "special_layout" %&gt;
+
+</pre>
+</div>
+<p>使用局部视图渲染集合中的各元素时会套用指定的模板。和局部视图一样，当前渲染的对象以及 <code>object_counter</code> 变量也可在布局中使用。</p><h4 id="使用嵌套布局">3.5 使用嵌套布局</h4><p>在程序中有时需要使用不同于常规布局的布局渲染特定的控制器。此时无需复制主视图进行编辑，可以使用嵌套布局（有时也叫子模板）。下面举个例子。</p><p>假设 <code>ApplicationController</code> 布局如下：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;&lt;%= @page_title or "Page Title" %&gt;&lt;/title&gt;
+  &lt;%= stylesheet_link_tag "layout" %&gt;
+  &lt;style&gt;&lt;%= yield :stylesheets %&gt;&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="top_menu"&gt;Top menu items here&lt;/div&gt;
+  &lt;div id="menu"&gt;Menu items here&lt;/div&gt;
+  &lt;div id="content"&gt;&lt;%= content_for?(:content) ? yield(:content) : yield %&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+</div>
+<p>在 <code>NewsController</code> 的页面中，想隐藏顶部目录，在右侧添加一个目录：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% content_for :stylesheets do %&gt;
+  #top_menu {display: none}
+  #right_menu {float: right; background-color: yellow; color: black}
+&lt;% end %&gt;
+&lt;% content_for :content do %&gt;
+  &lt;div id="right_menu"&gt;Right menu items here&lt;/div&gt;
+  &lt;%= content_for?(:news_content) ? yield(:news_content) : yield %&gt;
+&lt;% end %&gt;
+&lt;%= render template: "layouts/application" %&gt;
+
+</pre>
+</div>
+<p>就这么简单。<code>News</code> 控制器的视图会使用 <code>news.html.erb</code> 布局，隐藏了顶部目录，在 <code>&lt;div id="content"&gt;</code> 中添加一个右侧目录。</p><p>使用子模板方式实现这种效果有很多方法。注意，布局的嵌套层级没有限制。使用 <code>render template: 'layouts/news'</code> 可以指定使用一个新布局。如果确定，可以不为 <code>News</code> 控制器创建子模板，直接把 <code>content_for?(:news_content) ? yield(:news_content) : yield</code> 替换成 <code>yield</code> 即可。</p>
+
+        <h3>反馈</h3>
+        <p>
+          欢迎帮忙改善指南质量。
+        </p>
+        <p>
+          如发现任何错误，欢迎修正。开始贡献前，可先行阅读<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">贡献指南：文档</a>。
+        </p>
+        <p>翻译如有错误，深感抱歉，欢迎 <a href="https://github.com/ruby-china/guides/fork">Fork</a> 修正，或至此处<a href="https://github.com/ruby-china/guides/issues/new">回报</a>。</p>
+        <p>
+          文章可能有未完成或过时的内容。请先检查 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 来确定问题在 master 是否已经修掉了。再上 master 补上缺少的文件。内容参考 <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a>来了解行文风格。
+        </p>
+        <p>最后，任何关于 Ruby on Rails 文档的讨论，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件群组</a>。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用<a href="https://creativecommons.org/licenses/by-sa/4.0/">创用 CC 姓名标示-相同方式分享 4.0 国际授权条款</a>授权。</p>
+<p>“Rails”、“Ruby on Rails”，以及 Rails logo 为 David Heinemeier Hansson 的商标。版权所有。</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shCore.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushRuby.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushXml.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushSql.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushPlain.js"></script>
+  <script type="text/javascript">
+    SyntaxHighlighter.all();
+    $(guidesIndex.bind);
+  </script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    // ga('create', '', 'ruby-china.github.io');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

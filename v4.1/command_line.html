@@ -1,0 +1,773 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Rails 命令行 — Ruby on Rails 指南</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://rubyonrails.org/">综览</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/download">下载</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/deploy">部署</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">源码</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/screencasts">视频</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/documentation">文件</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/community">社群</a></li>
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="回首页">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南目录</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单帮助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 简介</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 程序</a></dd>
+                <dd><a href="configuring.html">设置 Rails 程序</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">客制与新建 Rails 产生器</a></dd>
+                <dd><a href="rails_application_templates.html">Rails 应用程式模版</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文件准则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <!-- <li><a class="nav-item" href="//github.com/docrails-tw/wiki">参与翻译</a></li> -->
+        <li><a class="nav-item" href="https://github.com/ruby-china/guides/blob/master/CONTRIBUTING.md">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">致谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南目录</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单帮助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 简介</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 程序</option>
+                  <option value="configuring.html">设置 Rails 程序</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">客制与新建 Rails 产生器</option>
+                  <option value="rails_application_templates.html">Rails 应用程式模版</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文件准则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Rails 命令行</h2><p>读完本文，你将学到：</p>
+<ul>
+<li>如何新建 Rails 程序；</li>
+<li>如何生成模型、控制器、数据库迁移和单元测试；</li>
+<li>如何启动开发服务器；</li>
+<li>如果在交互 shell 中测试对象；</li>
+<li>如何分析、评测程序；</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li>
+<a href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%9F%BA%E7%A1%80">命令行基础</a>
+
+<ul>
+<li><a href="#rails-new"><code>rails new</code></a></li>
+<li><a href="#rails-server"><code>rails server</code></a></li>
+<li><a href="#rails-generate"><code>rails generate</code></a></li>
+<li><a href="#rails-console"><code>rails console</code></a></li>
+<li><a href="#rails-dbconsole"><code>rails dbconsole</code></a></li>
+<li><a href="#rails-runner"><code>rails runner</code></a></li>
+<li><a href="#rails-destroy"><code>rails destroy</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#rake">Rake</a>
+
+<ul>
+<li><a href="#about"><code>about</code></a></li>
+<li><a href="#assets"><code>assets</code></a></li>
+<li><a href="#db"><code>db</code></a></li>
+<li><a href="#doc"><code>doc</code></a></li>
+<li><a href="#notes"><code>notes</code></a></li>
+<li><a href="#routes"><code>routes</code></a></li>
+<li><a href="#test"><code>test</code></a></li>
+<li><a href="#tmp"><code>tmp</code></a></li>
+<li><a href="#%E5%85%B6%E4%BB%96%E4%BB%BB%E5%8A%A1">其他任务</a></li>
+<li><a href="#%E7%BC%96%E5%86%99-rake-%E4%BB%BB%E5%8A%A1">编写 Rake 任务</a></li>
+</ul>
+</li>
+<li>
+<a href="#rails-%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95">Rails 命令行高级用法</a>
+
+<ul>
+<li><a href="#%E6%96%B0%E5%BB%BA%E7%A8%8B%E5%BA%8F%E6%97%B6%E6%8C%87%E5%AE%9A%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E6%BA%90%E7%A0%81%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F">新建程序时指定数据库和源码管理系统</a></li>
+</ul>
+</li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <div class="note"><p>阅读本文前要具备一些 Rails 基础知识，可以阅读“<a href="getting_started.html">Rails 入门</a>”一文。</p></div><h3 id="命令行基础">1 命令行基础</h3><p>有些命令在 Rails 开发过程中经常会用到，下面按照使用频率倒序列出：</p>
+<ul>
+<li><code>rails console</code></li>
+<li><code>rails server</code></li>
+<li><code>rake</code></li>
+<li><code>rails generate</code></li>
+<li><code>rails dbconsole</code></li>
+<li><code>rails new app_name</code></li>
+</ul>
+<p>这些命令都可指定 <code>-h</code> 或 <code>--help</code> 选项显示具体用法。</p><p>下面我们来新建一个 Rails 程序，介绍各命令的用法。</p><h4 id="rails-new">1.1 <code>rails new</code>
+</h4><p>安装 Rails 后首先要做的就是使用 <code>rails new</code> 命令新建 Rails 程序。</p><div class="note"><p>如果还没安装 Rails ，可以执行 <code>gem install rails</code> 命令安装。</p></div><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails new commandsapp
+     create
+     create  README.rdoc
+     create  Rakefile
+     create  config.ru
+     create  .gitignore
+     create  Gemfile
+     create  app
+     ...
+     create  tmp/cache
+     ...
+        run  bundle install
+
+</pre>
+</div>
+<p>这个简单的命令会生成很多文件，组成一个完整的 Rails 程序，直接就可运行。</p><h4 id="rails-server">1.2 <code>rails server</code>
+</h4><p><code>rails server</code> 命令会启动 Ruby 内建的小型服务器 WEBrick。要想在浏览器中访问程序，就要执行这个命令。</p><p>无需其他操作，执行 <code>rails server</code> 命令后就能运行刚创建的 Rails 程序：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ cd commandsapp
+$ rails server
+=&gt; Booting WEBrick
+=&gt; Rails 4.2.0 application starting in development on http://0.0.0.0:3000
+=&gt; Call with -d to detach
+=&gt; Ctrl-C to shutdown server
+[2013-08-07 02:00:01] INFO  WEBrick 1.3.1
+[2013-08-07 02:00:01] INFO  ruby 2.0.0 (2013-06-27) [x86_64-darwin11.2.0]
+[2013-08-07 02:00:01] INFO  WEBrick::HTTPServer#start: pid=69680 port=3000
+
+</pre>
+</div>
+<p>只执行了三个命令，我们就启动了一个 Rails 服务器，监听端口 3000。打开浏览器，访问 <a href="http://localhost:3000">http://localhost:3000</a>，会看到一个简单的 Rails 程序。</p><div class="note"><p>启动服务器的命令还可使用别名“s”：<code>rails s</code>。</p></div><p>如果想让服务器监听其他端口，可通过 <code>-p</code> 选项指定。所处的环境可由 <code>-e</code> 选项指定。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails server -e production -p 4000
+
+</pre>
+</div>
+<p><code>-b</code> 选项把 Rails 绑定到指定的 IP，默认 IP 是 0.0.0.0。指定 <code>-d</code> 选项后，服务器会以守护进程的形式运行。</p><h4 id="rails-generate">1.3 <code>rails generate</code>
+</h4><p><code>rails generate</code> 使用模板生成很多东西。单独执行 <code>rails generate</code> 命令，会列出可用的生成器：</p><div class="note"><p>还可使用别名“g”执行生成器命令：<code>rails g</code>。</p></div><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails generate
+Usage: rails generate GENERATOR [args] [options]
+
+...
+...
+
+Please choose a generator below.
+
+Rails:
+  assets
+  controller
+  generator
+  ...
+  ...
+
+</pre>
+</div>
+<div class="note"><p>使用其他生成器 gem 可以安装更多的生成器，或者使用插件中提供的生成器，甚至还可以自己编写生成器。</p></div><p>使用生成器可以节省大量编写程序骨架的时间。</p><p>下面我们使用控制器生成器生成控制器。但应该使用哪个命令呢？我们问一下生成器：</p><div class="note"><p>所有的 Rails 命令都有帮助信息。和其他 *nix 命令一样，可以在命令后加上 <code>--help</code> 或 <code>-h</code> 选项，例如 <code>rails server --help</code>。</p></div><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails generate controller
+Usage: rails generate controller NAME [action action] [options]
+
+...
+...
+
+Description:
+    ...
+
+    To create a controller within a module, specify the controller name as a
+    path like 'parent_module/controller_name'.
+
+    ...
+
+Example:
+    `rails generate controller CreditCard open debit credit close`
+
+    Credit card controller with URLs like /credit_card/debit.
+        Controller: app/controllers/credit_card_controller.rb
+        Test:       test/controllers/credit_card_controller_test.rb
+        Views:      app/views/credit_card/debit.html.erb [...]
+        Helper:     app/helpers/credit_card_helper.rb
+
+</pre>
+</div>
+<p>控制器生成器接受的参数形式是 <code>generate controller ControllerName action1 action2</code>。下面我们来生成 <code>Greetings</code> 控制器，包含一个动作 <code>hello</code>，跟读者打个招呼。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails generate controller Greetings hello
+     create  app/controllers/greetings_controller.rb
+      route  get "greetings/hello"
+     invoke  erb
+     create    app/views/greetings
+     create    app/views/greetings/hello.html.erb
+     invoke  test_unit
+     create    test/controllers/greetings_controller_test.rb
+     invoke  helper
+     create    app/helpers/greetings_helper.rb
+     invoke    test_unit
+     create      test/helpers/greetings_helper_test.rb
+     invoke  assets
+     invoke    coffee
+     create      app/assets/javascripts/greetings.js.coffee
+     invoke    scss
+     create      app/assets/stylesheets/greetings.css.scss
+
+</pre>
+</div>
+<p>这个命令生成了什么呢？在程序中创建了一堆文件夹，还有控制器文件、视图文件、功能测试文件、视图帮助方法文件、JavaScript 文件盒样式表文件。</p><p>打开控制器文件（<code>app/controllers/greetings_controller.rb</code>），做些改动：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class GreetingsController &lt; ApplicationController
+  def hello
+    @message = "Hello, how are you today?"
+  end
+end
+
+</pre>
+</div>
+<p>然后修改视图文件（<code>app/views/greetings/hello.html.erb</code>），显示消息：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;h1&gt;A Greeting for You!&lt;/h1&gt;
+&lt;p&gt;&lt;%= @message %&gt;&lt;/p&gt;
+
+</pre>
+</div>
+<p>执行 <code>rails server</code> 命令启动服务器：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails server
+=&gt; Booting WEBrick...
+
+</pre>
+</div>
+<p>要查看的地址是 <a href="http://localhost:3000/greetings/hello">http://localhost:3000/greetings/hello</a>。</p><div class="note"><p>在常规的 Rails 程序中，URL 的格式是 http://(host)/(controller)/(action)，访问 http://(host)/(controller) 会进入控制器的 <code>index</code> 动作。</p></div><p>Rails 也为数据模型提供了生成器。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails generate model
+Usage:
+  rails generate model NAME [field[:type][:index] field[:type][:index]] [options]
+
+...
+
+Active Record options:
+      [--migration]            # Indicates when to generate migration
+                               # Default: true
+
+...
+
+Description:
+    Create rails files for model generator.
+
+</pre>
+</div>
+<div class="note"><p>全部可用的字段类型，请查看 <code>TableDefinition#column</code> 方法的<a href="http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html#method-i-column">文档</a>。</p></div><p>不过我们暂且不单独生成模型（后文再生成），先使用脚手架。Rails 中的脚手架会生成资源所需的全部文件，包括：模型，模型所用的迁移，处理模型的控制器，查看数据的视图，以及测试组件。</p><p>我们要创建一个名为“HighScore”的资源，记录视频游戏的最高得分。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails generate scaffold HighScore game:string score:integer
+    invoke  active_record
+    create    db/migrate/20130717151933_create_high_scores.rb
+    create    app/models/high_score.rb
+    invoke    test_unit
+    create      test/models/high_score_test.rb
+    create      test/fixtures/high_scores.yml
+    invoke  resource_route
+     route    resources :high_scores
+    invoke  scaffold_controller
+    create    app/controllers/high_scores_controller.rb
+    invoke    erb
+    create      app/views/high_scores
+    create      app/views/high_scores/index.html.erb
+    create      app/views/high_scores/edit.html.erb
+    create      app/views/high_scores/show.html.erb
+    create      app/views/high_scores/new.html.erb
+    create      app/views/high_scores/_form.html.erb
+    invoke    test_unit
+    create      test/controllers/high_scores_controller_test.rb
+    invoke    helper
+    create      app/helpers/high_scores_helper.rb
+    invoke      test_unit
+    create        test/helpers/high_scores_helper_test.rb
+    invoke    jbuilder
+    create      app/views/high_scores/index.json.jbuilder
+    create      app/views/high_scores/show.json.jbuilder
+    invoke  assets
+    invoke    coffee
+    create      app/assets/javascripts/high_scores.js.coffee
+    invoke    scss
+    create      app/assets/stylesheets/high_scores.css.scss
+    invoke  scss
+   identical    app/assets/stylesheets/scaffolds.css.scss
+
+</pre>
+</div>
+<p>这个生成器检测到以下各组件对应的文件夹已经存储在：模型，控制器，帮助方法，布局，功能测试，单元测试，样式表。然后创建“HighScore”资源的视图、控制器、模型和迁移文件（用来创建 <code>high_scores</code> 数据表和字段），并设置好路由，以及测试等。</p><p>我们要运行迁移，执行文件 <code>20130717151933_create_high_scores.rb</code> 中的代码，这才能修改数据库的模式。那么要修改哪个数据库呢？执行 <code>rake db:migrate</code> 命令后会生成 SQLite3 数据库。稍后再详细介绍 Rake。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake db:migrate
+==  CreateHighScores: migrating ===============================================
+-- create_table(:high_scores)
+   -&gt; 0.0017s
+==  CreateHighScores: migrated (0.0019s) ======================================
+
+</pre>
+</div>
+<div class="note"><p>介绍一下单元测试。单元测试是用来测试代码、做断定的代码。在单元测试中，我们只关注代码的一部分，例如模型中的一个方法，测试其输入和输出。单元测试是你的好伙伴，你逐渐会意识到，单元测试的程度越高，生活的质量才能提上来。真的。稍后我们会编写一个单元测试。</p></div><p>我们来看一下 Rails 创建的界面。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails server
+
+</pre>
+</div>
+<p>打开浏览器，访问 <a href="http://localhost:3000/high_scores">http://localhost:3000/high_scores</a>，现在可以创建新的最高得分了（太空入侵者得了 55,160 分）。</p><h4 id="rails-console">1.4 <code>rails console</code>
+</h4><p>执行 <code>console</code> 命令后，可以在命令行中和 Rails 程序交互。<code>rails</code> console` 使用的是 IRB，所以如果你用过 IRB 的话，操作起来很顺手。在终端里可以快速测试想法，或者修改服务器端的数据，而无需在网站中操作。</p><div class="note"><p>这个命令还可以使用别名“c”：<code>rails c</code>。</p></div><p>执行 <code>console</code> 命令时可以指定终端在哪个环境中打开：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails console staging
+
+</pre>
+</div>
+<p>如果你想测试一些代码，但不想改变存储的数据，可以执行 <code>rails console --sandbox</code>。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails console --sandbox
+Loading development environment in sandbox (Rails 4.2.0)
+Any modifications you make will be rolled back on exit
+irb(main):001:0&gt;
+
+</pre>
+</div>
+<h4 id="rails-dbconsole">1.5 <code>rails dbconsole</code>
+</h4><p><code>rails dbconsole</code> 能检测到你正在使用的数据库类型（还能理解传入的命令行参数），然后进入该数据库的命令行界面。该命令支持 MySQL，PostgreSQL，SQLite 和 SQLite3。</p><div class="note"><p>这个命令还可使用别名“db”：<code>rails db</code>。</p></div><h4 id="rails-runner">1.6 <code>rails runner</code>
+</h4><p><code>runner</code> 可以以非交互的方式在 Rails 中运行 Ruby 代码。例如：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails runner "Model.long_running_method"
+
+</pre>
+</div>
+<div class="note"><p>这个命令还可使用别名“r”：<code>rails r</code>。</p></div><p>可使用 <code>-e</code> 选项指定 <code>runner</code> 命令在哪个环境中运行。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails runner -e staging "Model.long_running_method"
+
+</pre>
+</div>
+<h4 id="rails-destroy">1.7 <code>rails destroy</code>
+</h4><p><code>destroy</code> 可以理解成 <code>generate</code> 的逆操作，能识别生成了什么，然后将其删除。</p><div class="note"><p>这个命令还可使用别名“d”：<code>rails d</code>。</p></div><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails generate model Oops
+      invoke  active_record
+      create    db/migrate/20120528062523_create_oops.rb
+      create    app/models/oops.rb
+      invoke    test_unit
+      create      test/models/oops_test.rb
+      create      test/fixtures/oops.yml
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails destroy model Oops
+      invoke  active_record
+      remove    db/migrate/20120528062523_create_oops.rb
+      remove    app/models/oops.rb
+      invoke    test_unit
+      remove      test/models/oops_test.rb
+      remove      test/fixtures/oops.yml
+
+</pre>
+</div>
+<h3 id="rake">2 Rake</h3><p>Rake 是 Ruby 领域的 Make，是个独立的 Ruby 工具，目的是代替 Unix 中的 make。Rake 根据 <code>Rakefile</code> 和 <code>.rake</code> 文件构建任务。Rails 使用 Rake 实现常见的管理任务，尤其是较为复杂的任务。</p><p>执行 <code>rake -- tasks</code> 命令可以列出所有可用的 Rake 任务，具体的任务根据所在文件夹会有所不同。每个任务都有描述信息，帮助你找到所需的命令。</p><p>要想查看执行 Rake 任务时的完整调用栈，可以在命令中使用 <code>--trace</code> 选项，例如 <code>rake db:create --trace</code>。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake --tasks
+rake about              # List versions of all Rails frameworks and the environment
+rake assets:clean       # Remove compiled assets
+rake assets:precompile  # Compile all the assets named in config.assets.precompile
+rake db:create          # Create the database from config/database.yml for the current Rails.env
+...
+rake log:clear          # Truncates all *.log files in log/ to zero bytes (specify which logs with LOGS=test,development)
+rake middleware         # Prints out your Rack middleware stack
+...
+rake tmp:clear          # Clear session, cache, and socket files from tmp/ (narrow w/ tmp:sessions:clear, tmp:cache:clear, tmp:sockets:clear)
+rake tmp:create         # Creates tmp directories for sessions, cache, sockets, and pids
+
+</pre>
+</div>
+<div class="note"><p>还可以执行 <code>rake -T</code> 查看所有任务。</p></div><h4 id="about">2.1 <code>about</code>
+</h4><p><code>rake about</code> 任务输出以下信息：Ruby、RubyGems、Rails 的版本号，Rails 使用的组件，程序所在的文件夹，Rails 当前所处的环境名，程序使用的数据库适配器，数据库模式版本号。如果想向他人需求帮助，检查安全补丁是否影响程序，或者需要查看现有 Rails 程序的信息，可以使用这个任务。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake about
+About your application's environment
+Ruby version              1.9.3 (x86_64-linux)
+RubyGems version          1.3.6
+Rack version              1.3
+Rails version             4.2.0
+JavaScript Runtime        Node.js (V8)
+Active Record version     4.2.0
+Action Pack version       4.2.0
+Action View version       4.2.0
+Action Mailer version     4.2.0
+Active Support version    4.2.0
+Middleware                Rack::Sendfile, ActionDispatch::Static, Rack::Lock, #&lt;ActiveSupport::Cache::Strategy::LocalCache::Middleware:0x007ffd131a7c88&gt;, Rack::Runtime, Rack::MethodOverride, ActionDispatch::RequestId, Rails::Rack::Logger, ActionDispatch::ShowExceptions, ActionDispatch::DebugExceptions, ActionDispatch::RemoteIp, ActionDispatch::Reloader, ActionDispatch::Callbacks, ActiveRecord::Migration::CheckPending, ActiveRecord::ConnectionAdapters::ConnectionManagement, ActiveRecord::QueryCache, ActionDispatch::Cookies, ActionDispatch::Session::CookieStore, ActionDispatch::Flash, ActionDispatch::ParamsParser, Rack::Head, Rack::ConditionalGet, Rack::ETag
+Application root          /home/foobar/commandsapp
+Environment               development
+Database adapter          sqlite3
+Database schema version   20110805173523
+
+</pre>
+</div>
+<h4 id="assets">2.2 <code>assets</code>
+</h4><p><code>rake assets:precompile</code> 任务会预编译 <code>app/assets</code> 文件夹中的静态资源文件。<code>rake assets:clean</code> 任务会把编译好的静态资源文件删除。</p><h4 id="db">2.3 <code>db</code>
+</h4><p>Rake 命名空间 <code>db:</code> 中最常用的任务是 <code>migrate</code> 和 <code>create</code>，这两个任务会尝试运行所有迁移相关的 Rake 任务（<code>up</code>，<code>down</code>，<code>redo</code>，<code>reset</code>）。<code>rake db:version</code> 在排查问题时很有用，会输出数据库的当前版本。</p><p>关于数据库迁移的更多介绍，参阅“<a href="active_record_migrations.html">Active Record 数据库迁移</a>”一文。</p><h4 id="doc">2.4 <code>doc</code>
+</h4><p><code>doc:</code> 命名空间中的任务可以生成程序的文档，Rails API 文档和 Rails 指南。生成的文档可以随意分割，减少程序的大小，适合在嵌入式平台使用。</p>
+<ul>
+<li>
+<code>rake doc:app</code> 在 <code>doc/app</code> 文件夹中生成程序的文档；</li>
+<li>
+<code>rake doc:guides</code> 在 <code>doc/guides</code> 文件夹中生成 Rails 指南；</li>
+<li>
+<code>rake doc:rails</code> 在 <code>doc/api</code> 文件夹中生成 Rails API 文档；</li>
+</ul>
+<h4 id="notes">2.5 <code>notes</code>
+</h4><p><code>rake notes</code> 会搜索整个程序，寻找以 FIXME、OPTIMIZE 或 TODO 开头的注释。搜索的文件包括 <code>.builder</code>，<code>.rb</code>，<code>.erb</code>，<code>.haml</code>，<code>.slim</code>，<code>.css</code>，<code>.scss</code>，<code>.js</code>，<code>.coffee</code>，<code>.rake</code>，<code>.sass</code> 和 <code>.less</code>。搜索的内容包括默认注解和自定义注解。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake notes
+(in /home/foobar/commandsapp)
+app/controllers/admin/users_controller.rb:
+  * [ 20] [TODO] any other way to do this?
+  * [132] [FIXME] high priority for next deploy
+
+app/models/school.rb:
+  * [ 13] [OPTIMIZE] refactor this code to make it faster
+  * [ 17] [FIXME]
+
+</pre>
+</div>
+<p>如果想查找特定的注解，例如 FIXME，可以执行 <code>rake notes:fixme</code> 任务。注意，在命令中注解的名字要使用小写形式。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake notes:fixme
+(in /home/foobar/commandsapp)
+app/controllers/admin/users_controller.rb:
+  * [132] high priority for next deploy
+
+app/models/school.rb:
+  * [ 17]
+
+</pre>
+</div>
+<p>在代码中可以使用自定义的注解，然后执行 <code>rake notes:custom</code> 任务，并使用 <code>ANNOTATION</code> 环境变量指定要查找的注解。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake notes:custom ANNOTATION=BUG
+(in /home/foobar/commandsapp)
+app/models/post.rb:
+  * [ 23] Have to fix this one before pushing!
+
+</pre>
+</div>
+<div class="note"><p>注意，不管查找的是默认的注解还是自定义的直接，注解名（例如 FIXME，BUG 等）不会在输出结果中显示。</p></div><p>默认情况下，<code>rake notes</code> 会搜索 <code>app</code>、<code>config</code>、<code>lib</code>、<code>bin</code> 和 <code>test</code> 这几个文件夹中的文件。如果想在其他的文件夹中查找，可以使用 <code>SOURCE_ANNOTATION_DIRECTORIES</code> 环境变量指定一个以逗号分隔的列表。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ export SOURCE_ANNOTATION_DIRECTORIES='spec,vendor'
+$ rake notes
+(in /home/foobar/commandsapp)
+app/models/user.rb:
+  * [ 35] [FIXME] User should have a subscription at this point
+spec/models/user_spec.rb:
+  * [122] [TODO] Verify the user that has a subscription works
+
+</pre>
+</div>
+<h4 id="routes">2.6 <code>routes</code>
+</h4><p><code>rake routes</code> 会列出程序中定义的所有路由，可为解决路由问题提供帮助，还可以让你对程序中的所有 URL 有个整体了解。</p><h4 id="test">2.7 <code>test</code>
+</h4><div class="note"><p>Rails 中的单元测试详情，参见“<a href="testing.html">Rails 程序测试指南</a>”一文。</p></div><p>Rails 提供了一个名为 Minitest 的测试组件。Rails 的稳定性也由测试决定。<code>test:</code> 命名空间中的任务可用于运行各种测试。</p><h4 id="tmp">2.8 <code>tmp</code>
+</h4><p><code>Rails.root/tmp</code> 文件夹和 *nix 中的 <code>/tmp</code> 作用相同，用来存放临时文件，例如会话（如果使用文件存储会话）、PID 文件和缓存文件等。</p><p><code>tmp:</code> 命名空间中的任务可以清理或创建 <code>Rails.root/tmp</code> 文件夹：</p>
+<ul>
+<li>
+<code>rake tmp:cache:clear</code> 清理 <code>tmp/cache</code> 文件夹；</li>
+<li>
+<code>rake tmp:sessions:clear</code> 清理 <code>tmp/sessions</code> 文件夹；</li>
+<li>
+<code>rake tmp:sockets:clear</code> 清理 <code>tmp/sockets</code> 文件夹；</li>
+<li>
+<code>rake tmp:clear</code> 清理以上三个文件夹；</li>
+<li>
+<code>rake tmp:create</code> 创建会话、缓存、套接字和 PID 所需的临时文件夹；</li>
+</ul>
+<h4 id="其他任务">2.9 其他任务</h4>
+<ul>
+<li>
+<code>rake stats</code> 用来统计代码状况，显示千行代码数和测试比例等；</li>
+<li>
+<code>rake secret</code> 会生成一个伪随机字符串，作为会话的密钥；</li>
+<li>
+<code>rake time:zones:all</code> 列出 Rails 能理解的所有时区；</li>
+</ul>
+<h4 id="编写-rake-任务">2.10 编写 Rake 任务</h4><p>自己编写的 Rake 任务保存在 <code>Rails.root/lib/tasks</code> 文件夹中，文件的扩展名是 <code>.rake</code>。执行 <code>bin/rails generate task</code> 命令会生成一个新的自定义任务文件。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+desc "I am short, but comprehensive description for my cool task"
+task task_name: [:prerequisite_task, :another_task_we_depend_on] do
+  # All your magic here
+  # Any valid Ruby code is allowed
+end
+
+</pre>
+</div>
+<p>向自定义的任务中传入参数的方式如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+task :task_name, [:arg_1] =&gt; [:pre_1, :pre_2] do |t, args|
+  # You can use args from here
+end
+
+</pre>
+</div>
+<p>任务可以分组，放入命名空间：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+namespace :db do
+  desc "This task does nothing"
+  task :nothing do
+    # Seriously, nothing
+  end
+end
+
+</pre>
+</div>
+<p>执行任务的方法如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+rake task_name
+rake "task_name[value 1]" # entire argument string should be quoted
+rake db:nothing
+
+</pre>
+</div>
+<div class="note"><p>如果在任务中要和程序的模型交互，例如查询数据库等，可以使用 <code>environment</code> 任务，加载程序代码。</p></div><h3 id="rails-命令行高级用法">3 Rails 命令行高级用法</h3><p>Rails 命令行的高级用法就是找到实用的参数，满足特定需求或者工作流程。下面是一些常用的高级命令。</p><h4 id="新建程序时指定数据库和源码管理系统">3.1 新建程序时指定数据库和源码管理系统</h4><p>新建程序时，可设置一些选项指定使用哪种数据库和源码管理系统。这么做可以节省一点时间，减少敲击键盘的次数。</p><p>我们来看一下 <code>--git</code> 和 <code>--database=postgresql</code> 选项有什么作用：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ mkdir gitapp
+$ cd gitapp
+$ git init
+Initialized empty Git repository in .git/
+$ rails new . --git --database=postgresql
+      exists
+      create  app/controllers
+      create  app/helpers
+...
+...
+      create  tmp/cache
+      create  tmp/pids
+      create  Rakefile
+add 'Rakefile'
+      create  README.rdoc
+add 'README.rdoc'
+      create  app/controllers/application_controller.rb
+add 'app/controllers/application_controller.rb'
+      create  app/helpers/application_helper.rb
+...
+      create  log/test.log
+add 'log/test.log'
+
+</pre>
+</div>
+<p>上面的命令先新建一个 <code>gitapp</code> 文件夹，初始化一个空的 git 仓库，然后再把 Rails 生成的文件加入仓库。再来看一下在数据库设置文件中添加了什么：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ cat config/database.yml
+# PostgreSQL. Versions 8.2 and up are supported.
+#
+# Install the pg driver:
+#   gem install pg
+# On OS X with Homebrew:
+#   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
+# On OS X with MacPorts:
+#   gem install pg -- --with-pg-config=/opt/local/lib/postgresql84/bin/pg_config
+# On Windows:
+#   gem install pg
+#       Choose the win32 build.
+#       Install PostgreSQL and put its /bin directory on your path.
+#
+# Configure Using Gemfile
+# gem 'pg'
+#
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: gitapp_development
+  pool: 5
+  username: gitapp
+  password:
+...
+...
+
+</pre>
+</div>
+<p>这个命令还根据我们选择的 PostgreSQL 数据库在 <code>database.yml</code> 中添加了一些设置。</p><div class="note"><p>指定源码管理系统选项时唯一的不便是，要先新建程序的文件夹，再初始化源码管理系统，然后才能执行 <code>rails new</code> 命令生成程序骨架。</p></div>
+
+        <h3>反馈</h3>
+        <p>
+          欢迎帮忙改善指南质量。
+        </p>
+        <p>
+          如发现任何错误，欢迎修正。开始贡献前，可先行阅读<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">贡献指南：文档</a>。
+        </p>
+        <p>翻译如有错误，深感抱歉，欢迎 <a href="https://github.com/ruby-china/guides/fork">Fork</a> 修正，或至此处<a href="https://github.com/ruby-china/guides/issues/new">回报</a>。</p>
+        <p>
+          文章可能有未完成或过时的内容。请先检查 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 来确定问题在 master 是否已经修掉了。再上 master 补上缺少的文件。内容参考 <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a>来了解行文风格。
+        </p>
+        <p>最后，任何关于 Ruby on Rails 文档的讨论，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件群组</a>。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用<a href="https://creativecommons.org/licenses/by-sa/4.0/">创用 CC 姓名标示-相同方式分享 4.0 国际授权条款</a>授权。</p>
+<p>“Rails”、“Ruby on Rails”，以及 Rails logo 为 David Heinemeier Hansson 的商标。版权所有。</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shCore.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushRuby.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushXml.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushSql.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushPlain.js"></script>
+  <script type="text/javascript">
+    SyntaxHighlighter.all();
+    $(guidesIndex.bind);
+  </script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    // ga('create', '', 'ruby-china.github.io');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>

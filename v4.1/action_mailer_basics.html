@@ -1,0 +1,770 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Action Mailer 基础 — Ruby on Rails 指南</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://rubyonrails.org/">综览</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/download">下载</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/deploy">部署</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">源码</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/screencasts">视频</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/documentation">文件</a></li>
+        <li class="more-info"><a href="http://rubyonrails.org/community">社群</a></li>
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="回首页">Guides.rubyonrails.org</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南目录</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 数据库迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单帮助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 简介</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="security.html">Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 程序</a></dd>
+                <dd><a href="configuring.html">设置 Rails 程序</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">客制与新建 Rails 产生器</a></dd>
+                <dd><a href="rails_application_templates.html">Rails 应用程式模版</a></dd>
+                <dt>贡献 Ruby on Rails</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文件准则</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <!-- <li><a class="nav-item" href="//github.com/docrails-tw/wiki">参与翻译</a></li> -->
+        <li><a class="nav-item" href="https://github.com/ruby-china/guides/blob/master/CONTRIBUTING.md">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">致谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南目录</option>
+              <optgroup label="入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 数据库迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单帮助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 简介</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="security.html">Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 程序</option>
+                  <option value="configuring.html">设置 Rails 程序</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="constant_autoloading_and_reloading.html">Constant Autoloading and Reloading</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">客制与新建 Rails 产生器</option>
+                  <option value="rails_application_templates.html">Rails 应用程式模版</option>
+              </optgroup>
+              <optgroup label="贡献 Ruby on Rails">
+                  <option value="contributing_to_ruby_on_rails.html">贡献 Ruby on Rails</option>
+                  <option value="api_documentation_guidelines.html">API 文件准则</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">升级 Ruby on Rails</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Action Mailer 基础</h2><p>本文全面介绍如何在程序中收发邮件，Action Mailer 的内部机理，以及如何测试“邮件程序”（mailer）。</p><p>读完本文，你将学到：</p>
+<ul>
+<li>如何在 Rails 程序内收发邮件；</li>
+<li>如何生成及编辑 Action Mailer 类和邮件视图；</li>
+<li>如何设置 Action Mailer；</li>
+<li>如何测试 Action Mailer 类；</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <ol class="chapters">
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li>
+<a href="#%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6">发送邮件</a>
+
+<ul>
+<li><a href="#%E7%94%9F%E6%88%90%E9%82%AE%E4%BB%B6%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%AD%A5%E9%AA%A4">生成邮件程序的步骤</a></li>
+<li><a href="#%E8%87%AA%E5%8A%A8%E7%BC%96%E7%A0%81%E9%82%AE%E4%BB%B6%E5%A4%B4">自动编码邮件头</a></li>
+<li><a href="#action-mailer-%E6%96%B9%E6%B3%95">Action Mailer 方法</a></li>
+<li><a href="#%E9%82%AE%E4%BB%B6%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%A7%86%E5%9B%BE">邮件程序的视图</a></li>
+<li><a href="#action-mailer-%E5%B8%83%E5%B1%80">Action Mailer 布局</a></li>
+<li><a href="#%E5%9C%A8-action-mailer-%E8%A7%86%E5%9B%BE%E4%B8%AD%E7%94%9F%E6%88%90-url">在 Action Mailer 视图中生成 URL</a></li>
+<li><a href="#%E5%8F%91%E9%80%81%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E9%82%AE%E4%BB%B6">发送多种格式邮件</a></li>
+<li><a href="#%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6%E6%97%B6%E5%8A%A8%E6%80%81%E8%AE%BE%E7%BD%AE%E5%8F%91%E9%80%81%E9%80%89%E9%A1%B9">发送邮件时动态设置发送选项</a></li>
+<li><a href="#%E4%B8%8D%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF">不渲染模板</a></li>
+</ul>
+</li>
+<li><a href="#%E6%8E%A5%E6%94%B6%E9%82%AE%E4%BB%B6">接收邮件</a></li>
+<li><a href="#action-mailer-%E5%9B%9E%E8%B0%83">Action Mailer 回调</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-action-mailer-%E5%B8%AE%E5%8A%A9%E6%96%B9%E6%B3%95">使用 Action Mailer 帮助方法</a></li>
+<li>
+<a href="#%E8%AE%BE%E7%BD%AE-action-mailer">设置 Action Mailer</a>
+
+<ul>
+<li><a href="#action-mailer-%E8%AE%BE%E7%BD%AE%E7%A4%BA%E4%BE%8B">Action Mailer 设置示例</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE-action-mailer-%E4%BD%BF%E7%94%A8-gmail">设置 Action Mailer 使用 Gmail</a></li>
+</ul>
+</li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E9%82%AE%E4%BB%B6%E7%A8%8B%E5%BA%8F">测试邮件程序</a></li>
+<li><a href="#%E6%8B%A6%E6%88%AA%E9%82%AE%E4%BB%B6">拦截邮件</a></li>
+</ol>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <h3 id="简介">1 简介</h3><p>Rails 使用 Action Mailer 实现发送邮件功能，邮件由邮件程序和视图控制。邮件程序继承自 <code>ActionMailer::Base</code>，作用和控制器类似，保存在文件夹 <code>app/mailers</code> 中，对应的视图保存在文件夹 <code>app/views</code> 中。</p><h3 id="发送邮件">2 发送邮件</h3><p>本节详细介绍如何创建邮件程序及对应的视图。</p><h4 id="生成邮件程序的步骤">2.1 生成邮件程序的步骤</h4><h5 id="创建邮件程序">2.1.1 创建邮件程序</h5><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails generate mailer UserMailer
+create  app/mailers/user_mailer.rb
+invoke  erb
+create    app/views/user_mailer
+invoke  test_unit
+create    test/mailers/user_mailer_test.rb
+
+</pre>
+</div>
+<p>如上所示，生成邮件程序的方法和使用其他生成器一样。邮件程序在某种程度上就是控制器。执行上述命令后，生成了一个邮件程序，一个视图文件夹和一个测试文件。</p><p>如果不想使用生成器，可以手动在 <code>app/mailers</code> 文件夹中新建文件，但要确保继承自 <code>ActionMailer::Base</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class MyMailer &lt; ActionMailer::Base
+end
+
+</pre>
+</div>
+<h5 id="编辑邮件程序">2.1.2 编辑邮件程序</h5><p>邮件程序和控制器类似，也有称为“动作”的方法，以及组织内容的视图。控制器生成的内容，例如 HTML，发送给客户端；邮件程序生成的消息则通过电子邮件发送。</p><p>文件 <code>app/mailers/user_mailer.rb</code> 中有一个空的邮件程序：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UserMailer &lt; ActionMailer::Base
+  default from: 'from@example.com'
+end
+
+</pre>
+</div>
+<p>下面我们定义一个名为 <code>welcome_email</code> 的方法，向用户的注册 Email 中发送一封邮件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UserMailer &lt; ActionMailer::Base
+  default from: 'notifications@example.com'
+
+  def welcome_email(user)
+    @user = user
+    @url  = 'http://example.com/login'
+    mail(to: @user.email, subject: 'Welcome to My Awesome Site')
+  end
+end
+
+</pre>
+</div>
+<p>简单说明一下这段代码。可用选项的详细说明请参见“<a href="#complete-list-of-action-mailer-methods">Action Mailer 方法</a>”一节。</p>
+<ul>
+<li>
+<code>default</code>：一个 Hash，该邮件程序发出邮件的默认设置。上例中我们把 <code>:from</code> 邮件头设为一个值，这个类中的所有动作都会使用这个值，不过可在具体的动作中重设。</li>
+<li>
+<code>mail</code>：用于发送邮件的方法，我们传入了 <code>:to</code> 和 <code>:subject</code> 邮件头。</li>
+</ul>
+<p>和控制器一样，动作中定义的实例变量可以在视图中使用。</p><h5 id="创建邮件程序的视图">2.1.3 创建邮件程序的视图</h5><p>在文件夹 <code>app/views/user_mailer/</code> 中新建文件 <code>welcome_email.html.erb</code>。这个视图是邮件的模板，使用 HTML 编写：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta content='text/html; charset=UTF-8' http-equiv='Content-Type' /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Welcome to example.com, &lt;%= @user.name %&gt;&lt;/h1&gt;
+    &lt;p&gt;
+      You have successfully signed up to example.com,
+      your username is: &lt;%= @user.login %&gt;.&lt;br&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      To login to the site, just follow this link: &lt;%= @url %&gt;.
+    &lt;/p&gt;
+    &lt;p&gt;Thanks for joining and have a great day!&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+</div>
+<p>我们再创建一个纯文本视图。因为并不是所有客户端都可以显示 HTML 邮件，所以最好发送两种格式。在文件夹 <code>app/views/user_mailer/</code> 中新建文件 <code>welcome_email.text.erb</code>，写入以下代码：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+Welcome to example.com, &lt;%= @user.name %&gt;
+===============================================
+
+You have successfully signed up to example.com,
+your username is: &lt;%= @user.login %&gt;.
+
+To login to the site, just follow this link: &lt;%= @url %&gt;.
+
+Thanks for joining and have a great day!
+
+</pre>
+</div>
+<p>调用 <code>mail</code> 方法后，Action Mailer 会检测到这两个模板（纯文本和 HTML），自动生成一个类型为 <code>multipart/alternative</code> 的邮件。</p><h5 id="调用邮件程序">2.1.4 调用邮件程序</h5><p>其实，邮件程序就是渲染视图的另一种方式，只不过渲染的视图不通过 HTTP 协议发送，而是通过 Email 协议发送。因此，应该由控制器调用邮件程序，在成功注册用户后给用户发送一封邮件。过程相当简单。</p><p>首先，生成一个简单的 <code>User</code> 脚手架：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails generate scaffold user name email login
+$ rake db:migrate
+
+</pre>
+</div>
+<p>这样就有一个可用的用户模型了。我们需要编辑的是文件 <code>app/controllers/users_controller.rb</code>，修改 <code>create</code> 动作，成功保存用户后调用 <code>UserMailer.welcome_email</code> 方法，向刚注册的用户发送邮件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UsersController &lt; ApplicationController
+  # POST /users
+  # POST /users.json
+  def create
+    @user = User.new(params[:user])
+
+    respond_to do |format|
+      if @user.save
+        # Tell the UserMailer to send a welcome email after save
+        UserMailer.welcome_email(@user).deliver
+
+        format.html { redirect_to(@user, notice: 'User was successfully created.') }
+        format.json { render json: @user, status: :created, location: @user }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+end
+
+</pre>
+</div>
+<p><code>welcome_email</code> 方法返回 <code>Mail::Message</code> 对象，在其上调用 <code>deliver</code> 方法发送邮件。</p><h4 id="自动编码邮件头">2.2 自动编码邮件头</h4><p>Action Mailer 会自动编码邮件头和邮件主体中的多字节字符。</p><p>更复杂的需求，例如使用其他字符集和自编码文字，请参考 <a href="https://github.com/mikel/mail">Mail</a> 库的用法。</p><h4 id="action-mailer-方法">2.3 Action Mailer 方法</h4><p>下面这三个方法是邮件程序中最重要的方法：</p>
+<ul>
+<li>
+<code>headers</code>：设置邮件头，可以指定一个由字段名和值组成的 Hash，或者使用 <code>headers[:field_name] = 'value'</code> 形式；</li>
+<li>
+<code>attachments</code>：添加邮件的附件，例如，<code>attachments['file-name.jpg'] = File.read('file-name.jpg')</code>；</li>
+<li>
+<code>mail</code>：发送邮件，传入的值为 Hash 形式的邮件头，<code>mail</code> 方法负责创建邮件内容，纯文本或多种格式，取决于定义了哪种邮件模板；</li>
+</ul>
+<h5 id="添加附件">2.3.1 添加附件</h5><p>在 Action Mailer 中添加附件十分方便。</p>
+<ul>
+<li>
+<p>  传入文件名和内容，Action Mailer 和 <a href="https://github.com/mikel/mail">Mail</a> gem 会自动猜测附件的 MIME 类型，设置编码并创建附件。</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+attachments['filename.jpg'] = File.read('/path/to/filename.jpg')
+
+</pre>
+</div>
+<p>触发 <code>mail</code> 方法后，会发送一个由多部分组成的邮件，附件嵌套在类型为 <code>multipart/mixed</code> 的顶级结构中，其中第一部分的类型为 <code>multipart/alternative</code>，包含纯文本和 HTML 格式的邮件内容。</p>
+</li>
+</ul>
+<div class="note"><p>Mail gem 会自动使用 Base64 编码附件。如果想使用其他编码方式，可以先编码好，再把编码后的附件通过 Hash 传给 <code>attachments</code> 方法。</p></div>
+<ul>
+<li>
+<p>  传入文件名，指定邮件头和内容，Action Mailer 和 Mail gem 会使用传入的参数添加附件。</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+encoded_content = SpecialEncode(File.read('/path/to/filename.jpg'))
+attachments['filename.jpg'] = {mime_type: 'application/x-gzip',
+                               encoding: 'SpecialEncoding',
+                               content: encoded_content }
+
+</pre>
+</div>
+</li>
+</ul>
+<div class="note"><p>如果指定了 <code>encoding</code> 键，Mail 会认为附件已经编码了，不会再使用 Base64 编码附件。</p></div><h5 id="使用行间附件">2.3.2 使用行间附件</h5><p>在 Action Mailer 3.0 中使用行间附件比之前版本简单得多。</p>
+<ul>
+<li>
+<p>  首先，在 <code>attachments</code> 方法上调用 <code>inline</code> 方法，告诉 Mail 这是个行间附件：</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def welcome
+  attachments.inline['image.jpg'] = File.read('/path/to/image.jpg')
+end
+
+</pre>
+</div>
+</li>
+<li>
+<p>  在视图中，可以直接使用 <code>attachments</code> 方法，将其视为一个 Hash，指定想要使用的附件，在其上调用 <code>url</code> 方法，再把结果传给 <code>image_tag</code> 方法：</p>
+<div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;p&gt;Hello there, this is our image&lt;/p&gt;
+
+&lt;%= image_tag attachments['image.jpg'].url %&gt;
+
+</pre>
+</div>
+</li>
+<li>
+<p>  因为我们只是简单的调用了 <code>image_tag</code> 方法，所以和其他图片一样，在附件地址之后，还可以传入选项 Hash：</p>
+<div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;p&gt;Hello there, this is our image&lt;/p&gt;
+
+&lt;%= image_tag attachments['image.jpg'].url, alt: 'My Photo',
+                                            class: 'photos' %&gt;
+
+</pre>
+</div>
+</li>
+</ul>
+<h5 id="发给多个收件人">2.3.3 发给多个收件人</h5><p>要想把一封邮件发送给多个收件人，例如通知所有管理员有新用户注册网站，可以把 <code>:to</code> 键的值设为一组邮件地址。这一组邮件地址可以是一个数组；也可以是一个字符串，使用逗号分隔各个地址。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class AdminMailer &lt; ActionMailer::Base
+  default to: Proc.new { Admin.pluck(:email) },
+          from: 'notification@example.com'
+
+  def new_registration(user)
+    @user = user
+    mail(subject: "New User Signup: #{@user.email}")
+  end
+end
+
+</pre>
+</div>
+<p>使用类似的方式还可添加抄送和密送，分别设置 <code>:cc</code> 和 <code>:bcc</code> 键即可。</p><h5 id="在邮件中显示名字">2.3.4 在邮件中显示名字</h5><p>有时希望收件人在邮件中看到自己的名字，而不只是邮件地址。实现这种需求的方法是把邮件地址写成 <code>"Full Name &lt;email&gt;"</code> 格式。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def welcome_email(user)
+  @user = user
+  email_with_name = "#{@user.name} &lt;#{@user.email}&gt;"
+  mail(to: email_with_name, subject: 'Welcome to My Awesome Site')
+end
+
+</pre>
+</div>
+<h4 id="邮件程序的视图">2.4 邮件程序的视图</h4><p>邮件程序的视图保存在文件夹 <code>app/views/name_of_mailer_class</code> 中。邮件程序之所以知道使用哪个视图，是因为视图文件名和邮件程序的方法名一致。如前例，<code>welcome_email</code> 方法的 HTML 格式视图是 <code>app/views/user_mailer/welcome_email.html.erb</code>，纯文本格式视图是 <code>welcome_email.text.erb</code>。</p><p>要想修改动作使用的视图，可以这么做：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UserMailer &lt; ActionMailer::Base
+  default from: 'notifications@example.com'
+
+  def welcome_email(user)
+    @user = user
+    @url  = 'http://example.com/login'
+    mail(to: @user.email,
+         subject: 'Welcome to My Awesome Site',
+         template_path: 'notifications',
+         template_name: 'another')
+  end
+end
+
+</pre>
+</div>
+<p>此时，邮件程序会在文件夹 <code>app/views/notifications</code> 中寻找名为 <code>another</code> 的视图。<code>template_path</code> 的值可以是一个数组，按照顺序查找视图。</p><p>如果想获得更多灵活性，可以传入一个代码块，渲染指定的模板，或者不使用模板，渲染行间代码或纯文本：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UserMailer &lt; ActionMailer::Base
+  default from: 'notifications@example.com'
+
+  def welcome_email(user)
+    @user = user
+    @url  = 'http://example.com/login'
+    mail(to: @user.email,
+         subject: 'Welcome to My Awesome Site') do |format|
+      format.html { render 'another_template' }
+      format.text { render text: 'Render text' }
+    end
+  end
+end
+
+</pre>
+</div>
+<p>上述代码会使用 <code>another_template.html.erb</code> 渲染 HTML，使用 <code>'Render text'</code> 渲染纯文本。这里用到的 <code>render</code> 方法和控制器中的一样，所以选项也都是一样的，例如 <code>:text</code>、<code>:inline</code> 等。</p><h4 id="action-mailer-布局">2.5 Action Mailer 布局</h4><p>和控制器一样，邮件程序也可以使用布局。布局的名字必须和邮件程序类一样，例如 <code>user_mailer.html.erb</code> 和 <code>user_mailer.text.erb</code> 会自动识别为邮件程序的布局。</p><p>如果想使用其他布局文件，可以在邮件程序中调用 <code>layout</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UserMailer &lt; ActionMailer::Base
+  layout 'awesome' # use awesome.(html|text).erb as the layout
+end
+
+</pre>
+</div>
+<p>还是跟控制器布局一样，在邮件程序的布局中调用 <code>yield</code> 方法可以渲染视图。</p><p>在 <code>format</code> 代码块中可以把 <code>layout: 'layout_name'</code> 选项传给 <code>render</code> 方法，指定使用其他布局：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UserMailer &lt; ActionMailer::Base
+  def welcome_email(user)
+    mail(to: user.email) do |format|
+      format.html { render layout: 'my_layout' }
+      format.text
+    end
+  end
+end
+
+</pre>
+</div>
+<p>上述代码会使用文件 <code>my_layout.html.erb</code> 渲染 HTML 格式；如果文件 <code>user_mailer.text.erb</code> 存在，会用来渲染纯文本格式。</p><h4 id="在-action-mailer-视图中生成-url">2.6 在 Action Mailer 视图中生成 URL</h4><p>和控制器不同，邮件程序不知道请求的上下文，因此要自己提供 <code>:host</code> 参数。</p><p>一个程序的 <code>:host</code> 参数一般是相同的，可以在 <code>config/application.rb</code> 中做全局设置：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_mailer.default_url_options = { host: 'example.com' }
+
+</pre>
+</div>
+<h5 id="使用-url_for-方法生成-url">2.6.1 使用 <code>url_for</code> 方法生成 URL</h5><p>使用 <code>url_for</code> 方法时必须指定 <code>only_path: false</code> 选项，这样才能确保生成绝对 URL，因为默认情况下如果不指定 <code>:host</code> 选项，<code>url_for</code> 帮助方法生成的是相对 URL。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= url_for(controller: 'welcome',
+            action: 'greeting',
+            only_path: false) %&gt;
+
+</pre>
+</div>
+<p>如果没全局设置 <code>:host</code> 选项，使用 <code>url_for</code> 方法时一定要指定 <code>only_path: false</code> 选项。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= url_for(host: 'example.com',
+            controller: 'welcome',
+            action: 'greeting') %&gt;
+
+</pre>
+</div>
+<div class="note"><p>如果指定了 <code>:host</code> 选项，Rails 会生成绝对 URL，没必要再指定 <code>only_path: false</code>。</p></div><h5 id="使用具名路由生成-url">2.6.2 使用具名路由生成 URL</h5><p>邮件客户端不能理解网页中的上下文，没有生成完整地址的基地址，所以使用具名路由帮助方法时一定要使用 <code>_url</code> 形式。</p><p>如果没有设置全局 <code>:host</code> 参数，一定要将其传给 URL 帮助方法。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= user_url(@user, host: 'example.com') %&gt;
+
+</pre>
+</div>
+<h4 id="发送多种格式邮件">2.7 发送多种格式邮件</h4><p>如果同一动作有多个模板，Action Mailer 会自动发送多种格式的邮件。例如前面的 <code>UserMailer</code>，如果在 <code>app/views/user_mailer</code> 文件夹中有 <code>welcome_email.text.erb</code> 和 <code>welcome_email.html.erb</code> 两个模板，Action Mailer 会自动发送 HTML 和纯文本格式的邮件。</p><p>格式的顺序由 <code>ActionMailer::Base.default</code> 方法的 <code>:parts_order</code> 参数决定。</p><h4 id="发送邮件时动态设置发送选项">2.8 发送邮件时动态设置发送选项</h4><p>如果在发送邮件时想重设发送选项（例如，SMTP 密令），可以在邮件程序动作中使用 <code>delivery_method_options</code> 方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UserMailer &lt; ActionMailer::Base
+  def welcome_email(user, company)
+    @user = user
+    @url  = user_url(@user)
+    delivery_options = { user_name: company.smtp_user,
+                         password: company.smtp_password,
+                         address: company.smtp_host }
+    mail(to: @user.email,
+         subject: "Please see the Terms and Conditions attached",
+         delivery_method_options: delivery_options)
+  end
+end
+
+</pre>
+</div>
+<h4 id="不渲染模板">2.9 不渲染模板</h4><p>有时可能不想使用布局，直接使用字符串渲染邮件内容，可以使用 <code>:body</code> 选项。但别忘了指定 <code>:content_type</code> 选项，否则 Rails 会使用默认值 <code>text/plain</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UserMailer &lt; ActionMailer::Base
+  def welcome_email(user, email_body)
+    mail(to: user.email,
+         body: email_body,
+         content_type: "text/html",
+         subject: "Already rendered!")
+  end
+end
+
+</pre>
+</div>
+<h3 id="接收邮件">3 接收邮件</h3><p>使用 Action Mailer 接收和解析邮件做些额外设置。接收邮件之前，要先设置系统，把邮件转发给程序。所以，在 Rails 程序中接收邮件要完成以下步骤：</p>
+<ul>
+<li><p>在邮件程序中实现 <code>receive</code> 方法；</p></li>
+<li><p>设置邮件服务器，把邮件转发到 <code>/path/to/app/bin/rails runner 'UserMailer.receive(STDIN.read)'</code>；</p></li>
+</ul>
+<p>在邮件程序中定义 <code>receive</code> 方法后，Action Mailer 会解析收到的邮件，生成邮件对象，解码邮件内容，实例化一个邮件程序，把邮件对象传给邮件程序的 <code>receive</code> 实例方法。下面举个例子：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UserMailer &lt; ActionMailer::Base
+  def receive(email)
+    page = Page.find_by(address: email.to.first)
+    page.emails.create(
+      subject: email.subject,
+      body: email.body
+    )
+
+    if email.has_attachments?
+      email.attachments.each do |attachment|
+        page.attachments.create({
+          file: attachment,
+          description: email.subject
+        })
+      end
+    end
+  end
+end
+
+</pre>
+</div>
+<h3 id="action-mailer-回调">4 Action Mailer 回调</h3><p>在 Action Mailer 中也可设置 <code>before_action</code>、<code>after_action</code> 和 <code>around_action</code>。</p>
+<ul>
+<li><p>  和控制器中的回调一样，可以传入代码块，或者方法名的符号形式；</p></li>
+<li><p>  在 <code>before_action</code> 中可以使用 <code>defaults</code> 和 <code>delivery_method_options</code> 方法，或者指定默认邮件头和附件；</p></li>
+<li>
+<p>  <code>after_action</code> 可以实现类似 <code>before_action</code> 的功能，而且在 <code>after_action</code> 中可以使用实例变量；</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UserMailer &lt; ActionMailer::Base
+  after_action :set_delivery_options,
+               :prevent_delivery_to_guests,
+               :set_business_headers
+
+  def feedback_message(business, user)
+    @business = business
+    @user = user
+    mail
+  end
+
+  def campaign_message(business, user)
+    @business = business
+    @user = user
+  end
+
+  private
+
+    def set_delivery_options
+      # You have access to the mail instance,
+      # @business and @user instance variables here
+      if @business &amp;&amp; @business.has_smtp_settings?
+        mail.delivery_method.settings.merge!(@business.smtp_settings)
+      end
+    end
+
+    def prevent_delivery_to_guests
+      if @user &amp;&amp; @user.guest?
+        mail.perform_deliveries = false
+      end
+    end
+
+    def set_business_headers
+      if @business
+        headers["X-SMTPAPI-CATEGORY"] = @business.code
+      end
+    end
+end
+
+</pre>
+</div>
+</li>
+<li><p>  如果在回调中把邮件主体设为 <code>nil</code> 之外的值，会阻止执行后续操作；</p></li>
+</ul>
+<h3 id="使用-action-mailer-帮助方法">5 使用 Action Mailer 帮助方法</h3><p>Action Mailer 继承自 <code>AbstractController</code>，因此为控制器定义的帮助方法都可以在邮件程序中使用。</p><h3 id="设置-action-mailer">6 设置 Action Mailer</h3><p>下述设置选项最好在环境相关的文件（<code>environment.rb</code>，<code>production.rb</code> 等）中设置。</p>
+<table>
+<thead>
+<tr>
+<th>设置项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>logger</code></td>
+<td>运行邮件程序时生成日志信息。设为 <code>nil</code> 禁用日志。可设为 Ruby 自带的 <code>Logger</code> 或 <code>Log4r</code> 库。</td>
+</tr>
+<tr>
+<td><code>smtp_settings</code></td>
+<td>设置 <code>:smtp</code> 发送方式的详情。</td>
+</tr>
+<tr>
+<td><code>sendmail_settings</code></td>
+<td>设置 <code>:sendmail</code> 发送方式的详情。</td>
+</tr>
+<tr>
+<td><code>raise_delivery_errors</code></td>
+<td>如果邮件发送失败，是否抛出异常。仅当外部邮件服务器设置为立即发送才有效。</td>
+</tr>
+<tr>
+<td><code>delivery_method</code></td>
+<td>设置发送方式，可设为 <code>:smtp</code>（默认）、<code>:sendmail</code>、<code>:file</code> 和 <code>:test</code>。详情参阅 <a href="http://api.rubyonrails.org/classes/ActionMailer/Base.html">API 文档</a>。</td>
+</tr>
+<tr>
+<td><code>perform_deliveries</code></td>
+<td>调用 <code>deliver</code> 方法时是否真发送邮件。默认情况下会真的发送，但在功能测试中可以不发送。</td>
+</tr>
+<tr>
+<td><code>deliveries</code></td>
+<td>把通过 Action Mailer 使用 <code>:test</code> 方式发送的邮件保存到一个数组中，协助单元测试和功能测试。</td>
+</tr>
+<tr>
+<td><code>default_options</code></td>
+<td>为 <code>mail</code> 方法设置默认选项值（<code>:from</code>，<code>:reply_to</code> 等）。</td>
+</tr>
+</tbody>
+</table>
+<p>完整的设置说明参见“设置 Rails 程序”一文中的“<a href="configuring.html#configuring-action-mailer">设置 Action Mailer</a>”一节。</p><h4 id="action-mailer-设置示例">6.1 Action Mailer 设置示例</h4><p>可以把下面的代码添加到文件 <code>config/environments/$RAILS_ENV.rb</code> 中：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_mailer.delivery_method = :sendmail
+# Defaults to:
+# config.action_mailer.sendmail_settings = {
+#   location: '/usr/sbin/sendmail',
+#   arguments: '-i -t'
+# }
+config.action_mailer.perform_deliveries = true
+config.action_mailer.raise_delivery_errors = true
+config.action_mailer.default_options = {from: 'no-reply@example.com'}
+
+</pre>
+</div>
+<h4 id="设置-action-mailer-使用-gmail">6.2 设置 Action Mailer 使用 Gmail</h4><p>Action Mailer 现在使用 <a href="https://github.com/mikel/mail">Mail</a> gem，针对 Gmail 的设置更简单，把下面的代码添加到文件 <code>config/environments/$RAILS_ENV.rb</code>  中即可：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+  address:              'smtp.gmail.com',
+  port:                 587,
+  domain:               'example.com',
+  user_name:            '&lt;username&gt;',
+  password:             '&lt;password&gt;',
+  authentication:       'plain',
+  enable_starttls_auto: true  }
+
+</pre>
+</div>
+<h3 id="测试邮件程序">7 测试邮件程序</h3><p>邮件程序的测试参阅“<a href="%7B%7B%20site.baseurl%7D%7D%E3%80%81testing.html#testing-your-mailers">Rails 程序测试指南</a>”。</p><h3 id="拦截邮件">8 拦截邮件</h3><p>有时，在邮件发送之前需要做些修改。Action Mailer 提供了相应的钩子，可以拦截每封邮件。你可以注册一个拦截器，在交给发送程序之前修改邮件。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class SandboxEmailInterceptor
+  def self.delivering_email(message)
+    message.to = ['sandbox@example.com']
+  end
+end
+
+</pre>
+</div>
+<p>使用拦截器之前要在 Action Mailer 框架中注册，方法是在初始化脚本 <code>config/initializers/sandbox_email_interceptor.rb</code> 中添加以下代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+ActionMailer::Base.register_interceptor(SandboxEmailInterceptor) if Rails.env.staging?
+
+</pre>
+</div>
+<div class="note"><p>上述代码中使用的是自定义环境，名为“staging”。这个环境和生产环境一样，但只做测试之用。关于自定义环境的详细介绍，参阅“<a href="configuring.html#creating-rails-environments">新建 Rails 环境</a>”一节。</p></div>
+
+        <h3>反馈</h3>
+        <p>
+          欢迎帮忙改善指南质量。
+        </p>
+        <p>
+          如发现任何错误，欢迎修正。开始贡献前，可先行阅读<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">贡献指南：文档</a>。
+        </p>
+        <p>翻译如有错误，深感抱歉，欢迎 <a href="https://github.com/ruby-china/guides/fork">Fork</a> 修正，或至此处<a href="https://github.com/ruby-china/guides/issues/new">回报</a>。</p>
+        <p>
+          文章可能有未完成或过时的内容。请先检查 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 来确定问题在 master 是否已经修掉了。再上 master 补上缺少的文件。内容参考 <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a>来了解行文风格。
+        </p>
+        <p>最后，任何关于 Ruby on Rails 文档的讨论，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件群组</a>。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用<a href="https://creativecommons.org/licenses/by-sa/4.0/">创用 CC 姓名标示-相同方式分享 4.0 国际授权条款</a>授权。</p>
+<p>“Rails”、“Ruby on Rails”，以及 Rails logo 为 David Heinemeier Hansson 的商标。版权所有。</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shCore.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushRuby.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushXml.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushSql.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushPlain.js"></script>
+  <script type="text/javascript">
+    SyntaxHighlighter.all();
+    $(guidesIndex.bind);
+  </script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    // ga('create', '', 'ruby-china.github.io');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+
+  </script>
+</body>
+</html>
