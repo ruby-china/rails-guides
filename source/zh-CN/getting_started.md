@@ -660,6 +660,135 @@ TIP: 链接到当前控制器的动作时不需要指定 :controller 选项，�
 
 TIP 在开发环境中（默认情况下我们是在开发环境中工作），Rails 针对每个浏览器请求都会重新加载应用，因此对应用进行修改之后不需要重启服务器。
 
+### 更新文章
+
+我们已经介绍了 CRUD 操作中的“CR”两种操作，下面让我们看一下“U”操作，也就是更新文章。
+
+第一步要在 ArticlesController 中添加 edit 动作，通常把这个动作放在 new 动作和 create 动作之间，就像下面这样：
+
+```erb
+def new
+  @article = Article.new
+end
+
+def edit
+  @article = Article.find(params[:id])
+end
+
+def create
+  @article = Article.new(article_params)
+
+  if @article.save
+    redirect_to @article
+  else
+    render 'new'
+  end
+end
+```
+
+接下来在视图中添加一个表单，这个表单类似于前文用于新建文章的表单。创建 `app/views/articles/edit.html.erb` 文件，添加下面的代码：
+
+```erb
+<h1>Editing article</h1>
+
+<%= form_for :article, url: article_path(@article), method: :patch do |f| %>
+
+  <% if @article.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@article.errors.count, "error") %> prohibited
+        this article from being saved:
+      </h2>
+      <ul>
+        <% @article.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <%= f.label :text %><br>
+    <%= f.text_area :text %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+
+<% end %>
+
+<%= link_to 'Back', articles_path %>
+```
+
+上面的代码把表单指向了 update 动作，这个动作稍后我们再来定义。
+
+method: :patch 选项告诉 Rails 使用 PATCH 方法提交表单。根据 REST 协议，PATCH 方法是更新资源时使用的 HTTP 方法。
+
+form_for 辅助方法的第一个参数可以是对象，例如 @article，form_for 辅助方法会用这个对象的字段来填充表单。如果传入和实例变量（@article）同名的符号（:article），也会自动产生相同效果，上面的代码使用的就是符号。关于 form_for 辅助方法参数的更多介绍，请参阅 form_for 的文档。
+
+接下来在 app/controllers/articles_controller.rb 文件中创建 update 动作，把这个动作放在 create 动作和 private 方法之间：
+
+```erb
+def create
+  @article = Article.new(article_params)
+
+  if @article.save
+    redirect_to @article
+  else
+    render 'new'
+  end
+end
+
+def update
+  @article = Article.find(params[:id])
+
+  if @article.update(article_params)
+    redirect_to @article
+  else
+    render 'edit'
+  end
+end
+
+private
+  def article_params
+    params.require(:article).permit(:title, :text)
+  end
+  
+```
+
+update 动作用于更新已有记录，它接受一个散列作为参数，散列中包含想要更新的属性。和之前一样，如果更新文章时发生错误，就需要把表单再次显示给用户。
+
+上面的代码重用了之前为 create 动作定义的 article_params 方法。
+
+TIP: 不用把所有属性都传递给 update 方法。例如，调用 @article.update(title: 'A new title') 时，Rails 只更新 title 属性而不修改其他属性。
+
+最后，我们想在文章列表中显示指向 edit 动作的链接。打开 app/views/articles/`index.html.erb` 文件，在 Show 链接后面添加 Edit 链接：
+
+```reb
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+    <th colspan="2"></th>
+  </tr>
+
+  <% @articles.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= article.text %></td>
+      <td><%= link_to 'Show', article_path(article) %></td>
+      <td><%= link_to 'Edit', edit_article_path(article) %></td>
+    </tr>
+  <% end %>
+</table>
+```
+
 接着在 `app/views/articles/show.html.erb` 模板中添加 `Edit` 链接，这样文章页面也有 `Edit` 链接了。把这个链接添加到模板底部：
 
 ```erb
@@ -821,6 +950,25 @@ end
 ```erb
 <h1>Listing Articles</h1>
 <%= link_to 'New article', new_article_path %>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+    <th colspan="3"></th>
+  </tr>
+
+  <% @articles.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= article.text %></td>
+      <td><%= link_to 'Show', article_path(article) %></td>
+      <td><%= link_to 'Edit', edit_article_path(article) %></td>
+      <td><%= link_to 'Destroy', article_path(article),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>
 
 ```
 
