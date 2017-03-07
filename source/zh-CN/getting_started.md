@@ -622,8 +622,43 @@ class ArticlesController < ApplicationController
 
 `link_to` 方法是 Rails 内置的视图辅助方法之一，用于创建基于链接文本和地址的超链接。在这里地址指的是文章列表页面的路径。
 
-接下来添加指向其他视图的链接。首先在 `app/views/articles/index.html.erb` 文件中添加“New Article”链接，把这个链接放在 `
+接下来添加指向其他视图的链接。首先在 `app/views/articles/index.html.erb` 文件中添加“New Article”链接，把这个链接放在 <table> 标签之前：
+
+```erb
+<%= link_to 'New article', new_article_path %>
 ```
+
+点击这个链接会打开用于新建文章的表单。
+
+接下来在 app/views/articles/new.html.erb 文件中添加返回 index 动作的链接，把这个链接放在表单之后：
+
+```erb
+<%= form_for :article, url: articles_path do |f| %>
+  ...
+<% end %>
+
+<%= link_to 'Back', articles_path %>
+```
+
+最后，在 app/views/articles/show.html.erb 模板中添加返回 index 动作的链接，这样用户看完一篇文章后就可以返回文章列表页面了：
+
+```erb
+<p>
+  <strong>Title:</strong>
+  <%= @article.title %>
+</p>
+
+<p>
+  <strong>Text:</strong>
+  <%= @article.text %>
+</p>
+
+<%= link_to 'Back', articles_path %>
+```
+
+TIP: 链接到当前控制器的动作时不需要指定 :controller 选项，因为 Rails 默认使用当前控制器。
+
+TIP 在开发环境中（默认情况下我们是在开发环境中工作），Rails 针对每个浏览器请求都会重新加载应用，因此对应用进行修改之后不需要重启服务器。
 
 接着在 `app/views/articles/show.html.erb` 模板中添加 `Edit` 链接，这样文章页面也有 `Edit` 链接了。把这个链接添加到模板底部：
 
