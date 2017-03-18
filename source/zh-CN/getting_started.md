@@ -604,7 +604,20 @@ class ArticlesController < ApplicationController
 ```erb
 <h1>Listing articles</h1>
 
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+  </tr>
 
+  <% @articles.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= article.text %></td>
+      <td><%= link_to 'Show', article_path(article) %></td>
+    </tr>
+  <% end %>
+</table>
 ```
 
 现在访问 <http://localhost:3000/articles>，会看到已创建的所有文章的列表。
@@ -622,7 +635,7 @@ class ArticlesController < ApplicationController
 
 `link_to` 方法是 Rails 内置的视图辅助方法之一，用于创建基于链接文本和地址的超链接。在这里地址指的是文章列表页面的路径。
 
-接下来添加指向其他视图的链接。首先在 `app/views/articles/index.html.erb` 文件中添加“New Article”链接，把这个链接放在 <table> 标签之前：
+接下来添加指向其他视图的链接。首先在 `app/views/articles/index.html.erb` 文件中添加“New Article”链接，把这个链接放在 `<table>` 标签之前：
 
 ```erb
 <%= link_to 'New article', new_article_path %>
@@ -630,7 +643,7 @@ class ArticlesController < ApplicationController
 
 点击这个链接会打开用于新建文章的表单。
 
-接下来在 app/views/articles/new.html.erb 文件中添加返回 index 动作的链接，把这个链接放在表单之后：
+接下来在 `app/views/articles/new.html.erb` 文件中添加返回 `index` 动作的链接，把这个链接放在表单之后：
 
 ```erb
 <%= form_for :article, url: articles_path do |f| %>
@@ -640,7 +653,7 @@ class ArticlesController < ApplicationController
 <%= link_to 'Back', articles_path %>
 ```
 
-最后，在 app/views/articles/show.html.erb 模板中添加返回 index 动作的链接，这样用户看完一篇文章后就可以返回文章列表页面了：
+最后，在 `app/views/articles/show.html.erb` 模板中添加返回 `index` 动作的链接，这样用户看完一篇文章后就可以返回文章列表页面了：
 
 ```erb
 <p>
@@ -656,9 +669,236 @@ class ArticlesController < ApplicationController
 <%= link_to 'Back', articles_path %>
 ```
 
-TIP: 链接到当前控制器的动作时不需要指定 :controller 选项，因为 Rails 默认使用当前控制器。
+TIP: 链接到当前控制器的动作时不需要指定 `:controller` 选项，因为 Rails 默认使用当前控制器。
 
-TIP 在开发环境中（默认情况下我们是在开发环境中工作），Rails 针对每个浏览器请求都会重新加载应用，因此对应用进行修改之后不需要重启服务器。
+TIP: 在开发环境中（默认情况下我们是在开发环境中工作），Rails 针对每个浏览器请求都会重新加载应用，因此对应用进行修改之后不需要重启服务器。
+
+### 添加验证
+
+`app/models/article.rb` 模型文件简单到只有两行代码：
+
+```ruby
+class Article < ApplicationRecord
+end
+```
+
+虽然这个文件中代码很少，但请注意 `Article` 类继承自 `ApplicationRecord` 类，而 `ApplicationRecord` 类继承自 `ActiveRecord::Base` 类。正是 `ActiveRecord::Base` 类为 Rails 模型提供了大量功能，包括基本的数据库 CRUD 操作（创建、读取、更新、删除）、数据验证，以及对复杂搜索的支持和关联多个模型的能力。
+
+Rails 提供了许多方法用于验证传入模型的数据。打开 `app/models/article.rb` 文件，像下面这样修改：
+
+```ruby
+class Article < ApplicationRecord
+  validates :title, presence: true,
+                    length: { minimum: 5 }
+end
+```
+
+添加的代码用于确保每篇文章都有标题，并且标题长度不少于 5 个字符。在 Rails 模型中可以验证多种条件，包括字段是否存在、字段是否唯一、字段的格式、关联对象是否存在，等等。关于验证的更多介绍，请参阅[active\_record\_validations.xml](active_record_validations.xml#active-record-validations)。
+
+现在验证已经添加完毕，如果我们在调用 `@article.save` 时传递了无效的文章数据，验证就会返回 `false`。再次打开 `app/controllers/articles_controller.rb` 文件，会看到我们并没有在 `create` 动作中检查 `@article.save` 的调用结果。在这里如果 `@article.save` 失败了，就需要把表单再次显示给用户。为此，需要像下面这样修改 `app/controllers/articles_controller.rb` 文件中的 `new` 和 `create` 动作：
+
+```ruby
+def new
+  @article = Article.new
+end
+
+def create
+  @article = Article.new(article_params)
+
+  if @article.save
+    redirect_to @article
+  else
+    render 'new'
+  end
+end
+
+private
+  def article_params
+    params.require(:article).permit(:title, :text)
+  end
+```
+
+在上面的代码中，我们在 `new` 动作中创建了新的实例变量 `@article`，稍后你就会知道为什么要这样做。
+
+注意在 `create` 动作中，当 `save` 返回 `false` 时，我们用 `render` 代替了 `redirect_to`。使用 `render` 方法是为了把 `@article` 对象回传给 `new` 模板。这里渲染操作是在提交表单的这个请求中完成的，而 `redirect_to` 会告诉浏览器发起另一个请求。
+
+刷新 <http://localhost:3000/articles/new>，试着提交一篇没有标题的文章，Rails 会返回这个表单，但这种处理方式没有多大用处，更好的做法是告诉用户哪里出错了。为此需要修改 `app/views/articles/new.html.erb` 文件，添加显示错误信息的代码：
+
+```erb
+<%= form_for :article, url: articles_path do |f| %>
+
+  <% if @article.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@article.errors.count, "error") %> prohibited
+        this article from being saved:
+      </h2>
+      <ul>
+        <% @article.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <%= f.label :text %><br>
+    <%= f.text_area :text %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+
+<% end %>
+
+<%= link_to 'Back', articles_path %>
+```
+
+上面我们添加了一些代码。我们使用 `@article.errors.any?` 检查是否有错误，如果有错误就使用 `@article.errors.full_messages` 列出所有错误信息。
+
+`pluralize` 是 Rails 提供的辅助方法，接受一个数字和一个字符串作为参数。如果数字比 1 大，字符串会被自动转换为复数形式。
+
+在 `ArticlesController` 中添加 `@article = Article.new` 是因为如果不这样做，在视图中 `@article` 的值就会是 `nil`，这样在调用 `@article.errors.any?` 时就会抛出错误。
+
+TIP: Rails 会自动用 div 包围含有错误信息的字段，并为这些 div 添加 `field_with_errors` 类。我们可以定义 CSS 规则突出显示错误信息。
+
+当我们再次访问 <http://localhost:3000/articles/new>，试着提交一篇没有标题的文章，就会看到友好的错误信息。
+
+![出错的表单](form_with_errors.png)
+
+### 更新文章
+
+我们已经介绍了 CRUD 操作中的“CR”两种操作，下面让我们看一下“U”操作，也就是更新文章。
+
+第一步要在 `ArticlesController` 中添加 `edit` 动作，通常把这个动作放在 `new` 动作和 `create` 动作之间，就像下面这样：
+
+```ruby
+def new
+  @article = Article.new
+end
+
+def edit
+  @article = Article.find(params[:id])
+end
+
+def create
+  @article = Article.new(article_params)
+
+  if @article.save
+    redirect_to @article
+  else
+    render 'new'
+  end
+end
+```
+
+接下来在视图中添加一个表单，这个表单类似于前文用于新建文章的表单。创建 `app/views/articles/edit.html.erb` 文件，添加下面的代码：
+
+```erb
+<h1>Editing article</h1>
+
+<%= form_for :article, url: article_path(@article), method: :patch do |f| %>
+
+  <% if @article.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@article.errors.count, "error") %> prohibited
+        this article from being saved:
+      </h2>
+      <ul>
+        <% @article.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <%= f.label :text %><br>
+    <%= f.text_area :text %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+
+<% end %>
+
+<%= link_to 'Back', articles_path %>
+```
+
+上面的代码把表单指向了 `update` 动作，这个动作稍后我们再来定义。
+
+`method: :patch` 选项告诉 Rails 使用 `PATCH` 方法提交表单。根据 REST 协议，`PATCH` 方法是**更新**资源时使用的 HTTP 方法。
+
+`form_for` 辅助方法的第一个参数可以是对象，例如 `@article`，`form_for` 辅助方法会用这个对象的字段来填充表单。如果传入和实例变量（`@article`）同名的符号（`:article`），也会自动产生相同效果，上面的代码使用的就是符号。关于 `form_for` 辅助方法参数的更多介绍，请参阅 [`form_for` 的文档](http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_for)。
+
+接下来在 `app/controllers/articles_controller.rb` 文件中创建 `update` 动作，把这个动作放在 `create` 动作和 `private` 方法之间：
+
+```ruby
+def create
+  @article = Article.new(article_params)
+
+  if @article.save
+    redirect_to @article
+  else
+    render 'new'
+  end
+end
+
+def update
+  @article = Article.find(params[:id])
+
+  if @article.update(article_params)
+    redirect_to @article
+  else
+    render 'edit'
+  end
+end
+
+private
+  def article_params
+    params.require(:article).permit(:title, :text)
+  end
+```
+
+`update` 动作用于更新已有记录，它接受一个散列作为参数，散列中包含想要更新的属性。和之前一样，如果更新文章时发生错误，就需要把表单再次显示给用户。
+
+上面的代码重用了之前为 `create` 动作定义的 `article_params` 方法。
+
+TIP: 不用把所有属性都传递给 `update` 方法。例如，调用 `@article.update(title: 'A new title')` 时，Rails 只更新 `title` 属性而不修改其他属性。
+
+最后，我们想在文章列表中显示指向 `edit` 动作的链接。打开 `app/views/articles/index.html.erb` 文件，在 `Show` 链接后面添加 `Edit` 链接：
+
+```erb
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+    <th colspan="2"></th>
+  </tr>
+
+  <% @articles.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= article.text %></td>
+      <td><%= link_to 'Show', article_path(article) %></td>
+      <td><%= link_to 'Edit', edit_article_path(article) %></td>
+    </tr>
+  <% end %>
+</table>
+```
 
 接着在 `app/views/articles/show.html.erb` 模板中添加 `Edit` 链接，这样文章页面也有 `Edit` 链接了。把这个链接添加到模板底部：
 
@@ -821,7 +1061,25 @@ end
 ```erb
 <h1>Listing Articles</h1>
 <%= link_to 'New article', new_article_path %>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+    <th colspan="3"></th>
+  </tr>
 
+  <% @articles.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= article.text %></td>
+      <td><%= link_to 'Show', article_path(article) %></td>
+      <td><%= link_to 'Edit', edit_article_path(article) %></td>
+      <td><%= link_to 'Destroy', article_path(article),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>
 ```
 
 在上面的代码中，`link_to` 辅助方法生成“Destroy”链接的用法有点不同，其中第二个参数是具名路由（named route），还有一些选项作为其他参数。`method: :delete` 和 `data: { confirm: 'Are you sure?' }` 选项用于设置链接的 HTML5 属性，这样点击链接后 Rails 会先向用户显示一个确认对话框，然后用 `delete` 方法发起请求。这些操作是通过 JavaScript 脚本 `jquery_ujs` 实现的，这个脚本在生成应用骨架时已经被自动包含在了应用的布局中（`app/views/layouts/application.html.erb`）。如果没有这个脚本，确认对话框就无法显示。
