@@ -217,6 +217,8 @@
 <li><a href="#%E6%98%BE%E7%A4%BA%E6%96%87%E7%AB%A0">显示文章</a></li>
 <li><a href="#%E5%88%97%E5%87%BA%E6%89%80%E6%9C%89%E6%96%87%E7%AB%A0">列出所有文章</a></li>
 <li><a href="#%E6%B7%BB%E5%8A%A0%E9%93%BE%E6%8E%A5">添加链接</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E9%AA%8C%E8%AF%81">添加验证</a></li>
+<li><a href="#%E6%9B%B4%E6%96%B0%E6%96%87%E7%AB%A0">更新文章</a></li>
 <li><a href="#%E4%BD%BF%E7%94%A8%E5%B1%80%E9%83%A8%E8%A7%86%E5%9B%BE%E5%8E%BB%E6%8E%89%E8%A7%86%E5%9B%BE%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E4%BB%A3%E7%A0%81">使用局部视图去掉视图中的重复代码</a></li>
 <li><a href="#%E5%88%A0%E9%99%A4%E6%96%87%E7%AB%A0">删除文章</a></li>
 </ul>
@@ -702,7 +704,20 @@ class ArticlesController &lt; ApplicationController
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;h1&gt;Listing articles&lt;/h1&gt;
 
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Title&lt;/th&gt;
+    &lt;th&gt;Text&lt;/th&gt;
+  &lt;/tr&gt;
 
+  &lt;% @articles.each do |article| %&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;%= article.title %&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;%= article.text %&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;%= link_to 'Show', article_path(article) %&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;% end %&gt;
+&lt;/table&gt;
 
 </pre>
 </div>
@@ -713,8 +728,228 @@ class ArticlesController &lt; ApplicationController
 
 </pre>
 </div>
-<p><code>link_to</code> 方法是 Rails 内置的视图辅助方法之一，用于创建基于链接文本和地址的超链接。在这里地址指的是文章列表页面的路径。</p><p>接下来添加指向其他视图的链接。首先在 <code>app/views/articles/index.html.erb</code> 文件中添加“New Article”链接，把这个链接放在 <code>
-</code>``</p><p>接着在 <code>app/views/articles/show.html.erb</code> 模板中添加 <code>Edit</code> 链接，这样文章页面也有 <code>Edit</code> 链接了。把这个链接添加到模板底部：</p><div class="code_container">
+<p><code>link_to</code> 方法是 Rails 内置的视图辅助方法之一，用于创建基于链接文本和地址的超链接。在这里地址指的是文章列表页面的路径。</p><p>接下来添加指向其他视图的链接。首先在 <code>app/views/articles/index.html.erb</code> 文件中添加“New Article”链接，把这个链接放在 <code>&lt;table&gt;</code> 标签之前：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= link_to 'New article', new_article_path %&gt;
+
+</pre>
+</div>
+<p>点击这个链接会打开用于新建文章的表单。</p><p>接下来在 <code>app/views/articles/new.html.erb</code> 文件中添加返回 <code>index</code> 动作的链接，把这个链接放在表单之后：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for :article, url: articles_path do |f| %&gt;
+  ...
+&lt;% end %&gt;
+
+&lt;%= link_to 'Back', articles_path %&gt;
+
+</pre>
+</div>
+<p>最后，在 <code>app/views/articles/show.html.erb</code> 模板中添加返回 <code>index</code> 动作的链接，这样用户看完一篇文章后就可以返回文章列表页面了：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;p&gt;
+  &lt;strong&gt;Title:&lt;/strong&gt;
+  &lt;%= @article.title %&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+  &lt;strong&gt;Text:&lt;/strong&gt;
+  &lt;%= @article.text %&gt;
+&lt;/p&gt;
+
+&lt;%= link_to 'Back', articles_path %&gt;
+
+</pre>
+</div>
+<div class="info"><p>链接到当前控制器的动作时不需要指定 <code>:controller</code> 选项，因为 Rails 默认使用当前控制器。</p></div><div class="info"><p>在开发环境中（默认情况下我们是在开发环境中工作），Rails 针对每个浏览器请求都会重新加载应用，因此对应用进行修改之后不需要重启服务器。</p></div><h4 id="%E6%B7%BB%E5%8A%A0%E9%AA%8C%E8%AF%81">5.10 添加验证</h4><p><code>app/models/article.rb</code> 模型文件简单到只有两行代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Article &lt; ApplicationRecord
+end
+
+</pre>
+</div>
+<p>虽然这个文件中代码很少，但请注意 <code>Article</code> 类继承自 <code>ApplicationRecord</code> 类，而 <code>ApplicationRecord</code> 类继承自 <code>ActiveRecord::Base</code> 类。正是 <code>ActiveRecord::Base</code> 类为 Rails 模型提供了大量功能，包括基本的数据库 CRUD 操作（创建、读取、更新、删除）、数据验证，以及对复杂搜索的支持和关联多个模型的能力。</p><p>Rails 提供了许多方法用于验证传入模型的数据。打开 <code>app/models/article.rb</code> 文件，像下面这样修改：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Article &lt; ApplicationRecord
+  validates :title, presence: true,
+                    length: { minimum: 5 }
+end
+
+</pre>
+</div>
+<p>添加的代码用于确保每篇文章都有标题，并且标题长度不少于 5 个字符。在 Rails 模型中可以验证多种条件，包括字段是否存在、字段是否唯一、字段的格式、关联对象是否存在，等等。关于验证的更多介绍，请参阅<a href="active_record_validations.xml#active-record-validations">active_record_validations.xml</a>。</p><p>现在验证已经添加完毕，如果我们在调用 <code>@article.save</code> 时传递了无效的文章数据，验证就会返回 <code>false</code>。再次打开 <code>app/controllers/articles_controller.rb</code> 文件，会看到我们并没有在 <code>create</code> 动作中检查 <code>@article.save</code> 的调用结果。在这里如果 <code>@article.save</code> 失败了，就需要把表单再次显示给用户。为此，需要像下面这样修改 <code>app/controllers/articles_controller.rb</code> 文件中的 <code>new</code> 和 <code>create</code> 动作：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def new
+  @article = Article.new
+end
+
+def create
+  @article = Article.new(article_params)
+
+  if @article.save
+    redirect_to @article
+  else
+    render 'new'
+  end
+end
+
+private
+  def article_params
+    params.require(:article).permit(:title, :text)
+  end
+
+</pre>
+</div>
+<p>在上面的代码中，我们在 <code>new</code> 动作中创建了新的实例变量 <code>@article</code>，稍后你就会知道为什么要这样做。</p><p>注意在 <code>create</code> 动作中，当 <code>save</code> 返回 <code>false</code> 时，我们用 <code>render</code> 代替了 <code>redirect_to</code>。使用 <code>render</code> 方法是为了把 <code>@article</code> 对象回传给 <code>new</code> 模板。这里渲染操作是在提交表单的这个请求中完成的，而 <code>redirect_to</code> 会告诉浏览器发起另一个请求。</p><p>刷新 <a href="http://localhost:3000/articles/new">http://localhost:3000/articles/new</a>，试着提交一篇没有标题的文章，Rails 会返回这个表单，但这种处理方式没有多大用处，更好的做法是告诉用户哪里出错了。为此需要修改 <code>app/views/articles/new.html.erb</code> 文件，添加显示错误信息的代码：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for :article, url: articles_path do |f| %&gt;
+
+  &lt;% if @article.errors.any? %&gt;
+    &lt;div id="error_explanation"&gt;
+      &lt;h2&gt;
+        &lt;%= pluralize(@article.errors.count, "error") %&gt; prohibited
+        this article from being saved:
+      &lt;/h2&gt;
+      &lt;ul&gt;
+        &lt;% @article.errors.full_messages.each do |msg| %&gt;
+          &lt;li&gt;&lt;%= msg %&gt;&lt;/li&gt;
+        &lt;% end %&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+
+  &lt;p&gt;
+    &lt;%= f.label :title %&gt;&lt;br&gt;
+    &lt;%= f.text_field :title %&gt;
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    &lt;%= f.label :text %&gt;&lt;br&gt;
+    &lt;%= f.text_area :text %&gt;
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    &lt;%= f.submit %&gt;
+  &lt;/p&gt;
+
+&lt;% end %&gt;
+
+&lt;%= link_to 'Back', articles_path %&gt;
+
+</pre>
+</div>
+<p>上面我们添加了一些代码。我们使用 <code>@article.errors.any?</code> 检查是否有错误，如果有错误就使用 <code>@article.errors.full_messages</code> 列出所有错误信息。</p><p><code>pluralize</code> 是 Rails 提供的辅助方法，接受一个数字和一个字符串作为参数。如果数字比 1 大，字符串会被自动转换为复数形式。</p><p>在 <code>ArticlesController</code> 中添加 <code>@article = Article.new</code> 是因为如果不这样做，在视图中 <code>@article</code> 的值就会是 <code>nil</code>，这样在调用 <code>@article.errors.any?</code> 时就会抛出错误。</p><div class="info"><p>Rails 会自动用 div 包围含有错误信息的字段，并为这些 div 添加 <code>field_with_errors</code> 类。我们可以定义 CSS 规则突出显示错误信息。</p></div><p>当我们再次访问 <a href="http://localhost:3000/articles/new">http://localhost:3000/articles/new</a>，试着提交一篇没有标题的文章，就会看到友好的错误信息。</p><p><img src="form_with_errors.png" alt="出错的表单"></p><h4 id="%E6%9B%B4%E6%96%B0%E6%96%87%E7%AB%A0">5.11 更新文章</h4><p>我们已经介绍了 CRUD 操作中的“CR”两种操作，下面让我们看一下“U”操作，也就是更新文章。</p><p>第一步要在 <code>ArticlesController</code> 中添加 <code>edit</code> 动作，通常把这个动作放在 <code>new</code> 动作和 <code>create</code> 动作之间，就像下面这样：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def new
+  @article = Article.new
+end
+
+def edit
+  @article = Article.find(params[:id])
+end
+
+def create
+  @article = Article.new(article_params)
+
+  if @article.save
+    redirect_to @article
+  else
+    render 'new'
+  end
+end
+
+</pre>
+</div>
+<p>接下来在视图中添加一个表单，这个表单类似于前文用于新建文章的表单。创建 <code>app/views/articles/edit.html.erb</code> 文件，添加下面的代码：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;h1&gt;Editing article&lt;/h1&gt;
+
+&lt;%= form_for :article, url: article_path(@article), method: :patch do |f| %&gt;
+
+  &lt;% if @article.errors.any? %&gt;
+    &lt;div id="error_explanation"&gt;
+      &lt;h2&gt;
+        &lt;%= pluralize(@article.errors.count, "error") %&gt; prohibited
+        this article from being saved:
+      &lt;/h2&gt;
+      &lt;ul&gt;
+        &lt;% @article.errors.full_messages.each do |msg| %&gt;
+          &lt;li&gt;&lt;%= msg %&gt;&lt;/li&gt;
+        &lt;% end %&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+
+  &lt;p&gt;
+    &lt;%= f.label :title %&gt;&lt;br&gt;
+    &lt;%= f.text_field :title %&gt;
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    &lt;%= f.label :text %&gt;&lt;br&gt;
+    &lt;%= f.text_area :text %&gt;
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    &lt;%= f.submit %&gt;
+  &lt;/p&gt;
+
+&lt;% end %&gt;
+
+&lt;%= link_to 'Back', articles_path %&gt;
+
+</pre>
+</div>
+<p>上面的代码把表单指向了 <code>update</code> 动作，这个动作稍后我们再来定义。</p><p><code>method: :patch</code> 选项告诉 Rails 使用 <code>PATCH</code> 方法提交表单。根据 REST 协议，<code>PATCH</code> 方法是<strong>更新</strong>资源时使用的 HTTP 方法。</p><p><code>form_for</code> 辅助方法的第一个参数可以是对象，例如 <code>@article</code>，<code>form_for</code> 辅助方法会用这个对象的字段来填充表单。如果传入和实例变量（<code>@article</code>）同名的符号（<code>:article</code>），也会自动产生相同效果，上面的代码使用的就是符号。关于 <code>form_for</code> 辅助方法参数的更多介绍，请参阅 <a href="http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_for"><code>form_for</code> 的文档</a>。</p><p>接下来在 <code>app/controllers/articles_controller.rb</code> 文件中创建 <code>update</code> 动作，把这个动作放在 <code>create</code> 动作和 <code>private</code> 方法之间：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def create
+  @article = Article.new(article_params)
+
+  if @article.save
+    redirect_to @article
+  else
+    render 'new'
+  end
+end
+
+def update
+  @article = Article.find(params[:id])
+
+  if @article.update(article_params)
+    redirect_to @article
+  else
+    render 'edit'
+  end
+end
+
+private
+  def article_params
+    params.require(:article).permit(:title, :text)
+  end
+
+</pre>
+</div>
+<p><code>update</code> 动作用于更新已有记录，它接受一个散列作为参数，散列中包含想要更新的属性。和之前一样，如果更新文章时发生错误，就需要把表单再次显示给用户。</p><p>上面的代码重用了之前为 <code>create</code> 动作定义的 <code>article_params</code> 方法。</p><div class="info"><p>不用把所有属性都传递给 <code>update</code> 方法。例如，调用 <code>@article.update(title: 'A new title')</code> 时，Rails 只更新 <code>title</code> 属性而不修改其他属性。</p></div><p>最后，我们想在文章列表中显示指向 <code>edit</code> 动作的链接。打开 <code>app/views/articles/index.html.erb</code> 文件，在 <code>Show</code> 链接后面添加 <code>Edit</code> 链接：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Title&lt;/th&gt;
+    &lt;th&gt;Text&lt;/th&gt;
+    &lt;th colspan="2"&gt;&lt;/th&gt;
+  &lt;/tr&gt;
+
+  &lt;% @articles.each do |article| %&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;%= article.title %&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;%= article.text %&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;%= link_to 'Show', article_path(article) %&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;%= link_to 'Edit', edit_article_path(article) %&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;% end %&gt;
+&lt;/table&gt;
+
+</pre>
+</div>
+<p>接着在 <code>app/views/articles/show.html.erb</code> 模板中添加 <code>Edit</code> 链接，这样文章页面也有 <code>Edit</code> 链接了。把这个链接添加到模板底部：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 ...
 
@@ -723,7 +958,7 @@ class ArticlesController &lt; ApplicationController
 
 </pre>
 </div>
-<p>下面是文章列表现在的样子：</p><p><img src="images/getting_started/index_action_with_edit_link.png" alt="文章列表"></p><h4 id="%E4%BD%BF%E7%94%A8%E5%B1%80%E9%83%A8%E8%A7%86%E5%9B%BE%E5%8E%BB%E6%8E%89%E8%A7%86%E5%9B%BE%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E4%BB%A3%E7%A0%81">5.10 使用局部视图去掉视图中的重复代码</h4><p>编辑文章页面和新建文章页面看起来很相似，实际上这两个页面用于显示表单的代码是相同的。现在我们要用局部视图来去掉这些重复代码。按照约定，局部视图的文件名以下划线开头。</p><div class="info"><p>关于局部视图的更多介绍，请参阅<a href="layouts_and_rendering.html">Rails 布局和视图渲染</a>。</p></div><p>新建 <code>app/views/articles/_form.html.erb</code> 文件，添加下面的代码：</p><div class="code_container">
+<p>下面是文章列表现在的样子：</p><p><img src="images/getting_started/index_action_with_edit_link.png" alt="文章列表"></p><h4 id="%E4%BD%BF%E7%94%A8%E5%B1%80%E9%83%A8%E8%A7%86%E5%9B%BE%E5%8E%BB%E6%8E%89%E8%A7%86%E5%9B%BE%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E4%BB%A3%E7%A0%81">5.12 使用局部视图去掉视图中的重复代码</h4><p>编辑文章页面和新建文章页面看起来很相似，实际上这两个页面用于显示表单的代码是相同的。现在我们要用局部视图来去掉这些重复代码。按照约定，局部视图的文件名以下划线开头。</p><div class="info"><p>关于局部视图的更多介绍，请参阅<a href="layouts_and_rendering.html">Rails 布局和视图渲染</a>。</p></div><p>新建 <code>app/views/articles/_form.html.erb</code> 文件，添加下面的代码：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;%= form_for @article do |f| %&gt;
 
@@ -779,7 +1014,7 @@ class ArticlesController &lt; ApplicationController
 
 </pre>
 </div>
-<h4 id="%E5%88%A0%E9%99%A4%E6%96%87%E7%AB%A0">5.11 删除文章</h4><p>现在该介绍 CRUD 中的“D”操作了，也就是从数据库删除文章。按照 REST 架构的约定，在 <code>bin/rails routes</code> 命令的输出结果中删除文章的路由是：</p><div class="code_container">
+<h4 id="%E5%88%A0%E9%99%A4%E6%96%87%E7%AB%A0">5.13 删除文章</h4><p>现在该介绍 CRUD 中的“D”操作了，也就是从数据库删除文章。按照 REST 架构的约定，在 <code>bin/rails routes</code> 命令的输出结果中删除文章的路由是：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 DELETE /articles/:id(.:format)      articles#destroy
 
@@ -860,7 +1095,25 @@ end
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;h1&gt;Listing Articles&lt;/h1&gt;
 &lt;%= link_to 'New article', new_article_path %&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Title&lt;/th&gt;
+    &lt;th&gt;Text&lt;/th&gt;
+    &lt;th colspan="3"&gt;&lt;/th&gt;
+  &lt;/tr&gt;
 
+  &lt;% @articles.each do |article| %&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;%= article.title %&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;%= article.text %&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;%= link_to 'Show', article_path(article) %&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;%= link_to 'Edit', edit_article_path(article) %&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;%= link_to 'Destroy', article_path(article),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;% end %&gt;
+&lt;/table&gt;
 
 </pre>
 </div>
