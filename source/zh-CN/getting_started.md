@@ -770,7 +770,7 @@ TIP: Rails 会自动用 div 包围含有错误信息的字段，并为这些 div
 
 当我们再次访问 <http://localhost:3000/articles/new>，试着提交一篇没有标题的文章，就会看到友好的错误信息。
 
-![出错的表单](form_with_errors.png)
+![出错的表单](images/getting_started/form_with_errors.png)
 
 ### 更新文章
 
