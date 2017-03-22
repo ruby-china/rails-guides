@@ -610,7 +610,7 @@ class ArticlesController < ApplicationController
     <th>Text</th>
   </tr>
 
-  <% @articles.each do |article| %>
+  <% @article.each do |article| %>
     <tr>
       <td><%= article.title %></td>
       <td><%= article.text %></td>
