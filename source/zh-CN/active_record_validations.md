@@ -436,7 +436,7 @@ class LineItem < ApplicationRecord
 end
 ```
 
-为了能验证关联的对象是否存在，要在关联中指定 `:inverse_of` 选项。
+为了能验证关联的Record（区别于上一条关联对象）是否存在，要在关联中指定 `:inverse_of` 选项。
 
 ```ruby
 class Order < ApplicationRecord
