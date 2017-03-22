@@ -537,7 +537,7 @@ bundle exec puma -p 28080 cable/config.ru
 
 ### 注意事项
 
-WebSocket 服务器没有访问会话的权限，但可以访问 cookie，而在处理身份验证时需要用到 cookie。[这篇文章](http://www.rubytutorial.io/actioncable-devise-authentication)介绍了如何使用 Devise 验证身份。
+WebSocket 服务器没有访问 Session 的权限，但可以访问 Cookie，而在处理身份验证时需要用到 Cookie。[这篇文章](http://www.rubytutorial.io/actioncable-devise-authentication)介绍了如何使用 Devise 验证身份。
 
 依赖关系
 --------
