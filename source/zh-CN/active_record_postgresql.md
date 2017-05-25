@@ -331,7 +331,7 @@ class Comment < ApplicationRecord
 end
 ```
 
-See [this section](#UUID Primary Keys) for more details on using UUIDs as primary key.
+See [this section](#uuid-primary-keys) for more details on using UUIDs as primary key.
 
 ### Bit String Types
 

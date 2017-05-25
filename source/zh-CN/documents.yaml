@@ -1,5 +1,5 @@
 -
-  name: 入门
+  name: 新手入门
   documents:
     -
       name: Rails 入门
@@ -13,7 +13,7 @@
       url: active_record_basics.html
       description: 本篇介绍 Models、数据库持久性以及 Active Record 模式。
     -
-      name: Active Record 数据库迁移
+      name: Active Record 迁移
       url: active_record_migrations.html
       description: 本篇介绍如何有条有理地使用 Active Record 来修改数据库。
     -
@@ -29,7 +29,7 @@
       url: association_basics.html
       description: 本篇介绍如何使用 Active Record 的关联功能。
     -
-      name: Active Record 查询
+      name: Active Record 查询接口
       url: active_record_querying.html
       description: 本篇介绍如何使用 Active Record 的数据库查询功能。
     -
@@ -52,7 +52,7 @@
     -
       name: Action View 表单辅助方法
       url: form_helpers.html
-      description: 本篇介绍 Action View 的表单帮助方法。
+      description: 本篇介绍 Action View 的表单辅助方法。
 -
   name: 控制器
   documents:
@@ -65,7 +65,7 @@
       url: routing.html
       description: 本篇介绍与使用者息息相关的路由功能。想了解如何使用 Rails 的路由，从这里开始。
 -
-  name: 深入
+  name: 深入探索
   documents:
     -
       name: Active Support 核心扩展
@@ -84,11 +84,11 @@
       url: active_job_basics.html
       description: 本篇提供创建背景任务、任务排程以及执行任务的所有知识。
     -
-      name: 测试 Rails 应用
+      name: Rails 应用测试指南
       url: testing.html
       description: 这是 Rails 中测试设施的综合指南。它涵盖了从“什么是测试？”到集成测试的知识。
     -
-      name: Rails 安全指南
+      name: Ruby on Rails 安全指南
       url: security.html
       description: 本篇介绍网路应用程序常见的安全问题，如何在 Rails 里避免这些问题。
     -
@@ -156,76 +156,76 @@
       url: rails_on_rack.html
       description: 本篇介绍 Rails 和 Rack 的集成以及和其他 Rack 组件的交互。
     -
-      name: 创建及定制 Rails 生成器
+      name: 创建及定制 Rails 生成器和模板
       url: generators.html
       description: 本篇介绍如何添加新的生成器，或者为 Rails 内置生成器提供替代选项（例如替换 scaffold 生成器的测试组件）。
     -
-      name: 引擎
+      name: 引擎入门
       url: engines.html
       description: 本篇介绍如何编写可挂载的引擎。
       work_in_progress: true
 -
-  name: 贡献 Ruby on Rails
+  name: 为 Ruby on Rails 做贡献
   documents:
     -
-      name: 贡献 Ruby on Rails
+      name: 为 Ruby on Rails 做贡献
       url: contributing_to_ruby_on_rails.html
       description: Rails 不是“别人的框架”。本篇提供几条贡献 Rails 开发的路线。
     -
-      name: API 文档守则
+      name: API 文档指导方针
       url: api_documentation_guidelines.html
       description: 本篇介绍 Ruby on Rails API 文档守则。
     -
-      name: Ruby on Rails 指南守则
+      name: Ruby on Rails 指南指导方针
       url: ruby_on_rails_guides_guidelines.html
       description: 本篇介绍 Ruby on Rails 指南守则。
 -
   name: 维护方针
   documents:
     -
-      name: 维护方针
+      name: Ruby on Rails 的维护方针
       url: maintenance_policy.html
       description: Ruby on Rails 当前支持版本，和什么时候发布新版本。
 -
-  name: 发布说明
+  name: 发布记
   documents:
     -
-      name: 升级 Ruby on Rails
+      name: Ruby on Rails 升级指南
       url: upgrading_ruby_on_rails.html
       description: 本篇帮助升级到 Ruby on Rails 最新版。
     -
-      name: Ruby on Rails 5.0 发布说明
+      name: Ruby on Rails 5.0 发布记
       url: 5_0_release_notes.html
       description: Rails 5.0 的发布说明。
     -
-      name: Ruby on Rails 4.2 发布说明
+      name: Ruby on Rails 4.2 发布记
       url: 4_2_release_notes.html
       description: Rails 4.2 的发布说明。
     -
-      name: Ruby on Rails 4.1 发布说明
+      name: Ruby on Rails 4.1 发布记
       url: 4_1_release_notes.html
       description: Rails 4.1 的发布说明。
     -
-      name: Ruby on Rails 4.0 发布说明
+      name: Ruby on Rails 4.0 发布记
       url: 4_0_release_notes.html
       description: Rails 4.0 的发布说明
     -
-      name: Ruby on Rails 3.2 发布说明
+      name: Ruby on Rails 3.2 发布记
       url: 3_2_release_notes.html
       description: Rails 3.2 的发布说明
     -
-      name: Ruby on Rails 3.1 发布说明
+      name: Ruby on Rails 3.1 发布记
       url: 3_1_release_notes.html
       description: Rails 3.1 的发布说明
     -
-      name: Ruby on Rails 3.0 发布说明
+      name: Ruby on Rails 3.0 发布记
       url: 3_0_release_notes.html
       description: Rails 3.0 的发布说明
     -
-      name: Ruby on Rails 2.3 发布说明
+      name: Ruby on Rails 2.3 发布记
       url: 2_3_release_notes.html
       description: Rails 2.3 的发布说明
     -
-      name: Ruby on Rails 2.2 发布说明
+      name: Ruby on Rails 2.2 发布记
       url: 2_2_release_notes.html
       description: Rails 2.2 的发布说明

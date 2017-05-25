@@ -36,7 +36,7 @@ class User < ApplicationRecord
 
   before_validation :ensure_login_has_a_value
 
-  protected
+  private
     def ensure_login_has_a_value
       if login.nil?
         self.login = email unless email.blank?
@@ -66,7 +66,7 @@ class User < ApplicationRecord
   # :on takes an array as well
   after_validation :set_location, on: [ :create, :update ]
 
-  protected
+  private
     def normalize_name
       self.name = name.downcase.titleize
     end
@@ -77,7 +77,7 @@ class User < ApplicationRecord
 end
 ```
 
-It is considered good practice to declare callback methods as protected or private. If left public, they can be called from outside of the model and violate the principle of object encapsulation.
+It is considered good practice to declare callback methods as private. If left public, they can be called from outside of the model and violate the principle of object encapsulation.
 
 Available Callbacks
 -------------------
@@ -202,11 +202,9 @@ The following methods trigger callbacks:
 
 * `create`
 * `create!`
-* `decrement!`
 * `destroy`
 * `destroy!`
 * `destroy_all`
-* `increment!`
 * `save`
 * `save!`
 * `save(validate: false)`
@@ -290,7 +288,7 @@ Article destroyed
 Conditional Callbacks
 ---------------------
 
-As with validations, we can also make the calling of a callback method conditional on the satisfaction of a given predicate. We can do this using the `:if` and `:unless` options, which can take a symbol, a string, a `Proc` or an `Array`. You may use the `:if` option when you want to specify under which conditions the callback **should** be called. If you want to specify the conditions under which the callback **should not** be called, then you may use the `:unless` option.
+As with validations, we can also make the calling of a callback method conditional on the satisfaction of a given predicate. We can do this using the `:if` and `:unless` options, which can take a symbol, a `Proc` or an `Array`. You may use the `:if` option when you want to specify under which conditions the callback **should** be called. If you want to specify the conditions under which the callback **should not** be called, then you may use the `:unless` option.
 
 ### Using `:if` and `:unless` with a `Symbol`
 
@@ -299,16 +297,6 @@ You can associate the `:if` and `:unless` options with a symbol corresponding to
 ```ruby
 class Order < ApplicationRecord
   before_save :normalize_card_number, if: :paid_with_card?
-end
-```
-
-### Using `:if` and `:unless` with a String
-
-You can also use a string that will be evaluated using `eval` and hence needs to contain valid Ruby code. You should use this option only when the string represents a really short condition:
-
-```ruby
-class Order < ApplicationRecord
-  before_save :normalize_card_number, if: "paid_with_card?"
 end
 ```
 
@@ -399,7 +387,7 @@ By using the `after_commit` callback we can account for this case.
 
 ```ruby
 class PictureFile < ApplicationRecord
-  after_commit :delete_picture_file_from_disk, on: [:destroy]
+  after_commit :delete_picture_file_from_disk, on: :destroy
 
   def delete_picture_file_from_disk
     if File.exist?(filepath)
@@ -409,7 +397,7 @@ class PictureFile < ApplicationRecord
 end
 ```
 
-NOTE: the `:on` option specifies when a callback will be fired. If you
+NOTE: The `:on` option specifies when a callback will be fired. If you
 don't supply the `:on` option the callback will fire for every action.
 
 Since using `after_commit` callback only on create, update or delete is
@@ -431,4 +419,4 @@ class PictureFile < ApplicationRecord
 end
 ```
 
-WARNING. The `after_commit` and `after_rollback` callbacks are guaranteed to be called for all models created, updated, or destroyed within a transaction block. If any exceptions are raised within one of these callbacks, they will be ignored so that they don't interfere with the other callbacks. As such, if your callback code could raise an exception, you'll need to rescue it and handle it appropriately within the callback.
+WARNING. The `after_commit` and `after_rollback` callbacks are called for all models created, updated, or destroyed within a transaction block. However, if an exception is raised within one of these callbacks, the exception will bubble up and any remaining `after_commit` or `after_rollback` methods will _not_ be executed. As such, if your callback code could raise an exception, you'll need to rescue it and handle it within the callback in order to allow other callbacks to run.

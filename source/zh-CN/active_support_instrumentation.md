@@ -1,5 +1,4 @@
-Active Support 监测程序
-=======================
+# Active Support 监测程序
 
 Active Support 是 Rails 核心的一部分，提供 Ruby 语言扩展、实用方法等。其中包括一份监测 API，在应用中可以用它测度 Ruby 代码（如 Rails 应用或框架自身）中的特定操作。不过，这个 API 不限于只能在 Rails 中使用，如果愿意，也可以在其他 Ruby 脚本中使用。
 
@@ -7,20 +6,18 @@ Active Support 是 Rails 核心的一部分，提供 Ruby 语言扩展、实用�
 
 读完本文后，您将学到：
 
-- 使用监测程序能做什么；
+*   使用监测程序能做什么；
+*   Rails 框架为监测提供的钩子；
+*   订阅钩子；
+*   自定义监测点。
 
-- Rails 框架为监测提供的钩子；
-
-- 订阅钩子；
-
-- 自定义监测点。
+-----------------------------------------------------------------------------
 
 NOTE: 本文原文尚未完工！
 
---------------------------------------------------------------------------------
+<a class="anchor" id="introduction-to-instrumentation"></a>
 
-监测程序简介
-------------
+## 监测程序简介
 
 Active Support 提供的监测 API 允许开发者提供钩子，供其他开发者订阅。在 Rails 框架中，有很多。通过这个 API，开发者可以选择在应用或其他 Ruby 代码中发生特定事件时接收通知。
 
@@ -28,19 +25,23 @@ Active Support 提供的监测 API 允许开发者提供钩子，供其他开发
 
 在应用中甚至还可以自己创建事件，然后订阅。
 
-Rails 框架中的钩子
-------------------
+<a class="anchor" id="rails-framework-hooks"></a>
+
+## Rails 框架中的钩子
 
 Ruby on Rails 框架为很多常见的事件提供了钩子。下面详述。
 
-Action Controller
------------------
+<a class="anchor" id="action-controller"></a>
 
-### write\_fragment.action\_controller
+## Action Controller
 
-| 键 | 值 |
+<a class="anchor" id="write-fragment-action-controller"></a>
+
+### write_fragment.action_controller
+
+| 键 | 值  |
 |---|---|
-| :key | 完整的键 |
+| `:key` | 完整的键  |
 
 ```ruby
 {
@@ -48,11 +49,13 @@ Action Controller
 }
 ```
 
-### read\_fragment.action\_controller
+<a class="anchor" id="read-fragment-action-controller"></a>
 
-| 键 | 值 |
+### read_fragment.action_controller
+
+| 键 | 值  |
 |---|---|
-| :key | 完整的键 |
+| `:key` | 完整的键  |
 
 ```ruby
 {
@@ -60,11 +63,13 @@ Action Controller
 }
 ```
 
-### expire\_fragment.action\_controller
+<a class="anchor" id="expire-fragment-action-controller"></a>
 
-| 键 | 值 |
+### expire_fragment.action_controller
+
+| 键 | 值  |
 |---|---|
-| :key | 完整的键 |
+| `:key` | 完整的键  |
 
 ```ruby
 {
@@ -72,11 +77,13 @@ Action Controller
 }
 ```
 
-### exist\_fragment?.action\_controller
+<a class="anchor" id="exist-fragment-questionmark-action-controller"></a>
 
-| 键 | 值 |
+### exist_fragment?.action_controller
+
+| 键 | 值  |
 |---|---|
-| :key | 完整的键 |
+| `:key` | 完整的键  |
 
 ```ruby
 {
@@ -84,11 +91,13 @@ Action Controller
 }
 ```
 
-### write\_page.action\_controller
+<a class="anchor" id="write-page-action-controller"></a>
 
-| 键 | 值 |
+### write_page.action_controller
+
+| 键 | 值  |
 |---|---|
-| :path | 完整的路径 |
+| `:path` | 完整的路径  |
 
 ```ruby
 {
@@ -96,11 +105,13 @@ Action Controller
 }
 ```
 
-### expire\_page.action\_controller
+<a class="anchor" id="expire-page-action-controller"></a>
 
-| 键 | 值 |
+### expire_page.action_controller
+
+| 键 | 值  |
 |---|---|
-| :path | 完整的路径 |
+| `:path` | 完整的路径  |
 
 ```ruby
 {
@@ -108,17 +119,19 @@ Action Controller
 }
 ```
 
-### start\_processing.action\_controller
+<a class="anchor" id="start-processing-action-controller"></a>
 
-| 键 | 值 |
+### start_processing.action_controller
+
+| 键 | 值  |
 |---|---|
-| :controller | 控制器名 |
-| :action | 动作名 |
-| :params | 请求参数散列，不过滤 |
-| :headers | 请求首部 |
-| :format | html、js、json、xml 等 |
-| :method | HTTP 请求方法 |
-| :path | 请求路径 |
+| `:controller` | 控制器名  |
+| `:action` | 动作名  |
+| `:params` | 请求参数散列，不过滤  |
+| `:headers` | 请求首部  |
+| `:format` | html、js、json、xml 等  |
+| `:method` | HTTP 请求方法  |
+| `:path` | 请求路径  |
 
 ```ruby
 {
@@ -132,20 +145,22 @@ Action Controller
 }
 ```
 
-### process\_action.action\_controller
+<a class="anchor" id="process-action-action-controller"></a>
 
-| 键 | 值 |
+### process_action.action_controller
+
+| 键 | 值  |
 |---|---|
-| :controller | 控制器名 |
-| :action | 动作名 |
-| :params | 请求参数散列，不过滤 |
-| :headers | 请求首部 |
-| :format | html、js、json、xml 等 |
-| :method | HTTP 请求方法 |
-| :path | 请求路径 |
-| :status | HTTP 状态码 |
-| :view_runtime | 花在视图上的时间量（ms） |
-| :db_runtime | 执行数据库查询的时间量（ms） |
+| `:controller` | 控制器名  |
+| `:action` | 动作名  |
+| `:params` | 请求参数散列，不过滤  |
+| `:headers` | 请求首部  |
+| `:format` | html、js、json、xml 等  |
+| `:method` | HTTP 请求方法  |
+| `:path` | 请求路径  |
+| `:status` | HTTP 状态码  |
+| `:view_runtime` | 花在视图上的时间量（ms）  |
+| `:db_runtime` | 执行数据库查询的时间量（ms）  |
 
 ```ruby
 {
@@ -162,24 +177,31 @@ Action Controller
 }
 ```
 
-### send\_file.action\_controller
+<a class="anchor" id="send-file-action-controller"></a>
 
-| 键 | 值 |
+### send_file.action_controller
+
+| 键 | 值  |
 |---|---|
-| :path | 文件的完整路径 |
+| `:path` | 文件的完整路径  |
 
 TIP: 调用方可以添加额外的键。
 
-### send\_data.action\_controller
+
+<a class="anchor" id="send-data-action-controller"></a>
+
+### send_data.action_controller
 
 `ActionController` 在载荷（payload）中没有任何特定的信息。所有选项都传到载荷中。
 
-### redirect\_to.action\_controller
+<a class="anchor" id="redirect-to-action-controller"></a>
 
-| 键 | 值 |
+### redirect_to.action_controller
+
+| 键 | 值  |
 |---|---|
-| :status | HTTP 响应码 |
-| :location | 重定向的 URL |
+| `:status` | HTTP 响应码  |
+| `:location` | 重定向的 URL  |
 
 ```ruby
 {
@@ -188,11 +210,13 @@ TIP: 调用方可以添加额外的键。
 }
 ```
 
-### halted\_callback.action\_controller
+<a class="anchor" id="halted-callback-action-controller"></a>
 
-| 键 | 值 |
+### halted_callback.action_controller
+
+| 键 | 值  |
 |---|---|
-| :filter | 过滤暂停的动作 |
+| `:filter` | 过滤暂停的动作  |
 
 ```ruby
 {
@@ -200,15 +224,18 @@ TIP: 调用方可以添加额外的键。
 }
 ```
 
-Action View
------------
+<a class="anchor" id="action-view"></a>
 
-### render\_template.action\_view
+## Action View
 
-| 键 | 值 |
+<a class="anchor" id="render-template-action-view"></a>
+
+### render_template.action_view
+
+| 键 | 值  |
 |---|---|
-| :identifier | 模板的完整路径 |
-| :layout | 使用的布局 |
+| `:identifier` | 模板的完整路径  |
+| `:layout` | 使用的布局  |
 
 ```ruby
 {
@@ -217,11 +244,13 @@ Action View
 }
 ```
 
+<a class="anchor" id="render-partial-action-view"></a>
+
 ### render-partial-action-view
 
-| 键 | 值 |
+| 键 | 值  |
 |---|---|
-| :identifier | 模板的完整路径 |
+| `:identifier` | 模板的完整路径  |
 
 ```ruby
 {
@@ -229,13 +258,15 @@ Action View
 }
 ```
 
-### render\_collection.action\_view
+<a class="anchor" id="render-collection-action-view"></a>
 
-| 键 | 值 |
+### render_collection.action_view
+
+| 键 | 值  |
 |---|---|
-| :identifier | 模板的完整路径 |
-| :count | 集合的大小 |
-| :cache_hits | 从缓存中获取的局部视图数量 |
+| `:identifier` | 模板的完整路径  |
+| `:count` | 集合的大小  |
+| `:cache_hits` | 从缓存中获取的局部视图数量  |
 
 仅当渲染集合时设定了 `cached: true` 选项，才有 `:cache_hits` 键。
 
@@ -247,19 +278,24 @@ Action View
 }
 ```
 
-Active Record
--------------
+<a class="anchor" id="active-record"></a>
 
-### sql.active\_record
+## Active Record
 
-| 键 | 值 |
+<a class="anchor" id="sql-active-record"></a>
+
+### sql.active_record
+
+| 键 | 值  |
 |---|---|
-| :sql | SQL 语句 |
-| :name | 操作的名称 |
-| :connection_id | self.object_id |
-| :binds | 绑定的参数 |
+| `:sql` | SQL 语句  |
+| `:name` | 操作的名称  |
+| `:connection_id` | `self.object_id`  |
+| `:binds` | 绑定的参数  |
+| `:cached` | 使用缓存的查询时为 `true`  |
 
 TIP: 适配器也会添加数据。
+
 
 ```ruby
 {
@@ -270,12 +306,14 @@ TIP: 适配器也会添加数据。
 }
 ```
 
-### instantiation.active\_record
+<a class="anchor" id="instantiation-active-record"></a>
 
-| 键 | 值 |
+### instantiation.active_record
+
+| 键 | 值  |
 |---|---|
-| :record_count | 实例化记录的数量 |
-| :class_name | 记录所属的类 |
+| `:record_count` | 实例化记录的数量  |
+| `:class_name` | 记录所属的类  |
 
 ```ruby
 {
@@ -284,22 +322,25 @@ TIP: 适配器也会添加数据。
 }
 ```
 
-Action Mailer
--------------
+<a class="anchor" id="action-mailer"></a>
 
-### receive.action\_mailer
+## Action Mailer
 
-| 键 | 值 |
+<a class="anchor" id="receive-action-mailer"></a>
+
+### receive.action_mailer
+
+| 键 | 值  |
 |---|---|
-| :mailer | 邮件程序类的名称 |
-| :message_id | 邮件的 ID，由 Mail gem 生成 |
-| :subject | 邮件的主题 |
-| :to | 邮件的收件地址 |
-| :from | 邮件的发件地址 |
-| :bcc | 邮件的密送地址 |
-| :cc | 邮件的抄送地址 |
-| :date | 发送邮件的日期 |
-| :mail | 邮件的编码形式 |
+| `:mailer` | 邮件程序类的名称  |
+| `:message_id` | 邮件的 ID，由 Mail gem 生成  |
+| `:subject` | 邮件的主题  |
+| `:to` | 邮件的收件地址  |
+| `:from` | 邮件的发件地址  |
+| `:bcc` | 邮件的密送地址  |
+| `:cc` | 邮件的抄送地址  |
+| `:date` | 发送邮件的日期  |
+| `:mail` | 邮件的编码形式  |
 
 ```ruby
 {
@@ -313,19 +354,21 @@ Action Mailer
 }
 ```
 
-### deliver.action\_mailer
+<a class="anchor" id="deliver-action-mailer"></a>
 
-| 键 | 值 |
+### deliver.action_mailer
+
+| 键 | 值  |
 |---|---|
-| :mailer | 邮件程序类的名称 |
-| :message_id | 邮件的 ID，由 Mail gem 生成 |
-| :subject | 邮件的主题 |
-| :to | 邮件的收件地址 |
-| :from | 邮件的发件地址 |
-| :bcc | 邮件的密送地址 |
-| :cc | 邮件的抄送地址 |
-| :date | 发送邮件的日期 |
-| :mail | 邮件的编码形式 |
+| `:mailer` | 邮件程序类的名称  |
+| `:message_id` | 邮件的 ID，由 Mail gem 生成  |
+| `:subject` | 邮件的主题  |
+| `:to` | 邮件的收件地址  |
+| `:from` | 邮件的发件地址  |
+| `:bcc` | 邮件的密送地址  |
+| `:cc` | 邮件的抄送地址  |
+| `:date` | 发送邮件的日期  |
+| `:mail` | 邮件的编码形式  |
 
 ```ruby
 {
@@ -339,68 +382,68 @@ Action Mailer
 }
 ```
 
-Active Support
---------------
+<a class="anchor" id="active-support"></a>
 
-### cache\_read.active\_support
+## Active Support
 
-| 键 | 值 |
+<a class="anchor" id="cache-read-active-support"></a>
+
+### cache_read.active_support
+
+| 键 | 值  |
 |---|---|
-| :key | 存储器中使用的键 |
-| :hit | 是否读取了缓存 |
-| :super_operation | 如果使用 #fetch 读取了，添加 :fetch |
+| `:key` | 存储器中使用的键  |
+| `:hit` | 是否读取了缓存  |
+| `:super_operation` | 如果使用 `#fetch` 读取了，添加 `:fetch`  |
 
-### cache\_generate.active\_support
+<a class="anchor" id="cache-generate-active-support"></a>
+
+### cache_generate.active_support
 
 仅当使用块调用 `#fetch` 时使用这个事件。
 
-| 键 | 值 |
+| 键 | 值  |
 |---|---|
-| :key | 存储器中使用的键 |
+| `:key` | 存储器中使用的键  |
 
 TIP: 写入存储器时，传给 `fetch` 的选项会合并到载荷中。
 
+
 ```ruby
 {
   key: 'name-of-complicated-computation'
 }
 ```
 
-### cache\_fetch\_hit.active\_support
+<a class="anchor" id="cache-fetch-hit-active-support"></a>
+
+### cache_fetch_hit.active_support
 
 仅当使用块调用 `#fetch` 时使用这个事件。
 
-| 键 | 值 |
+| 键 | 值  |
 |---|---|
-| :key | 存储器中使用的键 |
+| `:key` | 存储器中使用的键  |
 
 TIP: 传给 `fetch` 的选项会合并到载荷中。
 
+
 ```ruby
 {
   key: 'name-of-complicated-computation'
 }
 ```
 
-### cache\_write.active\_support
+<a class="anchor" id="cache-write-active-support"></a>
 
-| 键 | 值 |
+### cache_write.active_support
+
+| 键 | 值  |
 |---|---|
-| :key | 存储器中使用的键 |
+| `:key` | 存储器中使用的键  |
 
 TIP: 缓存存储器可能会添加其他键。
 
-```ruby
-{
-  key: 'name-of-complicated-computation'
-}
-```
-
-### cache\_delete.active\_support
-
-| 键 | 值 |
-|---|---|
-| :key | 存储器中使用的键 |
 
 ```ruby
 {
@@ -408,11 +451,13 @@ TIP: 缓存存储器可能会添加其他键。
 }
 ```
 
-### cache\_exist?.active\_support
+<a class="anchor" id="cache-delete-active-support"></a>
 
-| 键 | 值 |
+### cache_delete.active_support
+
+| 键 | 值  |
 |---|---|
-| :key | 存储器中使用的键 |
+| `:key` | 存储器中使用的键  |
 
 ```ruby
 {
@@ -420,72 +465,98 @@ TIP: 缓存存储器可能会添加其他键。
 }
 ```
 
-Active Job
-----------
+<a class="anchor" id="cache-exist-questionmark-active-support"></a>
 
-### enqueue\_at.active\_job
+### cache_exist?.active_support
 
-| 键 | 值 |
+| 键 | 值  |
 |---|---|
-| :adapter | 处理作业的 QueueAdapter 对象 |
-| :job | 作业对象 |
+| `:key` | 存储器中使用的键  |
 
-### enqueue.active\_job
+```ruby
+{
+  key: 'name-of-complicated-computation'
+}
+```
 
-| 键 | 值 |
+<a class="anchor" id="active-job"></a>
+
+## Active Job
+
+<a class="anchor" id="enqueue-at-active-job"></a>
+
+### enqueue_at.active_job
+
+| 键 | 值  |
 |---|---|
-| :adapter | 处理作业的 QueueAdapter 对象 |
-| :job | 作业对象 |
+| `:adapter` | 处理作业的 `QueueAdapter` 对象  |
+| `:job` | 作业对象  |
 
-### perform\_start.active\_job
+<a class="anchor" id="enqueue-active-job"></a>
 
-| 键 | 值 |
+### enqueue.active_job
+
+| 键 | 值  |
 |---|---|
-| :adapter | 处理作业的 QueueAdapter 对象 |
-| :job | 作业对象 |
+| `:adapter` | 处理作业的 `QueueAdapter` 对象  |
+| `:job` | 作业对象  |
 
-### perform.active\_job
+<a class="anchor" id="perform-start-active-job"></a>
 
-| 键 | 值 |
+### perform_start.active_job
+
+| 键 | 值  |
 |---|---|
-| :adapter | 处理作业的 QueueAdapter 对象 |
-| :job | 作业对象 |
+| `:adapter` | 处理作业的 `QueueAdapter` 对象  |
+| `:job` | 作业对象  |
 
-Railties
---------
+<a class="anchor" id="perform-active-job"></a>
 
-### load\_config\_initializer.railties
+### perform.active_job
 
-| 键 | 值 |
+| 键 | 值  |
 |---|---|
-| :initializer | 从 config/initializers 中加载的初始化脚本的路径 |
+| `:adapter` | 处理作业的 `QueueAdapter` 对象  |
+| `:job` | 作业对象  |
 
-Rails
------
+<a class="anchor" id="railties"></a>
+
+## Railties
+
+<a class="anchor" id="load-config-initializer-railties"></a>
+
+### load_config_initializer.railties
+
+| 键 | 值  |
+|---|---|
+| `:initializer` | 从 `config/initializers` 中加载的初始化脚本的路径  |
+
+<a class="anchor" id="rails"></a>
+
+## Rails
+
+<a class="anchor" id="deprecation-rails"></a>
 
 ### deprecation.rails
 
-| 键 | 值 |
+| 键 | 值  |
 |---|---|
-| :message | 弃用提醒 |
-| :callstack | 弃用的位置 |
+| `:message` | 弃用提醒  |
+| `:callstack` | 弃用的位置  |
 
-订阅事件
---------
+<a class="anchor" id="subscribing-to-an-event"></a>
+
+## 订阅事件
 
 订阅事件是件简单的事，在 `ActiveSupport::Notifications.subscribe` 的块中监听通知即可。
 
 这个块接收下述参数：
 
-- 事件的名称
-
-- 开始时间
-
-- 结束时间
-
-- 事件的唯一 ID
-
-- 载荷（参见前述各节）
+*   事件的名称
+*   开始时间
+*   结束时间
+*   事件的唯一 ID
+*   载荷（参见前述各节）
 
 ```ruby
 ActiveSupport::Notifications.subscribe "process_action.action_controller" do |name, started, finished, unique_id, data|
@@ -525,8 +596,9 @@ ActiveSupport::Notifications.subscribe /action_controller/ do |*args|
 end
 ```
 
-自定义事件
-----------
+<a class="anchor" id="creating-custom-events"></a>
+
+## 自定义事件
 
 自己添加事件也很简单，繁重的工作都由 `ActiveSupport::Notifications` 代劳，我们只需调用 `instrument`，并传入 `name`、`payload` 和一个块。通知在块返回后发送。`ActiveSupport` 会生成起始时间和唯一的 ID。传给 `instrument` 调用的所有数据都会放入载荷中。
 

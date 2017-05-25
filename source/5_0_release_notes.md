@@ -37,7 +37,6 @@ Major Features
 --------------
 
 ### Action Cable
-[Pull Request](https://github.com/rails/rails/pull/22586)
 
 Action Cable is a new framework in Rails 5. It seamlessly integrates
 [WebSockets](https://en.wikipedia.org/wiki/WebSocket) with the rest of your
@@ -92,9 +91,9 @@ without having to rely on implementation details or monkey patching.
 
 Some things that you can achieve with this:
 
-* The type detected by Active Record can be overridden.
-* A default can also be provided.
-* Attributes do not need to be backed by a database column.
+- The type detected by Active Record can be overridden.
+- A default can also be provided.
+- Attributes do not need to be backed by a database column.
 
 ```ruby
 
@@ -151,7 +150,7 @@ The type of an attribute is given the opportunity to change how dirty
 tracking is performed.
 
 See its
-[documentation](http://api.rubyonrails.org/classes/ActiveRecord/Attributes/ClassMethods.html)
+[documentation](http://api.rubyonrails.org/v5.0.1/classes/ActiveRecord/Attributes/ClassMethods.html)
 for a detailed write up.
 
 
@@ -243,7 +242,7 @@ Please refer to the [Changelog][railties] for detailed changes.
      [Pull Request](https://github.com/rails/rails/pull/22288))
 
 *   New applications are generated with the evented file system monitor enabled
-    on Linux and Mac OS X. The feature can be opted out by passing
+    on Linux and macOS. The feature can be opted out by passing
     `--skip-listen` to the generator.
     ([commit](https://github.com/rails/rails/commit/de6ad5665d2679944a9ee9407826ba88395a1003),
     [commit](https://github.com/rails/rails/commit/94dbc48887bf39c241ee2ce1741ee680d773f202))
@@ -499,6 +498,9 @@ Please refer to the [Changelog][action-view] for detailed changes.
 *   The `datetime_tag` helper now generates an input tag with the type of
     `datetime-local`.
     ([Pull Request](https://github.com/rails/rails/pull/25469))
+
+*   Allow blocks while rendering with the `render partial:` helper.
+    ([Pull Request](https://github.com/rails/rails/pull/17974))
 
 Action Mailer
 -------------
@@ -803,6 +805,15 @@ Please refer to the [Changelog][active-record] for detailed changes.
 *   Added `:time` option to `touch` method to touch records with different time
     than the current time.
     ([Pull Request](https://github.com/rails/rails/pull/18956))
+
+*   Change transaction callbacks to not swallow errors.
+    Before this change any errors raised inside a transaction callback
+    were getting rescued and printed in the logs, unless you used
+    the (newly deprecated) `raise_in_transactional_callbacks = true` option.
+
+    Now these errors are not rescued anymore and just bubble up, matching the
+    behavior of other callbacks.
+    ([commit](https://github.com/rails/rails/commit/07d3d402341e81ada0214f2cb2be1da69eadfe72))
 
 Active Model
 ------------

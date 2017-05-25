@@ -1,32 +1,25 @@
-Action Controller 概览
-======================
+# Action Controller 概览
 
 本文介绍控制器的工作原理，以及控制器在应用请求周期中扮演的角色。
 
 读完本文后，您将学到：
 
-- 请求如何进入控制器；
+*   请求如何进入控制器；
+*   如何限制传入控制器的参数；
+*   为什么以及如何把数据存储在会话或 cookie 中；
+*   处理请求时，如何使用过滤器执行代码；
+*   如何使用 Action Controller 内置的 HTTP 身份验证功能；
+*   如何把数据流直接发送给用户的浏览器；
+*   如何过滤敏感信息，不写入应用的日志；
+*   如何处理请求过程中可能出现的异常。
 
-- 如何限制传入控制器的参数；
+-----------------------------------------------------------------------------
 
-- 为什么以及如何把数据存储在会话或 cookie 中；
+<a class="anchor" id="what-does-a-controller-do-questionmark"></a>
 
-- 处理请求时，如何使用过滤器执行代码；
+## 控制器的作用
 
-- 如何使用 Action Controller 内置的 HTTP 身份验证功能；
-
-- 如何把数据流直接发送给用户的浏览器；
-
-- 如何过滤敏感信息，不写入应用的日志；
-
-- 如何处理请求过程中可能出现的异常。
-
---------------------------------------------------------------------------------
-
-控制器的作用
-------------
-
-Action Controller 是 MVC 中的 C（控制器）。路由决定使用哪个控制器处理请求后，控制器负责解析请求，生成相应的输出。Action Controller 会代为处理大多数底层工作，使用智能的约定，让整个过程清晰明了。
+Action Controller 是 MVC 中的 C（控制器）。路由器决定使用哪个控制器处理请求后，控制器负责解析请求，生成相应的输出。Action Controller 会代为处理大多数底层工作，使用智能的约定，让整个过程清晰明了。
 
 在大多数按照 [REST](http://en.wikipedia.org/wiki/Representational_state_transfer) 架构开发的应用中，控制器会接收请求（开发者不可见），从模型中获取数据，或把数据写入模型，再通过视图生成 HTML。如果控制器需要做其他操作，也没问题，以上只不过是控制器的主要作用。
 
@@ -34,8 +27,9 @@ Action Controller 是 MVC 中的 C（控制器）。路由决定使用哪个控�
 
 NOTE: 路由的处理细节参阅[Rails 路由全解](routing.html)。
 
-控制器命名约定
---------------
+<a class="anchor" id="controller-name-convention"></a>
+
+## 控制器命名约定
 
 Rails 控制器的命名约定是，最后一个单词使用复数形式，但也有例外，比如 `ApplicationController`。例如：用 `ClientsController`，而不是 `ClientController`；用 `SiteAdminsController`，而不是 `SiteAdminController` 或 `SitesAdminsController`。
 
@@ -43,8 +37,9 @@ Rails 控制器的命名约定是，最后一个单词使用复数形式，但�
 
 NOTE: 控制器的命名约定与模型不同，模型的名字习惯使用单数形式。
 
-方法和动作
-----------
+<a class="anchor" id="methods-and-actions"></a>
+
+## 方法和动作
 
 一个控制器是一个 Ruby 类，继承自 `ApplicationController`，和其他类一样，定义了很多方法。应用接到请求时，路由决定运行哪个控制器和哪个动作，然后 Rails 创建该控制器的实例，运行与动作同名的方法。
 
@@ -65,12 +60,13 @@ end
 
 详情参阅[Rails 布局和视图渲染](layouts_and_rendering.html)。
 
-`ApplicationController` 继承自 `ActionController::Base`。后者定义了许多有用的方法。本文会介绍部分方法，如果想知道定义了哪些方法，可查阅 API 文档或源码。
+`ApplicationController` 继承自 `ActionController::Base`。后者定义了许多有用的方法。本文会介绍部分方法，如果想知道定义了哪些方法，可查阅 [API 文档](http://api.rubyonrails.org/classes/ActionController.html)或源码。
 
 只有公开方法才作为动作调用。所以最好减少对外可见的方法数量（使用 `private` 或 `protected`），例如辅助方法和过滤器方法。
 
-参数
-----
+<a class="anchor" id="parameters"></a>
+
+## 参数
 
 在控制器的动作中，往往需要获取用户发送的数据或其他参数。在 Web 应用中参数分为两类。第一类随 URL 发送，叫做“查询字符串参数”，即 URL 中 `?` 符号后面的部分。第二类经常称为“POST 数据”，一般来自用户填写的表单。之所以叫做“POST 数据”，是因为这类数据只能随 HTTP POST 请求发送。Rails 不区分这两种参数，在控制器中都可通过 `params` 散列获取：
 
@@ -104,17 +100,21 @@ class ClientsController < ApplicationController
 end
 ```
 
+<a class="anchor" id="hash-and-array-parameters"></a>
+
 ### 散列和数组参数
 
 `params` 散列不局限于只能使用一维键值对，其中可以包含数组和嵌套的散列。若想发送数组，要在键名后加上一对空方括号（`[]`）：
 
-    GET /clients?ids[]=1&ids[]=2&ids[]=3
+```
+GET /clients?ids[]=1&ids[]=2&ids[]=3
+```
 
-NOTE: “\[”和“\]”这两个符号不允许出现在 URL 中，所以上面的地址会被编码成 `/clients?ids%5b%5d=1&ids%5b%5d=2&ids%5b%5d=3`。多数情况下，无需你费心，浏览器会代为编码，接收到这样的请求后，Rails 也会自动解码。如果你要手动向服务器发送这样的请求，就要留心了。
+NOTE: “[”和“]”这两个符号不允许出现在 URL 中，所以上面的地址会被编码成 `/clients?ids%5b%5d=1&ids%5b%5d=2&ids%5b%5d=3`。多数情况下，无需你费心，浏览器会代为编码，接收到这样的请求后，Rails 也会自动解码。如果你要手动向服务器发送这样的请求，就要留心了。
 
 此时，`params[:ids]` 的值是 `["1", "2", "3"]`。注意，参数的值始终是字符串，Rails 不会尝试转换类型。
 
-NOTE: 默认情况下，基于安全考虑，参数中的 `[nil]` 和 `[nil, nil, …​]` 会替换成 `[]`。详情参见 [Ruby on Rails 安全指南](security.html#生成不安全的查询)。
+NOTE: 默认情况下，基于安全考虑，参数中的 `[nil]` 和 `[nil, nil, &#8230;&#8203;]` 会替换成 `[]`。详情参见 [生成不安全的查询](security.html#unsafe-query-generation)。
 
 若想发送一个散列，要在方括号内指定键名：
 
@@ -130,6 +130,8 @@ NOTE: 默认情况下，基于安全考虑，参数中的 `[nil]` 和 `[nil, nil
 提交这个表单后，`params[:client]` 的值是 `{ "name" => "Acme", "phone" => "12345", "address" => { "postcode" => "12345", "city" => "Carrot City" } }`。注意 `params[:client][:address]` 是个嵌套散列。
 
 `params` 对象的行为类似于散列，但是键可以混用符号和字符串。
+
+<a class="anchor" id="json-parameters"></a>
 
 ### JSON 参数
 
@@ -159,6 +161,8 @@ NOTE: 默认情况下，基于安全考虑，参数中的 `[nil]` 和 `[nil, nil
 
 NOTE: 解析 XML 格式参数的功能现已抽出，制成了 gem，名为 `actionpack-xml_parser`。
 
+<a class="anchor" id="routing-parameters"></a>
+
 ### 路由参数
 
 `params` 散列始终有 `:controller` 和 `:action` 两个键，但获取这两个值应该使用 `controller_name` 和 `action_name` 方法。路由中定义的参数，例如 `:id`，也可通过 `params` 散列获取。例如，假设有个客户列表，可以列出激活和未激活的客户。我们可以定义一个路由，捕获下面这个 URL 中的 `:status` 参数：
@@ -168,6 +172,8 @@ get '/clients/:status' => 'clients#index', foo: 'bar'
 ```
 
 此时，用户访问 `/clients/active` 时，`params[:status]` 的值是 `"active"`。同时，`params[:foo]` 的值会被设为 `"bar"`，就像通过查询字符串传入的一样。控制器还会收到 `params[:action]`，其值为 `"index"`，以及 `params[:controller]`，其值为 `"clients"`。
+
+<a class="anchor" id="default-url-options"></a>
 
 ### `default_url_options`
 
@@ -187,6 +193,8 @@ end
 
 其实，不是生成的每个 URL 都会调用这个方法。为了提高性能，返回的散列会缓存，因此一次请求至少会调用一次。
 
+<a class="anchor" id="strong-parameters"></a>
+
 ### 健壮参数
 
 加入健壮参数功能后，Action Controller 的参数禁止在 Avtive Model 中批量赋值，除非参数在白名单中。也就是说，你要明确选择哪些属性可以批量更新，以防不小心允许用户更新模型中敏感的属性。
@@ -195,7 +203,7 @@ end
 
 ```ruby
 class PeopleController < ActionController::Base
-  # 这会导致 ActiveModel::ForbiddenAttributes 异常抛出
+  # 这会导致 ActiveModel::ForbiddenAttributesError 异常抛出
   # 因为没有明确指明允许赋值的属性就批量更新了
   def create
     Person.create(params[:person])
@@ -220,6 +228,8 @@ class PeopleController < ActionController::Base
 end
 ```
 
+<a class="anchor" id="permitted-scalar-values"></a>
+
 #### 允许使用的标量值
 
 假如允许传入 `:id`：
@@ -238,13 +248,23 @@ params.permit(:id)
 params.permit(id: [])
 ```
 
+有时无法或不便声明散列参数或其内部结构的有效键，此时可以映射为一个空散列：
+
+```ruby
+params.permit(preferences: {})
+```
+
+但是要注意，这样就能接受任何输入了。此时，`permit` 确保返回的结构中只有允许的标量，其他值都会过滤掉。
+
 若想允许传入整个参数散列，可以使用 `permit!` 方法：
 
 ```ruby
 params.require(:log_entry).permit!
 ```
 
-此时，允许传入整个 `:log_entry` 散列及嵌套散列。使用 `permit!` 时要特别注意，因为这么做模型中所有现有的属性及后续添加的属性都允许进行批量赋值。
+此时，允许传入整个 `:log_entry` 散列及嵌套散列，不再检查是不是允许的标量值。使用 `permit!` 时要特别注意，因为这么做模型中所有现有的属性及后续添加的属性都允许进行批量赋值。
+
+<a class="anchor" id="nested-parameters"></a>
 
 #### 嵌套参数
 
@@ -257,6 +277,8 @@ params.permit(:name, { emails: [] },
 ```
 
 此时，允许传入 `name`、`emails` 和 `friends` 属性。其中，`emails` 是标量数组；`friends` 是一个由资源组成的数组：应该有个 `name` 属性（任何允许使用的标量值），有个 `hobbies` 属性，其值是标量数组，以及一个 `family` 属性，其值只能包含 `name` 属性（也是任何允许使用的标量值）。
+
+<a class="anchor" id="more-examples"></a>
 
 #### 更多示例
 
@@ -286,6 +308,8 @@ params.require(:author).permit(:name, books_attributes: [:title, :id, :_destroy]
 params.require(:book).permit(:title, chapters_attributes: [:title])
 ```
 
+<a class="anchor" id="outside-the-scope-of-strong-parameters"></a>
+
 #### 不用健壮参数
 
 健壮参数的目的是为了解决常见问题，不是万用良药。不过，你可以很方便地与自己的代码结合，解决复杂需求。
@@ -298,18 +322,16 @@ def product_params
 end
 ```
 
-会话
-----
+<a class="anchor" id="session"></a>
+
+## 会话
 
 应用中的每个用户都有一个会话（session），用于存储少量数据，在多次请求中永久存储。会话只能在控制器和视图中使用，可以通过以下几种存储机制实现：
 
-- `ActionDispatch::Session::CookieStore`：所有数据都存储在客户端
-
-- `ActionDispatch::Session::CacheStore`：数据存储在 Rails 缓存里
-
-- `ActionDispatch::Session::ActiveRecordStore`：使用 Active Record 把数据存储在数据库中（需要使用 `activerecord-session_store` gem）
-
-- `ActionDispatch::Session::MemCacheStore`：数据存储在 Memcached 集群中（这是以前的实现方式，现在应该改用 CacheStore）
+*   `ActionDispatch::Session::CookieStore`：所有数据都存储在客户端
+*   `ActionDispatch::Session::CacheStore`：数据存储在 Rails 缓存里
+*   `ActionDispatch::Session::ActiveRecordStore`：使用 Active Record 把数据存储在数据库中（需要使用 `activerecord-session_store` gem）
+*   `ActionDispatch::Session::MemCacheStore`：数据存储在 Memcached 集群中（这是以前的实现方式，现在应该改用 CacheStore）
 
 所有存储机制都会用到一个 cookie，存储每个会话的 ID（必须使用 cookie，因为 Rails 不允许在 URL 中传递会话 ID，这么做不安全）。
 
@@ -321,7 +343,7 @@ CookieStore 可以存储大约 4KB 数据，比其他几种存储机制少很多
 
 关于会话存储的更多信息，参阅[Ruby on Rails 安全指南](security.html)。
 
-如果想使用其他会话存储机制，可以在 `config/initializers/session_store.rb` 文件中修改：
+如果想使用其他会话存储机制，可以在一个初始化脚本中修改：
 
 ```ruby
 # Use the database for sessions instead of the cookie-based default,
@@ -330,7 +352,7 @@ CookieStore 可以存储大约 4KB 数据，比其他几种存储机制少很多
 # Rails.application.config.session_store :active_record_store
 ```
 
-签署会话数据时，Rails 会用到会话的键（cookie 的名称）。这个值可以在 `config/initializers/session_store.rb` 中修改：
+签署会话数据时，Rails 会用到会话的键（cookie 的名称）。这个值也可以在一个初始化脚本中修改：
 
 ```ruby
 # Be sure to restart your server when you modify this file.
@@ -372,6 +394,8 @@ production:
 ```
 
 NOTE: 使用 `CookieStore` 时，如果修改了密钥，之前所有的会话都会失效。
+
+<a class="anchor" id="accessing-the-session"></a>
 
 ### 访问会话
 
@@ -425,6 +449,8 @@ end
 ```
 
 若想重设整个会话，使用 `reset_session` 方法。
+
+<a class="anchor" id="the-flash"></a>
 
 ### 闪现消息
 
@@ -497,6 +523,8 @@ class MainController < ApplicationController
 end
 ```
 
+<a class="anchor" id="flash-now"></a>
+
 #### `flash.now`
 
 默认情况下，闪现消息中的内容只在下一次请求中可用，但有时希望在同一个请求中使用。例如，`create` 动作没有成功保存资源时，会直接渲染 `new` 模板，这并不是一个新请求，但却希望显示一个闪现消息。针对这种情况，可以使用 `flash.now`，其用法和常规的 `flash` 一样：
@@ -515,8 +543,9 @@ class ClientsController < ApplicationController
 end
 ```
 
-cookies
--------
+<a class="anchor" id="cookies"></a>
+
+## cookies
 
 应用可以在客户端存储少量数据（称为 cookie），在多次请求中使用，甚至可以用作会话。在 Rails 中可以使用 `cookies` 方法轻易访问 cookie，用法和 `session` 差不多，就像一个散列：
 
@@ -587,8 +616,9 @@ end
 
 如果使用 cookie 存储会话，`session` 和 `flash` 散列也是如此。
 
-渲染 XML 和 JSON 数据
----------------------
+<a class="anchor" id="rendering-xml-and-json-data"></a>
+
+## 渲染 XML 和 JSON 数据
 
 在 `ActionController` 中渲染 `XML` 和 `JSON` 数据非常简单。使用脚手架生成的控制器如下所示：
 
@@ -607,8 +637,9 @@ end
 
 你可能注意到了，在这段代码中，我们使用的是 `render xml: @users` 而不是 `render xml: @users.to_xml`。如果不是字符串对象，Rails 会自动调用 `to_xml` 方法。
 
-过滤器
-------
+<a class="anchor" id="filters"></a>
+
+## 过滤器
 
 过滤器（filter）是一种方法，在控制器动作运行之前、之后，或者前后运行。
 
@@ -643,6 +674,8 @@ end
 
 此时，`LoginsController` 的 `new` 动作和 `create` 动作就不需要用户先登录。`:only` 选项的意思是只跳过这些动作。此外，还有个 `:except` 选项，用法类似。定义过滤器时也可使用这些选项，指定只在选中的动作上运行。
 
+<a class="anchor" id="after-filters-and-around-filters"></a>
+
 ### 后置过滤器和环绕过滤器
 
 除了前置过滤器之外，还可以在动作运行之后，或者在动作运行前后执行过滤器。
@@ -674,6 +707,8 @@ end
 注意，环绕过滤器还包含了渲染操作。在上面的例子中，视图本身是从数据库中读取出来的（例如，通过作用域），读取视图的操作在事务中完成，然后提供预览数据。
 
 也可以不拉入动作，自己生成响应，不过此时动作不会运行。
+
+<a class="anchor" id="other-ways-to-use-filters"></a>
 
 ### 过滤器的其他用法
 
@@ -713,8 +748,9 @@ end
 
 这种方式也不是定义 `require_login` 过滤器的理想方式，因为与控制器不在同一作用域，要把控制器作为参数传入。定义过滤器的类，必须有一个和过滤器种类同名的方法。对于 `before_action` 过滤器，类中必须定义 `before` 方法。其他类型的过滤器以此类推。`around` 方法必须调用 `yield` 方法执行动作。
 
-请求伪造防护
-------------
+<a class="anchor" id="request-forgery-protection"></a>
+
+## 请求伪造防护
 
 跨站请求伪造（Cross-Site Request Forgery，CSRF）是一种攻击方式，A 网站的用户伪装成 B 网站的用户发送请求，在 B 站中添加、修改或删除数据，而 B 站的用户浑然不知。
 
@@ -742,51 +778,60 @@ end
 </form>
 ```
 
-使用[表单辅助方法](form_helpers.xml#action-view-form-helpers)生成的所有表单都有这样一个令牌，因此多数时候你都无需担心。如果想自己编写表单，或者基于其他原因想添加令牌，可以使用 `form_authenticity_token` 方法。
+使用[表单辅助方法](form_helpers.html)生成的所有表单都有这样一个令牌，因此多数时候你都无需担心。如果想自己编写表单，或者基于其他原因想添加令牌，可以使用 `form_authenticity_token` 方法。
 
 `form_authenticity_token` 会生成一个有效的令牌。在 Rails 没有自动添加令牌的地方（例如 Ajax）可以使用这个方法。
 
 [Ruby on Rails 安全指南](security.html)将更为深入地说明请求伪造防护措施，还有一些开发 Web 应用需要知道的其他安全隐患。
 
-请求和响应对象
---------------
+<a class="anchor" id="the-request-and-response-objects"></a>
+
+## 请求和响应对象
 
 在每个控制器中都有两个存取方法，分别用于获取当前请求循环的请求对象和响应对象。`request` 方法的返回值是一个 `ActionDispatch::Request` 实例，`response` 方法的返回值是一个响应对象，表示回送客户端的数据。
 
+<a class="anchor" id="the-request-object"></a>
+
 ### `request` 对象
 
-`request` 对象中有很多客户端请求的有用信息。可用方法的完整列表参阅 [API 文档](http://api.rubyonrails.org/classes/ActionDispatch/Request.html)。下面说明部分属性：
+`request` 对象中有很多客户端请求的有用信息。可用方法的完整列表参阅 [Rails API 文档](http://api.rubyonrails.org/classes/ActionDispatch/Request.html)和 [Rack 文档](http://www.rubydoc.info/github/rack/rack/Rack/Request)。下面说明部分属性：
 
-| request 对象的属性 | 作用 |
-|---------------|----|
-| host | 请求的主机名 |
-| domain(n=2) | 主机名的前 n 个片段，从顶级域名的右侧算起 |
-| format | 客户端请求的内容类型 |
-| method | 请求使用的 HTTP 方法 |
-| get?, post?, patch?, put?, delete?, head? | 如果 HTTP 方法是 GET/POST/PATCH/PUT/DELETE/HEAD，返回 true |
-| headers | 返回一个散列，包含请求的首部 |
-| port | 请求的端口号（整数） |
-| protocol | 返回所用的协议外加 "://"，例如 "http://" |
-| query_string | URL 中的查询字符串，即 ? 后面的全部内容 |
-| remote_ip | 客户端的 IP 地址 |
-| url | 请求的完整 URL |
+| `request` 对象的属性 | 作用  |
+|---|---|
+| `host` | 请求的主机名  |
+| `domain(n=2)` | 主机名的前 `n` 个片段，从顶级域名的右侧算起  |
+| `format` | 客户端请求的内容类型  |
+| `method` | 请求使用的 HTTP 方法  |
+| `get?`, `post?`, `patch?`, `put?`, `delete?`, `head?` | 如果 HTTP 方法是 GET/POST/PATCH/PUT/DELETE/HEAD，返回 `true`  |
+| `headers` | 返回一个散列，包含请求的首部  |
+| `port` | 请求的端口号（整数）  |
+| `protocol` | 返回所用的协议外加 `"://"`，例如 `"http://"`  |
+| `query_string` | URL 中的查询字符串，即 `?` 后面的全部内容  |
+| `remote_ip` | 客户端的 IP 地址  |
+| `url` | 请求的完整 URL  |
+
+<a class="anchor" id="path-parameters-query-parameters-and-request-parameters"></a>
 
 #### `path_parameters`、`query_parameters` 和 `request_parameters`
 
 不管请求中的参数通过查询字符串发送，还是通过 POST 主体提交，Rails 都会把这些参数存入 `params` 散列中。`request` 对象有三个存取方法，用于获取各种类型的参数。`query_parameters` 散列中的参数来自查询参数；`request_parameters` 散列中的参数来自 POST 主体；`path_parameters` 散列中的参数来自路由，传入相应的控制器和动作。
 
+<a class="anchor" id="the-response-object"></a>
+
 ### `response` 对象
 
-`response` 对象通常不直接使用。`response` 对象在动作的执行过程中构建，把渲染的数据回送给用户。不过有时可能需要直接访问响应，比如在后置过滤器中。`response` 对象上的方法有些可以用于赋值。
+`response` 对象通常不直接使用。`response` 对象在动作的执行过程中构建，把渲染的数据回送给用户。不过有时可能需要直接访问响应，比如在后置过滤器中。`response` 对象上的方法有些可以用于赋值。若想了解全部可用方法，参阅 [Rails API 文档](http://api.rubyonrails.org/classes/ActionDispatch/Response.html)和 [Rack 文档](http://www.rubydoc.info/github/rack/rack/Rack/Response)。
 
-| response 对象的属性 | 作用 |
-|----------------|----|
-| body | 回送客户端的数据，字符串格式。通常是 HTML。 |
-| status | 响应的 HTTP 状态码，例如，请求成功时是 200，文件未找到时是 404。 |
-| location | 重定向的 URL（如果重定向的话）。 |
-| content_type | 响应的内容类型。 |
-| charset | 响应使用的字符集。默认是 "utf-8"。 |
-| headers | 响应的首部。 |
+| `response` 对象的属性 | 作用  |
+|---|---|
+| `body` | 回送客户端的数据，字符串格式。通常是 HTML。  |
+| `status` | 响应的 HTTP 状态码，例如，请求成功时是 200，文件未找到时是 404。  |
+| `location` | 重定向的 URL（如果重定向的话）。  |
+| `content_type` | 响应的内容类型。  |
+| `charset` | 响应使用的字符集。默认是 `"utf-8"`。  |
+| `headers` | 响应的首部。  |
+
+<a class="anchor" id="setting-custom-headers"></a>
 
 #### 设置自定义首部
 
@@ -798,14 +843,16 @@ response.headers["Content-Type"] = "application/pdf"
 
 注意，上面这段代码直接使用 `content_type=` 方法更合理。
 
-HTTP 身份验证
--------------
+<a class="anchor" id="http-authentications"></a>
+
+## HTTP 身份验证
 
 Rails 内置了两种 HTTP 身份验证机制：
 
-- 基本身份验证
+*   基本身份验证
+*   摘要身份验证
 
-- 摘要身份验证
+<a class="anchor" id="http-basic-authentication"></a>
 
 ### HTTP 基本身份验证
 
@@ -818,6 +865,8 @@ end
 ```
 
 添加 `http_basic_authenticate_with` 方法后，可以创建具有命名空间的控制器，继承自 `AdminsController`，`http_basic_authenticate_with` 方法会在这些控制器的所有动作运行之前执行，启用 HTTP 基本身份验证。
+
+<a class="anchor" id="http-digest-authentication"></a>
 
 ### HTTP 摘要身份验证
 
@@ -841,8 +890,9 @@ end
 
 如上面的代码所示，`authenticate_or_request_with_http_digest` 方法的块只接受一个参数，用户名，返回值是密码。如果 `authenticate_or_request_with_http_digest` 返回 `false` 或 `nil`，表明身份验证失败。
 
-数据流和文件下载
-----------------
+<a class="anchor" id="streaming-and-file-downloads"></a>
+
+## 数据流和文件下载
 
 有时不想渲染 HTML 页面，而是把文件发送给用户。在所有的控制器中都可以使用 `send_data` 和 `send_file` 方法。这两个方法都会以数据流的方式发送数据。`send_file` 方法很方便，只要提供磁盘中文件的名称，就会用数据流发送文件内容。
 
@@ -874,6 +924,8 @@ end
 
 在上面的代码中，`download_pdf` 动作调用一个私有方法，生成 PDF 文档，然后返回字符串形式。返回的字符串会以数据流的形式发送给客户端，并为用户推荐一个文件名。有时发送文件流时，并不希望用户下载这个文件，比如嵌在 HTML 页面中的图像。若想告诉浏览器文件不是用来下载的，可以把 `:disposition` 选项设为 `"inline"`。这个选项的另外一个值，也是默认值，是 `"attachment"`。
 
+<a class="anchor" id="sending-files"></a>
+
 ### 发送文件
 
 如果想发送磁盘中已经存在的文件，可以使用 `send_file` 方法。
@@ -897,6 +949,8 @@ end
 WARNING: 要谨慎处理用户提交数据（参数、cookies 等）中的文件路径，这有安全隐患，可能导致不该下载的文件被下载了。
 
 TIP: 不建议通过 Rails 以数据流的方式发送静态文件，你可以把静态文件放在服务器的公共文件夹中。使用 Apache 或其他 Web 服务器下载效率更高，因为不用经由整个 Rails 栈处理。
+
+<a class="anchor" id="restful-downloads"></a>
 
 ### REST 式下载
 
@@ -930,9 +984,13 @@ NOTE: 配置文件不会在每次请求中都重新加载，为了让改动生�
 GET /clients/1.pdf
 ```
 
+<a class="anchor" id="live-streaming-of-arbitrary-data"></a>
+
 ### 任意数据的实时流
 
 在 Rails 中，不仅文件可以使用数据流的方式处理，在响应对象中，任何数据都可以视作数据流。`ActionController::Live` 模块可以和浏览器建立持久连接，随时随地把数据传送给浏览器。
+
+<a class="anchor" id="incorporating-live-streaming"></a>
 
 #### 使用实时流
 
@@ -957,6 +1015,8 @@ end
 上面的代码会和浏览器建立持久连接，每秒一次，共发送 100 次 `"hello world\n"`。
 
 关于这段代码有一些注意事项。必须关闭响应流。如果忘记关闭，套接字就会一直处于打开状态。发送数据流之前，还要把内容类型设为 `text/event-stream`。这是因为在响应流上调用 `write` 或 `commit` 发送响应后（`response.committed?` 返回真值）就无法设置首部了。
+
+<a class="anchor" id="example-usage"></a>
 
 #### 使用举例
 
@@ -984,20 +1044,23 @@ end
 
 在这段代码中，只有上一句唱完才会发送下一句歌词。
 
+<a class="anchor" id="streaming-considerations"></a>
+
 #### 使用数据流的注意事项
 
 以数据流的方式发送任意数据是个强大的功能，如前面几个例子所示，你可以选择何时发送什么数据。不过，在使用时，要注意以下事项：
 
-- 每次以数据流形式发送响应都会新建一个线程，然后把原线程中的局部变量复制过来。线程中有太多局部变量会降低性能。而且，线程太多也会影响性能。
+*   每次以数据流形式发送响应都会新建一个线程，然后把原线程中的局部变量复制过来。线程中有太多局部变量会降低性能。而且，线程太多也会影响性能。
+*   忘记关闭响应流会导致套接字一直处于打开状态。使用响应流时一定要记得调用 `close` 方法。
+*   WEBrick 会缓冲所有响应，因此引入 `ActionController::Live` 也不会有任何效果。你应该使用不自动缓冲响应的服务器。
 
-- 忘记关闭响应流会导致套接字一直处于打开状态。使用响应流时一定要记得调用 `close` 方法。
+<a class="anchor" id="log-filtering"></a>
 
-- WEBrick 会缓冲所有响应，因此引入 `ActionController::Live` 也不会有任何效果。你应该使用不自动缓冲响应的服务器。
-
-日志过滤
---------
+## 日志过滤
 
 Rails 在 `log` 文件夹中为每个环境都准备了一个日志文件。这些文件在调试时特别有用，但是线上应用并不用把所有信息都写入日志。
+
+<a class="anchor" id="parameters-filtering"></a>
 
 ### 参数过滤
 
@@ -1008,6 +1071,8 @@ config.filter_parameters << :password
 ```
 
 NOTE: 指定的参数通过部分匹配正则表达式过滤掉。Rails 默认在相应的初始化脚本（`initializers/filter_parameter_logging.rb`）中过滤 `:password`，以及应用中常见的 `password` 和 `password_confirmation` 参数。
+
+<a class="anchor" id="redirects-filtering"></a>
 
 ### 重定向过滤
 
@@ -1025,16 +1090,21 @@ config.filter_redirect.concat ['s3.amazonaws.com', /private_path/]
 
 匹配的 URL 会显示为 `'[FILTERED]'`。
 
-异常处理
---------
+<a class="anchor" id="rescue"></a>
+
+## 异常处理
 
 应用很有可能出错，错误发生时会抛出异常，这些异常是需要处理的。例如，如果用户访问一个链接，但数据库中已经没有对应的资源了，此时 Active Record 会抛出 `ActiveRecord::RecordNotFound` 异常。
 
 在 Rails 中，异常的默认处理方式是显示“500 Server Error”消息。如果应用在本地运行，出错后会显示一个精美的调用跟踪，以及其他附加信息，让开发者快速找到出错的地方，然后修正。如果应用已经上线，Rails 则会简单地显示“500 Server Error”消息；如果是路由错误或记录不存在，则显示“404 Not Found”。有时你可能想换种方式捕获错误，以不同的方式显示报错信息。在 Rails 中，有很多层异常处理，详解如下。
 
+<a class="anchor" id="the-default-500-and-404-templates"></a>
+
 ### 默认的 500 和 404 模板
 
 默认情况下，生产环境中的应用出错时会显示 404 或 500 错误消息，在开发环境中则抛出未捕获的异常。错误消息在 `public` 文件夹里的静态 HTML 文件中，分别是 `404.html` 和 `500.html`。你可以修改这两个文件，添加其他信息和样式，不过要记住，这两个是静态文件，不能使用 ERB、SCSS、CoffeeScript 或布局。
+
+<a class="anchor" id="rescue-form"></a>
 
 ### `rescue_from`
 
@@ -1094,8 +1164,9 @@ NOTE: 在生产环境中，所有 `ActiveRecord::RecordNotFound` 异常都会导
 
 NOTE: 某些异常只能在 `ApplicationController` 类中捕获，因为在异常抛出前控制器还没初始化，动作也没执行。
 
-强制使用 HTTPS 协议
--------------------
+<a class="anchor" id="force-https-protocol"></a>
+
+## 强制使用 HTTPS 协议
 
 有时，基于安全考虑，可能希望某个控制器只能通过 HTTPS 协议访问。为了达到这一目的，可以在控制器中使用 `force_ssl` 方法：
 

@@ -1,43 +1,37 @@
-Rails 入门
-==========
+# Rails 入门
 
 本文介绍如何开始使用 Ruby on Rails。
 
 读完本文后，您将学到：
 
-- 如何安装 Rails、创建 Rails 应用，如何连接数据库；
+*   如何安装 Rails、创建 Rails 应用，如何连接数据库；
+*   Rails 应用的基本文件结构；
+*   MVC（模型、视图、控制器）和 REST 架构的基本原理；
+*   如何快速生成 Rails 应用骨架。
 
-- Rails 应用的基本文件结构；
+-----------------------------------------------------------------------------
 
-- MVC（模型、视图、控制器）和 REST 架构的基本原理；
+<a class="anchor" id="guide-assumptions"></a>
 
-- 如何快速生成 Rails 应用骨架。
-
---------------------------------------------------------------------------------
-
-前提条件
---------
+## 前提条件
 
 本文针对想从零开始开发 Rails 应用的初学者，不要求 Rails 使用经验。不过，为了能顺利阅读，还是需要事先安装好一些软件：
 
-- [Ruby](https://www.ruby-lang.org/en/downloads) 2.2.2 及以上版本
-
-- [开发工具包](http://rubyinstaller.org/downloads/)的正确版本（针对 Windows 用户）
-
-- 包管理工具 [RubyGems](https://rubygems.org/)，随 Ruby 预装。若想深入了解 RubyGems，请参阅 [RubyGems 指南](http://guides.rubygems.org/)
-
-- [SQLite3 数据库](https://www.sqlite.org/)
+*   [Ruby](https://www.ruby-lang.org/en/downloads) 2.2.2 及以上版本
+*   [开发工具包](http://rubyinstaller.org/downloads/)的正确版本（针对 Windows 用户）
+*   包管理工具 [RubyGems](https://rubygems.org/)，随 Ruby 预装。若想深入了解 RubyGems，请参阅 [RubyGems 指南](http://guides.rubygems.org/)
+*   [SQLite3 数据库](https://www.sqlite.org/)
 
 Rails 是使用 Ruby 语言开发的 Web 应用框架。如果之前没接触过 Ruby，会感到直接学习 Rails 的学习曲线很陡。这里提供几个学习 Ruby 的在线资源：
 
-- [Ruby 语言官方网站](https://www.ruby-lang.org/en/documentation/)
-
-- [免费编程图书列表](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#ruby)
+*   [Ruby 语言官方网站](https://www.ruby-lang.org/en/documentation/)
+*   [免费编程图书列表](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#ruby)
 
 需要注意的是，有些资源虽然很好，但针对的是 Ruby 1.8 甚至 1.6 这些老版本，因此不涉及一些 Rails 日常开发的常见句法。
 
-Rails 是什么？
---------------
+<a class="anchor" id="what-is-rails"></a>
+
+## Rails 是什么？
 
 Rails 是使用 Ruby 语言编写的 Web 应用开发框架，目的是通过解决快速开发中的共通问题，简化 Web 应用的开发。与其他编程语言和框架相比，使用 Rails 只需编写更少代码就能实现更多功能。有经验的 Rails 程序员常说，Rails 让 Web 应用开发变得更有趣。
 
@@ -45,12 +39,12 @@ Rails 有自己的设计原则，认为问题总有最好的解决方法，并�
 
 Rails 哲学包含两大指导思想：
 
-- 不要自我重复（DRY）： DRY 是软件开发中的一个原则，意思是“系统中的每个功能都要具有单一、准确、可信的实现。”。不重复表述同一件事，写出的代码才更易维护、更具扩展性，也更不容易出问题。
+*   不要自我重复（DRY）： DRY 是软件开发中的一个原则，意思是“系统中的每个功能都要具有单一、准确、可信的实现。”。不重复表述同一件事，写出的代码才更易维护、更具扩展性，也更不容易出问题。
+*   多约定，少配置： Rails 为 Web 应用的大多数需求都提供了最好的解决方法，并且默认使用这些约定，而不是在长长的配置文件中设置每个细节。
 
-- 多约定，少配置： Rails 为 Web 应用的大多数需求都提供了最好的解决方法，并且默认使用这些约定，而不是在长长的配置文件中设置每个细节。
+<a class="anchor" id="creating-a-new-rails-project"></a>
 
-创建 Rails 项目
----------------
+## 创建 Rails 项目
 
 阅读本文的最佳方法是一步步跟着操作。所有这些步骤对于运行示例应用都是必不可少的，同时也不需要更多的代码或步骤。
 
@@ -58,16 +52,18 @@ Rails 哲学包含两大指导思想：
 
 TIP: 文中的示例代码使用 UNIX 风格的命令行提示符 $，如果你的命令行提示符是自定义的，看起来可能会不一样。在 Windows 中，命令行提示符可能类似 `c:\source_code>`。
 
+<a class="anchor" id="installing-rails"></a>
+
 ### 安装 Rails
 
-打开命令行：在 Mac OS X 中打开 Terminal.app，在 Windows 中要在开始菜单中选择“运行”，然后输入“cmd.exe”。本文中所有以 $ 开头的代码，都应该在命令行中执行。首先确认是否安装了 Ruby 的最新版本：
+打开命令行：在 macOS 中打开 Terminal.app，在 Windows 中要在开始菜单中选择“运行”，然后输入“cmd.exe”。本文中所有以 $ 开头的代码，都应该在命令行中执行。首先确认是否安装了 Ruby 的最新版本：
 
 ```sh
 $ ruby -v
-ruby 2.3.0p0
+ruby 2.3.1p112
 ```
 
-TIP: 有很多工具可以帮助你快速地在系统中安装 Ruby 和 Ruby on Rails。Windows 用户可以使用 [Rails Installer](http://railsinstaller.org/)，Mac OS X 用户可以使用 [Tokaido](https://github.com/tokaido/tokaidoapp)。更多操作系统中的安装方法请访问 [ruby-lang.org](https://www.ruby-lang.org/en/documentation/installation/)。
+TIP: 有很多工具可以帮助你快速地在系统中安装 Ruby 和 Ruby on Rails。Windows 用户可以使用 [Rails Installer](http://railsinstaller.org/)，macOS 用户可以使用 [Tokaido](https://github.com/tokaido/tokaidoapp)。更多操作系统中的安装方法请访问 [ruby-lang.org](https://www.ruby-lang.org/en/documentation/installation/)。
 
 很多类 UNIX 系统都预装了版本较新的 SQLite3。在 Windows 中，通过 Rails Installer 安装 Rails 会同时安装 SQLite3。其他操作系统中 SQLite3 的安装方法请参阅 [SQLite3 官网](https://www.sqlite.org/)。接下来，确认 SQLite3 是否在 PATH 中：
 
@@ -89,11 +85,13 @@ $ gem install rails
 $ rails --version
 ```
 
-如果执行结果类似 `Rails 5.0.0`，那么就可以继续往下读了。
+如果执行结果类似 `Rails 5.1.0`，那么就可以继续往下读了。
+
+<a class="anchor" id="creating-the-blog-application"></a>
 
 ### 创建 Blog 应用
 
-Rails 提供了许多名为“生成器”（generator）的脚本，这些脚本可以为特定任务生成所需的全部文件，从而简化开发。其中包括新应用生成器，这个脚本用于创建 Rails 应用骨架，避免了手动编写基础代码。
+Rails 提供了许多名为生成器（generator）的脚本，这些脚本可以为特定任务生成所需的全部文件，从而简化开发。其中包括新应用生成器，这个脚本用于创建 Rails 应用骨架，避免了手动编写基础代码。
 
 要使用新应用生成器，请打开终端，进入具有写权限的文件夹，输入：
 
@@ -113,27 +111,31 @@ $ cd blog
 
 `blog` 文件夹中有许多自动生成的文件和文件夹，这些文件和文件夹组成了 Rails 应用的结构。本文涉及的大部分工作都在 app 文件夹中完成。下面简单介绍一下这些用新应用生成器默认选项生成的文件和文件夹的功能：
 
-| 文件/文件夹 | 作用 |
-|--------|----|
-| app/ | 包含应用的控制器、模型、视图、辅助方法、邮件程序和静态资源文件。这个文件夹是本文剩余内容关注的重点。 |
-| bin/ | 包含用于启动应用的 rails 脚本，以及用于安装、更新、部署或运行应用的其他脚本。 |
-| config/ | 配置应用的路由、数据库等。详情请参阅configuring.xml。 |
-| config.ru | 基于 Rack 的服务器所需的 Rack 配置，用于启动应用。 |
-| db/ | 包含当前数据库的模式，以及数据库迁移文件。 |
-| Gemfile, Gemfile.lock | 这两个文件用于指定 Rails 应用所需的 gem 依赖。Bundler gem 需要用到这两个文件。关于 Bundler 的更多介绍，请访问 Bundler 官网。 |
-| lib/ | 应用的扩展模块。 |
-| log/ | 应用日志文件。 |
-| public/ | 仅有的可以直接从外部访问的文件夹，包含静态文件和编译后的静态资源文件。 |
-| Rakefile | 定位并加载可在命令行中执行的任务。这些任务在 Rails 的各个组件中定义。如果要添加自定义任务，请不要修改 Rakefile，真接把自定义任务保存在 lib/tasks 文件夹中即可。 |
-| README.md | 应用的自述文件，说明应用的用途、安装方法等。 |
-| test/ | 单元测试、固件和其他测试装置。详情请参阅testing.xml。 |
-| tmp/ | 临时文件（如缓存和 PID 文件）。 |
-| vendor/ | 包含第三方代码，如第三方 gem。 |
+| 文件/文件夹 | 作用  |
+|---|---|
+| `app/` | 包含应用的控制器、模型、视图、辅助方法、邮件程序、频道、作业和静态资源文件。这个文件夹是本文剩余内容关注的重点。  |
+| `bin/` | 包含用于启动应用的 rails 脚本，以及用于安装、更新、部署或运行应用的其他脚本。  |
+| `config/` | 配置应用的路由、数据库等。详情请参阅[配置 Rails 应用](configuring.html)。  |
+| `config.ru` | 基于 Rack 的服务器所需的 Rack 配置，用于启动应用。  |
+| `db/` | 包含当前数据库的模式，以及数据库迁移文件。  |
+| `Gemfile`, `Gemfile.lock` | 这两个文件用于指定 Rails 应用所需的 gem 依赖。Bundler gem 需要用到这两个文件。关于 Bundler 的更多介绍，请访问 [Bundler 官网](http://bundler.io/)。  |
+| `lib/` | 应用的扩展模块。  |
+| `log/` | 应用日志文件。  |
+| `public/` | 仅有的可以直接从外部访问的文件夹，包含静态文件和编译后的静态资源文件。  |
+| `Rakefile` | 定位并加载可在命令行中执行的任务。这些任务在 Rails 的各个组件中定义。如果要添加自定义任务，请不要修改 Rakefile，直接把自定义任务保存在 `lib/tasks` 文件夹中即可。  |
+| `README.md` | 应用的自述文件，说明应用的用途、安装方法等。  |
+| `test/` | 单元测试、固件和其他测试装置。详情请参阅[Rails 应用测试指南](testing.html)。  |
+| `tmp/` | 临时文件（如缓存和 PID 文件）。  |
+| `vendor/` | 包含第三方代码，如第三方 gem。  |
+| `.gitignore` | 告诉 Git 要忽略的文件（或模式）。详情参见 [GitHub 帮助文档](https://help.github.com/articles/ignoring-files)。  |
 
-Hello, Rails!
--------------
+<a class="anchor" id="hello-rails"></a>
+
+## Hello, Rails!
 
 首先，让我们快速地在页面中添加一些文字。为了访问页面，需要运行 Rails 应用服务器（即 Web 服务器）。
+
+<a class="anchor" id="starting-up-the-web-server"></a>
 
 ### 启动 Web 服务器
 
@@ -145,15 +147,17 @@ $ bin/rails server
 
 TIP: Windows 用户需要把 `bin` 文件夹下的脚本文件直接传递给 Ruby 解析器，例如 `ruby bin\rails server`。
 
-TIP: 编译 CoffeeScript 和压缩 JavaScript 静态资源文件需要 JavaScript 运行时，如果没有运行时，在压缩静态资源文件时会报错，提示没有 `execjs`。Mac OS X 和 Windows 一般都提供了 JavaScript 运行时。在 Rails 应用的 Gemfile 中，`therubyracer` gem 被注释掉了，如果需要使用这个 gem，请去掉注释。对于 JRuby 用户，推荐使用 `therubyrhino` 这个运行时，在 JRuby 中创建 Rails 应用的 Gemfile 中默认包含了这个 gem。要查看 Rails 支持的所有运行时，请参阅 [ExecJS](https://github.com/rails/execjs#readme)。
+TIP: 编译 CoffeeScript 和压缩 JavaScript 静态资源文件需要 JavaScript 运行时，如果没有运行时，在压缩静态资源文件时会报错，提示没有 `execjs`。macOS 和 Windows 一般都提供了 JavaScript 运行时。在 Rails 应用的 Gemfile 中，`therubyracer` gem 被注释掉了，如果需要使用这个 gem，请去掉注释。对于 JRuby 用户，推荐使用 `therubyrhino` 这个运行时，在 JRuby 中创建 Rails 应用的 Gemfile 中默认包含了这个 gem。要查看 Rails 支持的所有运行时，请参阅 [ExecJS](https://github.com/rails/execjs#readme)。
 
 上述命令会启动 Puma，这是 Rails 默认使用的 Web 服务器。要查看运行中的应用，请打开浏览器窗口，访问 <http://localhost:3000>。这时应该看到默认的 Rails 欢迎页面：
 
 ![默认的 Rails 欢迎页面](images/getting_started/rails_welcome.png)
 
-TIP: 要停止 Web 服务器，请在终端中按 Ctrl+C 键。服务器停止后命令行提示符会重新出现。在大多数类 Unix 系统中，包括 Mac OS X，命令行提示符是 $ 符号。在开发模式中，一般情况下无需重启服务器，服务器会自动加载修改后的文件。
+TIP: 要停止 Web 服务器，请在终端中按 Ctrl+C 键。服务器停止后命令行提示符会重新出现。在大多数类 Unix 系统中，包括 macOS，命令行提示符是 $ 符号。在开发模式中，一般情况下无需重启服务器，服务器会自动加载修改后的文件。
 
 欢迎页面是创建 Rails 应用的冒烟测试，看到这个页面就表示应用已经正确配置，能够正常工作了。
+
+<a class="anchor" id="say-hello-rails"></a>
 
 ### 显示“Hello, Rails!”
 
@@ -171,20 +175,23 @@ $ bin/rails generate controller Welcome index
 
 上述命令让 Rails 生成了多个文件和一个路由：
 
-    create  app/controllers/welcome_controller.rb
-     route  get 'welcome/index'
-    invoke  erb
-    create    app/views/welcome
-    create    app/views/welcome/index.html.erb
-    invoke  test_unit
-    create    test/controllers/welcome_controller_test.rb
-    invoke  helper
-    create    app/helpers/welcome_helper.rb
-    invoke  assets
-    invoke    coffee
-    create      app/assets/javascripts/welcome.coffee
-    invoke    scss
-    create      app/assets/stylesheets/welcome.scss
+```
+create  app/controllers/welcome_controller.rb
+ route  get 'welcome/index'
+invoke  erb
+create    app/views/welcome
+create    app/views/welcome/index.html.erb
+invoke  test_unit
+create    test/controllers/welcome_controller_test.rb
+invoke  helper
+create    app/helpers/welcome_helper.rb
+invoke    test_unit
+invoke  assets
+invoke    coffee
+create      app/assets/javascripts/welcome.coffee
+invoke    scss
+create      app/assets/stylesheets/welcome.scss
+```
 
 其中最重要的文件是控制器和视图，控制器位于 `app/controllers/welcome_controller.rb` 文件 ，视图位于 `app/views/welcome/index.html.erb` 文件 。
 
@@ -194,9 +201,11 @@ $ bin/rails generate controller Welcome index
 <h1>Hello, Rails!</h1>
 ```
 
+<a class="anchor" id="setting-the-application-home-page"></a>
+
 ### 设置应用主页
 
-现在我们已经创建了控制器和视图，还需要告诉 Rails 何时显示“Hello, Rails!”，我们希望在访问根地址 <http://localhost:3000> 时显示。目前根地址显示的还是默认的 Rails 欢迎页面。
+现在我们已经创建了控制器和视图，还需要告诉 Rails 何时显示“Hello, Rails!”，我们希望在访问根地址  <http://localhost:3000> 时显示。目前根地址显示的还是默认的 Rails 欢迎页面。
 
 接下来需要告诉 Rails 真正的主页在哪里。
 
@@ -210,7 +219,7 @@ Rails.application.routes.draw do
 end
 ```
 
-这是应用的路由文件，使用特殊的 DSL（domain-specific language，领域专属语言）编写，告诉 Rails 把访问请求发往哪个控制器和动作。编辑这个文件，添加一行代码 `root 'welcome#index'`，此时文件内容应该变成下面这样：
+这是应用的路由文件，使用特殊的 DSL（Domain-Specific Language，领域专属语言）编写，告诉 Rails 把访问请求发往哪个控制器和动作。编辑这个文件，添加一行代码 `root 'welcome#index'`，此时文件内容应该变成下面这样：
 
 ```ruby
 Rails.application.routes.draw do
@@ -222,21 +231,23 @@ end
 
 `root 'welcome#index'` 告诉 Rails 对根路径的访问请求应该发往 welcome 控制器的 index 动作，`get 'welcome/index'` 告诉 Rails 对 <http://localhost:3000/welcome/index> 的访问请求应该发往 welcome 控制器的 index 动作。后者是之前使用控制器生成器创建控制器（`bin/rails generate controller Welcome index`）时自动生成的。
 
-如果在生成控制器时停止了服务器，请再次启动服务器（`bin/rails server`），然后在浏览器中访问 <http://localhost:3000>。我们会看到之前添加到 `app/views/welcome/index.html.erb` 文件 的“Hello, Rails!”信息，这说明新定义的路由确实把访问请求发往了 `WelcomeController` 的 `index` 动作，并正确渲染了视图。
+如果在生成控制器时停止了服务器，请再次启动服务器（`bin/rails server`），然后在浏览器中访问  <http://localhost:3000>。我们会看到之前添加到 `app/views/welcome/index.html.erb` 文件 的“Hello, Rails!”信息，这说明新定义的路由确实把访问请求发往了 `WelcomeController` 的 `index` 动作，并正确渲染了视图。
 
 TIP: 关于路由的更多介绍，请参阅[Rails 路由全解](routing.html)。
 
-启动并运行起来
---------------
+<a class="anchor" id="getting-up-and-running"></a>
+
+## 启动并运行起来
 
 前文已经介绍了如何创建控制器、动作和视图，接下来我们要创建一些更具实用价值的东西。
 
 在 Blog 应用中创建一个资源（resource）。资源是一个术语，表示一系列类似对象的集合，如文章、人或动物。资源中的项目可以被创建、读取、更新和删除，这些操作简称 CRUD（Create, Read, Update, Delete）。
 
-Rails 提供了 `resources` 方法，用于声明标准的 REST 资源。把 article 资源添加到 `config/routes.rb` 文件，此时文件内容应该变成下面这样：
+Rails 提供了 `resources` 方法，用于声明标准的 REST 资源。把 articles 资源添加到 `config/routes.rb` 文件，此时文件内容应该变成下面这样：
 
 ```ruby
 Rails.application.routes.draw do
+  get 'welcome/index'
 
   resources :articles
 
@@ -244,7 +255,7 @@ Rails.application.routes.draw do
 end
 ```
 
-执行 `bin/rails routes` 命令，可以看到所有标准 REST 动作都具有对应的路由。输出结果中各列的意义稍后会作说明，现在只需注意 Rails 从 article 的单数形式推导出了它的复数形式，并进行了合理使用。
+执行 `bin/rails routes` 命令，可以看到所有标准 REST 动作都具有对应的路由。输出结果中各列的意义稍后会作说明，现在只需注意  Rails 从 article 的单数形式推导出了它的复数形式，并进行了合理使用。
 
 ```sh
 $ bin/rails routes
@@ -266,9 +277,11 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 
 表单看起来很简陋，不过没关系，之后我们再来美化。
 
+<a class="anchor" id="laying-down-the-ground-work"></a>
+
 ### 打地基
 
-首先，应用需要一个页面用于新建文章，`/articles/new` 是个不错的选择。相关路由之前已经定义过了，可以直接访问。打开 <http://localhost:3000/articles/new>，会看到下面的路由错误：
+首先，应用需要一个页面用于新建文章，`/articles/new` 是个不错的选择。相关路由之前已经定义过了，可以直接访问。打开  <http://localhost:3000/articles/new>，会看到下面的路由错误：
 
 ![路由错误，常量 ArticlesController 未初始化](images/getting_started/routing_error_no_controller.png)
 
@@ -312,13 +325,13 @@ end
 
 上图中下面的几行都被截断了，下面是完整信息：
 
-> ArticlesController\#new is missing a template for this request format and variant. request.formats: \["text/html"\] request.variant: \[\] NOTE! For XHR/Ajax or API requests, this action would normally respond with 204 No Content: an empty white screen. Since you’re loading it in a web browser, we assume that you expected to actually render a template, not… nothing, so we’re showing an error to be extra-clear. If you expect 204 No Content, carry on. That’s what you’ll get from an XHR or API request. Give it a shot.
+> ArticlesController#new is missing a template for this request format and variant. request.formats: ["text/html"] request.variant: [] NOTE! For XHR/Ajax or API requests, this action would normally respond with 204 No Content: an empty white screen. Since you&#8217;re loading it in a web browser, we assume that you expected to actually render a template, not… nothing, so we&#8217;re showing an error to be extra-clear. If you expect 204 No Content, carry on. That&#8217;s what you&#8217;ll get from an XHR or API request. Give it a shot.
 
 内容还真不少！让我们快速浏览一下，看看各部分是什么意思。
 
 第一部分说明缺少哪个模板，这里缺少的是 `articles/new` 模板。Rails 首先查找这个模板，如果找不到再查找 `application/new` 模板。之所以会查找后面这个模板，是因为 `ArticlesController` 继承自 `ApplicationController`。
 
-下一部分是 `request.formats`，说明响应使用的模板格式。当我们在浏览器中请求页面时，`request.formats` 的值是 `text/html`，因此 Rails 会查找 HTML 模板。`request.variants` 指明伺服的是何种物理设备，帮助 Rails 判断该使用哪个模板渲染响应。它的值是空的，因为没有为其提供信息。
+下一部分是 `request.formats`，说明响应使用的模板格式。当我们在浏览器中请求页面时，`request.formats` 的值是 `text/html`，因此 Rails 会查找 HTML 模板。`request.variant` 指明伺服的是何种物理设备，帮助 Rails 判断该使用哪个模板渲染响应。它的值是空的，因为没有为其提供信息。
 
 在本例中，能够工作的最简单的模板位于 `app/views/articles/new.html.erb` 文件中。文件的扩展名很重要：第一个扩展名是模板格式，第二个扩展名是模板处理器。Rails 会尝试在 `app/views` 文件夹中查找 `articles/new` 模板。这个模板的格式只能是 `html`，模板处理器只能是 `erb`、`builder` 和 `coffee` 中的一个。`:erb` 是最常用的 HTML 模板处理器，`:builder` 是 XML 模板处理器，`:coffee` 模板处理器用 CoffeeScript 创建 JavaScript 模板。因为我们要创建 HTML 表单，所以应该使用能够在 HTML 中嵌入 Ruby 的 `ERB` 语言。
 
@@ -331,6 +344,8 @@ end
 ```
 
 刷新 <http://localhost:3000/articles/new>，会看到页面有了标题。现在路由、控制器、动作和视图都可以协调地工作了！是时候创建用于新建文章的表单了。
+
+<a class="anchor" id="the-first-form"></a>
 
 ### 第一个表单
 
@@ -392,6 +407,8 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 
 解决问题的方法是在 `ArticlesController` 中创建 `create` 动作。
 
+<a class="anchor" id="creating-articles"></a>
+
 ### 创建文章
 
 要消除“未知动作”错误，我们需要修改 `app/controllers/articles_controller.rb` 文件，在 `ArticlesController` 类的 `new` 动作之后添加 `create` 动作，就像下面这样：
@@ -418,25 +435,33 @@ end
 
 这里 `render` 方法接受了一个简单的散列（hash）作为参数，`:plain` 键的值是 `params[:article].inspect`。`params` 方法是代表表单提交的参数（或字段）的对象。`params` 方法返回 `ActionController::Parameters` 对象，这个对象允许使用字符串或符号访问散列的键。这里我们只关注通过表单提交的参数。
 
-TIP: 请确保牢固掌握 `params` 方法，这个方法很常用。让我们看一个示例 URL：http://www.example.com/?username=dhh&email=dhh@email.com。在这个 URL 中，`params[:username]` 的值是“dhh”，`params[:email]` 的值是“dhh@email.com”。
+TIP: 请确保牢固掌握 `params` 方法，这个方法很常用。让我们看一个示例 URL：`http://www.example.com/?username=dhh&email=dhh@email.com`。在这个 URL 中，`params[:username]` 的值是“dhh”，`params[:email]` 的值是“`dhh@email.com`”。
 
-如果再次提交表单，就不会再看到缺少模板错误，而是会看到下面这些内容：
+如果再次提交表单，会看到下面这些内容：
 
-    <ActionController::Parameters {"title"=>"First Article!", "text"=>"This is my first article."} permitted: false>
+```
+<ActionController::Parameters {"title"=>"First Article!", "text"=>"This is my first article."} permitted: false>
+```
 
 `create` 动作把表单提交的参数都显示出来了，但这并没有什么用，只是看到了参数实际上却什么也没做。
+
+<a class="anchor" id="creating-the-article-model"></a>
 
 ### 创建 Article 模型
 
 在 Rails 中，模型使用单数名称，对应的数据库表使用复数名称。Rails 提供了用于创建模型的生成器，大多数 Rails 开发者在新建模型时倾向于使用这个生成器。要想新建模型，请执行下面的命令：
 
-    $ bin/rails generate model Article title:string text:text
+```
+$ bin/rails generate model Article title:string text:text
+```
 
 上面的命令告诉 Rails 创建 `Article` 模型，并使模型具有字符串类型的 `title` 属性和文本类型的 `text` 属性。这两个属性会自动添加到数据库的 `articles` 表中，并映射到 `Article` 模型上。
 
 为此 Rails 会创建一堆文件。这里我们只关注 `app/models/article.rb` 和 `db/migrate/20140120191729_create_articles.rb` 这两个文件 （后面这个文件名和你看到的可能会有点不一样）。后者负责创建数据库结构，下一节会详细说明。
 
 TIP: Active Record 很智能，能自动把数据表的字段名映射到模型属性上，因此无需在 Rails 模型中声明属性，让 Active Record 自动完成即可。
+
+<a class="anchor" id="running-a-migration"></a>
 
 ### 运行迁移
 
@@ -469,12 +494,16 @@ $ bin/rails db:migrate
 
 Rails 会执行迁移命令并告诉我们它创建了 Articles 表。
 
-    ==  CreateArticles: migrating ==================================================
-    -- create_table(:articles)
-       -> 0.0019s
-    ==  CreateArticles: migrated (0.0020s) =========================================
+```
+==  CreateArticles: migrating ==================================================
+-- create_table(:articles)
+   -> 0.0019s
+==  CreateArticles: migrated (0.0020s) =========================================
+```
 
 NOTE: 因为默认情况下我们是在开发环境中工作，所以上述命令应用于 `config/database.yml` 文件中 `development` 部分定义的的数据库。要想在其他环境中执行迁移，例如生产环境，就必须在调用命令时显式传递环境变量：`bin/rails db:migrate RAILS_ENV=production`。
+
+<a class="anchor" id="saving-data-in-the-controller"></a>
 
 ### 在控制器中保存数据
 
@@ -499,7 +528,7 @@ TIP: 之后我们会看到，`@article.save` 返回布尔值，以表明文章�
 
 ![禁用属性错误](images/getting_started/forbidden_attributes_for_new_article.png)
 
-Rails 提供了多种安全特性来帮助我们编写安全的应用，上面看到的就是一种安全特性。这个安全特性叫做 [健壮参数](action_controller_overview.xml#strong-parameters)（strong parameter），要求我们明确地告诉 Rails 哪些参数允许在控制器动作中使用。
+Rails 提供了多种安全特性来帮助我们编写安全的应用，上面看到的就是一种安全特性。这个安全特性叫做 [健壮参数](action_controller_overview.html#strong-parameters)（strong parameter），要求我们明确地告诉 Rails 哪些参数允许在控制器动作中使用。
 
 为什么我们要这样自找麻烦呢？一次性获取所有控制器参数并自动赋值给模型显然更简单，但这样做会造成恶意使用的风险。设想一下，如果有人对服务器发起了一个精心设计的请求，看起来就像提交了一篇新文章，但同时包含了能够破坏应用完整性的额外字段和值，会怎么样？这些恶意数据会批量赋值给模型，然后和正常数据一起进入数据库，这样就有可能破坏我们的应用或者造成更大损失。
 
@@ -527,19 +556,23 @@ private
 
 TIP: 关于键壮参数的更多介绍，请参阅上面提供的参考资料和[这篇博客](http://weblog.rubyonrails.org/2012/3/21/strong-parameters/)。
 
+<a class="anchor" id="showing-articles"></a>
+
 ### 显示文章
 
 现在再次提交表单，Rails 会提示找不到 `show` 动作。尽管这个提示没有多大用处，但在继续前进之前我们还是先添加 `show` 动作吧。
 
 之前我们在 `bin/rails routes` 命令的输出结果中看到，`show` 动作对应的路由是：
 
-    article GET    /articles/:id(.:format)      articles#show
+```
+article GET    /articles/:id(.:format)      articles#show
+```
 
 特殊句法 `:id` 告诉 Rails 这个路由期望接受 `:id` 参数，在这里也就是文章的 ID。
 
 和前面一样，我们需要在 `app/controllers/articles_controller.rb` 文件中添加 `show` 动作，并创建对应的视图文件。
 
-NOTE: 常见的做法是按照以下顺序在控制器中放置标准的 CRUD 动作：`index`，`show`，`new`，`edit`，`create`，`update` 和 `destroy`。你也可以按照自己的顺序放置这些动作，但要记住它们都是公开方法，如前文所述，必须放在控制器的私有方法或受保护的方法之前才能正常工作。
+NOTE: 常见的做法是按照以下顺序在控制器中放置标准的 CRUD 动作：`index`，`show`，`new`，`edit`，`create`，`update` 和 `destroy`。你也可以按照自己的顺序放置这些动作，但要记住它们都是公开方法，如前文所述，必须放在私有方法之前才能正常工作。
 
 有鉴于此，让我们像下面这样添加 `show` 动作：
 
@@ -575,11 +608,15 @@ class ArticlesController < ApplicationController
 
 ![显示文章](images/getting_started/show_action_for_articles.png)
 
+<a class="anchor" id="listing-all-articles"></a>
+
 ### 列出所有文章
 
 我们还需要列出所有文章，下面就来完成这个功能。在 `bin/rails routes` 命令的输出结果中，和列出文章对应的路由是：
 
-    articles GET    /articles(.:format)          articles#index
+```
+articles GET    /articles(.:format)          articles#index
+```
 
 在 `app/controllers/articles_controller.rb` 文件的 `ArticlesController` 中为上述路由添加对应的 `index` 动作。在编写 `index` 动作时，常见的做法是把它作为控制器的第一个方法，就像下面这样：
 
@@ -621,6 +658,8 @@ class ArticlesController < ApplicationController
 ```
 
 现在访问 <http://localhost:3000/articles>，会看到已创建的所有文章的列表。
+
+<a class="anchor" id="adding-links"></a>
 
 ### 添加链接
 
@@ -673,6 +712,8 @@ TIP: 链接到当前控制器的动作时不需要指定 `:controller` 选项，
 
 TIP: 在开发环境中（默认情况下我们是在开发环境中工作），Rails 针对每个浏览器请求都会重新加载应用，因此对应用进行修改之后不需要重启服务器。
 
+<a class="anchor" id="adding-some-validation"></a>
+
 ### 添加验证
 
 `app/models/article.rb` 模型文件简单到只有两行代码：
@@ -693,7 +734,7 @@ class Article < ApplicationRecord
 end
 ```
 
-添加的代码用于确保每篇文章都有标题，并且标题长度不少于 5 个字符。在 Rails 模型中可以验证多种条件，包括字段是否存在、字段是否唯一、字段的格式、关联对象是否存在，等等。关于验证的更多介绍，请参阅[active\_record\_validations.xml](active_record_validations.xml#active-record-validations)。
+添加的代码用于确保每篇文章都有标题，并且标题长度不少于 5 个字符。在 Rails 模型中可以验证多种条件，包括字段是否存在、字段是否唯一、字段的格式、关联对象是否存在，等等。关于验证的更多介绍，请参阅[Active Record 数据验证](active_record_validations.html)。
 
 现在验证已经添加完毕，如果我们在调用 `@article.save` 时传递了无效的文章数据，验证就会返回 `false`。再次打开 `app/controllers/articles_controller.rb` 文件，会看到我们并没有在 `create` 动作中检查 `@article.save` 的调用结果。在这里如果 `@article.save` 失败了，就需要把表单再次显示给用户。为此，需要像下面这样修改 `app/controllers/articles_controller.rb` 文件中的 `new` 和 `create` 动作：
 
@@ -772,6 +813,8 @@ TIP: Rails 会自动用 div 包围含有错误信息的字段，并为这些 div
 
 ![出错的表单](images/getting_started/form_with_errors.png)
 
+<a class="anchor" id="updating-articles"></a>
+
 ### 更新文章
 
 我们已经介绍了 CRUD 操作中的“CR”两种操作，下面让我们看一下“U”操作，也就是更新文章。
@@ -801,9 +844,9 @@ end
 接下来在视图中添加一个表单，这个表单类似于前文用于新建文章的表单。创建 `app/views/articles/edit.html.erb` 文件，添加下面的代码：
 
 ```erb
-<h1>Editing article</h1>
+<h1>Edit article</h1>
 
-<%= form_for :article, url: article_path(@article), method: :patch do |f| %>
+<%= form_for(@article) do |f| %>
 
   <% if @article.errors.any? %>
     <div id="error_explanation">
@@ -839,6 +882,8 @@ end
 ```
 
 上面的代码把表单指向了 `update` 动作，这个动作稍后我们再来定义。
+
+传入 `@article` 对象后，会自动为表单创建 URL，用于提交编辑后的文章。
 
 `method: :patch` 选项告诉 Rails 使用 `PATCH` 方法提交表单。根据 REST 协议，`PATCH` 方法是**更新**资源时使用的 HTTP 方法。
 
@@ -913,6 +958,8 @@ TIP: 不用把所有属性都传递给 `update` 方法。例如，调用 `@artic
 
 ![文章列表](images/getting_started/index_action_with_edit_link.png)
 
+<a class="anchor" id="using-partials-to-clean-up-duplication-in-views"></a>
+
 ### 使用局部视图去掉视图中的重复代码
 
 编辑文章页面和新建文章页面看起来很相似，实际上这两个页面用于显示表单的代码是相同的。现在我们要用局部视图来去掉这些重复代码。按照约定，局部视图的文件名以下划线开头。
@@ -977,11 +1024,15 @@ TIP: 关于局部视图的更多介绍，请参阅[Rails 布局和视图渲染](
 <%= link_to 'Back', articles_path %>
 ```
 
+<a class="anchor" id="deleting-articles"></a>
+
 ### 删除文章
 
 现在该介绍 CRUD 中的“D”操作了，也就是从数据库删除文章。按照 REST 架构的约定，在 `bin/rails routes` 命令的输出结果中删除文章的路由是：
 
-    DELETE /articles/:id(.:format)      articles#destroy
+```
+DELETE /articles/:id(.:format)      articles#destroy
+```
 
 删除资源的路由应该使用 `delete` 路由方法。如果在删除资源时仍然使用 `get` 路由，就可能给那些设计恶意地址的人提供可乘之机：
 
@@ -1092,10 +1143,13 @@ TIP: 关于 jQuery 非侵入式适配器（jQuery UJS）的更多介绍，请参
 
 TIP: 通常 Rails 鼓励用资源对象来代替手动声明路由。关于路由的更多介绍，请参阅[Rails 路由全解](routing.html)。
 
-添加第二个模型
---------------
+<a class="anchor" id="adding-a-second-model"></a>
+
+## 添加第二个模型
 
 现在是为应用添加第二个模型的时候了。这个模型用于处理文章评论。
+
+<a class="anchor" id="generating-a-model"></a>
 
 ### 生成模型
 
@@ -1107,12 +1161,12 @@ $ bin/rails generate model Comment commenter:string body:text article:references
 
 上面的命令会生成 4 个文件：
 
-| 文件 | 用途 |
-|----|----|
-| db/migrate/20140120201010_create_comments.rb | 用于在数据库中创建 comments 表的迁移文件（你的文件名会包含不同的时间戳） |
-| app/models/comment.rb | Comment 模型文件 |
-| test/models/comment_test.rb | Comment 模型的测试文件 |
-| test/fixtures/comments.yml | 用于测试的示例评论 |
+| 文件 | 用途  |
+|---|---|
+| `db/migrate/20140120201010_create_comments.rb` | 用于在数据库中创建 comments 表的迁移文件（你的文件名会包含不同的时间戳）  |
+| `app/models/comment.rb` | `Comment` 模型文件  |
+| `test/models/comment_test.rb` | `Comment` 模型的测试文件  |
+| `test/fixtures/comments.yml` | 用于测试的示例评论  |
 
 首先看一下 `app/models/comment.rb` 文件：
 
@@ -1150,18 +1204,21 @@ $ bin/rails db:migrate
 
 Rails 很智能，只会运行针对当前数据库还没有运行过的迁移，运行结果像下面这样：
 
-    ==  CreateComments: migrating =================================================
-    -- create_table(:comments)
-       -> 0.0115s
-    ==  CreateComments: migrated (0.0119s) ========================================
+```
+==  CreateComments: migrating =================================================
+-- create_table(:comments)
+   -> 0.0115s
+==  CreateComments: migrated (0.0119s) ========================================
+```
+
+<a class="anchor" id="associating-models"></a>
 
 ### 模型关联
 
 Active Record 关联让我们可以轻易地声明两个模型之间的关系。对于评论和文章，我们可以像下面这样声明：
 
-- 每一条评论都属于某一篇文章
-
-- 一篇文章可以有多条评论
+*   每一条评论都属于某一篇文章
+*   一篇文章可以有多条评论
 
 实际上，这种表达方式和 Rails 用于声明模型关联的句法非常接近。前文我们已经看过 `Comment` 模型中用于声明模型关联的代码，这行代码用于声明每一条评论都属于某一篇文章：
 
@@ -1185,6 +1242,8 @@ end
 
 TIP: 关于模型关联的更多介绍，请参阅[Active Record 关联](association_basics.html)。
 
+<a class="anchor" id="adding-a-route-for-comments"></a>
+
 ### 为评论添加路由
 
 和 `welcome` 控制器一样，在添加路由之后 Rails 才知道在哪个地址上查看评论。再次打开 `config/routes.rb` 文件，像下面这样进行修改：
@@ -1199,6 +1258,8 @@ end
 
 TIP: 关于路由的更多介绍，请参阅[Rails 路由全解](routing.html)。
 
+<a class="anchor" id="generating-a-controller"></a>
+
 ### 生成控制器
 
 有了模型，下面应该创建对应的控制器了。还是使用前面用过的生成器：
@@ -1209,14 +1270,14 @@ $ bin/rails generate controller Comments
 
 上面的命令会创建 5 个文件和一个空文件夹：
 
-| 文件/文件夹 | 用途 |
-|--------|----|
-| app/controllers/comments_controller.rb | Comments 控制器文件 |
-| app/views/comments/ | 控制器的视图保存在这里 |
-| test/controllers/comments_controller_test.rb | 控制器的测试文件 |
-| app/helpers/comments_helper.rb | 视图辅助方法文件 |
-| app/assets/javascripts/comment.coffee | 控制器的 CoffeeScript 文件 |
-| app/assets/stylesheets/comment.scss | 控制器的样式表文件 |
+| 文件/文件夹 | 用途  |
+|---|---|
+| `app/controllers/comments_controller.rb` | Comments 控制器文件  |
+| `app/views/comments/` | 控制器的视图保存在这里  |
+| `test/controllers/comments_controller_test.rb` | 控制器的测试文件  |
+| `app/helpers/comments_helper.rb` | 视图辅助方法文件  |
+| `app/assets/javascripts/comments.coffee` | 控制器的 CoffeeScript 文件  |
+| `app/assets/stylesheets/comments.scss` | 控制器的样式表文件  |
 
 在博客中，读者看完文章后可以直接发表评论，并且马上可以看到这些评论是否在页面上显示出来了。我们的博客采取同样的设计。这里 `CommentsController` 需要提供创建评论和删除垃圾评论的方法。
 
@@ -1324,10 +1385,13 @@ end
 
 ![带有评论的文章](images/getting_started/article_with_comments.png)
 
-重构
-----
+<a class="anchor" id="refactoring"></a>
+
+## 重构
 
 现在博客的文章和评论都已经正常工作，打开 `app/views/articles/show.html.erb` 文件，会看到文件代码变得又长又不美观。因此下面我们要用局部视图来重构代码。
+
+<a class="anchor" id="rendering-partial-collections"></a>
 
 ### 渲染局部视图集合
 
@@ -1382,6 +1446,8 @@ end
 
 这样对于 `@article.comments` 集合中的每条评论，都会渲染 `app/views/comments/_comment.html.erb` 文件中的局部视图。`render` 方法会遍历 `@article.comments` 集合，把每条评论赋值给局部视图中的同名局部变量，也就是这里的 `comment` 变量。
 
+<a class="anchor" id="rendering-a-partial-form"></a>
+
 ### 渲染局部视图表单
 
 我们把添加评论的代码也移到局部视图中。创建 `app/views/comments/_form.html.erb` 文件，添加下面的代码：
@@ -1429,8 +1495,9 @@ end
 
 `@article` 是实例变量，因此在所有局部视图中都可以使用。
 
-删除评论
---------
+<a class="anchor" id="deleting-comments"></a>
+
+## 删除评论
 
 博客还有一个重要功能是删除垃圾评论。为了实现这个功能，我们需要在视图中添加一个链接，并在 `CommentsController` 中添加 `destroy` 动作。
 
@@ -1480,6 +1547,8 @@ end
 
 `destroy` 动作首先找到指定文章，然后在 `@article.comments` 集合中找到指定评论，接着从数据库删除这条评论，最后重定向到显示文章的页面。
 
+<a class="anchor" id="deleting-associated-objects"></a>
+
 ### 删除关联对象
 
 如果要删除一篇文章，文章的相关评论也需要删除，否则这些评论还会占用数据库空间。在 Rails 中可以使用关联的 `dependent` 选项来完成这一工作。像下面这样修改 `app/models/article.rb` 文件中的 `Article` 模型：
@@ -1492,8 +1561,11 @@ class Article < ApplicationRecord
 end
 ```
 
-安全
-----
+<a class="anchor" id="security"></a>
+
+## 安全
+
+<a class="anchor" id="basic-authentication"></a>
 
 ### 基本身份验证
 
@@ -1534,31 +1606,32 @@ class CommentsController < ApplicationController
 
 现在如果我们试着新建文章，就会看到 HTTP 基本身份验证对话框：
 
-![HTTP 基本认证对话框](images/getting_started/challenge.png)
+![HTTP 基本身份验证对话框](images/getting_started/challenge.png)
 
 此外，还可以在 Rails 中使用其他身份验证方法。在众多选择中，[Devise](https://github.com/plataformatec/devise) 和 [Authlogic](https://github.com/binarylogic/authlogic) 是两个流行的 Rails 身份验证扩展。
 
+<a class="anchor" id="other-security-considerations"></a>
+
 ### 其他安全注意事项
 
-安全，尤其是 Web 应用的安全，是一个广泛和值得深入研究的领域。关于 Rails 应用安全的更多介绍，请参阅[安全指南](security.html)。
+安全，尤其是 Web 应用的安全，是一个广泛和值得深入研究的领域。关于 Rails 应用安全的更多介绍，请参阅[Ruby on Rails 安全指南](security.html)。
 
-接下来做什么？
---------------
+<a class="anchor" id="whats-next"></a>
+
+## 接下来做什么？
 
 至此，我们已经完成了第一个 Rails 应用，请在此基础上尽情修改、试验。
 
 记住你不需要独自完成一切，在安装和运行 Rails 时如果需要帮助，请随时使用下面的资源：
 
-- [Ruby on Rails 指南](http://rails.guide)
+*   [Ruby on Rails 指南](http://rails.guide)
+*   [Ruby on Rails 教程](http://railstutorial-china.org)
+*   [Ruby on Rails 邮件列表](http://groups.google.com/group/rubyonrails-talk)
+*   irc.freenode.net 中的 [#rubyonrails](irc://irc.freenode.net/#rubyonrails) 频道
 
-- [Ruby on Rails 教程](http://railstutorial-china.org)
+<a class="anchor" id="configuration-gotchas"></a>
 
-- [Ruby on Rails 邮件列表](http://groups.google.com/group/rubyonrails-talk)
-
-- irc.freenode.net 中的 [\#rubyonrails](irc://irc.freenode.net/#rubyonrails) 频道
-
-配置问题
---------
+## 配置问题
 
 在 Rails 中，储存外部数据最好都使用 UTF-8 编码。虽然 Ruby 库和 Rails 通常都能将使用其他编码的外部数据转换为 UTF-8 编码，但并非总是能可靠地工作，所以最好还是确保所有的外部数据都使用 UTF-8 编码。
 
@@ -1566,6 +1639,5 @@ class CommentsController < ApplicationController
 
 下面是非 UTF-8 编码数据的两种常见来源：
 
-- 文本编辑器：大多数文本编辑器（例如 TextMate）默认使用 UTF-8 编码保存文件。如果你的文本编辑器未使用 UTF-8 编码，就可能导致在模板中输入的特殊字符（例如 é）在浏览器中显示为带有问号的黑色菱形块。这个问题也会出现在 i18n 翻译文件中。大多数未默认使用 UTF-8 编码的文本编辑器（例如 Dreamweaver 的某些版本）提供了将默认编码修改为 UTF-8 的方法，别忘了进行修改。
-
-- 数据库：默认情况下，Rails 会把从数据库中取出的数据转换成 UTF-8 格式。尽管如此，如果数据库内部不使用 UTF-8 编码，就有可能无法保存用户输入的所有字符。例如，如果数据库内部使用 Latin-1 编码，而用户输入了俄语、希伯来语或日语字符，那么在把数据保存到数据库时就会造成数据永久丢失。因此，只要可能，就请在数据库内部使用 UTF-8 编码。
+*   文本编辑器：大多数文本编辑器（例如 TextMate）默认使用 UTF-8 编码保存文件。如果你的文本编辑器未使用 UTF-8 编码，就可能导致在模板中输入的特殊字符（例如 é）在浏览器中显示为带有问号的黑色菱形块。这个问题也会出现在 i18n 翻译文件中。大多数未默认使用 UTF-8 编码的文本编辑器（例如 Dreamweaver 的某些版本）提供了将默认编码修改为 UTF-8 的方法，别忘了进行修改。
+*   数据库：默认情况下，Rails 会把从数据库中取出的数据转换成 UTF-8 格式。尽管如此，如果数据库内部不使用 UTF-8 编码，就有可能无法保存用户输入的所有字符。例如，如果数据库内部使用 Latin-1 编码，而用户输入了俄语、希伯来语或日语字符，那么在把数据保存到数据库时就会造成数据永久丢失。因此，只要可能，就请在数据库内部使用 UTF-8 编码。

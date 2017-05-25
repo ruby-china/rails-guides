@@ -1,18 +1,22 @@
-Ruby on Rails 升级指南
-======================
+# Ruby on Rails 升级指南
 
 本文说明把 Ruby on Rails 升级到新版本的步骤。各个版本的发布记中也有升级步骤。
 
---------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
-一般建议
---------
+<a class="anchor" id="general-advice"></a>
+
+## 一般建议
 
 计划升级现有项目之前，应该确定有升级的必要。你要考虑几个因素：对新功能的需求，难于支持旧代码，以及你的时间和技能，等等。
+
+<a class="anchor" id="test-coverage"></a>
 
 ### 测试覆盖度
 
 为了确保升级后应用依然能正常运行，最好的方式是具有足够的测试覆盖度。如果没有自动化测试保障应用，你就要自己花时间检查有变化的部分。对升级 Rails 来说，你要检查应用的每个功能。不要给自己找麻烦，在升级之前一定要保障有足够的测试覆盖度。
+
+<a class="anchor" id="the-upgrade-process"></a>
 
 ### 升级过程
 
@@ -21,34 +25,33 @@ Ruby on Rails 升级指南
 升级过程如下：
 
 1.  编写测试，确保能通过。
-
-2.  升级到当前版本的最新补丁版本。
-
-3.  修正测试和弃用的功能。
-
-4.  升级到下一个小版本的补丁版本。
+1.  升级到当前版本的最新补丁版本。
+1.  修正测试和弃用的功能。
+1.  升级到下一个小版本的补丁版本。
 
 重复上述过程，直到你所选的版本为止。每次升级版本都要修改 `Gemfile` 中的 Rails 版本号（以及其他需要升级的 gem），再运行 `bundle update`。然后，运行下文所述的 `update` 任务，更新配置文件。最后运行测试。
 
 Rails 的所有版本在[这个页面](https://rubygems.org/gems/rails/versions)中列出。
 
+<a class="anchor" id="ruby-versions"></a>
+
 ### Ruby 版本
 
 发布新版 Rails 时，一般会紧跟最新的 Ruby 版本：
 
-- Rails 5 要求 Ruby 2.2.2 或以上版本
-
-- Rails 4 建议使用 Ruby 2.0，要求 1.9.3 或以上版本
-
-- Rails 3.2.x 是支持 Ruby 1.8.7 的最后一个版本
-
-- Rails 3 及以上版本要求 Ruby 1.8.7 或以上版本。官方不再支持之前的 Ruby 版本，应该尽早升级。
+*   Rails 5 要求 Ruby 2.2.2 或以上版本
+*   Rails 4 建议使用 Ruby 2.0，要求 1.9.3 或以上版本
+*   Rails 3.2.x 是支持 Ruby 1.8.7 的最后一个版本
+*   Rails 3 及以上版本要求 Ruby 1.8.7 或以上版本。官方不再支持之前的 Ruby 版本，应该尽早升级。
 
 TIP: Ruby 1.8.7 p248 和 p249 有一些缺陷，会导致 Rails 崩溃。 Ruby Enterprise Edition 1.8.7-2010.02 修正了这些缺陷。对 1.9 系列来说，1.9.1 完全不能用，因此如果你使用 1.9.x 的话，应该直接跳到 1.9.3。
 
+
+<a class="anchor" id="the-update-task"></a>
+
 ### `update` 任务
 
-Rails 提供了 `app:update` 任务（4.2 及之前的版本是 `rails:update`）。更新 `Gemfile` 中的 Rails 版本号之后，运行这个任务。这个任务在交互式会话中协助你创建新文件和修改旧文件。
+Rails 提供了 `app:update` 任务（4.2 及之前的版本是 `rake rails:update`）。更新 `Gemfile` 中的 Rails 版本号之后，运行这个任务。这个任务在交互式会话中协助你创建新文件和修改旧文件。
 
 ```sh
 $ rails app:update
@@ -66,14 +69,53 @@ Overwrite /myapp/config/application.rb? (enter "h" for help) [Ynaqdh]
 
 别忘了检查差异，以防有意料之外的改动。
 
-从 Rails 4.2 升级到 5.0
------------------------
+<a class="anchor" id="upgrading-from-rails-5-0-to-rails-5-1"></a>
 
-Rails 5.0 的变动参见[发布记](5_0_release_notes.xml#ruby-on-rails-5-0-release-notes)。
+## 从 Rails 5.0 升级到 5.1
+
+Rails 5.1 的变动参见[发布记](5_1_release_notes.html)。
+
+<a class="anchor" id="top-level-hashwithindifferentaccess-is-soft-deprecated"></a>
+
+### 温和弃用顶层 `HashWithIndifferentAccess` 类
+
+如果你的应用使用顶层 `HashWithIndifferentAccess` 类，应该逐渐转用 `ActiveSupport::HashWithIndifferentAccess` 类。
+
+这只是一项温和的弃用，目前代码不受影响，也不看看到提醒，但是以后会删除这个常量。
+
+此外，如果 YAML 文档转储中包含这个类的对象，要重新加载并转储，以便引用正确的常量，防止以后无法加载。
+
+<a class="anchor" id="application-secrets-now-loaded-with-all-keys-as-symbols"></a>
+
+### `application.secrets` 全部使用符号键索引
+
+如果你的应用在 `config/secrets.yml` 中存储嵌套的配置，现在所有键都通过符号加载，请勿再使用字符串加载。
+
+请把
+
+```ruby
+Rails.application.secrets[:smtp_settings]["address"]
+```
+
+改为：
+
+```ruby
+Rails.application.secrets[:smtp_settings][:address]
+```
+
+<a class="anchor" id="upgrading-from-rails-4-2-to-rails-5-0"></a>
+
+## 从 Rails 4.2 升级到 5.0
+
+Rails 5.0 的变动参见[发布记](5_0_release_notes.html)。
+
+<a class="anchor" id="ruby-2-2-2-required"></a>
 
 ### 要求 Ruby 2.2.2+
 
 从 Ruby on Rails 5.0 开始，只支持 Ruby 2.2.2+。升级之前，确保你使用的是 Ruby 2.2.2 或以上版本。
+
+<a class="anchor" id="active-record-models-now-inherit-from-applicationrecord-by-default"></a>
 
 ### 现在 Active Record 模型默认继承自 ApplicationRecord
 
@@ -91,6 +133,8 @@ end
 
 然后让所有模型继承它。
 
+<a class="anchor" id="halting-callback-chains-via-throw-abort"></a>
+
 ### 通过 `throw(:abort)` 停止回调链
 
 在 Rails 4.2 中，如果 Active Record 和 Active Model 中的一个前置回调返回 `false`，整个回调链停止。也就是说，后续前置回调不会执行，回调中的操作也不执行。
@@ -107,7 +151,9 @@ ActiveSupport.halt_callback_chains_on_return_false = false
 
 注意，这个选项不影响 Active Support 回调，因为不管返回什么值，这种回调链都不停止。
 
-详情参见 [\#17227 工单](https://github.com/rails/rails/pull/17227)。
+详情参见 [#17227 工单](https://github.com/rails/rails/pull/17227)。
+
+<a class="anchor" id="activejob-now-inherits-from-applicationjob-by-default"></a>
 
 ### 现在 ActiveJob 默认继承自 ApplicationJob
 
@@ -122,13 +168,29 @@ end
 
 然后让所有作业类继承它。
 
-详情参见 [\#19034 工单](https://github.com/rails/rails/pull/19034)。
+详情参见 [#19034 工单](https://github.com/rails/rails/pull/19034)。
+
+<a class="anchor" id="rails-controller-testing"></a>
 
 ### Rails 控制器测试
+
+<a class="anchor" id="extraction-of-some-helper-methods-to-rails-controller-testing"></a>
+
+#### 某些辅助方法提取到 `rails-controller-testing` 中了
 
 `assigns` 和 `assert_template` 提取到 `rails-controller-testing` gem 中了。如果想继续在控制器测试中使用这两个方法，把 `gem 'rails-controller-testing'` 添加到 `Gemfile` 中。
 
 如果使用 RSpec 做测试，还要做些配置，详情参见这个 gem 的文档。
+
+<a class="anchor" id="new-behavior-when-uploading-files"></a>
+
+#### 上传文件的新行为
+
+如果在测试中使用 `ActionDispatch::Http::UploadedFile` 上传文件，要换成类似的 `Rack::Test::UploadedFile` 类。
+
+详情参见 [#26404 工单](https://github.com/rails/rails/issues/26404)。
+
+<a class="anchor" id="autoloading-is-disabled-after-booting-in-the-production-environment"></a>
 
 ### 在生产环境启动后不再自动加载
 
@@ -140,17 +202,25 @@ end
 
 针对这一变化，大多数应用都无需改动。在少有的情况下，如果生产环境需要自动加载，把 `Rails.application.config.enable_dependency_loading` 设为 `true`。
 
+<a class="anchor" id="xml-serialization"></a>
+
 ### XML 序列化
 
 `ActiveModel::Serializers::Xml` 从 Rails 中提取出来，变成 `activemodel-serializers-xml` gem 了。如果想继续在应用中使用 XML 序列化，把 `gem 'activemodel-serializers-xml'` 添加到 `Gemfile` 中。
+
+<a class="anchor" id="removed-support-for-legacy-mysql-database-adapter"></a>
 
 ### 不再支持旧的 `mysql` 数据库适配器
 
 Rails 5 不再支持旧的 `mysql` 数据库适配器。多数用户应该换用 `mysql2`。找到维护人员之后，会作为一个单独的 gem 发布。
 
+<a class="anchor" id="removed-support-for-debugger"></a>
+
 ### 不再支持 debugger
 
 Rails 5 要求的 Ruby 2.2 不支持 `debugger`。换用 `byebug`。
+
+<a class="anchor" id="use-bin-rails-for-running-tasks-and-tests"></a>
 
 ### 使用 bin/rails 运行任务和测试
 
@@ -162,6 +232,8 @@ Rails 5 支持使用 `bin/rails` 运行任务和测试。一般来说，还有�
 
 执行 `bin/rails` 命令查看所有可用的命令。
 
+<a class="anchor" id="actioncontroller-parameters-no-longer-inherits-from-hashwithindifferentaccess"></a>
+
 ### `ActionController::Parameters` 不再继承自 `HashWithIndifferentAccess`
 
 现在，应用中的 `params` 不再返回散列。如果已经在参数上调用了 `permit`，无需做任何修改。如果使用 `slice` 及其他需要读取散列的方法，而不管是否调用了 `permitted?`，需要更新应用，首先调用 `permit`，然后转换成散列。
@@ -170,15 +242,21 @@ Rails 5 支持使用 `bin/rails` 运行任务和测试。一般来说，还有�
 params.permit([:proceed_to, :return_to]).to_h
 ```
 
+<a class="anchor" id="protect-from-forgery-now-defaults-to-prepend-false"></a>
+
 ### `protect_from_forgery` 的选项现在默认为 `prepend: false`
 
 `protect_from_forgery` 的选项现在默认为 `prepend: false`，这意味着，在应用中调用 `protect_from_forgery` 时，会插入回调链。如果始终想让 `protect_from_forgery` 先运行，应该修改应用，使用 `protect_from_forgery prepend: true`。
+
+<a class="anchor" id="default-template-handler-is-now-raw"></a>
 
 ### 默认的模板处理程序现在是 raw
 
 文件扩展名中没有模板处理程序的，现在使用 raw 处理程序。以前，Rails 使用 ERB 模板处理程序渲染这种文件。
 
 如果不想让 raw 处理程序处理文件，应该添加文件扩展名，让相应的模板处理程序解析。
+
+<a class="anchor" id="added-wildcard-matching-for-template-dependencies"></a>
 
 ### 为模板依赖添加通配符匹配
 
@@ -196,13 +274,19 @@ params.permit([:proceed_to, :return_to]).to_h
 <% # Template Dependency: recordings/threads/events/* %>
 ```
 
+<a class="anchor" id="removed-support-for-protected-attributes-gem"></a>
+
 ### 不再支持 `protected_attributes` gem
 
 Rails 5 不再支持 `protected_attributes` gem。
 
+<a class="anchor" id="removed-support-for-activerecord-deprecated-finders-gem"></a>
+
 ### 不再支持 `activerecord-deprecated_finders` gem
 
 Rails 5 不再支持 `activerecord-deprecated_finders` gem。
+
+<a class="anchor" id="activesupport-testcase-default-test-order-is-now-random"></a>
 
 ### `ActiveSupport::TestCase` 现在默认随机运行测试
 
@@ -214,6 +298,8 @@ Rails.application.configure do
   config.active_support.test_order = :sorted
 end
 ```
+
+<a class="anchor" id="actioncontroller-live-became-a-concern"></a>
 
 ### `ActionController::Live` 变为一个 `Concern`
 
@@ -241,7 +327,11 @@ class StreamingSupport
 end
 ```
 
+<a class="anchor" id="new-framework-defaults"></a>
+
 ### 框架的新默认值
+
+<a class="anchor" id="active-record-belongs-to-required-by-default-option"></a>
 
 #### Active Record `belongs_to_required_by_default` 选项
 
@@ -255,6 +345,8 @@ end
 config.active_record.belongs_to_required_by_default = true
 ```
 
+<a class="anchor" id="per-form-csrf-tokens"></a>
+
 #### 每个表单都有自己的 CSRF 令牌
 
 现在，Rails 5 支持每个表单有自己的 CSRF 令牌，从而降低 JavaScript 创建的表单遭受代码注入攻击的风险。启用这个选项后，应用中的表单都有自己的 CSRF 令牌，专门针对那个表单的动作和方法。
@@ -262,6 +354,8 @@ config.active_record.belongs_to_required_by_default = true
 ```ruby
 config.action_controller.per_form_csrf_tokens = true
 ```
+
+<a class="anchor" id="forgery-protection-with-origin-check"></a>
 
 #### 伪造保护检查源
 
@@ -271,6 +365,8 @@ config.action_controller.per_form_csrf_tokens = true
 config.action_controller.forgery_protection_origin_check = true
 ```
 
+<a class="anchor" id="allow-configuration-of-action-mailer-queue-name"></a>
+
 #### 允许配置 Action Mailer 队列的名称
 
 默认的邮件程序队列名为 `mailers`。这个配置选项允许你全局修改队列名称。在配置文件中添加下述内容：
@@ -278,6 +374,8 @@ config.action_controller.forgery_protection_origin_check = true
 ```ruby
 config.action_mailer.deliver_later_queue_name = :new_queue_name
 ```
+
+<a class="anchor" id="support-fragment-caching-in-action-mailer-views"></a>
 
 #### Action Mailer 视图支持片段缓存
 
@@ -287,6 +385,8 @@ config.action_mailer.deliver_later_queue_name = :new_queue_name
 config.action_mailer.perform_caching = true
 ```
 
+<a class="anchor" id="configure-the-output-of-db-structure-dump"></a>
+
 #### 配置 `db:structure:dump` 的输出
 
 如果使用 `schema_search_path` 或者其他 PostgreSQL 扩展，可以控制如何转储数据库模式。设为 `:all` 生成全部转储，设为 `:schema_search_path` 从模式搜索路径中生成转储。
@@ -294,6 +394,8 @@ config.action_mailer.perform_caching = true
 ```ruby
 config.active_record.dump_schemas = :all
 ```
+
+<a class="anchor" id="configure-ssl-options-to-enable-hsts-with-subdomains"></a>
 
 #### 配置 SSL 选项为子域名启用 HSTS
 
@@ -303,6 +405,8 @@ config.active_record.dump_schemas = :all
 config.ssl_options = { hsts: { subdomains: true } }
 ```
 
+<a class="anchor" id="preserve-timezone-of-the-receiver"></a>
+
 #### 保留接收者的时区
 
 使用 Ruby 2.4 时，调用 `to_time` 时可以保留接收者的时区：
@@ -311,12 +415,17 @@ config.ssl_options = { hsts: { subdomains: true } }
 ActiveSupport.to_time_preserves_timezone = false
 ```
 
-从 Rails 4.1 升级到 4.2
------------------------
+<a class="anchor" id="upgrading-from-rails-4-1-to-rails-4-2"></a>
+
+## 从 Rails 4.1 升级到 4.2
+
+<a class="anchor" id="web-console"></a>
 
 ### Web Console
 
 首先，把 `gem 'web-console', '~> 2.0'` 添加到 `Gemfile` 的 `:development` 组里（升级时不含这个 gem），然后执行 `bundle install` 命令。安装好之后，可以在任何想使用 Web Console 的视图里调用辅助方法 `<%= console %>`。开发环境的错误页面中也有 Web Console。
+
+<a class="anchor" id="responders"></a>
 
 ### `responders` gem
 
@@ -351,7 +460,9 @@ class UsersController < ApplicationController
 end
 ```
 
-详情参见 [\#16526 工单](https://github.com/rails/rails/pull/16526)。
+详情参见 [#16526 工单](https://github.com/rails/rails/pull/16526)。
+
+<a class="anchor" id="error-handling-in-transaction-callbacks"></a>
 
 ### 事务回调中的错误处理
 
@@ -363,7 +474,9 @@ end
 config.active_record.raise_in_transactional_callbacks = true
 ```
 
-详情参见 [\#14488](https://github.com/rails/rails/pull/14488) 和 [\#16537 工单](https://github.com/rails/rails/pull/16537)。
+详情参见 [#14488](https://github.com/rails/rails/pull/14488) 和 [#16537 工单](https://github.com/rails/rails/pull/16537)。
+
+<a class="anchor" id="ordering-of-test-cases"></a>
 
 ### 测试用例的运行顺序
 
@@ -378,9 +491,13 @@ Rails.application.configure do
 end
 ```
 
+<a class="anchor" id="serialized-attributes"></a>
+
 ### 序列化的属性
 
 使用定制的编码器时（如 `serialize :metadata, JSON`），如果把 `nil` 赋值给序列化的属性，存入数据库中的值是 `NULL`，而不是通过编码器传递的 `nil` 值（例如，使用 `JSON` 编码器时的 `"null"`）。
+
+<a class="anchor" id="production-log-level"></a>
 
 ### 生产环境的日志等级
 
@@ -391,6 +508,8 @@ Rails 5 将把生产环境的默认日志等级改为 `:debug`（以前是 `:inf
 # the future default.
 config.log_level = :info
 ```
+
+<a class="anchor" id="after-bundle-in-rails-templates"></a>
 
 ### 在 Rails 模板中使用 `after_bundle`
 
@@ -422,9 +541,11 @@ after_bundle do
 end
 ```
 
+<a class="anchor" id="rails-html-sanitizer"></a>
+
 ### rails-html-sanitizer
 
-现在，净化应用中的 HTML 片段有了新的选择。古老的 html-scanner 方式正式弃用，换成了 [rails-html-sanitizer](https://github.com/rails/rails-html-sanitizer)。
+现在，净化应用中的 HTML 片段有了新的选择。古老的 html-scanner  方式正式弃用，换成了 [rails-html-sanitizer](https://github.com/rails/rails-html-sanitizer)。
 
 因此，`sanitize`、`sanitize_css`、`strip_tags` 和 `strip_links` 等方法现在有了新的实现方式。
 
@@ -442,13 +563,19 @@ end
 gem 'rails-deprecated_sanitizer'
 ```
 
+<a class="anchor" id="rails-dom-testing"></a>
+
 ### Rails DOM 测试
 
 `TagAssertions` 模块（包含 `assert_tag` 等方法）已经弃用，换成了 `SelectorAssertions` 模块的 `assert_select` 方法。新的方法提取到 [`rails-dom-testing`](https://github.com/rails/rails-dom-testing) gem 中了。
 
+<a class="anchor" id="masked-authenticity-tokens"></a>
+
 ### 遮蔽真伪令牌
 
 为了防范 SSL 攻击，`form_authenticity_token` 现在做了遮蔽，每次请求都不同。因此，验证令牌时先解除遮蔽，然后再解密。所以，验证非 Rails 表单发送的，而且依赖静态会话 CSRF 令牌的请求时，要考虑这一点。
+
+<a class="anchor" id="action-mailer"></a>
 
 ### Action Mailer
 
@@ -476,6 +603,8 @@ class Notifier < ActionMailer::Base
 end
 ```
 
+<a class="anchor" id="foreign-key-support"></a>
+
 ### 支持外键
 
 迁移 DSL 做了扩充，支持定义外键。如果你以前使用 foreigner gem，可以考虑把它删掉了。注意，Rails 对外键的支持没有 foreigner 全面。这意味着，不是每一个 foreigner 定义都可以完全替换成 Rails 中相应的迁移 DSL。
@@ -483,15 +612,15 @@ end
 替换的过程如下：
 
 1.  从 `Gemfile` 中删除 `gem "foreigner"`。
+1.  执行 `bundle install` 命令。
+1.  执行 `bin/rake db:schema:dump` 命令。
+1.  确保 `db/schema.rb` 文件中包含每一个外键定义，而且有所需的选项。
 
-2.  执行 `bundle install` 命令。
+<a class="anchor" id="upgrading-from-rails-4-0-to-rails-4-1"></a>
 
-3.  执行 `bin/rake db:schema:dump` 命令。
+## 从 Rails 4.0 升级到 4.1
 
-4.  确保 `db/schema.rb` 文件中包含每一个外键定义，而且有所需的选项。
-
-从 Rails 4.0 升级到 4.1
------------------------
+<a class="anchor" id="csrf-protection-from-remote-script-tags"></a>
 
 ### 保护远程 `<script>` 标签免受 CSRF 攻击
 
@@ -513,17 +642,20 @@ xhr :get, :index, format: :js
 
 注意，站内的 `<script>` 标签也认为是跨源的，因此默认被阻拦。如果确实想使用 `<script>` 加载 JavaScript，必须在动作中明确指明跳过 CSRF 保护。
 
+<a class="anchor" id="spring"></a>
+
 ### Spring
 
 如果想使用 Spring 预加载应用，要这么做：
 
 1.  把 `gem 'spring', group: :development` 添加到 `Gemfile` 中。
-
-2.  执行 `bundle install` 命令，安装 Spring。
-
-3.  执行 `bundle exec spring binstub --all`，用 Spring 运行 binstub。
+1.  执行 `bundle install` 命令，安装 Spring。
+1.  执行 `bundle exec spring binstub --all`，用 Spring 运行 binstub。
 
 NOTE: 用户定义的 Rake 任务默认在开发环境中运行。如果想在其他环境中运行，查阅 [Spring 的自述文件](https://github.com/rails/spring#rake)。
+
+
+<a class="anchor" id="config-secrets-yml"></a>
 
 ### `config/secrets.yml`
 
@@ -531,28 +663,30 @@ NOTE: 用户定义的 Rake 任务默认在开发环境中运行。如果想在�
 
 1.  在 `config` 文件夹中创建 `secrets.yml` 文件，写入下述内容：
 
-    ``` yaml
+
+    ```yaml
     development:
       secret_key_base:
-
+    
     test:
       secret_key_base:
-
+    
     production:
       secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
     ```
 
-2.  使用 `secret_token.rb` 初始化脚本中的 `secret_key_base` 设定 `SECRET_KEY_BASE` 环境变量，供生产环境中的用户使用。此外，还可以直接复制 `secret_key_base` 的值，把 `<%= ENV["SECRET_KEY_BASE"] %>` 替换掉。
+1.  使用 `secret_token.rb` 初始化脚本中的 `secret_key_base` 设定 `SECRET_KEY_BASE` 环境变量，供生产环境中的用户使用。此外，还可以直接复制 `secret_key_base` 的值，把 `<%= ENV["SECRET_KEY_BASE"] %>` 替换掉。
+1.  删除 `secret_token.rb` 初始化脚本。
+1.  运行 `rake secret` 任务，为开发环境和测试环境生成密钥。
+1.  重启服务器。
 
-3.  删除 `secret_token.rb` 初始化脚本。
-
-4.  运行 `rake secret` 任务，为开发环境和测试环境生成密钥。
-
-5.  重启服务器。
+<a class="anchor" id="changes-to-test-helper"></a>
 
 ### 测试辅助方法的变化
 
 如果测试辅助方法中有调用 `ActiveRecord::Migration.check_pending!`，可以将其删除了。现在，引入 `rails/test_help` 文件时会自动做此项检查，不过留着那一行代码也没什么危害。
+
+<a class="anchor" id="cookies-serializer"></a>
 
 ### cookies 序列化程序
 
@@ -583,6 +717,8 @@ end
 
 如果使用 cookie 会话存储器，`session` 和 `flash` 散列也是如此。
 
+<a class="anchor" id="flash-structure-changes"></a>
+
 ### 闪现消息结构的变化
 
 闪现消息的键会[整形成字符串](https://github.com/rails/rails/commit/a668beffd64106a1e1fedb71cc25eaaa11baf0c1)，不过依然可以使用符号或字符串访问。迭代闪现消息时始终使用字符串键：
@@ -600,9 +736,13 @@ flash.keys # => ["string", "symbol"]
 
 一定要使用字符串比较闪现消息的键。
 
+<a class="anchor" id="changes-in-json-handling"></a>
+
 ### JSON 处理方式的变化
 
 Rails 4.1 对 JSON 的处理方式做了几项修改。
+
+<a class="anchor" id="multijson-removal"></a>
 
 #### 删除 MultiJSON
 
@@ -611,10 +751,12 @@ Rails 4.1 对 JSON 的处理方式做了几项修改。
 如果你的应用现在直接依赖 MultiJSON，有几种解决方法：
 
 1.  把 `multi_json` gem 添加到 `Gemfile` 中。注意，未来这种方法可能失效。
-
-2.  摒除 MultiJSON，换用 `obj.to_json` 和 `JSON.parse(str)`。
+1.  摒除 MultiJSON，换用 `obj.to_json` 和 `JSON.parse(str)`。
 
 WARNING: 不要直接把 `MultiJson.dump` 和 `MultiJson.load` 换成 `JSON.dump` 和 `JSON.load`。这两个 JSON gem API 的作用是序列化和反序列化任意的 Ruby 对象，一般[不安全](http://www.ruby-doc.org/stdlib-2.2.2/libdoc/json/rdoc/JSON.html#method-i-load)。
+
+
+<a class="anchor" id="json-gem-compatibility"></a>
 
 #### JSON gem 的兼容性
 
@@ -633,17 +775,19 @@ end
 >> JSON.generate(FooBar.new, quirks_mode: true) # => "\"#<FooBar:0x007fa80a481610>\""
 ```
 
+<a class="anchor" id="new-json-encoder"></a>
+
 #### 新的 JSON 编码器
 
 Rails 4.1 重写了 JSON 编码器，充分利用了 JSON gem。对多数应用来说，这一变化没有显著影响。然而，在重写的过程中从编码器中移除了下述功能：
 
 1.  环形数据结构检测
-
-2.  对 `encode_json` 钩子的支持
-
-3.  把 `BigDecimal` 对象编码成数字而不是字符串的选项
+1.  对 `encode_json` 钩子的支持
+1.  把 `BigDecimal` 对象编码成数字而不是字符串的选项
 
 如果你的应用依赖这些功能，可以把 [`activesupport-json_encoder`](https://github.com/rails/activesupport-json_encoder) gem 添加到 `Gemfile` 中。
+
+<a class="anchor" id="json-representation-of-time-objects"></a>
 
 #### 时间对象的 JSON 表述
 
@@ -652,6 +796,8 @@ Rails 4.1 重写了 JSON 编码器，充分利用了 JSON gem。对多数应用�
 ```ruby
 ActiveSupport::JSON::Encoding.time_precision = 0
 ```
+
+<a class="anchor" id="usage-of-return-within-inline-callback-blocks"></a>
 
 ### 行内回调块中 `return` 的用法
 
@@ -690,6 +836,8 @@ end
 
 详情参见[这个拉取请求](https://github.com/rails/rails/pull/13271)。
 
+<a class="anchor" id="methods-defined-in-active-record-fixtures"></a>
+
 ### Active Record 固件中定义的方法
 
 Rails 4.1 在各自的上下文中处理各个固件中的 ERB，因此一个附件中定义的辅助方法，无法在另一个固件中使用。
@@ -705,6 +853,8 @@ end
 ActiveRecord::FixtureSet.context_class.include FixtureFileHelpers
 ```
 
+<a class="anchor" id="i18n-enforcing-available-locales"></a>
+
 ### i18n 强制检查可用的本地化
 
 现在，Rails 4.1 默认把 i18n 的 `enforce_available_locales` 选项设为 `true`。这意味着，传给它的所有本地化都必须在 `available_locales` 列表中声明。
@@ -716,6 +866,8 @@ config.i18n.enforce_available_locales = false
 ```
 
 注意，这个选项是一项安全措施，为的是确保不把用户的输入作为本地化信息，除非这个信息之前是已知的。因此，除非有十足的原因，否则不建议禁用这个选项。
+
+<a class="anchor" id="mutator-methods-called-on-relation"></a>
 
 ### 在 Relation 上调用的可变方法
 
@@ -731,6 +883,8 @@ Author.where(name: 'Hank Moody').compact!
 authors = Author.where(name: 'Hank Moody').to_a
 authors.compact!
 ```
+
+<a class="anchor" id="changes-on-default-scopes"></a>
 
 ### 默认作用域的变化
 
@@ -795,23 +949,27 @@ User.inactive
 # SELECT "users".* FROM "users" WHERE "users"."state" = 'inactive'
 ```
 
+<a class="anchor" id="rendering-content-from-string"></a>
+
 ### 使用字符串渲染内容
 
 Rails 4.1 为 `render` 引入了 `:plain`、`:html` 和 `:body` 选项。现在，建议使用这三个选项渲染字符串内容，因为这样可以指定响应的内容类型。
 
-- `render :plain` 把内容类型设为 `text/plain`
-
-- `render :html` 把内容类型设为 `text/html`
-
-- `render :body` 不设定内容类型首部
+*   `render :plain` 把内容类型设为 `text/plain`
+*   `render :html` 把内容类型设为 `text/html`
+*   `render :body` 不设定内容类型首部
 
 从安全角度来看，如果响应主体中没有任何标记，应该使用 `render :plain`，因为多数浏览器会转义响应中不安全的内容。
 
 未来的版本会弃用 `render :text`。所以，请开始使用更精准的 `:plain`、`:html` 和 `:body` 选项。使用 `render :text` 可能有安全风险，因为发送的内容类型是 `text/html`。
 
+<a class="anchor" id="postgresql-json-and-hstore-datatypes"></a>
+
 ### PostgreSQL 的 json 和 hstore 数据类型
 
 Rails 4.1 把 `json` 和 `hstore` 列映射成键为字符串的 Ruby 散列。之前的版本使用 `HashWithIndifferentAccess`。这意味着，不再支持使用符号访问。建立在 `json` 或 `hstore` 列之上的 `store_accessors` 也是如此。确保要始终使用字符串键。
+
+<a class="anchor" id="explicit-block-use-for-activesupport-callbacks"></a>
 
 ### `ActiveSupport::Callbacks` 明确要求使用块
 
@@ -825,12 +983,15 @@ set_callback :save, :around, ->(r, &block) { stuff; result = block.call; stuff }
 set_callback :save, :around, ->(r, block) { stuff; result = block.call; stuff }
 ```
 
-从 Rails 3.2 升级到 4.0
------------------------
+<a class="anchor" id="upgrading-from-rails-3-2-to-rails-4-0"></a>
+
+## 从 Rails 3.2 升级到 4.0
 
 如果你的应用目前使用的版本低于 3.2.x，应该先升级到 3.2，再升级到 4.0。
 
 下述说明针对升级到 Rails 4.0。
+
+<a class="anchor" id="http-patch"></a>
 
 ### HTTP PATCH
 
@@ -890,6 +1051,8 @@ end
 
 关于 `PATCH` 请求，以及为什么这样改，请阅读 Rails 博客中的[这篇文章](http://weblog.rubyonrails.org/2012/2/26/edge-rails-patch-is-the-new-primary-http-method-for-updates/)。
 
+<a class="anchor" id="a-note-about-media-types"></a>
+
 #### 关于媒体类型
 
 `PATCH` 动词规范的勘误指出，[`PATCH` 请求应该使用“diff”媒体类型](http://www.rfc-editor.org/errata_search.php?rfc=5789)。[JSON Patch](http://tools.ietf.org/html/rfc6902) 就是这样的格式。虽然 Rails 原生不支持 JSON Patch，不过添加这一支持也不难：
@@ -915,6 +1078,8 @@ Mime::Type.register 'application/json-patch+json', :json_patch
 
 JSON Patch 最近才收录到 RFC 中，因此还没有多少好的 Ruby 库。Aaron Patterson 开发的 [hana](https://github.com/tenderlove/hana) 是一个，但是没有支持规范最近的几项修改。
 
+<a class="anchor" id="upgrading-from-rails-3-2-to-rails-4-0-gemfile"></a>
+
 ### Gemfile
 
 Rails 4.0 删除了 `Gemfile` 的 `assets` 分组。升级时，要把那一行删除。此外，还要更新应用配置（`config/application.rb`）：
@@ -925,222 +1090,217 @@ Rails 4.0 删除了 `Gemfile` 的 `assets` 分组。升级时，要把那一行�
 Bundler.require(*Rails.groups)
 ```
 
+<a class="anchor" id="upgrading-from-rails-3-2-to-rails-4-0-vendor-plugins"></a>
+
 ### vendor/plugins
 
 Rails 4.0 不再支持从 `vendor/plugins` 目录中加载插件。插件应该制成 gem，添加到 `Gemfile` 中。如果不想制成 gem，可以移到其他位置，例如 `lib/my_plugin/*`，然后添加相应的初始化脚本 `config/initializers/my_plugin.rb`。
 
+<a class="anchor" id="upgrading-from-rails-3-2-to-rails-4-0-active-record"></a>
+
 ### Active Record
 
-- Rails 4.0 从 Active Record 中删除了标识映射（identity map），因为[与关联有些不一致](https://github.com/rails/rails/commit/302c912bf6bcd0fa200d964ec2dc4a44abe328a6)。如果你启动了这个功能，要把这个没有作用的配置删除：`config.active_record.identity_map`。
+*   Rails 4.0 从 Active Record 中删除了标识映射（identity map），因为[与关联有些不一致](https://github.com/rails/rails/commit/302c912bf6bcd0fa200d964ec2dc4a44abe328a6)。如果你启动了这个功能，要把这个没有作用的配置删除：`config.active_record.identity_map`。
+*   关联集合的 `delete` 方法的参数现在除了记录之外还可以使用 `Integer` 或 `String`，基本与 `destroy` 方法一样。以前，传入这样的参数时会抛出 `ActiveRecord::AssociationTypeMismatch` 异常。从 Rails 4.0 开始，`delete` 在删除记录之前会自动查找指定 ID 对应的记录。
+*   在 Rails 4.0 中，如果修改了列或表的名称，相关的索引也会重命名。现在无需编写迁移重命名索引了。
+*   Rails 4.0 把 `serialized_attributes` 和 `attr_readonly` 改成只有类方法版本了。别再使用实例方法版本了，因为已经弃用。应该把实例方法版本改成类方法版本，例如把 `self.serialized_attributes` 改成 `self.class.serialized_attributes`。
+*   使用默认的编码器时，把 `nil` 赋值给序列化的属性在数据库中保存的是 `NULL`，而不是通过 `YAML ("--- \n&#8230;&#8203;\n")` 传递 `nil` 值。
+*   Rails 4.0 删除了 `attr_accessible` 和 `attr_protected`，换成了健壮参数（strong parameter）。平滑升级可以使用 [`protected_attributes`](https://github.com/rails/protected_attributes) gem。
+*   如果不使用 `protected_attributes` gem，可以把与它有关的选项都删除，例如 `whitelist_attributes` 或 `mass_assignment_sanitizer`。
+*   Rails 4.0 要求作用域使用可调用的对象，如 Proc 或 lambda：
 
-- 关联集合的 `delete` 方法的参数现在除了记录之外还可以使用 `Integer` 或 `String`，基本与 `destroy` 方法一样。以前，传入这样的参数时会抛出 `ActiveRecord::AssociationTypeMismatch` 异常。从 Rails 4.0 开始，`delete` 在删除记录之前会自动查找指定 ID 对应的记录。
-
-- 在 Rails 4.0 中，如果修改了列或表的名称，相关的索引也会重命名。现在无需编写迁移重命名索引了。
-
-- Rails 4.0 把 `serialized_attributes` 和 `attr_readonly` 改成只有类方法版本了。别再使用实例方法版本了，因为已经弃用。应该把实例方法版本改成类方法版本，例如把 `self.serialized_attributes` 改成 `self.class.serialized_attributes`。
-
-- 使用默认的编码器时，把 `nil` 赋值给序列化的属性在数据库中保存的是 `NULL`，而不是通过 `YAML ("--- \n…​\n")` 传递 `nil` 值。
-
-- Rails 4.0 删除了 `attr_accessible` 和 `attr_protected`，换成了健壮参数（strong parameter）。平滑升级可以使用 [`protected_attributes`](https://github.com/rails/protected_attributes) gem。
-
-- 如果不使用 `protected_attributes` gem，可以把与它有关的选项都删除，例如 `whitelist_attributes` 或 `mass_assignment_sanitizer`。
-
-- Rails 4.0 要求作用域使用可调用的对象，如 Proc 或 lambda：
-
-    ``` ruby
+    ```ruby
     scope :active, where(active: true)
-
+    
     # 变成
     scope :active, -> { where active: true }
     ```
 
-- Rails 4.0 弃用了 `ActiveRecord::Fixtures`，改成了 `ActiveRecord::FixtureSet`。
 
-- Rails 4.0 弃用了 `ActiveRecord::TestCase`，改成了 `ActiveSupport::TestCase`。
+*   Rails 4.0 弃用了 `ActiveRecord::Fixtures`，改成了 `ActiveRecord::FixtureSet`。
+*   Rails 4.0 弃用了 `ActiveRecord::TestCase`，改成了 `ActiveSupport::TestCase`。
+*   Rails 4.0 弃用了以前基于散列的查找方法 API。这意味着，不能再给查找方法传入选项了。例如，`Book.find(:all, conditions: { name: '1984' })` 已经弃用，改成了 `Book.where(name: '1984')`。
+*   除了 `find_by_&#8230;&#8203;` 和 `find_by_&#8230;&#8203;!`，其他动态查找方法都弃用了。新旧变化如下：
 
-- Rails 4.0 弃用了以前基于散列的查找方法 API。这意味着，不能再给查找方法传入选项了。例如，`Book.find(:all, conditions: { name: '1984' })` 已经弃用，改成了 `Book.where(name: '1984')`。
+    *   `find_all_by_&#8230;&#8203;` 变成 `where(&#8230;&#8203;)`
+    *   `find_last_by_&#8230;&#8203;` 变成 `where(&#8230;&#8203;).last`
+    *   `scoped_by_&#8230;&#8203;` 变成 `where(&#8230;&#8203;)`
+    *   `find_or_initialize_by_&#8230;&#8203;` 变成 `find_or_initialize_by(&#8230;&#8203;)`
+    *   `find_or_create_by_&#8230;&#8203;` 变成 `find_or_create_by(&#8230;&#8203;)`
 
-- 除了 `find_by_…​` 和 `find_by_…​!`，其他动态查找方法都弃用了。新旧变化如下：
 
-    -   `find_all_by_…​` 变成 `where(…​)`
+*   注意，`where(&#8230;&#8203;)` 返回一个关系，而不像旧的查找方法那样返回一个数组。如果需要使用数组，调用 `where(&#8230;&#8203;).to_a`。
+*   等价的方法所执行的 SQL 语句可能与以前的实现不同。
+*   如果想使用旧的查找方法，可以使用 [`activerecord-deprecated_finders`](https://github.com/rails/activerecord-deprecated_finders) gem。
+*   Rails 4.0 修改了 `has_and_belongs_to_many` 关联默认的联结表名，把第二个表名中的相同前缀去掉。现有的 `has_and_belongs_to_many` 关联，如果表名中有共用的前缀，要使用 `join_table` 选项指定。例如：
 
-    -   `find_last_by_…​` 变成 `where(…​).last`
-
-    -   `scoped_by_…​` 变成 `where(…​)`
-
-    -   `find_or_initialize_by_…​` 变成 `find_or_initialize_by(…​)`
-
-    -   `find_or_create_by_…​` 变成 `find_or_create_by(…​)`
-
-- 注意，`where(…​)` 返回一个关系，而不像旧的查找方法那样返回一个数组。如果需要使用数组，调用 `where(…​).to_a`。
-
-- 等价的方法所执行的 SQL 语句可能与以前的实现不同。
-
-- 如果想使用旧的查找方法，可以使用 [`activerecord-deprecated_finders`](https://github.com/rails/activerecord-deprecated_finders) gem。
-
-- Rails 4.0 修改了 `has_and_belongs_to_many` 关联默认的联结表名，把第二个表名中的相同前缀去掉。现有的 `has_and_belongs_to_many` 关联，如果表名中有共用的前缀，要使用 `join_table` 选项指定。例如：
-
-    ``` ruby
+    ```ruby
     CatalogCategory < ActiveRecord::Base
       has_and_belongs_to_many :catalog_products, join_table: 'catalog_categories_catalog_products'
     end
-
+    
     CatalogProduct < ActiveRecord::Base
       has_and_belongs_to_many :catalog_categories, join_table: 'catalog_categories_catalog_products'
     end
     ```
 
-- 注意，前缀含命名空间，因此 `Catalog::Category` 和 `Catalog::Product`，或者 `Catalog::Category` 和 `CatalogProduct` 之间的关联也要以同样的方式修改。
+
+*   注意，前缀含命名空间，因此 `Catalog::Category` 和 `Catalog::Product`，或者 `Catalog::Category` 和 `CatalogProduct` 之间的关联也要以同样的方式修改。
+
+<a class="anchor" id="active-resource"></a>
 
 ### Active Resource
 
 Rails 4.0 把 Active Resource 提取出来，制成了单独的 gem。如果想继续使用这个功能，把 [`activeresource`](https://github.com/rails/activeresource) gem 添加到 `Gemfile` 中。
 
+<a class="anchor" id="active-model"></a>
+
 ### Active Model
 
-- Rails 4.0 修改了 `ActiveModel::Validations::ConfirmationValidator` 错误的依附方式。现在，如果二次确认验证失败，错误依附到 `:#{attribute}_confirmation` 上，而不是 `attribute`。
+*   Rails 4.0 修改了 `ActiveModel::Validations::ConfirmationValidator` 错误的依附方式。现在，如果二次确认验证失败，错误依附到 `:#{attribute}_confirmation` 上，而不是 `attribute`。
+*   Rails 4.0 把 `ActiveModel::Serializers::JSON.include_root_in_json` 的默认值改成 `false` 了。现在 Active Model 序列化程序和 Active Record 对象具有相同的默认行为。这意味着，可以把 `config/initializers/wrap_parameters.rb` 文件中的下述选项注释掉或删除：
 
-- Rails 4.0 把 `ActiveModel::Serializers::JSON.include_root_in_json` 的默认值改成 `false` 了。现在 Active Model 序列化程序和 Active Record 对象具有相同的默认行为。这意味着，可以把 `config/initializers/wrap_parameters.rb` 文件中的下述选项注释掉或删除：
-
-    ``` ruby
+    ```ruby
     # Disable root element in JSON by default.
     # ActiveSupport.on_load(:active_record) do
     #   self.include_root_in_json = false
     # end
     ```
 
+
+
+<a class="anchor" id="action-pack"></a>
+
 ### Action Pack
 
-- Rails 4.0 引入了 `ActiveSupport::KeyGenerator`，使用它生成和验证签名 cookie 等。Rails 3.x 生成的现有签名 cookie，如果有 `secret_token`，并且添加了 `secret_key_base`，会自动升级。
+*   Rails 4.0 引入了 `ActiveSupport::KeyGenerator`，使用它生成和验证签名 cookie 等。Rails 3.x 生成的现有签名 cookie，如果有 `secret_token`，并且添加了 `secret_key_base`，会自动升级。
 
-    ``` ruby
+    ```ruby
     # config/initializers/secret_token.rb
     Myapp::Application.config.secret_token = 'existing secret token'
     Myapp::Application.config.secret_key_base = 'new secret key base'
     ```
-
+    
     注意，完全升级到 Rails 4.x，而且确定不再降级到 Rails 3.x之后再设定 `secret_key_base`。这是因为使用 Rails 4.x 中的新 `secret_key_base` 签名的 cookie 与 Rails 3.x 不兼容。你可以留着 `secret_token`，不设定新的 `secret_key_base`，把弃用消息忽略，等到完全升级好了再改。
-
+    
     如果使用外部应用或 JavaScript 读取 Rails 应用的签名会话 cookie（或一般的签名 cookie），解耦之后才应该设定 `secret_key_base`。
 
-- 如果设定了 `secret_key_base`，Rails 4.0 会加密基于 cookie 的会话内容。Rails 3.x 签名基于 cookie 的会话，但是不加密。签名的 cookie 是“安全的”，因为会确认是不是由应用生成的，无法篡改。然而，终端用户能看到内容，而加密后则无法查看，而且性能没有重大损失。
 
-    改成加密会话 cookie 的详情参见 [\#9978 拉取请求](https://github.com/rails/rails/pull/9978)。
+*   如果设定了 `secret_key_base`，Rails 4.0 会加密基于 cookie 的会话内容。Rails 3.x 签名基于 cookie 的会话，但是不加密。签名的 cookie 是“安全的”，因为会确认是不是由应用生成的，无法篡改。然而，终端用户能看到内容，而加密后则无法查看，而且性能没有重大损失。
 
-- Rails 4.0 删除了 `ActionController::Base.asset_path` 选项，改用 Asset Pipeline 功能。
+    改成加密会话 cookie 的详情参见 [#9978 拉取请求](https://github.com/rails/rails/pull/9978)。
 
-- Rails 4.0 弃用了 `ActionController::Base.page_cache_extension` 选项，换成 `ActionController::Base.default_static_extension`。
 
-- Rails 4.0 从 Action Pack 中删除了动作和页面缓存。如果想在控制器中使用 `caches_action`，要添加 `actionpack-action_caching` gem，想使用 `caches_page`，要添加 `actionpack-page_caching` gem。
+*   Rails 4.0 删除了 `ActionController::Base.asset_path` 选项，改用 Asset Pipeline 功能。
+*   Rails 4.0 弃用了 `ActionController::Base.page_cache_extension` 选项，换成 `ActionController::Base.default_static_extension`。
+*   Rails 4.0 从 Action Pack 中删除了动作和页面缓存。如果想在控制器中使用 `caches_action`，要添加 `actionpack-action_caching` gem，想使用 `caches_page`，要添加 `actionpack-page_caching` gem。
+*   Rails 4.0 删除了 XML 参数解析器。若想使用，要添加 `actionpack-xml_parser` gem。
+*   Rails 4.0 修改了默认的 `layout` 查找集，使用返回 `nil` 的符号或 proc。如果不想使用布局，返回 `false`。
+*   Rails 4.0 把默认的 memcached 客户端由 `memcache-client` 改成了 `dalli`。若想升级，只需把 `gem 'dalli'` 添加到 `Gemfile` 中。
+*   Rails 4.0 弃用了控制器中的 `dom_id` 和 `dom_class` 方法（在视图中可以继续使用）。若想使用，要引入 `ActionView::RecordIdentifier` 模块。
+*   Rails 4.0 弃用了 `link_to` 辅助方法的 `:confirm` 选项。现在应该使用 `data` 属性（如 `data: { confirm: 'Are you sure?' }`）。基于这个辅助方法的辅助方法（如 `link_to_if` 或 `link_to_unless`）也受影响。
+*   Rails 4.0 改变了 `assert_generates`、`assert_recognizes` 和 `assert_routing` 的工作方式。现在，这三个断言抛出 `Assertion`，而不是 `ActionController::RoutingError`。
+*   如果具名路由的名称有冲突，Rails 4.0 抛出 `ArgumentError`。自己定义具名路由，或者由 `resources` 生成都可能触发这一错误。下面两例中的 `example_path` 路由有冲突：
 
-- Rails 4.0 删除了 XML 参数解析器。若想使用，要添加 `actionpack-xml_parser` gem。
-
-- Rails 4.0 修改了默认的 `layout` 查找集，使用返回 `nil` 的符号或 proc。如果不想使用布局，返回 `false`。
-
-- Rails 4.0 把默认的 memcached 客户端由 `memcache-client` 改成了 `dalli`。若想升级，只需把 `gem 'dalli'` 添加到 `Gemfile` 中。
-
-- Rails 4.0 弃用了控制器中的 `dom_id` 和 `dom_class` 方法（在视图中可以继续使用）。若想使用，要引入 `ActionView::RecordIdentifier` 模块。
-
-- Rails 4.0 弃用了 `link_to` 辅助方法的 `:confirm` 选项。现在应该使用 `data` 属性（如 `data: { confirm: 'Are you sure?' }`）。基于这个辅助方法的辅助方法（如 `link_to_if` 或 `link_to_unless`）也受影响。
-
-- Rails 4.0 改变了 `assert_generates`、`assert_recognizes` 和 `assert_routing` 的工作方式。现在，这三个断言抛出 `Assertion`，而不是 `ActionController::RoutingError`。
-
-- 如果具名路由的名称有冲突，Rails 4.0 抛出 `ArgumentError`。自己定义具名路由，或者由 `resources` 生成都可能触发这一错误。下面两例中的 `example_path` 路由有冲突：
-
-    ``` ruby
+    ```ruby
     get 'one' => 'test#example', as: :example
     get 'two' => 'test#example', as: :example
-
+    
     resources :examples
     get 'clashing/:id' => 'test#example', as: :example
     ```
+    
+    在第一例中，可以为两个路由起不同的名称。在第二例中，可以使用 `resources` 方法提供的 `only` 或 `except` 选项，限制生成的路由。详情参见[限制所创建的路由](routing.html#restricting-the-routes-created)。
 
-    在第一例中，可以为两个路由起不同的名称。在第二例中，可以使用 `resources` 方法提供的 `only` 或 `except` 选项，限制生成的路由。详情参见[路由指南](routing.html#限制所创建的路由)。
 
-- Rails 4.0 还改变了含有 Unicode 字符的路由的处理方式。现在，可以直接在路由中使用 Unicode 字符。如果以前这样做过，要做修改。例如：
+*   Rails 4.0 还改变了含有 Unicode 字符的路由的处理方式。现在，可以直接在路由中使用 Unicode 字符。如果以前这样做过，要做修改。例如：
 
-    ``` ruby
+    ```ruby
     get Rack::Utils.escape('こんにちは'), controller: 'welcome', action: 'index'
     ```
-
+    
     要改成：
-
-    ``` ruby
+    
+    ```ruby
     get 'こんにちは', controller: 'welcome', action: 'index'
     ```
 
-- Rails 4.0 要求使用 `match` 定义的路由必须指定请求方法。例如：
 
-    ``` ruby
+*   Rails 4.0 要求使用 `match` 定义的路由必须指定请求方法。例如：
+
+    ```ruby
     # Rails 3.x
     match '/' => 'root#index'
-
+    
     # 改成
     match '/' => 'root#index', via: :get
-
+    
     # 或
     get '/' => 'root#index'
     ```
 
-- Rails 4.0 删除了 `ActionDispatch::BestStandardsSupport` 中间件。根据[这篇文章](http://msdn.microsoft.com/en-us/library/jj676915(v=vs.85).aspx)，`<!DOCTYPE html>` 就能触发标准模式。此外，ChromeFrame 首部移到 `config.action_dispatch.default_headers` 中了。
+
+*   Rails 4.0 删除了 `ActionDispatch::BestStandardsSupport` 中间件。根据[这篇文章](http://msdn.microsoft.com/en-us/library/jj676915(v=vs.85).aspx)，`<!DOCTYPE html>` 就能触发标准模式。此外，ChromeFrame 首部移到 `config.action_dispatch.default_headers` 中了。
 
     注意，还必须把对这个中间件的引用从应用的代码中删除，例如：
-
-    ``` ruby
+    
+    ```ruby
     # 抛出异常
     config.middleware.insert_before(Rack::Lock, ActionDispatch::BestStandardsSupport)
     ```
-
+    
     此外，还要把环境配置中的 `config.action_dispatch.best_standards_support` 选项删除（如果有的话）。
 
-- 在 Rails 4.0 中，预先编译好的静态资源不再自动从 `vendor/assets` 和 `lib/assets` 中复制 JS 和 CSS 之外的静态文件。Rails 应用和引擎开发者应该把静态资源文件放在 `app/assets` 目录中，或者配置 `config.assets.precompile` 选项。
 
-- 在 Rails 4.0 中，如果动作无法处理请求的格式，抛出 `ActionController::UnknownFormat` 异常。默认情况下，这个异常的处理方式是返回“406 Not Acceptable”响应，不过现在可以覆盖。在 Rails 3 中始终返回“406 Not Acceptable”响应，不可覆盖。
+*   在 Rails 4.0 中，预先编译好的静态资源不再自动从 `vendor/assets` 和 `lib/assets` 中复制 JS 和 CSS 之外的静态文件。Rails 应用和引擎开发者应该把静态资源文件放在 `app/assets` 目录中，或者配置 `config.assets.precompile` 选项。
+*   在 Rails 4.0 中，如果动作无法处理请求的格式，抛出 `ActionController::UnknownFormat` 异常。默认情况下，这个异常的处理方式是返回“406 Not Acceptable”响应，不过现在可以覆盖。在 Rails 3 中始终返回“406 Not Acceptable”响应，不可覆盖。
+*   在 Rails 4.0 中，如果 `ParamsParser` 无法解析请求参数，抛出 `ActionDispatch::ParamsParser::ParseError` 异常。你应该捕获这个异常，而不是具体的异常，如 `MultiJson::DecodeError`。
+*   在 Rails 4.0 中，如果挂载引擎的 URL 有前缀，`SCRIPT_NAME` 能正确嵌套。现在不用设定 `default_url_options[:script_name]` 选项覆盖 URL 前缀了。
+*   Rails 4.0 弃用了 `ActionController::Integration`，改成了 `ActionDispatch::Integration`。
+*   Rails 4.0 弃用了 `ActionController::IntegrationTest`，改成了 `ActionDispatch::IntegrationTest`。
+*   Rails 4.0 弃用了 `ActionController::PerformanceTest`，改成了 `ActionDispatch::PerformanceTest`。
+*   Rails 4.0 弃用了 `ActionController::AbstractRequest`，改成了 `ActionDispatch::Request`。
+*   Rails 4.0 弃用了 `ActionController::Request`，改成了 `ActionDispatch::Request`。
+*   Rails 4.0 弃用了 `ActionController::AbstractResponse`，改成了 `ActionDispatch::Response`。
+*   Rails 4.0 弃用了 `ActionController::Response`，改成了 `ActionDispatch::Response`。
+*   Rails 4.0 弃用了 `ActionController::Routing`，改成了 `ActionDispatch::Routing`。
 
-- 在 Rails 4.0 中，如果 `ParamsParser` 无法解析请求参数，抛出 `ActionDispatch::ParamsParser::ParseError` 异常。你应该捕获这个异常，而不是具体的异常，如 `MultiJson::DecodeError`。
-
-- 在 Rails 4.0 中，如果挂载引擎的 URL 有前缀，`SCRIPT_NAME` 能正确嵌套。现在不用设定 `default_url_options[:script_name]` 选项覆盖 URL 前缀了。
-
-- Rails 4.0 弃用了 `ActionController::Integration`，改成了 `ActionDispatch::Integration`。
-
-- Rails 4.0 弃用了 `ActionController::IntegrationTest`，改成了 `ActionDispatch::IntegrationTest`。
-
-- Rails 4.0 弃用了 `ActionController::PerformanceTest`，改成了 `ActionDispatch::PerformanceTest`。
-
-- Rails 4.0 弃用了 `ActionController::AbstractRequest`，改成了 `ActionDispatch::Request`。
-
-- Rails 4.0 弃用了 `ActionController::Request`，改成了 `ActionDispatch::Request`。
-
-- Rails 4.0 弃用了 `ActionController::AbstractResponse`，改成了 `ActionDispatch::Response`。
-
-- Rails 4.0 弃用了 `ActionController::Response`，改成了 `ActionDispatch::Response`。
-
-- Rails 4.0 弃用了 `ActionController::Routing`，改成了 `ActionDispatch::Routing`。
+<a class="anchor" id="active-support"></a>
 
 ### Active Support
 
 Rails 4.0 删除了 `ERB::Util#json_escape` 的别名 `j`，因为已经把它用作 `ActionView::Helpers::JavaScriptHelper#escape_javascript` 的别名。
 
+<a class="anchor" id="helpers-loading-order"></a>
+
 ### 辅助方法的加载顺序
 
 Rails 4.0 改变了从不同目录中加载辅助方法的顺序。以前，先找到所有目录，然后按字母表顺序排序。升级到 Rails 4.0 之后，辅助方法的目录顺序依旧，只在各自的目录中按字母表顺序加载。如果没有使用 `helpers_path` 参数，这一变化只影响从引擎中加载辅助方法的方式。如果看重顺序，升级后应该检查辅助方法是否可用。如果想修改加载引擎的顺序，可以使用 `config.railties_order=` 方法。
+
+<a class="anchor" id="active-record-observer-and-action-controller-sweeper"></a>
 
 ### Active Record 观测器和 Action Controller 清洁器
 
 `ActiveRecord::Observer` 和 `ActionController::Caching::Sweeper` 提取到 `rails-observers` gem 中了。如果要使用它们，要添加 `rails-observers` gem。
 
+<a class="anchor" id="sprockets-rails"></a>
+
 ### sprockets-rails
 
-- `assets:precompile:primary` 和 `assets:precompile:all` 删除了。改用 `assets:precompile`。
+*   `assets:precompile:primary` 和 `assets:precompile:all` 删除了。改用 `assets:precompile`。
+*   `config.assets.compress` 选项要改成 `config.assets.js_compressor`，例如：
 
-- `config.assets.compress` 选项要改成 `config.assets.js_compressor`，例如：
-
-    ``` ruby
+    ```ruby
     config.assets.js_compressor = :uglifier
     ```
 
+
+
+<a class="anchor" id="sass-rails"></a>
+
 ### sass-rails
 
-- `asset-url` 不再接受两个参数。例如，`asset-url("rails.png", image)` 变成了 `asset-url("rails.png")`。
+*   `asset-url` 不再接受两个参数。例如，`asset-url("rails.png", image)` 变成了 `asset-url("rails.png")`。
 
 NOTE: [英语原文](http://guides.rubyonrails.org/upgrading_ruby_on_rails.html)还有从 Rails 3.0 升级到 3.1 及从 3.1 升级到 3.2 的说明，由于版本太旧，不再翻译，敬请谅解。——译者注
+

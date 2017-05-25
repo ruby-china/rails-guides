@@ -1,30 +1,23 @@
-创建及定制 Rails 生成器和模板
-=============================
+# 创建及定制 Rails 生成器和模板
 
 如果你打算改进自己的工作流程，Rails 生成器是必备工具。本文教你创建及定制生成器的方式。
 
 读完本文后，您将学到：
 
-- 如何查看应用中有哪些生成器可用；
+*   如何查看应用中有哪些生成器可用；
+*   如何使用模板创建生成器；
+*   在调用生成器之前，Rails 如何搜索生成器；
+*   Rails 内部如何使用模板生成 Rails 代码；
+*   如何通过创建新生成器定制脚手架；
+*   如何通过修改生成器模板定制脚手架；
+*   如何使用后备机制防范覆盖大量生成器；
+*   如何创建应用模板。
 
-- 如何使用模板创建生成器；
+-----------------------------------------------------------------------------
 
-- 在调用生成器之前，Rails 如何搜索生成器；
+<a class="anchor" id="first-contact"></a>
 
-- Rails 内部如何使用模板生成 Rails 代码；
-
-- 如何通过创建新生成器定制脚手架；
-
-- 如何通过修改生成器模板定制脚手架；
-
-- 如何使用后备机制防范覆盖大量生成器；
-
-- 如何创建应用模板。
-
---------------------------------------------------------------------------------
-
-第一次接触
-----------
+## 第一次接触
 
 使用 `rails` 命令创建应用时，使用的其实就是一个 Rails 生成器。创建应用之后，可以使用 `rails generator` 命令列出全部可用的生成器：
 
@@ -40,8 +33,9 @@ $ bin/rails generate
 $ bin/rails generate helper --help
 ```
 
-创建首个生成器
---------------
+<a class="anchor" id="creating-your-first-generator"></a>
+
+## 创建首个生成器
 
 自 Rails 3.0 起，生成器使用 [Thor](https://github.com/erikhuda/thor) 构建。Thor 提供了强大的解析选项和处理文件的丰富 API。举个例子。我们来构建一个生成器，在 `config/initializers` 目录中创建一个名为 `initializer.rb` 的初始化脚本。
 
@@ -56,6 +50,7 @@ end
 ```
 
 NOTE: `create_file` 是 `Thor::Actions` 提供的一个方法。`create_file` 即其他 Thor 方法的文档参见 [Thor 的文档](http://rdoc.info/github/erikhuda/thor/master/Thor/Actions.html)。
+
 
 这个生成器相当简单：继承自 `Rails::Generators::Base`，定义了一个方法。调用生成器时，生成器中的公开方法按照定义的顺序依次执行。最后，我们调用 `create_file` 方法在指定的位置创建一个文件，写入指定的内容。如果你熟悉 Rails Application Templates API，对这个生成器 API 就不会感到陌生。
 
@@ -84,8 +79,9 @@ end
 
 现在，调用生成器时指定 `--help` 选项便能看到刚添加的描述。添加描述的第二个方法是，在生成器所在的目录中创建一个名为 `USAGE` 的文件。下一节将这么做。
 
-使用生成器创建生成器
---------------------
+<a class="anchor" id="creating-generators-with-generators"></a>
+
+## 使用生成器创建生成器
 
 生成器本身也有一个生成器：
 
@@ -143,24 +139,29 @@ $ bin/rails generate initializer core_extensions
 
 可以看到，这个命令生成了 `config/initializers/core_extensions.rb` 文件，里面的内容与模板中一样。这表明，`copy_file` 方法的作用是把源根目录中的文件复制到指定的目标路径。`file_name` 方法是继承自 `Rails::Generators::NamedBase` 之后自动创建的。
 
-生成器中可用的方法在本章[最后一节](#生成器方法)说明。
+生成器中可用的方法在本章[最后一节](#generator-methods)说明。
 
-查找生成器
-----------
+<a class="anchor" id="generators-lookup"></a>
+
+## 查找生成器
 
 执行 `rails generate initializer core_extensions` 命令时，Rails 按照下述顺序引入文件，直到找到所需的生成器为止：
 
-    rails/generators/initializer/initializer_generator.rb
-    generators/initializer/initializer_generator.rb
-    rails/generators/initializer_generator.rb
-    generators/initializer_generator.rb
+```
+rails/generators/initializer/initializer_generator.rb
+generators/initializer/initializer_generator.rb
+rails/generators/initializer_generator.rb
+generators/initializer_generator.rb
+```
 
 如果最后找不到，显示一个错误消息。
 
 TIP: 上述示例把文件放在应用的 `lib` 目录中，因为这个目录在 `$LOAD_PATH` 中。
 
-定制工作流程
-------------
+
+<a class="anchor" id="customizing-your-workflow"></a>
+
+## 定制工作流程
 
 Rails 自带的生成器十分灵活，可以定制脚手架。生成器在 `config/application.rb` 文件中配置，下面是一些默认值：
 
@@ -209,9 +210,17 @@ $ bin/rails generate scaffold User name:string
       create    app/assets/stylesheets/scaffolds.scss
 ```
 
-通过上述输出不难看出 Rails 3.0 及以上版本中生成器的工作方式。脚手架生成器其实什么也不生成，只是调用其他生成器。因此，我们可以添加、替换和删除任何生成器。例如，脚手架生成器调用了 scaffold\_controller 生成器，而它调用了 erb、test\_unit 和 helper 生成器。因为各个生成器的职责单一，所以可以轻易复用，从而避免代码重复。
+通过上述输出不难看出 Rails 3.0 及以上版本中生成器的工作方式。脚手架生成器其实什么也不生成，只是调用其他生成器。因此，我们可以添加、替换和删除任何生成器。例如，脚手架生成器调用了 scaffold_controller 生成器，而它调用了 erb、test_unit 和 helper 生成器。因为各个生成器的职责单一，所以可以轻易复用，从而避免代码重复。
 
-我们定制工作流程的第一步是，不让脚手架生成样式表、JavaScript 和测试固件文件。为此，我们要像下面这样修改配置：
+使用脚手架生成资源时，如果不想生成默认的 `app/assets/stylesheets/scaffolds.scss` 文件，可以禁用 `scaffold_stylesheet`：
+
+```ruby
+  config.generators do |g|
+    g.scaffold_stylesheet false
+  end
+```
+
+其次，我们可以不让脚手架生成样式表、JavaScript 和测试固件文件。为此，我们要像下面这样修改配置：
 
 ```ruby
 config.generators do |g|
@@ -317,8 +326,9 @@ hook_for :test_framework, as: :helper
 
 现在，你可以使用脚手架再生成一个资源，你会发现它生成了测试。
 
-通过修改生成器模板定制工作流程
-------------------------------
+<a class="anchor" id="customizing-your-workflow-by-changing-generators-templates"></a>
+
+## 通过修改生成器模板定制工作流程
 
 前面我们只想在生成的辅助方法中添加一行代码，而不增加额外的功能。为此有种更为简单的方式：替换现有生成器的模板。这里要替换的是 `Rails::Generators::HelperGenerator` 的模板。
 
@@ -358,8 +368,9 @@ Rails 的脚手架模板经常使用 ERB 标签，这些标签要转义，这样
 <%= stylesheet_include_tag :application %>
 ```
 
-为生成器添加后备机制
---------------------
+<a class="anchor" id="adding-generators-fallbacks"></a>
+
+## 为生成器添加后备机制
 
 生成器最后一个相当有用的功能是插件生成器的后备机制。比如说我们想在 TestUnit 的基础上添加类似 [shoulda](https://github.com/thoughtbot/shoulda) 的功能。因为 TestUnit 已经实现了 Rails 所需的全部生成器，而 shoulda 只是覆盖其中部分，所以 shoulda 没必要重新实现某些生成器。相反，shoulda 可以告诉 Rails，在 `Shoulda` 命名空间中找不到某个生成器时，使用 `TestUnit` 中的生成器。
 
@@ -414,8 +425,9 @@ $ bin/rails generate scaffold Comment body:text
 
 后备机制能让生成器专注于实现单一职责，尽量复用代码，减少重复代码量。
 
-应用模板
---------
+<a class="anchor" id="application-templates"></a>
+
+## 应用模板
 
 至此，我们知道生成器可以在应用内部使用，但是你知道吗，生成器也可用于生成应用？这种生成器叫“模板”（template）。本节简介 Templates API，详情参阅[Rails 应用模板](rails_application_templates.html)。
 
@@ -450,12 +462,34 @@ $ rails new thud -m https://gist.github.com/radar/722911/raw/
 
 本章最后一节虽然不说明如何生成大多数已知的优秀模板，但是会详细说明可用的方法，供你自己开发模板。那些方法也可以在生成器中使用。
 
-生成器方法
-----------
+<a class="anchor" id="adding-command-line-arguments"></a>
+
+## 添加命令行参数
+
+Rails 的生成器可以轻易修改，接受自定义的命令行参数。这个功能源自 [Thor](http://www.rubydoc.info/github/erikhuda/thor/master/Thor/Base/ClassMethods#class_option-instance_method)：
+
+```ruby
+class_option :scope, type: :string, default: 'read_products'
+```
+
+现在，生成器可以这样调用：
+
+```sh
+$ rails generate initializer --scope write_products
+```
+
+在生成器类内部，命令行参数通过 `options` 方法访问。
+
+<a class="anchor" id="generator-methods"></a>
+
+## 生成器方法
 
 下面是可供 Rails 生成器和模板使用的方法。
 
 NOTE: 本文不涵盖 Thor 提供的方法。如果想了解，参阅 [Thor 的文档](http://rdoc.info/github/erikhuda/thor/master/Thor/Actions.html)。
+
+
+<a class="anchor" id="gem"></a>
 
 ### `gem`
 
@@ -468,11 +502,9 @@ gem "devise", "1.1.5"
 
 可用的选项：
 
-- `:group`：把 gem 添加到 `Gemfile` 中的哪个分组里。
-
-- `:version`：要使用的 gem 版本号，字符串。也可以在 `gem` 方法的第二个参数中指定。
-
-- `:git`：gem 的 Git 仓库的 URL。
+*   `:group`：把 gem 添加到 `Gemfile` 中的哪个分组里。
+*   `:version`：要使用的 gem 版本号，字符串。也可以在 `gem` 方法的第二个参数中指定。
+*   `:git`：gem 的 Git 仓库的 URL。
 
 传给这个方法的其他选项放在行尾：
 
@@ -486,6 +518,8 @@ gem "devise", git: "git://github.com/plataformatec/devise", branch: "master"
 gem "devise", git: "git://github.com/plataformatec/devise", branch: "master"
 ```
 
+<a class="anchor" id="gem-group"></a>
+
 ### `gem_group`
 
 把 gem 放在一个分组里：
@@ -495,6 +529,8 @@ gem_group :development, :test do
   gem "rspec-rails"
 end
 ```
+
+<a class="anchor" id="add-source"></a>
 
 ### `add_source`
 
@@ -512,6 +548,8 @@ add_source "http://gems.github.com" do
 end
 ```
 
+<a class="anchor" id="inject-into-file"></a>
+
 ### `inject_into_file`
 
 在文件中的指定位置插入一段代码：
@@ -523,6 +561,8 @@ RUBY
 end
 ```
 
+<a class="anchor" id="gsub-file"></a>
+
 ### `gsub_file`
 
 替换文件中的文本：
@@ -532,6 +572,8 @@ gsub_file 'name_of_file.rb', 'method.to_be_replaced', 'method.the_replacing_code
 ```
 
 使用正则表达式替换的效果更精准。可以使用类似的方式调用 `append_file` 和 `prepend_file`，分别在文件的末尾和开头添加代码。
+
+<a class="anchor" id="application"></a>
 
 ### `application`
 
@@ -551,13 +593,17 @@ end
 
 可用的选项：
 
-- `:env`：指定配置选项所属的环境。如果想在块中使用这个选项，建议使用下述句法：
+*   `:env`：指定配置选项所属的环境。如果想在块中使用这个选项，建议使用下述句法：
 
-    ``` ruby
+    ```ruby
     application(nil, env: "development") do
       "config.asset_host = 'http://localhost:3000'"
     end
     ```
+
+
+
+<a class="anchor" id="git"></a>
 
 ### `git`
 
@@ -571,6 +617,8 @@ git add: "onefile.rb", rm: "badfile.cxx"
 ```
 
 这里的散列是传给指定 Git 命令的参数或选项。如最后一行所示，一次可以指定多个 Git 命令，但是命令的运行顺序不一定与指定的顺序一样。
+
+<a class="anchor" id="vendor"></a>
 
 ### `vendor`
 
@@ -588,6 +636,8 @@ vendor "seeds.rb" do
 end
 ```
 
+<a class="anchor" id="lib"></a>
+
 ### `lib`
 
 在 `lib` 目录中放一个文件，内有指定的代码：
@@ -603,6 +653,8 @@ lib "super_special.rb" do
   puts "Super special!"
 end
 ```
+
+<a class="anchor" id="rakefile"></a>
 
 ### `rakefile`
 
@@ -624,6 +676,8 @@ rakefile "test.rake" do
 end
 ```
 
+<a class="anchor" id="initializer"></a>
+
 ### `initializer`
 
 在应用的 `config/initializers` 目录中创建一个初始化脚本：
@@ -640,6 +694,8 @@ initializer "begin.rb" do
 end
 ```
 
+<a class="anchor" id="generate"></a>
+
 ### `generate`
 
 运行指定的生成器，第一个参数是生成器的名称，后续参数直接传给生成器：
@@ -647,6 +703,8 @@ end
 ```ruby
 generate "scaffold", "forums title:string description:text"
 ```
+
+<a class="anchor" id="rake"></a>
 
 ### `rake`
 
@@ -658,9 +716,10 @@ rake "db:migrate"
 
 可用的选项：
 
-- `:env`：指定在哪个环境中运行 Rake 任务。
+*   `:env`：指定在哪个环境中运行 Rake 任务。
+*   `:sudo`：是否使用 `sudo` 运行任务。默认为 `false`。
 
-- `:sudo`：是否使用 `sudo` 运行任务。默认为 `false`。
+<a class="anchor" id="capify-bang"></a>
 
 ### `capify!`
 
@@ -670,6 +729,8 @@ rake "db:migrate"
 capify!
 ```
 
+<a class="anchor" id="route"></a>
+
 ### `route`
 
 在 `config/routes.rb` 文件中添加文本：
@@ -677,6 +738,8 @@ capify!
 ```ruby
 route "resources :people"
 ```
+
+<a class="anchor" id="readme"></a>
 
 ### `readme`
 

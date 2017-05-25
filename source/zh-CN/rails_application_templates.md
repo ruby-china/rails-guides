@@ -1,18 +1,17 @@
-Rails 应用模板
-==============
+# Rails 应用模板
 
 应用模板是包含 DSL 的 Ruby 文件，作用是为新建的或现有的 Rails 项目添加 gem 和初始化脚本等。
 
 读完本文后，您将学到：
 
-- 如何使用模板生成和定制 Rails 应用；
+*   如何使用模板生成和定制 Rails 应用；
+*   如何使用 Rails Templates API 编写可复用的应用模板。
 
-- 如何使用 Rails Templates API 编写可复用的应用模板。
+-----------------------------------------------------------------------------
 
---------------------------------------------------------------------------------
+<a class="anchor" id="usage"></a>
 
-用法
-----
+## 用法
 
 若想使用模板，调用 Rails 生成器时把模板的位置传给 `-m` 选项。模板的位置可以是文件路径，也可以是 URL。
 
@@ -28,8 +27,9 @@ $ bin/rails app:template LOCATION=~/template.rb
 $ bin/rails app:template LOCATION=http://example.com/template.rb
 ```
 
-Templates API
--------------
+<a class="anchor" id="template-api"></a>
+
+## Templates API
 
 Rails Templates API 易于理解。下面是一个典型的 Rails 模板：
 
@@ -48,6 +48,8 @@ end
 
 下面各小节简介这个 API 提供的主要方法。
 
+<a class="anchor" id="gem-args"></a>
+
 ### `gem(*args)`
 
 在生成的应用的 `Gemfile` 中添加指定的 `gem` 条目。
@@ -65,6 +67,8 @@ gem "nokogiri"
 $ bundle install
 ```
 
+<a class="anchor" id="gem-group-names-block"></a>
+
 ### `gem_group(*names, &block)`
 
 把指定的 gem 条目放在一个分组中。
@@ -76,6 +80,8 @@ gem_group :development, :test do
   gem "rspec-rails"
 end
 ```
+
+<a class="anchor" id="add-source-source-options-block"></a>
 
 ### `add_source(source, options={}, &block)`
 
@@ -95,6 +101,8 @@ add_source "http://gems.github.com/" do
 end
 ```
 
+<a class="anchor" id="environment-application-data-nil-options-block"></a>
+
 ### `environment`/`application(data=nil, options={}, &block)`
 
 在 `config/application.rb` 文件中的 `Application` 类里添加一行代码。
@@ -106,6 +114,8 @@ environment 'config.action_mailer.default_url_options = {host: "http://yourwebsi
 ```
 
 `data` 参数的位置可以使用块。
+
+<a class="anchor" id="vendor-lib-file-initializer-filename-data-nil-block"></a>
 
 ### `vendor`/`lib`/`file`/`initializer(filename, data = nil, &block)`
 
@@ -140,6 +150,8 @@ CODE
 
 上述代码会创建 `app/components` 目录，然后在里面创建 `foo.rb` 文件。
 
+<a class="anchor" id="rakefile-filename-data-nil-block"></a>
+
 ### `rakefile(filename, data = nil, &block)`
 
 在 `lib/tasks` 目录中创建一个 Rake 文件，写入指定的任务：
@@ -158,6 +170,8 @@ end
 
 上述代码会创建 `lib/tasks/bootstrap.rake` 文件，写入 `boot:strap` rake 任务。
 
+<a class="anchor" id="generate-what-args"></a>
+
 ### `generate(what, *args)`
 
 运行指定的 Rails 生成器，并传入指定的参数。
@@ -166,6 +180,8 @@ end
 generate(:scaffold, "person", "name:string", "address:text", "age:number")
 ```
 
+<a class="anchor" id="run-command"></a>
+
 ### `run(command)`
 
 运行任意命令。作用类似于反引号。假如你想删除 `README.rdoc` 文件：
@@ -173,6 +189,8 @@ generate(:scaffold, "person", "name:string", "address:text", "age:number")
 ```ruby
 run "rm README.rdoc"
 ```
+
+<a class="anchor" id="rails-command-command-options"></a>
 
 ### `rails_command(command, options = {})`
 
@@ -194,6 +212,8 @@ rails_command "db:migrate", env: 'production'
 rails_command "log:clear", sudo: true
 ```
 
+<a class="anchor" id="route-routing-code"></a>
+
 ### `route(routing_code)`
 
 在 `config/routes.rb` 文件中添加一条路由规则。在前面几节中，我们使用脚手架生成了 Person 资源，还删除了 `README.rdoc` 文件。现在，把 `PeopleController#index` 设为应用的首页：
@@ -201,6 +221,8 @@ rails_command "log:clear", sudo: true
 ```ruby
 route "root to: 'person#index'"
 ```
+
+<a class="anchor" id="inside-dir"></a>
 
 ### `inside(dir)`
 
@@ -211,6 +233,8 @@ inside('vendor') do
   run "ln -s ~/commit-rails/rails rails"
 end
 ```
+
+<a class="anchor" id="ask-question"></a>
 
 ### `ask(question)`
 
@@ -226,6 +250,8 @@ lib lib_name, <<-CODE
 CODE
 ```
 
+<a class="anchor" id="yes-questionmark-question-or-no-questionmark-question"></a>
+
 ### `yes?(question)` 或 `no?(question)`
 
 这两个方法用于询问用户问题，然后根据用户的回答决定流程。假如你想在用户同意时才冰封 Rails：
@@ -234,6 +260,8 @@ CODE
 rails_command("rails:freeze:gems") if yes?("Freeze rails gems?")
 # no?(question) 的作用正好相反
 ```
+
+<a class="anchor" id="git-command"></a>
 
 ### `git(:command)`
 
@@ -244,6 +272,8 @@ git :init
 git add: "."
 git commit: "-a -m 'Initial commit'"
 ```
+
+<a class="anchor" id="after-bundle-block"></a>
 
 ### `after_bundle(&block)`
 
@@ -259,8 +289,9 @@ end
 
 即便传入 `--skip-bundle` 和（或） `--skip-spring` 选项，也会执行这个回调。
 
-高级用法
---------
+<a class="anchor" id="advanced-usage"></a>
+
+## 高级用法
 
 应用模板在 `Rails::Generators::AppGenerator` 实例的上下文中运行，用到了 [Thor 提供的 `apply` 方法](https://github.com/erikhuda/thor/blob/master/lib/thor/actions.rb#L207)。因此，你可以扩展或修改这个实例，满足自己的需求。
 

@@ -1,36 +1,37 @@
-Active Job 基础
-===============
+# Active Job 基础
 
 本文全面说明创建、入队和执行后台作业的基础知识。
 
 读完本文后，您将学到：
 
-- 如何创建作业；
+*   如何创建作业；
+*   如何入队作业；
+*   如何在后台运行作业；
+*   如何在应用中异步发送电子邮件。
 
-- 如何入队作业；
+-----------------------------------------------------------------------------
 
-- 如何在后台运行作业；
+<a class="anchor" id="introduction"></a>
 
-- 如何在应用中异步发送电子邮件。
-
---------------------------------------------------------------------------------
-
-简介
-----
+## 简介
 
 Active Job 框架负责声明作业，在各种队列后端中运行。作业各种各样，可以是定期清理、账单支付和寄信。其实，任何可以分解且并行运行的工作都可以。
 
-Active Job 的作用
------------------
+<a class="anchor" id="the-purpose-of-active-job"></a>
+
+## Active Job 的作用
 
 主要作用是确保所有 Rails 应用都有作业基础设施。这样便可以在此基础上构建各种功能和其他 gem，而无需担心不同作业运行程序（如 Delayed Job 和 Resque）的 API 之间的差异。此外，选用哪个队列后端只是战术问题。而且，切换队列后端也不用重写作业。
 
-NOTE: Rails 默认实现了立即运行的队列运行程序。因此，队列中的各个作业会立即运行。
+NOTE: Rails 自带了一个在进程内线程池中执行作业的异步队列。这些作业虽然是异步执行的，但是重启后队列中的作业就会丢失。
 
-创建作业
---------
+<a class="anchor" id="creating-a-job"></a>
+
+## 创建作业
 
 本节逐步说明创建和入队作业的过程。
+
+<a class="anchor" id="create-the-job"></a>
 
 ### 创建作业
 
@@ -65,6 +66,8 @@ end
 
 注意，`perform` 方法的参数是任意个。
 
+<a class="anchor" id="enqueue-the-job"></a>
+
 ### 入队作业
 
 像下面这样入队作业：
@@ -92,14 +95,19 @@ GuestsCleanupJob.perform_later(guest1, guest2, filter: 'some_filter')
 
 就这么简单！
 
-执行作业
---------
+<a class="anchor" id="job-execution"></a>
+
+## 执行作业
 
 在生产环境中入队和执行作业需要使用队列后端，即要为 Rails 提供一个第三方队列库。Rails 本身只提供了一个进程内队列系统，把作业存储在 RAM 中。如果进程崩溃，或者设备重启了，默认的异步后端会丢失所有作业。这对小型应用或不重要的作业来说没什么，但是生产环境中的多数应用应该挑选一个持久后端。
+
+<a class="anchor" id="backends"></a>
 
 ### 后端
 
 Active Job 为多种队列后端（Sidekiq、Resque、Delayed Job，等等）内置了适配器。最新的适配器列表参见 [`ActiveJob::QueueAdapters` 的 API 文档](http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html)。
+
+<a class="anchor" id="setting-the-backend"></a>
 
 ### 设置后端
 
@@ -128,22 +136,22 @@ end
 # 把 `config.active_job.queue_adapter` 配置覆盖了
 ```
 
+<a class="anchor" id="starting-the-backend"></a>
+
 ### 启动后端
 
 Rails 应用中的作业并行运行，因此多数队列库要求为自己启动专用的队列服务（与启动 Rails 应用的服务不同）。启动队列后端的说明参见各个库的文档。
 
 下面列出部分文档：
 
-- [Sidekiq](https://github.com/mperham/sidekiq/wiki/Active-Job)
+*   [Sidekiq](https://github.com/mperham/sidekiq/wiki/Active-Job)
+*   [Resque](https://github.com/resque/resque/wiki/ActiveJob)
+*   [Sucker Punch](https://github.com/brandonhilkert/sucker_punch#active-job)
+*   [Queue Classic](https://github.com/QueueClassic/queue_classic#active-job)
 
-- [Resque](https://github.com/resque/resque/wiki/ActiveJob)
+<a class="anchor" id="queues"></a>
 
-- [Sucker Punch](https://github.com/brandonhilkert/sucker_punch#active-job)
-
-- [Queue Classic](https://github.com/QueueClassic/queue_classic#active-job)
-
-队列
-----
+## 队列
 
 多数适配器支持多个队列。Active Job 允许把作业调度到具体的队列中：
 
@@ -224,24 +232,24 @@ ProcessVideoJob.perform_later(Video.last)
 
 NOTE: 确保队列后端“监听”着队列名称。某些后端要求指定要监听的队列。
 
-回调
-----
+<a class="anchor" id="callbacks"></a>
+
+## 回调
 
 Active Job 在作业的生命周期内提供了多个钩子。回调用于在作业的生命周期内触发逻辑。
 
+<a class="anchor" id="available-callbacks"></a>
+
 ### 可用的回调
 
-- `before_enqueue`
+*   `before_enqueue`
+*   `around_enqueue`
+*   `after_enqueue`
+*   `before_perform`
+*   `around_perform`
+*   `after_perform`
 
-- `around_enqueue`
-
-- `after_enqueue`
-
-- `before_perform`
-
-- `around_perform`
-
-- `after_perform`
+<a class="anchor" id="usage"></a>
 
 ### 用法
 
@@ -265,8 +273,9 @@ class GuestsCleanupJob < ApplicationJob
 end
 ```
 
-Action Mailer
--------------
+<a class="anchor" id="action-mailer"></a>
+
+## Action Mailer
 
 对现代的 Web 应用来说，最常见的作业是在请求-响应循环之外发送电子邮件，这样用户无需等待。Active Job 与 Action Mailer 是集成的，因此可以轻易异步发送电子邮件：
 
@@ -278,8 +287,9 @@ UserMailer.welcome(@user).deliver_now
 UserMailer.welcome(@user).deliver_later
 ```
 
-国际化
-------
+<a class="anchor" id="internationalization"></a>
+
+## 国际化
 
 创建作业时，使用 `I18n.locale` 设置。如果异步发送电子邮件，可能用得到：
 
@@ -289,8 +299,9 @@ I18n.locale = :eo
 UserMailer.welcome(@user).deliver_later # 使用世界语本地化电子邮件
 ```
 
-GlobalID
---------
+<a class="anchor" id="globalid"></a>
+
+## GlobalID
 
 Active Job 支持参数使用 GlobalID。这样便可以把 Active Record 对象传给作业，而不用传递类和 ID，再自己反序列化。以前，要这么定义作业：
 
@@ -315,8 +326,9 @@ end
 
 为此，模型类要混入 `GlobalID::Identification`。Active Record 模型类默认都混入了。
 
-异常
-----
+<a class="anchor" id="exceptions"></a>
+
+## 异常
 
 Active Job 允许捕获执行作业过程中抛出的异常：
 
@@ -334,13 +346,16 @@ class GuestsCleanupJob < ApplicationJob
 end
 ```
 
+<a class="anchor" id="deserialization"></a>
+
 ### 反序列化
 
 有了 GlobalID，可以序列化传给 `#perform` 方法的整个 Active Record 对象。
 
 如果在作业入队之后、调用 `#perform` 方法之前删除了传入的记录，Active Job 会抛出 `ActiveJob::DeserializationError` 异常。
 
-测试作业
---------
+<a class="anchor" id="job-testing"></a>
 
-测试作业的详细说明参见 [测试指南](testing.html#测试作业)。
+## 测试作业
+
+测试作业的详细说明参见 [测试作业](testing.html#testing-jobs)。

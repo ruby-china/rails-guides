@@ -290,7 +290,7 @@ You can also pass custom message via the `message` option.
 
 ```ruby
 class Person < ApplicationRecord
-  validates :terms_of_service, acceptance: true, message: 'must be abided'
+  validates :terms_of_service, acceptance: { message: 'must be abided' }
 end
 ```
 
@@ -392,7 +392,8 @@ The `exclusion` helper has an option `:in` that receives the set of values that
 will not be accepted for the validated attributes. The `:in` option has an
 alias called `:within` that you can use for the same purpose, if you'd like to.
 This example uses the `:message` option to show how you can include the
-attribute's value.
+attribute's value. For full options to the message argument please see the
+[message documentation](#message).
 
 The default error message is _"is reserved"_.
 
@@ -427,7 +428,8 @@ end
 The `inclusion` helper has an option `:in` that receives the set of values that
 will be accepted. The `:in` option has an alias called `:within` that you can
 use for the same purpose, if you'd like to. The previous example uses the
-`:message` option to show how you can include the attribute's value.
+`:message` option to show how you can include the attribute's value. For full
+options please see the [message documentation](#message).
 
 The default error message for this helper is _"is not included in the list"_.
 
@@ -487,9 +489,6 @@ If you set `:only_integer` to `true`, then it will use the
 
 regular expression to validate the attribute's value. Otherwise, it will try to
 convert the value to a number using `Float`.
-
-WARNING. Note that the regular expression above allows a trailing newline
-character.
 
 ```ruby
 class Player < ApplicationRecord
@@ -768,6 +767,9 @@ class Coffee < ApplicationRecord
 end
 ```
 
+For full options to the message argument please see the
+[message documentation](#message).
+
 ### `:allow_blank`
 
 The `:allow_blank` option is similar to the `:allow_nil` option. This option
@@ -792,7 +794,8 @@ for each validation helper. The `:message` option accepts a `String` or `Proc`.
 
 A `String` `:message` value can optionally contain any/all of `%{value}`,
 `%{attribute}`, and `%{model}` which will be dynamically replaced when
-validation fails.
+validation fails. This replacement is done using the I18n gem, and the
+placeholders must match exactly, no spaces are allowed.
 
 A `Proc` `:message` value is given two arguments: the object being validated, and
 a hash with `:model`, `:attribute`, and `:value` key-value pairs.
@@ -907,18 +910,6 @@ class Order < ApplicationRecord
   def paid_with_card?
     payment_type == "card"
   end
-end
-```
-
-### Using a String with `:if` and `:unless`
-
-You can also use a string that will be evaluated using `eval` and needs to
-contain valid Ruby code. You should use this option only when the string
-represents a really short condition.
-
-```ruby
-class Person < ApplicationRecord
-  validates :surname, presence: true, if: "name.nil?"
 end
 ```
 

@@ -1,30 +1,24 @@
-表单辅助方法
-============
+# 表单辅助方法
 
 表单是 Web 应用中用户输入的基本界面。尽管如此，由于需要处理表单控件的名称和众多属性，编写和维护表单标记可能很快就会变得单调乏味。Rails 提供用于生成表单标记的视图辅助方法来消除这种复杂性。然而，由于这些辅助方法具有不同的用途和用法，开发者在使用之前需要知道它们之间的差异。
 
 读完本文后，您将学到：
 
-- 如何在 Rails 应用中创建搜索表单和类似的不针对特定模型的通用表单；
+*   如何在 Rails 应用中创建搜索表单和类似的不针对特定模型的通用表单；
+*   如何使用针对特定模型的表单来创建和修改对应的数据库记录；
+*   如何使用多种类型的数据生成选择列表；
+*   Rails 提供了哪些日期和时间辅助方法；
+*   上传文件的表单有什么特殊之处；
+*   如何用 `post` 方法把表单提交到外部资源并设置真伪令牌；
+*   如何创建复杂表单。
 
-- 如何使用针对特定模型的表单来创建和修改对应的数据库记录；
-
-- 如何使用多种类型的数据生成选择列表；
-
-- Rails 提供了哪些日期和时间辅助方法；
-
-- 上传文件的表单有什么特殊之处；
-
-- 如何用 `post` 方法把表单提交到外部资源并设置真伪令牌；
-
-- 如何创建复杂表单。
-
---------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 NOTE: 本文不是所有可用表单辅助方法及其参数的完整文档。关于表单辅助方法的完整介绍，请参阅 [Rails API 文档](http://api.rubyonrails.org/)。
 
-处理基本表单
-------------
+<a class="anchor" id="dealing-with-basic-forms"></a>
+
+## 处理基本表单
 
 `form_tag` 方法是最基本的表单辅助方法。
 
@@ -46,19 +40,18 @@ NOTE: 本文不是所有可用表单辅助方法及其参数的完整文档。�
 
 我们注意到，上面的 HTML 的第二行是一个 `hidden` 类型的 `input` 元素。这个 `input` 元素很重要，一旦缺少，表单就不能成功提交。这个 `input` 元素的 `name` 属性的值是 `utf8`，用于说明浏览器处理表单时使用的字符编码方式。对于所有表单，不管表单动作是“GET”还是“POST”，都会生成这个 `input` 元素。
 
-上面的 HTML 的第三行也是一个 `input` 元素，元素的 `name` 属性的值是 `authenticity_token`。这个 `input` 元素是 Rails 的一个名为跨站请求伪造保护的安全特性。在启用跨站请求伪造保护的情况下，表单辅助方法会为所有非 GET 表单生成这个 `input` 元素。关于跨站请求伪造保护的更多介绍，请参阅 [安全指南](security.html#跨站请求伪造（CSRF）)。
+上面的 HTML 的第三行也是一个 `input` 元素，元素的 `name` 属性的值是 `authenticity_token`。这个 `input` 元素是 Rails 的一个名为跨站请求伪造保护的安全特性。在启用跨站请求伪造保护的情况下，表单辅助方法会为所有非 GET 表单生成这个 `input` 元素。关于跨站请求伪造保护的更多介绍，请参阅 [跨站请求伪造（CSRF）](security.html#cross-site-request-forgery-csrf)。
+
+<a class="anchor" id="a-generic-search-form"></a>
 
 ### 通用搜索表单
 
 搜索表单是网上最常见的基本表单，包含：
 
-- 具有“GET”方法的表单元素
-
-- 文本框的 `label` 标签
-
-- 文本框
-
-- 提交按钮
+*   具有“GET”方法的表单元素
+*   文本框的 `label` 标签
+*   文本框
+*   提交按钮
 
 我们可以分别使用 `form_tag`、`label_tag`、`text_field_tag`、`submit_tag` 标签来创建搜索表单，就像下面这样：
 
@@ -87,6 +80,8 @@ NOTE: 表单中的文本框会根据 `name` 属性（在上面的例子中值为
 
 WARNING: 搜索表单的方法都应该设置为“GET”，这样用户就可以把搜索结果添加为书签。一般来说，Rails 推荐为表单动作使用正确的 HTTP 动词。
 
+<a class="anchor" id="multiple-hashes-in-form-helper-calls"></a>
+
 ### 在调用表单辅助方法时使用多个散列
 
 `form_tag` 辅助方法接受两个参数：提交表单的地址和选项散列。选项散列用于指明提交表单的方法，以及 HTML 选项，例如表单的 `class` 属性。
@@ -105,13 +100,17 @@ form_tag({controller: "people", action: "search"}, method: "get", class: "nifty_
 # => '<form accept-charset="UTF-8" action="/people/search" method="get" class="nifty_form">'
 ```
 
+<a class="anchor" id="helpers-for-generating-form-elements"></a>
+
 ### 用于生成表单元素的辅助方法
 
 Rails 提供了一系列用于生成表单元素（如复选框、文本字段和单选按钮）的辅助方法。这些名称以 `_tag` 结尾的基本辅助方法（如 `text_field_tag` 和 `check_box_tag`）只生成单个 `input` 元素，并且第一个参数都是 `input` 元素的 `name` 属性的值。在提交表单时，`name` 属性的值会和表单数据一起传递，这样在控制器中就可以通过 `params` 来获得各个 `input` 元素的值。例如，如果表单包含 `<%= text_field_tag(:query) %>`，我们就可以通过 `params[:query]` 来获得这个文本字段的值。
 
-在给 `input` 元素命名时，Rails 有一些命名约定，使我们可以提交非标量值（如数组或散列），这些值同样可以通过 `params` 来获得。关于这些命名约定的更多介绍，请参阅 [理解参数命名约定](#理解参数命名约定)。
+在给 `input` 元素命名时，Rails 有一些命名约定，使我们可以提交非标量值（如数组或散列），这些值同样可以通过 `params` 来获得。关于这些命名约定的更多介绍，请参阅 [理解参数命名约定](#understanding-parameter-naming-conventions)。
 
 关于这些辅助方法的用法的详细介绍，请参阅 [API 文档](http://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html)。
+
+<a class="anchor" id="checkboxes"></a>
 
 #### 复选框
 
@@ -134,6 +133,8 @@ Rails 提供了一系列用于生成表单元素（如复选框、文本字段�
 ```
 
 `check_box_tag` 辅助方法的第一个参数是生成的 `input` 元素的 `name` 属性的值。可选的第二个参数是 `input` 元素的值，当对应复选框被选中时，这个值会包含在表单数据中，并可以通过 `params` 来获得。
+
+<a class="anchor" id="radio-buttons"></a>
 
 #### 单选按钮
 
@@ -159,9 +160,11 @@ Rails 提供了一系列用于生成表单元素（如复选框、文本字段�
 
 NOTE: 在使用复选框和单选按钮时一定要指定 `label` 标签。`label` 标签为对应选项提供说明文字，并扩大可点击区域，使用户更容易选中想要的选项。
 
+<a class="anchor" id="other-helpers-of-interest"></a>
+
 ### 其他你可能感兴趣的辅助方法
 
-其他值得一提的表单控件包括文本区域、密码框、隐藏输入字段、搜索字段、电话号码字段、日期字段、时间字段、颜色字段、日期时间字段、本地日期时间字段、月份字段、星期字段、URL 地址字段、电子邮件地址字段、数字字段和范围字段：
+其他值得一提的表单控件包括文本区域、密码框、隐藏输入字段、搜索字段、电话号码字段、日期字段、时间字段、颜色字段、本地日期时间字段、月份字段、星期字段、URL 地址字段、电子邮件地址字段、数字字段和范围字段：
 
 ```erb
 <%= text_area_tag(:message, "Hi, nice site", size: "24x6") %>
@@ -205,10 +208,13 @@ NOTE: 在使用复选框和单选按钮时一定要指定 `label` 标签。`labe
 
 WARNING: 搜索字段、电话号码字段、日期字段、时间字段、颜色字段、日期时间字段、本地日期时间字段、月份字段、星期字段、URL 地址字段、电子邮件地址字段、数字字段和范围字段都是 HTML5 控件。要想在旧版本浏览器中拥有一致的体验，我们需要使用 HTML5 polyfill（针对 CSS 或 JavaScript 代码）。[HTML5 Cross Browser Polyfills](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills) 提供了 HTML5 polyfill 的完整列表，目前最流行的工具是 [Modernizr](https://modernizr.com/)，通过检测 HTML5 特性是否存在来添加缺失的功能。
 
-TIP: 使用密码框时可以配置 Rails 应用，不把密码框的值写入日志，详情参阅 [安全指南](security.html#日志)。
+TIP: 使用密码框时可以配置 Rails 应用，不把密码框的值写入日志，详情参阅 [日志](security.html#logging)。
 
-处理模型对象
-------------
+<a class="anchor" id="dealing-with-model-objects"></a>
+
+## 处理模型对象
+
+<a class="anchor" id="dealing-with-model-objects-model-object-helpers"></a>
 
 ### 模型对象辅助方法
 
@@ -230,7 +236,9 @@ TIP: 使用密码框时可以配置 Rails 应用，不把密码框的值写入�
 
 WARNING: 传入的参数必须是实例变量的名称，如 `:person` 或 `"person"`，而不是模型实例本身。
 
-Rails 还提供了用于显示模型对象数据验证错误的辅助方法，详情参阅 [Active Record 数据验证](active_record_validations.html#在视图中显示验证错误)。
+Rails 还提供了用于显示模型对象数据验证错误的辅助方法，详情参阅 [在视图中显示验证错误](active_record_validations.html#displaying-validation-errors-in-views)。
+
+<a class="anchor" id="binding-a-form-to-an-object"></a>
 
 ### 把表单绑定到对象上
 
@@ -256,13 +264,10 @@ end
 
 这里有几点需要注意：
 
-- 实际需要修改的对象是 `@article`。
-
-- `form_for` 辅助方法的选项是一个散列，其中 `:url` 键对应的值是路由选项，`:html` 键对应的值是 HTML 选项，这两个选项本身也是散列。还可以提供 `:namespace` 选项来确保表单元素具有唯一的 ID 属性，自动生成的 ID 会以 `:namespace` 选项的值和下划线作为前缀。
-
-- `form_for` 辅助方法会产出一个表单生成器对象，即变量 `f`。
-
-- 用于生成表单控件的辅助方法都在表单生成器对象 `f` 上调用。
+*   实际需要修改的对象是 `@article`。
+*   `form_for` 辅助方法的选项是一个散列，其中 `:url` 键对应的值是路由选项，`:html` 键对应的值是 HTML 选项，这两个选项本身也是散列。还可以提供 `:namespace` 选项来确保表单元素具有唯一的 ID 属性，自动生成的 ID 会以 `:namespace` 选项的值和下划线作为前缀。
+*   `form_for` 辅助方法会产出一个表单生成器对象，即变量 `f`。
+*   用于生成表单控件的辅助方法都在表单生成器对象 `f` 上调用。
 
 上面的代码会生成下面的 HTML：
 
@@ -274,7 +279,7 @@ end
 </form>
 ```
 
-`form_for` 辅助方法的第一个参数决定了 `params` 使用哪个键来访问表单数据。在上面的例子中，这个参数为 `@article`，因此所有 `input` 控件的 `name` 属性都是 `article[attribute_name]` 这种形式，而在 `create` 动作中 `params[:article]` 是一个拥有 `:title` 和 `:body` 键的散列。关于 `input` 控件 `name` 属性重要性的更多介绍，请参阅 [理解参数命名约定](#理解参数命名约定)。
+`form_for` 辅助方法的第一个参数决定了 `params` 使用哪个键来访问表单数据。在上面的例子中，这个参数为 `@article`，因此所有 `input` 控件的 `name` 属性都是 `article[attribute_name]` 这种形式，而在 `create` 动作中 `params[:article]` 是一个拥有 `:title` 和 `:body` 键的散列。关于 `input` 控件 `name` 属性重要性的更多介绍，请参阅 [理解参数命名约定](#understanding-parameter-naming-conventions)。
 
 在表单生成器上调用的辅助方法和模型对象辅助方法几乎完全相同，区别在于前者无需指定需要修改的对象，因为表单生成器已经指定了需要修改的对象。
 
@@ -300,6 +305,8 @@ end
 
 和 `form_for` 辅助方法一样， `fields_for` 方法产出的对象是一个表单生成器（实际上 `form_for` 方法在内部调用了 `fields_for` 方法）。
 
+<a class="anchor" id="relying-on-record-identification"></a>
+
 ### 使用记录识别技术
 
 `Article` 模型对我们来说是直接可用的，因此根据 Rails 开发的最佳实践，我们应该把这个模型声明为资源：
@@ -308,7 +315,7 @@ end
 resources :articles
 ```
 
-NOTE: 资源的声明有许多副作用。关于设置和使用资源的更多介绍，请参阅 [Rails 路由全解](routing.html#资源路由：Rails 的默认风格)。
+NOTE: 资源的声明有许多副作用。关于设置和使用资源的更多介绍，请参阅 [资源路由：Rails 的默认风格](routing.html#resource-routing-the-rails-default)。
 
 在处理 REST 架构的资源时，使用记录识别技术可以大大简化 `form_for` 辅助方法的调用。简而言之，使用记录识别技术后，我们只需把模型实例传递给 `form_for` 方法作为参数，Rails 会找出模型名称和其他信息：
 
@@ -332,6 +339,8 @@ Rails 还会自动为表单的 `class` 和 `id` 属性设置合适的值，例�
 
 WARNING: 在模型中使用单表继承（single-table inheritance，STI）时，如果只有父类声明为资源，在子类上就不能使用记录识别技术。这时，必须显式说明模型名称、`:url` 和 `:method`。
 
+<a class="anchor" id="dealing-with-namespaces"></a>
+
 #### 处理命名空间
 
 如果在路由中使用了命名空间，我们同样可以使用 `form_for` 方法调用的短格式。例如，假设有 `admin` 命名空间，那么 `form_for` 方法调用的短格式可以写成：
@@ -346,7 +355,9 @@ form_for [:admin, @article]
 form_for [:admin, :management, @article]
 ```
 
-关于 Rails 路由及其相关约定的更多介绍，请参阅[xml#rails-routing-from-the-outside-in](routing.html)。
+关于 Rails 路由及其相关约定的更多介绍，请参阅[Rails 路由全解](routing.html)。
+
+<a class="anchor" id="how-do-forms-with-patch-put-or-delete-methods-work"></a>
 
 ### 表单如何处理 PATCH、PUT 或 DELETE 请求方法？
 
@@ -371,8 +382,9 @@ form_tag(search_path, method: "patch")
 
 在处理提交的数据时，Rails 会考虑 `_method` 这个特殊参数的值，并按照指定的 HTTP 方法处理请求（在本例中为 PATCH）。
 
-快速创建选择列表
-----------------
+<a class="anchor" id="making-select-boxes-with-ease"></a>
+
+## 快速创建选择列表
 
 选择列表由大量 HTML 标签组成（需要为每个选项分别创建 `option` 标签），因此最适合动态生成。
 
@@ -388,6 +400,8 @@ form_tag(search_path, method: "patch")
 ```
 
 这个选择列表显示了一组城市的列表，用户看到的是城市的名称，应用处理的是城市的 ID。每个 `option` 标签的 `value` 属性的值就是城市的 ID。下面我们会看到 Rails 为生成选择列表提供了哪些辅助方法。
+
+<a class="anchor" id="the-select-and-option-tags"></a>
 
 ### `select` 和 `option` 标签
 
@@ -435,8 +449,6 @@ form_tag(search_path, method: "patch")
 
 当 Rails 发现生成的选项值和第二个参数指定的值一样时，就会为这个选项添加 `selected` 属性。
 
-TIP: `options_for_select` 辅助方法的第二个参数必须和选项值完全一样。例如，如果选项值是整数 2，就必须指定整数 2，而不是字符串 `"2"`。需要注意的是，从 `params` 散列中提取的值都是字符串。
-
 WARNING: 如果 `select` 标签的 `required` 属性的值为 `true`，`size` 属性的值为 1，`multiple` 属性未设置为 `true`，并且未设置 `:include_blank` 或 `:prompt` 选项时，`:include_blank` 选项的值会被强制设置为 `true`。
 
 我们可以通过散列为选项添加任意属性：
@@ -457,6 +469,8 @@ WARNING: 如果 `select` 标签的 `required` 属性的值为 `true`，`size` �
 <option value="2" selected="selected" data-size="3.2 million">Madrid</option>
 ...
 ```
+
+<a class="anchor" id="select-boxes-for-dealing-with-models"></a>
 
 ### 用于处理模型的选择列表
 
@@ -493,6 +507,8 @@ WARNING: 如果 `select` 标签的 `required` 属性的值为 `true`，`size` �
 
 WARNING: 如果我们使用 `select` 辅助方法（或类似的辅助方法，如 `collection_select`、`select_tag`）来设置 `belongs_to` 关联，就必须传入外键的名称（在上面的例子中是 `city_id`），而不是关联的名称。在上面的例子中，如果传入的是 `city` 而不是 `city_id`，在把 `params` 传递给 `Person.new` 或 `update` 方法时，Active Record 会抛出 `ActiveRecord::AssociationTypeMismatch: City(#17815740) expected, got String(#1138750)` 错误。换一个角度看，这说明表单辅助方法只能修改模型属性。我们还应该注意到允许用户直接修改外键的潜在安全后果。
 
+<a class="anchor" id="pption-tags-from-a-collection-of-arbitrary-objects"></a>
+
 ### 从任意对象组成的集合创建 `option` 标签
 
 使用 `options_for_select` 辅助方法生成 `option` 标签需要创建包含各个选项的文本和值的数组。但如果我们已经拥有 `City` 模型（可能是 Active Record 模型），并且想要从这些对象的集合生成 `option` 标签，那么应该怎么做呢？一个解决方案是创建并遍历嵌套数组：
@@ -524,6 +540,8 @@ WARNING: 如果我们使用 `select` 辅助方法（或类似的辅助方法，�
 
 NOTE: 传递给 `options_for_select` 辅助方法作为参数的嵌套数组，子数组的第一个元素是选项文本，第二个元素是选项值，然而传递给 `options_from_collection_for_select` 辅助方法作为参数的嵌套数组，子数组的第一个元素是读取选项值的方法的名称，第二个元素是读取选项文本的方法的名称。
 
+<a class="anchor" id="time-zone-and-country-select"></a>
+
 ### 时区和国家选择列表
 
 要想利用 Rails 提供的时区相关功能，首先需要设置用户所在的时区。为此，我们可以使用 `collection_select` 辅助方法从预定义时区对象生成选择列表，我们也可以使用更简单的 `time_zone_select` 辅助方法：
@@ -532,20 +550,22 @@ NOTE: 传递给 `options_for_select` 辅助方法作为参数的嵌套数组，�
 <%= time_zone_select(:person, :time_zone) %>
 ```
 
-Rails 还提供了 `time_zone_options_for_select` 辅助方法用于手动生成定制的时区选择列表。关于 `time_zone_select` 和 `time_zone_options_for_select` 辅助方法的更多介绍，请参阅 API 文档。
+Rails 还提供了 `time_zone_options_for_select` 辅助方法用于手动生成定制的时区选择列表。关于 `time_zone_select` 和 `time_zone_options_for_select` 辅助方法的更多介绍，请参阅 [API 文档](http://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-time_zone_options_for_select)。
 
-Rails 的早期版本提供了用于生成国家选择列表的 `country_select` 辅助方法，现在这一功能被放入独立的 [country\_select 插件](https://github.com/stefanpenner/country_select)。需要注意的是，在使用这个插件生成国家选择列表时，一些特定地区是否应该被当作国家还存在争议，这也是 Rails 不再内置这一功能的原因。
+Rails 的早期版本提供了用于生成国家选择列表的 `country_select` 辅助方法，现在这一功能被放入独立的 [country_select 插件](https://github.com/stefanpenner/country_select)。需要注意的是，在使用这个插件生成国家选择列表时，一些特定地区是否应该被当作国家还存在争议，这也是 Rails 不再内置这一功能的原因。
 
-使用日期和时间的表单辅助方法
-----------------------------
+<a class="anchor" id="using-date-and-time-form-helpers"></a>
+
+## 使用日期和时间的表单辅助方法
 
 我们可以选择不使用生成 HTML5 日期和时间输入字段的表单辅助方法，而使用替代的日期和时间辅助方法。这些日期和时间辅助方法与所有其他表单辅助方法主要有两点不同：
 
-- 日期和时间不是在单个 `input` 元素中输入，而是每个时间单位（年、月、日等）都有各自的 `input` 元素。因此在 `params` 散列中没有表示日期和时间的单个值。
-
-- 其他表单辅助方法使用 `_tag` 后缀区分独立的辅助方法和处理模型对象的辅助方法。对于日期和时间辅助方法，`select_date`、`select_time` 和 `select_datetime` 是独立的辅助方法，`date_select`、`time_select` 和 `datetime_select` 是对应的处理模型对象的辅助方法。
+*   日期和时间不是在单个 `input` 元素中输入，而是每个时间单位（年、月、日等）都有各自的 `input` 元素。因此在 `params` 散列中没有表示日期和时间的单个值。
+*   其他表单辅助方法使用 `_tag` 后缀区分独立的辅助方法和处理模型对象的辅助方法。对于日期和时间辅助方法，`select_date`、`select_time` 和 `select_datetime` 是独立的辅助方法，`date_select`、`time_select` 和 `datetime_select` 是对应的处理模型对象的辅助方法。
 
 这两类辅助方法都会为每个时间单位（年、月、日等）生成各自的选择列表。
+
+<a class="anchor" id="barebones-helpers"></a>
 
 ### 独立的辅助方法
 
@@ -571,6 +591,8 @@ Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, pa
 
 `:prefix` 选项用于说明从 `params` 散列中取回时间信息的键名。这个选项的默认值是 `date`，在上面的例子中被设置为 `start_date`。
 
+<a class="anchor" id="model-object-helpers"></a>
+
 ### 处理模型对象的辅助方法
 
 在更新或创建 Active Record 对象的表单中，`select_date` 辅助方法不能很好地工作，因为 Active Record 期望 `params` 散列的每个元素都对应一个模型属性。处理模型对象的日期和时间辅助方法使用特殊名称提交参数，Active Record 一看到这些参数就知道必须把这些参数和其他参数一起传递给对应字段类型的构造方法。例如：
@@ -595,6 +617,8 @@ Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, pa
 
 当把这个 `params` 散列传递给 `Person.new` 或 `update` 方法时，Active Record 会发现应该把这些参数都用于构造 `birth_date` 属性，并且会使用附加信息来确定把这些参数传递给构造方法（如 `Date.civil` 方法）的顺序。
 
+<a class="anchor" id="common-options"></a>
+
 ### 通用选项
 
 这两类辅助方法使用一组相同的核心函数来生成选择列表，因此使用的选项也大体相同。特别是默认情况下，Rails 生成的年份选项会包含当前年份的前后 5 年。如果这个范围不能满足使用需求，可以使用 `:start_year` 和 `:end_year` 选项覆盖这一默认设置。关于这两类辅助方法的可用选项的更多介绍，请参阅 [API 文档](http://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html)。
@@ -602,6 +626,8 @@ Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, pa
 根据经验，在处理模型对象时应该使用 `date_select` 辅助方法，在其他情况下应该使用 `select_date` 辅助方法。例如在根据日期过滤搜索结果时就应该使用 `select_date` 辅助方法。
 
 NOTE: 在许多情况下，内置的日期选择器显得笨手笨脚，不能帮助用户正确计算出日期和星期几之间的关系。
+
+<a class="anchor" id="individual-components"></a>
 
 ### 独立组件
 
@@ -616,8 +642,9 @@ NOTE: 在许多情况下，内置的日期选择器显得笨手笨脚，不能�
 
 如果当前年份是 2009 年，上面的代码会成生相同的 HTML。用户选择的年份可以通过 `params[:date][:year]` 取回。
 
-上传文件
---------
+<a class="anchor" id="uploading-files"></a>
+
+## 上传文件
 
 上传某种类型的文件是常见任务，例如上传某人的照片或包含待处理数据的 CSV 文件。在上传文件时特别需要注意的是，表单的编码必须设置为 `multipart/form-data`。使用 `form_for` 辅助方法时会自动完成这一设置。如果使用 `form_tag` 辅助方法，就必须手动完成这一设置，具体操作可以参考下面的例子。
 
@@ -634,6 +661,8 @@ NOTE: 在许多情况下，内置的日期选择器显得笨手笨脚，不能�
 ```
 
 Rails 同样为上传文件提供了一对辅助方法：独立的辅助方法 `file_field_tag` 和处理模型的辅助方法 `file_field`。这两个辅助方法和其他辅助方法的唯一区别是，我们无法为文件上传控件设置默认值，因为这样做没有意义。和我们期望的一样，在上述例子的第一个表单中上传的文件通过 `params[:picture]` 取回，在第二个表单中通过 `params[:person][:picture]` 取回。
+
+<a class="anchor" id="what-gets-uploaded"></a>
 
 ### 上传的内容
 
@@ -652,12 +681,15 @@ end
 
 NOTE: 如果用户没有选择要上传的文件，对应参数会是空字符串。
 
+<a class="anchor" id="dealing-with-ajax"></a>
+
 ### 处理 Ajax
 
 和其他表单不同，异步上传文件的表单可不是为 `form_for` 辅助方法设置 `remote: true` 选项这么简单。在这个 Ajax 表单中，上传文件的序列化是通过浏览器端的 JavaScript 完成的，而 JavaScript 无法读取硬盘上的文件，因此文件无法上传。最常见的解决方案是使用不可见的 iframe 作为表单提交的目标。
 
-定制表单生成器
---------------
+<a class="anchor" id="customizing-form-builders"></a>
+
+## 定制表单生成器
 
 前面说过，`form_for` 和 `fields_for` 辅助方法产出的对象是 `FormBuilder` 类或其子类的实例，即表单生成器。表单生成器为单个对象封装了显示表单所需的功能。我们可以用常规的方式使用表单辅助方法，也可以继承 `FormBuilder` 类并添加其他辅助方法。例如：
 
@@ -702,12 +734,15 @@ end
 
 如果表单生成器 `f` 是 `FormBuilder` 类的实例，那么上面的代码会渲染局部视图 `form`，并把传入局部视图的对象设置为表单生成器。如果表单生成器 `f` 是 `LabellingFormBuilder` 类的实例，那么上面的代码会渲染局部视图 `labelling_form`。
 
-理解参数命名约定
-----------------
+<a class="anchor" id="understanding-parameter-naming-conventions"></a>
+
+## 理解参数命名约定
 
 从前面几节我们可以看到，表单提交的数据可以保存在 `params` 散列或嵌套的子散列中。例如，在 `Person` 模型的标准 `create` 动作中，`params[:person]` 通常是储存了创建 `Person` 实例所需的所有属性的散列。`params` 散列也可以包含数组、散列构成的数组等等。
 
 从根本上说，HTML 表单并不理解任何类型的结构化数据，表单提交的数据都是普通字符串组成的键值对。我们在应用中看到的数组和散列都是 Rails 根据参数命名约定生成的。
+
+<a class="anchor" id="basic-structures"></a>
 
 ### 基本结构
 
@@ -747,6 +782,8 @@ end
 
 得到的 `params[:person][:phone_number]` 是包含用户输入的电话号码的数组。
 
+<a class="anchor" id="combining-them"></a>
+
 ### 联合使用
 
 我们可以联合使用数组和散列。散列的元素可以是前面例子中那样的数组，也可以是散列构成的数组。例如，通过重复使用下面的表单控件我们可以添加任意长度的多行地址：
@@ -762,6 +799,8 @@ end
 不过还有一个限制，尽管散列可以任意嵌套，但数组只能有一层。数组通常可以用散列替换。例如，模型对象的数组可以用以模型对象 ID 、数组索引或其他参数为键的散列替换。
 
 WARNING: 数组参数在 `check_box` 辅助方法中不能很好地工作。根据 HTML 规范，未选中的复选框不提交任何值。然而，未选中的复选框也提交值往往会更容易处理。为此，`check_box` 辅助方法通过创建辅助的同名隐藏 `input` 元素来模拟这一行为。如果复选框未选中，只有隐藏的 `input` 元素的值会被提交；如果复选框被选中，复选框本身的值和隐藏的 `input` 元素的值都会被提交，但复选框本身的值优先级更高。在处理数组参数时，这样的重复提交会把 Rails 搞糊涂，因为 Rails 无法确定什么时候创建新的数组元素。这种情况下，我们可以使用 `check_box_tag` 辅助方法，或者用散列代替数组。
+
+<a class="anchor" id="using-form-helpers"></a>
 
 ### 使用表单辅助方法
 
@@ -824,8 +863,9 @@ Rails 之所以知道这些输入控件的值是 `person` 散列的一部分，�
 
 上面的代码生成的 HTML 和前一个例子完全相同。
 
-处理外部资源的表单
-------------------
+<a class="anchor" id="forms-to-external-resources"></a>
+
+## 处理外部资源的表单
 
 Rails 表单辅助方法也可用于创建向外部资源提交数据的表单。不过，有时我们需要为这些外部资源设置 `authenticity_token`，具体操作是为 `form_tag` 辅助方法设置 `authenticity_token: 'your_external_token'` 选项：
 
@@ -859,10 +899,13 @@ Rails 表单辅助方法也可用于创建向外部资源提交数据的表单�
 <% end %>
 ```
 
-创建复杂表单
-------------
+<a class="anchor" id="building-complex-forms"></a>
+
+## 创建复杂表单
 
 许多应用可不只是在表单中修改单个对象这样简单。例如，在创建 `Person` 模型的实例时，我们可能还想让用户在同一个表单中创建多条地址记录（如家庭地址、单位地址等）。之后在修改 `Person` 模型的实例时，用户应该能够根据需要添加、删除或修改地址。
+
+<a class="anchor" id="configuring-the-model"></a>
 
 ### 配置模型
 
@@ -880,6 +923,8 @@ end
 ```
 
 上面的代码会在 `Person` 模型上创建 `addresses_attributes=` 方法，用于创建、更新或删除地址。
+
+<a class="anchor" id="nested-forms"></a>
 
 ### 嵌套表单
 
@@ -936,9 +981,11 @@ end
 
 如果关联对象在数据库中已存在，`fields_for` 方法会使用这个对象的 ID 自动生成隐藏输入字段。通过设置 `include_id: false` 选项可以禁止自动生成隐藏输入字段。如果自动生成的隐藏输入字段位置不对，导致 HTML 无效，或者 ORM 中子对象不存在 ID，那么我们就应该禁止自动生成隐藏输入字段。
 
+<a class="anchor" id="the-controller"></a>
+
 ### 控制器
 
-照例，我们需要在控制器中[把参数列入白名单](action_controller_overview.xml#strong-parameters)，然后再把参数传递给模型：
+照例，我们需要在控制器中[把参数列入白名单](action_controller_overview.html#strong-parameters)，然后再把参数传递给模型：
 
 ```ruby
 def create
@@ -951,6 +998,8 @@ private
     params.require(:person).permit(:name, addresses_attributes: [:id, :kind, :street])
   end
 ```
+
+<a class="anchor" id="removing-objects"></a>
 
 ### 删除对象
 
@@ -990,9 +1039,11 @@ def person_params
 end
 ```
 
+<a class="anchor" id="preventing-empty-records"></a>
+
 ### 防止创建空记录
 
-通常我们需要忽略用户没有填写的字段。要实现这个功能，我们可以为 `accepts_nested_attributes_for` 方法设置 `:reject_if` 选项，这个选项的值是一个 Proc 对象。在表单提交每个属性散列时都会调用这个 Proc 对象。当 Proc 对象的返回值为 `true` 时，[1]Active Record 不会为这个属性 Hash 创建关联对象。在下面的例子中，当设置了 `kind` 属性时，Active Record 才会创建地址：
+通常我们需要忽略用户没有填写的字段。要实现这个功能，我们可以为 `accepts_nested_attributes_for` 方法设置 `:reject_if` 选项，这个选项的值是一个 Proc 对象。在表单提交每个属性散列时都会调用这个 Proc 对象。当 Proc 对象的返回值为 `true` 时，Active Record 不会为这个属性 Hash 创建关联对象。在下面的例子中，当设置了 `kind` 属性时，Active Record 才会创建地址：
 
 ```ruby
 class Person < ApplicationRecord
@@ -1003,8 +1054,8 @@ end
 
 方便起见，我们可以把 `:reject_if` 选项的值设为 `:all_blank`，此时创建的 Proc 对象会拒绝为除 `_destroy` 之外的其他属性都为空的属性散列创建关联对象。
 
+<a class="anchor" id="adding-fields-on-the-fly"></a>
+
 ### 按需添加字段
 
 有时，与其提前显示多组字段，倒不如等用户点击“添加新地址”按钮后再添加。Rails 没有内置这种功能。在生成这些字段时，我们必须保证关联数组的键是唯一的，这种情况下通常会使用 JavaScript 的当前时间（从 1970 年 1 月 1 日午夜开始经过的毫秒数）。
-
-[1] 原文为 `false`，但根据上下文应为 `true`。——译者注

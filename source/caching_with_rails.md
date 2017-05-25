@@ -100,8 +100,8 @@ called key-based expiration.
 
 Cache fragments will also be expired when the view fragment changes (e.g., the
 HTML in the view changes). The string of characters at the end of the key is a
-template tree digest. It is an md5 hash computed based on the contents of the
-view fragment you are caching. If you change the view fragment, the md5 hash
+template tree digest. It is an MD5 hash computed based on the contents of the
+view fragment you are caching. If you change the view fragment, the MD5 hash
 will change, expiring the existing file.
 
 TIP: Cache stores like Memcached will automatically delete old cache files.
@@ -198,11 +198,11 @@ render "comments/comments"
 render 'comments/comments'
 render('comments/comments')
 
-render "header" => render("comments/header")
+render "header" translates to render("comments/header")
 
-render(@topic)         => render("topics/topic")
-render(topics)         => render("topics/topic")
-render(message.topics) => render("topics/topic")
+render(@topic)         translates to render("topics/topic")
+render(topics)         translates to render("topics/topic")
+render(message.topics) translates to render("topics/topic")
 ```
 
 On the other hand, some calls need to be changed to make caching work properly.
@@ -258,7 +258,7 @@ comment format anywhere in the template, like:
 
 If you use a helper method, for example, inside a cached block and you then update
 that helper, you'll have to bump the cache as well. It doesn't really matter how
-you do it, but the md5 of the template file must change. One recommendation is to
+you do it, but the MD5 of the template file must change. One recommendation is to
 simply be explicit in a comment, like:
 
 ```html+erb
@@ -270,7 +270,7 @@ simply be explicit in a comment, like:
 
 Sometimes you need to cache a particular value or query result instead of caching view fragments. Rails' caching mechanism works great for storing __any__ kind of information.
 
-The most efficient way to implement low-level caching is using the `Rails.cache.fetch` method. This method does both reading and writing to the cache. When passed only a single argument, the key is fetched and value from the cache is returned. If a block is passed, the result of the block will be cached to the given key and the result is returned.
+The most efficient way to implement low-level caching is using the `Rails.cache.fetch` method. This method does both reading and writing to the cache. When passed only a single argument, the key is fetched and value from the cache is returned. If a block is passed, that block will be executed in the event of a cache miss. The return value of the block will be written to the cache under the given cache key, and that return value will be returned. In case of cache hit, the cached value will be returned without executing the block.
 
 Consider the following example. An application has a `Product` model with an instance method that looks up the product’s price on a competing website. The data returned by this method would be perfect for low-level caching:
 
@@ -381,7 +381,7 @@ config.cache_store = :memory_store, { size: 64.megabytes }
 ```
 
 If you're running multiple Ruby on Rails server processes (which is the case
-if you're using mongrel_cluster or Phusion Passenger), then your Rails server
+if you're using Phusion Passenger or puma clustered mode), then your Rails server
 process instances won't be able to share cache data with each other. This cache
 store is not appropriate for large application deployments. However, it can
 work well for small, low traffic sites with only a couple of server processes,
@@ -396,7 +396,7 @@ config.cache_store = :file_store, "/path/to/cache/directory"
 ```
 
 With this cache store, multiple server processes on the same host can share a
-cache. The cache store is appropriate for low to medium traffic sites that are
+cache. This cache store is appropriate for low to medium traffic sites that are
 served off one or two hosts. Server processes running on different hosts could
 share a cache by using a shared file system, but that setup is not recommended.
 
@@ -512,6 +512,30 @@ class ProductsController < ApplicationController
 end
 ```
 
+Sometimes we want to cache response, for example a static page, that never gets
+expired. To achieve this, we can use `http_cache_forever` helper and by doing
+so browser and proxies will cache it indefinitely.
+
+By default cached responses will be private, cached only on the user's web
+browser. To allow proxies to cache the response, set `public: true` to indicate
+that they can serve the cached response to all users.
+
+Using this helper, `last_modified` header is set to `Time.new(2011, 1, 1).utc`
+and `expires` header is set to a 100 years.
+
+WARNING: Use this method carefully as browser/proxy won't be able to invalidate
+the cached response unless browser cache is forcefully cleared.
+
+```ruby
+class HomeController < ApplicationController
+  def index
+    http_cache_forever(public: true) do
+      render
+    end
+  end
+end
+```
+
 ### Strong v/s Weak ETags
 
 Rails generates weak ETags by default. Weak ETags allow semantically equivalent
@@ -544,6 +568,20 @@ You can also set the strong ETag directly on the response.
 
 ```ruby
   response.strong_etag = response.body # => "618bbc92e2d35ea1945008b42799b0e7"
+```
+
+Caching in Development
+----------------------
+
+It's common to want to test the caching strategy of your application
+in developement mode. Rails provides the rake task `dev:cache` to 
+easily toggle caching on/off.
+
+```bash
+$ bin/rails dev:cache
+Development mode is now being cached.
+$ bin/rails dev:cache
+Development mode is no longer being cached.
 ```
 
 References

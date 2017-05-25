@@ -1,26 +1,24 @@
-Active Record 迁移
-==================
+# Active Record 迁移
 
 迁移是 Active Record 的一个特性，允许我们按时间顺序管理数据库模式。有了迁移，就不必再用纯 SQL 来修改数据库模式，而是可以使用简单的 Ruby DSL 来描述对数据表的修改。
 
 读完本文后，您将学到：
 
-- 用于创建迁移的生成器；
+*   用于创建迁移的生成器；
+*   Active Record 提供的用于操作数据库的方法；
+*   用于操作迁移和数据库模式的 `bin/rails` 任务；
+*   迁移和 `schema.rb` 文件的关系。
 
-- Active Record 提供的用于操作数据库的方法；
+-----------------------------------------------------------------------------
 
-- 用于操作迁移和数据库模式的 `bin/rails` 任务；
+<a class="anchor" id="migration-overview"></a>
 
-- 迁移和 `schema.rb` 文件的关系。
-
---------------------------------------------------------------------------------
-
-迁移概述
---------
+## 迁移概述
 
 迁移是以一致和轻松的方式按时间顺序修改数据库模式的实用方法。它使用 Ruby DSL，因此不必手动编写 SQL，从而实现了数据库无关的数据库模式的创建和修改。
 
-我们可以把迁移看做数据库的新“版本”。数据库模式一开始并不包含任何内容，之后通过一个个迁移来添加或删除数据表、字段和记录。 Active Record 知道如何沿着时间线更新数据库模式，使其从任何历史版本更新为最新版本。Active Record 还会更新 `db/schema.rb` 文件，以匹配最新的数据库结构。
+我们可以把迁移看做数据库的新“版本”。数据库模式一开始并不包含任何内容，之后通过一个个迁移来添加或删除数据表、字段和记录。
+Active Record 知道如何沿着时间线更新数据库模式，使其从任何历史版本更新为最新版本。Active Record 还会更新 `db/schema.rb` 文件，以匹配最新的数据库结构。
 
 下面是一个迁移的示例：
 
@@ -78,8 +76,11 @@ class ChangeProductsPrice < ActiveRecord::Migration[5.0]
 end
 ```
 
-创建迁移
---------
+<a class="anchor" id="creating-a-migration"></a>
+
+## 创建迁移
+
+<a class="anchor" id="creating-a-standalone-migration"></a>
 
 ### 创建独立的迁移
 
@@ -198,7 +199,7 @@ $ bin/rails generate migration AddUserRefToProducts user:references
 ```ruby
 class AddUserRefToProducts < ActiveRecord::Migration[5.0]
   def change
-    add_reference :products, :user, index: true, foreign_key: true
+    add_reference :products, :user, foreign_key: true
   end
 end
 ```
@@ -223,6 +224,8 @@ class CreateJoinTableCustomerProduct < ActiveRecord::Migration[5.0]
   end
 end
 ```
+
+<a class="anchor" id="model-generators"></a>
 
 ### 模型生成器
 
@@ -249,9 +252,11 @@ end
 
 我们可以根据需要添加“字段名称/类型”对，没有数量限制。
 
+<a class="anchor" id="passing-modifiers"></a>
+
 ### 传递修饰符
 
-可以直接在命令行中传递常用的[类型修饰符](#字段修饰符)。这些类型修饰符用大括号括起来，放在字段类型之后。例如，运行下面的命令：
+可以直接在命令行中传递常用的[类型修饰符](#column-modifiers)。这些类型修饰符用大括号括起来，放在字段类型之后。例如，运行下面的命令：
 
 ```sh
 $ bin/rails generate migration AddDetailsToProducts 'price:decimal{5,2}' supplier:references{polymorphic}
@@ -263,17 +268,20 @@ $ bin/rails generate migration AddDetailsToProducts 'price:decimal{5,2}' supplie
 class AddDetailsToProducts < ActiveRecord::Migration[5.0]
   def change
     add_column :products, :price, :decimal, precision: 5, scale: 2
-    add_reference :products, :supplier, polymorphic: true, index: true
+    add_reference :products, :supplier, polymorphic: true
   end
 end
 ```
 
 TIP: 关于传递修饰符的更多介绍，请参阅生成器的命令行帮助信息。
 
-编写迁移
---------
+<a class="anchor" id="writing-a-migration"></a>
+
+## 编写迁移
 
 使用生成器创建迁移后，就可以开始写代码了。
+
+<a class="anchor" id="creating-a-table"></a>
 
 ### 创建数据表
 
@@ -298,6 +306,8 @@ end
 上面的代码会在用于创建数据表的 SQL 语句末尾加上 `ENGINE=BLACKHOLE`（如果使用 MySQL 或 MarialDB，默认选项是 `ENGINE=InnoDB`）。
 
 还可以传递带有数据表描述信息的 `:comment` 选项，这些注释会被储存在数据库中，可以使用 MySQL Workbench、PgAdmin III 等数据库管理工具查看。对于大型数据库，强列推荐在应用的迁移中添加注释。目前只有 MySQL 和 PostgreSQL 适配器支持注释功能。
+
+<a class="anchor" id="creating-a-join-table"></a>
 
 ### 创建联结数据表
 
@@ -330,6 +340,8 @@ create_join_table :products, :categories do |t|
 end
 ```
 
+<a class="anchor" id="changing-tables"></a>
+
 ### 修改数据表
 
 `change_table` 方法和 `create_table` 非常类似，用于修改现有的数据表。它的用法和 `create_table` 方法风格类似，但传入块的对象有更多用法。例如：
@@ -344,6 +356,8 @@ end
 ```
 
 上面的代码删除 `description` 和 `name` 字段，创建 `part_number` 字符串字段并添加索引，最后重命名 `upccode` 字段。
+
+<a class="anchor" id="changing-columns"></a>
 
 ### 修改字段
 
@@ -366,27 +380,24 @@ change_column_default :products, :approved, from: true, to: false
 
 注意：也可以把上面的 `change_column_default` 迁移写成 `change_column_default :products, :approved, false`，但这种写法是无法撤销的。
 
+<a class="anchor" id="column-modifiers"></a>
+
 ### 字段修饰符
 
 字段修饰符可以在创建或修改字段时使用：
 
-- `limit` 修饰符：设置 `string/text/binary/integer` 字段的最大长度。
-
-- `precision` 修饰符：定义 `decimal` 字段的精度，表示数字的总位数。
-
-- `scale` 修饰符：定义 `decimal` 字段的标度，表示小数点后的位数。
-
-- `polymorphic` 修饰符：为 `belongs_to` 关联添加 `type` 字段。
-
-- `null` 修饰符：设置字段能否为 `NULL` 值。
-
-- `default` 修饰符：设置字段的默认值。请注意，如果使用动态值（如日期）作为默认值，那么默认值只会在第一次使时（如应用迁移的日期）计算一次。
-
-- `index` 修饰符：为字段添加索引。
-
-- `comment` 修饰符：为字段添加注释。
+*   `limit` 修饰符：设置 `string/text/binary/integer` 字段的最大长度。
+*   `precision` 修饰符：定义 `decimal` 字段的精度，表示数字的总位数。
+*   `scale` 修饰符：定义 `decimal` 字段的标度，表示小数点后的位数。
+*   `polymorphic` 修饰符：为 `belongs_to` 关联添加 `type` 字段。
+*   `null` 修饰符：设置字段能否为 `NULL` 值。
+*   `default` 修饰符：设置字段的默认值。请注意，如果使用动态值（如日期）作为默认值，那么默认值只会在第一次使时（如应用迁移的日期）计算一次。
+*   `index` 修饰符：为字段添加索引。
+*   `comment` 修饰符：为字段添加注释。
 
 有的适配器可能支持附加选项，更多介绍请参阅相应适配器的 API 文档。
+
+<a class="anchor" id="foreign-keys"></a>
 
 ### 外键
 
@@ -400,7 +411,7 @@ add_foreign_key :articles, :authors
 
 Rails 会为每一个外键生成以 `fk_rails_` 开头并且后面紧跟着 10 个字符的外键名，外键名是根据 `from_table` 和 `column` 推导出来的。需要时可以使用 `:name` 来指定外键名。
 
-NOTE: Active Record 只支持单字段外键，要想使用复合外键就需要 `execute` 方法和 `structure.sql`。更多介绍请参阅 [数据库模式转储](#数据库模式转储)。
+NOTE: Active Record 只支持单字段外键，要想使用复合外键就需要 `execute` 方法和 `structure.sql`。更多介绍请参阅 [数据库模式转储](#schema-dumping-and-you)。
 
 删除外键也很容易：
 
@@ -415,6 +426,8 @@ remove_foreign_key :accounts, column: :owner_id
 remove_foreign_key :accounts, name: :special_fk_name
 ```
 
+<a class="anchor" id="when-helpers-arent-enough"></a>
+
 ### 如果辅助方法不够用
 
 如果 Active Record 提供的辅助方法不够用，可以使用 `excute` 方法执行任意 SQL 语句：
@@ -425,51 +438,33 @@ Product.connection.execute("UPDATE products SET price = 'free' WHERE 1=1")
 
 关于各个方法的更多介绍和例子，请参阅 API 文档。尤其是 [`ActiveRecord::ConnectionAdapters::SchemaStatements`](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html) 的文档（在 `change`、`up` 和 `down` 方法中可以使用的方法）、[`ActiveRecord::ConnectionAdapters::TableDefinition`](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html) 的文档（在 `create_table` 方法的块中可以使用的方法）和 [`ActiveRecord::ConnectionAdapters::Table`](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/Table.html) 的文档（在 `change_table` 方法的块中可以使用的方法）。
 
+<a class="anchor" id="using-the-change-method"></a>
+
 ### 使用 `change` 方法
 
 `change` 方法是编写迁移时最常用的。在大多数情况下，Active Record 知道如何自动撤销用 `change` 方法编写的迁移。目前，在 `change` 方法中只能使用下面这些方法：
 
-- `add_column`
-
-- `add_foreign_key`
-
-- `add_index`
-
-- `add_reference`
-
-- `add_timestamps`
-
-- `change_column_default`（必须提供 `:from` 和 `:to` 选项）
-
-- `change_column_null`
-
-- `create_join_table`
-
-- `create_table`
-
-- `disable_extension`
-
-- `drop_join_table`
-
-- `drop_table`（必须提供块）
-
-- `enable_extension`
-
-- `remove_column`（必须提供字段类型）
-
-- `remove_foreign_key`（必须提供第二个数据表）
-
-- `remove_index`
-
-- `remove_reference`
-
-- `remove_timestamps`
-
-- `rename_column`
-
-- `rename_index`
-
-- `rename_table`
+*   `add_column`
+*   `add_foreign_key`
+*   `add_index`
+*   `add_reference`
+*   `add_timestamps`
+*   `change_column_default`（必须提供 `:from` 和 `:to` 选项）
+*   `change_column_null`
+*   `create_join_table`
+*   `create_table`
+*   `disable_extension`
+*   `drop_join_table`
+*   `drop_table`（必须提供块）
+*   `enable_extension`
+*   `remove_column`（必须提供字段类型）
+*   `remove_foreign_key`（必须提供第二个数据表）
+*   `remove_index`
+*   `remove_reference`
+*   `remove_timestamps`
+*   `rename_column`
+*   `rename_index`
+*   `rename_table`
 
 如果在块中不使用 `change`、`change_default` 和 `remove` 方法，那么 `change_table` 方法也是可撤销的。
 
@@ -480,6 +475,8 @@ remove_column :posts, :slug, :string, null: false, default: '', index: true
 ```
 
 如果需要使用其他方法，可以用 `reversible` 方法或者 `up` 和 `down` 方法来代替 `change` 方法。
+
+<a class="anchor" id="using-reversible"></a>
 
 ### 使用 `reversible` 方法
 
@@ -519,6 +516,8 @@ end
 
 有时，迁移执行的操作是无法撤销的，例如删除数据。在这种情况下，我们可以在 `down` 块中抛出 `ActiveRecord::IrreversibleMigration` 异常。这样一旦尝试撤销迁移，就会显示无法撤销迁移的出错信息。
 
+<a class="anchor" id="using-the-up-down-methods"></a>
+
 ### 使用 `up` 和 `down` 方法
 
 可以使用 `up` 和 `down` 方法以传统风格编写迁移而不使用 `change` 方法。`up` 方法用于描述对数据库模式所做的改变，`down` 方法用于撤销 `up` 方法所做的改变。换句话说，如果调用 `up` 方法之后紧接着调用 `down` 方法，数据库模式不会发生任何改变。例如用 `up` 方法创建数据表，就应该用 `down` 方法删除这个数据表。在 `down` 方法中撤销迁移时，明智的做法是按照和 `up` 方法中操作相反的顺序执行操作。下面的例子和上一节中的例子的功能完全相同：
@@ -556,6 +555,8 @@ end
 ```
 
 对于无法撤销的迁移，应该在 `down` 方法中抛出 `ActiveRecord::IrreversibleMigration` 异常。这样一旦尝试撤销迁移，就会显示无法撤销迁移的出错信息。
+
+<a class="anchor" id="reverting-previous-migrations"></a>
 
 ### 撤销之前的迁移
 
@@ -607,10 +608,11 @@ end
 
 不使用 `revert` 方法也可以编写出和上面的迁移功能相同的迁移，但需要更多步骤：调换 `create_table` 方法和 `reversible` 方法的顺序，用 `drop_table` 方法代替 `create_table` 方法，最后对调 `up` 和 `down` 方法。换句话说，这么多步骤用一个 `revert` 方法就可以代替。
 
-NOTE: 要想像上面的例子一样添加 `CHECK` 约束，必须使用 `structure.sql` 作为转储方式。请参阅 [数据库模式转储](#数据库模式转储)。
+NOTE: 要想像上面的例子一样添加 `CHECK` 约束，必须使用 `structure.sql` 作为转储方式。请参阅 [数据库模式转储](#schema-dumping-and-you)。
 
-运行迁移
---------
+<a class="anchor" id="running-migrations"></a>
+
+## 运行迁移
 
 Rails 提供了一套用于运行迁移的 `bin/rails` 任务。其中最常用的是 `rails db:migrate` 任务，用于调用所有未运行的迁移中的 `chagne` 或 `up` 方法。如果没有未运行的迁移，任务会直接退出。调用顺序是根据迁移文件名的时间戳确定的。
 
@@ -623,6 +625,8 @@ $ bin/rails db:migrate VERSION=20080906120000
 ```
 
 如果版本 `20080906120000` 高于当前版本（换句话说，是向上迁移），上面的命令会按顺序运行迁移直到运行完 `20080906120000` 版本，之后的版本都不会运行。如果是向下迁移（即版本 `20080906120000` 低于当前版本），上面的命令会按顺序运行 `20080906120000` 版本之前的所有迁移，不包括 `20080906120000` 版本。
+
+<a class="anchor" id="rolling-back"></a>
 
 ### 回滚
 
@@ -648,15 +652,21 @@ $ bin/rails db:migrate:redo STEP=3
 
 这些 `bin/rails` 任务可以完成的操作，通过 `db:migrate` 也都能完成，区别在于这些任务使用起来更方便，无需显式指定迁移的版本。
 
+<a class="anchor" id="setup-the-database"></a>
+
 ### 安装数据库
 
 `rails db:setup` 任务用于创建数据库，加载数据库模式，并使用种子数据初始化数据库。
+
+<a class="anchor" id="resetting-the-database"></a>
 
 ### 重置数据库
 
 `rails db:reset` 任务用于删除并重新创建数据库，其功能相当于 `rails db:drop db:setup`。
 
-NOTE: 重置数据库和运行所有迁移是不一样的。重置数据库只使用当前的 `db/schema.rb` 或 `db/structure.sql` 文件的内容。如果迁移无法回滚，使用 `rails db:reset` 任务可能也没用。关于转储数据库模式的更多介绍，请参阅 [数据库模式转储](#数据库模式转储)。
+NOTE: 重置数据库和运行所有迁移是不一样的。重置数据库只使用当前的 `db/schema.rb` 或 `db/structure.sql` 文件的内容。如果迁移无法回滚，使用 `rails db:reset` 任务可能也没用。关于转储数据库模式的更多介绍，请参阅 [数据库模式转储](#schema-dumping-and-you)。
+
+<a class="anchor" id="running-specific-migrations"></a>
 
 ### 运行指定迁移
 
@@ -668,6 +678,8 @@ $ bin/rails db:migrate:up VERSION=20080906120000
 
 上面的命令会运行 `20080906120000` 这个迁移，调用它的 `change` 或 `up` 方法。`db:migrate:up` 任务会检查指定迁移是否已经运行过，如果已经运行过就不会执行任何操作。
 
+<a class="anchor" id="running-migrations-in-different-environments"></a>
+
 ### 在不同环境中运行迁移
 
 `bin/rails db:migrate` 任务默认在开发环境中运行迁移。要想在其他环境中运行迁移，可以在执行任务时使用 `RAILS_ENV` 环境变量说明所需环境。例如，要想在测试环境中运行迁移，可以执行下面的命令：
@@ -676,22 +688,22 @@ $ bin/rails db:migrate:up VERSION=20080906120000
 $ bin/rails db:migrate RAILS_ENV=test
 ```
 
+<a class="anchor" id="changing-the-output-of-running-migrations"></a>
+
 ### 修改迁移运行时的输出
 
 运行迁移时，默认会输出正在进行的操作，以及操作所花费的时间。例如，创建数据表并添加索引的迁移在运行时会生成下面的输出：
 
-    ==  CreateProducts: migrating =================================================
-    -- create_table(:products)
-       -> 0.0028s
-    ==  CreateProducts: migrated (0.0028s) ========================================
+```
+==  CreateProducts: migrating =================================================
+-- create_table(:products)
+   -> 0.0028s
+==  CreateProducts: migrated (0.0028s) ========================================
+```
 
 在迁移中提供了几种方法，允许我们修改迁移运行时的输出：
 
-| 方法 | 用途 |
-|----|----|
-| `suppress_messages` | 参数是一个块，抑制块产生的任何输出。 |
-| `say` | 接受信息文体作为参数并将其输出。方法的第二个参数是布尔值，用于说明输出结果是否缩进。 |
-| `say_with_time` | 输出信息文本以及执行块所花费的时间。如果块返回整数，这个整数会被当作受块操作影响的记录的条数。 |
+
 例如，下面的迁移：
 
 ```ruby
@@ -720,27 +732,33 @@ end
 
 会生成下面的输出：
 
-    ==  CreateProducts: migrating =================================================
-    -- Created a table
-       -> and an index!
-    -- Waiting for a while
-       -> 10.0013s
-       -> 250 rows
-    ==  CreateProducts: migrated (10.0054s) =======================================
+```
+==  CreateProducts: migrating =================================================
+-- Created a table
+   -> and an index!
+-- Waiting for a while
+   -> 10.0013s
+   -> 250 rows
+==  CreateProducts: migrated (10.0054s) =======================================
+```
 
 要是不想让 Active Record 生成任何输出，可以使用 `rails db:migrate VERBOSE=false`。
 
-修改现有的迁移
---------------
+<a class="anchor" id="changing-existing-migrations"></a>
+
+## 修改现有的迁移
 
 在编写迁移时我们偶尔也会犯错误。如果已经运行过存在错误的迁移，那么直接修正迁移中的错误并重新运行这个迁移并不能解决问题：Rails 知道这个迁移已经运行过，因此执行 `rails db:migrate` 任务时不会执行任何操作。必须先回滚这个迁移（例如通过执行 `bin/rails db:rollback` 任务），再修正迁移中的错误，然后执行 `rails db:migrate` 任务来运行这个迁移的正确版本。
 
 通常，直接修改现有的迁移不是个好主意。这样做会给我们和同事带来额外的工作量，如果这个迁移已经在生产服务器上运行过，还可能带来大麻烦。作为替代，可以编写一个新的迁移来执行我们想要的操作。修改还未提交到源代版本码控制系统（或者更一般地，还未传播到开发设备之外）的新生成的迁移是相对无害的。
 
-在编写新的迁移来完全或部分撤销之前的迁移时，可以使用 `revert` 方法（请参阅前面 [撤销之前的迁移](#撤销之前的迁移)）。
+在编写新的迁移来完全或部分撤销之前的迁移时，可以使用 `revert` 方法（请参阅前面 [撤销之前的迁移](#reverting-previous-migrations)）。
 
-数据库模式转储
---------------
+<a class="anchor" id="schema-dumping-and-you"></a>
+
+## 数据库模式转储
+
+<a class="anchor" id="what-are-schema-files-for"></a>
 
 ### 数据库模式文件有什么用？
 
@@ -750,7 +768,9 @@ end
 
 例如，我们可以这样创建测试数据库：把当前的开发数据库转储为 `db/schema.rb` 或 `db/structure.sql` 文件，然后加载到测试数据库。
 
-数据库模式文件还可以用于快速查看 Active Record 对象具有的属性。这些属性信息不仅在模型代码中找不到，而且经常分散在几个迁移文件中，还好在数据库模式文件中可以很容易地查看这些信息。[annotate\_models](https://github.com/ctran/annotate_models) gem 会在每个模型文件的顶部自动添加和更新注释，这些注释是对当前数据库模式的概述，如果需要可以使用这个 gem。
+数据库模式文件还可以用于快速查看 Active Record 对象具有的属性。这些属性信息不仅在模型代码中找不到，而且经常分散在几个迁移文件中，还好在数据库模式文件中可以很容易地查看这些信息。[annotate_models](https://github.com/ctran/annotate_models) gem 会在每个模型文件的顶部自动添加和更新注释，这些注释是对当前数据库模式的概述，如果需要可以使用这个 gem。
+
+<a class="anchor" id="types-of-schema-dumps"></a>
 
 ### 数据库模式转储的类型
 
@@ -768,10 +788,10 @@ ActiveRecord::Schema.define(version: 20080906171750) do
 
   create_table "products", force: true do |t|
     t.string   "name"
-    t.text "description"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "part_number"
+    t.string   "part_number"
   end
 end
 ```
@@ -784,23 +804,27 @@ end
 
 加载数据库模式实际上就是执行其中包含的 SQL 语句。根据定义，加载数据库模式会创建数据库结构的完美拷贝。`:sql` 格式的数据库模式，只能加载到和原有数据库类型相同的数据库，而不能加载到其他类型的数据库。
 
+<a class="anchor" id="schema-dumps-and-source-control"></a>
+
 ### 数据库模式转储和源码版本控制
 
 数据库模式转储是数据库模式的可信来源，因此强烈建议将其纳入源码版本控制。
 
 `db/schema.rb` 文件包含数据库的当前版本号，这样可以确保在合并两个包含数据库模式文件的分支时会发生冲突。一旦出现这种情况，就需要手动解决冲突，保留版本较高的那个数据库模式文件。
 
-Active Record 和引用完整性
---------------------------
+<a class="anchor" id="active-record-and-referential-integrity"></a>
+
+## Active Record 和引用完整性
 
 Active Record 在模型而不是数据库中声明关联。因此，像触发器、约束这些依赖数据库的特性没有被大量使用。
 
-验证，如 `validates :foreign_key, uniqueness: true`，是模型强制数据完整性的一种方式。在关联中设置 `:dependent` 选项，可以保证父对象删除后，子对象也会被删除。和其他应用层的操作一样，这些操作无法保证引用完整性，因此有些人会在数据库中使用[外键约束](#外键)以加强数据完整性。
+验证，如 `validates :foreign_key, uniqueness: true`，是模型强制数据完整性的一种方式。在关联中设置 `:dependent` 选项，可以保证父对象删除后，子对象也会被删除。和其他应用层的操作一样，这些操作无法保证引用完整性，因此有些人会在数据库中使用[外键约束](#foreign-keys)以加强数据完整性。
 
 尽管 Active Record 并未提供用于直接处理这些特性的工具，但 `execute` 方法可以用于执行任意 SQL。
 
-迁移和种子数据
---------------
+<a class="anchor" id="migrations-and-seed-data"></a>
+
+## 迁移和种子数据
 
 Rails 迁移特性的主要用途是使用一致的进程调用修改数据库模式的命令。迁移还可以用于添加或修改数据。对于不能删除和重建的数据库，如生产数据库，这些功能非常有用。
 

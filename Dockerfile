@@ -1,4 +1,4 @@
-FROM ruby:2.3
+FROM ruby:2.4.1
 
 ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8
@@ -21,4 +21,4 @@ COPY Gemfile.lock /app
 RUN bundle install
 
 ENV GUIDES_LANGUAGE=zh-CN
-ENV RAILS_VERSION=v5.0.1
+ENV RAILS_VERSION=v5.1.1

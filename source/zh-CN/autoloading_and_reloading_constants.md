@@ -1,26 +1,21 @@
-自动加载和重新加载常量
-======================
+# 自动加载和重新加载常量
 
 本文说明常量自动加载和重新加载机制。
 
 读完本文后，您将学到：
 
-- Ruby 常量的关键知识；
+*   Ruby 常量的关键知识；
+*   `autoload_paths` 是什么；
+*   常量是如何自动加载的；
+*   `require_dependency` 是什么；
+*   常量是如何重新加载的；
+*   自动加载常见问题的解决方案。
 
-- `autoload_paths` 是什么；
+-----------------------------------------------------------------------------
 
-- 常量是如何自动加载的；
+<a class="anchor" id="introduction"></a>
 
-- `require_dependency` 是什么；
-
-- 常量是如何重新加载的；
-
-- 自动加载常见问题的解决方案。
-
---------------------------------------------------------------------------------
-
-简介
-----
+## 简介
 
 编写 Ruby on Rails 应用时，代码会预加载。
 
@@ -53,12 +48,15 @@ end
 
 本文说明这一机制的运作原理。
 
-常量刷新程序
-------------
+<a class="anchor" id="constants-refresher"></a>
+
+## 常量刷新程序
 
 在多数编程语言中，常量不是那么重要，但在 Ruby 中却是一个内容丰富的话题。
 
 本文不会详解 Ruby 常量，但是会重点说明关键的概念。掌握以下几小节的内容对理解常量自动加载和重新加载有所帮助。
+
+<a class="anchor" id="nesting"></a>
 
 ### 嵌套
 
@@ -74,7 +72,9 @@ end
 
 类和模块的嵌套由内向外展开。嵌套可以通过 `Module.nesting` 方法审查。例如，在上述示例中，(1) 处的嵌套是
 
-    [XML::SAXParser, XML]
+```
+[XML::SAXParser, XML]
+```
 
 注意，组成嵌套的是类和模块“对象”，而不是访问它们的常量，与它们的名称也没有关系。
 
@@ -88,7 +88,9 @@ end
 
 虽然作用跟前一个示例类似，但是 (2) 处的嵌套是
 
-    [XML::SAXParser]
+```
+[XML::SAXParser]
+```
 
 不含“XML”。
 
@@ -116,23 +118,23 @@ end
 
 (3) 处的嵌套包含两个模块对象：
 
-    [A::B, X::Y]
+```
+[A::B, X::Y]
+```
 
 可以看出，嵌套的最后不是“A”，甚至不含“A”，但是包含 `X::Y`，而且它与 `A::B` 无关。
 
 嵌套是解释器维护的一个内部堆栈，根据下述规则修改：
 
-- 执行 `class` 关键字后面的定义体时，类对象入栈；执行完毕后出栈。
-
-- 执行 `module` 关键字后面的定义体时，模块对象入栈；执行完毕后出栈。
-
-- 执行 `class << object` 打开的单例类时，类对象入栈；执行完毕后出栈。
-
-- 调用 `instance_eval` 时如果传入字符串参数，接收者的单例类入栈求值的代码所在的嵌套层次。调用 `class_eval` 或 `module_eval` 时如果传入字符串参数，接收者入栈求值的代码所在的嵌套层次.
-
-- 顶层代码中由 `Kernel#load` 解释嵌套是空的，除非调用 `load` 时把第二个参数设为真值；如果是这样，Ruby 会创建一个匿名模块，将其入栈。
+*   执行 `class` 关键字后面的定义体时，类对象入栈；执行完毕后出栈。
+*   执行 `module` 关键字后面的定义体时，模块对象入栈；执行完毕后出栈。
+*   执行 `class << object` 打开的单例类时，类对象入栈；执行完毕后出栈。
+*   调用 `instance_eval` 时如果传入字符串参数，接收者的单例类入栈求值的代码所在的嵌套层次。调用 `class_eval` 或 `module_eval` 时如果传入字符串参数，接收者入栈求值的代码所在的嵌套层次.
+*   顶层代码中由 `Kernel#load` 解释嵌套是空的，除非调用 `load` 时把第二个参数设为真值；如果是这样，Ruby 会创建一个匿名模块，将其入栈。
 
 注意，块不会修改嵌套堆栈。尤其要注意的是，传给 `Class.new` 和 `Module.new` 的块不会导致定义的类或模块入栈嵌套堆栈。由此可见，以不同的方式定义类和模块，达到的效果是有区别的。
+
+<a class="anchor" id="class-and-module-definitions-are-constant-assignments"></a>
 
 ### 定义类和模块是为常量赋值
 
@@ -168,6 +170,7 @@ Project.name # => "Project"
 
 TIP: 自此之后常量和实例发生的事情无关紧要。例如，可以把常量删除，类对象可以赋值给其他常量，或者不再存储于常量中，等等。名称一旦设定就不会再变。
 
+
 类似地，模块使用 `module` 关键字创建，如下所示：
 
 ```ruby
@@ -189,6 +192,7 @@ Admin.name # => "Admin"
 
 WARNING: 传给 `Class.new` 或 `Module.new` 的块与 `class` 或 `module` 关键字的定义体不在完全相同的上下文中执行。但是两种方式得到的结果都是为常量赋值。
 
+
 因此，当人们说“`String` 类”的时候，真正指的是 `Object` 常量中存储的一个类对象，它存储着常量“String”中存储的一个类对象。而 `String` 是一个普通的 Ruby 常量，与常量有关的一切，例如解析算法，在 `String` 常量上都适用。
 
 同样地，在下述控制器中
@@ -204,6 +208,8 @@ end
 `Post` 不是调用类的句法，而是一个常规的 Ruby 常量。如果一切正常，这个常量的求值结果是一个能响应 `all` 方法的对象。
 
 因此，我们讨论的话题才是“常量”自动加载。Rails 提供了自动加载常量的功能。
+
+<a class="anchor" id="constants-are-stored-in-modules"></a>
 
 ### 常量存储在模块中
 
@@ -227,7 +233,11 @@ end
 
 在前述各段中，尤其要注意类和模块对象、常量名称，以及常量表中与之关联的值对象之间的区别。
 
+<a class="anchor" id="resolution-algorithms"></a>
+
 ### 解析算法
+
+<a class="anchor" id="resolution-algorithm-for-relative-constants"></a>
 
 #### 相对常量的解析算法
 
@@ -236,14 +246,13 @@ end
 简单来说，相对常量（relative constant）引用的解析算法如下：
 
 1.  如果嵌套不为空，在嵌套中按元素顺序查找常量。元素的祖先忽略不计。
+1.  如果未找到，算法向上，进入 cref 的祖先链。
+1.  如果未找到，而且 cref 是个模块，在 `Object` 中查找常量。
+1.  如果未找到，在 cref 上调用 `const_missing` 方法。这个方法的默认行为是抛出 `NameError` 异常，不过可以覆盖。
 
-2.  如果未找到，算法向上，进入 cref 的祖先链。
+Rails 的自动加载机制没有仿照这个算法，查找的起点是要自动加载的常量名称，即 cref。详情参见 [相对引用](#autoloading-algorithms-relative-references)。
 
-3.  如果未找到，而且 cref 是个模块，在 `Object` 中查找常量。
-
-4.  如果未找到，在 cref 上调用 `const_missing` 方法。这个方法的默认行为是抛出 `NameError` 异常，不过可以覆盖。
-
-Rails 的自动加载机制没有仿照这个算法，查找的起点是要自动加载的常量名称，即 cref。详情参见 [相对引用](#自动加载算法-相对引用)。
+<a class="anchor" id="resolution-algorithm-for-qualified-constants"></a>
 
 #### 限定常量的解析算法
 
@@ -257,18 +266,21 @@ Billing::Invoice
 
 TIP: 在开头加上两个冒号可以把第一部分的相对常量变成绝对常量，例如 `::Billing::Invoice`。此时，`Billing` 作为顶层常量查找。
 
+
 而 `Invoice` 由 `Billing` 限定，下面说明它是如何解析的。假定 parent 是限定的类或模块对象，即上例中的 `Billing`。限定常量的解析算法如下：
 
 1.  在 parent 及其祖先中查找常量。
-
-2.  如果未找到，调用 parent 的 `const_missing` 方法。这个方法的默认行为是抛出 `NameError` 异常，不过可以覆盖。
+1.  如果未找到，调用 parent 的 `const_missing` 方法。这个方法的默认行为是抛出 `NameError` 异常，不过可以覆盖。
 
 可以看出，这个算法比相对常量的解析算法简单。毕竟这里不涉及嵌套，而且模块也不是特殊情况，如果二者及其祖先中都找不到常量，不会再查看 `Object`。
 
-Rails 的自动加载机制没有仿照这个算法，查找的起点是要自动加载的常量名称和 parent。详情参见 [限定引用](#自动加载算法-限定引用)。
+Rails 的自动加载机制没有仿照这个算法，查找的起点是要自动加载的常量名称和 parent。详情参见 [限定引用](#autoloading-algorithms-qualified-references)。
 
-词汇表
-------
+<a class="anchor" id="vocabulary"></a>
+
+## 词汇表
+
+<a class="anchor" id="parent-namespaces"></a>
 
 ### 父级命名空间
 
@@ -278,28 +290,27 @@ Rails 的自动加载机制没有仿照这个算法，查找的起点是要自�
 
 不过涉及类和模块的父级命名空间解释有点复杂。假设有个名为“A::B”的模块 M：
 
-- 父级命名空间 “A” 在给定位置可能反应不出嵌套。
-
-- 某处代码可能把常量 `A` 从 `Object` 中删除了，导致常量 `A` 不存在。
-
-- 如果 `A` 存在，`A` 中原来有的类或模块可能不再存在。例如，把一个常量删除后再赋值另一个常量，那么存在的可能就不是同一个对象。
-
-- 这种情形中，重新赋值的 `A` 可能是一个名为“A”的新类或模块。
-
-- 在上述情况下，无法再通过 `A::B` 访问 `M`，但是模块对象本身可以继续存活于某处，而且名称依然是“A::B”。
+*   父级命名空间 “A” 在给定位置可能反应不出嵌套。
+*   某处代码可能把常量 `A` 从 `Object` 中删除了，导致常量 `A` 不存在。
+*   如果 `A` 存在，`A` 中原来有的类或模块可能不再存在。例如，把一个常量删除后再赋值另一个常量，那么存在的可能就不是同一个对象。
+*   这种情形中，重新赋值的 `A` 可能是一个名为“A”的新类或模块。
+*   在上述情况下，无法再通过 `A::B` 访问 `M`，但是模块对象本身可以继续存活于某处，而且名称依然是“A::B”。
 
 父级命名空间这个概念是自动加载算法的核心，有助于以直观的方式解释和理解算法，但是并不严谨。由于有边缘情况，本文所说的“父级命名空间”真正指的是具体的字符串来源。
+
+<a class="anchor" id="loading-mechanism"></a>
 
 ### 加载机制
 
 如果 `config.cache_classes` 的值是 `false`（开发环境的默认值），Rails 使用 `Kernel#load` 自动加载文件，否则使用 `Kernel#require` 自动加载文件（生产环境的默认值）。
 
-如果启用了[常量重新加载](#常量重新加载)，Rails 通过 `Kernel#load` 多次执行相同的文件。
+如果启用了[常量重新加载](#constant-reloading)，Rails 通过 `Kernel#load` 多次执行相同的文件。
 
 本文使用的“加载”是指解释指定的文件，但是具体使用 `Kernel#load` 还是 `Kernel#require`，取决于配置。
 
-自动加载可用性
---------------
+<a class="anchor" id="autoloading-availability"></a>
+
+## 自动加载可用性
 
 只要环境允许，Rails 始终会自动加载。例如，`runner` 命令会自动加载：
 
@@ -321,8 +332,9 @@ end
 
 如果及早加载 `app/models/beach_house.rb` 文件之后，`House` 尚不可知，Rails 会自动加载它。
 
-`autoload_paths`
-----------------
+<a class="anchor" id="autoload-paths"></a>
+
+## `autoload_paths`
 
 或许你已经知道，使用 `require` 引入相对文件名时，例如
 
@@ -336,11 +348,9 @@ Ruby 在 `$LOAD_PATH` 中列出的目录里寻找文件。即，Ruby 迭代那�
 
 好吧，其实 Rails 会在一系列目录中查找 `post.rb`，有点类似于 `$LOAD_PATH`。那一系列目录叫做 `autoload_paths`，默认包含：
 
-- 应用和启动时存在的引擎的 `app` 目录中的全部子目录。例如，`app/controllers`。这些子目录不一定是默认的，可以是任何自定义的目录，如 `app/workers`。`app` 目录中的全部子目录都自动纳入 `autoload_paths`。
-
-- 应用和引擎中名为 `app/*/concerns` 的二级目录。
-
-- `test/mailers/previews` 目录。
+*   应用和启动时存在的引擎的 `app` 目录中的全部子目录。例如，`app/controllers`。这些子目录不一定是默认的，可以是任何自定义的目录，如 `app/workers`。`app` 目录中的全部子目录都自动纳入 `autoload_paths`。
+*   应用和引擎中名为 `app/*/concerns` 的二级目录。
+*   `test/mailers/previews` 目录。
 
 此外，这些目录可以使用 `config.autoload_paths` 配置。例如，以前 `lib` 在这一系列目录中，但是现在不在了。应用可以在 `config/application.rb` 文件中添加下述配置，将其纳入其中：
 
@@ -366,8 +376,12 @@ $ bin/rails r 'puts ActiveSupport::Dependencies.autoload_paths'
 
 TIP: `autoload_paths` 在初始化过程中计算并缓存。目录结构发生变化时，要重启服务器。
 
-自动加载算法
-------------
+
+<a class="anchor" id="autoloading-algorithms"></a>
+
+## 自动加载算法
+
+<a class="anchor" id="autoloading-algorithms-relative-references"></a>
 
 ### 相对引用
 
@@ -383,6 +397,8 @@ end
 
 这里的三个常量都是相对引用。
 
+<a class="anchor" id="constants-after-the-class-and-module-keywords"></a>
+
 #### `class` 和 `module` 关键字后面的常量
 
 Ruby 程序会查找 `class` 或 `module` 关键字后面的常量，因为要知道是定义类或模块，还是再次打开。
@@ -390,6 +406,8 @@ Ruby 程序会查找 `class` 或 `module` 关键字后面的常量，因为要�
 如果常量不被认为是缺失的，不会定义常量，也不会触发自动加载。
 
 因此，在上述示例中，解释那个文件时，如果 `PostsController` 未定义，Rails 不会触发自动加载机制，而是由 Ruby 定义那个控制器。
+
+<a class="anchor" id="top-level-constants"></a>
 
 #### 顶层常量
 
@@ -399,10 +417,15 @@ Ruby 程序会查找 `class` 或 `module` 关键字后面的常量，因为要�
 
 如果那个文件定义了 `ApplicationController` 常量，那就没事，否则抛出 `LoadError` 异常：
 
-    unable to autoload constant ApplicationController, expected
-    <full path to application_controller.rb> to define it (LoadError)
+```
+unable to autoload constant ApplicationController, expected
+<full path to application_controller.rb> to define it (LoadError)
+```
 
 TIP: Rails 不要求自动加载的常量是类或模块对象。假如在 `app/models/max_clients.rb` 文件中定义了 `MAX_CLIENTS = 100`，Rails 也能自动加载 `MAX_CLIENTS`。
+
+
+<a class="anchor" id="namespaces"></a>
 
 #### 命名空间
 
@@ -420,47 +443,60 @@ end
 
 为了自动加载 `Role`，要分别检查当前或父级命名空间中有没有定义 `Role`。因此，从概念上讲，要按顺序尝试自动加载下述常量：
 
-    Admin::BaseController::Role
-    Admin::Role
-    Role
+```
+Admin::BaseController::Role
+Admin::Role
+Role
+```
 
 为此，Rails 在 `autoload_paths` 中分别查找下述文件名：
 
-    admin/base_controller/role.rb
-    admin/role.rb
-    role.rb
+```
+admin/base_controller/role.rb
+admin/role.rb
+role.rb
+```
 
 此外还会查找一些其他目录，稍后说明。
 
 TIP: 不含扩展名的相对文件路径通过 `'Constant::Name'.underscore` 得到，其中 `Constant::Name` 是已定义的常量。
 
+
 假设 `app/models/post.rb` 文件中定义了 `Post` 模型，下面说明 Rails 是如何自动加载 `PostsController` 中的 `Post` 常量的。
 
 首先，在 `autoload_paths` 中查找 `posts_controller/post.rb`：
 
-    app/assets/posts_controller/post.rb
-    app/controllers/posts_controller/post.rb
-    app/helpers/posts_controller/post.rb
-    ...
-    test/mailers/previews/posts_controller/post.rb
+```
+app/assets/posts_controller/post.rb
+app/controllers/posts_controller/post.rb
+app/helpers/posts_controller/post.rb
+...
+test/mailers/previews/posts_controller/post.rb
+```
 
-最后并未找到，因此会寻找一个类似的目录，[下一节](#自动模块)说明原因：
+最后并未找到，因此会寻找一个类似的目录，[下一节](#automatic-modules)说明原因：
 
-    app/assets/posts_controller/post
-    app/controllers/posts_controller/post
-    app/helpers/posts_controller/post
-    ...
-    test/mailers/previews/posts_controller/post
+```
+app/assets/posts_controller/post
+app/controllers/posts_controller/post
+app/helpers/posts_controller/post
+...
+test/mailers/previews/posts_controller/post
+```
 
 如果也未找到这样一个目录，Rails 会在父级命名空间中再次查找。对 `Post` 来说，只剩下顶层命名空间了：
 
-    app/assets/post.rb
-    app/controllers/post.rb
-    app/helpers/post.rb
-    app/mailers/post.rb
-    app/models/post.rb
+```
+app/assets/post.rb
+app/controllers/post.rb
+app/helpers/post.rb
+app/mailers/post.rb
+app/models/post.rb
+```
 
 这一次找到了 `app/models/post.rb` 文件。查找停止，加载那个文件。如果那个文件中定义了 `Post`，那就没问题，否则抛出 `LoadError` 异常。
+
+<a class="anchor" id="autoloading-algorithms-qualified-references"></a>
 
 ### 限定引用
 
@@ -508,6 +544,8 @@ end
 
 在实际使用中，这种命名冲突很少发生。如果发生，`require_dependency` 提供了解决方案：确保做前述引文中的试探时，在有冲突的地方定义了常量。
 
+<a class="anchor" id="automatic-modules"></a>
+
 ### 自动模块
 
 把模块作为命名空间使用时，Rails 不要求应用为之定义一个文件，有匹配命名空间的目录就够了。
@@ -516,76 +554,83 @@ end
 
 如果 `autoload_paths` 中有个名为 `admin.rb` 的文件，Rails 会加载那个文件。如果没有这么一个文件，而且存在名为 `admin` 的目录，Rails 会创建一个空模块，自动将其赋值给 `Admin` 常量。
 
+<a class="anchor" id="generic-procedure"></a>
+
 ### 一般步骤
 
-相对引用在 cref 中报告缺失，限定引用在 parent 中报告缺失（cref 的指代参见 [相对常量的解析算法](#相对常量的解析算法)开头，parent 的指代参见 [限定常量的解析算法](#限定常量的解析算法)开头）。
+相对引用在 cref 中报告缺失，限定引用在 parent 中报告缺失（cref 的指代参见 [相对常量的解析算法](#resolution-algorithm-for-relative-constants)开头，parent 的指代参见 [限定常量的解析算法](#resolution-algorithm-for-qualified-constants)开头）。
 
 在任意的情况下，自动加载常量 C 的步骤如下：
 
-    if the class or module in which C is missing is Object
-      let ns = ''
+```
+if the class or module in which C is missing is Object
+  let ns = ''
+else
+  let M = the class or module in which C is missing
+
+  if M is anonymous
+    let ns = ''
+  else
+    let ns = M.name
+  end
+end
+
+loop do
+  # 查找特定的文件
+  for dir in autoload_paths
+    if the file "#{dir}/#{ns.underscore}/c.rb" exists
+      load/require "#{dir}/#{ns.underscore}/c.rb"
+
+      if C is now defined
+        return
+      else
+        raise LoadError
+      end
+    end
+  end
+
+  # 查找自动模块
+  for dir in autoload_paths
+    if the directory "#{dir}/#{ns.underscore}/c" exists
+      if ns is an empty string
+        let C = Module.new in Object and return
+      else
+        let C = Module.new in ns.constantize and return
+      end
+    end
+  end
+
+  if ns is empty
+    # 到顶层了，还未找到常量
+    raise NameError
+  else
+    if C exists in any of the parent namespaces
+      # 以限定常量试探
+      raise NameError
     else
-      let M = the class or module in which C is missing
-
-      if M is anonymous
-        let ns = ''
-      else
-        let ns = M.name
-      end
+      # 在父级命名空间中再试一次
+      let ns = the parent namespace of ns and retry
     end
+  end
+end
+```
 
-    loop do
-      # 查找特定的文件
-      for dir in autoload_paths
-        if the file "#{dir}/#{ns.underscore}/c.rb" exists
-          load/require "#{dir}/#{ns.underscore}/c.rb"
+<a class="anchor" id="require-dependency"></a>
 
-          if C is now defined
-            return
-          else
-            raise LoadError
-          end
-        end
-      end
-
-      # 查找自动模块
-      for dir in autoload_paths
-        if the directory "#{dir}/#{ns.underscore}/c" exists
-          if ns is an empty string
-            let C = Module.new in Object and return
-          else
-            let C = Module.new in ns.constantize and return
-          end
-        end
-      end
-
-      if ns is empty
-        # 到顶层了，还未找到常量
-        raise NameError
-      else
-        if C exists in any of the parent namespaces
-          # 以限定常量试探
-          raise NameError
-        else
-          # 在父级命名空间中再试一次
-          let ns = the parent namespace of ns and retry
-        end
-      end
-    end
-
-`require_dependency`
---------------------
+## `require_dependency`
 
 常量自动加载按需触发，因此使用特定常量的代码可能已经定义了常量，或者触发自动加载。具体情况取决于执行路径，二者之间可能有较大差异。
 
-然而，有时执行到某部分代码时想确保特定常量是已知的。`require_dependency` 为此提供了一种方式。它使用目前的[加载机制](#加载机制)加载文件，而且会记录文件中定义的常量，就像是自动加载的一样，而且会按需重新加载。
+然而，有时执行到某部分代码时想确保特定常量是已知的。`require_dependency` 为此提供了一种方式。它使用目前的[加载机制](#loading-mechanism)加载文件，而且会记录文件中定义的常量，就像是自动加载的一样，而且会按需重新加载。
 
-`require_dependency` 很少需要使用，不过 [自动加载和 STI](#自动加载和 STI)和 [常量未缺失](#常量未缺失)有几个用例。
+`require_dependency` 很少需要使用，不过 [自动加载和 STI](#autoloading-and-sti)和 [常量未缺失](#when-constants-aren-t-missed)有几个用例。
 
 WARNING: 与自动加载不同，`require_dependency` 不期望文件中定义任何特定的常量。但是利用这种行为不好，文件和常量路径应该匹配。
 
-常量重新加载
-------------
+
+<a class="anchor" id="constant-reloading"></a>
+
+## 常量重新加载
 
 `config.cache_classes` 设为 `false` 时，Rails 会重新自动加载常量。
 
@@ -597,13 +642,10 @@ WARNING: 与自动加载不同，`require_dependency` 不期望文件中定义�
 
 在应用运行的过程中，如果相关的逻辑有变，会重新加载代码。为此，Rails 会监控下述文件：
 
-- `config/routes.rb`
-
-- 本地化文件
-
-- `autoload_paths` 中的 Ruby 文件
-
-- `db/schema.rb` 和 `db/structure.sql`
+*   `config/routes.rb`
+*   本地化文件
+*   `autoload_paths` 中的 Ruby 文件
+*   `db/schema.rb` 和 `db/structure.sql`
 
 如果这些文件中的内容有变，有个中间件会发现，然后重新加载代码。
 
@@ -611,8 +653,10 @@ WARNING: 与自动加载不同，`require_dependency` 不期望文件中定义�
 
 TIP: 这是一个极端操作，Rails 重新加载的不只是那些有变化的代码，因为类之间的依赖极难处理。相反，Rails 重新加载一切。
 
-`Module#autoload` 不涉其中
---------------------------
+
+<a class="anchor" id="module-autoload-isn-t-involved"></a>
+
+## `Module#autoload` 不涉其中
 
 `Module#autoload` 提供的是惰性加载常量方式，深置于 Ruby 的常量查找算法、动态常量 API，等等。这一机制相当简单。
 
@@ -628,8 +672,11 @@ Rails 不采用这种实现方式有几个原因。
 
 基于 `Module#autoload` 的实现很棒，但是如你所见，目前还不可能。Rails 的常量自动加载机制使用 `Module#const_missing` 实现，因此才有本文所述的独特算法。
 
-常见问题
---------
+<a class="anchor" id="common-gotchas"></a>
+
+## 常见问题
+
+<a class="anchor" id="nesting-and-qualified-constants"></a>
 
 ### 嵌套和限定常量
 
@@ -655,7 +702,7 @@ class Admin::UsersController < ApplicationController
 end
 ```
 
-为了解析 `User`，对前者来说，Ruby 会检查 `Admin`，但是后者不会，因为它不在嵌套中（参见 [嵌套](#嵌套)和 [解析算法](#解析算法)）。
+为了解析 `User`，对前者来说，Ruby 会检查 `Admin`，但是后者不会，因为它不在嵌套中（参见 [嵌套](#nesting)和 [解析算法](#resolution-algorithms)）。
 
 可惜，在缺失常量的地方，Rails 自动加载机制不知道嵌套，因此行为与 Ruby 不同。具体而言，在两种情况下，`Admin::User` 都能自动加载。
 
@@ -670,6 +717,8 @@ module Admin
   end
 end
 ```
+
+<a class="anchor" id="autoloading-and-sti"></a>
 
 ### 自动加载和 STI
 
@@ -732,16 +781,18 @@ WHERE "polygons"."type" IN ("Rectangle")
 
 这不是缺陷，查询包含了所有已知的 `Rectangle` 子代。
 
-为了确保能正确处理，而不管代码的执行顺序，可以在定义根类的文件底部手动加载子代：
+为了确保能正确处理，而不管代码的执行顺序，可以在定义各个中间类的文件底部手动加载子类：
 
 ```ruby
-# app/models/polygon.rb
-class Polygon < ApplicationRecord
+# app/models/rectangle.rb
+class Rectangle < Polygon
 end
 require_dependency 'square'
 ```
 
-只有最小辈的子代需要以这种方式加载。直接子类无需预加载。如果层次结构较深，中间类会自底向上递归自动加载，因为相应的常量作为超类出现在类定义中。
+每个中间类（首尾之外的类）都要这么做。根类并没有通过类型限定查询，因此无需知道所有子代。
+
+<a class="anchor" id="autoloading-and-require"></a>
 
 ### 自动加载和 `require`
 
@@ -758,12 +809,13 @@ end
 如果这么做，在开发环境中会导致两个问题：
 
 1.  如果在执行 `require` 之前自动加载了 `User`，`app/models/user.rb` 会再次运行，因为 `load` 不会更新 `$LOADED_FEATURES`。
-
-2.  如果 `require` 先执行了，Rails 不会把 `User` 标记为自动加载的常量，因此 `app/models/user.rb` 文件中的改动不会重新加载。
+1.  如果 `require` 先执行了，Rails 不会把 `User` 标记为自动加载的常量，因此 `app/models/user.rb` 文件中的改动不会重新加载。
 
 我们应该始终遵守规则，使用常量自动加载机制，一定不能混用自动加载和 `require`。底线是，如果一定要加载特定的文件，使用 `require_dependency`，这样能正确利用常量自动加载机制。不过，实际上很少需要这么做。
 
 当然，在自动加载的文件中使用 `require` 加载第三方库没问题，Rails 会做区分，不把第三方库里的常量标记为自动加载的。
+
+<a class="anchor" id="autoloading-and-initializers"></a>
 
 ### 自动加载和初始化脚本
 
@@ -779,7 +831,7 @@ end
 
 这么做的目的是根据所在环境为 `AUTH_SERVICE` 赋予不同的值。在开发环境中，运行这个初始化脚本时，自动加载 `MockedAuthService`。假如我们发送了几个请求，修改了实现，然后再次运行应用，奇怪的是，改动没有生效。这是为什么呢？
 
-[从前文得知](#常量重新加载)，Rails 会删除自动加载的常量，但是 `AUTH_SERVICE` 存储的还是原来那个类对象。原来那个常量不存在了，但是功能完全不受影响。
+[从前文得知](#constant-reloading)，Rails 会删除自动加载的常量，但是 `AUTH_SERVICE` 存储的还是原来那个类对象。原来那个常量不存在了，但是功能完全不受影响。
 
 下述代码概述了这种情况：
 
@@ -818,17 +870,23 @@ end
 
 然后在应用中使用 `AuthService.instance`。这样，`AuthService` 会按需加载，而且能顺利自动加载。
 
+<a class="anchor" id="require-dependency-and-initializers"></a>
+
 ### `require_dependency` 和初始化脚本
 
 前面说过，`require_dependency` 加载的文件能顺利自动加载。但是，一般来说不应该在初始化脚本中使用。
 
-有人可能觉得在初始化脚本中调用 [`require_dependency`](#require_dependency) 能确保提前加载特定的常量，例如用于解决 [STI 问题](#自动加载和 STI)。
+有人可能觉得在初始化脚本中调用 [`require_dependency`](#require-dependency) 能确保提前加载特定的常量，例如用于解决 [STI 问题](#autoloading-and-sti)。
 
-问题是，在开发环境中，如果文件系统中有相关的改动，[自动加载的常量会被抹除](#常量重新加载)。这样就与使用初始化脚本的初衷背道而驰了。
+问题是，在开发环境中，如果文件系统中有相关的改动，[自动加载的常量会被抹除](#constant-reloading)。这样就与使用初始化脚本的初衷背道而驰了。
 
 `require_dependency` 调用应该写在能自动加载的地方。
 
+<a class="anchor" id="when-constants-aren-t-missed"></a>
+
 ### 常量未缺失
+
+<a class="anchor" id="when-constants-aren-t-missed-relative-references"></a>
 
 #### 相对引用
 
@@ -889,6 +947,8 @@ module BellX1
 end
 ```
 
+<a class="anchor" id="when-constants-aren-t-missed-qualified-references"></a>
+
 #### 限定引用
 
 对下述代码来说
@@ -911,7 +971,7 @@ end
 
 `Hotel::Image` 这个表达式有歧义，因为它取决于执行路径。
 
-[从前文得知](#限定常量的解析算法)，Ruby 会在 `Hotel` 及其祖先中查找常量。如果加载了 `app/models/image.rb` 文件，但是没有加载 `app/models/hotel/image.rb`，Ruby 在 `Hotel` 中找不到 `Image`，而在 `Object` 中能找到：
+[从前文得知](#resolution-algorithm-for-qualified-constants)，Ruby 会在 `Hotel` 及其祖先中查找常量。如果加载了 `app/models/image.rb` 文件，但是没有加载 `app/models/hotel/image.rb`，Ruby 在 `Hotel` 中找不到 `Image`，而在 `Object` 中能找到：
 
 ```ruby
 $ bin/rails r 'Image; p Hotel::Image' 2>/dev/null
@@ -922,15 +982,22 @@ Image # 不是 Hotel::Image！
 
 不过，在这些情况下，解释器会发出提醒：
 
-    warning: toplevel constant Image referenced by Hotel::Image
+```
+warning: toplevel constant Image referenced by Hotel::Image
+```
 
 任何限定的类都能发现这种奇怪的常量解析行为：
 
-    2.1.5 :001 > String::Array
-    (irb):1: warning: toplevel constant Array referenced by String::Array
-     => Array
+```
+2.1.5 :001 > String::Array
+(irb):1: warning: toplevel constant Array referenced by String::Array
+ => Array
+```
 
 WARNING: 为了发现这种问题，限定命名空间必须是类。`Object` 不是模块的祖先。
+
+
+<a class="anchor" id="autoloading-within-singleton-classes"></a>
 
 ### 单例类中的自动加载
 
@@ -957,7 +1024,7 @@ end
 
 但是，如果 `Hotel::Services` 是未知的，Rails 无法自动加载它，应用会抛出 `NameError` 异常。
 
-这是因为单例类（匿名的）会触发自动加载，[从前文得知](#一般步骤)，在这种边缘情况下，Rails 只检查顶层命名空间。
+这是因为单例类（匿名的）会触发自动加载，[从前文得知](#generic-procedure)，在这种边缘情况下，Rails 只检查顶层命名空间。
 
 这个问题的简单解决方案是使用限定常量：
 
@@ -970,6 +1037,8 @@ module Hotel
   end
 end
 ```
+
+<a class="anchor" id="autoloading-in-basicobject"></a>
 
 ### `BasicObject` 中的自动加载
 
@@ -999,7 +1068,7 @@ c.user # 奇怪的是能正常运行，返回 User
 c.user # NameError: uninitialized constant C::User
 ```
 
-因为此时发现父级命名空间中已经有那个常量了（参见 [限定引用](#自动加载算法-限定引用)）。
+因为此时发现父级命名空间中已经有那个常量了（参见 [限定引用](#autoloading-algorithms-qualified-references)）。
 
 在纯 Ruby 代码中，在 `BasicObject` 的直接子代的定义体中应该始终使用绝对常量路径：
 

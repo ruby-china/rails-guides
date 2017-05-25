@@ -59,7 +59,7 @@ Run `rails --help` for a list of all the options.
 
 ### Dependencies and config.gem
 
-The `config.gem` method is gone and has been replaced by using `bundler` and a `Gemfile`, see [Vendoring Gems](#Vendoring Gems) below.
+The `config.gem` method is gone and has been replaced by using `bundler` and a `Gemfile`, see [Vendoring Gems](#vendoring-gems) below.
 
 ### Upgrade Process
 
