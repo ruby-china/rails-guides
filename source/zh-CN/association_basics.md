@@ -1,20 +1,18 @@
-Active Record 关联
-==================
+# Active Record 关联
 
 本文介绍 Active Record 的关联功能。
 
 读完本文后，您将学到：
 
-- 如何声明 Active Record 模型间的关联；
+*   如何声明 Active Record 模型间的关联；
+*   怎么理解不同的 Active Record 关联类型；
+*   如何使用关联为模型添加的方法。
 
-- 怎么理解不同的 Active Record 关联类型；
+-----------------------------------------------------------------------------
 
-- 如何使用关联为模型添加的方法。
+<a class="anchor" id="why-associations"></a>
 
---------------------------------------------------------------------------------
-
-为什么使用关联
---------------
+## 为什么使用关联
 
 在 Rails 中，关联在两个 Active Record 模型之间建立联系。模型之间为什么要有关联？因为关联能让常规操作变得更简单。例如，在一个简单的 Rails 应用中，有一个作者模型和一个图书模型。每位作者可以著有多本图书。不用关联的话，模型可以像下面这样定义：
 
@@ -68,26 +66,24 @@ end
 
 请阅读下一节，进一步学习不同的关联类型。后面还会介绍一些使用关联时的小技巧，然后列出关联添加的所有方法和选项。
 
-关联的类型
-----------
+<a class="anchor" id="the-types-of-associations"></a>
+
+## 关联的类型
 
 Rails 支持六种关联：
 
-- `belongs_to`
-
-- `has_one`
-
-- `has_many`
-
-- `has_many :through`
-
-- `has_one :through`
-
-- `has_and_belongs_to_many`
+*   `belongs_to`
+*   `has_one`
+*   `has_many`
+*   `has_many :through`
+*   `has_one :through`
+*   `has_and_belongs_to_many`
 
 关联使用宏式调用实现，用声明的形式为模型添加功能。例如，声明一个模型属于（`belongs_to`）另一个模型后，Rails 会维护两个模型之间的“[主键](https://en.wikipedia.org/wiki/Unique_key)-[外键](https://en.wikipedia.org/wiki/Foreign_key)”关系，而且还会向模型中添加很多实用的方法。
 
 在下面几小节中，你会学到如何声明并使用这些关联。首先来看一下各种关联适用的场景。
+
+<a class="anchor" id="the-belongs-to-association"></a>
 
 ### `belongs_to` 关联
 
@@ -102,6 +98,7 @@ end
 ![belongs to](images/belongs_to.png)
 
 NOTE: 在 `belongs_to` 关联声明中必须使用单数形式。如果在上面的代码中使用复数形式定义 `author` 关联，应用会报错，提示“uninitialized constant Book::Authors”。这是因为 Rails 自动使用关联名推导类名。如果关联名错误地使用复数，推导出的类名也就变成了复数。
+
 
 相应的迁移如下：
 
@@ -121,6 +118,8 @@ class CreateBooks < ActiveRecord::Migration[5.0]
   end
 end
 ```
+
+<a class="anchor" id="the-has-one-association"></a>
 
 ### `has_one` 关联
 
@@ -157,10 +156,12 @@ end
 
 ```ruby
 create_table :accounts do |t|
-  t.belongs_to :supplier, index: true, unique: true, foreign_key: true
+  t.belongs_to :supplier, index: { unique: true }, foreign_key: true
   # ...
 end
 ```
+
+<a class="anchor" id="the-has-many-association"></a>
 
 ### `has_many` 关联
 
@@ -173,6 +174,7 @@ end
 ```
 
 NOTE: 声明 `has_many` 关联时，另一个模型使用复数形式。
+
 
 ![has many](images/has_many.png)
 
@@ -194,6 +196,8 @@ class CreateAuthors < ActiveRecord::Migration[5.0]
   end
 end
 ```
+
+<a class="anchor" id="the-has-many-through-association"></a>
 
 ### `has_many :through` 关联
 
@@ -243,7 +247,7 @@ class CreateAppointments < ActiveRecord::Migration[5.0]
 end
 ```
 
-联结模型可以使用 [`has_many` 关联方法](#has_many 关联详解)管理。例如：
+联结模型可以使用 [`has_many` 关联方法](#has-many-association-reference)管理。例如：
 
 ```ruby
 physician.patients = patients
@@ -252,6 +256,7 @@ physician.patients = patients
 会为新建立的关联对象创建联结模型实例。如果其中一个对象删除了，相应的联结记录也会删除。
 
 WARNING: 自动删除联结模型的操作直接执行，不会触发 `*_destroy` 回调。
+
 
 `has_many :through` 还能简化嵌套的 `has_many` 关联。例如，一个文档分为多个部分，每一部分又有多个段落，如果想使用简单的方式获取文档中的所有段落，可以这么做：
 
@@ -276,6 +281,8 @@ end
 ```ruby
 @document.paragraphs
 ```
+
+<a class="anchor" id="the-has-one-through-association"></a>
 
 ### `has_one :through` 关联
 
@@ -324,6 +331,8 @@ end
 
 ![has one through](images/has_one_through.png)
 
+<a class="anchor" id="the-has-and-belongs-to-many-association"></a>
+
 ### `has_and_belongs_to_many` 关联
 
 `has_and_belongs_to_many` 关联直接建立两个模型之间的多对多关系，不借由第三个模型。例如，应用中有装配体和零件两个模型，每个装配体有多个零件，每个零件又可用于多个装配体，这时可以按照下面的方式定义模型：
@@ -363,6 +372,8 @@ class CreateAssembliesAndParts < ActiveRecord::Migration[5.0]
 end
 ```
 
+<a class="anchor" id="choosing-between-belongs-to-and-has-one"></a>
+
 ### 在 `belongs_to` 和 `has_one` 之间选择
 
 如果想建立两个模型之间的一对一关系，要在一个模型中添加 `belongs_to`，在另一模型中添加 `has_one`。但是怎么知道在哪个模型中添加哪个呢？
@@ -385,7 +396,7 @@ end
 class CreateSuppliers < ActiveRecord::Migration[5.0]
   def change
     create_table :suppliers do |t|
-      t.string  :name
+      t.string :name
       t.timestamps
     end
 
@@ -401,6 +412,9 @@ end
 ```
 
 NOTE: `t.integer :supplier_id` 更明确地表明了外键的名称。在目前的 Rails 版本中，可以抽象实现的细节，使用 `t.references :supplier` 代替。
+
+
+<a class="anchor" id="choosing-between-has-many-through-and-has-and-belongs-to-many"></a>
 
 ### 在 `has_many :through` 和 `has_and_belongs_to_many` 之间选择
 
@@ -438,6 +452,8 @@ end
 根据经验，如果想把关联模型当做独立实体使用，要用 `has_many :through` 关联；如果不需要使用关联模型，建立 `has_and_belongs_to_many` 关联更简单（不过要记得在数据库中创建联结表）。
 
 如果要对联结模型做数据验证、调用回调，或者使用其他属性，要使用 `has_many :through` 关联。
+
+<a class="anchor" id="polymorphic-associations"></a>
 
 ### 多态关联
 
@@ -494,6 +510,8 @@ end
 
 ![polymorphic](images/polymorphic.png)
 
+<a class="anchor" id="self-joins"></a>
+
 ### 自联结
 
 设计数据模型时，模型有时要和自己建立关系。例如，在一个数据库表中保存所有雇员的信息，但要建立经理和下属之间的关系。这种情况可以使用自联结关联解决：
@@ -522,20 +540,19 @@ class CreateEmployees < ActiveRecord::Migration[5.0]
 end
 ```
 
-小技巧和注意事项
-----------------
+<a class="anchor" id="tips-tricks-and-warnings"></a>
+
+## 小技巧和注意事项
 
 为了在 Rails 应用中有效使用 Active Record 关联，要了解以下几点：
 
-- 控制缓存
+*   控制缓存
+*   避免命名冲突
+*   更新模式
+*   控制关联的作用域
+*   双向关联
 
-- 避免命名冲突
-
-- 更新模式
-
-- 控制关联的作用域
-
-- 双向关联
+<a class="anchor" id="controlling-caching"></a>
 
 ### 控制缓存
 
@@ -556,13 +573,19 @@ author.books.reload.empty?   # 丢掉缓存的图书副本
                              # 重新从数据库中检索
 ```
 
+<a class="anchor" id="avoiding-name-collisions"></a>
+
 ### 避免命名冲突
 
 关联的名称并不能随意使用。因为创建关联时，会向模型添加同名方法，所以关联的名字不能和 `ActiveRecord::Base` 中的实例方法同名。如果同名，关联方法会覆盖 `ActiveRecord::Base` 中的实例方法，导致错误。例如，关联的名字不能为 `attributes` 或 `connection`。
 
+<a class="anchor" id="updating-the-schema"></a>
+
 ### 更新模式
 
 关联非常有用，但没什么魔法。关联对应的数据库模式需要你自己编写。不同的关联类型，要做的事也不同。对 `belongs_to` 关联来说，要创建外键；对 `has_and_belongs_to_many` 关联来说，要创建相应的联结表。
+
+<a class="anchor" id="creating-foreign-keys-for-belongs-to-associations"></a>
 
 #### 创建 `belongs_to` 关联所需的外键
 
@@ -592,11 +615,31 @@ end
 
 如果声明关联之前已经定义了模型，则要在迁移中使用 `add_column` 创建外键。
 
+为了提升查询性能，最好为外键添加索引；为了保证参照完整性，最好为外键添加约束：
+
+```ruby
+class CreateBooks < ActiveRecord::Migration[5.0]
+  def change
+    create_table :books do |t|
+      t.datetime :published_at
+      t.string   :book_number
+      t.integer  :author_id
+    end
+
+    add_index :books, :author_id
+    add_foreign_key :books, :authors
+  end
+end
+```
+
+<a class="anchor" id="creating-join-tables-for-has-and-belongs-to-many-associations"></a>
+
 #### 创建 `has_and_belongs_to_many` 关联所需的联结表
 
-创建 `has_and_belongs_to_many` 关联后，必须手动创建联结表。除非使用 `:join_table` 选项指定了联结表的名称，否则 Active Record 会按照类名出现在字典中的顺序为表起名。因此，作者和图书模型使用的联结表默认名为“authors\_books”，因为在字典中，“a”在“b”前面。
+创建 `has_and_belongs_to_many` 关联后，必须手动创建联结表。除非使用 `:join_table` 选项指定了联结表的名称，否则 Active Record 会按照类名出现在字典中的顺序为表起名。因此，作者和图书模型使用的联结表默认名为“authors_books”，因为在字典中，“a”在“b”前面。
 
-WARNING: 模型名的顺序使用字符串的 `<=>` 运算符确定。所以，如果两个字符串的长度不同，比较最短长度时，两个字符串是相等的，那么长字符串的排序比短字符串靠前。例如，你可能以为“paper\_boxes”和“papers”这两个表生成的联结表名为“papers\_paper\_boxes”，因为“paper\_boxes”比“papers”长，但其实生成的联结表名为“paper\_boxes\_papers”，因为在一般的编码方式中，“\_”比“s”靠前。
+WARNING: 模型名的顺序使用字符串的 `&lt;=&gt;` 运算符确定。所以，如果两个字符串的长度不同，比较最短长度时，两个字符串是相等的，那么长字符串的排序比短字符串靠前。例如，你可能以为“paper_boxes”和“papers”这两个表生成的联结表名为“papers_paper_boxes”，因为“paper_boxes”比“papers”长，但其实生成的联结表名为“paper_boxes_papers”，因为在一般的编码方式中，“_”比“s”靠前。
+
 
 不管名称是什么，你都要在迁移中手动创建联结表。例如下面的关联：
 
@@ -640,6 +683,8 @@ class CreateAssembliesPartsJoinTable < ActiveRecord::Migration[5.0]
   end
 end
 ```
+
+<a class="anchor" id="controlling-association-scope"></a>
 
 ### 控制关联的作用域
 
@@ -697,6 +742,8 @@ module MyApplication
 end
 ```
 
+<a class="anchor" id="bi-directional-associations"></a>
+
 ### 双向关联
 
 一般情况下，都要求能在关联的两端进行操作，即在两个模型中都要声明关联。
@@ -711,80 +758,97 @@ class Book < ApplicationRecord
 end
 ```
 
-默认情况下，Active Record 并不知道关联中两个模型之间的联系。这可能导致同一对象的两个副本不同步：
+通过关联的名称，Active Record 能探知这两个模型之间建立的是双向关联。这样一来，Active Record 只会加载一个 `Author` 对象副本，从而确保应用运行效率更高效，并避免数据不一致。
 
 ```ruby
 a = Author.first
 b = a.books.first
 a.first_name == b.author.first_name # => true
-a.first_name = 'Manny'
-a.first_name == b.author.first_name # => false
+a.first_name = 'David'
+a.first_name == b.author.first_name # => true
 ```
 
-之所以会发生这种情况，是因为 `a` 和 `b.author` 在内存中是同一数据的两种表述，修改其中一个并不会自动刷新另一个。Active Record 提供了 `:inverse_of` 选项，可以告知 Rails 两者之间的关系：
+Active Record 能自动识别多数具有标准名称的双向关联。然而，具有下述选项的关联无法识别：
+
+*   `:conditions`
+*   `:through`
+*   `:polymorphic`
+*   `:class_name`
+*   `:foreign_key`
+
+例如，对下属模型来说：
 
 ```ruby
 class Author < ApplicationRecord
-  has_many :books, inverse_of: :author
+  has_many :books
 end
 
 class Book < ApplicationRecord
-  belongs_to :author, inverse_of: :books
+  belongs_to :writer, class_name: 'Author', foreign_key: 'author_id'
 end
 ```
 
-这么修改之后，Active Record 只会加载一个作者对象，从而避免数据的不一致性，提高应用的执行效率：
+Active Record 就无法自动识别这个双向关联：
 
 ```ruby
 a = Author.first
 b = a.books.first
-a.first_name == b.author.first_name # => true
-a.first_name = 'Manny'
-a.first_name == b.author.first_name # => true
+a.first_name == b.writer.first_name # => true
+a.first_name = 'David'
+a.first_name == b.writer.first_name # => false
+```
+
+Active Record 提供了 `:inverse_of` 选项，可以通过它明确声明双向关联：
+
+```ruby
+class Author < ApplicationRecord
+  has_many :books, inverse_of: 'writer'
+end
+
+class Book < ApplicationRecord
+  belongs_to :writer, class_name: 'Author', foreign_key: 'author_id'
+end
+```
+
+在 `has_many` 声明中指定 `:inverse_of` 选项后，Active Record 便能识别双向关联：
+
+```ruby
+a = Author.first
+b = a.books.first
+a.first_name == b.writer.first_name # => true
+a.first_name = 'David'
+a.first_name == b.writer.first_name # => true
 ```
 
 `inverse_of` 有些限制：
 
-- 不支持 `:through` 关联；
+*   不支持 `:through` 关联；
+*   不支持 `:polymorphic` 关联；
+*   不支持 `:as` 选项；
 
-- 不支持 `:polymorphic` 关联；
+<a class="anchor" id="detailed-association-reference"></a>
 
-- 不支持 `:as` 选项；
-
-- `belongs_to` 关联会忽略 `has_many` 关联的 `inverse_of` 选项；
-
-每种关联都会尝试自动找到关联的另一端，并且设置 `:inverse_of` 选项（根据关联的名称）。使用标准名称的关联都有这种功能。但是，如果在关联中设置了下面这些选项，将无法自动设置 `:inverse_of`：
-
-- `:conditions`
-
-- `:through`
-
-- `:polymorphic`
-
-- `:foreign_key`
-
-关联详解
---------
+## 关联详解
 
 下面几小节详细说明各种关联，包括添加的方法和声明关联时可以使用的选项。
+
+<a class="anchor" id="belongs-to-association-reference"></a>
 
 ### `belongs_to` 关联详解
 
 `belongs_to` 关联创建一个模型与另一个模型之间的一对一关系。用数据库术语来说，就是这个类中包含外键。如果外键在另一个类中，应该使用 `has_one` 关联。
 
+<a class="anchor" id="methods-added-by-belongs-to"></a>
+
 #### `belongs_to` 关联添加的方法
 
 声明 `belongs_to` 关联后，所在的类自动获得了五个和关联相关的方法：
 
-- `association`
-
-- `association=(associate)`
-
-- `build_association(attributes = {})`
-
-- `create_association(attributes = {})`
-
-- `create_association!(attributes = {})`
+*   `association`
+*   `association=(associate)`
+*   `build_association(attributes = {})`
+*   `create_association(attributes = {})`
+*   `create_association!(attributes = {})`
 
 这五个方法中的 `association` 要替换成传给 `belongs_to` 方法的第一个参数。对下述声明来说：
 
@@ -806,6 +870,9 @@ create_author!
 
 NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法构建关联对象。`association.build` 方法是在 `has_many` 和 `has_and_belongs_to_many` 关联中使用的。创建关联对象要使用 `create_*` 方法。
 
+
+<a class="anchor" id="methods-added-by-belongs-to-association"></a>
+
 ##### `association`
 
 如果关联的对象存在，`association` 方法会返回关联的对象。如果找不到关联的对象，返回 `nil`。
@@ -820,6 +887,8 @@ NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法�
 @author = @book.reload.author
 ```
 
+<a class="anchor" id="methods-added-by-belongs-to-association-associate"></a>
+
 ##### `association=(associate)`
 
 `association=` 方法用于赋值关联的对象。这个方法的底层操作是，从关联对象上读取主键，然后把值赋给该主键对应的对象。
@@ -827,6 +896,8 @@ NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法�
 ```ruby
 @book.author = @author
 ```
+
+<a class="anchor" id="methods-added-by-belongs-to-build-association-attributes"></a>
 
 ##### `build_association(attributes = {})`
 
@@ -837,6 +908,8 @@ NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法�
                              author_name: "John Doe")
 ```
 
+<a class="anchor" id="methods-added-by-belongs-to-create-association-attributes"></a>
+
 ##### `create_association(attributes = {})`
 
 `create_association` 方法返回该关联类型的一个新对象。这个对象使用传入的属性初始化，对象的外键会自动设置，只要能通过所有数据验证，就会把关联对象存入数据库。
@@ -846,9 +919,13 @@ NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法�
                                    author_name: "John Doe")
 ```
 
+<a class="anchor" id="methods-added-by-belongs-to-create-association-bang-attributes"></a>
+
 ##### `create_association!(attributes = {})`
 
 与 `create_association` 方法作用相同，但是如果记录无效，会抛出 `ActiveRecord::RecordInvalid` 异常。
+
+<a class="anchor" id="options-for-belongs-to"></a>
 
 #### `belongs_to` 方法的选项
 
@@ -863,31 +940,25 @@ end
 
 `belongs_to` 关联支持下列选项：
 
-- `:autosave`
+*   `:autosave`
+*   `:class_name`
+*   `:counter_cache`
+*   `:dependent`
+*   `:foreign_key`
+*   `:primary_key`
+*   `:inverse_of`
+*   `:polymorphic`
+*   `:touch`
+*   `:validate`
+*   `:optional`
 
-- `:class_name`
-
-- `:counter_cache`
-
-- `:dependent`
-
-- `:foreign_key`
-
-- `:primary_key`
-
-- `:inverse_of`
-
-- `:polymorphic`
-
-- `:touch`
-
-- `:validate`
-
-- `:optional`
+<a class="anchor" id="options-for-belongs-to-autosave"></a>
 
 ##### `:autosave`
 
 如果把 `:autosave` 选项设为 `true`，保存父对象时，会自动保存所有子对象，并把标记为析构的子对象销毁。
+
+<a class="anchor" id="options-for-belongs-to-class-name"></a>
 
 ##### `:class_name`
 
@@ -898,6 +969,8 @@ class Book < ApplicationRecord
   belongs_to :author, class_name: "Patron"
 end
 ```
+
+<a class="anchor" id="options-for-belongs-to-counter-cache"></a>
 
 ##### `:counter_cache`
 
@@ -940,23 +1013,25 @@ end
 
 NOTE: 只需在关联的 `belongs_to` 一侧指定 `:counter_cache` 选项。
 
+
 计数缓存字段通过 `attr_readonly` 方法加入关联模型的只读属性列表中。
+
+<a class="anchor" id="options-for-belongs-to-dependent"></a>
 
 ##### `:dependent`
 
 `:dependent` 选项控制属主销毁后怎么处理关联的对象：
 
-- `:destroy`：也销毁关联的对象
-
-- `:delete_all`：直接从数据库中删除关联的对象（不执行回调）
-
-- `:nullify`：把外键设为 `NULL`（不执行回调）
-
-- `:restrict_with_exception`：如果有关联的记录，抛出异常
-
-- `:restrict_with_error`：如果有关联的对象，为属主添加一个错误
+*   `:destroy`：也销毁关联的对象
+*   `:delete_all`：直接从数据库中删除关联的对象（不执行回调）
+*   `:nullify`：把外键设为 `NULL`（不执行回调）
+*   `:restrict_with_exception`：如果有关联的记录，抛出异常
+*   `:restrict_with_error`：如果有关联的对象，为属主添加一个错误
 
 WARNING: 在 `belongs_to` 关联和 `has_many` 关联配对时，不应该设置这个选项，否则会导致数据库中出现无主记录。
+
+
+<a class="anchor" id="options-for-belongs-to-foreign-key"></a>
 
 ##### `:foreign_key`
 
@@ -970,6 +1045,9 @@ end
 ```
 
 TIP: 不管怎样，Rails 都不会自动创建外键字段，你要自己在迁移中创建。
+
+
+<a class="anchor" id="options-for-belongs-to-primary-key"></a>
 
 ##### `:primary_key`
 
@@ -989,6 +1067,8 @@ end
 
 执行 `@user.todos.create` 时，`@todo` 记录的用户 ID 是 `@user` 的 `guid` 值。
 
+<a class="anchor" id="options-for-belongs-to-inverse-of"></a>
+
 ##### `:inverse_of`
 
 `:inverse_of` 选项指定 `belongs_to` 关联另一端的 `has_many` 和 `has_one` 关联名。不能和 `:polymorphic` 选项一起使用。
@@ -1003,9 +1083,13 @@ class Book < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="polymorphic"></a>
+
 ##### `:polymorphic`
 
-`:polymorphic` 选项为 `true` 时，表明这是个多态关联。[多态关联](#多态关联)已经详细介绍过多态关联。
+`:polymorphic` 选项为 `true` 时，表明这是个多态关联。[多态关联](#polymorphic-associations)已经详细介绍过多态关联。
+
+<a class="anchor" id="touch"></a>
 
 ##### `:touch`
 
@@ -1029,13 +1113,19 @@ class Book < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="options-for-belongs-to-validate"></a>
+
 ##### `:validate`
 
 如果把 `:validate` 选项设为 `true`，保存对象时，会同时验证关联的对象。该选项的默认值是 `false`，保存对象时不验证关联的对象。
 
+<a class="anchor" id="optional"></a>
+
 ##### `:optional`
 
 如果把 `:optional` 选项设为 `true`，不会验证关联的对象是否存在。该选项的默认值是 `false`。
+
+<a class="anchor" id="scopes-for-belongs-to"></a>
 
 #### `belongs_to` 的作用域
 
@@ -1048,15 +1138,14 @@ class Book < ApplicationRecord
 end
 ```
 
-在作用域代码块中可以使用任何一个标准的[查询方法](active_record_querying.xml#active-record-query-interface)。下面分别介绍这几个：
+在作用域代码块中可以使用任何一个标准的[查询方法](active_record_querying.html)。下面分别介绍这几个：
 
-- `where`
+*   `where`
+*   `includes`
+*   `readonly`
+*   `select`
 
-- `includes`
-
-- `readonly`
-
-- `select`
+<a class="anchor" id="scopes-for-belongs-to-where"></a>
 
 ##### `where`
 
@@ -1067,6 +1156,8 @@ class book < ApplicationRecord
   belongs_to :author, -> { where active: true }
 end
 ```
+
+<a class="anchor" id="scopes-for-belongs-to-includes"></a>
 
 ##### `includes`
 
@@ -1106,9 +1197,14 @@ end
 
 NOTE: 直接关联没必要使用 `includes`。如果 `Book belongs_to :author`，那么需要使用时会自动及早加载作者。
 
+
+<a class="anchor" id="scopes-for-belongs-to-readonly"></a>
+
 ##### `readonly`
 
 如果使用 `readonly`，通过关联获取的对象是只读的。
+
+<a class="anchor" id="scopes-for-belongs-to-select"></a>
 
 ##### `select`
 
@@ -1116,27 +1212,30 @@ NOTE: 直接关联没必要使用 `includes`。如果 `Book belongs_to :author`�
 
 TIP: 如果在 `belongs_to` 关联中使用 `select` 方法，应该同时设置 `:foreign_key` 选项，确保返回的结果正确。
 
+
+<a class="anchor" id="belongs-to-association-reference-when-are-objects-saved-questionmark"></a>
+
 #### 什么时候保存对象
 
 把对象赋值给 `belongs_to` 关联不会自动保存对象，也不会保存关联的对象。
+
+<a class="anchor" id="has-one-association-reference"></a>
 
 ### `has_one` 关联详解
 
 `has_one` 关联建立两个模型之间的一对一关系。用数据库术语来说，这种关联的意思是外键在另一个类中。如果外键在这个类中，应该使用 `belongs_to` 关联。
 
+<a class="anchor" id="methods-added-by-has-one"></a>
+
 #### `has_one` 关联添加的方法
 
 声明 `has_one` 关联后，声明所在的类自动获得了五个关联相关的方法：
 
-- `association`
-
-- `association=(associate)`
-
-- `build_association(attributes = {})`
-
-- `create_association(attributes = {})`
-
-- `create_association!(attributes = {})`
+*   `association`
+*   `association=(associate)`
+*   `build_association(attributes = {})`
+*   `create_association(attributes = {})`
+*   `create_association!(attributes = {})`
 
 这五个方法中的 `association` 要替换成传给 `has_one` 方法的第一个参数。对如下的声明来说：
 
@@ -1158,6 +1257,9 @@ create_account!
 
 NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法构建关联对象。`association.build` 方法是在 `has_many` 和 `has_and_belongs_to_many` 关联中使用的。创建关联对象要使用 `create_*` 方法。
 
+
+<a class="anchor" id="methods-added-by-has-one-association-force-reload-false"></a>
+
 ##### `association`
 
 如果关联的对象存在，`association` 方法会返回关联的对象。如果找不到关联的对象，返回 `nil`。
@@ -1172,6 +1274,8 @@ NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法�
 @account = @supplier.reload.account
 ```
 
+<a class="anchor" id="methods-added-by-has-one-association-associate"></a>
+
 ##### `association=(associate)`
 
 `association=` 方法用于赋值关联的对象。这个方法的底层操作是，从对象上读取主键，然后把关联的对象的外键设为那个值。
@@ -1179,6 +1283,8 @@ NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法�
 ```ruby
 @supplier.account = @account
 ```
+
+<a class="anchor" id="methods-added-by-has-one-build-association-attributes"></a>
 
 ##### `build_association(attributes = {})`
 
@@ -1188,6 +1294,8 @@ NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法�
 @account = @supplier.build_account(terms: "Net 30")
 ```
 
+<a class="anchor" id="methods-added-by-has-one-create-association-attributes"></a>
+
 ##### `create_association(attributes = {})`
 
 `create_association` 方法返回该关联类型的一个新对象。这个对象使用传入的属性初始化，和对象链接的外键会自动设置，只要能通过所有数据验证，就会把关联对象存入数据库。
@@ -1196,9 +1304,13 @@ NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法�
 @account = @supplier.create_account(terms: "Net 30")
 ```
 
+<a class="anchor" id="methods-added-by-has-one-create-association-bang-attributes"></a>
+
 ##### `create_association!(attributes = {})`
 
 与 `create_association` 方法作用相同，但是如果记录无效，会抛出 `ActiveRecord::RecordInvalid` 异常。
+
+<a class="anchor" id="options-for-has-one"></a>
 
 #### `has_one` 方法的选项
 
@@ -1212,35 +1324,31 @@ end
 
 `has_one` 关联支持下列选项：
 
-- `:as`
+*   `:as`
+*   `:autosave`
+*   `:class_name`
+*   `:dependent`
+*   `:foreign_key`
+*   `:inverse_of`
+*   `:primary_key`
+*   `:source`
+*   `:source_type`
+*   `:through`
+*   `:validate`
 
-- `:autosave`
-
-- `:class_name`
-
-- `:dependent`
-
-- `:foreign_key`
-
-- `:inverse_of`
-
-- `:primary_key`
-
-- `:source`
-
-- `:source_type`
-
-- `:through`
-
-- `:validate`
+<a class="anchor" id="options-for-has-one-as"></a>
 
 ##### `:as`
 
-`:as` 选项表明这是多态关联。[前文](#多态关联)已经详细介绍过多态关联。
+`:as` 选项表明这是多态关联。[前文](#polymorphic-associations)已经详细介绍过多态关联。
+
+<a class="anchor" id="options-for-has-one-autosave"></a>
 
 ##### `:autosave`
 
 如果把 `:autosave` 选项设为 `true`，保存父对象时，会自动保存所有子对象，并把标记为析构的子对象销毁。
+
+<a class="anchor" id="options-for-has-one-class-name"></a>
 
 ##### `:class_name`
 
@@ -1252,21 +1360,21 @@ class Supplier < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="options-for-has-one-dependent"></a>
+
 ##### `:dependent`
 
 控制属主销毁后怎么处理关联的对象：
 
-- `:destroy`：也销毁关联的对象；
-
-- `:delete`：直接把关联的对象从数据库中删除（不执行回调）；
-
-- `:nullify`：把外键设为 `NULL`，不执行回调；
-
-- `:restrict_with_exception`：有关联的对象时抛出异常；
-
-- `:restrict_with_error`：有关联的对象时，向属主添加一个错误；
+*   `:destroy`：也销毁关联的对象；
+*   `:delete`：直接把关联的对象从数据库中删除（不执行回调）；
+*   `:nullify`：把外键设为 `NULL`，不执行回调；
+*   `:restrict_with_exception`：有关联的对象时抛出异常；
+*   `:restrict_with_error`：有关联的对象时，向属主添加一个错误；
 
 如果在数据库层设置了 `NOT NULL` 约束，就不能使用 `:nullify` 选项。如果 `:dependent` 选项没有销毁关联，就无法修改关联的对象，因为关联的对象的外键设置为不接受 `NULL`。
+
+<a class="anchor" id="options-for-has-one-foreign-key"></a>
 
 ##### `:foreign_key`
 
@@ -1279,6 +1387,8 @@ end
 ```
 
 TIP: 不管怎样，Rails 都不会自动创建外键字段，你要自己在迁移中创建。
+
+<a class="anchor" id="options-for-has-one-inverse-of"></a>
 
 ##### `:inverse_of`
 
@@ -1294,25 +1404,37 @@ class Account < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="options-for-has-one-primary-key"></a>
+
 ##### `:primary_key`
 
 按照约定，用来存储该模型主键的字段名 `id`。`:primary_key` 选项用于设置要使用的主键名。
+
+<a class="anchor" id="options-for-has-one-source"></a>
 
 ##### `:source`
 
 `:source` 选项指定 `has_one :through` 关联的源关联名称。
 
+<a class="anchor" id="options-for-has-one-source-type"></a>
+
 ##### `:source_type`
 
 `:source_type` 选项指定通过多态关联处理 `has_one :through` 关联的源关联类型。
 
+<a class="anchor" id="options-for-has-one-through"></a>
+
 ##### `:through`
 
-`:through` 选项指定用于执行查询的联结模型。[前文](#has_one :through 关联)详细介绍过 `has_one :through` 关联。
+`:through` 选项指定用于执行查询的联结模型。[前文](#the-has-one-through-association)详细介绍过 `has_one :through` 关联。
+
+<a class="anchor" id="options-for-has-one-validate"></a>
 
 ##### `:validate`
 
 如果把 `:validate` 选项设为 `true`，保存对象时，会同时验证关联的对象。该选项的默认值是 `false`，即保存对象时不验证关联的对象。
+
+<a class="anchor" id="scopes-for-has-one"></a>
 
 #### `has_one` 的作用域
 
@@ -1324,15 +1446,14 @@ class Supplier < ApplicationRecord
 end
 ```
 
-在作用域代码块中可以使用任何一个标准的[查询方法](active_record_querying.xml#active-record-query-interface)。下面介绍其中几个：
+在作用域代码块中可以使用任何一个标准的[查询方法](active_record_querying.html)。下面介绍其中几个：
 
-- `where`
+*   `where`
+*   `includes`
+*   `readonly`
+*   `select`
 
-- `includes`
-
-- `readonly`
-
-- `select`
+<a class="anchor" id="scopes-for-has-one-where"></a>
 
 ##### `where`
 
@@ -1343,6 +1464,8 @@ class Supplier < ApplicationRecord
   has_one :account, -> { where "confirmed = 1" }
 end
 ```
+
+<a class="anchor" id="scopes-for-has-one-includes"></a>
 
 ##### `includes`
 
@@ -1380,13 +1503,19 @@ class Representative < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="scopes-for-has-one-readonly"></a>
+
 ##### `readonly`
 
 如果使用 `readonly`，通过关联获取的对象是只读的。
 
+<a class="anchor" id="scopes-for-has-one-select"></a>
+
 ##### `select`
 
 `select` 方法会覆盖获取关联对象使用的 SQL `SELECT` 子句。默认情况下，Rails 检索所有列。
+
+<a class="anchor" id="has-one-association-reference-do-any-associated-objects-exist-questionmark"></a>
 
 #### 检查关联的对象是否存在
 
@@ -1398,6 +1527,8 @@ if @supplier.account.nil?
 end
 ```
 
+<a class="anchor" id="has-one-association-reference-when-are-objects-saved-questionmark"></a>
+
 #### 什么时候保存对象
 
 把对象赋值给 `has_one` 关联时，那个对象会自动保存（因为要更新外键）。而且所有被替换的对象也会自动保存，因为外键也变了。
@@ -1408,45 +1539,34 @@ end
 
 如果赋值给 `has_one` 关联时不想保存对象，使用 `association.build` 方法。
 
+<a class="anchor" id="has-many-association-reference"></a>
+
 ### `has_many` 关联详解
 
 `has_many` 关联建立两个模型之间的一对多关系。用数据库术语来说，这种关联的意思是外键在另一个类中，指向这个类的实例。
+
+<a class="anchor" id="methods-added-by-has-many"></a>
 
 #### `has_many` 关联添加的方法
 
 声明 `has_many` 关联后，声明所在的类自动获得了 16 个关联相关的方法：
 
-- `collection`
-
-- `collection<<(object, …​)`
-
-- `collection.delete(object, …​)`
-
-- `collection.destroy(object, …​)`
-
-- `collection=(objects)`
-
-- `collection_singular_ids`
-
-- `collection_singular_ids=(ids)`
-
-- `collection.clear`
-
-- `collection.empty?`
-
-- `collection.size`
-
-- `collection.find(…​)`
-
-- `collection.where(…​)`
-
-- `collection.exists?(…​)`
-
-- `collection.build(attributes = {}, …​)`
-
-- `collection.create(attributes = {})`
-
-- `collection.create!(attributes = {})`
+*   `collection`
+*   `collection<<(object, &#8230;&#8203;)`
+*   `collection.delete(object, &#8230;&#8203;)`
+*   `collection.destroy(object, &#8230;&#8203;)`
+*   `collection=(objects)`
+*   `collection_singular_ids`
+*   `collection_singular_ids=(ids)`
+*   `collection.clear`
+*   `collection.empty?`
+*   `collection.size`
+*   `collection.find(&#8230;&#8203;)`
+*   `collection.where(&#8230;&#8203;)`
+*   `collection.exists?(&#8230;&#8203;)`
+*   `collection.build(attributes = {}, &#8230;&#8203;)`
+*   `collection.create(attributes = {})`
+*   `collection.create!(attributes = {})`
 
 这些个方法中的 `collection` 要替换成传给 `has_many` 方法的第一个参数。`collection_singular` 要替换成第一个参数的单数形式。对如下的声明来说：
 
@@ -1477,6 +1597,8 @@ books.create(attributes = {})
 books.create!(attributes = {})
 ```
 
+<a class="anchor" id="methods-added-by-has-many-collection"></a>
+
 ##### `collection`
 
 `collection` 方法返回一个数组，包含所有关联的对象。如果没有关联的对象，则返回空数组。
@@ -1485,7 +1607,9 @@ books.create!(attributes = {})
 @books = @author.books
 ```
 
-##### `collection<<(object, …​)`
+<a class="anchor" id="methods-added-by-has-many-collection-object"></a>
+
+##### `collection<<(object, &#8230;&#8203;)`
 
 `collection<<` 方法向关联对象数组中添加一个或多个对象，并把各个所加对象的外键设为调用此方法的模型的主键。
 
@@ -1493,7 +1617,9 @@ books.create!(attributes = {})
 @author.books << @book1
 ```
 
-##### `collection.delete(object, …​)`
+<a class="anchor" id="methods-added-by-has-many-collection-delete-object"></a>
+
+##### `collection.delete(object, &#8230;&#8203;)`
 
 `collection.delete` 方法从关联对象数组中删除一个或多个对象，并把删除的对象外键设为 `NULL`。
 
@@ -1503,7 +1629,9 @@ books.create!(attributes = {})
 
 WARNING: 如果关联设置了 `dependent: :destroy`，还会销毁关联的对象；如果关联设置了 `dependent: :delete_all`，还会删除关联的对象。
 
-##### `collection.destroy(object, …​)`
+<a class="anchor" id="methods-added-by-has-many-collection-destroy-object"></a>
+
+##### `collection.destroy(object, &#8230;&#8203;)`
 
 `collection.destroy` 方法在关联对象上调用 `destroy` 方法，从关联对象数组中删除一个或多个对象。
 
@@ -1513,9 +1641,13 @@ WARNING: 如果关联设置了 `dependent: :destroy`，还会销毁关联的对�
 
 WARNING: 对象始终会从数据库中删除，忽略 `:dependent` 选项。
 
+<a class="anchor" id="methods-added-by-has-many-collection-objects"></a>
+
 ##### `collection=(objects)`
 
-`collection=` 方法让关联对象数组只包含指定的对象，根据需求会添加或删除对象。
+`collection=` 方法让关联对象数组只包含指定的对象，根据需求会添加或删除对象。改动会持久存入数据库。
+
+<a class="anchor" id="methods-added-by-has-many-collection-singular-ids"></a>
 
 ##### `collection_singular_ids`
 
@@ -1525,9 +1657,13 @@ WARNING: 对象始终会从数据库中删除，忽略 `:dependent` 选项。
 @book_ids = @author.book_ids
 ```
 
+<a class="anchor" id="methods-added-by-has-many-collection-singular-ids-ids"></a>
+
 ##### `collection_singular_ids=(ids)`
 
-`collection_singular_ids=` 方法让关联对象数组中只包含指定的主键，根据需要会增删 ID。
+`collection_singular_ids=` 方法让关联对象数组中只包含指定的主键，根据需要会增删 ID。改动会持久存入数据库。
+
+<a class="anchor" id="methods-added-by-has-many-collection-clear"></a>
 
 ##### `collection.clear`
 
@@ -1539,6 +1675,8 @@ WARNING: 对象始终会从数据库中删除，忽略 `:dependent` 选项。
 
 WARNING: 如果设为 `dependent: :destroy`，对象会被删除，这与 `dependent: :delete_all` 一样。
 
+<a class="anchor" id="methods-added-by-has-many-collection-empty-questionmark"></a>
+
 ##### `collection.empty?`
 
 如果集合中没有关联的对象，`collection.empty?` 方法返回 `true`。
@@ -1549,6 +1687,8 @@ WARNING: 如果设为 `dependent: :destroy`，对象会被删除，这与 `depen
 <% end %>
 ```
 
+<a class="anchor" id="methods-added-by-has-many-collection-size"></a>
+
 ##### `collection.size`
 
 `collection.size` 返回集合中的对象数量。
@@ -1557,7 +1697,9 @@ WARNING: 如果设为 `dependent: :destroy`，对象会被删除，这与 `depen
 @book_count = @author.books.size
 ```
 
-##### `collection.find(…​)`
+<a class="anchor" id="methods-added-by-has-many-collection-find"></a>
+
+##### `collection.find(&#8230;&#8203;)`
 
 `collection.find` 方法在集合中查找对象，使用的句法和选项跟 `ActiveRecord::Base.find` 方法一样。
 
@@ -1565,7 +1707,9 @@ WARNING: 如果设为 `dependent: :destroy`，对象会被删除，这与 `depen
 @available_books = @author.books.find(1)
 ```
 
-#### `collection.where(…​)`
+<a class="anchor" id="methods-added-by-has-many-collection-where"></a>
+
+#### `collection.where(&#8230;&#8203;)`
 
 `collection.where` 方法根据指定的条件在集合中查找对象，但对象是惰性加载的，即访问对象时才会查询数据库。
 
@@ -1574,11 +1718,15 @@ WARNING: 如果设为 `dependent: :destroy`，对象会被删除，这与 `depen
 @available_book = @available_books.first # 现在查询数据库
 ```
 
-##### `collection.exists?(…​)`
+<a class="anchor" id="methods-added-by-has-many-collection-exists-questionmark"></a>
+
+##### `collection.exists?(&#8230;&#8203;)`
 
 `collection.exists?` 方法根据指定的条件检查集合中是否有符合条件的对象，使用的句法和选项跟 [`ActiveRecord::Base.exists?` 方法](http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F)一样。
 
-##### `collection.build(attributes = {}, …​)`
+<a class="anchor" id="methods-added-by-has-many-collection-build-attributes"></a>
+
+##### `collection.build(attributes = {}, &#8230;&#8203;)`
 
 `collection.build` 方法返回一个或多个此种关联类型的新对象。这些对象会使用传入的属性初始化，还会创建对应的外键，但不会保存关联的对象。
 
@@ -1591,6 +1739,8 @@ WARNING: 如果设为 `dependent: :destroy`，对象会被删除，这与 `depen
   { published_at: Time.now, book_number: "A12347" }
 ])
 ```
+
+<a class="anchor" id="methods-added-by-has-many-collection-create-attributes"></a>
 
 ##### `collection.create(attributes = {})`
 
@@ -1606,9 +1756,13 @@ WARNING: 如果设为 `dependent: :destroy`，对象会被删除，这与 `depen
 ])
 ```
 
+<a class="anchor" id="methods-added-by-has-many-collection-create-bang-attributes"></a>
+
 #### `collection.create!(attributes = {})`
 
 作用与 `collection.create` 相同，但如果记录无效，会抛出 `ActiveRecord::RecordInvalid` 异常。
+
+<a class="anchor" id="options-for-has-many"></a>
 
 #### `has_many` 方法的选项
 
@@ -1622,37 +1776,32 @@ end
 
 `has_many` 关联支持以下选项：
 
-- `:as`
+*   `:as`
+*   `:autosave`
+*   `:class_name`
+*   `:counter_cache`
+*   `:dependent`
+*   `:foreign_key`
+*   `:inverse_of`
+*   `:primary_key`
+*   `:source`
+*   `:source_type`
+*   `:through`
+*   `:validate`
 
-- `:autosave`
-
-- `:class_name`
-
-- `:counter_cache`
-
-- `:dependent`
-
-- `:foreign_key`
-
-- `:inverse_of`
-
-- `:primary_key`
-
-- `:source`
-
-- `:source_type`
-
-- `:through`
-
-- `:validate`
+<a class="anchor" id="options-for-has-many-as"></a>
 
 ##### `:as`
 
-`:as` 选项表明这是多态关联。[前文](#多态关联)已经详细介绍过多态关联。
+`:as` 选项表明这是多态关联。[前文](#polymorphic-associations)已经详细介绍过多态关联。
+
+<a class="anchor" id="options-for-has-many-autosave"></a>
 
 ##### `:autosave`
 
 如果把 `:autosave` 选项设为 `true`，保存父对象时，会自动保存所有子对象，并把标记为析构的子对象销毁。
+
+<a class="anchor" id="options-for-has-many-class-name"></a>
 
 ##### `:class_name`
 
@@ -1664,23 +1813,25 @@ class Author < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="options-for-has-many-counter-cache"></a>
+
 ##### `:counter_cache`
 
 这个选项用于定制计数缓存列的名称。仅当定制了 `belongs_to` 关联的 `:counter_cache` 选项时才需要设定这个选项。
+
+<a class="anchor" id="dependent"></a>
 
 ##### `:dependent`
 
 设置销毁属主时怎么处理关联的对象：
 
-- `:destroy`：也销毁所有关联的对象；
+*   `:destroy`：也销毁所有关联的对象；
+*   `:delete_all`：直接把所有关联的对象从数据库中删除（不执行回调）；
+*   `:nullify`：把外键设为 `NULL`，不执行回调；
+*   `:restrict_with_exception`：有关联的对象时抛出异常；
+*   `:restrict_with_error`：有关联的对象时，向属主添加一个错误；
 
-- `:delete_all`：直接把所有关联的对象从数据库中删除（不执行回调）；
-
-- `:nullify`：把外键设为 `NULL`，不执行回调；
-
-- `:restrict_with_exception`：有关联的对象时抛出异常；
-
-- `:restrict_with_error`：有关联的对象时，向属主添加一个错误；
+<a class="anchor" id="options-for-has-many-foreign-key"></a>
 
 ##### `:foreign_key`
 
@@ -1693,6 +1844,8 @@ end
 ```
 
 TIP: 不管怎样，Rails 都不会自动创建外键字段，你要自己在迁移中创建。
+
+<a class="anchor" id="inverse-of"></a>
 
 ##### `:inverse_of`
 
@@ -1708,6 +1861,8 @@ class Book < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="options-for-has-many-primary-key"></a>
+
 ##### `:primary_key`
 
 按照约定，用来存储该模型主键的字段名为 `id`。`:primary_key` 选项用于设置要使用的主键名。
@@ -1722,21 +1877,31 @@ end
 
 如果执行 `@todo = @user.todos.create` 创建新的待办事项，那么 `@todo.user_id` 就是 `@user` 记录中 `guid` 字段的值。
 
+<a class="anchor" id="options-for-has-many-source"></a>
+
 ##### `:source`
 
 `:source` 选项指定 `has_many :through` 关联的源关联名称。只有无法从关联名中解出源关联的名称时才需要设置这个选项。
+
+<a class="anchor" id="options-for-has-many-source-type"></a>
 
 ##### `:source_type`
 
 `:source_type` 选项指定通过多态关联处理 `has_many :through` 关联的源关联类型。
 
+<a class="anchor" id="options-for-has-many-through"></a>
+
 ##### `:through`
 
-`:through` 选项指定一个联结模型，查询通过它执行。[前文](#has_many :through 关联)说过，`has_many :through` 关联是实现多对多关联的方式之一。
+`:through` 选项指定一个联结模型，查询通过它执行。[前文](#the-has-many-through-association)说过，`has_many :through` 关联是实现多对多关联的方式之一。
+
+<a class="anchor" id="options-for-has-many-validate"></a>
 
 ##### `:validate`
 
 如果把 `:validate` 选项设为 `false`，保存对象时，不验证关联的对象。该选项的默认值是 `true`，即保存对象时验证关联的对象。
+
+<a class="anchor" id="scopes-for-has-many"></a>
 
 #### `has_many` 的作用域
 
@@ -1748,27 +1913,20 @@ class Author < ApplicationRecord
 end
 ```
 
-在作用域代码块中可以使用任何一个标准的[查询方法](active_record_querying.xml#active-record-query-interface)。下面介绍其中几个：
+在作用域代码块中可以使用任何一个标准的[查询方法](active_record_querying.html)。下面介绍其中几个：
 
-- `where`
+*   `where`
+*   `extending`
+*   `group`
+*   `includes`
+*   `limit`
+*   `offset`
+*   `order`
+*   `readonly`
+*   `select`
+*   `distinct`
 
-- `extending`
-
-- `group`
-
-- `includes`
-
-- `limit`
-
-- `offset`
-
-- `order`
-
-- `readonly`
-
-- `select`
-
-- `distinct`
+<a class="anchor" id="scopes-for-has-many-where"></a>
 
 ##### `where`
 
@@ -1792,9 +1950,13 @@ end
 
 如果 `where` 使用散列形式，通过这个关联创建的记录会自动使用散列中的作用域。针对上面的例子，使用 `@author.confirmed_books.create` 或 `@author.confirmed_books.build` 创建图书时，会自动把 `confirmed` 列的值设为 `true`。
 
+<a class="anchor" id="scopes-for-has-many-extending"></a>
+
 ##### `extending`
 
-`extending` 方法指定一个模块名，用于扩展关联代理。[后文](#关联扩展)会详细介绍关联扩展。
+`extending` 方法指定一个模块名，用于扩展关联代理。[后文](#association-extensions)会详细介绍关联扩展。
+
+<a class="anchor" id="scopes-for-has-many-group"></a>
 
 ##### `group`
 
@@ -1806,6 +1968,8 @@ class Author < ApplicationRecord
                         through: :books
 end
 ```
+
+<a class="anchor" id="scopes-for-has-many-includes"></a>
 
 ##### `includes`
 
@@ -1843,6 +2007,8 @@ class LineItem < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="scopes-for-has-many-limit"></a>
+
 ##### `limit`
 
 `limit` 方法限制通过关联获取的对象数量。
@@ -1855,9 +2021,13 @@ class Author < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="scopes-for-has-many-offset"></a>
+
 ##### `offset`
 
 `offset` 方法指定通过关联获取对象时的偏移量。例如，`-> { offset(11) }` 会跳过前 11 个记录。
+
+<a class="anchor" id="scopes-for-has-many-order"></a>
 
 ##### `order`
 
@@ -1869,15 +2039,21 @@ class Author < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="scopes-for-has-many-readonly"></a>
+
 ##### `readonly`
 
 如果使用 `readonly`，通过关联获取的对象是只读的。
+
+<a class="anchor" id="scopes-for-has-many-select"></a>
 
 ##### `select`
 
 `select` 方法用于覆盖检索关联对象数据的 SQL `SELECT` 子句。默认情况下，Rails 会检索所有列。
 
 WARNING: 如果设置 `select` 选项，记得要包含主键和关联模型的外键。否则，Rails 会抛出异常。
+
+<a class="anchor" id="scopes-for-has-many-distinct"></a>
 
 ##### `distinct`
 
@@ -1938,6 +2114,8 @@ person.articles << article # => ActiveRecord::RecordNotUnique
 person.articles << article unless person.articles.include?(article)
 ```
 
+<a class="anchor" id="has-many-association-reference-when-are-objects-saved-questionmark"></a>
+
 #### 什么时候保存对象
 
 把对象赋值给 `has_many` 关联时，会自动保存对象（因为要更新外键）。如果一次赋值多个对象，所有对象都会自动保存。
@@ -1948,45 +2126,34 @@ person.articles << article unless person.articles.include?(article)
 
 如果赋值给 `has_many` 关联时不想保存对象，使用 `collection.build` 方法。
 
+<a class="anchor" id="has-and-belongs-to-many-association-reference"></a>
+
 ### `has_and_belongs_to_many` 关联详解
 
 `has_and_belongs_to_many` 关联建立两个模型之间的多对多关系。用数据库术语来说，这种关联的意思是有个联结表包含指向这两个类的外键。
+
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many"></a>
 
 #### `has_and_belongs_to_many` 关联添加的方法
 
 声明 `has_and_belongs_to_many` 关联后，声明所在的类自动获得了 16 个关联相关的方法：
 
-- `collection`
-
-- `collection<<(object, …​)`
-
-- `collection.delete(object, …​)`
-
-- `collection.destroy(object, …​)`
-
-- `collection=(objects)`
-
-- `collection_singular_ids`
-
-- `collection_singular_ids=(ids)`
-
-- `collection.clear`
-
-- `collection.empty?`
-
-- `collection.size`
-
-- `collection.find(…​)`
-
-- `collection.where(…​)`
-
-- `collection.exists?(…​)`
-
-- `collection.build(attributes = {})`
-
-- `collection.create(attributes = {})`
-
-- `collection.create!(attributes = {})`
+*   `collection`
+*   `collection<<(object, &#8230;&#8203;)`
+*   `collection.delete(object, &#8230;&#8203;)`
+*   `collection.destroy(object, &#8230;&#8203;)`
+*   `collection=(objects)`
+*   `collection_singular_ids`
+*   `collection_singular_ids=(ids)`
+*   `collection.clear`
+*   `collection.empty?`
+*   `collection.size`
+*   `collection.find(&#8230;&#8203;)`
+*   `collection.where(&#8230;&#8203;)`
+*   `collection.exists?(&#8230;&#8203;)`
+*   `collection.build(attributes = {})`
+*   `collection.create(attributes = {})`
+*   `collection.create!(attributes = {})`
 
 这些个方法中的 `collection` 要替换成传给 `has_and_belongs_to_many` 方法的第一个参数。`collection_singular` 要替换成第一个参数的单数形式。对如下的声明来说：
 
@@ -2017,11 +2184,15 @@ assemblies.create(attributes = {})
 assemblies.create!(attributes = {})
 ```
 
+<a class="anchor" id="additional-column-methods"></a>
+
 ##### 额外的列方法
 
 如果 `has_and_belongs_to_many` 关联使用的联结表中，除了两个外键之外还有其他列，通过关联获取的记录中会包含这些列，但是只读的，因为 Rails 不知道如何保存对这些列的改动。
 
 WARNING: 在 `has_and_belongs_to_many` 关联的联结表中使用其他字段的功能已经废弃。如果在多对多关联中需要使用这么复杂的数据表，应该用 `has_many :through` 关联代替 `has_and_belongs_to_many` 关联。
+
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection"></a>
 
 ##### `collection`
 
@@ -2031,7 +2202,9 @@ WARNING: 在 `has_and_belongs_to_many` 关联的联结表中使用其他字段�
 @assemblies = @part.assemblies
 ```
 
-##### `collection<<(object, …​)`
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-object"></a>
+
+##### `collection<<(object, &#8230;&#8203;)`
 
 `collection<<` 方法向集合中添加一个或多个对象，并在联结表中创建相应的记录。
 
@@ -2041,7 +2214,9 @@ WARNING: 在 `has_and_belongs_to_many` 关联的联结表中使用其他字段�
 
 NOTE: 这个方法是 `collection.concat` 和 `collection.push` 的别名。
 
-##### `collection.delete(object, …​)`
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-delete-object"></a>
+
+##### `collection.delete(object, &#8230;&#8203;)`
 
 `collection.delete` 方法从集合中删除一个或多个对象，并删除联结表中相应的记录，但是不会销毁对象。
 
@@ -2049,19 +2224,23 @@ NOTE: 这个方法是 `collection.concat` 和 `collection.push` 的别名。
 @part.assemblies.delete(@assembly1)
 ```
 
-WARNING: 这个方法不会触发联结记录上的回调。
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-destroy-object"></a>
 
-##### `collection.destroy(object, …​)`
+##### `collection.destroy(object, &#8230;&#8203;)`
 
-`collection.destroy` 方法在联结表中的记录上调用 `destroy` 方法，从集合中删除一个或多个对象，还会触发回调。这个方法不会销毁对象本身。
+`collection.destroy` 方法把集合中指定对象在联结表中的记录删除。这个方法不会销毁对象本身。
 
 ```ruby
 @part.assemblies.destroy(@assembly1)
 ```
 
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-objects"></a>
+
 ##### `collection=(objects)`
 
-`collection=` 方法让集合只包含指定的对象，根据需求会添加或删除对象。
+`collection=` 方法让集合只包含指定的对象，根据需求会添加或删除对象。改动会持久存入数据库。
+
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-singular-ids"></a>
 
 ##### `collection_singular_ids`
 
@@ -2071,13 +2250,19 @@ WARNING: 这个方法不会触发联结记录上的回调。
 @assembly_ids = @part.assembly_ids
 ```
 
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-singular-ids-ids"></a>
+
 ##### `collection_singular_ids=(ids)`
 
-`collection_singular_ids=` 方法让集合中只包含指定的主键，根据需要会增删 ID。
+`collection_singular_ids=` 方法让集合中只包含指定的主键，根据需要会增删 ID。改动会持久存入数据库。
+
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-clear"></a>
 
 ##### `collection.clear`
 
 `collection.clear` 方法删除集合中的所有对象，并把联结表中的相应记录删除。这个方法不会销毁关联的对象。
+
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-empty-questionmark"></a>
 
 ##### `collection.empty?`
 
@@ -2089,6 +2274,8 @@ WARNING: 这个方法不会触发联结记录上的回调。
 <% end %>
 ```
 
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-size"></a>
+
 ##### `collection.size`
 
 `collection.size` 方法返回集合中的对象数量。
@@ -2097,7 +2284,9 @@ WARNING: 这个方法不会触发联结记录上的回调。
 @assembly_count = @part.assemblies.size
 ```
 
-##### `collection.find(…​)`
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-find"></a>
+
+##### `collection.find(&#8230;&#8203;)`
 
 `collection.find` 方法在集合中查找对象，使用的句法和选项跟 `ActiveRecord::Base.find` 方法一样。此外还限制对象必须在集合中。
 
@@ -2105,7 +2294,9 @@ WARNING: 这个方法不会触发联结记录上的回调。
 @assembly = @part.assemblies.find(1)
 ```
 
-##### `collection.where(…​)`
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-where"></a>
+
+##### `collection.where(&#8230;&#8203;)`
 
 `collection.where` 方法根据指定的条件在集合中查找对象，但对象是惰性加载的，访问对象时才执行查询。此外还限制对象必须在集合中。
 
@@ -2113,9 +2304,13 @@ WARNING: 这个方法不会触发联结记录上的回调。
 @new_assemblies = @part.assemblies.where("created_at > ?", 2.days.ago)
 ```
 
-##### `collection.exists?(…​)`
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-exists-questionmark"></a>
+
+##### `collection.exists?(&#8230;&#8203;)`
 
 `collection.exists?` 方法根据指定的条件检查集合中是否有符合条件的对象，使用的句法和选项跟 `ActiveRecord::Base.exists?` 方法一样。
+
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-build-attributes"></a>
 
 ##### `collection.build(attributes = {})`
 
@@ -2125,6 +2320,8 @@ WARNING: 这个方法不会触发联结记录上的回调。
 @assembly = @part.assemblies.build({assembly_name: "Transmission housing"})
 ```
 
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-create-attributes"></a>
+
 ##### `collection.create(attributes = {})`
 
 `collection.create` 方法返回一个此种关联类型的新对象。这个对象会使用传入的属性初始化，还会在联结表中创建对应的记录，只要能通过所有数据验证，就保存关联对象。
@@ -2133,9 +2330,13 @@ WARNING: 这个方法不会触发联结记录上的回调。
 @assembly = @part.assemblies.create({assembly_name: "Transmission housing"})
 ```
 
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-create-bang-attributes"></a>
+
 ##### `collection.create!(attributes = {})`
 
 作用和 `collection.create` 相同，但如果记录无效，会抛出 `ActiveRecord::RecordInvalid` 异常。
+
+<a class="anchor" id="options-for-has-and-belongs-to-many"></a>
 
 #### `has_and_belongs_to_many` 方法的选项
 
@@ -2150,36 +2351,38 @@ end
 
 `has_and_belongs_to_many` 关联支持以下选项：
 
-- `:association_foreign_key`
+*   `:association_foreign_key`
+*   `:autosave`
+*   `:class_name`
+*   `:foreign_key`
+*   `:join_table`
+*   `:validate`
 
-- `:autosave`
-
-- `:class_name`
-
-- `:foreign_key`
-
-- `:join_table`
-
-- `:validate`
+<a class="anchor" id="association-foreign-key"></a>
 
 ##### `:association_foreign_key`
 
 按照约定，在联结表中用来指向另一个模型的外键名是模型名后加 `_id`。`:association_foreign_key` 选项用于设置要使用的外键名：
 
 TIP: `:foreign_key` 和 `:association_foreign_key` 这两个选项在设置多对多自联结时很有用。例如：
->
-> ``` ruby
-> class User < ApplicationRecord
->   has_and_belongs_to_many :friends,
->       class_name: "User",
->       foreign_key: "this_user_id",
->       association_foreign_key: "other_user_id"
-> end
-> ```
+
+```ruby
+class User < ApplicationRecord
+  has_and_belongs_to_many :friends,
+      class_name: "User",
+      foreign_key: "this_user_id",
+      association_foreign_key: "other_user_id"
+end
+```
+
+
+<a class="anchor" id="options-for-has-and-belongs-to-many-autosave"></a>
 
 ##### `:autosave`
 
 如果把 `:autosave` 选项设为 `true`，保存父对象时，会自动保存所有子对象，并把标记为析构的子对象销毁。
+
+<a class="anchor" id="options-for-has-and-belongs-to-many-class-name"></a>
 
 ##### `:class_name`
 
@@ -2190,6 +2393,8 @@ class Parts < ApplicationRecord
   has_and_belongs_to_many :assemblies, class_name: "Gadget"
 end
 ```
+
+<a class="anchor" id="options-for-has-and-belongs-to-many-foreign-key"></a>
 
 ##### `:foreign_key`
 
@@ -2204,13 +2409,19 @@ class User < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="join-table"></a>
+
 ##### `:join_table`
 
 如果默认按照字典顺序生成的联结表名不能满足要求，可以使用 `:join_table` 选项指定。
 
+<a class="anchor" id="options-for-has-and-belongs-to-many-validate"></a>
+
 ##### `:validate`
 
 如果把 `:validate` 选项设为 `false`，保存对象时，不会验证关联的对象。该选项的默认值是 `true`，即保存对象时验证关联的对象。
+
+<a class="anchor" id="scopes-for-has-and-belongs-to-many"></a>
 
 #### `has_and_belongs_to_many` 的作用域
 
@@ -2222,27 +2433,20 @@ class Parts < ApplicationRecord
 end
 ```
 
-在作用域代码块中可以使用任何一个标准的[查询方法](active_record_querying.xml#active-record-query-interface)。下面分别介绍其中几个：
+在作用域代码块中可以使用任何一个标准的[查询方法](active_record_querying.html)。下面分别介绍其中几个：
 
-- `where`
+*   `where`
+*   `extending`
+*   `group`
+*   `includes`
+*   `limit`
+*   `offset`
+*   `order`
+*   `readonly`
+*   `select`
+*   `distinct`
 
-- `extending`
-
-- `group`
-
-- `includes`
-
-- `limit`
-
-- `offset`
-
-- `order`
-
-- `readonly`
-
-- `select`
-
-- `distinct`
+<a class="anchor" id="scopes-for-has-and-belongs-to-many-where"></a>
 
 ##### `where`
 
@@ -2266,9 +2470,13 @@ end
 
 如果 `where` 使用散列形式，通过这个关联创建的记录会自动使用散列中的作用域。针对上面的例子，使用 `@parts.assemblies.create` 或 `@parts.assemblies.build` 创建订单时，会自动把 `factory` 字段的值设为 `"Seattle"`。
 
+<a class="anchor" id="scopes-for-has-and-belongs-to-many-extending"></a>
+
 ##### `extending`
 
-`extending` 方法指定一个模块名，用来扩展关联代理。[后文](#关联扩展)会详细介绍关联扩展。
+`extending` 方法指定一个模块名，用来扩展关联代理。[后文](#association-extensions)会详细介绍关联扩展。
+
+<a class="anchor" id="scopes-for-has-and-belongs-to-many-group"></a>
 
 ##### `group`
 
@@ -2280,9 +2488,13 @@ class Parts < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="scopes-for-has-and-belongs-to-many-includes"></a>
+
 ##### `includes`
 
 `includes` 方法指定使用关联时要及早加载的间接关联。
+
+<a class="anchor" id="scopes-for-has-and-belongs-to-many-limit"></a>
 
 ##### `limit`
 
@@ -2295,9 +2507,13 @@ class Parts < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="scopes-for-has-and-belongs-to-many-offset"></a>
+
 ##### `offset`
 
 `offset` 方法指定通过关联获取对象时的偏移量。例如，`-> { offset(11) }` 会跳过前 11 个记录。
+
+<a class="anchor" id="scopes-for-has-and-belongs-to-many-order"></a>
 
 ##### `order`
 
@@ -2310,17 +2526,25 @@ class Parts < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="scopes-for-has-and-belongs-to-many-readonly"></a>
+
 ##### `readonly`
 
 如果使用 `readonly`，通过关联获取的对象是只读的。
+
+<a class="anchor" id="scopes-for-has-and-belongs-to-many-select"></a>
 
 ##### `select`
 
 `select` 方法用于覆盖检索关联对象数据的 SQL `SELECT` 子句。默认情况下，Rails 检索所有列。
 
+<a class="anchor" id="scopes-for-has-and-belongs-to-many-distinct"></a>
+
 ##### `distinct`
 
 `distinct` 方法用于删除集合中重复的对象。
+
+<a class="anchor" id="has-and-belongs-to-many-association-reference-when-are-objects-saved-questionmark"></a>
 
 #### 什么时候保存对象
 
@@ -2332,19 +2556,18 @@ end
 
 如果赋值给 `has_and_belongs_to_many` 关联时不想保存对象，使用 `collection.build` 方法。
 
+<a class="anchor" id="association-callbacks"></a>
+
 ### 关联回调
 
 普通回调会介入 Active Record 对象的生命周期，在多个时刻处理对象。例如，可以使用 `:before_save` 回调在保存对象之前处理对象。
 
 关联回调和普通回调差不多，只不过由集合生命周期中的事件触发。关联回调有四种：
 
-- `before_add`
-
-- `after_add`
-
-- `before_remove`
-
-- `after_remove`
+*   `before_add`
+*   `after_add`
+*   `before_remove`
+*   `after_remove`
 
 关联回调在声明关联时定义。例如：
 
@@ -2378,6 +2601,8 @@ end
 ```
 
 如果 `before_add` 回调抛出异常，不会把对象添加到集合中。类似地，如果 `before_remove` 抛出异常，对象不会从集合中删除。
+
+<a class="anchor" id="association-extensions"></a>
 
 ### 关联扩展
 
@@ -2413,14 +2638,13 @@ end
 
 在扩展中可以使用如下 `proxy_association` 方法的三个属性获取关联代理的内部信息：
 
-- `proxy_association.owner`：返回关联所属的对象；
+*   `proxy_association.owner`：返回关联所属的对象；
+*   `proxy_association.reflection`：返回描述关联的反射对象；
+*   `proxy_association.target`：返回 `belongs_to` 或 `has_one` 关联的关联对象，或者 `has_many` 或 `has_and_belongs_to_many` 关联的关联对象集合；
 
-- `proxy_association.reflection`：返回描述关联的反射对象；
+<a class="anchor" id="single-table-inheritance"></a>
 
-- `proxy_association.target`：返回 `belongs_to` 或 `has_one` 关联的关联对象，或者 `has_many` 或 `has_and_belongs_to_many` 关联的关联对象集合；
-
-单表继承
---------
+## 单表继承
 
 有时可能想在不同的模型中共用相同的字段和行为。假如有 Car、Motorcycle 和 Bicycle 三个模型，我们想在它们中共用 `color` 和 `price` 字段，但是各自的具体行为不同，而且使用不同的控制器。
 

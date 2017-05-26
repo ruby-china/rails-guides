@@ -6,6 +6,7 @@ incorporate real-time features into your Rails application.
 
 After reading this guide, you will know:
 
+* What Action Cable is and its integration on backend and frontend  
 * How to setup Action Cable
 * How to setup channels
 * Deployment and Architecture setup for running Action Cable
@@ -61,7 +62,7 @@ module ApplicationCable
       self.current_user = find_verified_user
     end
 
-    protected
+    private
       def find_verified_user
         if current_user = User.find_by(id: cookies.signed[:user_id])
           current_user
@@ -85,7 +86,7 @@ The cookie is then automatically sent to the connection instance when a new conn
 is attempted, and you use that to set the `current_user`. By identifying the connection
 by this same current user, you're also ensuring that you can later retrieve all open
 connections by a given user (and potentially disconnect them all if the user is deleted
-or deauthorized).
+or unauthorized).
 
 ### Channels
 
@@ -239,12 +240,12 @@ WebNotificationsChannel.broadcast_to(
 ```
 
 The `WebNotificationsChannel.broadcast_to` call places a message in the current
-subscription adapter (Redis by default)'s pubsub queue under a separate
-broadcasting name for each user. For a user with an ID of 1, the broadcasting
-name would be `web_notifications_1`.
+subscription adapter (by default `redis` for production and `async` for development and
+test environments)'s pubsub queue under a separate broadcasting name for each user.
+For a user with an ID of 1, the broadcasting name would be `web_notifications:1`.
 
 The channel has been instructed to stream everything that arrives at
-`web_notifications_1` directly to the client by invoking the `received`
+`web_notifications:1` directly to the client by invoking the `received`
 callback.
 
 ### Subscriptions
@@ -312,7 +313,7 @@ App.cable.subscriptions.create { channel: "ChatChannel", room: "Best Room" },
 ```ruby
 # Somewhere in your app this is called, perhaps
 # from a NewCommentJob.
-ChatChannel.broadcast_to(
+ActionCable.server.broadcast(
   "chat_#{room}",
   sent_by: 'Paul',
   body: 'This is a cool chat app.'
@@ -421,7 +422,7 @@ App.cable.subscriptions.create "AppearanceChannel",
   buttonSelector = "[data-behavior~=appear_away]"
 
   install: ->
-    $(document).on "page:change.appearance", =>
+    $(document).on "turbolinks:load.appearance", =>
       @appear()
 
     $(document).on "click.appearance", buttonSelector, =>
@@ -509,10 +510,10 @@ WebNotificationsChannel.broadcast_to(
 The `WebNotificationsChannel.broadcast_to` call places a message in the current
 subscription adapter's pubsub queue under a separate broadcasting name for each
 user. For a user with an ID of 1, the broadcasting name would be
-"web_notifications_1".
+`web_notifications:1`.
 
 The channel has been instructed to stream everything that arrives at
-"web_notifications_1" directly to the client by invoking the `received`
+`web_notifications:1` directly to the client by invoking the `received`
 callback. The data passed as argument is the hash sent as the second parameter
 to the server-side broadcast call, JSON encoded for the trip across the wire,
 and unpacked for the data argument arriving to `received`.
@@ -529,7 +530,7 @@ Action Cable has two required configurations: a subscription adapter and allowed
 ### Subscription Adapter
 
 By default, Action Cable looks for a configuration file in `config/cable.yml`.
-The file must specify an adapter and a URL for each Rails environment. See the
+The file must specify an adapter for each Rails environment. See the
 [Dependencies](#dependencies) section for additional information on adapters.
 
 ```yaml
@@ -542,7 +543,28 @@ test:
 production:
   adapter: redis
   url: redis://10.10.3.153:6381
+  channel_prefix: appname_production
 ```
+#### Adapter Configuration
+
+Below is a list of the subscription adapters available for end users.
+
+##### Async Adapter
+
+The async adapter is intended for development/testing and should not be used in production.
+
+##### Redis Adapter
+
+Action Cable contains two Redis adapters: "normal" Redis and Evented Redis. Both
+of the adapters require users to provide a URL pointing to the Redis server.
+Additionally, a channel_prefix may be provided to avoid channel name collisions
+when using the same Redis server for multiple applications. See the [Redis PubSub documentation](https://redis.io/topics/pubsub#database-amp-scoping) for more details.
+
+##### PostgreSQL Adapter
+
+The PostgreSQL adapter uses Active Record's connection pool, and thus the
+application's `config/database.yml` database configuration, for its connection.
+This may change in the future. [#27214](https://github.com/rails/rails/issues/27214)
 
 ### Allowed Request Origins
 
@@ -571,12 +593,13 @@ environment configuration files.
 
 ### Other Configurations
 
-The other common option to configure is the log tags applied to the
-per-connection logger. Here's close to what we're using in Basecamp:
+The other common option to configure, is the log tags applied to the
+per-connection logger. Here's an example that uses
+the user account id if available, else "no-account" while tagging:
 
 ```ruby
 config.action_cable.log_tags = [
-  -> request { request.env['bc.account_id'] || "no-account" },
+  -> request { request.env['user_account_id'] || "no-account" },
   :action_cable,
   -> request { request.uuid }
 ]
@@ -586,7 +609,7 @@ For a full list of all configuration options, see the
 `ActionCable::Server::Configuration` class.
 
 Also note that your server must provide at least the same number of database
-connections as you have workers. The default worker pool size is set to 100, so
+connections as you have workers. The default worker pool size is set to 4, so
 that means you have to make at least that available. You can change that in
 `config/database.yml` through the `pool` attribute.
 
@@ -622,7 +645,7 @@ basic setup is as follows:
 
 ```ruby
 # cable/config.ru
-require_relative 'config/environment'
+require_relative '../config/environment'
 Rails.application.eager_load!
 
 run ActionCable.server

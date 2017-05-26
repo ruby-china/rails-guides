@@ -1,32 +1,31 @@
-为 Ruby on Rails 做贡献
-=======================
+# 为 Ruby on Rails 做贡献
 
 本文介绍几种参与 Ruby on Rails 开发的方式。
 
 读完本文后，您将学到：
 
-- 如何使用 GitHub 报告问题；
-
-- 如果克隆 master，运行测试组件；
-
-- 如何帮助解决现有问题；
-
-- 如何为 Ruby on Rails 文档做贡献；
-
-- 如何为 Ruby on Rails 代码做贡献。
+*   如何使用 GitHub 报告问题；
+*   如何克隆 master，运行测试组件；
+*   如何帮助解决现有问题；
+*   如何为 Ruby on Rails 文档做贡献；
+*   如何为 Ruby on Rails 代码做贡献。
 
 Ruby on Rails 不是某一个人的框架。这些年，有成百上千个人为 Ruby on Rails 做贡献，小到修正一个字符，大到调整重要的架构或文档——目的都是把 Ruby on Rails 变得更好，适合所有人使用。即便你现在不想编写代码或文档，也能通过其他方式做贡献，例如报告问题和测试补丁。
 
 [Rails 的自述文件](https://github.com/rails/rails/blob/master/README.md)说道，参与 Rails 及其子项目代码基开发的人，参与问题追踪系统、聊天室和邮件列表的人，都要遵守 Rails 的[行为准则](http://rubyonrails.org/conduct/)。
 
---------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
-报告错误
---------
+<a class="anchor" id="reporting-an-issue"></a>
+
+## 报告错误
 
 Ruby on Rails 使用 [GitHub 的问题追踪系统](https://github.com/rails/rails/issues)追踪问题（主要是解决缺陷和贡献新代码）。如果你发现 Ruby on Rails 有缺陷，首先应该发布到这个系统中。若想提交问题、评论问题或创建拉取请求， 你要注册一个 GitHub 账户（免费）。
 
 NOTE: Ruby on Rails 最新版的缺陷最受关注。此外，Rails 核心团队始终欢迎能对最新开发版做测试的人反馈。本文后面会说明如何测试最新开发版。
+
+
+<a class="anchor" id="creating-a-bug-report"></a>
 
 ### 创建一个缺陷报告
 
@@ -36,15 +35,17 @@ NOTE: Ruby on Rails 最新版的缺陷最受关注。此外，Rails 核心团队
 
 然后，耐心等待。除非你报告的是紧急问题，会导致世界末日，否则你要等待可能有其他人也遇到同样的问题，与你一起去解决。不要期望你报告的问题能立即得到关注，有人立刻着手解决。像这样报告问题基本上是让自己迈出修正问题的第一步，并且让其他遇到同样问题的人复议。
 
+<a class="anchor" id="create-an-executable-test-case"></a>
+
 ### 创建可执行的测试用例
 
 提供重现问题的方式有助于别人帮你确认、研究并最终解决问题。为此，你可以提供可执行的测试用例。为了简化这一过程，我们准备了几个缺陷报告模板供你参考：
 
-- 报告 Active Record（模型、数据库）问题的模板：[gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_master.rb)
-
-- 报告 Action Pack（控制器、路由）问题的模板：[gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_master.rb)
-
-- 其他问题的通用模板：[gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/generic_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/generic_master.rb)
+*   报告 Active Record（模型、数据库）问题的模板：[gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_master.rb)
+*   报告 Active Record（迁移）问题的模板：[gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_migrations_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_migrations_master.rb)
+*   报告 Action Pack（控制器、路由）问题的模板：[gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_master.rb)
+*   报告 Active Job 问题的模板：[gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_job_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_job_master.rb)
+*   其他问题的通用模板：[gem](https://github.com/rails/rails/blob/master/guides/bug_report_templates/generic_gem.rb) / [master](https://github.com/rails/rails/blob/master/guides/bug_report_templates/generic_master.rb)
 
 这些模板包含样板代码，供你着手编写测试用例，分别针对 Rails 的发布版（`*_gem.rb`）和最新开发版（`*_master.rb`）。
 
@@ -52,9 +53,14 @@ NOTE: Ruby on Rails 最新版的缺陷最受关注。此外，Rails 核心团队
 
 随后，可以通过一个 [gist](https://gist.github.com/) 分享你的可执行测试用例，或者直接粘贴到问题描述中。
 
+<a class="anchor" id="special-treatment-for-security-issues"></a>
+
 ### 特殊对待安全问题
 
 WARNING: 请不要在公开的 GitHub 问题报告中报告安全漏洞。安全问题的报告步骤在 [Rails 安全方针页面](http://rubyonrails.org/security)中有详细说明。
+
+
+<a class="anchor" id="what-about-feature-requests-questionmark"></a>
 
 ### 功能请求怎么办？
 
@@ -64,10 +70,13 @@ WARNING: 请不要在公开的 GitHub 问题报告中报告安全漏洞。安全
 
 如果你想在着手打补丁之前征询反馈，请向 [rails-core 邮件列表](https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-core)发送电子邮件。你可能得不到回应，这表明大家是中立的。你可能会发现有人对你提议的功能感兴趣；可能会有人说你的提议不可行。但是新想法就应该在那里讨论。GitHub 问题追踪系统不是集中讨论特性请求的正确场所。
 
-帮助解决现有问题
-----------------
+<a class="anchor" id="helping-to-resolve-existing-issues"></a>
+
+## 帮助解决现有问题
 
 除了报告问题之外，你还可以帮助核心团队解决现有问题。如果查看 GitHub 中的[问题列表](https://github.com/rails/rails/issues)，你会发现很多问题都得到了关注。为此你能做些什么呢？其实，你能做的有很多。
+
+<a class="anchor" id="verifying-bug-reports"></a>
 
 ### 确认缺陷报告
 
@@ -75,9 +84,11 @@ WARNING: 请不要在公开的 GitHub 问题报告中报告安全漏洞。安全
 
 如果问题描述不清，你能帮忙说得更具体些吗？或许你可以提供额外的信息，帮助重现缺陷，或者去掉说明问题所不需要的步骤。
 
-如果发现缺陷报告中没有测试，你可以贡献一个失败测试。这是学习源码的好机会：查看现有的测试文件能让你学到如何编写更好的测试。新测试最好以补丁的形式提供，详情参阅 [为 Rails 代码做贡献](#为 Rails 代码做贡献)。
+如果发现缺陷报告中没有测试，你可以贡献一个失败测试。这是学习源码的好机会：查看现有的测试文件能让你学到如何编写更好的测试。新测试最好以补丁的形式提供，详情参阅 [为 Rails 代码做贡献](#contributing-to-the-rails-code)。
 
 不管你自己写不写代码，只要你能把缺陷报告变得更简洁、更便于重现，就能为尝试修正缺陷的人提供帮助。
+
+<a class="anchor" id="testing-patches"></a>
 
 ### 测试补丁
 
@@ -96,53 +107,44 @@ $ git pull JohnSmith orange
 
 然后，使用主题分支中的代码做测试。下面是一些考虑的事情：
 
-- 改动可用吗？
-
-- 你对测试满意吗？你能理解测试吗？缺少测试吗？
-
-- 有适度的文档覆盖度吗？其他地方的文档需要更新吗？
-
-- 你喜欢他的实现方式吗？你能以更好或更快的方式实现部分改动吗？
+*   改动可用吗？
+*   你对测试满意吗？你能理解测试吗？缺少测试吗？
+*   有适度的文档覆盖度吗？其他地方的文档需要更新吗？
+*   你喜欢他的实现方式吗？你能以更好或更快的方式实现部分改动吗？
 
 拉取请求中的改动让你满意之后，在 GitHub 问题追踪系统中发表评论，表明你赞成。你的评论应该说你喜欢这个改动，以及你的观点。比如说：
 
-> 我喜欢你对 generate\_finder\_sql 这部分代码的调整，现在更好了。测试也没问题。
+> 我喜欢你对 generate_finder_sql 这部分代码的调整，现在更好了。测试也没问题。
 
 如果你的评论只是说“+1”，其他评审很难严肃对待。你要表明你花时间审查拉取请求了。
 
-为 Rails 文档做贡献
--------------------
+<a class="anchor" id="contributing-to-the-rails-documentation"></a>
+
+## 为 Rails 文档做贡献
 
 Ruby on Rails 主要有两份文档：这份指南，帮你学习 Ruby on Rails；API，作为参考资料。
 
 你可以帮助改进这份 Rails 指南，把它变得更简单、更为一致，也更易于理解。你可以添加缺少的信息、更正错误、修正错别字或者针对最新的 Rails 开发版做更新。
 
-如果经常做贡献，可以向 [Rails](http://github.com/rails/rails) 发送拉取请求，或者向 [Rails 核心团队](http://rubyonrails.org/core)索要 docrails 的提交权限。请勿直接向 docrails 发送拉取请求，如果想征询别人对你的改动有何意见，在 Rails 的问题追踪系统中询问。
-
-docrails 定期合并到 master 分支，因此 Ruby on Rails 的文档能得到及时更新。
-
-如果你对文档的改动有疑问，可以在 Rails 的问题追踪系统发工单。
+为此，可以向 [Rails 项目](http://github.com/rails/rails)发送拉取请求。
 
 如果你想为文档做贡献，请阅读[API 文档指导方针](api_documentation_guidelines.html)和[Ruby on Rails 指南指导方针](ruby_on_rails_guides_guidelines.html)。
 
-前面说过，常规的代码补丁应该有适当的文档覆盖度。docrails 项目只是为了在单独的地方改进文档。
-
 NOTE: 为了减轻 CI 服务器的压力，关于文档的提交消息中应该包含 `[ci skip]`，跳过构建步骤。只修改文档的提交一定要这么做。
 
-WARNING: docrails 有个十分严格的方针：不能触碰任何代码，不管改动有多小都不行。通过 docrails 只能编辑 RDoc 和指南。此外，在 docrails 中也不能编辑 CHANGELOG。
 
-翻译 Rails 指南
----------------
+<a class="anchor" id="translating-rails-guides"></a>
 
-我们欢迎人们自发把 Rails 指南翻译成其他语言。如果你想把 Rails 指南翻译成你的母语，请遵照下述步骤：
+## 翻译 Rails 指南
 
-- 派生项目（rails/rails）
+我们欢迎人们自发把 Rails 指南翻译成其他语言。翻译时请遵照下述步骤：
 
-- 为你的语言添加一个文件夹，例如针对意大利语的 guides/source/it-IT
+*   派生项目 https://github.com/rails/rails
+*   为你的语言添加一个文件夹，例如针对意大利语的 guides/source/it-IT
+*   把 guides/source 中的内容复制到你创建的文件夹中，然后翻译
+*   不要翻译 HTML 文件，因为那是自动生成的
 
-- 把 guides/source 中的内容复制到你创建的文件夹中，然后翻译
-
-- 不要翻译 HTML 文件，因为那是自动生成的
+注意，翻译不提交到 Rails 仓库中。如前所述，翻译在你派生的项目中操作。这么做的原因是，或许只有英语文档适合通过补丁维护。
 
 如果想生成这份指南的 HTML 格式，进入 guides 目录，然后执行（以 it-IT 为例）：
 
@@ -155,44 +157,44 @@ $ bundle exec rake guides:generate:html GUIDES_LANGUAGE=it-IT
 
 NOTE: 上述说明针对 Rails 4 及以上版本。Redcarpet gem 无法在 JRuby 中使用。
 
+
 已知的翻译成果：
 
-- 意大利语：<https://github.com/rixlabs/docrails>
+*   意大利语：<https://github.com/rixlabs/docrails>
+*   西班牙语：<http://wiki.github.com/gramos/docrails>
+*   波兰语：<https://github.com/apohllo/docrails/tree/master>
+*   法语：<https://github.com/railsfrance/docrails>
+*   捷克语：<https://github.com/rubyonrails-cz/docrails/tree/czech>
+*   土耳其语：<https://github.com/ujk/docrails/tree/master>
+*   韩语：<https://github.com/rorlakr/rails-guides>
+*   简体中文：<https://github.com/AndorChen/rails-guides>
+*   繁体中文：<https://github.com/docrails-tw/guides>
+*   俄语：<https://github.com/morsbox/rusrails>
+*   日语：<https://github.com/yasslab/railsguides.jp>
 
-- 西班牙语：<http://wiki.github.com/gramos/docrails>
+<a class="anchor" id="contributing-to-the-rails-code"></a>
 
-- 波兰语：<http://github.com/apohllo/docrails/tree/master>
+## 为 Rails 代码做贡献
 
-- 法语：<http://github.com/railsfrance/docrails>
-
-- 捷克语：<https://github.com/rubyonrails-cz/docrails/tree/czech>
-
-- 土耳其语：<https://github.com/ujk/docrails/tree/master>
-
-- 韩语：<https://github.com/rorlakr/rails-guides>
-
-- 简体中文：<https://github.com/AndorChen/rails-guides>
-
-- 繁体中文：<https://github.com/docrails-tw/guides>
-
-- 俄语：<https://github.com/morsbox/rusrails>
-
-- 日语：<https://github.com/yasslab/railsguides.jp>
-
-为 Rails 代码做贡献
--------------------
+<a class="anchor" id="setting-up-a-development-environment"></a>
 
 ### 搭建开发环境
 
 过了提交缺陷这个初级阶段之后，若想帮助解决现有问题，或者为 Ruby on Rails 贡献自己的代码，必须要能运行测试组件。这一节教你在自己的电脑中搭建测试的环境。
 
+<a class="anchor" id="the-easy-way"></a>
+
 #### 简单方式
 
 搭建开发环境最简单、也是推荐的方式是使用 [Rails 开发虚拟机](https://github.com/rails/rails-dev-box)。
 
+<a class="anchor" id="the-hard-way"></a>
+
 #### 笨拙方式
 
 如果你不便使用 Rails 开发虚拟机，请阅读[安装开发依赖](development_dependencies_install.html)。
+
+<a class="anchor" id="clone-the-rails-repository"></a>
 
 ### 克隆 Rails 仓库
 
@@ -211,6 +213,8 @@ $ git checkout -b my_new_branch
 
 分支的名称无关紧要，因为这个分支只存在于你的本地电脑和你在 GitHub 上的个人仓库中，不会出现在 Rails 的 Git 仓库里。
 
+<a class="anchor" id="bundle-install"></a>
+
 ### bundle install
 
 安装所需的 gem：
@@ -218,6 +222,8 @@ $ git checkout -b my_new_branch
 ```sh
 $ bundle install
 ```
+
+<a class="anchor" id="running-an-application-against-your-local-branch"></a>
 
 ### 使用本地分支运行应用
 
@@ -230,79 +236,59 @@ $ bundle exec rails new ~/my-test-app --dev
 
 上述命令使用本地分支在 `~/my-test-app` 目录中生成一个应用，重启服务器后便能看到改动的效果。
 
+<a class="anchor" id="write-your-code"></a>
+
 ### 编写你的代码
 
 现在可以着手添加和编辑代码了。你处在自己的分支中，可以编写任何你想编写的代码（使用 `git branch -a` 确定你处于正确的分支中）。不过，如果你打算把你的改动提交到 Rails 中，要注意几点：
 
-- 代码要写得正确。
-
-- 使用 Rails 习惯用法和辅助方法。
-
-- 包含测试，在没有你的代码时失败，添加之后则通过。
-
-- 更新（相应的）文档、别处的示例和指南。只要受你的代码影响，都更新。
+*   代码要写得正确。
+*   使用 Rails 习惯用法和辅助方法。
+*   包含测试，在没有你的代码时失败，添加之后则通过。
+*   更新（相应的）文档、别处的示例和指南。只要受你的代码影响，都更新。
 
 TIP: 装饰性的改动，没有为 Rails 的稳定性、功能或可测试性做出实质改进的改动一般不会接受（关于这一决定的讨论参见[这里](https://github.com/rails/rails/pull/13771#issuecomment-32746700)）。
+
+
+<a class="anchor" id="follow-the-coding-conventions"></a>
 
 #### 遵守编程约定
 
 Rails 遵守下述简单的编程风格约定：
 
-- （缩进）使用两个空格，不用制表符。
-
-- 行尾没有空白。空行不能有任何空白。
-
-- 私有和受保护的方法多一层缩进。
-
-- 使用 Ruby 1.9 及以上版本采用的散列句法。使用 `{ a: :b }`，而非 `{ :a => :b }`。
-
-- 较之 `and`/`or`，尽量使用 `&&`/`||`。
-
-- 编写类方法时，较之 `self.method`，尽量使用 `class << self`。
-
-- 使用 `my_method(my_arg)`，而非 `my_method( my_arg )` 或 `my_method my_arg`。
-
-- 使用 `a = b`，而非 `a=b`。
-
-- 使用 `assert_not` 方法，而非 `refute`。
-
-- 编写单行块时，较之 `method{do_stuff}`，尽量使用 `method { do_stuff }`。
-
-- 遵照源码中在用的其他约定。
+*   （缩进）使用两个空格，不用制表符。
+*   行尾没有空白。空行不能有任何空白。
+*   私有和受保护的方法多一层缩进。
+*   使用 Ruby 1.9 及以上版本采用的散列句法。使用 `{ a: :b }`，而非 `{ :a => :b }`。
+*   较之 `and`/`or`，尽量使用 `&&`/`||`。
+*   编写类方法时，较之 `self.method`，尽量使用 `class << self`。
+*   使用 `my_method(my_arg)`，而非 `my_method( my_arg )` 或 `my_method my_arg`。
+*   使用 `a = b`，而非 `a=b`。
+*   使用 `assert_not` 方法，而非 `refute`。
+*   编写单行块时，较之 `method{do_stuff}`，尽量使用 `method { do_stuff }`。
+*   遵照源码中在用的其他约定。
 
 以上是指导方针，使用时请灵活应变。
 
+<a class="anchor" id="benchmark-your-code"></a>
+
 ### 对你的代码做基准测试
 
-如果你的改动对 Rails 的性能有影响，请使用 [benchmark-ips](https://github.com/evanphx/benchmark-ips) gem 做基准测试，并提供测试结果以供比较。
+如果你的改动对 Rails 的性能有影响，请对你的代码做基准测试，衡量影响。请把基准测试脚本与结果一起分享出来。应该考虑把这个信息写入提交消息，以便后续开发者验证你的发现，确定是否仍有必要修改。（例如，Ruby VM 最新的优化出来后，以前的优化可能就没必要了。）
 
-下面是使用 benchmark-ips 的一个示例：
+针对你所关注的情况做优化十分简单，但是在其他情况下可能导致回归错误。英雌，应该在一些典型的情况下测试你的改动。理想情况下，你应该在从生产应用中抽离出来的真实场景中测试。
 
-```ruby
-require 'benchmark/ips'
+你可以从[基准测试模板](https://github.com/rails/rails/blob/master/guides/bug_report_templates/benchmark.rb)入手，模板中有使用 [benchmark-ips](https://github.com/evanphx/benchmark-ips) gem 的样板代码。这个模板针对相对独立的改动，可以直接放在脚本中。
 
-Benchmark.ips do |x|
-  x.report('addition') { 1 + 2 }
-  x.report('addition with send') { 1.send(:+, 2) }
-end
-```
-
-上述代码会生成一份报告，包含下述信息：
-
-    Calculating -------------------------------------
-                addition   132.013k i/100ms
-      addition with send   125.413k i/100ms
-    -------------------------------------------------
-                addition      9.677M (± 1.7%) i/s -     48.449M
-      addition with send      6.794M (± 1.1%) i/s -     33.987M
-
-详情参见 benchmark-ips 的[自述文件](https://github.com/evanphx/benchmark-ips/blob/master/README.md)。
+<a class="anchor" id="running-tests"></a>
 
 ### 运行测试
 
 在推送改动之前，通常不运行整个测试组件。railties 的测试组件所需的时间特别长，如果按照推荐的工作流程，使用 [rails-dev-box](https://github.com/rails/rails-dev-box) 把源码挂载到 `/vagrant`，时间更长。
 
 作为一种折中方案，应该测试明显受到影响的代码；如果不是改动 railties，运行受影响的组件的整个测试组件。如果所有测试都能通过，表明你可以提请你的贡献了。为了捕获别处预料之外的问题，我们配备了 [Travis CI](https://travis-ci.org/rails/rails)，作为一个安全保障。
+
+<a class="anchor" id="entire-rails"></a>
 
 #### 整个 Rails
 
@@ -313,6 +299,8 @@ $ cd rails
 $ bundle exec rake test
 ```
 
+<a class="anchor" id="for-a-particular-component"></a>
+
 #### 某个组件
 
 可以只运行某个组件（如 Action Pack）的测试。例如，运行 Action Mailer 的测试：
@@ -321,6 +309,8 @@ $ bundle exec rake test
 $ cd actionmailer
 $ bundle exec rake test
 ```
+
+<a class="anchor" id="running-a-single-test"></a>
 
 #### 运行单个测试
 
@@ -333,9 +323,13 @@ $ bundle exec ruby -w -Itest test/mail_layout_test.rb -n test_explicit_class_lay
 
 `-n` 选项指定运行单个方法，而非整个文件。
 
+<a class="anchor" id="testing-active-record"></a>
+
 #### 测试 Active Record
 
-首先，创建所需的数据库。对 MySQL 和 PostgreSQL 来说，运行 SQL 语句 `create database activerecord_unittest` 和 `create database activerecord_unittest2` 就行。SQLite3 无需这一步。
+首先，创建所需的数据库。必要的表名、用户名和密码参见 `activerecord/test/config.example.yml`。
+
+对 MySQL 和 PostgreSQL 来说，运行 SQL 语句 `create database activerecord_unittest` 和 `create database activerecord_unittest2` 就行。SQLite3 无需这一步。
 
 只使用 SQLite3 运行 Active Record 的测试组件：
 
@@ -346,8 +340,10 @@ $ bundle exec rake test:sqlite3
 
 然后分别运行：
 
-    test:mysql2
-    test:postgresql
+```
+test:mysql2
+test:postgresql
+```
 
 最后，一次运行前述三个测试：
 
@@ -369,6 +365,8 @@ $ bundle exec rake TEST=test/cases/associations/has_many_associations_test.rb
 
 此外，还可以调用 `test_jdbcmysql`、`test_jdbcsqlite3` 或 `test_jdbcpostgresql`。针对其他数据库的测试参见 `activerecord/RUNNING_UNIT_TESTS.rdoc` 文件，持续集成服务器运行的测试组件参见 `ci/travis.rb` 文件。
 
+<a class="anchor" id="warnings"></a>
+
 ### 提醒
 
 运行测试组件的命令启用了提醒。理想情况下，Ruby on Rails 不应该发出提醒，不过你可能会见到一些，其中部分可能来自第三方库。如果看到提醒，请忽略（或修正），然后提交不发出提醒的补丁。
@@ -379,6 +377,8 @@ $ bundle exec rake TEST=test/cases/associations/has_many_associations_test.rb
 $ RUBYOPT=-W0 bundle exec rake test
 ```
 
+<a class="anchor" id="updating-the-changelog"></a>
+
 ### 更新 CHANGELOG
 
 CHANGELOG 是每次发布的重要一环，保存着每个 Rails 版本的改动列表。
@@ -387,28 +387,30 @@ CHANGELOG 是每次发布的重要一环，保存着每个 Rails 版本的改动
 
 CHANGELOG 中的记录应该概述所做的改动，并且在末尾加上作者的名字。如果需要，可以写成多行，也可以缩进四个空格，添加代码示例。如果改动与某个工单有关，应该加上工单号。下面是一条 CHANGELOG 记录示例：
 
-    *   Summary of a change that briefly describes what was changed. You can use multiple
-        lines and wrap them at around 80 characters. Code examples are ok, too, if needed:
+```
+*   Summary of a change that briefly describes what was changed. You can use multiple
+    lines and wrap them at around 80 characters. Code examples are ok, too, if needed:
 
-            class Foo
-              def bar
-                puts 'baz'
-              end
-            end
+        class Foo
+          def bar
+            puts 'baz'
+          end
+        end
 
-        You can continue after the code example and you can attach issue number. GH#1234
+    You can continue after the code example and you can attach issue number. GH#1234
 
-        *Your Name*
+    *Your Name*
+```
 
 如果没有代码示例，或者没有分成多行，可以直接在最后一个词后面加上作者的名字。否则，最好新起一段。
+
+<a class="anchor" id="updating-the-gemfile-lock"></a>
 
 ### 更新 Gemfile.lock
 
 有些改动需要更新依赖。此时，要执行 `bundle update` 命令，获取依赖的正确版本，并且随改动一起提交 `Gemfile.lock` 文件。
 
-### 健全性检查
-
-在提交之前，你不一定是唯一查看代码的人。如果你认识其他使用 Rails 的人，试着邀请他们检查你的代码。如果不认识使用 Rails 的人，可以在 IRC 聊天室中找人帮忙，或者在 rails-core 邮件列表中发布你的想法。在公开补丁之前做检查是一种“冒烟测试”：如果你不能让另一个开发者认同你的代码，核心团队可能也不会认同。
+<a class="anchor" id="commit-your-changes"></a>
 
 ### 提交改动
 
@@ -424,34 +426,39 @@ $ git commit -a
 
 好的提交消息类似下面这样：
 
-    Short summary (ideally 50 characters or less)
+```
+Short summary (ideally 50 characters or less)
 
-    More detailed description, if necessary. It should be wrapped to
-    72 characters. Try to be as descriptive as you can. Even if you
-    think that the commit content is obvious, it may not be obvious
-    to others. Add any description that is already present in the
-    relevant issues; it should not be necessary to visit a webpage
-    to check the history.
+More detailed description, if necessary. It should be wrapped to
+72 characters. Try to be as descriptive as you can. Even if you
+think that the commit content is obvious, it may not be obvious
+to others. Add any description that is already present in the
+relevant issues; it should not be necessary to visit a webpage
+to check the history.
 
-    The description section can have multiple paragraphs.
+The description section can have multiple paragraphs.
 
-    Code examples can be embedded by indenting them with 4 spaces:
+Code examples can be embedded by indenting them with 4 spaces:
 
-        class ArticlesController
-          def index
-            render json: Article.limit(10)
-          end
-        end
+    class ArticlesController
+      def index
+        render json: Article.limit(10)
+      end
+    end
 
-    You can also add bullet points:
+You can also add bullet points:
 
-    - make a bullet point by starting a line with either a dash (-)
-      or an asterisk (*)
+- make a bullet point by starting a line with either a dash (-)
+  or an asterisk (*)
 
-    - wrap lines at 72 characters, and indent any additional lines
-      with 2 spaces for readability
+- wrap lines at 72 characters, and indent any additional lines
+  with 2 spaces for readability
+```
 
 TIP: 如果合适，请把多条提交压缩成一条提交。这样便于以后挑选，而且能保持 Git 日志整洁。
+
+
+<a class="anchor" id="update-your-branch"></a>
 
 ### 更新你的分支
 
@@ -470,6 +477,8 @@ $ git rebase master
 ```
 
 没有冲突？测试依旧能通过？你的改动依然合理？那就往下走。
+
+<a class="anchor" id="fork"></a>
 
 ### 派生
 
@@ -522,6 +531,8 @@ $ git rebase rails/branch_name
 $ git push origin branch_name
 ```
 
+<a class="anchor" id="issue-a-pull-request"></a>
+
 ### 创建拉取请求
 
 打开你刚刚推送的目标仓库（例如 https://github.com/your-user-name/rails），点击“New pull request”按钮。
@@ -529,6 +540,8 @@ $ git push origin branch_name
 如果需要修改比较的分支（默认比较 master 分支），点击“Edit”，然后点击“Click to create a pull request for this comparison”。
 
 确保包含你所做的改动。填写补丁的详情，以及一个有意义的标题。然后点击“Send pull request”。Rails 核心团队会收到关于此次提交的通知。
+
+<a class="anchor" id="get-some-feedback"></a>
 
 ### 获得反馈
 
@@ -540,9 +553,13 @@ $ git push origin branch_name
 
 在你等待反馈的过程中，可以再创建其他拉取请求，也可以给别人的拉取请求反馈。我想，他们会感激你的，正如你会感激给你反馈的人一样。
 
+<a class="anchor" id="iterate-as-necessary"></a>
+
 ### 必要时做迭代
 
 很有可能你得到的反馈是让你修改。别灰心，为活跃的开源项目做贡献就要跟上社区的步伐。如果有人建议你调整代码，你应该做调整，然后重新提交。如果你得到的反馈是，你的代码不应该添加到核心中，或许你可以考虑发布成一个 gem。
+
+<a class="anchor" id="squashing-commits"></a>
 
 #### 压缩提交
 
@@ -571,6 +588,8 @@ $ git push origin my_pull_request -f
 
 此时，GitHub 中的拉取请求会刷新，更新为最新的提交。
 
+<a class="anchor" id="updating-pull-request"></a>
+
 #### 更新拉取请求
 
 有时，你得到的反馈是让你修改已经提交的代码。此时可能需要修正现有的提交。在这种情况下，Git 不允许你推送改动，因为你推送的分支和本地分支不匹配。你无须重新发起拉取请求，而是可以强制推送到 GitHub 中的分支，如前一节的压缩提交命令所示：
@@ -580,6 +599,8 @@ $ git push origin my_pull_request -f
 ```
 
 这个命令会更新 GitHub 中的分支和拉取请求。不过注意，强制推送可能会导致远程分支中的提交丢失。使用时要小心。
+
+<a class="anchor" id="older-versions-of-ruby-on-rails"></a>
 
 ### 旧版 Ruby on Rails
 
@@ -591,6 +612,9 @@ $ git checkout 4-0-stable
 ```
 
 TIP: 为了明确知道你处于代码的哪个版本，可以[把 Git 分支名放到 shell 提示符中](http://qugstart.com/blog/git-and-svn/add-colored-git-branch-name-to-your-shell-prompt/)。
+
+
+<a class="anchor" id="backporting"></a>
 
 #### 逆向移植
 
@@ -613,7 +637,7 @@ $ git format-patch master --stdout > ~/my_changes.patch
 切换到目标分支，然后应用改动：
 
 ```sh
-$ git checkout -b my_backport_branch 3-2-stable
+$ git checkout -b my_backport_branch 4-2-stable
 $ git apply ~/my_changes.patch
 ```
 
@@ -623,7 +647,8 @@ $ git apply ~/my_changes.patch
 
 然后……可以思考下一次贡献了！
 
-Rails 贡献者
-------------
+<a class="anchor" id="rails-contributors"></a>
 
-所有贡献者，不管是通过 master 还是 docrails 贡献的，都在 [Rails Contributors 页面](http://contributors.rubyonrails.org/)中列出。
+## Rails 贡献者
+
+所有贡献者都在 [Rails Contributors 页面](http://contributors.rubyonrails.org/)中列出。

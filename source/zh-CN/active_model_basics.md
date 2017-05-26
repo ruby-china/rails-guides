@@ -1,26 +1,25 @@
-Active Model 基础
-=================
+# Active Model 基础
 
 本文简述模型类。Active Model 允许使用 Action Pack 辅助方法与普通的 Ruby 类交互。Active Model 还协助构建自定义的 ORM，可在 Rails 框架外部使用。
 
 读完本文后，您将学到：
 
-- Active Record 模型的行为；
+*   Active Record 模型的行为；
+*   回调和数据验证的工作方式；
+*   序列化程序的工作方式；
+*   Active Model 与 Rails 国际化（i18n）框架的集成。
 
-- 回调和数据验证的工作方式；
-
-- 序列化程序的工作方式；
-
-- Active Model 与 Rails 国际化（i18n）框架的集成。
+-----------------------------------------------------------------------------
 
 NOTE: 本文原文尚未完工！
 
---------------------------------------------------------------------------------
+<a class="anchor" id="active-model-basics-introduction"></a>
 
-简介
-----
+## 简介
 
 Active Model 库包含很多模块，用于开发要在 Active Record 中存储的类。下面说明其中部分模块。
+
+<a class="anchor" id="attribute-methods"></a>
 
 ### 属性方法
 
@@ -53,6 +52,8 @@ person.reset_age     # => 0
 person.age_highest?  # => false
 ```
 
+<a class="anchor" id="callbacks"></a>
+
 ### 回调
 
 `ActiveModel::Callbacks` 模块为 Active Record 提供回调，在某个时刻运行。定义回调之后，可以使用前置、后置和环绕方法包装。
@@ -78,6 +79,8 @@ class Person
 end
 ```
 
+<a class="anchor" id="conversion"></a>
+
 ### 转换
 
 如果一个类定义了 `persisted?` 和 `id` 方法，可以在那个类中引入 `ActiveModel::Conversion` 模块，这样便能在类的对象上调用 Rails 提供的转换方法。
@@ -100,6 +103,8 @@ person.to_model == person  # => true
 person.to_key              # => nil
 person.to_param            # => nil
 ```
+
+<a class="anchor" id="dirty"></a>
 
 ### 弄脏
 
@@ -135,6 +140,8 @@ class Person
 end
 ```
 
+<a class="anchor" id="querying-object-directly-for-its-list-of-all-changed-attributes"></a>
+
 #### 直接查询对象，获取所有被修改的属性列表
 
 ```ruby
@@ -144,7 +151,7 @@ person.changed? # => false
 person.first_name = "First Name"
 person.first_name # => "First Name"
 
-# 如果修改属性后未保存，返回 true，否则返回 false
+# 如果修改属性后未保存，返回 true
 person.changed? # => true
 
 # 返回修改之后没有保存的属性列表
@@ -156,6 +163,8 @@ person.changed_attributes # => {"first_name"=>nil}
 # 返回一个散列，键为修改的属性名，值是一个数组，包含旧值和新值
 person.changes # => {"first_name"=>[nil, "First Name"]}
 ```
+
+<a class="anchor" id="attribute-based-accessor-methods"></a>
 
 #### 基于属性的存取方法
 
@@ -179,6 +188,8 @@ person.first_name_was # => nil
 person.first_name_change # => [nil, "First Name"]
 person.last_name_change # => nil
 ```
+
+<a class="anchor" id="validations"></a>
 
 ### 数据验证
 
@@ -207,6 +218,8 @@ person.token = nil
 person.valid?                        # => raises ActiveModel::StrictValidationFailed
 ```
 
+<a class="anchor" id="naming"></a>
+
 ### 命名
 
 `ActiveModel::Naming` 添加一些类方法，便于管理命名和路由。这个模块定义了 `model_name` 类方法，它使用 `ActiveSupport::Inflector` 中的一些方法定义一些存取方法。
@@ -227,6 +240,8 @@ Person.model_name.i18n_key            # => :person
 Person.model_name.route_key           # => "people"
 Person.model_name.singular_route_key  # => "person"
 ```
+
+<a class="anchor" id="model"></a>
 
 ### 模型
 
@@ -249,13 +264,10 @@ end
 
 引入 `ActiveModel::Model` 后，将获得以下功能：
 
-- 模型名称内省
-
-- 转换
-
-- 翻译
-
-- 数据验证
+*   模型名称内省
+*   转换
+*   翻译
+*   数据验证
 
 还能像 Active Record 对象那样使用散列指定属性，初始化对象。
 
@@ -270,6 +282,8 @@ email_contact.persisted? # => false
 ```
 
 只要一个类引入了 `ActiveModel::Model`，它就能像 Active Record 对象那样使用 `form_for`、`render` 和任何 Action View 辅助方法。
+
+<a class="anchor" id="serialization"></a>
 
 ### 序列化
 
@@ -296,9 +310,13 @@ person.name = "Bob"
 person.serializable_hash   # => {"name"=>"Bob"}
 ```
 
+<a class="anchor" id="activemodel-serializers"></a>
+
 #### `ActiveModel::Serializers`
 
-Rails 提供了 `ActiveModel::Serializers::JSON` 序列化程序。这个模块自动引入 `ActiveModel::Serialization`。
+Rails 还提供了用于序列化和反序列化 JSON 的 `ActiveModel::Serializers::JSON`。这个模块自动引入前文介绍过的 `ActiveModel::Serialization` 模块。
+
+<a class="anchor" id="activemodel-serializers-json"></a>
 
 ##### `ActiveModel::Serializers::JSON`
 
@@ -316,7 +334,7 @@ class Person
 end
 ```
 
-调用 `as_json` 方法即可访问模型的散列表示形式。
+`as_json` 方法与 `serializable_hash` 方法相似，用于提供模型的散列表示形式。
 
 ```ruby
 person = Person.new
@@ -325,7 +343,7 @@ person.name = "Bob"
 person.as_json # => {"name"=>"Bob"}
 ```
 
-若想使用 JSON 字符串定义模型的属性，要在类中定义 `attributes=` 方法：
+还可以使用 JSON 字符串定义模型的属性。然后，要在类中定义 `attributes=` 方法：
 
 ```ruby
 class Person
@@ -354,6 +372,8 @@ person.from_json(json) # => #<Person:0x00000100c773f0 @name="Bob">
 person.name            # => "Bob"
 ```
 
+<a class="anchor" id="translation"></a>
+
 ### 翻译
 
 `ActiveModel::Translation` 模块把对象与 Rails 国际化（i18n）框架集成起来。
@@ -366,9 +386,9 @@ end
 
 使用 `human_attribute_name` 方法可以把属性名称变成对人类友好的格式。对人类友好的格式在本地化文件中定义。
 
-- `config/locales/app.pt-BR.yml`
+*   `config/locales/app.pt-BR.yml`
 
-    ``` ruby
+    ```ruby
     pt-BR:
       activemodel:
         attributes:
@@ -376,35 +396,42 @@ end
             name: 'Nome'
     ```
 
+
+
 ```ruby
 Person.human_attribute_name('name') # => "Nome"
 ```
+
+<a class="anchor" id="lint-tests"></a>
 
 ### lint 测试
 
 `ActiveModel::Lint::Tests` 模块测试对象是否符合 Active Model API。
 
-- `app/models/person.rb`
+*   `app/models/person.rb`
 
-    ``` ruby
+    ```ruby
     class Person
       include ActiveModel::Model
     end
     ```
 
-- `test/models/person_test.rb`
 
-    ``` ruby
+*   `test/models/person_test.rb`
+
+    ```ruby
     require 'test_helper'
-
+    
     class PersonTest < ActiveSupport::TestCase
       include ActiveModel::Lint::Tests
-
+    
       setup do
         @model = Person.new
       end
     end
     ```
+
+
 
 ```sh
 $ rails test
@@ -422,19 +449,23 @@ Finished in 0.024899s, 240.9735 runs/s, 1204.8677 assertions/s.
 
 为了使用 Action Pack，对象无需实现所有 API。这个模块只是提供一种指导，以防你需要全部功能。
 
+<a class="anchor" id="securepassword"></a>
+
 ### 安全密码
 
 `ActiveModel::SecurePassword` 提供安全加密密码的功能。这个模块提供了 `has_secure_password` 类方法，它定义了一个名为 `password` 的存取方法，而且有相应的数据验证。
+
+<a class="anchor" id="requirements"></a>
 
 #### 要求
 
 `ActiveModel::SecurePassword` 依赖 [bcrypt](https://github.com/codahale/bcrypt-ruby)，因此要在 `Gemfile` 中加入这个 gem，`ActiveModel::SecurePassword` 才能正确运行。为了使用安全密码，模型中必须定义一个名为 `password_digest` 的存取方法。`has_secure_password` 类方法会为 `password` 存取方法添加下述数据验证：
 
 1.  密码应该存在
+1.  密码应该等于密码确认（前提是有密码确认）
+1.  密码的最大长度为 72（`ActiveModel::SecurePassword` 依赖的 `bcrypt` 的要求）
 
-2.  密码应该等于密码确认
-
-3.  密码的最大长度为 72（`ActiveModel::SecurePassword` 依赖的 `bcrypt` 的要求）
+<a class="anchor" id="examples"></a>
 
 #### 示例
 
@@ -458,6 +489,10 @@ person.valid? # => false
 # 密码长度超过 72 时
 person.password = person.password_confirmation = 'a' * 100
 person.valid? # => false
+
+# 只有密码，没有密码确认
+person.password = 'aditya'
+person.valid? # => true
 
 # 所有数据验证都通过时
 person.password = person.password_confirmation = 'aditya'

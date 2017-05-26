@@ -1,18 +1,20 @@
-pwd = File.dirname(__FILE__)
-$:.unshift pwd
-
-begin
-  # Guides generation in the Rails repo.
-  as_lib = File.join(pwd, "../activesupport/lib")
-  ap_lib = File.join(pwd, "../actionpack/lib")
-
-  $:.unshift as_lib if File.directory?(as_lib)
-  $:.unshift ap_lib if File.directory?(ap_lib)
-rescue LoadError
-  # Guides generation from gems.
-  gem "actionpack", '>= 3.0'
-end
+$:.unshift __dir__
 
 require "rails_guides/generator"
-require "rails_guides/cn"
-RailsGuides::Generator.new.generate
+require "rails_guides/cn" # PLEASE DO NOT FORGET ME
+require "active_support/core_ext/object/blank"
+
+env_value = ->(name) { ENV[name].presence }
+env_flag  = ->(name) { "1" == env_value[name] }
+
+version = env_value["RAILS_VERSION"]
+edge    = `git rev-parse HEAD`.strip unless version
+
+RailsGuides::Generator.new(
+  edge:     edge,
+  version:  version,
+  all:      env_flag["ALL"],
+  only:     env_value["ONLY"],
+  kindle:   env_flag["KINDLE"],
+  language: env_value["GUIDES_LANGUAGE"]
+).generate

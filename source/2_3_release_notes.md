@@ -3,7 +3,7 @@
 Ruby on Rails 2.3 Release Notes
 ===============================
 
-Rails 2.3 delivers a variety of new and improved features, including pervasive Rack integration, refreshed support for Rails Engines, nested transactions for Active Record, dynamic and default scopes, unified rendering, more efficient routing, application templates, and quiet backtraces. This list covers the major upgrades, but doesn't include every little bug fix and change. If you want to see everything, check out the [list of commits](http://github.com/rails/rails/commits/2-3-stable) in the main Rails repository on GitHub or review the `CHANGELOG` files for the individual Rails components.
+Rails 2.3 delivers a variety of new and improved features, including pervasive Rack integration, refreshed support for Rails Engines, nested transactions for Active Record, dynamic and default scopes, unified rendering, more efficient routing, application templates, and quiet backtraces. This list covers the major upgrades, but doesn't include every little bug fix and change. If you want to see everything, check out the [list of commits](https://github.com/rails/rails/commits/2-3-stable) in the main Rails repository on GitHub or review the `CHANGELOG` files for the individual Rails components.
 
 --------------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ Documentation
 
 The [Ruby on Rails guides](http://guides.rubyonrails.org/) project has published several additional guides for Rails 2.3. In addition, a [separate site](http://edgeguides.rubyonrails.org/) maintains updated copies of the Guides for Edge Rails. Other documentation efforts include a relaunch of the [Rails wiki](http://newwiki.rubyonrails.org/) and early planning for a Rails Book.
 
-* More Information: [Rails Documentation Projects](http://weblog.rubyonrails.org/2009/1/15/rails-documentation-projects.)
+* More Information: [Rails Documentation Projects](http://weblog.rubyonrails.org/2009/1/15/rails-documentation-projects)
 
 Ruby 1.9.1 Support
 ------------------
@@ -179,7 +179,7 @@ developers = Developer.find(:all, :group => "salary",
   :having => "sum(salary) > 10000", :select => "salary")
 ```
 
-* Lead Contributor: [Emilio Tagua](http://github.com/miloops)
+* Lead Contributor: [Emilio Tagua](https://github.com/miloops)
 
 ### Reconnecting MySQL Connections
 
@@ -377,7 +377,7 @@ You can write this view in Rails 2.3:
 * Lead Contributor: [Eloy Duran](http://superalloy.nl/)
 * More Information:
     * [Nested Model Forms](http://weblog.rubyonrails.org/2009/1/26/nested-model-forms)
-    * [complex-form-examples](http://github.com/alloy/complex-form-examples)
+    * [complex-form-examples](https://github.com/alloy/complex-form-examples)
     * [What's New in Edge Rails: Nested Object Forms](http://archives.ryandaigle.com/articles/2009/2/1/what-s-new-in-edge-rails-nested-attributes)
 
 ### Smart Rendering of Partials
@@ -421,7 +421,7 @@ You're likely familiar with Rails' practice of adding timestamps to static asset
 
 Asset hosts get more flexible in edge Rails with the ability to declare an asset host as a specific object that responds to a call. This allows you to implement any complex logic you need in your asset hosting.
 
-* More Information: [asset-hosting-with-minimum-ssl](http://github.com/dhh/asset-hosting-with-minimum-ssl/tree/master)
+* More Information: [asset-hosting-with-minimum-ssl](https://github.com/dhh/asset-hosting-with-minimum-ssl/tree/master)
 
 ### grouped_options_for_select Helper Method
 
@@ -605,8 +605,8 @@ Deprecated
 
 A few pieces of older code are deprecated in this release:
 
-* If you're one of the (fairly rare) Rails developers who deploys in a fashion that depends on the inspector, reaper, and spawner scripts, you'll need to know that those scripts are no longer included in core Rails. If you need them, you'll be able to pick up copies via the [irs_process_scripts](http://github.com/rails/irs_process_scripts/tree) plugin.
-* `render_component` goes from "deprecated" to "nonexistent" in Rails 2.3. If you still need it, you can install the [render_component plugin](http://github.com/rails/render_component/tree/master).
+* If you're one of the (fairly rare) Rails developers who deploys in a fashion that depends on the inspector, reaper, and spawner scripts, you'll need to know that those scripts are no longer included in core Rails. If you need them, you'll be able to pick up copies via the [irs_process_scripts](https://github.com/rails/irs_process_scripts/tree) plugin.
+* `render_component` goes from "deprecated" to "nonexistent" in Rails 2.3. If you still need it, you can install the [render_component plugin](https://github.com/rails/render_component/tree/master).
 * Support for Rails components has been removed.
 * If you were one of the people who got used to running `script/performance/request` to look at performance based on integration tests, you need to learn a new trick: that script has been removed from core Rails now. There's a new request_profiler plugin that you can install to get the exact same functionality back.
 * `ActionController::Base#session_enabled?` is deprecated because sessions are lazy-loaded now.
@@ -614,7 +614,7 @@ A few pieces of older code are deprecated in this release:
 * Some integration test helpers have been removed. `response.headers["Status"]` and `headers["Status"]` will no longer return anything. Rack does not allow "Status" in its return headers. However you can still use the `status` and `status_message` helpers. `response.headers["cookie"]` and `headers["cookie"]` will no longer return any CGI cookies. You can inspect `headers["Set-Cookie"]` to see the raw cookie header or use the `cookies` helper to get a hash of the cookies sent to the client.
 * `formatted_polymorphic_url` is deprecated. Use `polymorphic_url` with `:format` instead.
 * The `:http_only` option in `ActionController::Response#set_cookie` has been renamed to `:httponly`.
-* The `:connector` and `:skip_last_comma` options of `to_sentence` have been replaced by `:words_connnector`, `:two_words_connector`, and `:last_word_connector` options.
+* The `:connector` and `:skip_last_comma` options of `to_sentence` have been replaced by `:words_connector`, `:two_words_connector`, and `:last_word_connector` options.
 * Posting a multipart form with an empty `file_field` control used to submit an empty string to the controller. Now it submits a nil, due to differences between Rack's multipart parser and the old Rails one.
 
 Credits

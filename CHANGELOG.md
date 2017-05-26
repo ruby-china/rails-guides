@@ -1,3 +1,7 @@
+## Rails 5.1.0 (April 27, 2017) ##
+
+*   No changes.
+
 ## Rails 5.0.1 (December 21, 2016) ##
 
 *   No changes.

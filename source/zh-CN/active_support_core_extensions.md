@@ -1,5 +1,4 @@
-Active Support 核心扩展
-=======================
+# Active Support 核心扩展
 
 Active Support 是 Ruby on Rails 的一个组件，扩展了 Ruby 语言，提供了一些实用功能。
 
@@ -7,18 +6,18 @@ Active Support 丰富了 Rails 使用的编程语言，目的是便于开发 Rai
 
 读完本文后，您将学到：
 
-- 核心扩展是什么；
+*   核心扩展是什么；
+*   如何加载所有扩展；
+*   如何按需加载想用的扩展；
+*   Active Support 提供了哪些扩展。
 
-- 如何加载所有扩展；
+-----------------------------------------------------------------------------
 
-- 如何按需加载想用的扩展；
+<a class="anchor" id="how-to-load-core-extensions"></a>
 
-- Active Support 提供了哪些扩展。
+## 如何加载核心扩展
 
---------------------------------------------------------------------------------
-
-如何加载核心扩展
-----------------
+<a class="anchor" id="stand-alone-active-support"></a>
 
 ### 独立的 Active Support
 
@@ -31,6 +30,8 @@ require 'active_support'
 ```
 
 我们来看一下到底应该如何加载。
+
+<a class="anchor" id="cherry-picking-a-definition"></a>
 
 #### 按需加载
 
@@ -49,6 +50,8 @@ require 'active_support/core_ext/object/blank'
 
 Active Support 的设计方式精良，确保按需加载时真的只加载所需的扩展。
 
+<a class="anchor" id="loading-grouped-core-extensions"></a>
+
 #### 成组加载核心扩展
 
 下一层级是加载 `Object` 对象的所有扩展。一般来说，对 `SomeClass` 的扩展都保存在 `active_support/core_ext/some_class` 文件夹中。
@@ -60,6 +63,8 @@ require 'active_support'
 require 'active_support/core_ext/object'
 ```
 
+<a class="anchor" id="loading-all-core-extensions"></a>
+
 #### 加载所有扩展
 
 如果想加载所有核心扩展，可以这么做：
@@ -68,6 +73,8 @@ require 'active_support/core_ext/object'
 require 'active_support'
 require 'active_support/core_ext'
 ```
+
+<a class="anchor" id="loading-all-active-support"></a>
 
 #### 加载 Active Support 提供的所有功能
 
@@ -79,24 +86,26 @@ require 'active_support/all'
 
 其实，这么做并不会把整个 Active Support 载入内存，有些功能通过 `autoload` 加载，所以真正使用时才会加载。
 
+<a class="anchor" id="active-support-within-a-ruby-on-rails-application"></a>
+
 ### 在 Rails 应用中使用 Active Support
 
 除非把 `config.active_support.bare` 设为 `true`，否则 Rails 应用不会加载 Active Support 提供的所有功能。即便全部加载，应用也会根据框架的设置按需加载所需功能，而且应用开发者还可以根据需要做更细化的选择，方法如前文所述。
 
-所有对象皆可使用的扩展
-----------------------
+<a class="anchor" id="extensions-to-all-objects"></a>
+
+## 所有对象皆可使用的扩展
+
+<a class="anchor" id="blank-questionmark-and-present-questionmark"></a>
 
 ### `blank?` 和 `present?`
 
 在 Rails 应用中，下面这些值表示空值：
 
-- `nil` 和 `false`；
-
-- 只有空白的字符串（注意下面的说明）；
-
-- 空数组和空散列；
-
-- 其他能响应 `empty?` 方法，而且返回值为 `true` 的对象；
+*   `nil` 和 `false`；
+*   只有空白的字符串（注意下面的说明）；
+*   空数组和空散列；
+*   其他能响应 `empty?` 方法，而且返回值为 `true` 的对象；
 
 TIP: 判断字符串是否为空使用的是能理解 Unicode 字符的 `[:space:]`，所以 `U+2029`（分段符）会被视为空白。
 
@@ -124,6 +133,8 @@ end
 
 NOTE: 在 `active_support/core_ext/object/blank.rb` 文件中定义。
 
+<a class="anchor" id="presence"></a>
+
 ### `presence`
 
 如果 `present?` 方法返回 `true`，`presence` 方法的返回值为调用对象，否则返回 `nil`。惯用法如下：
@@ -133,6 +144,8 @@ host = config[:host].presence || 'localhost'
 ```
 
 NOTE: 在 `active_support/core_ext/object/blank.rb` 文件中定义。
+
+<a class="anchor" id="duplicable-questionmark"></a>
 
 ### `duplicable?`
 
@@ -170,6 +183,8 @@ false.duplicable? # => false
 WARNING: 任何类都可以禁止对象复制，只需删除 `dup` 和 `clone` 两个方法，或者在这两个方法中抛出异常。因此只能在 `rescue` 语句中判断对象是否可复制。`duplicable?` 方法直接检查对象是否在上述列表中，因此比 `rescue` 的速度快。仅当你知道上述列表能满足需求时才应该使用 `duplicable?` 方法。
 
 NOTE: 在 `active_support/core_ext/object/duplicable.rb` 文件中定义。
+
+<a class="anchor" id="deep-dup"></a>
 
 ### `deep_dup`
 
@@ -216,6 +231,8 @@ number.object_id == duplicate.object_id   # => true
 
 NOTE: 在 `active_support/core_ext/object/deep_dup.rb` 文件中定义。
 
+<a class="anchor" id="try"></a>
+
 ### `try`
 
 如果只想当对象不为 `nil` 时在其上调用方法，最简单的方式是使用条件语句，但这么做把代码变复杂了。你可以使用 `try` 方法。`try` 方法和 `Object#send` 方法类似，但如果在 `nil` 上调用，返回值为 `nil`。
@@ -258,6 +275,8 @@ end
 
 NOTE: 在 `active_support/core_ext/object/try.rb` 文件中定义。
 
+<a class="anchor" id="class-eval-args-block"></a>
+
 ### `class_eval(*args, &block)`
 
 使用 `class_eval` 方法可以在对象的单例类上下文中执行代码：
@@ -279,6 +298,8 @@ end
 
 NOTE: 在 `active_support/core_ext/kernel/singleton_class.rb` 文件中定义。
 
+<a class="anchor" id="acts-like-questionmark-duck"></a>
+
 ### `acts_like?(duck)`
 
 `acts_like?` 方法检查一个类的行为是否与另一个类相似。比较是基于一个简单的约定：如果在某个类中定义了下面这个方法，就说明其接口与字符串一样。
@@ -297,6 +318,8 @@ some_klass.acts_like?(:string)
 Rails 使用这种约定定义了行为与 `Date` 和 `Time` 相似的类。
 
 NOTE: 在 `active_support/core_ext/object/acts_like.rb` 文件中定义。
+
+<a class="anchor" id="to-param"></a>
 
 ### `to_param`
 
@@ -342,6 +365,8 @@ WARNING: 应该让控制器知道重新定义了 `to_param` 方法，因为接�
 
 NOTE: 在 `active_support/core_ext/object/to_param.rb` 文件中定义。
 
+<a class="anchor" id="to-query"></a>
+
 ### `to_query`
 
 除散列之外，传入未转义的 `key`，`to_query` 方法把 `to_param` 方法的返回值赋值给 `key`，组成查询字符串。例如，重新定义了 `to_param` 方法：
@@ -369,7 +394,7 @@ account.to_query('company[name]')
 
 因此得到的值可以作为查询字符串使用。
 
-`Array#to_query` 方法在各个元素上调用 `to_query` 方法，键为 `_key_[]`，然后使用 `"&"` 合并：
+`Array#to_query` 方法在各个元素上调用 `to_query` 方法，键为 `key[]`，然后使用 `"&"` 合并：
 
 ```ruby
 [3.4, -45.6].to_query('sample')
@@ -390,6 +415,8 @@ account.to_query('company[name]')
 ```
 
 NOTE: 在 `active_support/core_ext/object/to_query.rb` 文件中定义。
+
+<a class="anchor" id="with-options"></a>
 
 ### `with_options`
 
@@ -432,15 +459,21 @@ TIP: `with_options` 方法会把方法调用转发给调用者，因此可以嵌
 
 NOTE: 在 `active_support/core_ext/object/with_options.rb` 文件中定义。
 
+<a class="anchor" id="json-support"></a>
+
 ### 对 JSON 的支持
 
 Active Support 实现的 `to_json` 方法比 `json` gem 更好用，这是因为 `Hash`、`OrderedHash` 和 `Process::Status` 等类转换成 JSON 时要做特别处理。
 
 NOTE: 在 `active_support/core_ext/object/json.rb` 文件中定义。
 
+<a class="anchor" id="instance-variables"></a>
+
 ### 实例变量
 
 Active Support 提供了很多便于访问实例变量的方法。
+
+<a class="anchor" id="instance-values"></a>
 
 #### `instance_values`
 
@@ -458,6 +491,8 @@ C.new(0, 1).instance_values # => {"x" => 0, "y" => 1}
 
 NOTE: 在 `active_support/core_ext/object/instance_variables.rb` 文件中定义。
 
+<a class="anchor" id="instance-variable-names"></a>
+
 #### `instance_variable_names`
 
 `instance_variable_names` 方法返回一个数组，实例变量的名称前面包含 `@` 符号。
@@ -473,6 +508,8 @@ C.new(0, 1).instance_variable_names # => ["@x", "@y"]
 ```
 
 NOTE: 在 `active_support/core_ext/object/instance_variables.rb` 文件中定义。
+
+<a class="anchor" id="silencing-warnings-and-exceptions"></a>
 
 ### 静默警告和异常
 
@@ -493,6 +530,8 @@ end
 
 NOTE: 在 `active_support/core_ext/kernel/reporting.rb` 文件中定义。
 
+<a class="anchor" id="in-questionmark"></a>
+
 ### `in?`
 
 `in?` 方法测试某个对象是否在另一个对象中。如果传入的对象不能响应 `include?` 方法，抛出 `ArgumentError` 异常。
@@ -508,60 +547,15 @@ NOTE: 在 `active_support/core_ext/kernel/reporting.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/object/inclusion.rb` 文件中定义。
 
-`Module` 的扩展
----------------
+<a class="anchor" id="extensions-to-module"></a>
 
-### `alias_method_chain`
+## `Module` 的扩展
 
-WARNING: 这个方法已经弃用，请使用 `Module#prepend`。
-
-在 Ruby 中，可以把方法包装成其他方法，这叫别名链（alias chain）。
-
-例如，想在功能测试中把参数看做字符串，就像在真正的请求中一样，但希望保留赋值数字等值的便利，可以在文件 `test/test_helper.rb` 中包装 `ActionDispatch::IntegrationTest#process` 方法：
-
-```ruby
-ActionDispatch::IntegrationTest.class_eval do
-  # 保存原 process 方法的引用
-  alias_method :original_process, :process
-
-  # 现在重新定义 process，委托给 original_process
-  def process('GET', path, params: nil, headers: nil, env: nil, xhr: false)
-    params = Hash[*params.map {|k, v| [k, v.to_s]}.flatten]
-    original_process('GET', path, params: params)
-  end
-end
-```
-
-`get`、`post` 等方法就是委托这个方法实现的。
-
-这种技术有个问题，`:original_process` 方法可能已经存在了。为了避免方法重名，人们者发明了一种链状结构：
-
-```ruby
-ActionDispatch::IntegrationTest.class_eval do
-  def process_with_stringified_params(...)
-    params = Hash[*params.map {|k, v| [k, v.to_s]}.flatten]
-    process_without_stringified_params(method, path, params: params)
-  end
-  alias_method :process_without_stringified_params, :process
-  alias_method :process, :process_with_stringified_params
-end
-```
-
-`alias_method_chain` 方法可以简化上述过程：
-
-```ruby
-ActionDispatch::IntegrationTest.class_eval do
-  def process_with_stringified_params(...)
-    params = Hash[*params.map {|k, v| [k, v.to_s]}.flatten]
-    process_without_stringified_params(method, path, params: params)
-  end
-  alias_method_chain :process, :stringified_params
-end
-```
-
-NOTE: 在 `active_support/core_ext/module/aliasing.rb` 文件中定义。
+<a class="anchor" id="attributes"></a>
 
 ### 属性
+
+<a class="anchor" id="alias-attribute"></a>
 
 #### `alias_attribute`
 
@@ -576,6 +570,8 @@ end
 ```
 
 NOTE: 在 `active_support/core_ext/module/aliasing.rb` 文件中定义。
+
+<a class="anchor" id="internal-attributes"></a>
 
 #### 内部属性
 
@@ -615,9 +611,11 @@ end
 
 NOTE: 在 `active_support/core_ext/module/attr_internal.rb` 文件中定义。
 
+<a class="anchor" id="module-attributes"></a>
+
 #### 模块属性
 
-方法 `mattr_reader`、`mattr_writer` 和 `mattr_accessor` 类似于为类定义的 `cattr_*` 方法。其实 `cattr_*` 方法就是 `mattr_*` 方法的别名。参见 [类属性](#类属性)。
+方法 `mattr_reader`、`mattr_writer` 和 `mattr_accessor` 类似于为类定义的 `cattr_*` 方法。其实 `cattr_*` 方法就是 `mattr_*` 方法的别名。参见 [类属性](#class-attributes)。
 
 例如，依赖机制就用到了这些方法：
 
@@ -640,7 +638,11 @@ end
 
 NOTE: 在 `active_support/core_ext/module/attribute_accessors.rb` 文件中定义。
 
+<a class="anchor" id="extensions-to-module-parents"></a>
+
 ### 父级
+
+<a class="anchor" id="parent"></a>
 
 #### `parent`
 
@@ -665,6 +667,8 @@ WARNING: 此时，`parent_name` 方法返回 `nil`。
 
 NOTE: 在 `active_support/core_ext/module/introspection.rb` 文件中定义。
 
+<a class="anchor" id="parent-name"></a>
+
 #### `parent_name`
 
 在嵌套的具名模块上调用 `parent_name` 方法，返回包含对应常量的完全限定模块名：
@@ -688,6 +692,8 @@ WARNING: 注意，此时 `parent` 方法返回 `Object`。
 
 NOTE: 在 `active_support/core_ext/module/introspection.rb` 文件中定义。
 
+<a class="anchor" id="extensions-to-module-parents-parents"></a>
+
 #### `parents`
 
 `parents` 方法在调用者上调用 `parent` 方法，直至 `Object` 为止。返回的结果是一个数组，由底而上：
@@ -707,53 +713,7 @@ M.parents       # => [X::Y, X, Object]
 
 NOTE: 在 `active_support/core_ext/module/introspection.rb` 文件中定义。
 
-#### 限定的常量名
-
-常规的 `const_defined?`、`const_get` 和 `const_set` 方法接受裸常量名。Active Support 扩展了这个 API，可以传入相对限定的常量名。
-
-新定义的方法是 `qualified_const_defined?`、`qualified_const_get` 和 `qualified_const_set`。它们的参数应该是相对接收者的限定常量名：
-
-```ruby
-Object.qualified_const_defined?("Math::PI")       # => true
-Object.qualified_const_get("Math::PI")            # => 3.141592653589793
-Object.qualified_const_set("Math::Phi", 1.618034) # => 1.618034
-```
-
-参数也可以是裸常量名：
-
-```ruby
-Math.qualified_const_get("E") # => 2.718281828459045
-```
-
-这些方法的行为与内置的对应方法类似。不过，`qualified_constant_defined?` 方法接受一个可选参数（第二个），指明判断时是否检查祖先树。沿路径检查时，表达式中的每个常量都会考虑这个参数。
-
-例如：
-
-```ruby
-module M
-  X = 1
-end
-
-module N
-  class C
-    include M
-  end
-end
-```
-
-此时，`qualified_const_defined?` 的行为如下：
-
-```ruby
-N.qualified_const_defined?("C::X", false) # => false
-N.qualified_const_defined?("C::X", true)  # => true
-N.qualified_const_defined?("C::X")        # => true
-```
-
-如上例所示，第二个参数的默认值为 `true`，跟 `const_defined?` 一样。
-
-为了与内置方法保持连贯，只接受相对路径。完全限定常量名，如 `::Math::PI`，会抛出 `NameError` 异常。
-
-NOTE: 在 `active_support/core_ext/module/qualified_const.rb` 文件中定义。
+<a class="anchor" id="reachable"></a>
 
 ### 可达性
 
@@ -792,6 +752,8 @@ orphan.reachable? # => false
 ```
 
 NOTE: 在 `active_support/core_ext/module/reachable.rb` 文件中定义。
+
+<a class="anchor" id="anonymous"></a>
 
 ### 匿名
 
@@ -833,6 +795,8 @@ m.anonymous? # => false
 但是按照定义，匿名模块是不可达的。
 
 NOTE: 在 `active_support/core_ext/module/anonymous.rb` 文件中定义。
+
+<a class="anchor" id="method-delegation"></a>
 
 ### 方法委托
 
@@ -918,6 +882,8 @@ delegate :size, to: :attachment, prefix: :avatar
 
 NOTE: 在 `active_support/core_ext/module/delegation.rb` 文件中定义。
 
+<a class="anchor" id="redefining-methods"></a>
+
 ### 重新定义方法
 
 有时需要使用 `define_method` 定义方法，但却不知道那个方法名是否已经存在。如果存在，而且启用了警告消息，会发出警告。这没什么，但却不够利落。
@@ -926,10 +892,15 @@ NOTE: 在 `active_support/core_ext/module/delegation.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/module/remove_method.rb` 文件中定义。
 
-`Class` 的扩展
---------------
+<a class="anchor" id="extensions-to-class"></a>
+
+## `Class` 的扩展
+
+<a class="anchor" id="class-attributes"></a>
 
 ### 类属性
+
+<a class="anchor" id="class-attribute"></a>
 
 #### `class_attribute`
 
@@ -1002,7 +973,8 @@ class A
   class_attribute :x, instance_reader: false
 end
 
-A.new.x = 1 # NoMethodError
+A.new.x = 1
+A.new.x # NoMethodError
 ```
 
 为了方便，`class_attribute` 还会定义实例判断方法，对实例读值方法的返回值做双重否定。在上例中，判断方法是 `x?`。
@@ -1012,6 +984,8 @@ A.new.x = 1 # NoMethodError
 如果不想要实例判断方法，传入 `instance_predicate: false`，这样就不会定义了。
 
 NOTE: 在 `active_support/core_ext/class/attribute.rb` 文件中定义。
+
+<a class="anchor" id="cattr-reader-cattr-writer-and-cattr-accessor"></a>
 
 #### `cattr_reader`、`cattr_writer` 和 `cattr_accessor`
 
@@ -1066,7 +1040,11 @@ end
 
 NOTE: 在 `active_support/core_ext/module/attribute_accessors.rb` 文件中定义。
 
+<a class="anchor" id="subclasses-descendants"></a>
+
 ### 子类和后代
+
+<a class="anchor" id="subclasses"></a>
 
 #### `subclasses`
 
@@ -1090,6 +1068,8 @@ C.subclasses # => [B, D]
 
 NOTE: 在 `active_support/core_ext/class/subclasses.rb` 文件中定义。
 
+<a class="anchor" id="descendants"></a>
+
 #### `descendants`
 
 `descendants` 方法返回接收者的后代：
@@ -1112,14 +1092,21 @@ C.descendants # => [B, A, D]
 
 NOTE: 在 `active_support/core_ext/class/subclasses.rb` 文件中定义。
 
-`String` 的扩展
----------------
+<a class="anchor" id="extensions-to-string"></a>
+
+## `String` 的扩展
+
+<a class="anchor" id="output-safety"></a>
 
 ### 输出的安全性
 
+<a class="anchor" id="motivation"></a>
+
 #### 引子
 
-把数据插入 HTML 模板要格外小心。例如，不能原封不动地把 `@review.title` 内插到 HTML 页面中。假如标题是“Flanagan & Matz rules!”，得到的输出格式就不对，因为 & 会转义成“&amp;”。更糟的是，如果应用编写不当，这可能留下严重的安全漏洞，因为用户可以注入恶意的 HTML，设定精心编造的标题。关于这个问题的详情，请阅读 [安全指南](security.html#跨站脚本（XSS）)对跨站脚本的说明。
+把数据插入 HTML 模板要格外小心。例如，不能原封不动地把 `@review.title` 内插到 HTML 页面中。假如标题是“Flanagan &amp; Matz rules!”，得到的输出格式就不对，因为 &amp; 会转义成“&amp;amp;”。更糟的是，如果应用编写不当，这可能留下严重的安全漏洞，因为用户可以注入恶意的 HTML，设定精心编造的标题。关于这个问题的详情，请阅读 [跨站脚本（XSS）](security.html#cross-site-scripting-xss)对跨站脚本的说明。
+
+<a class="anchor" id="safe-strings"></a>
 
 #### 安全字符串
 
@@ -1188,6 +1175,8 @@ end
 
 NOTE: 在 `active_support/core_ext/string/output_safety.rb` 文件中定义。
 
+<a class="anchor" id="transformation"></a>
+
 #### 转换
 
 通常，修改字符串的方法都返回不安全的字符串，前文所述的拼接除外。例如，`downcase`、`gsub`、`strip`、`chomp`、`underscore`，等等。
@@ -1196,13 +1185,19 @@ NOTE: 在 `active_support/core_ext/string/output_safety.rb` 文件中定义。
 
 TIP: 不管是否修改了自身，安全性都丧失了。
 
+<a class="anchor" id="conversion-and-coercion"></a>
+
 #### 类型转换和强制转换
 
 在安全字符串上调用 `to_s`，得到的还是安全字符串，但是使用 `to_str` 强制转换，得到的是不安全的字符串。
 
+<a class="anchor" id="copying"></a>
+
 #### 复制
 
 在安全字符串上调用 `dup` 或 `clone`，得到的还是安全字符串。
+
+<a class="anchor" id="remove"></a>
 
 ### `remove`
 
@@ -1215,6 +1210,8 @@ TIP: 不管是否修改了自身，安全性都丧失了。
 也有破坏性版本，`String#remove!`。
 
 NOTE: 在 `active_support/core_ext/string/filters.rb` 文件中定义。
+
+<a class="anchor" id="squish"></a>
 
 ### `squish`
 
@@ -1229,6 +1226,8 @@ NOTE: 在 `active_support/core_ext/string/filters.rb` 文件中定义。
 注意，既能处理 ASCII 空白，也能处理 Unicode 空白。
 
 NOTE: 在 `active_support/core_ext/string/filters.rb` 文件中定义。
+
+<a class="anchor" id="truncate"></a>
 
 ### `truncate`
 
@@ -1268,6 +1267,8 @@ NOTE: 在 `active_support/core_ext/string/filters.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/string/filters.rb` 文件中定义。
 
+<a class="anchor" id="truncate-words"></a>
+
 ### `truncate_words`
 
 `truncate_words` 方法在指定个单词处截断接收者，返回一个副本：
@@ -1300,6 +1301,8 @@ NOTE: 在 `active_support/core_ext/string/filters.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/string/filters.rb` 文件中定义。
 
+<a class="anchor" id="inquiry"></a>
+
 ### `inquiry`
 
 `inquiry` 方法把字符串转换成 `StringInquirer` 对象，这样可以使用漂亮的方式检查相等性：
@@ -1308,6 +1311,8 @@ NOTE: 在 `active_support/core_ext/string/filters.rb` 文件中定义。
 "production".inquiry.production? # => true
 "active".inquiry.inactive?       # => false
 ```
+
+<a class="anchor" id="starts-with-questionmark-and-ends-with-questionmark"></a>
 
 ### `starts_with?` 和 `ends_with?`
 
@@ -1319,6 +1324,8 @@ Active Support 为 `String#start_with?` 和 `String#end_with?` 定义了第三�
 ```
 
 NOTE: 在 `active_support/core_ext/string/starts_ends_with.rb` 文件中定义。
+
+<a class="anchor" id="strip-heredoc"></a>
 
 ### `strip_heredoc`
 
@@ -1343,6 +1350,8 @@ end
 从技术层面来说，这个方法寻找整个字符串中的最小缩进量，然后删除那么多的前导空白。
 
 NOTE: 在 `active_support/core_ext/string/strip.rb` 文件中定义。
+
+<a class="anchor" id="indent"></a>
 
 ### `indent`
 
@@ -1381,7 +1390,11 @@ EOS
 
 NOTE: 在 `active_support/core_ext/string/indent.rb` 文件中定义。
 
+<a class="anchor" id="access"></a>
+
 ### 访问
+
+<a class="anchor" id="at-position"></a>
 
 #### `at(position)`
 
@@ -1396,6 +1409,8 @@ NOTE: 在 `active_support/core_ext/string/indent.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/string/access.rb` 文件中定义。
 
+<a class="anchor" id="from-position"></a>
+
 #### `from(position)`
 
 返回子串，从 `position` 位置开始：
@@ -1408,6 +1423,8 @@ NOTE: 在 `active_support/core_ext/string/access.rb` 文件中定义。
 ```
 
 NOTE: 在 `active_support/core_ext/string/access.rb` 文件中定义。
+
+<a class="anchor" id="to-position"></a>
 
 #### `to(position)`
 
@@ -1422,11 +1439,15 @@ NOTE: 在 `active_support/core_ext/string/access.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/string/access.rb` 文件中定义。
 
+<a class="anchor" id="first-limit-1"></a>
+
 #### `first(limit = 1)`
 
 如果 `n` &gt; 0，`str.first(n)` 的作用与 `str.to(n-1)` 一样；如果 `n` == 0，返回一个空字符串。
 
 NOTE: 在 `active_support/core_ext/string/access.rb` 文件中定义。
+
+<a class="anchor" id="last-limit-1"></a>
 
 #### `last(limit = 1)`
 
@@ -1434,7 +1455,11 @@ NOTE: 在 `active_support/core_ext/string/access.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/string/access.rb` 文件中定义。
 
+<a class="anchor" id="inflections"></a>
+
 ### 词形变化
+
+<a class="anchor" id="pluralize"></a>
 
 #### `pluralize`
 
@@ -1468,6 +1493,8 @@ end
 
 NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
 
+<a class="anchor" id="singularize"></a>
+
 #### `singularize`
 
 作用与 `pluralize` 相反：
@@ -1490,6 +1517,8 @@ end
 ```
 
 NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
+
+<a class="anchor" id="camelize"></a>
 
 #### `camelize`
 
@@ -1526,18 +1555,21 @@ end
 为使用这种风格的语言计算方法名时可以这么设定，例如 JavaScript。
 
 TIP: 一般来说，可以把 `camelize` 视作 `underscore` 的逆操作，不过也有例外：`"SSLError".underscore.camelize` 的结果是 `"SslError"`。为了支持这种情况，Active Support 允许你在 `config/initializers/inflections.rb` 文件中指定缩略词。
->
-> ``` ruby
-> ActiveSupport::Inflector.inflections do |inflect|
->   inflect.acronym 'SSL'
-> end
->
-> "SSLError".underscore.camelize # => "SSLError"
-> ```
+
+```ruby
+ActiveSupport::Inflector.inflections do |inflect|
+  inflect.acronym 'SSL'
+end
+
+"SSLError".underscore.camelize # => "SSLError"
+```
+
 
 `camelcase` 是 `camelize` 的别名。
 
 NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
+
+<a class="anchor" id="underscore"></a>
 
 #### `underscore`
 
@@ -1578,6 +1610,8 @@ TIP: 一般来说，可以把 `underscore` 视作 `camelize` 的逆操作，不�
 
 NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
 
+<a class="anchor" id="titleize"></a>
+
 #### `titleize`
 
 `titleize` 方法把接收者中的单词首字母变成大写：
@@ -1590,6 +1624,8 @@ NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
 `titlecase` 是 `titleize` 的别名。
 
 NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
+
+<a class="anchor" id="dasherize"></a>
 
 #### `dasherize`
 
@@ -1611,6 +1647,8 @@ end
 ```
 
 NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
+
+<a class="anchor" id="demodulize"></a>
 
 #### `demodulize`
 
@@ -1639,6 +1677,8 @@ end
 
 NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
 
+<a class="anchor" id="deconstantize"></a>
+
 #### `deconstantize`
 
 `deconstantize` 方法去掉限定常量引用表达式的最右侧部分，留下常量的容器：
@@ -1649,20 +1689,9 @@ NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
 "Admin::Hotel::ReservationUtils".deconstantize # => "Admin::Hotel"
 ```
 
-例如，Active Support 在 `Module#qualified_const_set` 中使用了这个方法：
-
-```ruby
-def qualified_const_set(path, value)
-  QualifiedConstUtils.raise_if_absolute(path)
-
-  const_name = path.demodulize
-  mod_name = path.deconstantize
-  mod = mod_name.empty? ? self : qualified_const_get(mod_name)
-  mod.const_set(const_name, value)
-end
-```
-
 NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
+
+<a class="anchor" id="parameterize"></a>
 
 #### `parameterize`
 
@@ -1691,6 +1720,8 @@ NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
 
+<a class="anchor" id="tableize"></a>
+
 #### `tableize`
 
 `tableize` 方法相当于先调用 `underscore`，再调用 `pluralize`。
@@ -1704,6 +1735,8 @@ NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
 一般来说，`tableize` 返回简单模型对应的表名。Active Record 真正的实现方式不是只使用 `tableize`，还会使用 `demodulize`，再检查一些可能影响返回结果的选项。
 
 NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
+
+<a class="anchor" id="classify"></a>
 
 #### `classify`
 
@@ -1724,6 +1757,8 @@ NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
 注意，`classify` 方法返回的类名是字符串。你可以调用 `constantize` 方法，得到真正的类对象，如下一节所述。
 
 NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
+
+<a class="anchor" id="constantize"></a>
 
 #### `constantize`
 
@@ -1768,23 +1803,20 @@ end
 
 NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
 
+<a class="anchor" id="humanize"></a>
+
 #### `humanize`
 
 `humanize` 方法对属性名做调整，以便显示给终端用户查看。
 
 这个方法所做的转换如下：
 
-- 根据参数做对人类友好的词形变化
-
-- 删除前导下划线（如果有）
-
-- 删除“\_id”后缀（如果有）
-
-- 把下划线替换成空格（如果有）
-
-- 把所有单词变成小写，缩略词除外
-
-- 把第一个单词的首字母变成大写
+*   根据参数做对人类友好的词形变化
+*   删除前导下划线（如果有）
+*   删除“_id”后缀（如果有）
+*   把下划线替换成空格（如果有）
+*   把所有单词变成小写，缩略词除外
+*   把第一个单词的首字母变成大写
 
 把 `:capitalize` 选项设为 `false`（默认值为 `true`）可以禁止把第一个单词的首字母变成大写。
 
@@ -1819,9 +1851,11 @@ end
 
 NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
 
+<a class="anchor" id="foreign-key"></a>
+
 #### `foreign_key`
 
-`foreign_key` 方法根据类名计算外键列的名称。为此，它先调用 `demodulize`，再调用 `underscore`，最后加上“\_id”：
+`foreign_key` 方法根据类名计算外键列的名称。为此，它先调用 `demodulize`，再调用 `underscore`，最后加上“_id”：
 
 ```ruby
 "User".foreign_key           # => "user_id"
@@ -1829,7 +1863,7 @@ NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
 "Admin::Session".foreign_key # => "session_id"
 ```
 
-如果不想添加“\_id”中的下划线，传入 `false` 参数：
+如果不想添加“_id”中的下划线，传入 `false` 参数：
 
 ```ruby
 "User".foreign_key(false) # => "userid"
@@ -1844,7 +1878,11 @@ foreign_key = options[:foreign_key] || reflection.active_record.name.foreign_key
 
 NOTE: 在 `active_support/core_ext/string/inflections.rb` 文件中定义。
 
+<a class="anchor" id="extensions-to-string-conversions"></a>
+
 ### 转换
+
+<a class="anchor" id="to-date-to-time-to-datetime"></a>
 
 #### `to_date`、`to_time`、`to_datetime`
 
@@ -1871,8 +1909,11 @@ TIP: 参数为空时，这三个方法返回 `nil`。
 
 NOTE: 在 `active_support/core_ext/string/conversions.rb` 文件中定义。
 
-`Numeric` 的扩展
-----------------
+<a class="anchor" id="extensions-to-numeric"></a>
+
+## `Numeric` 的扩展
+
+<a class="anchor" id="bytes"></a>
 
 ### 字节
 
@@ -1905,6 +1946,8 @@ exabytes
 
 NOTE: 在 `active_support/core_ext/numeric/bytes.rb` 文件中定义。
 
+<a class="anchor" id="time"></a>
+
 ### 时间
 
 用于计算和声明时间，例如 `45.minutes + 2.hours + 4.years`。
@@ -1923,6 +1966,8 @@ NOTE: 在 `active_support/core_ext/numeric/bytes.rb` 文件中定义。
 ```
 
 NOTE: 在 `active_support/core_ext/numeric/time.rb` 文件中定义。
+
+<a class="anchor" id="formatting"></a>
 
 ### 格式化
 
@@ -2013,8 +2058,11 @@ NOTE: 在 `active_support/core_ext/numeric/time.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/numeric/conversions.rb` 文件中定义。
 
-`Integer` 的扩展
-----------------
+<a class="anchor" id="extensions-to-integer"></a>
+
+## `Integer` 的扩展
+
+<a class="anchor" id="multiple-of-questionmark"></a>
 
 ### `multiple_of?`
 
@@ -2026,6 +2074,8 @@ NOTE: 在 `active_support/core_ext/numeric/conversions.rb` 文件中定义。
 ```
 
 NOTE: 在 `active_support/core_ext/integer/multiple.rb` 文件中定义。
+
+<a class="anchor" id="ordinal"></a>
 
 ### `ordinal`
 
@@ -2042,6 +2092,8 @@ NOTE: 在 `active_support/core_ext/integer/multiple.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/integer/inflections.rb` 文件中定义。
 
+<a class="anchor" id="ordinalize"></a>
+
 ### `ordinalize`
 
 `ordinalize` 方法返回整数接收者的序数词（字符串）。注意，`ordinal` 方法只返回后缀。
@@ -2057,8 +2109,11 @@ NOTE: 在 `active_support/core_ext/integer/inflections.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/integer/inflections.rb` 文件中定义。
 
-`BigDecimal` 的扩展
--------------------
+<a class="anchor" id="extensions-to-bigdecimal"></a>
+
+## `BigDecimal` 的扩展
+
+<a class="anchor" id="extensions-to-bigdecimal-to-s"></a>
 
 ### `to_s`
 
@@ -2080,8 +2135,11 @@ BigDecimal.new(5.00, 6).to_s(:db)  # => "5.0"
 BigDecimal.new(5.00, 6).to_s("e")  # => "0.5E1"
 ```
 
-`Enumerable` 的扩展
--------------------
+<a class="anchor" id="extensions-to-enumerable"></a>
+
+## `Enumerable` 的扩展
+
+<a class="anchor" id="sum"></a>
 
 ### `sum`
 
@@ -2097,7 +2155,7 @@ BigDecimal.new(5.00, 6).to_s("e")  # => "0.5E1"
 ```ruby
 [[1, 2], [2, 3], [3, 4]].sum    # => [1, 2, 2, 3, 3, 4]
 %w(foo bar baz).sum             # => "foobarbaz"
-{a: 1, b: 2, c: 3}.sum # => [:b, 2, :c, 3, :a, 1]
+{a: 1, b: 2, c: 3}.sum          # => [:b, 2, :c, 3, :a, 1]
 ```
 
 空集合的元素之和默认为零，不过可以自定义：
@@ -2122,6 +2180,8 @@ BigDecimal.new(5.00, 6).to_s("e")  # => "0.5E1"
 
 NOTE: 在 `active_support/core_ext/enumerable.rb` 文件中定义。
 
+<a class="anchor" id="index-by"></a>
+
 ### `index_by`
 
 `index_by` 方法生成一个散列，使用某个键索引可枚举对象中的元素。
@@ -2136,6 +2196,8 @@ invoices.index_by(&:number)
 WARNING: 键一般是唯一的。如果块为不同的元素返回相同的键，不会使用那个键构建集合。最后一个元素胜出。
 
 NOTE: 在 `active_support/core_ext/enumerable.rb` 文件中定义。
+
+<a class="anchor" id="many-questionmark"></a>
 
 ### `many?`
 
@@ -2155,6 +2217,8 @@ NOTE: 在 `active_support/core_ext/enumerable.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/enumerable.rb` 文件中定义。
 
+<a class="anchor" id="exclude-questionmark"></a>
+
 ### `exclude?`
 
 `exclude?` 方法测试指定对象是否不在集合中。这是内置方法 `include?` 的逆向判断。
@@ -2164,6 +2228,8 @@ to_visit << node if visited.exclude?(node)
 ```
 
 NOTE: 在 `active_support/core_ext/enumerable.rb` 文件中定义。
+
+<a class="anchor" id="without"></a>
 
 ### `without`
 
@@ -2175,6 +2241,8 @@ NOTE: 在 `active_support/core_ext/enumerable.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/enumerable.rb` 文件中定义。
 
+<a class="anchor" id="pluck"></a>
+
 ### `pluck`
 
 `pluck` 方法基于指定的键返回一个数组：
@@ -2185,8 +2253,11 @@ NOTE: 在 `active_support/core_ext/enumerable.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/enumerable.rb` 文件中定义。
 
-`Array` 的扩展
---------------
+<a class="anchor" id="extensions-to-array"></a>
+
+## `Array` 的扩展
+
+<a class="anchor" id="accessing"></a>
 
 ### 访问
 
@@ -2214,7 +2285,11 @@ NOTE: 在 `active_support/core_ext/enumerable.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/array/access.rb` 文件中定义。
 
+<a class="anchor" id="adding-elements"></a>
+
 ### 添加元素
+
+<a class="anchor" id="prepend"></a>
 
 #### `prepend`
 
@@ -2227,6 +2302,8 @@ NOTE: 在 `active_support/core_ext/array/access.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/array/prepend_and_append.rb` 文件中定义。
 
+<a class="anchor" id="append"></a>
+
 #### `append`
 
 这个方法是 `Array#<<` 的别名。
@@ -2237,6 +2314,8 @@ NOTE: 在 `active_support/core_ext/array/prepend_and_append.rb` 文件中定义�
 ```
 
 NOTE: 在 `active_support/core_ext/array/prepend_and_append.rb` 文件中定义。
+
+<a class="anchor" id="options-extraction"></a>
 
 ### 选项提取
 
@@ -2266,7 +2345,11 @@ end
 
 NOTE: 在 `active_support/core_ext/array/extract_options.rb` 文件中定义。
 
+<a class="anchor" id="extensions-to-array-conversions"></a>
+
 ### 转换
+
+<a class="anchor" id="to-sentence"></a>
 
 #### `to_sentence`
 
@@ -2281,21 +2364,21 @@ NOTE: 在 `active_support/core_ext/array/extract_options.rb` 文件中定义。
 
 这个方法接受三个选项：
 
-- `:two_words_connector`：数组长度为 2 时使用什么词。默认为“ and”。
-
-- `:words_connector`：数组元素数量为 3 个以上（含）时，使用什么连接除最后两个元素之外的元素。默认为“, ”。
-
-- `:last_word_connector`：数组元素数量为 3 个以上（含）时，使用什么连接最后两个元素。默认为“, and”。
+*   `:two_words_connector`：数组长度为 2 时使用什么词。默认为“ and”。
+*   `:words_connector`：数组元素数量为 3 个以上（含）时，使用什么连接除最后两个元素之外的元素。默认为“, ”。
+*   `:last_word_connector`：数组元素数量为 3 个以上（含）时，使用什么连接最后两个元素。默认为“, and”。
 
 这些选项的默认值可以本地化，相应的键为：
 
-| 选项 | i18n 键 |
-|----|--------|
-| :two_words_connector | support.array.two_words_connector |
-| :words_connector | support.array.words_connector |
-| :last_word_connector | support.array.last_word_connector |
+| 选项 | i18n 键  |
+|---|---|
+| `:two_words_connector` | `support.array.two_words_connector`  |
+| `:words_connector` | `support.array.words_connector`  |
+| `:last_word_connector` | `support.array.last_word_connector`  |
 
 NOTE: 在 `active_support/core_ext/array/conversions.rb` 文件中定义。
+
+<a class="anchor" id="to-formatted-s"></a>
 
 #### `to_formatted_s`
 
@@ -2312,6 +2395,8 @@ invoice.lines.to_formatted_s(:db) # => "23,567,556,12"
 在上述示例中，整数是在元素上调用 `id` 得到的。
 
 NOTE: 在 `active_support/core_ext/array/conversions.rb` 文件中定义。
+
+<a class="anchor" id="extensions-to-array-conversions-to-xml"></a>
 
 #### `to_xml`
 
@@ -2414,17 +2499,17 @@ Contributor.limit(2).order(:rank).to_xml(skip_types: true)
 
 NOTE: 在 `active_support/core_ext/array/conversions.rb` 文件中定义。
 
+<a class="anchor" id="wrapping"></a>
+
 ### 包装
 
 `Array.wrap` 方法把参数包装成一个数组，除非参数已经是数组（或与数组类似的结构）。
 
 具体而言：
 
-- 如果参数是 `nil`，返回一个空数组。
-
-- 否则，如果参数响应 `to_ary` 方法，调用之；如果 `to_ary` 返回值不是 `nil`，返回之。
-
-- 否则，把参数作为数组的唯一元素，返回之。
+*   如果参数是 `nil`，返回一个空数组。
+*   否则，如果参数响应 `to_ary` 方法，调用之；如果 `to_ary` 返回值不是 `nil`，返回之。
+*   否则，把参数作为数组的唯一元素，返回之。
 
 ```ruby
 Array.wrap(nil)       # => []
@@ -2434,11 +2519,9 @@ Array.wrap(0)         # => [0]
 
 这个方法的作用与 `Kernel#Array` 类似，不过二者之间有些区别：
 
-- 如果参数响应 `to_ary`，调用之。如果 `to_ary` 的返回值是 `nil`，`Kernel#Array` 接着调用 `to_a`，而 `Array.wrap` 把参数作为数组的唯一元素，返回之。
-
-- 如果 `to_ary` 的返回值既不是 `nil`，也不是 `Array` 对象，`Kernel#Array` 抛出异常，而 `Array.wrap` 不会，它返回那个值。
-
-- 如果参数不响应 `to_ary`，`Array.wrap` 不在参数上调用 `to_a`，而是把参数作为数组的唯一元素，返回之。
+*   如果参数响应 `to_ary`，调用之。如果 `to_ary` 的返回值是 `nil`，`Kernel#Array` 接着调用 `to_a`，而 `Array.wrap` 把参数作为数组的唯一元素，返回之。
+*   如果 `to_ary` 的返回值既不是 `nil`，也不是 `Array` 对象，`Kernel#Array` 抛出异常，而 `Array.wrap` 不会，它返回那个值。
+*   如果参数不响应 `to_ary`，`Array.wrap` 不在参数上调用 `to_a`，而是把参数作为数组的唯一元素，返回之。
 
 对某些可枚举对象来说，最后一点尤为重要：
 
@@ -2459,6 +2542,8 @@ Array(foo: :bar)      # => [[:foo, :bar]]
 
 NOTE: 在 `active_support/core_ext/array/wrap.rb` 文件中定义。
 
+<a class="anchor" id="duplicating"></a>
+
 ### 复制
 
 `Array#deep_dup` 方法使用 Active Support 提供的 `Object#deep_dup` 方法复制数组自身和里面的对象。其工作方式相当于通过 `Array#map` 把 `deep_dup` 方法发给里面的各个对象。
@@ -2472,7 +2557,11 @@ array[1][2] == nil   # => true
 
 NOTE: 在 `active_support/core_ext/object/deep_dup.rb` 文件中定义。
 
+<a class="anchor" id="grouping"></a>
+
 ### 分组
+
+<a class="anchor" id="in-groups-of-number-fill-with-nil"></a>
 
 #### `in_groups_of(number, fill_with = nil)`
 
@@ -2509,6 +2598,8 @@ NOTE: 在 `active_support/core_ext/object/deep_dup.rb` 文件中定义。
 因此，`false` 不能作为填充值使用。
 
 NOTE: 在 `active_support/core_ext/array/grouping.rb` 文件中定义。
+
+<a class="anchor" id="in-groups-number-fill-with-nil"></a>
 
 #### `in_groups(number, fill_with = nil)`
 
@@ -2548,6 +2639,8 @@ NOTE: 在 `active_support/core_ext/array/grouping.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/array/grouping.rb` 文件中定义。
 
+<a class="anchor" id="split-value-nil"></a>
+
 #### `split(value = nil)`
 
 `split` 方法在指定的分隔符处拆分数组，返回得到的片段。
@@ -2570,10 +2663,15 @@ TIP: 仔细观察上例，出现连续的分隔符时，得到的是空数组。
 
 NOTE: 在 `active_support/core_ext/array/grouping.rb` 文件中定义。
 
-`Hash` 的扩展
--------------
+<a class="anchor" id="extensions-to-hash"></a>
+
+## `Hash` 的扩展
+
+<a class="anchor" id="extensions-to-hash-conversions"></a>
 
 ### 转换
+
+<a class="anchor" id="conversions-to-xml"></a>
 
 #### `to_xml`
 
@@ -2591,17 +2689,13 @@ NOTE: 在 `active_support/core_ext/array/grouping.rb` 文件中定义。
 
 为此，这个方法迭代各个键值对，根据值构建节点。假如键值对是 `key, value`：
 
-- 如果 `value` 是一个散列，递归调用，此时 `key` 作为 `:root`。
+*   如果 `value` 是一个散列，递归调用，此时 `key` 作为 `:root`。
+*   如果 `value` 是一个数组，递归调用，此时 `key` 作为 `:root`，`key` 的单数形式作为 `:children`。
+*   如果 `value` 是可调用对象，必须能接受一个或两个参数。根据参数的数量，传给可调用对象的第一个参数是 `options` 散列，`key` 作为 `:root`，`key` 的单数形式作为第二个参数。它的返回值作为新节点。
+*   如果 `value` 响应 `to_xml`，调用这个方法时把 `key` 作为 `:root`。
+*   否则，使用 `key` 为标签创建一个节点，`value` 的字符串表示形式为文本作为节点的文本。如果 `value` 是 `nil`，添加“nil”属性，值为“true”。除非有 `:skip_type` 选项，而且值为 `true`，否则还会根据下述对应关系添加“type”属性：
 
-- 如果 `value` 是一个数组，递归调用，此时 `key` 作为 `:root`，`key` 的单数形式作为 `:children`。
-
-- 如果 `value` 是可调用对象，必须能接受一个或两个参数。根据参数的数量，传给可调用对象的第一个参数是 `options` 散列，`key` 作为 `:root`，`key` 的单数形式作为第二个参数。它的返回值作为新节点。
-
-- 如果 `value` 响应 `to_xml`，调用这个方法时把 `key` 作为 `:root`。
-
-- 否则，使用 `key` 为标签创建一个节点，`value` 的字符串表示形式为文本作为节点的文本。如果 `value` 是 `nil`，添加“nil”属性，值为“true”。除非有 `:skip_type` 选项，而且值为 `true`，否则还会根据下述对应关系添加“type”属性：
-
-    ``` ruby
+    ```ruby
     XML_TYPE_NAMES = {
       "Symbol"     => "symbol",
       "Integer"    => "integer",
@@ -2615,11 +2709,15 @@ NOTE: 在 `active_support/core_ext/array/grouping.rb` 文件中定义。
     }
     ```
 
+
+
 默认情况下，根节点是“hash”，不过可以通过 `:root` 选项配置。
 
 默认的 XML 构建程序是一个新的 `Builder::XmlMarkup` 实例。可以使用 `:builder` 选项配置构建程序。这个方法还接受 `:dasherize` 等选项，它们会被转发给构建程序。
 
 NOTE: 在 `active_support/core_ext/hash/conversions.rb` 文件中定义。
+
+<a class="anchor" id="merging"></a>
 
 ### 合并
 
@@ -2631,6 +2729,8 @@ Ruby 有个内置的方法，`Hash#merge`，用于合并两个散列：
 ```
 
 为了方便，Active Support 定义了几个用于合并散列的方法。
+
+<a class="anchor" id="reverse-merge-and-reverse-merge-bang"></a>
 
 #### `reverse_merge` 和 `reverse_merge!`
 
@@ -2656,6 +2756,8 @@ WARNING: `reverse_merge!` 方法会就地修改调用方，这可能不是个好
 
 NOTE: 在 `active_support/core_ext/hash/reverse_merge.rb` 文件中定义。
 
+<a class="anchor" id="reverse-update"></a>
+
 #### `reverse_update`
 
 `reverse_update` 方法是 `reverse_merge!` 的别名，作用参见前文。
@@ -2663,6 +2765,8 @@ NOTE: 在 `active_support/core_ext/hash/reverse_merge.rb` 文件中定义。
 WARNING: 注意，`reverse_update` 方法的名称中没有感叹号。
 
 NOTE: 在 `active_support/core_ext/hash/reverse_merge.rb` 文件中定义。
+
+<a class="anchor" id="deep-merge-and-deep-merge-bang"></a>
 
 #### `deep_merge` 和 `deep_merge!`
 
@@ -2678,6 +2782,8 @@ Active Support 定义了 `Hash#deep_merge` 方法。在深度合并中，如果�
 `deep_merge!` 方法就地执行深度合并。
 
 NOTE: 在 `active_support/core_ext/hash/deep_merge.rb` 文件中定义。
+
+<a class="anchor" id="deep-duplicating"></a>
 
 ### 深度复制
 
@@ -2696,7 +2802,11 @@ hash[:b][:d] == [3, 4]   # => true
 
 NOTE: 在 `active_support/core_ext/object/deep_dup.rb` 文件中定义。
 
+<a class="anchor" id="working-with-keys"></a>
+
 ### 处理键
+
+<a class="anchor" id="except-and-except-bang"></a>
 
 #### `except` 和 `except!`
 
@@ -2716,6 +2826,8 @@ NOTE: 在 `active_support/core_ext/object/deep_dup.rb` 文件中定义。
 还有爆炸版本，`except!`，就地从接收者中删除键。
 
 NOTE: 在 `active_support/core_ext/hash/except.rb` 文件中定义。
+
+<a class="anchor" id="transform-keys-and-transform-keys-bang"></a>
 
 #### `transform_keys` 和 `transform_keys!`
 
@@ -2759,13 +2871,15 @@ end
 
 NOTE: 在 `active_support/core_ext/hash/keys.rb` 文件中定义。
 
+<a class="anchor" id="stringify-keys-and-stringify-keys-bang"></a>
+
 #### `stringify_keys` 和 `stringify_keys!`
 
 `stringify_keys` 把接收者中的键都变成字符串，然后返回一个散列。为此，它在键上调用 `to_s`。
 
 ```ruby
 {nil => nil, 1 => 1, a: :a}.stringify_keys
-# => {"" => nil, "a" => :a, "1" => 1}
+# => {"" => nil, "1" => 1, "a" => :a}
 ```
 
 遇到冲突的键时，只会从中选择一个。选择哪个值并不确定。
@@ -2801,13 +2915,15 @@ end
 
 NOTE: 在 `active_support/core_ext/hash/keys.rb` 文件中定义。
 
+<a class="anchor" id="symbolize-keys-and-symbolize-keys-bang"></a>
+
 #### `symbolize_keys` 和 `symbolize_keys!`
 
 `symbolize_keys` 方法把接收者中的键尽量变成符号。为此，它在键上调用 `to_sym`。
 
 ```ruby
 {nil => nil, 1 => 1, "a" => "a"}.symbolize_keys
-# => {1=>1, nil=>nil, :a=>"a"}
+# => {nil=>nil, 1=>1, :a=>"a"}
 ```
 
 WARNING: 注意，在上例中，只有键变成了符号。
@@ -2845,11 +2961,15 @@ end
 
 NOTE: 在 `active_support/core_ext/hash/keys.rb` 文件中定义。
 
+<a class="anchor" id="to-options-and-to-options-bang"></a>
+
 #### `to_options` 和 `to_options!`
 
 `to_options` 和 `to_options!` 分别是 `symbolize_keys` and `symbolize_keys!` 的别名。
 
 NOTE: 在 `active_support/core_ext/hash/keys.rb` 文件中定义。
+
+<a class="anchor" id="assert-valid-keys"></a>
 
 #### `assert_valid_keys`
 
@@ -2864,7 +2984,11 @@ NOTE: 在 `active_support/core_ext/hash/keys.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/hash/keys.rb` 文件中定义。
 
+<a class="anchor" id="working-with-values"></a>
+
 ### 处理值
+
+<a class="anchor" id="transform-values-transform-values-bang"></a>
 
 #### `transform_values` 和 `transform_values!`
 
@@ -2879,13 +3003,15 @@ NOTE: 在 `active_support/core_ext/hash/keys.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/hash/transform_values.rb` 文件中定义。
 
+<a class="anchor" id="slicing"></a>
+
 ### 切片
 
 Ruby 原生支持从字符串和数组中提取切片。Active Support 为散列增加了这个功能：
 
 ```ruby
 {a: 1, b: 2, c: 3}.slice(:a, :c)
-# => {:c=>3, :a=>1}
+# => {:a=>1, :c=>3}
 
 {a: 1, b: 2, c: 3}.slice(:b, :X)
 # => {:b=>2} # 不存在的键会被忽略
@@ -2910,6 +3036,8 @@ hash                   # => {:a=>1}
 
 NOTE: 在 `active_support/core_ext/hash/slice.rb` 文件中定义。
 
+<a class="anchor" id="extracting"></a>
+
 ### 提取
 
 `extract!` 方法删除并返回匹配指定键的键值对。
@@ -2930,6 +3058,8 @@ rest = hash.extract!(:a).class
 
 NOTE: 在 `active_support/core_ext/hash/slice.rb` 文件中定义。
 
+<a class="anchor" id="indifferent-access"></a>
+
 ### 无差别访问
 
 `with_indifferent_access` 方法把接收者转换成 `ActiveSupport::HashWithIndifferentAccess` 实例：
@@ -2939,6 +3069,8 @@ NOTE: 在 `active_support/core_ext/hash/slice.rb` 文件中定义。
 ```
 
 NOTE: 在 `active_support/core_ext/hash/indifferent_access.rb` 文件中定义。
+
+<a class="anchor" id="compacting"></a>
 
 ### 压缩
 
@@ -2950,8 +3082,11 @@ NOTE: 在 `active_support/core_ext/hash/indifferent_access.rb` 文件中定义�
 
 NOTE: 在 `active_support/core_ext/hash/compact.rb` 文件中定义。
 
-`Regexp` 的扩展
----------------
+<a class="anchor" id="extensions-to-regexp"></a>
+
+## `Regexp` 的扩展
+
+<a class="anchor" id="multiline-questionmark"></a>
 
 ### `multiline?`
 
@@ -2979,8 +3114,27 @@ end
 
 NOTE: 在 `active_support/core_ext/regexp.rb` 文件中定义。
 
-`Range` 的扩展
---------------
+<a class="anchor" id="match-questionmark"></a>
+
+### `match?`
+
+Rails 实现了 `Regexp#match?` 方法，供 Ruby 2.4 之前的版本使用：
+
+```ruby
+/oo/.match?('foo')    # => true
+/oo/.match?('bar')    # => false
+/oo/.match?('foo', 1) # => true
+```
+
+这个向后移植的版本与原生的 `match?` 方法具有相同的接口，但是调用方没有未设定 `$1` 等副作用，不过速度没什么优势。定义这个方法的目的是编写与 2.4 兼容的代码。Rails 内部有用到这个判断方法。
+
+只有 Ruby 未定义 `Regexp#match?` 方法时，Rails 才会定义，因此在 Ruby 2.4 或以上版本中运行的代码使用的是原生版本，性能有保障。
+
+<a class="anchor" id="extensions-to-range"></a>
+
+## `Range` 的扩展
+
+<a class="anchor" id="extensions-to-range-to-s"></a>
 
 ### `to_s`
 
@@ -2997,6 +3151,8 @@ Active Support 扩展了 `Range#to_s` 方法，让它接受一个可选的格式
 如上例所示，`:db` 格式生成一个 `BETWEEN` SQL 子句。Active Record 使用它支持范围值条件。
 
 NOTE: 在 `active_support/core_ext/range/conversions.rb` 文件中定义。
+
+<a class="anchor" id="include-questionmark"></a>
 
 ### `include?`
 
@@ -3022,6 +3178,8 @@ Active Support 扩展了这两个方法，允许参数为另一个值域。此�
 
 NOTE: 在 `active_support/core_ext/range/include_range.rb` 文件中定义。
 
+<a class="anchor" id="overlaps-questionmark"></a>
+
 ### `overlaps?`
 
 `Range#overlaps?` 方法测试两个值域是否有交集：
@@ -3034,8 +3192,11 @@ NOTE: 在 `active_support/core_ext/range/include_range.rb` 文件中定义。
 
 NOTE: 在 `active_support/core_ext/range/overlaps.rb` 文件中定义。
 
-`Date` 的扩展
--------------
+<a class="anchor" id="extensions-to-date"></a>
+
+## `Date` 的扩展
+
+<a class="anchor" id="extensions-to-date-calculations"></a>
 
 ### 计算
 
@@ -3043,13 +3204,19 @@ NOTE: 这一节的方法都在 `active_support/core_ext/date/calculations.rb` �
 
 TIP: 下述计算方法在 1582 年 10 月有边缘情况，因为 5..14 日不存在。简单起见，本文没有说明这些日子的行为，不过可以说，其行为与预期是相符的。即，`Date.new(1582, 10, 4).tomorrow` 返回 `Date.new(1582, 10, 15)`，等等。预期的行为参见 `test/core_ext/date_ext_test.rb` 中的 Active Support 测试组件。
 
+<a class="anchor" id="date-current"></a>
+
 #### `Date.current`
 
 Active Support 定义的 `Date.current` 方法表示当前时区中的今天。其作用类似于 `Date.today`，不过会考虑用户设定的时区（如果定义了时区的话）。Active Support 还定义了 `Date.yesterday` 和 `Date.tomorrow`，以及实例判断方法 `past?`、`today?`、`future?`、`on_weekday?` 和 `on_weekend?`，这些方法都与 `Date.current` 相关。
 
 比较日期时，如果要考虑用户设定的时区，应该使用 `Date.current`，而不是 `Date.today`。与系统的时区（`Date.today` 默认采用）相比，用户设定的时区可能超前，这意味着，`Date.today` 可能等于 `Date.yesterday`。
 
+<a class="anchor" id="named-dates"></a>
+
 #### 具名日期
+
+<a class="anchor" id="prev-year-next-year"></a>
 
 ##### `prev_year`、`next_year`
 
@@ -3070,6 +3237,8 @@ d.next_year               # => Wed, 28 Feb 2001
 ```
 
 `last_year` 是 `prev_year` 的别名。
+
+<a class="anchor" id="prev-month-next-month"></a>
 
 ##### `prev_month`、`next_month`
 
@@ -3092,6 +3261,8 @@ Date.new(2000, 1, 31).next_month # => Tue, 29 Feb 2000
 
 `last_month` 是 `prev_month` 的别名。
 
+<a class="anchor" id="prev-quarter-next-quarter"></a>
+
 ##### `prev_quarter`、`next_quarter`
 
 类似于 `prev_month` 和 `next_month`，返回前一季度和下一季度中的相同日：
@@ -3113,6 +3284,8 @@ Time.local(2000, 11, 31).next_quarter # => Wed, 28 Feb 2001
 
 `last_quarter` 是 `prev_quarter` 的别名。
 
+<a class="anchor" id="beginning-of-week-end-of-week"></a>
+
 ##### `beginning_of_week`、`end_of_week`
 
 `beginning_of_week` 和 `end_of_week` 方法分别返回某一周的第一天和最后一天的日期。一周假定从周一开始，不过这是可以修改的，方法是在线程中设定 `Date.beginning_of_week` 或 `config.beginning_of_week`。
@@ -3126,6 +3299,8 @@ d.end_of_week(:sunday)       # => Sat, 08 May 2010
 ```
 
 `at_beginning_of_week` 是 `beginning_of_week` 的别名，`at_end_of_week` 是 `end_of_week` 的别名。
+
+<a class="anchor" id="monday-sunday"></a>
 
 ##### `monday`、`sunday`
 
@@ -3142,6 +3317,8 @@ d.monday                     # => Mon, 10 Sep 2012
 d = Date.new(2012, 9, 16)    # => Sun, 16 Sep 2012
 d.sunday                     # => Sun, 16 Sep 2012
 ```
+
+<a class="anchor" id="prev-week-next-week"></a>
 
 ##### `prev_week`、`next_week`
 
@@ -3165,6 +3342,8 @@ d.prev_week(:friday)     # => Fri, 30 Apr 2010
 
 设定 `Date.beginning_of_week` 或 `config.beginning_of_week` 之后，`next_week` 和 `prev_week` 能按预期工作。
 
+<a class="anchor" id="beginning-of-month-end-of-month"></a>
+
 ##### `beginning_of_month`、`end_of_month`
 
 `beginning_of_month` 和 `end_of_month` 方法分别返回某个月的第一天和最后一天的日期：
@@ -3176,6 +3355,8 @@ d.end_of_month           # => Mon, 31 May 2010
 ```
 
 `at_beginning_of_month` 是 `beginning_of_month` 的别名，`at_end_of_month` 是 `end_of_month` 的别名。
+
+<a class="anchor" id="beginning-of-quarter-end-of-quarter"></a>
 
 ##### `beginning_of_quarter`、`end_of_quarter`
 
@@ -3189,6 +3370,8 @@ d.end_of_quarter         # => Wed, 30 Jun 2010
 
 `at_beginning_of_quarter` 是 `beginning_of_quarter` 的别名，`at_end_of_quarter` 是 `end_of_quarter` 的别名。
 
+<a class="anchor" id="beginning-of-year-end-of-year"></a>
+
 ##### `beginning_of_year`、`end_of_year`
 
 `beginning_of_year` 和 `end_of_year` 方法分别返回一年的第一天和最后一天的日期：
@@ -3201,7 +3384,11 @@ d.end_of_year            # => Fri, 31 Dec 2010
 
 `at_beginning_of_year` 是 `beginning_of_year` 的别名，`at_end_of_year` 是 `end_of_year` 的别名。
 
+<a class="anchor" id="other-date-computations"></a>
+
 #### 其他日期计算方法
+
+<a class="anchor" id="years-ago-years-since"></a>
 
 ##### `years_ago`、`years_since`
 
@@ -3226,6 +3413,8 @@ Date.new(2012, 2, 29).years_ago(3)     # => Sat, 28 Feb 2009
 Date.new(2012, 2, 29).years_since(3)   # => Sat, 28 Feb 2015
 ```
 
+<a class="anchor" id="months-ago-months-since"></a>
+
 ##### `months_ago`、`months_since`
 
 `months_ago` 和 `months_since` 方法的作用类似，不过是针对月的：
@@ -3242,6 +3431,8 @@ Date.new(2010, 4, 30).months_ago(2)    # => Sun, 28 Feb 2010
 Date.new(2009, 12, 31).months_since(2) # => Sun, 28 Feb 2010
 ```
 
+<a class="anchor" id="weeks-ago"></a>
+
 ##### `weeks_ago`
 
 `weeks_ago` 方法的作用类似，不过是针对周的：
@@ -3250,6 +3441,8 @@ Date.new(2009, 12, 31).months_since(2) # => Sun, 28 Feb 2010
 Date.new(2010, 5, 24).weeks_ago(1)    # => Mon, 17 May 2010
 Date.new(2010, 5, 24).weeks_ago(2)    # => Mon, 10 May 2010
 ```
+
+<a class="anchor" id="other-date-computations-advance"></a>
 
 ##### `advance`
 
@@ -3279,6 +3472,8 @@ Date.new(2010, 2, 28).advance(days: 1).advance(months: 1)
 # => Thu, 01 Apr 2010
 ```
 
+<a class="anchor" id="extensions-to-date-calculations-changing-components"></a>
+
 #### 修改日期组成部分
 
 `change` 方法在接收者的基础上修改日期，修改的值由参数指定：
@@ -3294,6 +3489,8 @@ Date.new(2010, 12, 23).change(year: 2011, month: 11)
 Date.new(2010, 1, 31).change(month: 2)
 # => ArgumentError: invalid date
 ```
+
+<a class="anchor" id="extensions-to-date-calculations-durations"></a>
 
 #### 时间跨度
 
@@ -3315,9 +3512,13 @@ Date.new(1582, 10, 4) + 1.day
 # => Fri, 15 Oct 1582
 ```
 
+<a class="anchor" id="timestamps"></a>
+
 #### 时间戳
 
 TIP: 如果可能，下述方法返回 `Time` 对象，否则返回 `DateTime` 对象。如果用户设定了时区，会将其考虑在内。
+
+<a class="anchor" id="beginning-of-day-end-of-day"></a>
 
 ##### `beginning_of_day`、`end_of_day`
 
@@ -3337,6 +3538,8 @@ date.end_of_day # => Mon Jun 07 23:59:59 +0200 2010
 
 `at_beginning_of_day`、`midnight` 和 `at_midnight` 是 `beginning_of_day` 的别名，
 
+<a class="anchor" id="beginning-of-hour-end-of-hour"></a>
+
 ##### `beginning_of_hour`、`end_of_hour`
 
 `beginning_of_hour` 返回一小时的起始时间戳（hh:00:00）：
@@ -3354,6 +3557,8 @@ date.end_of_hour # => Mon Jun 07 19:59:59 +0200 2010
 ```
 
 `at_beginning_of_hour` 是 `beginning_of_hour` 的别名。
+
+<a class="anchor" id="beginning-of-minute-end-of-minute"></a>
 
 ##### `beginning_of_minute`、`end_of_minute`
 
@@ -3375,6 +3580,8 @@ date.end_of_minute # => Mon Jun 07 19:55:59 +0200 2010
 
 TIP: `Time` 和 `DateTime` 实现了 `beginning_of_hour`、`end_of_hour`、`beginning_of_minute` 和 `end_of_minute` 方法，但是 `Date` 没有实现，因为在 `Date` 实例上请求小时和分钟的起始和结束时间戳没有意义。
 
+<a class="anchor" id="ago-since"></a>
+
 ##### `ago`、`since`
 
 `ago` 的参数是秒数，返回自午夜起那么多秒之后的时间戳：
@@ -3391,10 +3598,13 @@ date = Date.current # => Fri, 11 Jun 2010
 date.since(1)       # => Fri, 11 Jun 2010 00:00:01 EDT -04:00
 ```
 
-`DateTime` 的扩展
------------------
+<a class="anchor" id="extensions-to-datetime"></a>
+
+## `DateTime` 的扩展
 
 WARNING: `DateTime` 不理解夏令时规则，因此如果正处于夏令时，这些方法可能有边缘情况。例如，在夏令时中，`seconds_since_midnight` 可能无法返回真实的量。
+
+<a class="anchor" id="extensions-to-datetime-calculations"></a>
 
 ### 计算
 
@@ -3448,13 +3658,21 @@ beginning_of_hour (at_beginning_of_hour)
 end_of_hour
 ```
 
+<a class="anchor" id="named-datetimes"></a>
+
 #### 具名日期时间
+
+<a class="anchor" id="datetime-current"></a>
 
 ##### `DateTime.current`
 
 Active Support 定义的 `DateTime.current` 方法类似于 `Time.now.to_datetime`，不过会考虑用户设定的时区（如果定义了时区的话）。Active Support 还定义了 `DateTime.yesterday` 和 `DateTime.tomorrow`，以及与 `DateTime.current` 相关的判断方法 `past?` 和 `future?`。
 
+<a class="anchor" id="other-extensions"></a>
+
 #### 其他扩展
+
+<a class="anchor" id="seconds-since-midnight"></a>
 
 ##### `seconds_since_midnight`
 
@@ -3464,6 +3682,8 @@ Active Support 定义的 `DateTime.current` 方法类似于 `Time.now.to_datetim
 now = DateTime.current     # => Mon, 07 Jun 2010 20:26:36 +0000
 now.seconds_since_midnight # => 73596
 ```
+
+<a class="anchor" id="utc"></a>
 
 ##### `utc`
 
@@ -3476,6 +3696,8 @@ now.utc                # => Mon, 07 Jun 2010 23:27:52 +0000
 
 这个方法有个别名，`getutc`。
 
+<a class="anchor" id="utc-questionmark"></a>
+
 ##### `utc?`
 
 `utc?` 判断接收者的时区是不是 UTC：
@@ -3485,6 +3707,8 @@ now = DateTime.now # => Mon, 07 Jun 2010 19:30:47 -0400
 now.utc?           # => false
 now.utc.utc?       # => true
 ```
+
+<a class="anchor" id="other-extensions-advance"></a>
 
 ##### `advance`
 
@@ -3516,6 +3740,8 @@ d.advance(seconds: 1).advance(months: 1)
 ```
 
 WARNING: 因为 `DateTime` 不支持夏令时，所以可能得到不存在的时间点，而且没有提醒或报错。
+
+<a class="anchor" id="extensions-to-datetime-calculations-changing-components"></a>
 
 #### 修改日期时间组成部分
 
@@ -3549,6 +3775,8 @@ DateTime.current.change(month: 2, day: 30)
 # => ArgumentError: invalid date
 ```
 
+<a class="anchor" id="extensions-to-datetime-calculations-durations"></a>
+
 #### 时间跨度
 
 可以为日期时间增加或减去时间跨度：
@@ -3569,8 +3797,11 @@ DateTime.new(1582, 10, 4, 23) + 1.hour
 # => Fri, 15 Oct 1582 00:00:00 +0000
 ```
 
-`Time` 的扩展
--------------
+<a class="anchor" id="extensions-to-time"></a>
+
+## `Time` 的扩展
+
+<a class="anchor" id="extensions-to-time-calculations"></a>
 
 ### 计算
 
@@ -3620,14 +3851,13 @@ on_weekend?
 
 它们的作用与之前类似。详情参见前文，不过要知道下述区别：
 
-- `change` 额外接受 `:usec` 选项。
+*   `change` 额外接受 `:usec` 选项。
+*   `Time` 支持夏令时，因此能正确计算夏令时。
 
-- `Time` 支持夏令时，因此能正确计算夏令时。
-
-    ``` ruby
+    ```ruby
     Time.zone_default
     # => #<ActiveSupport::TimeZone:0x7f73654d4f38 @utc_offset=nil, @name="Madrid", ...>
-
+    
     # 因为采用夏令时，在巴塞罗那，2010/03/28 02:00 +0100 变成 2010/03/28 03:00 +0200
     t = Time.local(2010, 3, 28, 1, 59, 59)
     # => Sun Mar 28 01:59:59 +0100 2010
@@ -3635,13 +3865,18 @@ on_weekend?
     # => Sun Mar 28 03:00:00 +0200 2010
     ```
 
-- 如果 `since` 或 `ago` 的目标时间无法使用 `Time` 对象表示，返回一个 `DateTime` 对象。
+
+*   如果 `since` 或 `ago` 的目标时间无法使用 `Time` 对象表示，返回一个 `DateTime` 对象。
+
+<a class="anchor" id="time-current"></a>
 
 #### `Time.current`
 
 Active Support 定义的 `Time.current` 方法表示当前时区中的今天。其作用类似于 `Time.now`，不过会考虑用户设定的时区（如果定义了时区的话）。Active Support 还定义了与 `Time.current` 有关的实例判断方法 `past?`、`today?` 和 `future?`。
 
 比较时间时，如果要考虑用户设定的时区，应该使用 `Time.current`，而不是 `Time.now`。与系统的时区（`Time.now` 默认采用）相比，用户设定的时区可能超前，这意味着，`Time.now.to_date` 可能等于 `Date.yesterday`。
+
+<a class="anchor" id="all-day-all-week-all-month-all-quarter-and-all-year"></a>
 
 #### `all_day`、`all_week`、`all_month`、`all_quarter` 和 `all_year`
 
@@ -3671,6 +3906,8 @@ now.all_year
 # => Fri, 01 Jan 2010 00:00:00 UTC +00:00..Fri, 31 Dec 2010 23:59:59 UTC +00:00
 ```
 
+<a class="anchor" id="time-constructors"></a>
+
 ### 时间构造方法
 
 Active Support 定义的 `Time.current` 方法，在用户设定了时区时，等价于 `Time.zone.now`，否则回落到 `Time.now`：
@@ -3685,6 +3922,8 @@ Time.current
 与 `DateTime` 一样，判断方法 `past?` 和 `future?` 与 `Time.current` 相关。
 
 如果要构造的时间超出了运行时平台对 `Time` 的支持范围，微秒会被丢掉，然后返回 `DateTime` 对象。
+
+<a class="anchor" id="durations"></a>
 
 #### 时间跨度
 
@@ -3706,8 +3945,11 @@ Time.utc(1582, 10, 3) + 5.days
 # => Mon Oct 18 00:00:00 UTC 1582
 ```
 
-`File` 的扩展
--------------
+<a class="anchor" id="extensions-to-file"></a>
+
+## `File` 的扩展
+
+<a class="anchor" id="atomic-write"></a>
 
 ### `atomic_write`
 
@@ -3733,8 +3975,11 @@ WARNING: 注意，不能使用 `atomic_write` 追加内容。
 
 NOTE: 在 `active_support/core_ext/file/atomic.rb` 文件中定义。
 
-`Marshal` 的扩展
-----------------
+<a class="anchor" id="extensions-to-marshal"></a>
+
+## `Marshal` 的扩展
+
+<a class="anchor" id="load"></a>
 
 ### `load`
 
@@ -3752,8 +3997,9 @@ WARNING: 如果参数是 `IO` 对象，要能响应 `rewind` 方法才会重试�
 
 NOTE: 在 `active_support/core_ext/marshal.rb` 文件中定义。
 
-`NameError` 的扩展
-------------------
+<a class="anchor" id="extensions-to-nameerror"></a>
+
+## `NameError` 的扩展
 
 Active Support 为 `NameError` 增加了 `missing_name?` 方法，测试异常是不是由于参数的名称引起的。
 
@@ -3777,8 +4023,9 @@ end
 
 NOTE: 在 `active_support/core_ext/name_error.rb` 文件中定义。
 
-`LoadError` 的扩展
-------------------
+<a class="anchor" id="extensions-to-loaderror"></a>
+
+## `LoadError` 的扩展
 
 Active Support 为 `LoadError` 增加了 `is_missing?` 方法。
 

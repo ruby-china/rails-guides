@@ -1,29 +1,30 @@
-Active Record 回调
-==================
+# Active Record 回调
 
 本文介绍如何介入 Active Record 对象的生命周期。
 
 读完本文后，您将学到：
 
-- Active Record 对象的生命周期；
+*   Active Record 对象的生命周期；
+*   如何创建用于响应对象生命周期内事件的回调方法；
+*   如何把常用的回调封装到特殊的类中。
 
-- 如何创建用于响应对象生命周期内事件的回调方法；
+-----------------------------------------------------------------------------
 
-- 如何把常用的回调封装到特殊的类中。
+<a class="anchor" id="the-object-life-cycle"></a>
 
---------------------------------------------------------------------------------
-
-对象的生命周期
---------------
+## 对象的生命周期
 
 在 Rails 应用正常运作期间，对象可以被创建、更新或删除。Active Record 为对象的生命周期提供了钩子，使我们可以控制应用及其数据。
 
 回调使我们可以在对象状态更改之前或之后触发逻辑。
 
-回调概述
---------
+<a class="anchor" id="callbacks-overview"></a>
+
+## 回调概述
 
 回调是在对象生命周期的某些时刻被调用的方法。通过回调，我们可以编写在创建、保存、更新、删除、验证或从数据库中加载 Active Record 对象时执行的代码。
+
+<a class="anchor" id="callback-registration"></a>
 
 ### 注册回调
 
@@ -35,7 +36,7 @@ class User < ApplicationRecord
 
   before_validation :ensure_login_has_a_value
 
-  protected
+  private
     def ensure_login_has_a_value
       if login.nil?
         self.login = email unless email.blank?
@@ -65,7 +66,7 @@ class User < ApplicationRecord
   # :on 选项的值也可以是数组
   after_validation :set_location, on: [ :create, :update ]
 
-  protected
+  private
     def normalize_name
       self.name = name.downcase.titleize
     end
@@ -76,64 +77,54 @@ class User < ApplicationRecord
 end
 ```
 
-通常应该把回调定义为受保护的方法或私有方法。如果把回调定义为公共方法，就可以从模型外部调用回调，这样做违反了对象封装原则。
+通常应该把回调定义为私有方法。如果把回调定义为公共方法，就可以从模型外部调用回调，这样做违反了对象封装原则。
 
-可用的回调
-----------
+<a class="anchor" id="available-callbacks"></a>
+
+## 可用的回调
 
 下面按照回调在 Rails 应用正常运作期间被调用的顺序，列出所有可用的 Active Record 回调。
 
+<a class="anchor" id="creating-an-object"></a>
+
 ### 创建对象
 
-- `before_validation`
+*   `before_validation`
+*   `after_validation`
+*   `before_save`
+*   `around_save`
+*   `before_create`
+*   `around_create`
+*   `after_create`
+*   `after_save`
+*   `after_commit/after_rollback`
 
-- `after_validation`
-
-- `before_save`
-
-- `around_save`
-
-- `before_create`
-
-- `around_create`
-
-- `after_create`
-
-- `after_save`
-
-- `after_commit/after_rollback`
+<a class="anchor" id="updating-an-object"></a>
 
 ### 更新对象
 
-- `before_validation`
+*   `before_validation`
+*   `after_validation`
+*   `before_save`
+*   `around_save`
+*   `before_update`
+*   `around_update`
+*   `after_update`
+*   `after_save`
+*   `after_commit/after_rollback`
 
-- `after_validation`
-
-- `before_save`
-
-- `around_save`
-
-- `before_update`
-
-- `around_update`
-
-- `after_update`
-
-- `after_save`
-
-- `after_commit/after_rollback`
+<a class="anchor" id="destroying-an-object"></a>
 
 ### 删除对象
 
-- `before_destroy`
-
-- `around_destroy`
-
-- `after_destroy`
-
-- `after_commit/after_rollback`
+*   `before_destroy`
+*   `around_destroy`
+*   `after_destroy`
+*   `after_commit/after_rollback`
 
 WARNING: 无论按什么顺序注册回调，在创建和更新对象时，`after_save` 回调总是在更明确的 `after_create` 和 `after_update` 回调之后被调用。
+
+<a class="anchor" id="after-initialize-and-after-find"></a>
 
 ### `after_initialize` 和 `after_find` 回调
 
@@ -165,6 +156,8 @@ You have found an object!
 You have initialized an object!
 => #<User id: 1>
 ```
+
+<a class="anchor" id="after-touch"></a>
 
 ### `after_touch` 回调
 
@@ -219,96 +212,67 @@ An Employee was touched
 => true
 ```
 
-调用回调
---------
+<a class="anchor" id="running-callbacks"></a>
+
+## 调用回调
 
 下面这些方法会触发回调：
 
-- `create`
-
-- `create!`
-
-- `decrement!`
-
-- `destroy`
-
-- `destroy!`
-
-- `destroy_all`
-
-- `increment!`
-
-- `save`
-
-- `save!`
-
-- `save(validate: false)`
-
-- `toggle!`
-
-- `update_attribute`
-
-- `update`
-
-- `update!`
-
-- `valid?`
+*   `create`
+*   `create!`
+*   `decrement!`
+*   `destroy`
+*   `destroy!`
+*   `destroy_all`
+*   `increment!`
+*   `save`
+*   `save!`
+*   `save(validate: false)`
+*   `toggle!`
+*   `update_attribute`
+*   `update`
+*   `update!`
+*   `valid?`
 
 此外，下面这些查找方法会触发 `after_find` 回调：
 
-- `all`
-
-- `first`
-
-- `find`
-
-- `find_by`
-
-- `find_by_*`
-
-- `find_by_*!`
-
-- `find_by_sql`
-
-- `last`
+*   `all`
+*   `first`
+*   `find`
+*   `find_by`
+*   `find_by_*`
+*   `find_by_*!`
+*   `find_by_sql`
+*   `last`
 
 每次初始化类的新对象时都会触发 `after_initialize` 回调。
 
-NOTE: `find_by_*` 和 `find_by_*!` 方法是为每个属性自动生成的动态查找方法。关于动态查找方法的更多介绍，请参阅 [动态查找方法](active_record_querying.html#动态查找方法)。
+NOTE: `find_by_*` 和 `find_by_*!` 方法是为每个属性自动生成的动态查找方法。关于动态查找方法的更多介绍，请参阅 [动态查找方法](active_record_querying.html#dynamic-finders)。
 
-跳过回调
---------
+<a class="anchor" id="skipping-callbacks"></a>
+
+## 跳过回调
 
 和验证一样，我们可以跳过回调。使用下面这些方法可以跳过回调：
 
-- `decrement`
-
-- `decrement_counter`
-
-- `delete`
-
-- `delete_all`
-
-- `increment`
-
-- `increment_counter`
-
-- `toggle`
-
-- `touch`
-
-- `update_column`
-
-- `update_columns`
-
-- `update_all`
-
-- `update_counters`
+*   `decrement`
+*   `decrement_counter`
+*   `delete`
+*   `delete_all`
+*   `increment`
+*   `increment_counter`
+*   `toggle`
+*   `touch`
+*   `update_column`
+*   `update_columns`
+*   `update_all`
+*   `update_counters`
 
 请慎重地使用这些方法，因为有些回调包含了重要的业务规则和应用逻辑，在不了解潜在影响的情况下就跳过回调，可能导致无效数据。
 
-停止执行
---------
+<a class="anchor" id="halting-execution"></a>
+
+## 停止执行
 
 回调在模型中注册后，将被加入队列等待执行。这个队列包含了所有模型的验证、已注册的回调和将要执行的数据库操作。
 
@@ -316,8 +280,9 @@ NOTE: `find_by_*` 和 `find_by_*!` 方法是为每个属性自动生成的动态
 
 WARNING: 当回调链停止后，Rails 会重新抛出除了 `ActiveRecord::Rollback` 和 `ActiveRecord::RecordInvalid` 之外的其他异常。这可能导致那些预期 `save` 和 `update_attributes` 等方法（通常返回 `true` 或 `false` ）不会引发异常的代码出错。
 
-关联回调
---------
+<a class="anchor" id="relational-callbacks"></a>
+
+## 关联回调
 
 回调不仅可以在模型关联中使用，还可以通过模型关联定义。假设有一个用户在博客中发表了多篇文章，现在我们要删除这个用户，那么这个用户的所有文章也应该删除，为此我们通过 `Article` 模型和 `User` 模型的关联来给 `User` 模型添加一个 `after_destroy` 回调：
 
@@ -345,10 +310,13 @@ Article destroyed
 => #<User id: 1>
 ```
 
-条件回调
---------
+<a class="anchor" id="conditional-callbacks"></a>
 
-和验证一样，我们可以在满足指定条件时再调用回调方法。为此，我们可以使用 `:if` 和 `:unless` 选项，选项的值可以是符号、字符串、`Proc` 或数组。要想指定在哪些条件下调用回调，可以使用 `:if` 选项。要想指定在哪些条件下不调用回调，可以使用 `:unless` 选项。
+## 条件回调
+
+和验证一样，我们可以在满足指定条件时再调用回调方法。为此，我们可以使用 `:if` 和 `:unless` 选项，选项的值可以是符号、`Proc` 或数组。要想指定在哪些条件下调用回调，可以使用 `:if` 选项。要想指定在哪些条件下不调用回调，可以使用 `:unless` 选项。
+
+<a class="anchor" id="using-if-and-unless-with-a-symbol"></a>
 
 ### 使用符号作为 `:if` 和 `:unless` 选项的值
 
@@ -360,15 +328,7 @@ class Order < ApplicationRecord
 end
 ```
 
-### 使用字符串作为 `:if` 和 `:unless` 选项的值
-
-还可以使用字符串作为 `:if` 和 `:unless` 选项的值，这个字符串会通过 `eval` 方法执行，因此必须包含有效的 Ruby 代码。当字符串表示的条件非常短时我们才使用这种方式：
-
-```ruby
-class Order < ApplicationRecord
-  before_save :normalize_card_number, if: "paid_with_card?"
-end
-```
+<a class="anchor" id="using-if-and-unless-with-a-proc"></a>
 
 ### 使用 Proc 作为 `:if` 和 `:unless` 选项的值
 
@@ -381,6 +341,8 @@ class Order < ApplicationRecord
 end
 ```
 
+<a class="anchor" id="multiple-conditions-for-callbacks"></a>
+
 ### 在条件回调中使用多个条件
 
 在编写条件回调时，我们可以在同一个回调声明中混合使用 `:if` 和 `:unless` 选项：
@@ -392,8 +354,9 @@ class Comment < ApplicationRecord
 end
 ```
 
-回调类
-------
+<a class="anchor" id="callback-classes"></a>
+
+## 回调类
 
 有时需要在其他模型中重用已有的回调方法，为了解决这个问题，Active Record 允许我们用类来封装回调方法。有了回调类，回调方法的重用就变得非常容易。
 
@@ -439,8 +402,9 @@ end
 
 我们可以根据需要在回调类中声明任意多个回调。
 
-事务回调
---------
+<a class="anchor" id="transaction-callbacks"></a>
+
+## 事务回调
 
 `after_commit` 和 `after_rollback` 这两个回调会在数据库事务完成时触发。它们和 `after_save` 回调非常相似，区别在于它们在数据库变更已经提交或回滚后才会执行，常用于 Active Record 模型需要和数据库事务之外的系统交互的场景。
 
@@ -457,7 +421,7 @@ end
 
 ```ruby
 class PictureFile < ApplicationRecord
-  after_commit :delete_picture_file_from_disk, on: [:destroy]
+  after_commit :delete_picture_file_from_disk, on: :destroy
 
   def delete_picture_file_from_disk
     if File.exist?(filepath)
@@ -471,11 +435,9 @@ NOTE: `:on` 选项说明什么时候触发回调。如果不提供 `:on` 选项�
 
 由于只在执行创建、更新或删除动作时触发 `after_commit` 回调是很常见的，这些操作都拥有别名：
 
-- `after_create_commit`
-
-- `after_update_commit`
-
-- `after_destroy_commit`
+*   `after_create_commit`
+*   `after_update_commit`
+*   `after_destroy_commit`
 
 ```ruby
 class PictureFile < ApplicationRecord
@@ -489,4 +451,4 @@ class PictureFile < ApplicationRecord
 end
 ```
 
-WARNING: 对于在事务中创建、更新或删除的模型，`after_commit` 和 `after_rollback` 回调一定会被调用。如果其中有一个回调引发异常，这个异常会被忽略，以避免干扰其他回调。因此，如果回调代码可能引发异常，就需要在回调中救援并进行适当处理。
+WARNING: 在事务中创建、更新或删除模型时会调用 `after_commit` 和 `after_rollback` 回调。然而，如果其中有一个回调引发异常，异常会向上冒泡，后续 `after_commit` 和 `after_rollback` 回调不再执行。因此，如果回调代码可能引发异常，就需要在回调中救援并进行适当处理，以便让其他回调继续运行。

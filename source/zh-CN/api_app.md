@@ -1,20 +1,17 @@
-使用 Rails 开发只提供 API 的应用
-================================
+# 使用 Rails 开发只提供 API 的应用
 
 在本文中您将学到：
 
-- Rails 对只提供 API 的应用的支持；
+*   Rails 对只提供 API 的应用的支持；
+*   如何配置 Rails，不使用任何针对浏览器的功能；
+*   如何决定使用哪些中间件；
+*   如何决定在控制器中使用哪些模块。
 
-- 如何配置 Rails，不使用任何针对浏览器的功能；
+-----------------------------------------------------------------------------
 
-- 如何决定使用哪些中间件；
+<a class="anchor" id="what-is-an-api-application-questionmark"></a>
 
-- 如何决定在控制器中使用哪些模块。
-
---------------------------------------------------------------------------------
-
-什么是 API 应用？
------------------
+## 什么是 API 应用？
 
 人们说把 Rails 用作“API”，通常指的是在 Web 应用之外提供一份可通过编程方式访问的 API。例如，GitHub 提供了 [API](http://developer.github.com/)，供你在自己的客户端中使用。
 
@@ -26,8 +23,9 @@
 
 本文说明如何构建伺服 JSON 资源的 Rails 应用，供 API 客户端（包括客户端框架）使用。
 
-为什么使用 Rails 构建 JSON API？
---------------------------------
+<a class="anchor" id="why-use-rails-for-json-apis-questionmark"></a>
+
+## 为什么使用 Rails 构建 JSON API？
 
 提到使用 Rails 构建 JSON API，多数人想到的第一个问题是：“使用 Rails 生成 JSON 是不是有点大材小用了？使用 Sinatra 这样的框架是不是更好？”
 
@@ -39,50 +37,39 @@
 
 在中间件层处理的功能：
 
-- 重新加载：Rails 应用支持简单明了的重新加载机制。即使应用变大，每次请求都重启服务器变得不切实际，这一机制依然适用。
-
-- 开发模式：Rails 应用自带智能的开发默认值，使得开发过程很愉快，而且不会破坏生产环境的效率。
-
-- 测试模式：同开发模式。
-
-- 日志：Rails 应用会在日志中记录每次请求，而且为不同环境设定了合适的详细等级。在开发环境中，Rails 记录的信息包括请求环境、数据库查询和基本的性能信息。
-
-- 安全性：Rails 能检测并防范 [IP 欺骗攻击](https://en.wikipedia.org/wiki/IP_address_spoofing)，还能处理[时序攻击](http://en.wikipedia.org/wiki/Timing_attack)中的加密签名。不知道 IP 欺骗攻击和时序攻击是什么？这就对了。
-
-- 参数解析：想以 JSON 的形式指定参数，而不是 URL 编码字符串形式？没问题。Rails 会代为解码 JSON，存入 `params` 中。想使用嵌套的 URL 编码参数？也没问题。
-
-- 条件 GET 请求：Rails 能处理条件 `GET` 请求相关的首部（`ETag` 和 `Last-Modified`），然后返回正确的响应首部和状态码。你只需在控制器中使用 [`stale?`](http://api.rubyonrails.org/classes/ActionController/ConditionalGet.html#method-i-stale-3F) 做检查，剩下的 HTTP 细节都由 Rails 处理。
-
-- HEAD 请求：Rails 会把 `HEAD` 请求转换成 `GET` 请求，只返回首部。这样 `HEAD` 请求在所有 Rails API 中都可靠。
+*   重新加载：Rails 应用支持简单明了的重新加载机制。即使应用变大，每次请求都重启服务器变得不切实际，这一机制依然适用。
+*   开发模式：Rails 应用自带智能的开发默认值，使得开发过程很愉快，而且不会破坏生产环境的效率。
+*   测试模式：同开发模式。
+*   日志：Rails 应用会在日志中记录每次请求，而且为不同环境设定了合适的详细等级。在开发环境中，Rails 记录的信息包括请求环境、数据库查询和基本的性能信息。
+*   安全性：Rails 能检测并防范 [IP 欺骗攻击](https://en.wikipedia.org/wiki/IP_address_spoofing)，还能处理[时序攻击](http://en.wikipedia.org/wiki/Timing_attack)中的加密签名。不知道 IP 欺骗攻击和时序攻击是什么？这就对了。
+*   参数解析：想以 JSON 的形式指定参数，而不是 URL 编码字符串形式？没问题。Rails 会代为解码 JSON，存入 `params` 中。想使用嵌套的 URL 编码参数？也没问题。
+*   条件 GET 请求：Rails 能处理条件 `GET` 请求相关的首部（`ETag` 和 `Last-Modified`），然后返回正确的响应首部和状态码。你只需在控制器中使用 [`stale?`](http://api.rubyonrails.org/classes/ActionController/ConditionalGet.html#method-i-stale-3F) 做检查，剩下的 HTTP 细节都由 Rails 处理。
+*   HEAD 请求：Rails 会把 `HEAD` 请求转换成 `GET` 请求，只返回首部。这样 `HEAD` 请求在所有 Rails API 中都可靠。
 
 虽然这些功能可以使用 Rack 中间件实现，但是上述列表的目的是说明 Rails 默认提供的中间件栈提供了大量有价值的功能，即便“只是生成 JSON”也用得到。
 
 在 Action Pack 层处理的功能：
 
-- 资源式路由：如果构建的是 REST 式 JSON API，你会想用 Rails 路由器的。按照约定以简明的方式把 HTTP 映射到控制器上能节省很多时间，不用再从 HTTP 方面思考如何建模 API。
-
-- URL 生成：路由的另一面是 URL 生成。基于 HTTP 的优秀 API 包含 URL（比如 [GitHub Gist API](http://developer.github.com/v3/gists/)）。
-
-- 首部和重定向响应：`head :no_content` 和 `redirect_to user_url(current_user)` 用着很方便。当然，你可以自己动手添加相应的响应首部，但是为什么要费这事呢？
-
-- 缓存：Rails 提供了页面缓存、动作缓存和片段缓存。构建嵌套的 JSON 对象时，片段缓存特别有用。
-
-- 基本身份验证、摘要身份验证和令牌身份验证：Rails 默认支持三种 HTTP 身份验证。
-
-- 监测程序：Rails 提供了监测 API，在众多事件发生时触发注册的处理程序，例如处理动作、发送文件或数据、重定向和数据库查询。各个事件的载荷中包含相关的信息（对动作处理事件来说，载荷中包括控制器、动作、参数、请求格式、请求方法和完整的请求路径）。
-
-- 生成器：通常生成一个资源就能把模型、控制器、测试桩件和路由在一个命令中通通创建出来，然后再做调整。迁移等也有生成器。
-
-- 插件：有很多第三方库支持 Rails，这样不必或很少需要花时间设置及把库与 Web 框架连接起来。插件可以重写默认的生成器、添加 Rake 任务，而且继续使用 Rails 选择的处理方式（如日志记录器和缓存后端）。
+*   资源式路由：如果构建的是 REST 式 JSON API，你会想用 Rails 路由器的。按照约定以简明的方式把 HTTP 映射到控制器上能节省很多时间，不用再从 HTTP 方面思考如何建模 API。
+*   URL 生成：路由的另一面是 URL 生成。基于 HTTP 的优秀 API 包含 URL（比如 [GitHub Gist API](http://developer.github.com/v3/gists/)）。
+*   首部和重定向响应：`head :no_content` 和 `redirect_to user_url(current_user)` 用着很方便。当然，你可以自己动手添加相应的响应首部，但是为什么要费这事呢？
+*   缓存：Rails 提供了页面缓存、动作缓存和片段缓存。构建嵌套的 JSON 对象时，片段缓存特别有用。
+*   基本身份验证、摘要身份验证和令牌身份验证：Rails 默认支持三种 HTTP 身份验证。
+*   监测程序：Rails 提供了监测 API，在众多事件发生时触发注册的处理程序，例如处理动作、发送文件或数据、重定向和数据库查询。各个事件的载荷中包含相关的信息（对动作处理事件来说，载荷中包括控制器、动作、参数、请求格式、请求方法和完整的请求路径）。
+*   生成器：通常生成一个资源就能把模型、控制器、测试桩件和路由在一个命令中通通创建出来，然后再做调整。迁移等也有生成器。
+*   插件：有很多第三方库支持 Rails，这样不必或很少需要花时间设置及把库与 Web 框架连接起来。插件可以重写默认的生成器、添加 Rake 任务，而且继续使用 Rails 选择的处理方式（如日志记录器和缓存后端）。
 
 当然，Rails 启动过程还是要把各个注册的组件连接起来。例如，Rails 启动时会使用 `config/database.yml` 文件配置 Active Record。
 
 简单来说，你可能没有想过去掉视图层之后要把 Rails 的哪些部分保留下来，不过答案是，多数都要保留。
 
-基本配置
---------
+<a class="anchor" id="the-basic-configuration"></a>
+
+## 基本配置
 
 如果你构建的 Rails 应用主要用作 API，可以从较小的 Rails 子集开始，然后再根据需要添加功能。
+
+<a class="anchor" id="creating-a-new-application"></a>
 
 ### 新建应用
 
@@ -94,11 +81,11 @@ $ rails new my_api --api
 
 这个命令主要做三件事：
 
-- 配置应用，使用有限的中间件（比常规应用少）。具体而言，不含默认主要针对浏览器应用的中间件（如提供 cookie 支持的中间件）。
+*   配置应用，使用有限的中间件（比常规应用少）。具体而言，不含默认主要针对浏览器应用的中间件（如提供 cookie 支持的中间件）。
+*   让 `ApplicationController` 继承 `ActionController::API`，而不继承 `ActionController::Base`。与中间件一样，这样做是为了去除主要针对浏览器应用的  Action Controller 模块。
+*   配置生成器，生成资源时不生成视图、辅助方法和静态资源。
 
-- 让 `ApplicationController` 继承 `ActionController::API`，而不继承 `ActionController::Base`。与中间件一样，这样做是为了去除主要针对浏览器应用的 Action Controller 模块。
-
-- 配置生成器，生成资源时不生成视图、辅助方法和静态资源。
+<a class="anchor" id="changing-an-existing-application"></a>
 
 ### 修改现有应用
 
@@ -140,42 +127,30 @@ class ApplicationController < ActionController::API
 end
 ```
 
-选择中间件
-----------
+<a class="anchor" id="choosing-middleware"></a>
+
+## 选择中间件
 
 API 应用默认包含下述中间件：
 
-- `Rack::Sendfile`
+*   `Rack::Sendfile`
+*   `ActionDispatch::Static`
+*   `ActionDispatch::Executor`
+*   `ActiveSupport::Cache::Strategy::LocalCache::Middleware`
+*   `Rack::Runtime`
+*   `ActionDispatch::RequestId`
+*   `Rails::Rack::Logger`
+*   `ActionDispatch::ShowExceptions`
+*   `ActionDispatch::DebugExceptions`
+*   `ActionDispatch::RemoteIp`
+*   `ActionDispatch::Reloader`
+*   `ActionDispatch::Callbacks`
+*   `ActiveRecord::Migration::CheckPending`
+*   `Rack::Head`
+*   `Rack::ConditionalGet`
+*   `Rack::ETag`
 
-- `ActionDispatch::Static`
-
-- `ActionDispatch::Executor`
-
-- `ActiveSupport::Cache::Strategy::LocalCache::Middleware`
-
-- `Rack::Runtime`
-
-- `ActionDispatch::RequestId`
-
-- `Rails::Rack::Logger`
-
-- `ActionDispatch::ShowExceptions`
-
-- `ActionDispatch::DebugExceptions`
-
-- `ActionDispatch::RemoteIp`
-
-- `ActionDispatch::Reloader`
-
-- `ActionDispatch::Callbacks`
-
-- `Rack::Head`
-
-- `Rack::ConditionalGet`
-
-- `Rack::ETag`
-
-各个中间件的作用参见 [内部中间件栈](rails_on_rack.html#内部中间件栈)。
+各个中间件的作用参见 [内部中间件栈](rails_on_rack.html#internal-middleware-stack)。
 
 其他插件，包括 Active Record，可能会添加额外的中间件。一般来说，这些中间件对要构建的应用类型一无所知，可以在只提供 API 的 Rails 应用中使用。
 
@@ -184,6 +159,8 @@ API 应用默认包含下述中间件：
 ```sh
 $ rails middleware
 ```
+
+<a class="anchor" id="using-the-cache-middleware"></a>
 
 ### 使用缓存中间件
 
@@ -219,6 +196,8 @@ end
 
 可以把这种机制理解为使用 HTTP 语义的页面缓存。
 
+<a class="anchor" id="using-rack-sendfile"></a>
+
 ### 使用 Rack::Sendfile
 
 在 Rails 控制器中使用 `send_file` 方法时，它会设定 `X-Sendfile` 首部。`Rack::Sendfile` 负责发送文件。
@@ -240,6 +219,8 @@ config.action_dispatch.x_sendfile_header = "X-Accel-Redirect"
 ```
 
 请按照 `Rack::Sendfile` 文档中的说明配置你的服务器。
+
+<a class="anchor" id="using-actiondispatch-request"></a>
 
 ### 使用 ActionDispatch::Request
 
@@ -266,29 +247,30 @@ jQuery.ajax({
 { :person => { :firstName => "Yehuda", :lastName => "Katz" } }
 ```
 
+<a class="anchor" id="other-middleware"></a>
+
 ### 其他中间件
 
 Rails 自带的其他中间件在 API 应用中可能也会用到，尤其是 API 客户端包含浏览器时：
 
-- `Rack::MethodOverride`
+*   `Rack::MethodOverride`
+*   `ActionDispatch::Cookies`
+*   `ActionDispatch::Flash`
+*   管理会话
 
-- `ActionDispatch::Cookies`
+    *   `ActionDispatch::Session::CacheStore`
+    *   `ActionDispatch::Session::CookieStore`
+    *   `ActionDispatch::Session::MemCacheStore`
 
-- `ActionDispatch::Flash`
 
-- 管理会话
-
-    -   `ActionDispatch::Session::CacheStore`
-
-    -   `ActionDispatch::Session::CookieStore`
-
-    -   `ActionDispatch::Session::MemCacheStore`
 
 这些中间件可通过下述方式添加：
 
 ```ruby
 config.middleware.use Rack::MethodOverride
 ```
+
+<a class="anchor" id="removing-middleware"></a>
 
 ### 删除中间件
 
@@ -300,43 +282,41 @@ config.middleware.delete ::Rack::Sendfile
 
 注意，删除中间件后 Action Controller 的特定功能就不可用了。
 
-选择控制器模块
---------------
+<a class="anchor" id="choosing-controller-modules"></a>
+
+## 选择控制器模块
 
 API 应用（使用 `ActionController::API`）默认有下述控制器模块：
 
-- `ActionController::UrlFor`：提供 `url_for` 等辅助方法。
-
-- `ActionController::Redirecting`：提供 `redirect_to`。
-
-- `AbstractController::Rendering` 和 `ActionController::ApiRendering`：提供基本的渲染支持。
-
-- `ActionController::Renderers::All`：提供 `render :json` 等。
-
-- `ActionController::ConditionalGet`：提供 `stale?`。
-
-- `ActionController::BasicImplicitRender`：如果没有显式响应，确保返回一个空响应。
-
-- `ActionController::StrongParameters`：结合 Active Model 批量赋值，提供参数白名单过滤功能。
-
-- `ActionController::ForceSSL`：提供 `force_ssl`。
-
-- `ActionController::DataStreaming`：提供 `send_file` 和 `send_data`。
-
-- `AbstractController::Callbacks`：提供 `before_action` 等方法。
-
-- `ActionController::Rescue`：提供 `rescue_from`。
-
-- `ActionController::Instrumentation`：提供 Action Controller 定义的监测钩子（详情参见 [Active Support 监测程序](active_support_instrumentation.html#Action Controller)）。
-
-- `ActionController::ParamsWrapper`：把参数散列放到一个嵌套散列中，这样在发送 POST 请求时无需指定根元素。
+*   `ActionController::UrlFor`：提供 `url_for` 等辅助方法。
+*   `ActionController::Redirecting`：提供 `redirect_to`。
+*   `AbstractController::Rendering` 和 `ActionController::ApiRendering`：提供基本的渲染支持。
+*   `ActionController::Renderers::All`：提供 `render :json` 等。
+*   `ActionController::ConditionalGet`：提供 `stale?`。
+*   `ActionController::BasicImplicitRender`：如果没有显式响应，确保返回一个空响应。
+*   `ActionController::StrongParameters`：结合 Active Model 批量赋值，提供参数白名单过滤功能。
+*   `ActionController::ForceSSL`：提供 `force_ssl`。
+*   `ActionController::DataStreaming`：提供 `send_file` 和 `send_data`。
+*   `AbstractController::Callbacks`：提供 `before_action` 等方法。
+*   `ActionController::Rescue`：提供 `rescue_from`。
+*   `ActionController::Instrumentation`：提供 Action Controller 定义的监测钩子（详情参见 [Action Controller](active_support_instrumentation.html#action-controller)）。
+*   `ActionController::ParamsWrapper`：把参数散列放到一个嵌套散列中，这样在发送 POST 请求时无需指定根元素。
 
 其他插件可能会添加额外的模块。`ActionController::API` 引入的模块可以在 Rails 控制台中列出：
 
 ```sh
 $ bin/rails c
 >> ActionController::API.ancestors - ActionController::Metal.ancestors
+=> [ActionController::API,
+    ActiveRecord::Railties::ControllerRuntime,
+    ActionDispatch::Routing::RouteSet::MountedHelpers,
+    ActionController::ParamsWrapper,
+    ... ,
+    AbstractController::Rendering,
+    ActionView::ViewPaths]
 ```
+
+<a class="anchor" id="adding-other-modules"></a>
 
 ### 添加其他模块
 
@@ -344,14 +324,10 @@ $ bin/rails c
 
 可能想添加的常见模块有：
 
-- `AbstractController::Translation`：提供本地化和翻译方法 `l` 和 `t`。
-
-- `ActionController::HttpAuthentication::Basic`（或 `Digest` 或 `Token`）：提供基本、摘要或令牌 HTTP 身份验证。
-
-- `ActionView::Layouts`：渲染时支持使用布局。
-
-- `ActionController::MimeResponds`：提供 `respond_to`。
-
-- `ActionController::Cookies`：提供 `cookies`，包括签名和加密 cookie。需要 cookies 中间件支持。
+*   `AbstractController::Translation`：提供本地化和翻译方法 `l` 和 `t`。
+*   `ActionController::HttpAuthentication::Basic`（或 `Digest` 或 `Token`）：提供基本、摘要或令牌 HTTP 身份验证。
+*   `ActionView::Layouts`：渲染时支持使用布局。
+*   `ActionController::MimeResponds`：提供 `respond_to`。
+*   `ActionController::Cookies`：提供 `cookies`，包括签名和加密 cookie。需要 cookies 中间件支持。
 
 模块最好添加到 `ApplicationController` 中，不过也可以在各个控制器中添加。

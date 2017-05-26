@@ -1,22 +1,19 @@
-Action View 概述
-================
+# Action View 概览
 
 读完本文后，您将学到：
 
-- Action View 是什么，如何在 Rails 中使用 Action View；
+*   Action View 是什么，如何在 Rails 中使用 Action View；
+*   模板、局部视图和布局的最佳使用方法；
+*   Action View 提供了哪些辅助方法，如何自己编写辅助方法；
+*   如何使用本地化视图。
 
-- 模板、局部视图和布局的最佳使用方法；
-
-- Action View 提供了哪些辅助方法，如何自己编写辅助方法；
-
-- 如何使用本地化视图。
+-----------------------------------------------------------------------------
 
 NOTE: 本文原文尚未完工！
 
---------------------------------------------------------------------------------
+<a class="anchor" id="what-is-action-view"></a>
 
-Action View 是什么
-------------------
+## Action View 是什么
 
 在 Rails 中，Web 请求由 Action Controller（请参阅[Action Controller 概览](action_controller_overview.html)）和 Action View 处理。通常，Action Controller 参与和数据库的通信，并在需要时执行 CRUD 操作，然后由 Action View 负责编译响应。
 
@@ -24,8 +21,9 @@ Action View 模板使用混合了 HTML 标签的嵌入式 Ruby 语言编写。�
 
 NOTE: Action View 的某些特性与 Active Record 有关，但这并不意味着 Action View 依赖 Active Record。Action View 是独立的软件包，可以和任何类型的 Ruby 库一起使用。
 
-在 Rails 中使用 Action View
----------------------------
+<a class="anchor" id="using-action-view-with-rails"></a>
+
+## 在 Rails 中使用 Action View
 
 在 `app/views` 文件夹中，每个控制器都有一个对应的文件夹，其中保存了控制器对应视图的模板文件。这些模板文件用于显示每个控制器动作产生的视图。
 
@@ -48,16 +46,21 @@ $ bin/rails generate scaffold article
 
 在上面的输出结果中我们可以看到 Rails 中视图的命名约定。通常，视图和对应的控制器动作共享名称。例如，`articles_controller.rb` 控制器文件中的 `index` 动作对应 `app/views/articles` 文件夹中的 `index.html.erb` 视图文件。返回客户端的完整 HTML 由 ERB 视图文件和包装它的布局文件，以及视图可能引用的所有局部视图文件组成。后文会详细说明这三种文件。
 
-模板、局部视图和布局
---------------------
+<a class="anchor" id="templates-partials-and-layouts"></a>
+
+## 模板、局部视图和布局
 
 前面说过，最后输出的 HTML 由模板、局部视图和布局这三种 Rails 元素组成。下面分别进行简要介绍。
+
+<a class="anchor" id="templates"></a>
 
 ### 模板
 
 Action View 模板可以用多种方式编写。扩展名是 `.erb` 的模板文件混合使用 ERB（嵌入式 Ruby）和 HTML 编写，扩展名是 `.builder` 的模板文件使用 `Builder::XmlMarkup` 库编写。
 
 Rails 支持多种模板系统，并使用文件扩展名加以区分。例如，使用 ERB 模板系统的 HTML 文件的扩展名是 `.html.erb`。
+
+<a class="anchor" id="erb"></a>
 
 #### ERB 模板
 
@@ -80,6 +83,8 @@ Hi, Mr. <% puts "Frodo" %>
 ```
 
 要想删除前导和结尾空格，可以把 `<% %>` 标签替换为 `<%- -%>` 标签。
+
+<a class="anchor" id="builder"></a>
 
 #### Builder 模板
 
@@ -146,6 +151,8 @@ xml.rss("version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/") do
 end
 ```
 
+<a class="anchor" id="jbuilder"></a>
+
 #### Jbuilder 模板系统
 
 [Jbuilder](https://github.com/rails/jbuilder) 是由 Rails 团队维护并默认包含在 Rails Gemfile 中的 gem。它类似 Builder，但用于生成 JSON，而不是 XML。
@@ -176,13 +183,19 @@ json.email("alex@example.com")
 
 关于 Jbuilder 模板的更多例子和信息，请参阅 [Jbuilder 文档](https://github.com/rails/jbuilder#jbuilder)。
 
+<a class="anchor" id="template-caching"></a>
+
 #### 模板缓存
 
 默认情况下，Rails 会把所有模板分别编译为方法，以便进行渲染。在开发环境中，当我们修改了模板时，Rails 会检查文件的修改时间并自动重新编译。
 
+<a class="anchor" id="partials"></a>
+
 ### 局部视图
 
 局部视图模板，通常直接称为“局部视图”，作用是把渲染过程分成多个更容易管理的部分。局部视图从模板中提取代码片断并保存在独立的文件中，然后在模板中重用。
+
+<a class="anchor" id="naming-partials"></a>
 
 #### 局部视图的名称
 
@@ -199,6 +212,8 @@ json.email("alex@example.com")
 ```
 
 上面的代码会加载 `app/views/shared/_menu.html.erb` 局部视图文件。
+
+<a class="anchor" id="using-partials-to-simplify-views"></a>
 
 #### 使用局部视图来简化视图
 
@@ -219,6 +234,8 @@ json.email("alex@example.com")
 
 在上面的代码中，`_ad_banner.html.erb` 和 `_footer.html.erb` 局部视图可以在多个页面中使用。当我们专注于实现某个页面时，不必关心这些局部视图的细节。
 
+<a class="anchor" id="render-without-partial-and-locals-options"></a>
+
 #### 不使用 `partial` 和 `locals` 选项进行渲染
 
 在前面的例子中，`render` 方法有两个选项：`partial` 和 `locals`。如果一共只有这两个选项，那么可以跳过不写。例如，下面的代码：
@@ -232,6 +249,8 @@ json.email("alex@example.com")
 ```erb
 <%= render "product", product: @product %>
 ```
+
+<a class="anchor" id="the-as-and-object-options"></a>
 
 #### `as` 和 `object` 选项
 
@@ -247,12 +266,6 @@ json.email("alex@example.com")
 <%= render partial: "product", locals: { product: @product } %>
 ```
 
-`as` 选项用于为局部变量指定不同的名称。例如，把局部变量的名称由 `product` 改为 `item`：
-
-```erb
-<%= render partial: "product", as: "item" %>
-```
-
 `object` 选项用于直接指定想要在局部视图中使用的对象，常用于模板对象位于其他地方（例如位于其他实例变量或局部变量中）的情况。例如，下面的代码：
 
 ```erb
@@ -265,11 +278,19 @@ json.email("alex@example.com")
 <%= render partial: "product", object: @item %>
 ```
 
-`object` 和 `as` 选项还可一起使用：
+使用 `as` 选项可以为局部变量指定别的名称。例如，如果想把 `product` 换成 `item`，可以这么做：
 
 ```erb
 <%= render partial: "product", object: @item, as: "item" %>
 ```
+
+这等效于：
+
+```erb
+<%= render partial: "product", locals: { item: @item } %>
+```
+
+<a class="anchor" id="rendering-collections"></a>
 
 #### 渲染集合
 
@@ -297,6 +318,8 @@ json.email("alex@example.com")
 
 Rails 会根据集合中的模型名来确定应该使用哪个局部视图，在本例中模型名是 `Product`。实际上，我们甚至可以使用这种简易写法来渲染由不同模型实例组成的集合，Rails 会为集合中的每个元素选择适当的局部视图。
 
+<a class="anchor" id="spacer-templates"></a>
+
 #### 间隔模板
 
 我们还可以使用 `:spacer_template` 选项来指定第二个局部视图（也就是间隔模板），在渲染第一个局部视图（也就是主局部视图）的两个实例之间会渲染这个间隔模板:
@@ -307,12 +330,15 @@ Rails 会根据集合中的模型名来确定应该使用哪个局部视图，�
 
 上面的代码会在两个 `_product` 局部视图（主局部视图）之间渲染 `_product_ruler` 局部视图（间隔模板）。
 
+<a class="anchor" id="layouts"></a>
+
 ### 布局
 
 布局是渲染 Rails 控制器返回结果时使用的公共视图模板。通常，Rails 应用中会包含多个视图用于渲染不同页面。例如，网站中用户登录后页面的布局，营销或销售页面的布局。用户登录后页面的布局可以包含在多个控制器动作中出现的顶级导航。SaaS 应用的销售页面布局可以包含指向“定价”和“联系我们”页面的顶级导航。不同布局可以有不同的外观和感官。关于布局的更多介绍，请参阅[Rails 布局和视图渲染](layouts_and_rendering.html)。
 
-局部布局
---------
+<a class="anchor" id="partial-layout"></a>
+
+## 局部布局
 
 应用于局部视图的布局称为局部布局。局部布局和应用于控制器动作的全局布局不一样，但两者的工作方式类似。
 
@@ -356,12 +382,15 @@ Article.create(body: 'Partial Layouts are cool!')
 
 假设我们使用的 `_box` 局部布局和前面一样，那么这里模板的渲染结果也会和前面一样。
 
-视图路径
---------
+<a class="anchor" id="view-paths"></a>
+
+## 视图路径
 
 在渲染响应时，控制器需要解析不同视图所在的位置。默认情况下，控制器只查找 `app/views` 文件夹。
 
 我们可以使用 `prepend_view_path` 和 `append_view_path` 方法分别在查找路径的开头和结尾添加其他位置。
+
+<a class="anchor" id="prepend-view-path"></a>
 
 ### 在开头添加视图路径
 
@@ -373,6 +402,8 @@ prepend_view_path "app/views/#{request.subdomain}"
 
 这样在解析视图时，Action View 会首先查找这个文件夹。
 
+<a class="anchor" id="append-view-path"></a>
+
 ### 在末尾添加视图路径
 
 同样，我们可以在查找路径的末尾添加视图路径：
@@ -383,12 +414,15 @@ append_view_path "app/views/direct"
 
 上面的代码会在查找路径的末尾添加 `app/views/direct` 文件夹。
 
-Action View 提供的辅助方法概述
-------------------------------
+<a class="anchor" id="overview-of-helpers-provided-by-action-view"></a>
+
+## Action View 提供的辅助方法概述
 
 NOTE: 本节内容仍在完善中，目前并没有列出所有辅助方法。关于辅助方法的完整列表，请参阅 [API 文档](http://api.rubyonrails.org/classes/ActionView/Helpers.html)。
 
 本节内容只是对 Action View 中可用辅助方法的简要概述。在阅读本节内容之后，推荐查看 [API 文档](http://api.rubyonrails.org/classes/ActionView/Helpers.html)，文档详细介绍了所有辅助方法。
+
+<a class="anchor" id="assettaghelper"></a>
 
 ### `AssetTagHelper` 模块
 
@@ -401,6 +435,8 @@ config.action_controller.asset_host = "assets.example.com"
 image_tag("rails.png") # => <img src="http://assets.example.com/images/rails.png" alt="Rails" />
 ```
 
+<a class="anchor" id="auto-discovery-link-tag"></a>
+
 #### `auto_discovery_link_tag` 方法
 
 `auto_discovery_link_tag` 方法用于返回链接标签，使浏览器和订阅阅读器可以自动检测 RSS 或 Atom 订阅源。
@@ -409,6 +445,8 @@ image_tag("rails.png") # => <img src="http://assets.example.com/images/rails.png
 auto_discovery_link_tag(:rss, "http://www.example.com/feed.rss", { title: "RSS Feed" })
 # => <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="http://www.example.com/feed.rss" />
 ```
+
+<a class="anchor" id="image-path"></a>
 
 #### `image_path` 方法
 
@@ -424,6 +462,8 @@ image_path("edit.png") # => /assets/edit.png
 image_path("edit.png") # => /assets/edit-2d1a2db63fc738690021fedb5a65b68e.png
 ```
 
+<a class="anchor" id="image-url"></a>
+
 #### `image_url` 方法
 
 `image_url` 方法用于计算 `app/assets/images` 文件夹中图像资源的 URL 地址。`image_url` 方法在内部调用了 `image_path` 方法，并把得到的图像资源路径和当前主机或静态资源文件服务器的 URL 地址合并。
@@ -432,6 +472,8 @@ image_path("edit.png") # => /assets/edit-2d1a2db63fc738690021fedb5a65b68e.png
 image_url("edit.png") # => http://www.example.com/assets/edit.png
 ```
 
+<a class="anchor" id="image-tag"></a>
+
 #### `image_tag` 方法
 
 `image_tag` 方法用于返回 HTML 图像标签。此方法接受图像的完整路径或 `app/assets/images` 文件夹中图像的文件名作为参数。
@@ -439,6 +481,8 @@ image_url("edit.png") # => http://www.example.com/assets/edit.png
 ```ruby
 image_tag("icon.png") # => <img src="/assets/icon.png" alt="Icon" />
 ```
+
+<a class="anchor" id="javascript-include-tag"></a>
 
 #### `javascript_include_tag` 方法
 
@@ -467,6 +511,8 @@ javascript_include_tag :all, cache: true
 # => <script src="/javascripts/all.js"></script>
 ```
 
+<a class="anchor" id="javascript-path"></a>
+
 #### `javascript_path` 方法
 
 `javascript_path` 方法用于计算 `app/assets/javascripts` 文件夹中 JavaScript 资源的路径。如果没有指定文件的扩展名，Rails 会自动添加 `.js`。`javascript_path` 方法返回 JavaScript 资源的完整路径（绝对路径）。`javascript_include_tag` 方法在内部使用 `javascript_path` 方法生成脚本路径。
@@ -475,6 +521,8 @@ javascript_include_tag :all, cache: true
 javascript_path "common" # => /assets/common.js
 ```
 
+<a class="anchor" id="javascript-url"></a>
+
 #### `javascript_url` 方法
 
 `javascript_url` 方法用于计算 `app/assets/javascripts` 文件夹中 JavaScript 资源的 URL 地址。`javascript_url` 方法在内部调用了 `javascript_path` 方法，并把得到的 JavaScript 资源的路径和当前主机或静态资源文件服务器的 URL 地址合并。
@@ -482,6 +530,8 @@ javascript_path "common" # => /assets/common.js
 ```ruby
 javascript_url "common" # => http://www.example.com/assets/common.js
 ```
+
+<a class="anchor" id="stylesheet-link-tag"></a>
 
 #### `stylesheet_link_tag` 方法
 
@@ -505,6 +555,8 @@ stylesheet_link_tag :all, cache: true
 # => <link href="/assets/all.css" media="screen" rel="stylesheet" />
 ```
 
+<a class="anchor" id="stylesheet-path"></a>
+
 #### `stylesheet_path` 方法
 
 `stylesheet_path` 方法用于计算 `app/assets/stylesheets` 文件夹中样式表资源的路径。如果没有指定文件的扩展名，Rails 会自动添加 `.css`。`stylesheet_path` 方法返回样式表资源的完整路径（绝对路径）。`stylesheet_link_tag` 方法在内部使用 `stylesheet_path` 方法生成样式表路径。
@@ -512,6 +564,8 @@ stylesheet_link_tag :all, cache: true
 ```ruby
 stylesheet_path "application" # => /assets/application.css
 ```
+
+<a class="anchor" id="stylesheet-url"></a>
 
 #### `stylesheet_url` 方法
 
@@ -521,7 +575,11 @@ stylesheet_path "application" # => /assets/application.css
 stylesheet_url "application" # => http://www.example.com/assets/application.css
 ```
 
+<a class="anchor" id="atomfeedhelper"></a>
+
 ### `AtomFeedHelper` 模块
+
+<a class="anchor" id="atom-feed"></a>
 
 #### `atom_feed` 方法
 
@@ -566,7 +624,11 @@ atom_feed do |feed|
 end
 ```
 
+<a class="anchor" id="benchmarkhelper"></a>
+
 ### `BenchmarkHelper` 模块
+
+<a class="anchor" id="benchmark"></a>
 
 #### `benchmark` 方法
 
@@ -580,7 +642,11 @@ end
 
 上面的代码会在日志中写入类似 `Process data files (0.34523)` 的测量结果，我们可以通过比较执行时间来优化代码。
 
+<a class="anchor" id="cachehelper"></a>
+
 ### `CacheHelper` 模块
+
+<a class="anchor" id="cache"></a>
 
 #### `cache` 方法
 
@@ -592,7 +658,11 @@ end
 <% end %>
 ```
 
+<a class="anchor" id="capturehelper"></a>
+
 ### `CaptureHelper` 模块
+
+<a class="anchor" id="capture"></a>
 
 #### `capture` 方法
 
@@ -616,6 +686,8 @@ end
   </body>
 </html>
 ```
+
+<a class="anchor" id="content-for"></a>
 
 #### `content_for` 方法
 
@@ -647,7 +719,11 @@ end
 <% end %>
 ```
 
+<a class="anchor" id="datehelper"></a>
+
 ### `DateHelper` 模块
+
+<a class="anchor" id="date-select"></a>
 
 #### `date_select` 方法
 
@@ -657,6 +733,8 @@ end
 date_select("article", "published_on")
 ```
 
+<a class="anchor" id="datetime-select"></a>
+
 #### `datetime_select` 方法
 
 `datetime_select` 方法返回年、月、日、时、分的选择列表标签，用于设置 `datetime` 类型的属性的值。
@@ -664,6 +742,8 @@ date_select("article", "published_on")
 ```ruby
 datetime_select("article", "published_on")
 ```
+
+<a class="anchor" id="distance-of-time-in-words"></a>
 
 #### `distance_of_time_in_words` 方法
 
@@ -673,6 +753,8 @@ datetime_select("article", "published_on")
 distance_of_time_in_words(Time.now, Time.now + 15.seconds)        # => less than a minute
 distance_of_time_in_words(Time.now, Time.now + 15.seconds, include_seconds: true)  # => less than 20 seconds
 ```
+
+<a class="anchor" id="select-date"></a>
 
 #### `select_date` 方法
 
@@ -686,6 +768,8 @@ select_date(Time.today + 6.days)
 select_date()
 ```
 
+<a class="anchor" id="select-datetime"></a>
+
 #### `select_datetime` 方法
 
 `select_datetime` 方法返回年、月、日、时、分的选择列表标签，并通过 `Datetime` 对象来设置默认值。
@@ -697,6 +781,8 @@ select_datetime(Time.now + 4.days)
 # 生成一个日期时间选择列表，默认选中今天（未指定日期时间）
 select_datetime()
 ```
+
+<a class="anchor" id="select-day"></a>
 
 #### `select_day` 方法
 
@@ -710,6 +796,8 @@ select_day(Time.today + 2.days)
 select_day(5)
 ```
 
+<a class="anchor" id="select-hour"></a>
+
 #### `select_hour` 方法
 
 `select_hour` 方法返回一天中 24 小时的选择列表标签，即 0 到 23，并把当前小时设置为默认值。
@@ -718,6 +806,8 @@ select_day(5)
 # 生成一个小时选择列表，默认选中指定的小时
 select_hour(Time.now + 6.hours)
 ```
+
+<a class="anchor" id="select-minute"></a>
 
 #### `select_minute` 方法
 
@@ -728,6 +818,8 @@ select_hour(Time.now + 6.hours)
 select_minute(Time.now + 10.minutes)
 ```
 
+<a class="anchor" id="select-month"></a>
+
 #### `select_month` 方法
 
 `select_month` 方法返回一年中 12 个月的选择列表标签，并把当月设置为默认值。
@@ -736,6 +828,8 @@ select_minute(Time.now + 10.minutes)
 # 生成一个月份选择列表，默认选中当前月份
 select_month(Date.today)
 ```
+
+<a class="anchor" id="select-second"></a>
 
 #### `select_second` 方法
 
@@ -746,6 +840,8 @@ select_month(Date.today)
 select_second(Time.now + 16.seconds)
 ```
 
+<a class="anchor" id="select-time"></a>
+
 #### `select_time` 方法
 
 `select_time` 方法返回时、分的选择列表标签，并通过 `Time` 对象来设置默认值。
@@ -754,6 +850,8 @@ select_second(Time.now + 16.seconds)
 # 生成一个时间选择列表，默认选中指定的时间
 select_time(Time.now)
 ```
+
+<a class="anchor" id="select-year"></a>
 
 #### `select_year` 方法
 
@@ -767,6 +865,8 @@ select_year(Date.today)
 select_year(Date.today, start_year: 1900, end_year: 2009)
 ```
 
+<a class="anchor" id="time-ago-in-words"></a>
+
 #### `time_ago_in_words` 方法
 
 `time_ago_in_words` 方法和 `distance_of_time_in_words` 方法类似，区别在于 `time_ago_in_words` 方法计算的是指定时间到 `Time.now` 对应的当前时间的时间间隔。
@@ -774,6 +874,8 @@ select_year(Date.today, start_year: 1900, end_year: 2009)
 ```ruby
 time_ago_in_words(3.minutes.from_now)  # => 3 minutes
 ```
+
+<a class="anchor" id="time-select"></a>
 
 #### `time_select` 方法
 
@@ -783,6 +885,8 @@ time_ago_in_words(3.minutes.from_now)  # => 3 minutes
 # 生成一个时间选择标签，通过 POST 发送后存储在提交的属性中的 order 变量中
 time_select("order", "submitted")
 ```
+
+<a class="anchor" id="debughelper"></a>
 
 ### `DebugHelper` 模块
 
@@ -803,6 +907,8 @@ third:
 - 3
 </pre>
 ```
+
+<a class="anchor" id="formhelper"></a>
 
 ### `FormHelper` 模块
 
@@ -839,6 +945,8 @@ third:
 
 `params` 散列包含了嵌套的 `person` 值，这个值可以在控制器中通过 `params[:person]` 访问。
 
+<a class="anchor" id="check-box"></a>
+
 #### `check_box` 方法
 
 `check_box` 方法返回用于处理指定模型属性的复选框标签。
@@ -849,6 +957,8 @@ check_box("article", "validated")
 # => <input type="checkbox" id="article_validated" name="article[validated]" value="1" />
 #    <input name="article[validated]" type="hidden" value="0" />
 ```
+
+<a class="anchor" id="fields-for"></a>
 
 #### `fields_for` 方法
 
@@ -865,6 +975,8 @@ check_box("article", "validated")
 <% end %>
 ```
 
+<a class="anchor" id="file-field"></a>
+
 #### `file_field` 方法
 
 `file_field` 方法返回用于处理指定模型属性的文件上传组件标签。
@@ -873,6 +985,8 @@ check_box("article", "validated")
 file_field(:user, :avatar)
 # => <input type="file" id="user_avatar" name="user[avatar]" />
 ```
+
+<a class="anchor" id="form-for"></a>
 
 #### `form_for` 方法
 
@@ -887,6 +1001,8 @@ file_field(:user, :avatar)
 <% end %>
 ```
 
+<a class="anchor" id="hidden-field"></a>
+
 #### `hidden_​​field` 方法
 
 `hidden_​​field` 方法返回用于处理指定模型属性的隐藏输入字段标签。
@@ -895,6 +1011,8 @@ file_field(:user, :avatar)
 hidden_field(:user, :token)
 # => <input type="hidden" id="user_token" name="user[token]" value="#{@user.token}" />
 ```
+
+<a class="anchor" id="label"></a>
 
 #### `label` 方法
 
@@ -905,6 +1023,8 @@ label(:article, :title)
 # => <label for="article_title">Title</label>
 ```
 
+<a class="anchor" id="password-field"></a>
+
 #### `password_field` 方法
 
 `password_field` 方法返回用于处理指定模型属性的密码框标签。
@@ -913,6 +1033,8 @@ label(:article, :title)
 password_field(:login, :pass)
 # => <input type="text" id="login_pass" name="login[pass]" value="#{@login.pass}" />
 ```
+
+<a class="anchor" id="radio-button"></a>
 
 #### `radio_button` 方法
 
@@ -926,6 +1048,8 @@ radio_button("article", "category", "java")
 #    <input type="radio" id="article_category_java" name="article[category]" value="java" />
 ```
 
+<a class="anchor" id="text-area"></a>
+
 #### `text_area` 方法
 
 `text_area` 方法返回用于处理指定模型属性的文本区域标签。
@@ -937,6 +1061,8 @@ text_area(:comment, :text, size: "20x30")
 #    </textarea>
 ```
 
+<a class="anchor" id="text-field"></a>
+
 #### `text_field` 方法
 
 `text_field` 方法返回用于处理指定模型属性的文本框标签。
@@ -945,6 +1071,8 @@ text_area(:comment, :text, size: "20x30")
 text_field(:article, :title)
 # => <input type="text" id="article_title" name="article[title]" value="#{@article.title}" />
 ```
+
+<a class="anchor" id="email-field"></a>
 
 #### `email_field` 方法
 
@@ -955,6 +1083,8 @@ email_field(:user, :email)
 # => <input type="email" id="user_email" name="user[email]" value="#{@user.email}" />
 ```
 
+<a class="anchor" id="url-field"></a>
+
 #### `url_field` 方法
 
 `url_field` 方法返回用于处理指定模型属性的 URL 地址输入框标签。
@@ -964,9 +1094,13 @@ url_field(:user, :url)
 # => <input type="url" id="user_url" name="user[url]" value="#{@user.url}" />
 ```
 
+<a class="anchor" id="formoptionshelper"></a>
+
 ### `FormOptionsHelper` 模块
 
 `FormOptionsHelper` 模块提供了许多方法，用于把不同类型的容器转换为一组选项标签。
+
+<a class="anchor" id="collection-select"></a>
 
 #### `collection_select` 方法
 
@@ -1004,6 +1138,8 @@ collection_select(:article, :author_id, Author.all, :id, :name_with_initial, { p
 </select>
 ```
 
+<a class="anchor" id="collection-radio-buttons"></a>
+
 #### `collection_radio_buttons` 方法
 
 `collection_radio_buttons` 方法返回一个集合的单选按钮标签，其中每个集合元素的两个指定方法的返回值分别是每个选项的值和文本。
@@ -1039,6 +1175,8 @@ collection_radio_buttons(:article, :author_id, Author.all, :id, :name_with_initi
 <input id="article_author_id_3" name="article[author_id]" type="radio" value="3" />
 <label for="article_author_id_3">M. Clark</label>
 ```
+
+<a class="anchor" id="collection-check-boxes"></a>
 
 #### `collection_check_boxes` 方法
 
@@ -1076,6 +1214,8 @@ collection_check_boxes(:article, :author_ids, Author.all, :id, :name_with_initia
 <label for="article_author_ids_3">M. Clark</label>
 <input name="article[author_ids][]" type="hidden" value="" />
 ```
+
+<a class="anchor" id="option-groups-from-collection-for-select"></a>
 
 #### `option_groups_from_collection_for_select` 方法
 
@@ -1119,6 +1259,8 @@ option_groups_from_collection_for_select(@continents, :countries, :name, :id, :n
 
 注意：`option_groups_from_collection_for_select` 方法只返回 `optgroup` 和 `option` 标签，我们要把这些 `optgroup` 和 `option` 标签放在 `select` 标签里。
 
+<a class="anchor" id="options-for-select"></a>
+
 #### `options_for_select` 方法
 
 `options_for_select` 方法接受容器（如散列、数组、可枚举对象、自定义类型）作为参数，返回一组选项标签。
@@ -1129,6 +1271,8 @@ options_for_select([ "VISA", "MasterCard" ])
 ```
 
 注意：`options_for_select` 方法只返回 `option` 标签，我们要把这些 `option` 标签放在 `select` 标签里。
+
+<a class="anchor" id="options-from-collection-for-select"></a>
 
 #### `options_from_collection_for_select` 方法
 
@@ -1146,6 +1290,8 @@ options_from_collection_for_select(@project.people, "id", "name")
 ```
 
 注意：`options_from_collection_for_select` 方法只返回 `option` 标签，我们要把这些 `option` 标签放在 `select` 标签里。
+
+<a class="anchor" id="select"></a>
 
 #### `select` 方法
 
@@ -1168,9 +1314,13 @@ select("article", "person_id", Person.all.collect { |p| [ p.name, p.id ] }, { in
 </select>
 ```
 
+<a class="anchor" id="time-zone-options-for-select"></a>
+
 #### `time_zone_options_for_select` 方法
 
 `time_zone_options_for_select` 方法返回一组选项标签，其中每个选项对应一个时区，这些时区几乎包含了世界上所有的时区。
+
+<a class="anchor" id="time-zone-select"></a>
 
 #### `time_zone_select` 方法
 
@@ -1180,6 +1330,8 @@ select("article", "person_id", Person.all.collect { |p| [ p.name, p.id ] }, { in
 time_zone_select( "user", "time_zone")
 ```
 
+<a class="anchor" id="date-field"></a>
+
 #### `date_field` 方法
 
 `date_field` 方法返回用于处理指定模型属性的日期输入框标签。
@@ -1188,9 +1340,13 @@ time_zone_select( "user", "time_zone")
 date_field("user", "dob")
 ```
 
+<a class="anchor" id="formtaghelper"></a>
+
 ### `FormTagHelper` 模块
 
 `FormTagHelper` 模块提供了许多用于创建表单标签的方法。和 `FormHelper` 模块不同，`FormTagHelper` 模块提供的方法不依赖于传递给模板的 Active Record 对象。作为替代，我们可以手动为表单的各个组件的标签提供 `name` 和 `value` 属性。
+
+<a class="anchor" id="check-box-tag"></a>
 
 #### `check_box_tag` 方法
 
@@ -1200,6 +1356,8 @@ date_field("user", "dob")
 check_box_tag 'accept'
 # => <input id="accept" name="accept" type="checkbox" value="1" />
 ```
+
+<a class="anchor" id="field-set-tag"></a>
 
 #### `field_set_tag` 方法
 
@@ -1211,6 +1369,8 @@ check_box_tag 'accept'
 <% end %>
 # => <fieldset><p><input id="name" name="name" type="text" /></p></fieldset>
 ```
+
+<a class="anchor" id="file-field-tag"></a>
 
 #### `file_field_tag` 方法
 
@@ -1230,6 +1390,8 @@ file_field_tag 'attachment'
 # => <input id="attachment" name="attachment" type="file" />
 ```
 
+<a class="anchor" id="form-tag"></a>
+
 #### `form_tag` 方法
 
 `form_tag` 方法用于创建表单标签。和 `ActionController::Base#url_for` 方法类似，`form_tag` 方法的第一个参数是 `url_for_options` 选项，用于说明提交表单的 URL。
@@ -1241,6 +1403,8 @@ file_field_tag 'attachment'
 # => <form action="/articles" method="post"><div><input type="submit" name="submit" value="Save" /></div></form>
 ```
 
+<a class="anchor" id="hidden-field-tag"></a>
+
 #### `hidden_​​field_tag` 方法
 
 `hidden_​​field_tag` 方法用于创建隐藏输入字段标签。隐藏输入字段用于传递因 HTTP 无状态特性而丢失的数据，或不想让用户看到的数据。
@@ -1249,6 +1413,8 @@ file_field_tag 'attachment'
 hidden_field_tag 'token', 'VUBJKB23UIVI1UU1VOBVI@'
 # => <input id="token" name="token" type="hidden" value="VUBJKB23UIVI1UU1VOBVI@" />
 ```
+
+<a class="anchor" id="image-submit-tag"></a>
 
 #### `image_submit_tag` 方法
 
@@ -1259,6 +1425,8 @@ image_submit_tag("login.png")
 # => <input src="/images/login.png" type="image" />
 ```
 
+<a class="anchor" id="label-tag"></a>
+
 #### `label_tag` 方法
 
 `label_tag` 方法用于创建 `label` 标签。
@@ -1267,6 +1435,8 @@ image_submit_tag("login.png")
 label_tag 'name'
 # => <label for="name">Name</label>
 ```
+
+<a class="anchor" id="password-field-tag"></a>
 
 #### `password_field_tag` 方法
 
@@ -1277,6 +1447,8 @@ password_field_tag 'pass'
 # => <input id="pass" name="pass" type="password" />
 ```
 
+<a class="anchor" id="radio-button-tag"></a>
+
 #### `radio_button_tag` 方法
 
 `radio_button_tag` 方法用于创建单选按钮标签。为一组单选按钮设置相同的 `name` 属性即可实现对一组选项进行单选。
@@ -1285,6 +1457,8 @@ password_field_tag 'pass'
 radio_button_tag 'gender', 'male'
 # => <input id="gender_male" name="gender" type="radio" value="male" />
 ```
+
+<a class="anchor" id="select-tag"></a>
 
 #### `select_tag` 方法
 
@@ -1295,6 +1469,8 @@ select_tag "people", "<option>David</option>"
 # => <select id="people" name="people"><option>David</option></select>
 ```
 
+<a class="anchor" id="submit-tag"></a>
+
 #### `submit_tag` 方法
 
 `submit_tag` 方法用于创建提交按钮标签，并在按钮上显示指定的文本。
@@ -1303,6 +1479,8 @@ select_tag "people", "<option>David</option>"
 submit_tag "Publish this article"
 # => <input name="commit" type="submit" value="Publish this article" />
 ```
+
+<a class="anchor" id="text-area-tag"></a>
 
 #### `text_area_tag` 方法
 
@@ -1313,6 +1491,8 @@ text_area_tag 'article'
 # => <textarea id="article" name="article"></textarea>
 ```
 
+<a class="anchor" id="text-field-tag"></a>
+
 #### `text_field_tag` 方法
 
 `text_field_tag` 方法用于创建文本框标签。文本框用于输入较短的文本，如用户名或搜索关键词。
@@ -1321,6 +1501,8 @@ text_area_tag 'article'
 text_field_tag 'name'
 # => <input id="name" name="name" type="text" />
 ```
+
+<a class="anchor" id="email-field-tag"></a>
 
 #### `email_field_tag` 方法
 
@@ -1331,6 +1513,8 @@ email_field_tag 'email'
 # => <input id="email" name="email" type="email" />
 ```
 
+<a class="anchor" id="url-field-tag"></a>
+
 #### `url_field_tag` 方法
 
 `url_field_tag` 方法用于创建 URL 地址输入框标签。
@@ -1339,6 +1523,8 @@ email_field_tag 'email'
 url_field_tag 'url'
 # => <input id="url" name="url" type="url" />
 ```
+
+<a class="anchor" id="date-field-tag"></a>
 
 #### `date_field_tag` 方法
 
@@ -1349,13 +1535,19 @@ date_field_tag "dob"
 # => <input id="dob" name="dob" type="date" />
 ```
 
+<a class="anchor" id="javascripthelper"></a>
+
 ### `JavaScriptHelper` 模块
 
 `JavaScriptHelper` 模块提供在视图中使用 JavaScript 的相关方法。
 
+<a class="anchor" id="escape-javascript"></a>
+
 #### `escape_javascript` 方法
 
 `escape_javascript` 方法转义 JavaScript 代码中的回车符、单引号和双引号。
+
+<a class="anchor" id="javascript-tag"></a>
 
 #### `javascript_tag` 方法
 
@@ -1373,9 +1565,13 @@ alert('All is good')
 </script>
 ```
 
+<a class="anchor" id="numberhelper"></a>
+
 ### `NumberHelper` 模块
 
 `NumberHelper` 模块提供把数字转换为格式化字符串的方法，包括把数字转换为电话号码、货币、百分数、具有指定精度的数字、带有千位分隔符的数字和文件大小的方法。
+
+<a class="anchor" id="number-to-currency"></a>
 
 #### `number_to_currency` 方法
 
@@ -1384,6 +1580,8 @@ alert('All is good')
 ```ruby
 number_to_currency(1234567890.50) # => $1,234,567,890.50
 ```
+
+<a class="anchor" id="number-to-human-size"></a>
 
 #### `number_to_human_size` 方法
 
@@ -1394,6 +1592,8 @@ number_to_human_size(1234)          # => 1.2 KB
 number_to_human_size(1234567)       # => 1.2 MB
 ```
 
+<a class="anchor" id="number-to-percentage"></a>
+
 #### `number_to_percentage` 方法
 
 `number_to_percentage` 方法用于把数字转换为百分数字符串。
@@ -1401,6 +1601,8 @@ number_to_human_size(1234567)       # => 1.2 MB
 ```ruby
 number_to_percentage(100, precision: 0)        # => 100%
 ```
+
+<a class="anchor" id="number-to-phone"></a>
 
 #### `number_to_phone` 方法
 
@@ -1410,6 +1612,8 @@ number_to_percentage(100, precision: 0)        # => 100%
 number_to_phone(1235551234) # => 123-555-1234
 ```
 
+<a class="anchor" id="number-with-delimiter"></a>
+
 #### `number_with_delimiter` 方法
 
 `number_with_delimiter` 方法用于把数字转换为带有千位分隔符的数字。
@@ -1418,18 +1622,24 @@ number_to_phone(1235551234) # => 123-555-1234
 number_with_delimiter(12345678) # => 12,345,678
 ```
 
+<a class="anchor" id="number-with-precision"></a>
+
 #### `number_with_precision` 方法
 
 `number_with_precision` 方法用于把数字转换为具有指定精度的数字，默认精度为 3。
 
 ```ruby
 number_with_precision(111.2345)     # => 111.235
-number_with_precision(111.2345, 2)  # => 111.23
+number_with_precision(111.2345, precision: 2)  # => 111.23
 ```
+
+<a class="anchor" id="sanitizehelper"></a>
 
 ### `SanitizeHelper` 模块
 
 `SanitizeHelper` 模块提供从文本中清除不需要的 HTML 元素的方法。
+
+<a class="anchor" id="sanitize"></a>
 
 #### `sanitize` 方法
 
@@ -1453,9 +1663,13 @@ class Application < Rails::Application
 end
 ```
 
+<a class="anchor" id="sanitize-css-style"></a>
+
 #### `sanitize_css(style)` 方法
 
 `sanitize_css(style)` 方法用于净化 CSS 代码。
+
+<a class="anchor" id="strip-links-html"></a>
 
 #### `strip_links(html)` 方法
 
@@ -1476,9 +1690,11 @@ strip_links('Blog: <a href="http://myblog.com/">Visit</a>.')
 # => Blog: Visit.
 ```
 
+<a class="anchor" id="strip-tags-html"></a>
+
 #### `strip_tags(html)` 方法
 
-`strip_tags(html)` 方法用于清除包括注释在内的所有 HTML 标签。此方法使用 html-scanner 解析 HTML，因此其 HTML 解析能力受到 html-scanner 的限制。
+`strip_tags(html)` 方法用于清除包括注释在内的所有 HTML 标签。这个方法的功能由 rails-html-sanitizer gem 提供。
 
 ```ruby
 strip_tags("Strip <i>these</i> tags!")
@@ -1490,7 +1706,9 @@ strip_tags("<b>Bold</b> no more!  <a href='more.html'>See more</a>")
 # => Bold no more!  See more
 ```
 
-注意：使用 `strip_tags(html)` 方法清除后的文本仍然可能包含 &lt;、&gt; 和 & 字符，从而导致浏览器显示异常。
+注意：使用 `strip_tags(html)` 方法清除后的文本仍然可能包含 &lt;、&gt; 和 &amp; 字符，从而导致浏览器显示异常。
+
+<a class="anchor" id="csrfhelper"></a>
 
 ### `CsrfHelper` 模块
 
@@ -1500,10 +1718,11 @@ strip_tags("<b>Bold</b> no more!  <a href='more.html'>See more</a>")
 <%= csrf_meta_tags %>
 ```
 
-NOTE: 普通表单生成隐藏字段，因此不使用这些标签。关于这个问题的更多介绍，请参阅 [Ruby on Rails 安全指南](security.html#跨站请求伪造（CSRF）)。
+NOTE: 普通表单生成隐藏字段，因此不使用这些标签。关于这个问题的更多介绍，请参阅 [跨站请求伪造（CSRF）](security.html#cross-site-request-forgery-csrf)。
 
-本地化视图
-----------
+<a class="anchor" id="localized-views"></a>
+
+## 本地化视图
 
 Action View 可以根据当前的本地化设置渲染不同的模板。
 

@@ -44,7 +44,7 @@ TIP: Ruby 1.8.7 p248 and p249 have marshaling bugs that crash Rails. Ruby Enterp
 
 ### The Update Task
 
-Rails provides the `app:update` task (`rails:update` on 4.2 and earlier). After updating the Rails version
+Rails provides the `app:update` task (`rake rails:update` on 4.2 and earlier). After updating the Rails version
 in the Gemfile, run this task.
 This will help you with the creation of new files and changes of old files in an
 interactive session.
@@ -64,6 +64,41 @@ Overwrite /myapp/config/application.rb? (enter "h" for help) [Ynaqdh]
 ```
 
 Don't forget to review the difference, to see if there were any unexpected changes.
+
+Upgrading from Rails 5.0 to Rails 5.1
+-------------------------------------
+
+For more information on changes made to Rails 5.1 please see the [release notes](5_1_release_notes.html).
+
+### Top-level `HashWithIndifferentAccess` is soft-deprecated
+
+If your application uses the the top-level `HashWithIndifferentAccess` class, you
+should slowly move your code to instead use `ActiveSupport::HashWithIndifferentAccess`.
+
+It is only soft-deprecated, which means that your code will not break at the
+moment and no deprecation warning will be displayed, but this constant will be
+removed in the future.
+
+Also, if you have pretty old YAML documents containing dumps of such objects,
+you may need to load and dump them again to make sure that they reference
+the right constant, and that loading them won't break in the future.
+
+### `application.secrets` now loaded with all keys as symbols
+
+If your application stores nested configuration in `config/secrets.yml`, all keys
+are now loaded as symbols, so access using strings should be changed.
+
+From:
+
+```ruby
+Rails.application.secrets[:smtp_settings]["address"]
+```
+
+To:
+
+```ruby
+Rails.application.secrets[:smtp_settings][:address]
+```
 
 Upgrading from Rails 4.2 to Rails 5.0
 -------------------------------------
@@ -140,12 +175,22 @@ See [#19034](https://github.com/rails/rails/pull/19034) for more details.
 
 ### Rails Controller Testing
 
+#### Extraction of some helper methods to `rails-controller-testing`
+
 `assigns` and `assert_template` have been extracted to the `rails-controller-testing` gem. To
 continue using these methods in your controller tests, add `gem 'rails-controller-testing'` to
 your Gemfile.
 
 If you are using Rspec for testing, please see the extra configuration required in the gem's
 documentation.
+
+#### New behavior when uploading files
+
+If you are using `ActionDispatch::Http::UploadedFile` in your tests to
+upload files, you will need to change to use the similar `Rack::Test::UploadedFile`
+class instead.
+
+See [#26404](https://github.com/rails/rails/issues/26404) for more details.
 
 ### Autoloading is Disabled After Booting in the Production Environment
 
@@ -325,7 +370,7 @@ should support caching.
 
 #### Configure the Output of `db:structure:dump`
 
-If you're using `schema_search_path` or other PostgreSQL extentions, you can control how the schema is
+If you're using `schema_search_path` or other PostgreSQL extensions, you can control how the schema is
 dumped. Set to `:all` to generate all dumps, or to `:schema_search_path` to generate from schema search path.
 
     config.active_record.dump_schemas = :all
@@ -703,7 +748,7 @@ There are a few major changes related to JSON handling in Rails 4.1.
 MultiJSON has reached its [end-of-life](https://github.com/rails/rails/pull/10576)
 and has been removed from Rails.
 
-If your application currently depend on MultiJSON directly, you have a few options:
+If your application currently depends on MultiJSON directly, you have a few options:
 
 1. Add 'multi_json' to your Gemfile. Note that this might cease to work in the future
 
@@ -1278,6 +1323,10 @@ Also check your environment settings for `config.action_dispatch.best_standards_
 
 Rails 4.0 removes the `j` alias for `ERB::Util#json_escape` since `j` is already used for `ActionView::Helpers::JavaScriptHelper#escape_javascript`.
 
+#### Cache
+
+The caching method changed between Rails 3.x and 4.0. You should [change the cache namespace](http://guides.rubyonrails.org/caching_with_rails.html#activesupport-cache-store) and roll out with a cold cache.
+
 ### Helpers Loading Order
 
 The order in which helpers from more than one directory are loaded has changed in Rails 4.0. Previously, they were gathered and then sorted alphabetically. After upgrading to Rails 4.0, helpers will preserve the order of loaded directories and will be sorted alphabetically only within each directory. Unless you explicitly use the `helpers_path` parameter, this change will only impact the way of loading helpers from engines. If you rely on the ordering, you should check if correct methods are available after upgrade. If you would like to change the order in which engines are loaded, you can use `config.railties_order=` method.
@@ -1426,7 +1475,7 @@ config.assets.digest = true
 # config.assets.manifest = YOUR_PATH
 
 # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-# config.assets.precompile += %w( search.js )
+# config.assets.precompile += %w( admin.js admin.css )
 
 # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
 # config.force_ssl = true
