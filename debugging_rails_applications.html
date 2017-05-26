@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>调试 Rails 应用 — Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="返回首页">Rails 指南</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>新手入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询接口</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入探索</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">Rails 应用测试指南</a></dd>
+                <dd><a href="security.html">Ruby on Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器和模板</a></dd>
+                <dt>为 Ruby on Rails 做贡献</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档指导方针</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">Ruby on Rails 的维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布记</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="新手入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询接口</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入探索">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">Rails 应用测试指南</option>
+                  <option value="security.html">Ruby on Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器和模板</option>
+              </optgroup>
+              <optgroup label="为 Ruby on Rails 做贡献">
+                  <option value="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</option>
+                  <option value="api_documentation_guidelines.html">API 文档指导方针</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">Ruby on Rails 的维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布记</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>调试 Rails 应用</h2><p>本文介绍如何调试 Rails 应用。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li>  调试的目的；</li>
+<li>  如何追查测试没有发现的问题；</li>
+<li>  不同的调试方法；</li>
+<li>  如何分析堆栈跟踪。</li>
+</ul>
+
+
+              <div id="subCol">
+          <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />目录</h3>
+          <ol class="chapters">
+<li>
+<a href="#view-helpers-for-debugging">调试相关的视图辅助方法</a>
+
+<ul>
+<li><a href="#debug"><code>debug</code></a></li>
+<li><a href="#to-yaml"><code>to_yaml</code></a></li>
+<li><a href="#inspect"><code>inspect</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#the-logger">日志记录器</a>
+
+<ul>
+<li><a href="#what-is-the-logger-questionmark">日志记录器是什么？</a></li>
+<li><a href="#log-levels">日志等级</a></li>
+<li><a href="#sending-messages">发送消息</a></li>
+<li><a href="#tagged-logging">为日志打标签</a></li>
+<li><a href="#impact-of-logs-on-performance">日志对性能的影响</a></li>
+</ul>
+</li>
+<li>
+<a href="#debugging-with-the-byebug-gem">使用 <code>byebug</code> gem 调试</a>
+
+<ul>
+<li><a href="#setup">安装</a></li>
+<li><a href="#the-shell">Shell</a></li>
+<li><a href="#the-context">上下文</a></li>
+<li><a href="#threads">线程</a></li>
+<li><a href="#debugging-with-the-byebug-gem-inspecting-variables">审查变量</a></li>
+<li><a href="#step-by-step">逐步执行</a></li>
+<li><a href="#breakpoints">断点</a></li>
+<li><a href="#catching-exceptions">捕获异常</a></li>
+<li><a href="#resuming-execution">恢复执行</a></li>
+<li><a href="#editing">编辑</a></li>
+<li><a href="#quitting">退出</a></li>
+<li><a href="#debugging-with-the-byebug-gem-settings">设置</a></li>
+</ul>
+</li>
+<li>
+<a href="#debugging-with-the-web-console-gem">使用 <code>web-console</code> gem 调试</a>
+
+<ul>
+<li><a href="#console">控制台</a></li>
+<li><a href="#debugging-with-the-web-console-gem-inspecting-variables">审查变量</a></li>
+<li><a href="#debugging-with-the-web-console-gem-settings">设置</a></li>
+</ul>
+</li>
+<li>
+<a href="#debugging-memory-leaks">调试内存泄露</a>
+
+<ul>
+<li><a href="#valgrind">Valgrind</a></li>
+</ul>
+</li>
+<li><a href="#plugins-for-debugging">用于调试的插件</a></li>
+<li><a href="#references">参考资源</a></li>
+</ol>
+
+        </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <p><a class="anchor" id="view-helpers-for-debugging"></a></p><h3 id="view-helpers-for-debugging">1 调试相关的视图辅助方法</h3><p>一个常见的需求是查看变量的值。在 Rails 中，可以使用下面这三个方法：</p>
+<ul>
+<li>  <code>debug</code>
+</li>
+<li>  <code>to_yaml</code>
+</li>
+<li>  <code>inspect</code>
+</li>
+</ul>
+<p><a class="anchor" id="debug"></a></p><h4 id="debug">1.1 <code>debug</code>
+</h4><p><code>debug</code> 方法使用 YAML 格式渲染对象，把结果放在 <code>&lt;pre&gt;</code> 标签中，可以把任何对象转换成人类可读的数据格式。例如，在视图中有以下代码：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= debug @article %&gt;
+&lt;p&gt;
+  &lt;b&gt;Title:&lt;/b&gt;
+  &lt;%= @article.title %&gt;
+&lt;/p&gt;
+
+</pre>
+</div>
+<p>渲染后会看到如下结果：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+--- !ruby/object Article
+attributes:
+  updated_at: 2008-09-05 22:55:47
+  body: It's a very helpful guide for debugging your Rails app.
+  title: Rails debugging guide
+  published: t
+  id: "1"
+  created_at: 2008-09-05 22:55:47
+attributes_cache: {}
+
+
+Title: Rails debugging guide
+
+</pre>
+</div>
+<p><a class="anchor" id="to-yaml"></a></p><h4 id="to-yaml">1.2 <code>to_yaml</code>
+</h4><p>在任何对象上调用 <code>to_yaml</code> 方法可以把对象转换成 YAML。转换得到的对象可以传给 <code>simple_format</code> 辅助方法，格式化输出。<code>debug</code> 就是这么做的：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= simple_format @article.to_yaml %&gt;
+&lt;p&gt;
+  &lt;b&gt;Title:&lt;/b&gt;
+  &lt;%= @article.title %&gt;
+&lt;/p&gt;
+
+</pre>
+</div>
+<p>渲染后得到的结果如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+--- !ruby/object Article
+attributes:
+updated_at: 2008-09-05 22:55:47
+body: It's a very helpful guide for debugging your Rails app.
+title: Rails debugging guide
+published: t
+id: "1"
+created_at: 2008-09-05 22:55:47
+attributes_cache: {}
+
+Title: Rails debugging guide
+
+</pre>
+</div>
+<p><a class="anchor" id="inspect"></a></p><h4 id="inspect">1.3 <code>inspect</code>
+</h4><p>另一个用于显示对象值的方法是 <code>inspect</code>，显示数组和散列时使用这个方法特别方便。<code>inspect</code> 方法以字符串的形式显示对象的值。例如：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= [1, 2, 3, 4, 5].inspect %&gt;
+&lt;p&gt;
+  &lt;b&gt;Title:&lt;/b&gt;
+  &lt;%= @article.title %&gt;
+&lt;/p&gt;
+
+</pre>
+</div>
+<p>渲染后得到的结果如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+[1, 2, 3, 4, 5]
+
+Title: Rails debugging guide
+
+</pre>
+</div>
+<p><a class="anchor" id="the-logger"></a></p><h3 id="the-logger">2 日志记录器</h3><p>运行时把信息写入日志文件也很有用。Rails 分别为各个运行时环境维护着单独的日志文件。</p><p><a class="anchor" id="what-is-the-logger-questionmark"></a></p><h4 id="what-is-the-logger-questionmark">2.1 日志记录器是什么？</h4><p>Rails 使用 <code>ActiveSupport::Logger</code> 类把信息写入日志。当然也可以换用其他库，比如 <code>Log4r</code>。</p><p>若想替换日志库，可以在 <code>config/application.rb</code> 或其他环境的配置文件中设置，例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.logger = Logger.new(STDOUT)
+config.logger = Log4r::Logger.new("Application Log")
+
+</pre>
+</div>
+<p>或者在 <code>config/environment.rb</code> 中添加下述代码中的某一行：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Rails.logger = Logger.new(STDOUT)
+Rails.logger = Log4r::Logger.new("Application Log")
+
+</pre>
+</div>
+<div class="info"><p>默认情况下，日志文件都保存在 <code>Rails.root/log/</code> 目录中，日志文件的名称对应于各个环境。</p></div><p><a class="anchor" id="log-levels"></a></p><h4 id="log-levels">2.2 日志等级</h4><p>如果消息的日志等级等于或高于设定的等级，就会写入对应的日志文件中。如果想知道当前的日志等级，可以调用 <code>Rails.logger.level</code> 方法。</p><p>可用的日志等级包括 <code>:debug</code>、<code>:info</code>、<code>:warn</code>、<code>:error</code>、<code>:fatal</code> 和 <code>:unknown</code>，分别对应数字 0-5。修改默认日志等级的方式如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.log_level = :warn # 在环境的配置文件中
+Rails.logger.level = 0 # 任何时候
+
+</pre>
+</div>
+<p>这么设置在开发环境和交付准备环境中很有用，在生产环境中则不会写入大量不必要的信息。</p><div class="info"><p>Rails 为所有环境设定的默认日志等级是 <code>debug</code>。</p></div><p><a class="anchor" id="sending-messages"></a></p><h4 id="sending-messages">2.3 发送消息</h4><p>把消息写入日志文件可以在控制器、模型或邮件程序中调用 <code>logger.(debug|info|warn|error|fatal)</code> 方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+logger.debug "Person attributes hash: #{@person.attributes.inspect}"
+logger.info "Processing the request..."
+logger.fatal "Terminating application, raised unrecoverable error!!!"
+
+</pre>
+</div>
+<p>下面这个例子增加了额外的写日志功能：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ArticlesController &lt; ApplicationController
+  # ...
+
+  def create
+    @article = Article.new(params[:article])
+    logger.debug "New article: #{@article.attributes.inspect}"
+    logger.debug "Article should be valid: #{@article.valid?}"
+
+    if @article.save
+      flash[:notice] =  'Article was successfully created.'
+      logger.debug "The article was saved and now the user is going to be redirected..."
+      redirect_to(@article)
+    else
+      render action: "new"
+    end
+  end
+
+  # ...
+end
+
+</pre>
+</div>
+<p>执行上述动作后得到的日志如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+Processing ArticlesController#create (for 127.0.0.1 at 2008-09-08 11:52:54) [POST]
+  Session ID: BAh7BzoMY3NyZl9pZCIlMDY5MWU1M2I1ZDRjODBlMzkyMWI1OTg2NWQyNzViZjYiCmZsYXNoSUM6J0FjdGl
+vbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7AAY6CkB1c2VkewA=--b18cd92fba90eacf8137e5f6b3b06c4d724596a4
+  Parameters: {"commit"=&gt;"Create", "article"=&gt;{"title"=&gt;"Debugging Rails",
+ "body"=&gt;"I'm learning how to print in logs!!!", "published"=&gt;"0"},
+ "authenticity_token"=&gt;"2059c1286e93402e389127b1153204e0d1e275dd", "action"=&gt;"create", "controller"=&gt;"articles"}
+New article: {"updated_at"=&gt;nil, "title"=&gt;"Debugging Rails", "body"=&gt;"I'm learning how to print in logs!!!",
+ "published"=&gt;false, "created_at"=&gt;nil}
+Article should be valid: true
+  Article Create (0.000443)   INSERT INTO "articles" ("updated_at", "title", "body", "published",
+ "created_at") VALUES('2008-09-08 14:52:54', 'Debugging Rails',
+ 'I''m learning how to print in logs!!!', 'f', '2008-09-08 14:52:54')
+The article was saved and now the user is going to be redirected...
+Redirected to # Article:0x20af760&gt;
+Completed in 0.01224 (81 reqs/sec) | DB: 0.00044 (3%) | 302 Found [http://localhost/articles]
+
+</pre>
+</div>
+<p>加入这种日志信息有助于发现异常现象。如果添加了额外的日志消息，记得要合理设定日志等级，免得把大量无用的消息写入生产环境的日志文件。</p><p><a class="anchor" id="tagged-logging"></a></p><h4 id="tagged-logging">2.4 为日志打标签</h4><p>运行多用户、多账户的应用时，使用自定义的规则筛选日志信息能节省很多时间。Active Support 中的 <code>TaggedLogging</code> 模块可以实现这种功能，可以在日志消息中加入二级域名、请求 ID 等有助于调试的信息。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+logger.tagged("BCX") { logger.info "Stuff" }                            # Logs "[BCX] Stuff"
+logger.tagged("BCX", "Jason") { logger.info "Stuff" }                   # Logs "[BCX] [Jason] Stuff"
+logger.tagged("BCX") { logger.tagged("Jason") { logger.info "Stuff" } } # Logs "[BCX] [Jason] Stuff"
+
+</pre>
+</div>
+<p><a class="anchor" id="impact-of-logs-on-performance"></a></p><h4 id="impact-of-logs-on-performance">2.5 日志对性能的影响</h4><p>如果把日志写入磁盘，肯定会对应用有点小的性能影响。不过可以做些小调整：<code>:debug</code> 等级比 <code>:fatal</code> 等级对性能的影响更大，因为写入的日志消息量更多。</p><p>如果按照下面的方式大量调用 <code>Logger</code>，也有潜在的问题：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+logger.debug "Person attributes hash: #{@person.attributes.inspect}"
+
+</pre>
+</div>
+<p>在上述代码中，即使日志等级不包含 <code>:debug</code> 也会对性能产生影响。这是因为 Ruby 要初始化字符串，再花时间做插值。因此建议把代码块传给 <code>logger</code> 方法，只有等于或大于设定的日志等级时才执行其中的代码。重写后的代码如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+logger.debug {"Person attributes hash: #{@person.attributes.inspect}"}
+
+</pre>
+</div>
+<p>代码块中的内容，即字符串插值，仅当允许 <code>:debug</code> 日志等级时才会执行。这种节省性能的方式只有在日志量比较大时才能体现出来，但却是个好的编程习惯。</p><p><a class="anchor" id="debugging-with-the-byebug-gem"></a></p><h3 id="debugging-with-the-byebug-gem">3 使用 <code>byebug</code> gem 调试</h3><p>如果代码表现异常，可以在日志或控制台中诊断问题。但有时使用这种方法效率不高，无法找到导致问题的根源。如果需要检查源码，<code>byebug</code> gem 可以助你一臂之力。</p><p>如果想学习 Rails 源码但却无从下手，也可使用 <code>byebug</code> gem。随便找个请求，然后按照这里介绍的方法，从你编写的代码一直研究到 Rails 框架的代码。</p><p><a class="anchor" id="setup"></a></p><h4 id="setup">3.1 安装</h4><p><code>byebug</code> gem 可以设置断点，实时查看执行的 Rails 代码。安装方法如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ gem install byebug
+
+</pre>
+</div>
+<p>在任何 Rails 应用中都可以使用 <code>byebug</code> 方法呼出调试器。</p><p>下面举个例子：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class PeopleController &lt; ApplicationController
+  def new
+    byebug
+    @person = Person.new
+  end
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="the-shell"></a></p><h4 id="the-shell">3.2 Shell</h4><p>在应用中调用 <code>byebug</code> 方法后，在启动应用的终端窗口中会启用调试器 shell，并显示调试器的提示符 <code>(byebug)</code>。提示符前面显示的是即将执行的代码，当前行以“=&gt;”标记，例如：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+[1, 10] in /PathTo/project/app/controllers/articles_controller.rb
+    3:
+    4:   # GET /articles
+    5:   # GET /articles.json
+    6:   def index
+    7:     byebug
+=&gt;  8:     @articles = Article.find_recent
+    9:
+   10:     respond_to do |format|
+   11:       format.html # index.html.erb
+   12:       format.json { render json: @articles }
+
+(byebug)
+
+</pre>
+</div>
+<p>如果是浏览器中执行的请求到达了那里，当前浏览器标签页会处于挂起状态，等待调试器完工，跟踪完整个请求。</p><p>例如：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+=&gt; Booting Puma
+=&gt; Rails 5.1.0 application starting in development on http://0.0.0.0:3000
+=&gt; Run `rails server -h` for more startup options
+Puma starting in single mode...
+* Version 3.4.0 (ruby 2.3.1-p112), codename: Owl Bowl Brawl
+* Min threads: 5, max threads: 5
+* Environment: development
+* Listening on tcp://localhost:3000
+Use Ctrl-C to stop
+Started GET "/" for 127.0.0.1 at 2014-04-11 13:11:48 +0200
+  ActiveRecord::SchemaMigration Load (0.2ms)  SELECT "schema_migrations".* FROM "schema_migrations"
+Processing by ArticlesController#index as HTML
+
+[3, 12] in /PathTo/project/app/controllers/articles_controller.rb
+    3:
+    4:   # GET /articles
+    5:   # GET /articles.json
+    6:   def index
+    7:     byebug
+=&gt;  8:     @articles = Article.find_recent
+    9:
+   10:     respond_to do |format|
+   11:       format.html # index.html.erb
+   12:       format.json { render json: @articles }
+(byebug)
+
+</pre>
+</div>
+<p>现在可以深入分析应用的代码了。首先我们来查看一下调试器的帮助信息，输入 <code>help</code>：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) help
+
+  break      -- Sets breakpoints in the source code
+  catch      -- Handles exception catchpoints
+  condition  -- Sets conditions on breakpoints
+  continue   -- Runs until program ends, hits a breakpoint or reaches a line
+  debug      -- Spawns a subdebugger
+  delete     -- Deletes breakpoints
+  disable    -- Disables breakpoints or displays
+  display    -- Evaluates expressions every time the debugger stops
+  down       -- Moves to a lower frame in the stack trace
+  edit       -- Edits source files
+  enable     -- Enables breakpoints or displays
+  finish     -- Runs the program until frame returns
+  frame      -- Moves to a frame in the call stack
+  help       -- Helps you using byebug
+  history    -- Shows byebug's history of commands
+  info       -- Shows several informations about the program being debugged
+  interrupt  -- Interrupts the program
+  irb        -- Starts an IRB session
+  kill       -- Sends a signal to the current process
+  list       -- Lists lines of source code
+  method     -- Shows methods of an object, class or module
+  next       -- Runs one or more lines of code
+  pry        -- Starts a Pry session
+  quit       -- Exits byebug
+  restart    -- Restarts the debugged program
+  save       -- Saves current byebug session to a file
+  set        -- Modifies byebug settings
+  show       -- Shows byebug settings
+  source     -- Restores a previously saved byebug session
+  step       -- Steps into blocks or methods one or more times
+  thread     -- Commands to manipulate threads
+  tracevar   -- Enables tracing of a global variable
+  undisplay  -- Stops displaying all or some expressions when program stops
+  untracevar -- Stops tracing a global variable
+  up         -- Moves to a higher frame in the stack trace
+  var        -- Shows variables and its values
+  where      -- Displays the backtrace
+
+(byebug)
+
+</pre>
+</div>
+<p>如果想查看前面十行代码，输入 <code>list-</code>（或 <code>l-</code>）。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) l-
+
+[1, 10] in /PathTo/project/app/controllers/articles_controller.rb
+   1  class ArticlesController &lt; ApplicationController
+   2    before_action :set_article, only: [:show, :edit, :update, :destroy]
+   3
+   4    # GET /articles
+   5    # GET /articles.json
+   6    def index
+   7      byebug
+   8      @articles = Article.find_recent
+   9
+   10      respond_to do |format|
+
+</pre>
+</div>
+<p>这样我们就可以在文件内移动，查看 <code>byebug</code> 所在行上面的代码。如果想查看你在哪一行，输入 <code>list=</code>：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) list=
+
+[3, 12] in /PathTo/project/app/controllers/articles_controller.rb
+    3:
+    4:   # GET /articles
+    5:   # GET /articles.json
+    6:   def index
+    7:     byebug
+=&gt;  8:     @articles = Article.find_recent
+    9:
+   10:     respond_to do |format|
+   11:       format.html # index.html.erb
+   12:       format.json { render json: @articles }
+(byebug)
+
+</pre>
+</div>
+<p><a class="anchor" id="the-context"></a></p><h4 id="the-context">3.3 上下文</h4><p>开始调试应用时，会进入堆栈中不同部分对应的不同上下文。</p><p>到达一个停止点或者触发某个事件时，调试器就会创建一个上下文。上下文中包含被终止应用的信息，调试器用这些信息审查帧堆栈，计算变量的值，以及调试器在应用的什么地方终止执行。</p><p>任何时候都可执行 <code>backtrace</code> 命令（或别名 <code>where</code>）打印应用的回溯信息。这有助于理解是如何执行到当前位置的。只要你想知道应用是怎么执行到当前代码的，就可以通过 <code>backtrace</code> 命令获得答案。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) where
+--&gt; #0  ArticlesController.index
+      at /PathToProject/app/controllers/articles_controller.rb:8
+    #1  ActionController::BasicImplicitRender.send_action(method#String, *args#Array)
+      at /PathToGems/actionpack-5.1.0/lib/action_controller/metal/basic_implicit_render.rb:4
+    #2  AbstractController::Base.process_action(action#NilClass, *args#Array)
+      at /PathToGems/actionpack-5.1.0/lib/abstract_controller/base.rb:181
+    #3  ActionController::Rendering.process_action(action, *args)
+      at /PathToGems/actionpack-5.1.0/lib/action_controller/metal/rendering.rb:30
+...
+
+</pre>
+</div>
+<p>当前帧使用 <code>--&gt;</code> 标记。在回溯信息中可以执行 <code>frame n</code> 命令移动（从而改变上下文），其中 <code>n</code> 为帧序号。如果移动了，<code>byebug</code> 会显示新的上下文。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) frame 2
+
+[176, 185] in /PathToGems/actionpack-5.1.0/lib/abstract_controller/base.rb
+   176:       # is the intended way to override action dispatching.
+   177:       #
+   178:       # Notice that the first argument is the method to be dispatched
+   179:       # which is *not* necessarily the same as the action name.
+   180:       def process_action(method_name, *args)
+=&gt; 181:         send_action(method_name, *args)
+   182:       end
+   183:
+   184:       # Actually call the method associated with the action. Override
+   185:       # this method if you wish to change how action methods are called,
+(byebug)
+
+</pre>
+</div>
+<p>可用的变量和逐行执行代码时一样。毕竟，这就是调试的目的。</p><p>向前或向后移动帧可以执行 <code>up [n]</code> 或 <code>down [n]</code> 命令，分别向前或向后移动 n 帧。n 的默认值为 1。向前移动是指向较高的帧数移动，向下移动是指向较低的帧数移动。</p><p><a class="anchor" id="threads"></a></p><h4 id="threads">3.4 线程</h4><p><code>thread</code> 命令（缩写为 <code>th</code>）可以列出所有线程、停止线程、恢复线程，或者在线程之间切换。其选项如下：</p>
+<ul>
+<li>  <code>thread</code>：显示当前线程；</li>
+<li>  <code>thread list</code>：列出所有线程及其状态，<code>+</code> 符号表示当前线程；</li>
+<li>  <code>thread stop n</code>：停止线程 <code>n</code>；</li>
+<li>  <code>thread resume n</code>：恢复线程 <code>n</code>；</li>
+<li>  <code>thread switch n</code>：把当前线程切换到线程 <code>n</code>；</li>
+</ul>
+<p>调试并发线程时，如果想确认代码中没有条件竞争，使用这个命令十分方便。</p><p><a class="anchor" id="debugging-with-the-byebug-gem-inspecting-variables"></a></p><h4 id="debugging-with-the-byebug-gem-inspecting-variables">3.5 审查变量</h4><p>任何表达式都可在当前上下文中求值。如果想计算表达式的值，直接输入表达式即可。</p><p>下面这个例子说明如何查看当前上下文中实例变量的值：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+[3, 12] in /PathTo/project/app/controllers/articles_controller.rb
+    3:
+    4:   # GET /articles
+    5:   # GET /articles.json
+    6:   def index
+    7:     byebug
+=&gt;  8:     @articles = Article.find_recent
+    9:
+   10:     respond_to do |format|
+   11:       format.html # index.html.erb
+   12:       format.json { render json: @articles }
+
+(byebug) instance_variables
+[:@_action_has_layout, :@_routes, :@_request, :@_response, :@_lookup_context,
+ :@_action_name, :@_response_body, :@marked_for_same_origin_verification,
+ :@_config]
+
+</pre>
+</div>
+<p>你可能已经看出来了，在控制器中可以使用的实例变量都显示出来了。这个列表随着代码的执行会动态更新。例如，使用 <code>next</code> 命令（本文后面会进一步说明这个命令）执行下一行代码：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) next
+
+[5, 14] in /PathTo/project/app/controllers/articles_controller.rb
+   5     # GET /articles.json
+   6     def index
+   7       byebug
+   8       @articles = Article.find_recent
+   9
+=&gt; 10       respond_to do |format|
+   11         format.html # index.html.erb
+   12        format.json { render json: @articles }
+   13      end
+   14    end
+   15
+(byebug)
+
+</pre>
+</div>
+<p>然后再查看 <code>instance_variables</code> 的值：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) instance_variables
+[:@_action_has_layout, :@_routes, :@_request, :@_response, :@_lookup_context,
+ :@_action_name, :@_response_body, :@marked_for_same_origin_verification,
+ :@_config, :@articles]
+
+</pre>
+</div>
+<p>实例变量中出现了 <code>@articles</code>，因为执行了定义它的代码。</p><div class="info"><p>执行 <code>irb</code> 命令可进入 <strong>irb</strong> 模式（这不显然吗），irb 会话使用当前上下文。</p></div><p><code>var</code> 命令是显示变量值最便捷的方式：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) help var
+
+  [v]ar &lt;subcommand&gt;
+
+  Shows variables and its values
+
+
+  var all      -- Shows local, global and instance variables of self.
+  var args     -- Information about arguments of the current scope
+  var const    -- Shows constants of an object.
+  var global   -- Shows global variables.
+  var instance -- Shows instance variables of self or a specific object.
+  var local    -- Shows local variables in current scope.
+
+</pre>
+</div>
+<p>上述方法可以很轻易查看当前上下文中的变量值。例如，下述代码确认没有局部变量：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) var local
+(byebug)
+
+</pre>
+</div>
+<p>审查对象的方法也可以使用这个命令：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) var instance Article.new
+@_start_transaction_state = {}
+@aggregation_cache = {}
+@association_cache = {}
+@attributes = #&lt;ActiveRecord::AttributeSet:0x007fd0682a9b18 @attributes={"id"=&gt;#&lt;ActiveRecord::Attribute::FromDatabase:0x007fd0682a9a00 @name="id", @value_be...
+@destroyed = false
+@destroyed_by_association = nil
+@marked_for_destruction = false
+@new_record = true
+@readonly = false
+@transaction_state = nil
+
+</pre>
+</div>
+<p><code>display</code> 命令可用于监视变量，查看在代码执行过程中变量值的变化：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) display @articles
+1: @articles = nil
+
+</pre>
+</div>
+<p><code>display</code> 命令后跟的变量值会随着执行堆栈的推移而变化。如果想停止显示变量值，可以执行 <code>undisplay n</code> 命令，其中 <code>n</code> 是变量的代号（在上例中是 <code>1</code>）。</p><p><a class="anchor" id="step-by-step"></a></p><h4 id="step-by-step">3.6 逐步执行</h4><p>现在你知道在运行代码的什么位置，以及如何查看变量的值了。下面我们继续执行应用。</p><p><code>step</code> 命令（缩写为 <code>s</code>）可以一直执行应用，直到下一个逻辑停止点，再把控制权交给调试器。<code>next</code> 命令的作用和 <code>step</code> 命令类似，但是 <code>step</code> 命令会在执行下一行代码之前停止，一次只执行一步，而 <code>next</code> 命令会执行下一行代码，但不跳出方法。</p><p>我们来看看下面这种情形：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+Started GET "/" for 127.0.0.1 at 2014-04-11 13:39:23 +0200
+Processing by ArticlesController#index as HTML
+
+[1, 6] in /PathToProject/app/models/article.rb
+   1: class Article &lt; ApplicationRecord
+   2:   def self.find_recent(limit = 10)
+   3:     byebug
+=&gt; 4:     where('created_at &gt; ?', 1.week.ago).limit(limit)
+   5:   end
+   6: end
+
+(byebug)
+
+</pre>
+</div>
+<p>如果使用 <code>next</code>，不会深入方法调用，<code>byebug</code> 会进入同一上下文中的下一行。这里，进入的是当前方法的最后一行，因此 <code>byebug</code> 会返回调用方的下一行。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) next
+[4, 13] in /PathToProject/app/controllers/articles_controller.rb
+    4:   # GET /articles
+    5:   # GET /articles.json
+    6:   def index
+    7:     @articles = Article.find_recent
+    8:
+=&gt;  9:     respond_to do |format|
+   10:       format.html # index.html.erb
+   11:       format.json { render json: @articles }
+   12:     end
+   13:   end
+
+(byebug)
+
+</pre>
+</div>
+<p>如果使用 <code>step</code>，<code>byebug</code> 会进入要执行的下一个 Ruby 指令——这里是 Active Support 的 <code>week</code> 方法。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) step
+
+[49, 58] in /PathToGems/activesupport-5.1.0/lib/active_support/core_ext/numeric/time.rb
+   49:
+   50:   # Returns a Duration instance matching the number of weeks provided.
+   51:   #
+   52:   #   2.weeks # =&gt; 14 days
+   53:   def weeks
+=&gt; 54:     ActiveSupport::Duration.new(self * 7.days, [[:days, self * 7]])
+   55:   end
+   56:   alias :week :weeks
+   57:
+   58:   # Returns a Duration instance matching the number of fortnights provided.
+(byebug)
+
+</pre>
+</div>
+<p>逐行执行代码是找出代码缺陷的最佳方式。</p><div class="info"><p>还可以使用 <code>step n</code> 或 <code>next n</code> 一次向前移动 <code>n</code> 步。</p></div><p><a class="anchor" id="breakpoints"></a></p><h4 id="breakpoints">3.7 断点</h4><p>断点设置在何处终止执行代码。调试器会在设定断点的行呼出。</p><p>断点可以使用 <code>break</code> 命令（缩写为 <code>b</code>）动态添加。添加断点有三种方式：</p>
+<ul>
+<li>  <code>break n</code>：在当前源码文件的第 <code>n</code> 行设定断点。</li>
+<li>  <code>break file:n [if expression]</code>：在文件 <code>file</code> 的第 <code>n</code> 行设定断点。如果指定了表达式 <code>expression</code>，其返回结果必须为 <code>true</code> 才会启动调试器。</li>
+<li>  <code>break class(.|#)method [if expression]</code>：在 <code>class</code> 类的 <code>method</code> 方法中设置断点，<code>.</code> 和 <code>#</code> 分别表示类和实例方法。表达式 <code>expression</code> 的作用与 <code>file:n</code> 中的一样。</li>
+</ul>
+<p>例如，在前面的情形下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+[4, 13] in /PathToProject/app/controllers/articles_controller.rb
+    4:   # GET /articles
+    5:   # GET /articles.json
+    6:   def index
+    7:     @articles = Article.find_recent
+    8:
+=&gt;  9:     respond_to do |format|
+   10:       format.html # index.html.erb
+   11:       format.json { render json: @articles }
+   12:     end
+   13:   end
+
+(byebug) break 11
+Successfully created breakpoint with id 1
+
+</pre>
+</div>
+<p>使用 <code>info breakpoints</code> 命令可以列出断点。如果指定了数字，只会列出对应的断点，否则列出所有断点。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) info breakpoints
+Num Enb What
+1   y   at /PathToProject/app/controllers/articles_controller.rb:11
+
+</pre>
+</div>
+<p>如果想删除断点，使用 <code>delete n</code> 命令，删除编号为 <code>n</code> 的断点。如果不指定数字，则删除所有在用的断点。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) delete 1
+(byebug) info breakpoints
+No breakpoints.
+
+</pre>
+</div>
+<p>断点也可以启用或禁用：</p>
+<ul>
+<li>  <code>enable breakpoints [n [m [&amp;#8230;&amp;#8203;]]]</code>：在指定的断点列表或者所有断点处停止应用。这是创建断点后的默认状态。</li>
+<li>  <code>disable breakpoints [n [m [&amp;#8230;&amp;#8203;]]]</code>：让指定的断点（或全部断点）在应用中不起作用。</li>
+</ul>
+<p><a class="anchor" id="catching-exceptions"></a></p><h4 id="catching-exceptions">3.8 捕获异常</h4><p><code>catch exception-name</code> 命令（或 <code>cat exception-name</code>）可捕获 <code>exception-name</code> 类型的异常，源码很有可能没有处理这个异常。</p><p>执行 <code>catch</code> 命令可以列出所有可用的捕获点。</p><p><a class="anchor" id="resuming-execution"></a></p><h4 id="resuming-execution">3.9 恢复执行</h4><p>有两种方法可以恢复被调试器终止执行的应用：</p>
+<ul>
+<li>  <code>continue [n]</code>（或 <code>c</code>）：从停止的地方恢复执行程序，设置的断点失效。可选的参数 <code>n</code> 指定一个行数，设定一个一次性断点，应用执行到这一行时，断点会被删除。</li>
+<li>  <code>finish [n]</code>：一直执行，直到指定的堆栈帧返回为止。如果没有指定帧序号，应用会一直执行，直到当前堆栈帧返回为止。当前堆栈帧就是最近刚使用过的帧，如果之前没有移动帧的位置（执行 <code>up</code>、<code>down</code> 或 <code>frame</code> 命令），就是第 0 帧。如果指定了帧序号，则运行到指定的帧返回为止。</li>
+</ul>
+<p><a class="anchor" id="editing"></a></p><h4 id="editing">3.10 编辑</h4><p>下面这个方法可以在调试器中使用编辑器打开源码：</p>
+<ul>
+<li>  <code>edit [file:n]</code>：使用环境变量 <code>EDITOR</code> 指定的编辑器打开文件 <code>file</code>。还可指定行数 <code>n</code>。</li>
+</ul>
+<p><a class="anchor" id="quitting"></a></p><h4 id="quitting">3.11 退出</h4><p>若想退出调试器，使用 <code>quit</code> 命令（缩写为 <code>q</code>）。也可以输入 <code>q!</code>，跳过 <code>Really quit? (y/n)</code> 提示，无条件地退出。</p><p>退出后会终止所有线程，因此服务器也会停止，需要重启。</p><p><a class="anchor" id="debugging-with-the-byebug-gem-settings"></a></p><h4 id="debugging-with-the-byebug-gem-settings">3.12 设置</h4><p><code>byebug</code> 有几个选项，可用于调整行为：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+(byebug) help set
+
+  set &lt;setting&gt; &lt;value&gt;
+
+  Modifies byebug settings
+
+  Boolean values take "on", "off", "true", "false", "1" or "0". If you
+  don't specify a value, the boolean setting will be enabled. Conversely,
+  you can use "set no&lt;setting&gt;" to disable them.
+
+  You can see these environment settings with the "show" command.
+
+  List of supported settings:
+
+  autosave       -- Automatically save command history record on exit
+  autolist       -- Invoke list command on every stop
+  width          -- Number of characters per line in byebug's output
+  autoirb        -- Invoke IRB on every stop
+  basename       -- &lt;file&gt;:&lt;line&gt; information after every stop uses short paths
+  linetrace      -- Enable line execution tracing
+  autopry        -- Invoke Pry on every stop
+  stack_on_error -- Display stack trace when `eval` raises an exception
+  fullpath       -- Display full file names in backtraces
+  histfile       -- File where cmd history is saved to. Default: ./.byebug_history
+  listsize       -- Set number of source lines to list by default
+  post_mortem    -- Enable/disable post-mortem mode
+  callstyle      -- Set how you want method call parameters to be displayed
+  histsize       -- Maximum number of commands that can be stored in byebug history
+  savefile       -- File where settings are saved to. Default: ~/.byebug_save
+
+</pre>
+</div>
+<div class="info"><p>可以把这些设置保存在家目录中的 <code>.byebugrc</code> 文件里。启动时，调试器会读取这些全局设置。例如：</p></div><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+set callstyle short
+set listsize 25
+
+</pre>
+</div>
+<p><a class="anchor" id="debugging-with-the-web-console-gem"></a></p><h3 id="debugging-with-the-web-console-gem">4 使用 <code>web-console</code> gem 调试</h3><p>Web Console 的作用与 <code>byebug</code> 有点类似，不过它在浏览器中运行。在任何页面中都可以在视图或控制器的上下文中请求控制台。控制台在 HTML 内容下面渲染。</p><p><a class="anchor" id="console"></a></p><h4 id="console">4.1 控制台</h4><p>在任何控制器动作或视图中，都可以调用 <code>console</code> 方法呼出控制台。</p><p>例如，在一个控制器中：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class PostsController &lt; ApplicationController
+  def new
+    console
+    @post = Post.new
+  end
+end
+
+</pre>
+</div>
+<p>或者在一个视图中：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% console %&gt;
+
+&lt;h2&gt;New Post&lt;/h2&gt;
+
+</pre>
+</div>
+<p>控制台在视图中渲染。调用 <code>console</code> 的位置不用担心，它不会在调用的位置显示，而是显示在 HTML 内容下方。</p><p>控制台可以执行纯 Ruby 代码，你可以定义并实例化类、创建新模型或审查变量。</p><div class="note"><p>一个请求只能渲染一个控制台，否则 <code>web-console</code> 会在第二个 <code>console</code> 调用处抛出异常。</p></div><p><a class="anchor" id="debugging-with-the-web-console-gem-inspecting-variables"></a></p><h4 id="debugging-with-the-web-console-gem-inspecting-variables">4.2 审查变量</h4><p>可以调用 <code>instance_variables</code> 列出当前上下文中的全部实例变量。如果想列出全部局部变量，调用 <code>local_variables</code>。</p><p><a class="anchor" id="debugging-with-the-web-console-gem-settings"></a></p><h4 id="debugging-with-the-web-console-gem-settings">4.3 设置</h4>
+<ul>
+<li>  <code>config.web_console.whitelisted_ips</code>：授权的 IPv4 或 IPv6 地址和网络列表（默认值：<code>127.0.0.1/8, ::1</code>）。</li>
+<li>  <code>config.web_console.whiny_requests</code>：禁止渲染控制台时记录一条日志（默认值：<code>true</code>）。</li>
+</ul>
+<p><code>web-console</code> 会在远程服务器中执行 Ruby 代码，因此别在生产环境中使用。</p><p><a class="anchor" id="debugging-memory-leaks"></a></p><h3 id="debugging-memory-leaks">5 调试内存泄露</h3><p>Ruby 应用（Rails 或其他）可能会导致内存泄露，泄露可能由 Ruby 代码引起，也可能由 C 代码引起。</p><p>本节介绍如何使用 Valgrind 等工具查找并修正内存泄露问题。</p><p><a class="anchor" id="valgrind"></a></p><h4 id="valgrind">5.1 Valgrind</h4><p><a href="http://valgrind.org/">Valgrind</a> 应用能检测 C 语言层的内存泄露和条件竞争。</p><p>Valgrind 提供了很多工具，能自动检测很多内存管理和线程问题，也能详细分析程序。例如，如果 C 扩展调用了 <code>malloc()</code> 函数，但没调用 <code>free()</code> 函数，这部分内存就会一直被占用，直到应用终止执行。</p><p>关于如何安装以及如何在 Ruby 中使用 Valgrind，请阅读 Evan Weaver 写的 <a href="http://blog.evanweaver.com/articles/2008/02/05/valgrind-and-ruby/">Valgrind and Ruby</a> 一文。</p><p><a class="anchor" id="plugins-for-debugging"></a></p><h3 id="plugins-for-debugging">6 用于调试的插件</h3><p>有很多 Rails 插件可以帮助你查找问题和调试应用。下面列出一些有用的调试插件：</p>
+<ul>
+<li>  <a href="https://github.com/josevalim/rails-footnotes">Footnotes</a>：在应用的每个页面底部显示请求信息，并链接到源码（可通过 TextMate 打开）；</li>
+<li>  <a href="https://github.com/ruckus/active-record-query-trace/tree/master">Query Trace</a>：在日志中写入请求源信息；</li>
+<li>  <a href="https://github.com/nesquena/query_reviewer">Query Reviewer</a>：这个 Rails 插件在开发环境中会在每个 <code>SELECT</code> 查询前执行 <code>EXPLAIN</code> 查询，并在每个页面中添加一个 <code>div</code> 元素，显示分析到的查询问题；</li>
+<li>  <a href="https://github.com/smartinez87/exception_notification/tree/master">Exception Notifier</a>：提供了一个邮件程序和一组默认的邮件模板，Rails 应用出现问题后发送邮件通知；</li>
+<li>  <a href="https://github.com/charliesome/better_errors">Better Errors</a>：使用全新的页面替换 Rails 默认的错误页面，显示更多的上下文信息，例如源码和变量的值；</li>
+<li>  <a href="https://github.com/dejan/rails_panel">RailsPanel</a>：一个 Chrome 扩展，在浏览器的开发者工具中显示 <code>development.log</code> 文件的内容，显示的内容包括：数据库查询时间、渲染时间、总时间、参数列表、渲染的视图，等等。</li>
+<li>  <a href="https://github.com/pry/pry">Pry</a>：一个 IRB 替代品，可作为开发者的运行时控制台。</li>
+</ul>
+<p><a class="anchor" id="references"></a></p><h3 id="references">7 参考资源</h3>
+<ul>
+<li>  <a href="https://github.com/deivid-rodriguez/byebug">byebug 首页</a>
+</li>
+<li>  <a href="https://github.com/rails/web-console">web-console 首页</a>
+</li>
+</ul>
+
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

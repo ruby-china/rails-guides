@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Rails 初始化过程 — Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="返回首页">Rails 指南</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>新手入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询接口</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入探索</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">Rails 应用测试指南</a></dd>
+                <dd><a href="security.html">Ruby on Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器和模板</a></dd>
+                <dt>为 Ruby on Rails 做贡献</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档指导方针</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">Ruby on Rails 的维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布记</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="新手入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询接口</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入探索">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">Rails 应用测试指南</option>
+                  <option value="security.html">Ruby on Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器和模板</option>
+              </optgroup>
+              <optgroup label="为 Ruby on Rails 做贡献">
+                  <option value="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</option>
+                  <option value="api_documentation_guidelines.html">API 文档指导方针</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">Ruby on Rails 的维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布记</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Rails 初始化过程</h2><p>本文介绍 Rails 初始化过程的内部细节，内容较深，建议 Rails 高级开发者阅读。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li>  如何使用 <code>rails server</code>；</li>
+<li>  Rails 初始化过程的时间线；</li>
+<li>  引导过程中所需的不同文件的所在位置；</li>
+<li>  <code>Rails::Server</code> 接口的定义和使用方式。</li>
+</ul>
+
+
+              <div id="subCol">
+          <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />目录</h3>
+          <ol class="chapters">
+<li>
+<a href="#launch">启动</a>
+
+<ul>
+<li><a href="#railties-exe-rails"><code>railties/exe/rails</code> 文件</a></li>
+<li><a href="#railties-lib-rails-app-loader-rb"><code>railties/lib/rails/app_loader.rb</code> 文件</a></li>
+<li><a href="#bin-rails"><code>bin/rails</code> 文件</a></li>
+<li><a href="#config-boot-rb"><code>config/boot.rb</code> 文件</a></li>
+<li><a href="#rails-commands-rb"><code>rails/commands.rb</code> 文件</a></li>
+<li><a href="#rails-command-rb"><code>rails/command.rb</code> 文件</a></li>
+<li><a href="#actionpack-lib-action-dispatch-rb"><code>actionpack/lib/action_dispatch.rb</code> 文件</a></li>
+<li><a href="#rails-commands-server-server-command-rb"><code>rails/commands/server/server_command.rb</code> 文件</a></li>
+<li><a href="#rack-lib-rack-server-rb">Rack：<code>lib/rack/server.rb</code> 文件</a></li>
+<li><a href="#config-application"><code>config/application.rb</code> 文件</a></li>
+<li><a href="#rails-server-start"><code>Rails::Server#start</code> 方法</a></li>
+<li><a href="#config-environment-rb"><code>config/environment.rb</code> 文件</a></li>
+<li><a href="#config-application-rb"><code>config/application.rb</code> 文件</a></li>
+</ul>
+</li>
+<li>
+<a href="#loading-rails">加载 Rails</a>
+
+<ul>
+<li><a href="#railties-lib-rails-all-rb"><code>railties/lib/rails/all.rb</code> 文件</a></li>
+<li><a href="#config-environment-rb-1">回到 <code>config/environment.rb</code> 文件</a></li>
+<li><a href="#railties-lib-rails-application-rb"><code>railties/lib/rails/application.rb</code> 文件</a></li>
+<li><a href="#rack-lib-rack-server-rb-1">Rack：<code>lib/rack/server.rb</code> 文件</a></li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <div class="note"><p>本文原文尚未完工！</p></div><p>本文介绍默认情况下，Rails 应用初始化过程中的每一个方法调用，详细解释各个步骤的具体细节。本文将聚焦于使用 <code>rails server</code> 启动 Rails 应用时发生的事情。</p><div class="note"><p>除非另有说明，本文中出现的路径都是相对于 Rails 或 Rails 应用所在目录的相对路径。</p></div><div class="info"><p>如果想一边阅读本文一边查看 <a href="https://github.com/rails/rails">Rails 源代码</a>，推荐在 GitHub 中使用 <code>t</code> 快捷键打开文件查找器，以便快速查找相关文件。</p></div><p><a class="anchor" id="launch"></a></p><h3 id="launch">1 启动</h3><p>首先介绍 Rails 应用引导和初始化的过程。我们可以通过 <code>rails console</code> 或 <code>rails server</code> 命令启动 Rails 应用。</p><p><a class="anchor" id="railties-exe-rails"></a></p><h4 id="railties-exe-rails">1.1 <code>railties/exe/rails</code> 文件</h4><p><code>rails server</code> 命令中的 <code>rails</code> 是位于加载路径中的一个 Ruby 可执行文件。这个文件包含如下内容：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+version = "&gt;= 0"
+load Gem.bin_path('railties', 'rails', version)
+
+</pre>
+</div>
+<p>在 Rails 控制台中运行上述代码，可以看到加载的是 <code>railties/exe/rails</code> 文件。<code>railties/exe/rails</code> 文件的部分内容如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require "rails/cli"
+
+</pre>
+</div>
+<p><code>railties/lib/rails/cli</code> 文件又会调用 <code>Rails::AppLoader.exec_app</code> 方法。</p><p><a class="anchor" id="railties-lib-rails-app-loader-rb"></a></p><h4 id="railties-lib-rails-app-loader-rb">1.2 <code>railties/lib/rails/app_loader.rb</code> 文件</h4><p><code>exec_app</code> 方法的主要作用是执行应用中的 <code>bin/rails</code> 文件。如果在当前文件夹中未找到 <code>bin/rails</code> 文件，就会继续在上层文件夹中查找，直到找到为止。因此，我们可以在 Rails 应用中的任何位置执行 <code>rails</code> 命令。</p><p>执行 <code>rails server</code> 命令时，实际执行的是等价的下述命令：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ exec ruby bin/rails server
+
+</pre>
+</div>
+<p><a class="anchor" id="bin-rails"></a></p><h4 id="bin-rails">1.3 <code>bin/rails</code> 文件</h4><p>此文件包含如下内容：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+#!/usr/bin/env ruby
+APP_PATH = File.expand_path('../../config/application', __FILE__)
+require_relative '../config/boot'
+require 'rails/commands'
+
+</pre>
+</div>
+<p>其中 <code>APP_PATH</code> 常量稍后将在 <code>rails/commands</code> 中使用。所加载的 <code>config/boot</code> 是应用中的 <code>config/boot.rb</code> 文件，用于加载并设置 Bundler。</p><p><a class="anchor" id="config-boot-rb"></a></p><h4 id="config-boot-rb">1.4 <code>config/boot.rb</code> 文件</h4><p>此文件包含如下内容：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../../Gemfile', __FILE__)
+
+require 'bundler/setup' # 设置 Gemfile 中列出的所有 gem
+
+</pre>
+</div>
+<p>标准的 Rails 应用中包含 <code>Gemfile</code> 文件，用于声明应用的所有依赖关系。<code>config/boot.rb</code> 文件会把 <code>ENV['BUNDLE_GEMFILE']</code> 设置为 <code>Gemfile</code> 文件的路径。如果 <code>Gemfile</code> 文件存在，就会加载 <code>bundler/setup</code>，Bundler 通过它设置 Gemfile 中依赖关系的加载路径。</p><p>标准的 Rails 应用依赖多个 gem，包括：</p>
+<ul>
+<li>  actionmailer</li>
+<li>  actionpack</li>
+<li>  actionview</li>
+<li>  activemodel</li>
+<li>  activerecord</li>
+<li>  activesupport</li>
+<li>  activejob</li>
+<li>  arel</li>
+<li>  builder</li>
+<li>  bundler</li>
+<li>  erubis</li>
+<li>  i18n</li>
+<li>  mail</li>
+<li>  mime-types</li>
+<li>  rack</li>
+<li>  rack-cache</li>
+<li>  rack-mount</li>
+<li>  rack-test</li>
+<li>  rails</li>
+<li>  railties</li>
+<li>  rake</li>
+<li>  sqlite3</li>
+<li>  thor</li>
+<li>  tzinfo</li>
+</ul>
+<p><a class="anchor" id="rails-commands-rb"></a></p><h4 id="rails-commands-rb">1.5 <code>rails/commands.rb</code> 文件</h4><p>执行完 <code>config/boot.rb</code> 文件，下一步就要加载 <code>rails/commands</code>，其作用是扩展命令别名。在本例中（输入的命令为 <code>rails server</code>），<code>ARGV</code> 数组只包含将要传递的 <code>server</code> 命令：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require "rails/command"
+
+aliases = {
+  "g"  =&gt; "generate",
+  "d"  =&gt; "destroy",
+  "c"  =&gt; "console",
+  "s"  =&gt; "server",
+  "db" =&gt; "dbconsole",
+  "r"  =&gt; "runner",
+  "t"  =&gt; "test"
+}
+
+command = ARGV.shift
+command = aliases[command] || command
+
+Rails::Command.invoke command, ARGV
+
+</pre>
+</div>
+<p>如果输入的命令使用的是 <code>s</code> 而不是 <code>server</code>，Rails 就会在上面定义的 <code>aliases</code> 散列中查找对应的命令。</p><p><a class="anchor" id="rails-command-rb"></a></p><h4 id="rails-command-rb">1.6 <code>rails/command.rb</code> 文件</h4><p>输入 Rails 命令时，<code>invoke</code> 尝试查找指定命名空间中的命令，如果找到就执行那个命令。</p><p>如果找不到命令，Rails 委托 Rake 执行同名任务。</p><p>如下述代码所示，<code>args</code> 为空时，<code>Rails::Command</code> 自动显示帮助信息。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module Rails::Command
+  class &lt;&lt; self
+    def invoke(namespace, args = [], **config)
+      namespace = namespace.to_s
+      namespace = "help" if namespace.blank? || HELP_MAPPINGS.include?(namespace)
+      namespace = "version" if %w( -v --version ).include? namespace
+
+      if command = find_by_namespace(namespace)
+        command.perform(namespace, args, config)
+      else
+        find_by_namespace("rake").perform(namespace, args, config)
+      end
+    end
+  end
+end
+
+</pre>
+</div>
+<p>本例中输入的是 <code>server</code> 命令，因此 Rails 会进一步运行下述代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module Rails
+  module Command
+    class ServerCommand &lt; Base # :nodoc:
+      def perform
+        set_application_directory!
+
+        Rails::Server.new.tap do |server|
+          # Require application after server sets environment to propagate
+          # the --environment option.
+          require APP_PATH
+          Dir.chdir(Rails.application.root)
+          server.start
+        end
+      end
+    end
+  end
+end
+
+</pre>
+</div>
+<p>仅当 <code>config.ru</code> 文件无法找到时，才会切换到 Rails 应用根目录（<code>APP_PATH</code> 所在文件夹的上一层文件夹，其中 <code>APP_PATH</code> 指向 <code>config/application.rb</code> 文件）。然后运行 <code>Rails::Server</code> 类。</p><p><a class="anchor" id="actionpack-lib-action-dispatch-rb"></a></p><h4 id="actionpack-lib-action-dispatch-rb">1.7 <code>actionpack/lib/action_dispatch.rb</code> 文件</h4><p>Action Dispatch 是 Rails 框架的路由组件，提供路由、会话、常用中间件等功能。</p><p><a class="anchor" id="rails-commands-server-server-command-rb"></a></p><h4 id="rails-commands-server-server-command-rb">1.8 <code>rails/commands/server/server_command.rb</code> 文件</h4><p>此文件中定义的 <code>Rails::Server</code> 类，继承自 <code>Rack::Server</code> 类。当调用 <code>Rails::Server.new</code> 方法时，会调用此文件中定义的 <code>initialize</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def initialize(*)
+  super
+  set_environment
+end
+
+</pre>
+</div>
+<p>首先调用的 <code>super</code> 方法，会调用 <code>Rack::Server</code> 类的 <code>initialize</code> 方法。</p><p><a class="anchor" id="rack-lib-rack-server-rb"></a></p><h4 id="rack-lib-rack-server-rb">1.9 Rack：<code>lib/rack/server.rb</code> 文件</h4><p><code>Rack::Server</code> 类负责为所有基于 Rack 的应用（包括 Rails）提供通用服务器接口。</p><p><code>Rack::Server</code> 类的 <code>initialize</code> 方法的作用是设置几个变量：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def initialize(options = nil)
+  @options = options
+  @app = options[:app] if options &amp;&amp; options[:app]
+end
+
+</pre>
+</div>
+<p>在本例中，<code>options</code> 的值是 <code>nil</code>，因此这个方法什么也没做。</p><p>当 <code>super</code> 方法完成 <code>Rack::Server</code> 类的 <code>initialize</code> 方法的调用后，程序执行流程重新回到 <code>rails/commands/server/server_command.rb</code> 文件中。此时，会在 <code>Rails::Server</code> 对象的上下文中调用 <code>set_environment</code> 方法。乍一看这个方法什么也没做：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def set_environment
+  ENV["RAILS_ENV"] ||= options[:environment]
+end
+
+</pre>
+</div>
+<p>实际上，其中的 <code>options</code> 方法做了很多工作。<code>options</code> 方法在 <code>Rack::Server</code> 类中定义：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def options
+  @options ||= parse_options(ARGV)
+end
+
+</pre>
+</div>
+<p>而 <code>parse_options</code> 方法的定义如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def parse_options(args)
+  options = default_options
+
+  # 请不要计算 CGI `ISINDEX` 参数的值。
+  # http://www.meb.uni-bonn.de/docs/cgi/cl.html
+  args.clear if ENV.include?("REQUEST_METHOD")
+
+  options.merge! opt_parser.parse!(args)
+  options[:config] = ::File.expand_path(options[:config])
+  ENV["RACK_ENV"] = options[:environment]
+  options
+end
+
+</pre>
+</div>
+<p>其中 <code>default_options</code> 方法的定义如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def default_options
+  super.merge(
+    Port:               ENV.fetch("PORT", 3000).to_i,
+    Host:               ENV.fetch("HOST", "localhost").dup,
+    DoNotReverseLookup: true,
+    environment:        (ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "development").dup,
+    daemonize:          false,
+    caching:            nil,
+    pid:                Options::DEFAULT_PID_PATH,
+    restart_cmd:        restart_command)
+end
+
+</pre>
+</div>
+<p>在 <code>ENV</code> 散列中不存在 <code>REQUEST_METHOD</code> 键，因此可以跳过该行。下一行会合并 <code>opt_parser</code> 方法返回的选项，其中 <code>opt_parser</code> 方法在 <code>Rack::Server</code> 类中定义：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def opt_parser
+  Options.new
+end
+
+</pre>
+</div>
+<p><code>Options</code> 类在 <code>Rack::Server</code> 类中定义，但在 <code>Rails::Server</code> 类中被覆盖了，目的是为了接受不同参数。<code>Options</code> 类的 <code>parse!</code> 方法的定义如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def parse!(args)
+  args, options = args.dup, {}
+
+  option_parser(options).parse! args
+
+  options[:log_stdout] = options[:daemonize].blank? &amp;&amp; (options[:environment] || Rails.env) == "development"
+  options[:server]     = args.shift
+  options
+end
+
+</pre>
+</div>
+<p>此方法为 <code>options</code> 散列的键赋值，稍后 Rails 将使用此散列确定服务器的运行方式。<code>initialize</code> 方法运行完成后，程序执行流程会跳回 <code>server</code> 命令，然后加载之前设置的 <code>APP_PATH</code>。</p><p><a class="anchor" id="config-application"></a></p><h4 id="config-application">1.10 <code>config/application.rb</code> 文件</h4><p>执行 <code>require APP_PATH</code> 时，会加载 <code>config/application.rb</code> 文件（前文说过 <code>APP_PATH</code> 已经在 <code>bin/rails</code> 中定义）。这个文件也是应用的一部分，我们可以根据需要修改这个文件的内容。</p><p><a class="anchor" id="rails-server-start"></a></p><h4 id="rails-server-start">1.11 <code>Rails::Server#start</code> 方法</h4><p><code>config/application.rb</code> 文件加载完成后，会调用 <code>server.start</code> 方法。这个方法的定义如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def start
+  print_boot_information
+  trap(:INT) { exit }
+  create_tmp_directories
+  setup_dev_caching
+  log_to_stdout if options[:log_stdout]
+
+  super
+  ...
+end
+
+private
+  def print_boot_information
+    ...
+    puts "=&gt; Run `rails server -h` for more startup options"
+  end
+
+  def create_tmp_directories
+    %w(cache pids sockets).each do |dir_to_make|
+      FileUtils.mkdir_p(File.join(Rails.root, 'tmp', dir_to_make))
+    end
+  end
+
+  def setup_dev_caching
+    if options[:environment] == "development"
+      Rails::DevCaching.enable_by_argument(options[:caching])
+    end
+  end
+
+  def log_to_stdout
+    wrapped_app # 对应用执行 touch 操作，以便设置记录器
+
+    console = ActiveSupport::Logger.new(STDOUT)
+    console.formatter = Rails.logger.formatter
+    console.level = Rails.logger.level
+
+    unless ActiveSupport::Logger.logger_outputs_to?(Rails.logger, STDOUT)
+    Rails.logger.extend(ActiveSupport::Logger.broadcast(console))
+  end
+
+</pre>
+</div>
+<p>这是 Rails 初始化过程中第一次输出信息。<code>start</code> 方法为 <code>INT</code> 信号创建了一个陷阱，只要在服务器运行时按下 <code>CTRL-C</code>，服务器进程就会退出。我们看到，上述代码会创建 <code>tmp/cache</code>、<code>tmp/pids</code> 和 <code>tmp/sockets</code> 文件夹。然后，如果运行 <code>rails server</code> 命令时指定了 <code>--dev-caching</code> 参数，在开发环境中启用缓存。最后，调用 <code>wrapped_app</code> 方法，其作用是先创建 Rack 应用，再创建 <code>ActiveSupport::Logger</code> 类的实例。</p><p><code>super</code> 方法会调用 <code>Rack::Server.start</code> 方法，后者的定义如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def start &amp;blk
+  if options[:warn]
+    $-w = true
+  end
+
+  if includes = options[:include]
+    $LOAD_PATH.unshift(*includes)
+  end
+
+  if library = options[:require]
+    require library
+  end
+
+  if options[:debug]
+    $DEBUG = true
+    require 'pp'
+    p options[:server]
+    pp wrapped_app
+    pp app
+  end
+
+  check_pid! if options[:pid]
+
+  # 对包装后的应用执行 touch 操作，以便在创建守护进程之前
+  # 加载 `config.ru` 文件（例如在 `chdir` 等操作之前）
+  wrapped_app
+
+  daemonize_app if options[:daemonize]
+
+  write_pid if options[:pid]
+
+  trap(:INT) do
+    if server.respond_to?(:shutdown)
+      server.shutdown
+    else
+      exit
+    end
+  end
+
+  server.run wrapped_app, options, &amp;blk
+end
+
+</pre>
+</div>
+<p>代码块最后一行中的 <code>server.run</code> 非常有意思。这里我们再次遇到了 <code>wrapped_app</code> 方法，这次我们要更深入地研究它（前文已经调用过 <code>wrapped_app</code> 方法，现在需要回顾一下）。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+@wrapped_app ||= build_app app
+
+</pre>
+</div>
+<p>其中 <code>app</code> 方法定义如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def app
+  @app ||= options[:builder] ? build_app_from_string : build_app_and_options_from_config
+end
+...
+private
+  def build_app_and_options_from_config
+    if !::File.exist? options[:config]
+      abort "configuration #{options[:config]} not found"
+    end
+
+    app, options = Rack::Builder.parse_file(self.options[:config], opt_parser)
+    self.options.merge! options
+    app
+  end
+
+  def build_app_from_string
+    Rack::Builder.new_from_string(self.options[:builder])
+  end
+
+</pre>
+</div>
+<p><code>options[:config]</code> 的默认值为 <code>config.ru</code>，此文件包含如下内容：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 基于 Rack 的服务器使用此文件来启动应用。
+
+require_relative 'config/environment'
+run &lt;%= app_const %&gt;
+
+</pre>
+</div>
+<p><code>Rack::Builder.parse_file</code> 方法读取 <code>config.ru</code> 文件的内容，并使用下述代码解析文件内容：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+app = new_from_string cfgfile, config
+
+...
+
+def self.new_from_string(builder_script, file="(rackup)")
+  eval "Rack::Builder.new {\n" + builder_script + "\n}.to_app",
+    TOPLEVEL_BINDING, file, 0
+end
+
+</pre>
+</div>
+<p><code>Rack::Builder</code> 类的 <code>initialize</code> 方法会把接收到的代码块在 <code>Rack::Builder</code> 类的实例中执行，Rails 初始化过程中的大部分工作都在这一步完成。在 <code>config.ru</code> 文件中，加载 <code>config/environment.rb</code> 文件的这一行代码首先被执行：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require_relative 'config/environment'
+
+</pre>
+</div>
+<p><a class="anchor" id="config-environment-rb"></a></p><h4 id="config-environment-rb">1.12 <code>config/environment.rb</code> 文件</h4><p><code>config.ru</code> 文件（<code>rails server</code>）和 Passenger 都需要加载此文件。这两种运行服务器的方式直到这里才出现了交集，此前的一切工作都只是围绕 Rack 和 Rails 的设置进行的。</p><p>此文件以加载 <code>config/application.rb</code> 文件开始：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require_relative 'application'
+
+</pre>
+</div>
+<p><a class="anchor" id="config-application-rb"></a></p><h4 id="config-application-rb">1.13 <code>config/application.rb</code> 文件</h4><p>此文件会加载 <code>config/boot.rb</code> 文件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require_relative 'boot'
+
+</pre>
+</div>
+<p>对于 <code>rails server</code> 这种启动服务器的方式，之前并未加载过 <code>config/boot.rb</code> 文件，因此这里会加载该文件；对于 Passenger，之前已经加载过该文件，这里就不会重复加载了。</p><p>接下来，有趣的事情就要开始了！</p><p><a class="anchor" id="loading-rails"></a></p><h3 id="loading-rails">2 加载 Rails</h3><p><code>config/application.rb</code> 文件的下一行是：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'rails/all'
+
+</pre>
+</div>
+<p><a class="anchor" id="railties-lib-rails-all-rb"></a></p><h4 id="railties-lib-rails-all-rb">2.1 <code>railties/lib/rails/all.rb</code> 文件</h4><p>此文件负责加载 Rails 中所有独立的框架：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require "rails"
+
+%w(
+  active_record/railtie
+  action_controller/railtie
+  action_view/railtie
+  action_mailer/railtie
+  active_job/railtie
+  action_cable/engine
+  rails/test_unit/railtie
+  sprockets/railtie
+).each do |railtie|
+  begin
+    require railtie
+  rescue LoadError
+  end
+end
+
+</pre>
+</div>
+<p>这些框架加载完成后，就可以在 Rails 应用中使用了。这里不会深入介绍每个框架，而是鼓励读者自己动手试验和探索。</p><p>现在，我们只需记住，Rails 的常见功能，例如 Rails 引擎、I18n 和 Rails 配置，都在这里定义好了。</p><p><a class="anchor" id="config-environment-rb-1"></a></p><h4 id="config-environment-rb-1">2.2 回到 <code>config/environment.rb</code> 文件</h4><p><code>config/application.rb</code> 文件的其余部分定义了 <code>Rails::Application</code> 的配置，当应用的初始化全部完成后就会使用这些配置。当 <code>config/application.rb</code> 文件完成了 Rails 的加载和应用命名空间的定义后，程序执行流程再次回到 <code>config/environment.rb</code> 文件。在这里会通过 <code>rails/application.rb</code> 文件中定义的 <code>Rails.application.initialize!</code> 方法完成应用的初始化。</p><p><a class="anchor" id="railties-lib-rails-application-rb"></a></p><h4 id="railties-lib-rails-application-rb">2.3 <code>railties/lib/rails/application.rb</code> 文件</h4><p><code>initialize!</code> 方法的定义如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def initialize!(group=:default) #:nodoc:
+  raise "Application has been already initialized." if @initialized
+  run_initializers(group, self)
+  @initialized = true
+  self
+end
+
+</pre>
+</div>
+<p>我们看到，一个应用只能初始化一次。<code>railties/lib/rails/initializable.rb</code> 文件中定义的 <code>run_initializers</code> 方法负责运行初始化程序：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def run_initializers(group=:default, *args)
+  return if instance_variable_defined?(:@ran)
+  initializers.tsort_each do |initializer|
+    initializer.run(*args) if initializer.belongs_to?(group)
+  end
+  @ran = true
+end
+
+</pre>
+</div>
+<p><code>run_initializers</code> 方法的代码比较复杂，Rails 会遍历所有类的祖先，以查找能够响应 <code>initializers</code> 方法的类。对于找到的类，首先按名称排序，然后依次调用 <code>initializers</code> 方法。例如，<code>Engine</code> 类通过为所有的引擎提供 <code>initializers</code> 方法而使它们可用。</p><p><code>railties/lib/rails/application.rb</code> 文件中定义的 <code>Rails::Application</code> 类，定义了 <code>bootstrap</code>、<code>railtie</code> 和 <code>finisher</code> 初始化程序。<code>bootstrap</code> 初始化程序负责完成应用初始化的准备工作（例如初始化记录器），而 <code>finisher</code> 初始化程序（例如创建中间件栈）总是最后运行。<code>railtie</code> 初始化程序在 <code>Rails::Application</code> 类自身中定义，在 <code>bootstrap</code> 之后、<code>finishers</code> 之前运行。</p><p>应用初始化完成后，程序执行流程再次回到 <code>Rack::Server</code> 类。</p><p><a class="anchor" id="rack-lib-rack-server-rb-1"></a></p><h4 id="rack-lib-rack-server-rb-1">2.4 Rack：<code>lib/rack/server.rb</code> 文件</h4><p>程序执行流程上一次离开此文件是在定义 <code>app</code> 方法时：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def app
+  @app ||= options[:builder] ? build_app_from_string : build_app_and_options_from_config
+end
+...
+private
+  def build_app_and_options_from_config
+    if !::File.exist? options[:config]
+      abort "configuration #{options[:config]} not found"
+    end
+
+    app, options = Rack::Builder.parse_file(self.options[:config], opt_parser)
+    self.options.merge! options
+    app
+  end
+
+  def build_app_from_string
+    Rack::Builder.new_from_string(self.options[:builder])
+  end
+
+</pre>
+</div>
+<p>此时，<code>app</code> 就是 Rails 应用本身（一个中间件），接下来 Rack 会调用所有已提供的中间件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def build_app(app)
+  middleware[options[:environment]].reverse_each do |middleware|
+    middleware = middleware.call(self) if middleware.respond_to?(:call)
+    next unless middleware
+    klass = middleware.shift
+    app = klass.new(app, *middleware)
+  end
+  app
+end
+
+</pre>
+</div>
+<p>记住，在 <code>Server#start</code> 方法定义的最后一行代码中，通过 <code>wrapped_app</code> 方法调用了 <code>build_app</code> 方法。让我们回顾一下这行代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+server.run wrapped_app, options, &amp;blk
+
+</pre>
+</div>
+<p>此时，<code>server.run</code> 方法的实现方式取决于我们所使用的服务器。例如，如果使用的是 Puma，<code>run</code> 方法的实现方式如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+...
+DEFAULT_OPTIONS = {
+  :Host =&gt; '0.0.0.0',
+  :Port =&gt; 8080,
+  :Threads =&gt; '0:16',
+  :Verbose =&gt; false
+}
+
+def self.run(app, options = {})
+  options = DEFAULT_OPTIONS.merge(options)
+
+  if options[:Verbose]
+    app = Rack::CommonLogger.new(app, STDOUT)
+  end
+
+  if options[:environment]
+    ENV['RACK_ENV'] = options[:environment].to_s
+  end
+
+  server   = ::Puma::Server.new(app)
+  min, max = options[:Threads].split(':', 2)
+
+  puts "Puma #{::Puma::Const::PUMA_VERSION} starting..."
+  puts "* Min threads: #{min}, max threads: #{max}"
+  puts "* Environment: #{ENV['RACK_ENV']}"
+  puts "* Listening on tcp://#{options[:Host]}:#{options[:Port]}"
+
+  server.add_tcp_listener options[:Host], options[:Port]
+  server.min_threads = min
+  server.max_threads = max
+  yield server if block_given?
+
+  begin
+    server.run.join
+  rescue Interrupt
+    puts "* Gracefully stopping, waiting for requests to finish"
+    server.stop(true)
+    puts "* Goodbye!"
+  end
+
+end
+
+</pre>
+</div>
+<p>我们不会深入介绍服务器配置本身，不过这已经是 Rails 初始化过程的最后一步了。</p><p>本文高度概括的介绍，旨在帮助读者理解 Rails 应用的代码何时执行、如何执行，从而使读者成为更优秀的 Rails 开发者。要想掌握更多这方面的知识，Rails 源代码本身也许是最好的研究对象。</p>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

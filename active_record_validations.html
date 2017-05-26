@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Active Record 数据验证 — Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="返回首页">Rails 指南</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>新手入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询接口</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入探索</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">Rails 应用测试指南</a></dd>
+                <dd><a href="security.html">Ruby on Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器和模板</a></dd>
+                <dt>为 Ruby on Rails 做贡献</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档指导方针</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">Ruby on Rails 的维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布记</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="新手入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询接口</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入探索">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">Rails 应用测试指南</option>
+                  <option value="security.html">Ruby on Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器和模板</option>
+              </optgroup>
+              <optgroup label="为 Ruby on Rails 做贡献">
+                  <option value="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</option>
+                  <option value="api_documentation_guidelines.html">API 文档指导方针</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">Ruby on Rails 的维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布记</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Active Record 数据验证</h2><p>本文介绍如何使用 Active Record 提供的数据验证功能，在数据存入数据库之前验证对象的状态。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li>  如何使用 Active Record 内置的数据验证辅助方法；</li>
+<li>  如果自定义数据验证方法；</li>
+<li>  如何处理验证过程产生的错误消息。</li>
+</ul>
+
+
+              <div id="subCol">
+          <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />目录</h3>
+          <ol class="chapters">
+<li>
+<a href="#validations-overview">数据验证概览</a>
+
+<ul>
+<li><a href="#why-use-validations">为什么要做数据验证？</a></li>
+<li><a href="#when-does-validation-happen">数据在何时验证？</a></li>
+<li><a href="#skipping-validations">跳过验证</a></li>
+<li><a href="#valid-questionmark-and-invalid-questionmark"><code>valid?</code> 和 <code>invalid?</code></a></li>
+<li><a href="#validations-overview-errors"><code>errors[]</code></a></li>
+<li><a href="#validations-overview-errors-details"><code>errors.details</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#validation-helpers">数据验证辅助方法</a>
+
+<ul>
+<li><a href="#acceptance"><code>acceptance</code></a></li>
+<li><a href="#validates-associated"><code>validates_associated</code></a></li>
+<li><a href="#confirmation"><code>confirmation</code></a></li>
+<li><a href="#exclusion"><code>exclusion</code></a></li>
+<li><a href="#format"><code>format</code></a></li>
+<li><a href="#inclusion"><code>inclusion</code></a></li>
+<li><a href="#length"><code>length</code></a></li>
+<li><a href="#numericality"><code>numericality</code></a></li>
+<li><a href="#presence"><code>presence</code></a></li>
+<li><a href="#absence"><code>absence</code></a></li>
+<li><a href="#uniqueness"><code>uniqueness</code></a></li>
+<li><a href="#validates-with"><code>validates_with</code></a></li>
+<li><a href="#validates-each"><code>validates_each</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#common-validation-options">常用的验证选项</a>
+
+<ul>
+<li><a href="#allow-nil"><code>:allow_nil</code></a></li>
+<li><a href="#allow-blank"><code>:allow_blank</code></a></li>
+<li><a href="#message"><code>:message</code></a></li>
+<li><a href="#on"><code>:on</code></a></li>
+</ul>
+</li>
+<li><a href="#strict-validations">严格验证</a></li>
+<li>
+<a href="#conditional-validation">条件验证</a>
+
+<ul>
+<li><a href="#using-a-symbol-with-if-and-unless">使用符号</a></li>
+<li><a href="#using-a-proc-with-if-and-unless">使用 Proc</a></li>
+<li><a href="#grouping-conditional-validations">条件组合</a></li>
+<li><a href="#combining-validation-conditions">联合条件</a></li>
+</ul>
+</li>
+<li>
+<a href="#performing-custom-validations">自定义验证</a>
+
+<ul>
+<li><a href="#custom-validators">自定义验证类</a></li>
+<li><a href="#custom-methods">自定义验证方法</a></li>
+</ul>
+</li>
+<li>
+<a href="#working-with-validation-errors">处理验证错误</a>
+
+<ul>
+<li><a href="#working-with-validation-errors-errors"><code>errors</code></a></li>
+<li><a href="#errors"><code>errors[]</code></a></li>
+<li><a href="#errors-add"><code>errors.add</code></a></li>
+<li><a href="#working-with-validation-errors-errors-details"><code>errors.details</code></a></li>
+<li><a href="#errors-base"><code>errors[:base]</code></a></li>
+<li><a href="#errors-clear"><code>errors.clear</code></a></li>
+<li><a href="#errors-size"><code>errors.size</code></a></li>
+</ul>
+</li>
+<li><a href="#displaying-validation-errors-in-views">在视图中显示验证错误</a></li>
+</ol>
+
+        </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <p><a class="anchor" id="validations-overview"></a></p><h3 id="validations-overview">1 数据验证概览</h3><p>下面是一个非常简单的数据验证：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :name, presence: true
+end
+
+Person.create(name: "John Doe").valid? # =&gt; true
+Person.create(name: nil).valid? # =&gt; false
+
+</pre>
+</div>
+<p>可以看出，如果 <code>Person</code> 没有 <code>name</code> 属性，验证就会将其视为无效对象。第二个 <code>Person</code> 对象不会存入数据库。</p><p>在深入探讨之前，我们先来了解数据验证在应用中的作用。</p><p><a class="anchor" id="why-use-validations"></a></p><h4 id="why-use-validations">1.1 为什么要做数据验证？</h4><p>数据验证确保只有有效的数据才能存入数据库。例如，应用可能需要用户提供一个有效的电子邮件地址和邮寄地址。在模型中做验证是最有保障的，只有通过验证的数据才能存入数据库。数据验证和使用的数据库种类无关，终端用户也无法跳过，而且容易测试和维护。在 Rails 中做数据验证很简单，Rails 内置了很多辅助方法，能满足常规的需求，而且还可以编写自定义的验证方法。</p><p>在数据存入数据库之前，也有几种验证数据的方法，包括数据库原生的约束、客户端验证和控制器层验证。下面列出这几种验证方法的优缺点：</p>
+<ul>
+<li>  数据库约束和存储过程无法兼容多种数据库，而且难以测试和维护。然而，如果其他应用也要使用这个数据库，最好在数据库层做些约束。此外，数据库层的某些验证（例如在使用量很高的表中做唯一性验证）通过其他方式实现起来有点困难。</li>
+<li>  客户端验证很有用，但单独使用时可靠性不高。如果使用 JavaScript 实现，用户在浏览器中禁用 JavaScript 后很容易跳过验证。然而，客户端验证和其他验证方式相结合，可以为用户提供实时反馈。</li>
+<li>  控制器层验证很诱人，但一般都不灵便，难以测试和维护。只要可能，就要保证控制器的代码简洁，这样才有利于长远发展。</li>
+</ul>
+<p>你可以根据实际需求选择使用合适的验证方式。Rails 团队认为，模型层数据验证最具普适性。</p><p><a class="anchor" id="when-does-validation-happen"></a></p><h4 id="when-does-validation-happen">1.2 数据在何时验证？</h4><p>Active Record 对象分为两种：一种在数据库中有对应的记录，一种没有。新建的对象（例如，使用 <code>new</code> 方法）还不属于数据库。在对象上调用 <code>save</code> 方法后，才会把对象存入相应的数据库表。Active Record 使用实例方法 <code>new_record?</code> 判断对象是否已经存入数据库。假如有下面这个简单的 Active Record 类：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+end
+
+</pre>
+</div>
+<p>我们可以在 <code>rails console</code> 中看一下到底怎么回事：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails console
+&gt;&gt; p = Person.new(name: "John Doe")
+=&gt; #&lt;Person id: nil, name: "John Doe", created_at: nil, updated_at: nil&gt;
+&gt;&gt; p.new_record?
+=&gt; true
+&gt;&gt; p.save
+=&gt; true
+&gt;&gt; p.new_record?
+=&gt; false
+
+</pre>
+</div>
+<p>新建并保存记录会在数据库中执行 SQL <code>INSERT</code> 操作。更新现有的记录会在数据库中执行 SQL <code>UPDATE</code> 操作。一般情况下，数据验证发生在这些 SQL 操作执行之前。如果验证失败，对象会被标记为无效，Active Record 不会向数据库发送 <code>INSERT</code> 或 <code>UPDATE</code> 指令。这样就可以避免把无效的数据存入数据库。你可以选择在对象创建、保存或更新时执行特定的数据验证。</p><div class="warning"><p>修改数据库中对象的状态有多种方式。有些方法会触发数据验证，有些则不会。所以，如果不小心处理，还是有可能把无效的数据存入数据库。</p></div><p>下列方法会触发数据验证，如果验证失败就不把对象存入数据库：</p>
+<ul>
+<li>  <code>create</code>
+</li>
+<li>  <code>create!</code>
+</li>
+<li>  <code>save</code>
+</li>
+<li>  <code>save!</code>
+</li>
+<li>  <code>update</code>
+</li>
+<li>  <code>update!</code>
+</li>
+</ul>
+<p>爆炸方法（例如 <code>save!</code>）会在验证失败后抛出异常。验证失败后，非爆炸方法不会抛出异常，<code>save</code> 和 <code>update</code> 返回 <code>false</code>，<code>create</code> 返回对象本身。</p><p><a class="anchor" id="skipping-validations"></a></p><h4 id="skipping-validations">1.3 跳过验证</h4><p>下列方法会跳过验证，不管验证是否通过都会把对象存入数据库，使用时要特别留意。</p>
+<ul>
+<li>  <code>decrement!</code>
+</li>
+<li>  <code>decrement_counter</code>
+</li>
+<li>  <code>increment!</code>
+</li>
+<li>  <code>increment_counter</code>
+</li>
+<li>  <code>toggle!</code>
+</li>
+<li>  <code>touch</code>
+</li>
+<li>  <code>update_all</code>
+</li>
+<li>  <code>update_attribute</code>
+</li>
+<li>  <code>update_column</code>
+</li>
+<li>  <code>update_columns</code>
+</li>
+<li>  <code>update_counters</code>
+</li>
+</ul>
+<p>注意，使用 <code>save</code> 时如果传入 <code>validate: false</code> 参数，也会跳过验证。使用时要特别留意。</p>
+<ul>
+<li>  <code>save(validate: false)</code>
+</li>
+</ul>
+<p><a class="anchor" id="valid-questionmark-and-invalid-questionmark"></a></p><h4 id="valid-questionmark-and-invalid-questionmark">1.4 <code>valid?</code> 和 <code>invalid?</code>
+</h4><p>Rails 在保存 Active Record 对象之前验证数据。如果验证过程产生错误，Rails 不会保存对象。</p><p>你还可以自己执行数据验证。<code>valid?</code> 方法会触发数据验证，如果对象上没有错误，返回 <code>true</code>，否则返回 <code>false</code>。前面我们已经用过了：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :name, presence: true
+end
+
+Person.create(name: "John Doe").valid? # =&gt; true
+Person.create(name: nil).valid? # =&gt; false
+
+</pre>
+</div>
+<p>Active Record 执行验证后，所有发现的错误都可以通过实例方法 <code>errors.messages</code> 获取。该方法返回一个错误集合。如果数据验证后，这个集合为空，说明对象是有效的。</p><p>注意，使用 <code>new</code> 方法初始化对象时，即使无效也不会报错，因为只有保存对象时才会验证数据，例如调用 <code>create</code> 或 <code>save</code> 方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :name, presence: true
+end
+
+&gt;&gt; p = Person.new
+# =&gt; #&lt;Person id: nil, name: nil&gt;
+&gt;&gt; p.errors.messages
+# =&gt; {}
+
+&gt;&gt; p.valid?
+# =&gt; false
+&gt;&gt; p.errors.messages
+# =&gt; {name:["can't be blank"]}
+
+&gt;&gt; p = Person.create
+# =&gt; #&lt;Person id: nil, name: nil&gt;
+&gt;&gt; p.errors.messages
+# =&gt; {name:["can't be blank"]}
+
+&gt;&gt; p.save
+# =&gt; false
+
+&gt;&gt; p.save!
+# =&gt; ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
+
+&gt;&gt; Person.create!
+# =&gt; ActiveRecord::RecordInvalid: Validation failed: Name can't be blank
+
+</pre>
+</div>
+<p><code>invalid?</code> 的作用与 <code>valid?</code> 相反，它会触发数据验证，如果找到错误就返回 <code>true</code>，否则返回 <code>false</code>。</p><p><a class="anchor" id="validations-overview-errors"></a></p><h4 id="validations-overview-errors">1.5 <code>errors[]</code>
+</h4><p>若想检查对象的某个属性是否有效，可以使用 <code>errors[:attribute]</code>。<code>errors[:attribute]</code> 中包含与 <code>:attribute</code> 有关的所有错误。如果某个属性没有错误，就会返回空数组。</p><p>这个方法只在数据验证之后才能使用，因为它只是用来收集错误信息的，并不会触发验证。与前面介绍的 <code>ActiveRecord::Base#invalid?</code> 方法不一样，<code>errors[:attribute]</code> 不会验证整个对象，只检查对象的某个属性是否有错。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :name, presence: true
+end
+
+&gt;&gt; Person.new.errors[:name].any? # =&gt; false
+&gt;&gt; Person.create.errors[:name].any? # =&gt; true
+
+</pre>
+</div>
+<p>我们会在 <a href="#working-with-validation-errors">处理验证错误</a>详细说明验证错误。</p><p><a class="anchor" id="validations-overview-errors-details"></a></p><h4 id="validations-overview-errors-details">1.6 <code>errors.details</code>
+</h4><p>若想查看是哪个验证导致属性无效的，可以使用 <code>errors.details[:attribute]</code>。它的返回值是一个由散列组成的数组，<code>:error</code> 键的值是一个符号，指明出错的数据验证。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :name, presence: true
+end
+
+&gt;&gt; person = Person.new
+&gt;&gt; person.valid?
+&gt;&gt; person.errors.details[:name] # =&gt; [{error: :blank}]
+
+</pre>
+</div>
+<p><a href="#working-with-validation-errors">处理验证错误</a>会说明如何在自定义的数据验证中使用 <code>details</code>。</p><p><a class="anchor" id="validation-helpers"></a></p><h3 id="validation-helpers">2 数据验证辅助方法</h3><p>Active Record 预先定义了很多数据验证辅助方法，可以直接在模型类定义中使用。这些辅助方法提供了常用的验证规则。每次验证失败后，都会向对象的 <code>errors</code> 集合中添加一个消息，而且这些消息与所验证的属性是关联的。</p><p>每个辅助方法都可以接受任意个属性名，所以一行代码就能在多个属性上做同一种验证。</p><p>所有辅助方法都可指定 <code>:on</code> 和 <code>:message</code> 选项，分别指定何时做验证，以及验证失败后向 <code>errors</code> 集合添加什么消息。<code>:on</code> 选项的可选值是 <code>:create</code> 或 <code>:update</code>。每个辅助函数都有默认的错误消息，如果没有通过 <code>:message</code> 选项指定，则使用默认值。下面分别介绍各个辅助方法。</p><p><a class="anchor" id="acceptance"></a></p><h4 id="acceptance">2.1 <code>acceptance</code>
+</h4><p>这个方法检查表单提交时，用户界面中的复选框是否被选中。这个功能一般用来要求用户接受应用的服务条款、确保用户阅读了一些文本，等等。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :terms_of_service, acceptance: true
+end
+
+</pre>
+</div>
+<p>仅当 <code>terms_of_service</code> 不为 <code>nil</code> 时才会执行这个检查。这个辅助方法的默认错误消息是“must be accepted”。通过 <code>message</code> 选项可以传入自定义的消息。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :terms_of_service, acceptance: { message: 'must be abided' }
+end
+
+</pre>
+</div>
+<p>这个辅助方法还接受 <code>:accept</code> 选项，指定把哪些值视作“接受”。默认为 <code>['1', true]</code>，不过可以轻易修改：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :terms_of_service, acceptance: { accept: 'yes' }
+  validates :eula, acceptance: { accept: ['TRUE', 'accepted'] }
+end
+
+</pre>
+</div>
+<p>这种验证只针对 Web 应用，接受与否无需存入数据库。如果没有对应的字段，该方法会创建一个虚拟属性。如果数据库中有对应的字段，必须把 <code>accept</code> 选项的值设为或包含 <code>true</code>，否则验证不会执行。</p><p><a class="anchor" id="validates-associated"></a></p><h4 id="validates-associated">2.2 <code>validates_associated</code>
+</h4><p>如果模型和其他模型有关联，而且关联的模型也要验证，要使用这个辅助方法。保存对象时，会在相关联的每个对象上调用 <code>valid?</code> 方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Library &lt; ApplicationRecord
+  has_many :books
+  validates_associated :books
+end
+
+</pre>
+</div>
+<p>这种验证支持所有关联类型。</p><div class="warning"><p>不要在关联的两端都使用 <code>validates_associated</code>，这样会变成无限循环。</p></div><p><code>validates_associated</code> 的默认错误消息是“is invalid”。注意，相关联的每个对象都有各自的 <code>errors</code> 集合，错误消息不会都集中在调用该方法的模型对象上。</p><p><a class="anchor" id="confirmation"></a></p><h4 id="confirmation">2.3 <code>confirmation</code>
+</h4><p>如果要检查两个文本字段的值是否完全相同，使用这个辅助方法。例如，确认电子邮件地址或密码。这个验证创建一个虚拟属性，其名字为要验证的属性名后加 <code>_confirmation</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :email, confirmation: true
+end
+
+</pre>
+</div>
+<p>在视图模板中可以这么写：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= text_field :person, :email %&gt;
+&lt;%= text_field :person, :email_confirmation %&gt;
+
+</pre>
+</div>
+<p>只有 <code>email_confirmation</code> 的值不是 <code>nil</code> 时才会检查。所以要为确认属性加上存在性验证（后文会介绍 <code>presence</code> 验证）。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :email, confirmation: true
+  validates :email_confirmation, presence: true
+end
+
+</pre>
+</div>
+<p>此外，还可以使用 <code>:case_sensitive</code> 选项指定确认时是否区分大小写。这个选项的默认值是 <code>true</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :email, confirmation: { case_sensitive: false }
+end
+
+</pre>
+</div>
+<p>这个辅助方法的默认错误消息是“doesn’t match confirmation”。</p><p><a class="anchor" id="exclusion"></a></p><h4 id="exclusion">2.4 <code>exclusion</code>
+</h4><p>这个辅助方法检查属性的值是否不在指定的集合中。集合可以是任何一种可枚举的对象。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Account &lt; ApplicationRecord
+  validates :subdomain, exclusion: { in: %w(www us ca jp),
+    message: "%{value} is reserved." }
+end
+
+</pre>
+</div>
+<p><code>exclusion</code> 方法要指定 <code>:in</code> 选项，设置哪些值不能作为属性的值。<code>:in</code> 选项有个别名 <code>:with</code>，作用相同。上面的例子设置了 <code>:message</code> 选项，演示如何获取属性的值。<code>:message</code> 选项的完整参数参见 <a href="#message"><code>:message</code></a>。</p><p>默认的错误消息是“is reserved”。</p><p><a class="anchor" id="format"></a></p><h4 id="format">2.5 <code>format</code>
+</h4><p>这个辅助方法检查属性的值是否匹配 <code>:with</code> 选项指定的正则表达式。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Product &lt; ApplicationRecord
+  validates :legacy_code, format: { with: /\A[a-zA-Z]+\z/,
+    message: "only allows letters" }
+end
+
+</pre>
+</div>
+<p>或者，使用 <code>:without</code> 选项，指定属性的值不能匹配正则表达式。</p><p>默认的错误消息是“is invalid”。</p><p><a class="anchor" id="inclusion"></a></p><h4 id="inclusion">2.6 <code>inclusion</code>
+</h4><p>这个辅助方法检查属性的值是否在指定的集合中。集合可以是任何一种可枚举的对象。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Coffee &lt; ApplicationRecord
+  validates :size, inclusion: { in: %w(small medium large),
+    message: "%{value} is not a valid size" }
+end
+
+</pre>
+</div>
+<p><code>inclusion</code> 方法要指定 <code>:in</code> 选项，设置可接受哪些值。<code>:in</code> 选项有个别名 <code>:within</code>，作用相同。上面的例子设置了 <code>:message</code> 选项，演示如何获取属性的值。<code>:message</code> 选项的完整参数参见 <a href="#message"><code>:message</code></a>。</p><p>该方法的默认错误消息是“is not included in the list”。</p><p><a class="anchor" id="length"></a></p><h4 id="length">2.7 <code>length</code>
+</h4><p>这个辅助方法验证属性值的长度，有多个选项，可以使用不同的方法指定长度约束：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :name, length: { minimum: 2 }
+  validates :bio, length: { maximum: 500 }
+  validates :password, length: { in: 6..20 }
+  validates :registration_number, length: { is: 6 }
+end
+
+</pre>
+</div>
+<p>可用的长度约束选项有：</p>
+<ul>
+<li>  <code>:minimum</code>：属性的值不能比指定的长度短；</li>
+<li>  <code>:maximum</code>：属性的值不能比指定的长度长；</li>
+<li>  <code>:in</code>（或 <code>:within</code>）：属性值的长度在指定的范围内。该选项的值必须是一个范围；</li>
+<li>  <code>:is</code>：属性值的长度必须等于指定值；</li>
+</ul>
+<p>默认的错误消息根据长度验证的约束类型而有所不同，不过可以使用 <code>:message</code> 选项定制。定制消息时，可以使用 <code>:wrong_length</code>、<code>:too_long</code> 和 <code>:too_short</code> 选项，<code>%{count}</code> 表示长度限制的值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :bio, length: { maximum: 1000,
+    too_long: "%{count} characters is the maximum allowed" }
+end
+
+</pre>
+</div>
+<p>这个辅助方法默认统计字符数，但可以使用 <code>:tokenizer</code> 选项设置其他的统计方式：</p><p>注意，默认的错误消息使用复数形式（例如，“is too short (minimum is %{count} characters”），所以如果长度限制是 <code>minimum: 1</code>，就要提供一个定制的消息，或者使用 <code>presence: true</code> 代替。<code>:in</code> 或 <code>:within</code> 的下限值比 1 小时，要提供一个定制的消息，或者在 <code>length</code> 之前调用 <code>presence</code> 方法。</p><p><a class="anchor" id="numericality"></a></p><h4 id="numericality">2.8 <code>numericality</code>
+</h4><p>这个辅助方法检查属性的值是否只包含数字。默认情况下，匹配的值是可选的正负符号后加整数或浮点数。如果只接受整数，把 <code>:only_integer</code> 选项设为 <code>true</code>。</p><p>如果把 <code>:only_integer</code> 的值设为 <code>true</code>，使用下面的正则表达式验证属性的值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+/\A[+-]?\d+\z/
+
+</pre>
+</div>
+<p>否则，会尝试使用 <code>Float</code> 把值转换成数字。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Player &lt; ApplicationRecord
+  validates :points, numericality: true
+  validates :games_played, numericality: { only_integer: true }
+end
+
+</pre>
+</div>
+<p>除了 <code>:only_integer</code> 之外，这个方法还可指定以下选项，限制可接受的值：</p>
+<ul>
+<li>  <code>:greater_than</code>：属性值必须比指定的值大。该选项默认的错误消息是“must be greater than %{count}”；</li>
+<li>  <code>:greater_than_or_equal_to</code>：属性值必须大于或等于指定的值。该选项默认的错误消息是“must be greater than or equal to %{count}”；</li>
+<li>  <code>:equal_to</code>：属性值必须等于指定的值。该选项默认的错误消息是“must be equal to %{count}”；</li>
+<li>  <code>:less_than</code>：属性值必须比指定的值小。该选项默认的错误消息是“must be less than %{count}”；</li>
+<li>  <code>:less_than_or_equal_to</code>：属性值必须小于或等于指定的值。该选项默认的错误消息是“must be less than or equal to %{count}”；</li>
+<li>  <code>:other_than</code>：属性值必须与指定的值不同。该选项默认的错误消息是“must be other than %{count}”。</li>
+<li>  <code>:odd</code>：如果设为 <code>true</code>，属性值必须是奇数。该选项默认的错误消息是“must be odd”；</li>
+<li>  <code>:even</code>：如果设为 <code>true</code>，属性值必须是偶数。该选项默认的错误消息是“must be even”；</li>
+</ul>
+<div class="note"><p><code>numericality</code> 默认不接受 <code>nil</code> 值。可以使用 <code>allow_nil: true</code> 选项允许接受 <code>nil</code>。</p></div><p>默认的错误消息是“is not a number”。</p><p><a class="anchor" id="presence"></a></p><h4 id="presence">2.9 <code>presence</code>
+</h4><p>这个辅助方法检查指定的属性是否为非空值。它调用 <code>blank?</code> 方法检查值是否为 <code>nil</code> 或空字符串，即空字符串或只包含空白的字符串。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :name, :login, :email, presence: true
+end
+
+</pre>
+</div>
+<p>如果要确保关联对象存在，需要测试关联的对象本身是否存在，而不是用来映射关联的外键。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class LineItem &lt; ApplicationRecord
+  belongs_to :order
+  validates :order, presence: true
+end
+
+</pre>
+</div>
+<p>为了能验证关联的对象是否存在，要在关联中指定 <code>:inverse_of</code> 选项。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Order &lt; ApplicationRecord
+  has_many :line_items, inverse_of: :order
+end
+
+</pre>
+</div>
+<p>如果验证 <code>has_one</code> 或 <code>has_many</code> 关联的对象是否存在，会在关联的对象上调用 <code>blank?</code> 和 <code>marked_for_destruction?</code> 方法。</p><p>因为 <code>false.blank?</code> 的返回值是 <code>true</code>，所以如果要验证布尔值字段是否存在，要使用下述验证中的一个：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+validates :boolean_field_name, inclusion: { in: [true, false] }
+validates :boolean_field_name, exclusion: { in: [nil] }
+
+</pre>
+</div>
+<p>上述验证确保值不是 <code>nil</code>；在多数情况下，即验证不是 <code>NULL</code>。</p><p>默认的错误消息是“can’t be blank”。</p><p><a class="anchor" id="absence"></a></p><h4 id="absence">2.10 <code>absence</code>
+</h4><p>这个辅助方法验证指定的属性值是否为空。它使用 <code>present?</code> 方法检测值是否为 <code>nil</code> 或空字符串，即空字符串或只包含空白的字符串。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :name, :login, :email, absence: true
+end
+
+</pre>
+</div>
+<p>如果要确保关联对象为空，要测试关联的对象本身是否为空，而不是用来映射关联的外键。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class LineItem &lt; ApplicationRecord
+  belongs_to :order
+  validates :order, absence: true
+end
+
+</pre>
+</div>
+<p>为了能验证关联的对象是否为空，要在关联中指定 <code>:inverse_of</code> 选项。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Order &lt; ApplicationRecord
+  has_many :line_items, inverse_of: :order
+end
+
+</pre>
+</div>
+<p>如果验证 <code>has_one</code> 或 <code>has_many</code> 关联的对象是否为空，会在关联的对象上调用 <code>present?</code> 和 <code>marked_for_destruction?</code> 方法。</p><p>因为 <code>false.present?</code> 的返回值是 <code>false</code>，所以如果要验证布尔值字段是否为空要使用 <code>validates :field_name, exclusion: { in: [true, false] }</code>。</p><p>默认的错误消息是“must be blank”。</p><p><a class="anchor" id="uniqueness"></a></p><h4 id="uniqueness">2.11 <code>uniqueness</code>
+</h4><p>这个辅助方法在保存对象之前验证属性值是否是唯一的。该方法不会在数据库中创建唯一性约束，所以有可能两次数据库连接创建的记录具有相同的字段值。为了避免出现这种问题，必须在数据库的字段上建立唯一性索引。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Account &lt; ApplicationRecord
+  validates :email, uniqueness: true
+end
+
+</pre>
+</div>
+<p>这个验证会在模型对应的表中执行一个 SQL 查询，检查现有的记录中该字段是否已经出现过相同的值。</p><p><code>:scope</code> 选项用于指定检查唯一性时使用的一个或多个属性：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Holiday &lt; ApplicationRecord
+  validates :name, uniqueness: { scope: :year,
+    message: "should happen once per year" }
+end
+
+</pre>
+</div>
+<p>如果想确保使用 <code>:scope</code> 选项的唯一性验证严格有效，必须在数据库中为多列创建唯一性索引。多列索引的详情参见 <a href="http://dev.mysql.com/doc/refman/5.7/en/multiple-column-indexes.html">MySQL 手册</a>，<a href="http://www.postgresql.org/docs/current/static/ddl-constraints.html">PostgreSQL 手册</a>中有些示例，说明如何为一组列创建唯一性约束。</p><p>还有个 <code>:case_sensitive</code> 选项，指定唯一性验证是否区分大小写，默认值为 <code>true</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :name, uniqueness: { case_sensitive: false }
+end
+
+</pre>
+</div>
+<div class="warning"><p>注意，不管怎样设置，有些数据库查询时始终不区分大小写。</p></div><p>默认的错误消息是“has already been taken”。</p><p><a class="anchor" id="validates-with"></a></p><h4 id="validates-with">2.12 <code>validates_with</code>
+</h4><p>这个辅助方法把记录交给其他类做验证。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class GoodnessValidator &lt; ActiveModel::Validator
+  def validate(record)
+    if record.first_name == "Evil"
+      record.errors[:base] &lt;&lt; "This person is evil"
+    end
+  end
+end
+
+class Person &lt; ApplicationRecord
+  validates_with GoodnessValidator
+end
+
+</pre>
+</div>
+<div class="note"><p><code>record.errors[:base]</code> 中的错误针对整个对象，而不是特定的属性。</p></div><p><code>validates_with</code> 方法的参数是一个类或一组类，用来做验证。<code>validates_with</code> 方法没有默认的错误消息。在做验证的类中要手动把错误添加到记录的错误集合中。</p><p>实现 <code>validate</code> 方法时，必须指定 <code>record</code> 参数，这是要做验证的记录。</p><p>与其他验证一样，<code>validates_with</code> 也可指定 <code>:if</code>、<code>:unless</code> 和 <code>:on</code> 选项。如果指定了其他选项，会包含在 <code>options</code> 中传递给做验证的类。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class GoodnessValidator &lt; ActiveModel::Validator
+  def validate(record)
+    if options[:fields].any?{|field| record.send(field) == "Evil" }
+      record.errors[:base] &lt;&lt; "This person is evil"
+    end
+  end
+end
+
+class Person &lt; ApplicationRecord
+  validates_with GoodnessValidator, fields: [:first_name, :last_name]
+end
+
+</pre>
+</div>
+<p>注意，做验证的类在整个应用的生命周期内只会初始化一次，而不是每次验证时都初始化，所以使用实例变量时要特别小心。</p><p>如果做验证的类很复杂，必须要用实例变量，可以用纯粹的 Ruby 对象代替：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validate do |person|
+    GoodnessValidator.new(person).validate
+  end
+end
+
+class GoodnessValidator
+  def initialize(person)
+    @person = person
+  end
+
+  def validate
+    if some_complex_condition_involving_ivars_and_private_methods?
+      @person.errors[:base] &lt;&lt; "This person is evil"
+    end
+  end
+
+  # ...
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="validates-each"></a></p><h4 id="validates-each">2.13 <code>validates_each</code>
+</h4><p>这个辅助方法使用代码块中的代码验证属性。它没有预先定义验证函数，你要在代码块中定义验证方式。要验证的每个属性都会传入块中做验证。在下面的例子中，我们确保名和姓都不能以小写字母开头：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates_each :name, :surname do |record, attr, value|
+    record.errors.add(attr, 'must start with upper case') if value =~ /\A[[:lower:]]/
+  end
+end
+
+</pre>
+</div>
+<p>代码块的参数是记录、属性名和属性值。在代码块中可以做任何检查，确保数据有效。如果验证失败，应该向模型添加一个错误消息，把数据标记为无效。</p><p><a class="anchor" id="common-validation-options"></a></p><h3 id="common-validation-options">3 常用的验证选项</h3><p>下面介绍常用的验证选项。</p><p><a class="anchor" id="allow-nil"></a></p><h4 id="allow-nil">3.1 <code>:allow_nil</code>
+</h4><p>指定 <code>:allow_nil</code> 选项后，如果要验证的值为 <code>nil</code> 就跳过验证。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Coffee &lt; ApplicationRecord
+  validates :size, inclusion: { in: %w(small medium large),
+    message: "%{value} is not a valid size" }, allow_nil: true
+end
+
+</pre>
+</div>
+<p><code>:message</code> 选项的完整参数参见 <a href="#message"><code>:message</code></a>。</p><p><a class="anchor" id="allow-blank"></a></p><h4 id="allow-blank">3.2 <code>:allow_blank</code>
+</h4><p><code>:allow_blank</code> 选项和 <code>:allow_nil</code> 选项类似。如果要验证的值为空（调用 <code>blank?</code> 方法判断，例如 <code>nil</code> 或空字符串），就跳过验证。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Topic &lt; ApplicationRecord
+  validates :title, length: { is: 5 }, allow_blank: true
+end
+
+Topic.create(title: "").valid?  # =&gt; true
+Topic.create(title: nil).valid? # =&gt; true
+
+</pre>
+</div>
+<p><a class="anchor" id="message"></a></p><h4 id="message">3.3 <code>:message</code>
+</h4><p>前面已经介绍过，如果验证失败，会把 <code>:message</code> 选项指定的字符串添加到 <code>errors</code> 集合中。如果没指定这个选项，Active Record 使用各个验证辅助方法的默认错误消息。<code>:message</code> 选项的值是一个字符串或一个 <code>Proc</code> 对象。</p><p>字符串消息中可以包含 <code>%{value}</code>、<code>%{attribute}</code> 和 <code>%{model}</code>，在验证失败时它们会被替换成具体的值。替换通过 I18n gem 实现，而且占位符必须精确匹配，不能有空格。</p><p><code>Proc</code> 形式的消息有两个参数：验证的对象，以及包含 <code>:model</code>、<code>:attribute</code> 和 <code>:value</code> 键值对的散列。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  # 直接写消息
+  validates :name, presence: { message: "must be given please" }
+
+  # 带有动态属性值的消息。%{value} 会被替换成属性的值
+  # 此外还可以使用 %{attribute} 和 %{model}
+  validates :age, numericality: { message: "%{value} seems wrong" }
+
+  # Proc
+  validates :username,
+    uniqueness: {
+      # object = 要验证的 person 对象
+      # data = { model: "Person", attribute: "Username", value: &lt;username&gt; }
+      message: -&gt;(object, data) do
+        "Hey #{object.name}!, #{data[:value]} is taken already! Try again #{Time.zone.tomorrow}"
+      end
+    }
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="on"></a></p><h4 id="on">3.4 <code>:on</code>
+</h4><p><code>:on</code> 选项指定什么时候验证。所有内置的验证辅助方法默认都在保存时（新建记录或更新记录）验证。如果想修改，可以使用 <code>on: :create</code>，指定只在创建记录时验证；或者使用 <code>on: :update</code>，指定只在更新记录时验证。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  # 更新时允许电子邮件地址重复
+  validates :email, uniqueness: true, on: :create
+
+  # 创建记录时允许年龄不是数字
+  validates :age, numericality: true, on: :update
+
+  # 默认行为（创建和更新时都验证）
+  validates :name, presence: true
+end
+
+</pre>
+</div>
+<p>此外，还可以使用 <code>on:</code> 定义自定义的上下文。必须把上下文的名称传给 <code>valid?</code>、<code>invalid?</code> 或 <code>save</code> 才能触发自定义的上下文。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :email, uniqueness: true, on: :account_setup
+  validates :age, numericality: true, on: :account_setup
+end
+
+person = Person.new
+
+</pre>
+</div>
+<p><code>person.valid?(:account_setup)</code> 会执行上述两个验证，但不保存记录。<code>person.save(context: :account_setup)</code> 在保存之前在 <code>account_setup</code> 上下文中验证 <code>person</code>。显式触发时，可以只使用某个上下文验证，也可以不使用某个上下文验证。</p><p><a class="anchor" id="strict-validations"></a></p><h3 id="strict-validations">4 严格验证</h3><p>数据验证还可以使用严格模式，当对象无效时抛出 <code>ActiveModel::StrictValidationFailed</code> 异常。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :name, presence: { strict: true }
+end
+
+Person.new.valid?  # =&gt; ActiveModel::StrictValidationFailed: Name can't be blank
+
+</pre>
+</div>
+<p>还可以通过 <code>:strict</code> 选项指定抛出什么异常：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :token, presence: true, uniqueness: true, strict: TokenGenerationException
+end
+
+Person.new.valid?  # =&gt; TokenGenerationException: Token can't be blank
+
+</pre>
+</div>
+<p><a class="anchor" id="conditional-validation"></a></p><h3 id="conditional-validation">5 条件验证</h3><p>有时，只有满足特定条件时做验证才说得通。条件可通过 <code>:if</code> 和 <code>:unless</code> 选项指定，这两个选项的值可以是符号、字符串、<code>Proc</code> 或数组。<code>:if</code> 选项指定何时做验证。如果要指定何时不做验证，使用 <code>:unless</code> 选项。</p><p><a class="anchor" id="using-a-symbol-with-if-and-unless"></a></p><h4 id="using-a-symbol-with-if-and-unless">5.1 使用符号</h4><p><code>:if</code> 和 <code>:unless</code> 选项的值为符号时，表示要在验证之前执行对应的方法。这是最常用的设置方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Order &lt; ApplicationRecord
+  validates :card_number, presence: true, if: :paid_with_card?
+
+  def paid_with_card?
+    payment_type == "card"
+  end
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="using-a-proc-with-if-and-unless"></a></p><h4 id="using-a-proc-with-if-and-unless">5.2 使用 Proc</h4><p><code>:if</code> and <code>:unless</code> 选项的值还可以是 Proc。使用 Proc 对象可以在行间编写条件，不用定义额外的方法。这种形式最适合用在一行代码能表示的条件上。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Account &lt; ApplicationRecord
+  validates :password, confirmation: true,
+    unless: Proc.new { |a| a.password.blank? }
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="grouping-conditional-validations"></a></p><h4 id="grouping-conditional-validations">5.3 条件组合</h4><p>有时，同一个条件会用在多个验证上，这时可以使用 <code>with_options</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ApplicationRecord
+  with_options if: :is_admin? do |admin|
+    admin.validates :password, length: { minimum: 10 }
+    admin.validates :email, presence: true
+  end
+end
+
+</pre>
+</div>
+<p><code>with_options</code> 代码块中的所有验证都会使用 <code>if: :is_admin?</code> 这个条件。</p><p><a class="anchor" id="combining-validation-conditions"></a></p><h4 id="combining-validation-conditions">5.4 联合条件</h4><p>另一方面，如果是否做某个验证要满足多个条件时，可以使用数组。而且，一个验证可以同时指定 <code>:if</code> 和 <code>:unless</code> 选项。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Computer &lt; ApplicationRecord
+  validates :mouse, presence: true,
+                    if: ["market.retail?", :desktop?],
+                    unless: Proc.new { |c| c.trackpad.present? }
+end
+
+</pre>
+</div>
+<p>只有当 <code>:if</code> 选项的所有条件都返回 <code>true</code>，且 <code>:unless</code> 选项中的条件返回 <code>false</code> 时才会做验证。</p><p><a class="anchor" id="performing-custom-validations"></a></p><h3 id="performing-custom-validations">6 自定义验证</h3><p>如果内置的数据验证辅助方法无法满足需求，可以选择自己定义验证使用的类或方法。</p><p><a class="anchor" id="custom-validators"></a></p><h4 id="custom-validators">6.1 自定义验证类</h4><p>自定义的验证类继承自 <code>ActiveModel::Validator</code>，必须实现 <code>validate</code> 方法，其参数是要验证的记录，然后验证这个记录是否有效。自定义的验证类通过 <code>validates_with</code> 方法调用。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class MyValidator &lt; ActiveModel::Validator
+  def validate(record)
+    unless record.name.starts_with? 'X'
+      record.errors[:name] &lt;&lt; 'Need a name starting with X please!'
+    end
+  end
+end
+
+class Person
+  include ActiveModel::Validations
+  validates_with MyValidator
+end
+
+</pre>
+</div>
+<p>在自定义的验证类中验证单个属性，最简单的方法是继承 <code>ActiveModel::EachValidator</code> 类。此时，自定义的验证类必须实现 <code>validate_each</code> 方法。这个方法接受三个参数：记录、属性名和属性值。它们分别对应模型实例、要验证的属性及其值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class EmailValidator &lt; ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
+    unless value =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+      record.errors[attribute] &lt;&lt; (options[:message] || "is not an email")
+    end
+  end
+end
+
+class Person &lt; ApplicationRecord
+  validates :email, presence: true, email: true
+end
+
+</pre>
+</div>
+<p>如上面的代码所示，可以同时使用内置的验证方法和自定义的验证类。</p><p><a class="anchor" id="custom-methods"></a></p><h4 id="custom-methods">6.2 自定义验证方法</h4><p>你还可以自定义方法，验证模型的状态，如果验证失败，向 <code>erros</code> 集合添加错误消息。验证方法必须使用类方法 <code>validate</code>（<a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveModel/Validations/ClassMethods.html#method-i-validate">API</a>）注册，传入自定义验证方法名的符号形式。</p><p>这个类方法可以接受多个符号，自定义的验证方法会按照注册的顺序执行。</p><p><code>valid?</code> 方法会验证错误集合是否为空，因此若想让验证失败，自定义的验证方法要把错误添加到那个集合中。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Invoice &lt; ApplicationRecord
+  validate :expiration_date_cannot_be_in_the_past,
+    :discount_cannot_be_greater_than_total_value
+
+  def expiration_date_cannot_be_in_the_past
+    if expiration_date.present? &amp;&amp; expiration_date &lt; Date.today
+      errors.add(:expiration_date, "can't be in the past")
+    end
+  end
+
+  def discount_cannot_be_greater_than_total_value
+    if discount &gt; total_value
+      errors.add(:discount, "can't be greater than total value")
+    end
+  end
+end
+
+</pre>
+</div>
+<p>默认情况下，每次调用 <code>valid?</code> 方法或保存对象时都会执行自定义的验证方法。不过，使用 <code>validate</code> 方法注册自定义验证方法时可以设置 <code>:on</code> 选项，指定什么时候验证。<code>:on</code> 的可选值为 <code>:create</code> 和 <code>:update</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Invoice &lt; ApplicationRecord
+  validate :active_customer, on: :create
+
+  def active_customer
+    errors.add(:customer_id, "is not active") unless customer.active?
+  end
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="working-with-validation-errors"></a></p><h3 id="working-with-validation-errors">7 处理验证错误</h3><p>除了前面介绍的 <code>valid?</code> 和 <code>invalid?</code> 方法之外，Rails 还提供了很多方法用来处理 <code>errors</code> 集合，以及查询对象的有效性。</p><p>下面介绍其中一些最常用的方法。所有可用的方法请查阅 <code>ActiveModel::Errors</code> 的文档。</p><p><a class="anchor" id="working-with-validation-errors-errors"></a></p><h4 id="working-with-validation-errors-errors">7.1 <code>errors</code>
+</h4><p><code>ActiveModel::Errors</code> 的实例包含所有的错误。键是每个属性的名称，值是一个数组，包含错误消息字符串。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :name, presence: true, length: { minimum: 3 }
+end
+
+person = Person.new
+person.valid? # =&gt; false
+person.errors.messages
+ # =&gt; {:name=&gt;["can't be blank", "is too short (minimum is 3 characters)"]}
+
+person = Person.new(name: "John Doe")
+person.valid? # =&gt; true
+person.errors.messages # =&gt; {}
+
+</pre>
+</div>
+<p><a class="anchor" id="errors"></a></p><h4 id="errors">7.2 <code>errors[]</code>
+</h4><p><code>errors[]</code> 用于获取某个属性上的错误消息，返回结果是一个由该属性所有错误消息字符串组成的数组，每个字符串表示一个错误消息。如果字段上没有错误，则返回空数组。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :name, presence: true, length: { minimum: 3 }
+end
+
+person = Person.new(name: "John Doe")
+person.valid? # =&gt; true
+person.errors[:name] # =&gt; []
+
+person = Person.new(name: "JD")
+person.valid? # =&gt; false
+person.errors[:name] # =&gt; ["is too short (minimum is 3 characters)"]
+
+person = Person.new
+person.valid? # =&gt; false
+person.errors[:name]
+ # =&gt; ["can't be blank", "is too short (minimum is 3 characters)"]
+
+</pre>
+</div>
+<p><a class="anchor" id="errors-add"></a></p><h4 id="errors-add">7.3 <code>errors.add</code>
+</h4><p><code>add</code> 方法用于手动添加某属性的错误消息，它的参数是属性和错误消息。</p><p>使用 <code>errors.full_messages</code>（或等价的 <code>errors.to_a</code>）方法以对用户友好的格式显示错误消息。这些错误消息的前面都会加上属性名（首字母大写），如下述示例所示。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  def a_method_used_for_validation_purposes
+    errors.add(:name, "cannot contain the characters !@#%*()_-+=")
+  end
+end
+
+person = Person.create(name: "!@#")
+
+person.errors[:name]
+ # =&gt; ["cannot contain the characters !@#%*()_-+="]
+
+person.errors.full_messages
+ # =&gt; ["Name cannot contain the characters !@#%*()_-+="]
+
+</pre>
+</div>
+<p><code>&lt;&lt;</code> 的作用与 <code>errors#add</code> 一样：把一个消息追加到 <code>errors.messages</code> 数组中。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  def a_method_used_for_validation_purposes
+    errors.messages[:name] &lt;&lt; "cannot contain the characters !@#%*()_-+="
+  end
+end
+
+person = Person.create(name: "!@#")
+
+person.errors[:name]
+ # =&gt; ["cannot contain the characters !@#%*()_-+="]
+
+person.errors.to_a
+ # =&gt; ["Name cannot contain the characters !@#%*()_-+="]
+
+</pre>
+</div>
+<p><a class="anchor" id="working-with-validation-errors-errors-details"></a></p><h4 id="working-with-validation-errors-errors-details">7.4 <code>errors.details</code>
+</h4><p>使用 <code>errors.add</code> 方法可以为返回的错误详情散列指定验证程序类型。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  def a_method_used_for_validation_purposes
+    errors.add(:name, :invalid_characters)
+  end
+end
+
+person = Person.create(name: "!@#")
+
+person.errors.details[:name]
+# =&gt; [{error: :invalid_characters}]
+
+</pre>
+</div>
+<p>如果想提升错误详情的信息量，可以为 <code>errors.add</code> 方法提供额外的键，指定不允许的字符。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  def a_method_used_for_validation_purposes
+    errors.add(:name, :invalid_characters, not_allowed: "!@#%*()_-+=")
+  end
+end
+
+person = Person.create(name: "!@#")
+
+person.errors.details[:name]
+# =&gt; [{error: :invalid_characters, not_allowed: "!@#%*()_-+="}]
+
+</pre>
+</div>
+<p>Rails 内置的验证程序生成的错误详情散列都有对应的验证程序类型。</p><p><a class="anchor" id="errors-base"></a></p><h4 id="errors-base">7.5 <code>errors[:base]</code>
+</h4><p>错误消息可以添加到整个对象上，而不是针对某个属性。如果不想管是哪个属性导致对象无效，只想把对象标记为无效状态，就可以使用这个方法。<code>errors[:base]</code> 是个数组，可以添加字符串作为错误消息。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  def a_method_used_for_validation_purposes
+    errors[:base] &lt;&lt; "This person is invalid because ..."
+  end
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="errors-clear"></a></p><h4 id="errors-clear">7.6 <code>errors.clear</code>
+</h4><p>如果想清除 <code>errors</code> 集合中的所有错误消息，可以使用 <code>clear</code> 方法。当然，在无效的对象上调用 <code>errors.clear</code> 方法后，对象还是无效的，虽然 <code>errors</code> 集合为空了，但下次调用 <code>valid?</code> 方法，或调用其他把对象存入数据库的方法时， 会再次进行验证。如果任何一个验证失败了，<code>errors</code> 集合中就再次出现值了。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :name, presence: true, length: { minimum: 3 }
+end
+
+person = Person.new
+person.valid? # =&gt; false
+person.errors[:name]
+ # =&gt; ["can't be blank", "is too short (minimum is 3 characters)"]
+
+person.errors.clear
+person.errors.empty? # =&gt; true
+
+person.save # =&gt; false
+
+person.errors[:name]
+# =&gt; ["can't be blank", "is too short (minimum is 3 characters)"]
+
+</pre>
+</div>
+<p><a class="anchor" id="errors-size"></a></p><h4 id="errors-size">7.7 <code>errors.size</code>
+</h4><p><code>size</code> 方法返回对象上错误消息的总数。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person &lt; ApplicationRecord
+  validates :name, presence: true, length: { minimum: 3 }
+end
+
+person = Person.new
+person.valid? # =&gt; false
+person.errors.size # =&gt; 2
+
+person = Person.new(name: "Andrea", email: "andrea@example.com")
+person.valid? # =&gt; true
+person.errors.size # =&gt; 0
+
+</pre>
+</div>
+<p><a class="anchor" id="displaying-validation-errors-in-views"></a></p><h3 id="displaying-validation-errors-in-views">8 在视图中显示验证错误</h3><p>在模型中加入数据验证后，如果在表单中创建模型，出错时，你或许想把错误消息显示出来。</p><p>因为每个应用显示错误消息的方式不同，所以 Rails 没有直接提供用于显示错误消息的视图辅助方法。不过，Rails 提供了这么多方法用来处理验证，自己编写一个也不难。使用脚手架时，Rails 会在生成的 <code>_form.html.erb</code> 中加入一些 ERB 代码，显示模型错误消息的完整列表。</p><p>假如有个模型对象存储在实例变量 <code>@article</code> 中，视图的代码可以这么写：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% if @article.errors.any? %&gt;
+  &lt;div id="error_explanation"&gt;
+    &lt;h2&gt;&lt;%= pluralize(@article.errors.count, "error") %&gt; prohibited this article from being saved:&lt;/h2&gt;
+
+    &lt;ul&gt;
+    &lt;% @article.errors.full_messages.each do |msg| %&gt;
+      &lt;li&gt;&lt;%= msg %&gt;&lt;/li&gt;
+    &lt;% end %&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>此外，如果使用 Rails 的表单辅助方法生成表单，如果某个表单字段验证失败，会把字段包含在一个 <code>&lt;div&gt;</code> 中：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;div class="field_with_errors"&gt;
+  &lt;input id="article_title" name="article[title]" size="30" type="text" value=""&gt;
+&lt;/div&gt;
+
+</pre>
+</div>
+<p>然后，你可以根据需求为这个 <code>div</code> 添加样式。脚手架默认添加的 CSS 规则如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+</pre>
+</div>
+<p>上述样式把所有出错的表单字段放入一个内边距为 2 像素的红色框内。</p>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

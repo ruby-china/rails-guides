@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Active Record 迁移 — Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="返回首页">Rails 指南</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>新手入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询接口</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入探索</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">Rails 应用测试指南</a></dd>
+                <dd><a href="security.html">Ruby on Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器和模板</a></dd>
+                <dt>为 Ruby on Rails 做贡献</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档指导方针</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">Ruby on Rails 的维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布记</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="新手入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询接口</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入探索">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">Rails 应用测试指南</option>
+                  <option value="security.html">Ruby on Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器和模板</option>
+              </optgroup>
+              <optgroup label="为 Ruby on Rails 做贡献">
+                  <option value="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</option>
+                  <option value="api_documentation_guidelines.html">API 文档指导方针</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">Ruby on Rails 的维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布记</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Active Record 迁移</h2><p>迁移是 Active Record 的一个特性，允许我们按时间顺序管理数据库模式。有了迁移，就不必再用纯 SQL 来修改数据库模式，而是可以使用简单的 Ruby DSL 来描述对数据表的修改。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li>  用于创建迁移的生成器；</li>
+<li>  Active Record 提供的用于操作数据库的方法；</li>
+<li>  用于操作迁移和数据库模式的 <code>bin/rails</code> 任务；</li>
+<li>  迁移和 <code>schema.rb</code> 文件的关系。</li>
+</ul>
+
+
+              <div id="subCol">
+          <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />目录</h3>
+          <ol class="chapters">
+<li><a href="#migration-overview">迁移概述</a></li>
+<li>
+<a href="#creating-a-migration">创建迁移</a>
+
+<ul>
+<li><a href="#creating-a-standalone-migration">创建独立的迁移</a></li>
+<li><a href="#model-generators">模型生成器</a></li>
+<li><a href="#passing-modifiers">传递修饰符</a></li>
+</ul>
+</li>
+<li>
+<a href="#writing-a-migration">编写迁移</a>
+
+<ul>
+<li><a href="#creating-a-table">创建数据表</a></li>
+<li><a href="#creating-a-join-table">创建联结数据表</a></li>
+<li><a href="#changing-tables">修改数据表</a></li>
+<li><a href="#changing-columns">修改字段</a></li>
+<li><a href="#column-modifiers">字段修饰符</a></li>
+<li><a href="#foreign-keys">外键</a></li>
+<li><a href="#when-helpers-arent-enough">如果辅助方法不够用</a></li>
+<li><a href="#using-the-change-method">使用 <code>change</code> 方法</a></li>
+<li><a href="#using-reversible">使用 <code>reversible</code> 方法</a></li>
+<li><a href="#using-the-up-down-methods">使用 <code>up</code> 和 <code>down</code> 方法</a></li>
+<li><a href="#reverting-previous-migrations">撤销之前的迁移</a></li>
+</ul>
+</li>
+<li>
+<a href="#running-migrations">运行迁移</a>
+
+<ul>
+<li><a href="#rolling-back">回滚</a></li>
+<li><a href="#setup-the-database">安装数据库</a></li>
+<li><a href="#resetting-the-database">重置数据库</a></li>
+<li><a href="#running-specific-migrations">运行指定迁移</a></li>
+<li><a href="#running-migrations-in-different-environments">在不同环境中运行迁移</a></li>
+<li><a href="#changing-the-output-of-running-migrations">修改迁移运行时的输出</a></li>
+</ul>
+</li>
+<li><a href="#changing-existing-migrations">修改现有的迁移</a></li>
+<li>
+<a href="#schema-dumping-and-you">数据库模式转储</a>
+
+<ul>
+<li><a href="#what-are-schema-files-for">数据库模式文件有什么用？</a></li>
+<li><a href="#types-of-schema-dumps">数据库模式转储的类型</a></li>
+<li><a href="#schema-dumps-and-source-control">数据库模式转储和源码版本控制</a></li>
+</ul>
+</li>
+<li><a href="#active-record-and-referential-integrity">Active Record 和引用完整性</a></li>
+<li><a href="#migrations-and-seed-data">迁移和种子数据</a></li>
+</ol>
+
+        </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <p><a class="anchor" id="migration-overview"></a></p><h3 id="migration-overview">1 迁移概述</h3><p>迁移是以一致和轻松的方式按时间顺序修改数据库模式的实用方法。它使用 Ruby DSL，因此不必手动编写 SQL，从而实现了数据库无关的数据库模式的创建和修改。</p><p>我们可以把迁移看做数据库的新“版本”。数据库模式一开始并不包含任何内容，之后通过一个个迁移来添加或删除数据表、字段和记录。
+Active Record 知道如何沿着时间线更新数据库模式，使其从任何历史版本更新为最新版本。Active Record 还会更新 <code>db/schema.rb</code> 文件，以匹配最新的数据库结构。</p><p>下面是一个迁移的示例：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class CreateProducts &lt; ActiveRecord::Migration[5.0]
+  def change
+    create_table :products do |t|
+      t.string :name
+      t.text :description
+
+      t.timestamps
+    end
+  end
+end
+
+</pre>
+</div>
+<p>这个迁移用于添加 <code>products</code> 数据表，数据表中包含 <code>name</code> 字符串字段和 <code>description</code> 文本字段。同时隐式添加了 <code>id</code> 主键字段，这是所有 Active Record 模型的默认主键。<code>timestamps</code> 宏添加了 <code>created_at</code> 和 <code>updated_at</code> 两个字段。后面这几个特殊字段只要存在就都由 Active Record 自动管理。</p><p>注意这里定义的对数据库的修改是按时间进行的。在这个迁移运行之前，数据表还不存在。在这个迁移运行之后，数据表就被创建了。Active Record 还知道如何撤销这个迁移：如果我们回滚这个迁移，数据表就会被删除。</p><p>对于支持事务并提供了用于修改数据库模式的语句的数据库，迁移被包装在事务中。如果数据库不支持事务，那么当迁移失败时，已成功的那部分操作将无法回滚。这种情况下只能手动完成相应的回滚操作。</p><div class="note"><p>某些查询不能在事务内部运行。如果数据库适配器支持 DDL 事务，就可以使用 <code>disable_ddl_transaction!</code> 方法在某个迁移中临时禁用事务。</p></div><p>如果想在迁移中完成一些 Active Record 不知如何撤销的操作，可以使用 <code>reversible</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ChangeProductsPrice &lt; ActiveRecord::Migration[5.0]
+  def change
+    reversible do |dir|
+      change_table :products do |t|
+        dir.up   { t.change :price, :string }
+        dir.down { t.change :price, :integer }
+      end
+    end
+  end
+end
+
+</pre>
+</div>
+<p>或者用 <code>up</code> 和 <code>down</code> 方法来代替 <code>change</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ChangeProductsPrice &lt; ActiveRecord::Migration[5.0]
+  def up
+    change_table :products do |t|
+      t.change :price, :string
+    end
+  end
+
+  def down
+    change_table :products do |t|
+      t.change :price, :integer
+    end
+  end
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="creating-a-migration"></a></p><h3 id="creating-a-migration">2 创建迁移</h3><p><a class="anchor" id="creating-a-standalone-migration"></a></p><h4 id="creating-a-standalone-migration">2.1 创建独立的迁移</h4><p>迁移文件储存在 <code>db/migrate</code> 文件夹中，一个迁移文件包含一个迁移类。文件名采用 <code>YYYYMMDDHHMMSS_create_products.rb</code> 形式，即 UTC 时间戳加上下划线再加上迁移的名称。迁移类的名称（驼峰式）应该匹配文件名中迁移的名称。例如，在 <code>20080906120000_create_products.rb</code> 文件中应该定义 <code>CreateProducts</code> 类，在 <code>20080906120001_add_details_to_products.rb</code> 文件中应该定义 <code>AddDetailsToProducts</code> 类。Rails 根据文件名的时间戳部分确定要运行的迁移和迁移运行的顺序，因此当需要把迁移文件复制到其他 Rails 应用，或者自己生成迁移文件时，一定要注意迁移运行的顺序。</p><p>当然，计算时间戳不是什么有趣的事，因此 Active Record 提供了生成器：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate migration AddPartNumberToProducts
+
+</pre>
+</div>
+<p>上面的命令会创建空的迁移，并进行适当命名：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class AddPartNumberToProducts &lt; ActiveRecord::Migration[5.0]
+  def change
+  end
+end
+
+</pre>
+</div>
+<p>如果迁移名称是 <code>AddXXXToYYY</code> 或 <code>RemoveXXXFromYYY</code> 的形式，并且后面跟着字段名和类型列表，那么会生成包含合适的 <code>add_column</code> 或 <code>remove_column</code> 语句的迁移。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate migration AddPartNumberToProducts part_number:string
+
+</pre>
+</div>
+<p>上面的命令会生成：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class AddPartNumberToProducts &lt; ActiveRecord::Migration[5.0]
+  def change
+    add_column :products, :part_number, :string
+  end
+end
+
+</pre>
+</div>
+<p>还可以像下面这样在新建字段上添加索引：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate migration AddPartNumberToProducts part_number:string:index
+
+</pre>
+</div>
+<p>上面的命令会生成：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class AddPartNumberToProducts &lt; ActiveRecord::Migration[5.0]
+  def change
+    add_column :products, :part_number, :string
+    add_index :products, :part_number
+  end
+end
+
+</pre>
+</div>
+<p>类似地，还可以生成用于删除字段的迁移：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate migration RemovePartNumberFromProducts part_number:string
+
+</pre>
+</div>
+<p>上面的命令会生成：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class RemovePartNumberFromProducts &lt; ActiveRecord::Migration[5.0]
+  def change
+    remove_column :products, :part_number, :string
+  end
+end
+
+</pre>
+</div>
+<p>还可以生成用于添加多个字段的迁移，例如：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate migration AddDetailsToProducts part_number:string price:decimal
+
+</pre>
+</div>
+<p>上面的命令会生成：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class AddDetailsToProducts &lt; ActiveRecord::Migration[5.0]
+  def change
+    add_column :products, :part_number, :string
+    add_column :products, :price, :decimal
+  end
+end
+
+</pre>
+</div>
+<p>如果迁移名称是 <code>CreateXXX</code> 的形式，并且后面跟着字段名和类型列表，那么会生成用于创建包含指定字段的 <code>XXX</code> 数据表的迁移。例如：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate migration CreateProducts name:string part_number:string
+
+</pre>
+</div>
+<p>上面的命令会生成：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class CreateProducts &lt; ActiveRecord::Migration[5.0]
+  def change
+    create_table :products do |t|
+      t.string :name
+      t.string :part_number
+    end
+  end
+end
+
+</pre>
+</div>
+<p>和往常一样，上面的命令生成的代码只是一个起点，我们可以修改 <code>db/migrate/YYYYMMDDHHMMSS_add_details_to_products.rb</code> 文件，根据需要增删代码。</p><p>生成器也接受 <code>references</code> 字段类型作为参数（还可使用 <code>belongs_to</code>），例如：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate migration AddUserRefToProducts user:references
+
+</pre>
+</div>
+<p>上面的命令会生成：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class AddUserRefToProducts &lt; ActiveRecord::Migration[5.0]
+  def change
+    add_reference :products, :user, foreign_key: true
+  end
+end
+
+</pre>
+</div>
+<p>这个迁移会创建 <code>user_id</code> 字段并添加索引。关于 <code>add_reference</code> 选项的更多介绍，请参阅 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_reference">API 文档</a>。</p><p>如果迁移名称中包含 <code>JoinTable</code>，生成器会创建联结数据表：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails g migration CreateJoinTableCustomerProduct customer product
+
+</pre>
+</div>
+<p>上面的命令会生成：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class CreateJoinTableCustomerProduct &lt; ActiveRecord::Migration[5.0]
+  def change
+    create_join_table :customers, :products do |t|
+      # t.index [:customer_id, :product_id]
+      # t.index [:product_id, :customer_id]
+    end
+  end
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="model-generators"></a></p><h4 id="model-generators">2.2 模型生成器</h4><p>模型和脚手架生成器会生成适用于添加新模型的迁移。这些迁移中已经包含用于创建有关数据表的指令。如果我们告诉 Rails 想要哪些字段，那么添加这些字段所需的语句也会被创建。例如，运行下面的命令：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate model Product name:string description:text
+
+</pre>
+</div>
+<p>上面的命令会创建下面的迁移：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class CreateProducts &lt; ActiveRecord::Migration[5.0]
+  def change
+    create_table :products do |t|
+      t.string :name
+      t.text :description
+
+      t.timestamps
+    end
+  end
+end
+
+</pre>
+</div>
+<p>我们可以根据需要添加“字段名称/类型”对，没有数量限制。</p><p><a class="anchor" id="passing-modifiers"></a></p><h4 id="passing-modifiers">2.3 传递修饰符</h4><p>可以直接在命令行中传递常用的<a href="#column-modifiers">类型修饰符</a>。这些类型修饰符用大括号括起来，放在字段类型之后。例如，运行下面的命令：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate migration AddDetailsToProducts 'price:decimal{5,2}' supplier:references{polymorphic}
+
+</pre>
+</div>
+<p>上面的命令会创建下面的迁移：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class AddDetailsToProducts &lt; ActiveRecord::Migration[5.0]
+  def change
+    add_column :products, :price, :decimal, precision: 5, scale: 2
+    add_reference :products, :supplier, polymorphic: true
+  end
+end
+
+</pre>
+</div>
+<div class="info"><p>关于传递修饰符的更多介绍，请参阅生成器的命令行帮助信息。</p></div><p><a class="anchor" id="writing-a-migration"></a></p><h3 id="writing-a-migration">3 编写迁移</h3><p>使用生成器创建迁移后，就可以开始写代码了。</p><p><a class="anchor" id="creating-a-table"></a></p><h4 id="creating-a-table">3.1 创建数据表</h4><p><code>create_table</code> 方法是最基础、最常用的方法，其代码通常是由模型或脚手架生成器生成的。典型的用法像下面这样：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+create_table :products do |t|
+  t.string :name
+end
+
+</pre>
+</div>
+<p>上面的命令会创建包含 <code>name</code> 字段的 <code>products</code> 数据表（后面会介绍，数据表还包含自动创建的 <code>id</code> 字段）。</p><p>默认情况下，<code>create_table</code> 方法会创建 <code>id</code> 主键。可以用 <code>:primary_key</code> 选项来修改主键名称，还可以传入 <code>id: false</code> 选项以禁用主键。如果需要传递数据库特有的选项，可以在 <code>:options</code> 选项中使用 SQL 代码片段。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+create_table :products, options: "ENGINE=BLACKHOLE" do |t|
+  t.string :name, null: false
+end
+
+</pre>
+</div>
+<p>上面的代码会在用于创建数据表的 SQL 语句末尾加上 <code>ENGINE=BLACKHOLE</code>（如果使用 MySQL 或 MarialDB，默认选项是 <code>ENGINE=InnoDB</code>）。</p><p>还可以传递带有数据表描述信息的 <code>:comment</code> 选项，这些注释会被储存在数据库中，可以使用 MySQL Workbench、PgAdmin III 等数据库管理工具查看。对于大型数据库，强列推荐在应用的迁移中添加注释。目前只有 MySQL 和 PostgreSQL 适配器支持注释功能。</p><p><a class="anchor" id="creating-a-join-table"></a></p><h4 id="creating-a-join-table">3.2 创建联结数据表</h4><p><code>create_join_table</code> 方法用于创建 HABTM（has and belongs to many）联结数据表。典型的用法像下面这样：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+create_join_table :products, :categories
+
+</pre>
+</div>
+<p>上面的代码会创建包含 <code>category_id</code> 和 <code>product_id</code> 字段的 <code>categories_products</code> 数据表。这两个字段的 <code>:null</code> 选项默认设置为 <code>false</code>，可以通过 <code>:column_options</code> 选项覆盖这一设置：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+create_join_table :products, :categories, column_options: { null: true }
+
+</pre>
+</div>
+<p>联结数据表的名称默认由 <code>create_join_table</code> 方法的前两个参数按字母顺序组合而来。可以传入 <code>:table_name</code> 选项来自定义联结数据表的名称：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+create_join_table :products, :categories, table_name: :categorization
+
+</pre>
+</div>
+<p>上面的代码会创建 <code>categorization</code> 数据表。</p><p><code>create_join_table</code> 方法也接受块作为参数，用于添加索引（默认未创建的索引）或附加字段：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+create_join_table :products, :categories do |t|
+  t.index :product_id
+  t.index :category_id
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="changing-tables"></a></p><h4 id="changing-tables">3.3 修改数据表</h4><p><code>change_table</code> 方法和 <code>create_table</code> 非常类似，用于修改现有的数据表。它的用法和 <code>create_table</code> 方法风格类似，但传入块的对象有更多用法。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+change_table :products do |t|
+  t.remove :description, :name
+  t.string :part_number
+  t.index :part_number
+  t.rename :upccode, :upc_code
+end
+
+</pre>
+</div>
+<p>上面的代码删除 <code>description</code> 和 <code>name</code> 字段，创建 <code>part_number</code> 字符串字段并添加索引，最后重命名 <code>upccode</code> 字段。</p><p><a class="anchor" id="changing-columns"></a></p><h4 id="changing-columns">3.4 修改字段</h4><p>Rails 提供了与 <code>remove_column</code> 和 <code>add_column</code> 类似的 <code>change_column</code> 迁移方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+change_column :products, :part_number, :text
+
+</pre>
+</div>
+<p>上面的代码把 <code>products</code> 数据表的 <code>part_number</code> 字段修改为 <code>:text</code> 字段。请注意 <code>change_column</code> 命令是无法撤销的。</p><p>除 <code>change_column</code> 方法之外，还有 <code>change_column_null</code> 和 <code>change_column_default</code> 方法，前者专门用于设置字段可以为空或不可以为空，后者专门用于修改字段的默认值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+change_column_null :products, :name, false
+change_column_default :products, :approved, from: true, to: false
+
+</pre>
+</div>
+<p>上面的代码把 <code>products</code> 数据表的 <code>:name</code> 字段设置为 <code>NOT NULL</code> 字段，把 <code>:approved</code> 字段的默认值由 <code>true</code> 修改为 <code>false</code>。</p><p>注意：也可以把上面的 <code>change_column_default</code> 迁移写成 <code>change_column_default :products, :approved, false</code>，但这种写法是无法撤销的。</p><p><a class="anchor" id="column-modifiers"></a></p><h4 id="column-modifiers">3.5 字段修饰符</h4><p>字段修饰符可以在创建或修改字段时使用：</p>
+<ul>
+<li>  <code>limit</code> 修饰符：设置 <code>string/text/binary/integer</code> 字段的最大长度。</li>
+<li>  <code>precision</code> 修饰符：定义 <code>decimal</code> 字段的精度，表示数字的总位数。</li>
+<li>  <code>scale</code> 修饰符：定义 <code>decimal</code> 字段的标度，表示小数点后的位数。</li>
+<li>  <code>polymorphic</code> 修饰符：为 <code>belongs_to</code> 关联添加 <code>type</code> 字段。</li>
+<li>  <code>null</code> 修饰符：设置字段能否为 <code>NULL</code> 值。</li>
+<li>  <code>default</code> 修饰符：设置字段的默认值。请注意，如果使用动态值（如日期）作为默认值，那么默认值只会在第一次使时（如应用迁移的日期）计算一次。</li>
+<li>  <code>index</code> 修饰符：为字段添加索引。</li>
+<li>  <code>comment</code> 修饰符：为字段添加注释。</li>
+</ul>
+<p>有的适配器可能支持附加选项，更多介绍请参阅相应适配器的 API 文档。</p><p><a class="anchor" id="foreign-keys"></a></p><h4 id="foreign-keys">3.6 外键</h4><p>尽管不是必需的，但有时我们需要使用外键约束以保证引用完整性。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+add_foreign_key :articles, :authors
+
+</pre>
+</div>
+<p>上面的代码为 <code>articles</code> 数据表的 <code>author_id</code> 字段添加外键，这个外键会引用 <code>authors</code> 数据表的 <code>id</code> 字段。如果字段名不能从表名称推导出来，我们可以使用 <code>:column</code> 和 <code>:primary_key</code> 选项。</p><p>Rails 会为每一个外键生成以 <code>fk_rails_</code> 开头并且后面紧跟着 10 个字符的外键名，外键名是根据 <code>from_table</code> 和 <code>column</code> 推导出来的。需要时可以使用 <code>:name</code> 来指定外键名。</p><div class="note"><p>Active Record 只支持单字段外键，要想使用复合外键就需要 <code>execute</code> 方法和 <code>structure.sql</code>。更多介绍请参阅 <a href="#schema-dumping-and-you">数据库模式转储</a>。</p></div><p>删除外键也很容易：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 让 Active Record 找出列名
+remove_foreign_key :accounts, :branches
+
+# 删除特定列上的外键
+remove_foreign_key :accounts, column: :owner_id
+
+# 通过名称删除外键
+remove_foreign_key :accounts, name: :special_fk_name
+
+</pre>
+</div>
+<p><a class="anchor" id="when-helpers-arent-enough"></a></p><h4 id="when-helpers-arent-enough">3.7 如果辅助方法不够用</h4><p>如果 Active Record 提供的辅助方法不够用，可以使用 <code>excute</code> 方法执行任意 SQL 语句：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Product.connection.execute("UPDATE products SET price = 'free' WHERE 1=1")
+
+</pre>
+</div>
+<p>关于各个方法的更多介绍和例子，请参阅 API 文档。尤其是 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html"><code>ActiveRecord::ConnectionAdapters::SchemaStatements</code></a> 的文档（在 <code>change</code>、<code>up</code> 和 <code>down</code> 方法中可以使用的方法）、<a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html"><code>ActiveRecord::ConnectionAdapters::TableDefinition</code></a> 的文档（在 <code>create_table</code> 方法的块中可以使用的方法）和 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveRecord/ConnectionAdapters/Table.html"><code>ActiveRecord::ConnectionAdapters::Table</code></a> 的文档（在 <code>change_table</code> 方法的块中可以使用的方法）。</p><p><a class="anchor" id="using-the-change-method"></a></p><h4 id="using-the-change-method">3.8 使用 <code>change</code> 方法</h4><p><code>change</code> 方法是编写迁移时最常用的。在大多数情况下，Active Record 知道如何自动撤销用 <code>change</code> 方法编写的迁移。目前，在 <code>change</code> 方法中只能使用下面这些方法：</p>
+<ul>
+<li>  <code>add_column</code>
+</li>
+<li>  <code>add_foreign_key</code>
+</li>
+<li>  <code>add_index</code>
+</li>
+<li>  <code>add_reference</code>
+</li>
+<li>  <code>add_timestamps</code>
+</li>
+<li>  <code>change_column_default</code>（必须提供 <code>:from</code> 和 <code>:to</code> 选项）</li>
+<li>  <code>change_column_null</code>
+</li>
+<li>  <code>create_join_table</code>
+</li>
+<li>  <code>create_table</code>
+</li>
+<li>  <code>disable_extension</code>
+</li>
+<li>  <code>drop_join_table</code>
+</li>
+<li>  <code>drop_table</code>（必须提供块）</li>
+<li>  <code>enable_extension</code>
+</li>
+<li>  <code>remove_column</code>（必须提供字段类型）</li>
+<li>  <code>remove_foreign_key</code>（必须提供第二个数据表）</li>
+<li>  <code>remove_index</code>
+</li>
+<li>  <code>remove_reference</code>
+</li>
+<li>  <code>remove_timestamps</code>
+</li>
+<li>  <code>rename_column</code>
+</li>
+<li>  <code>rename_index</code>
+</li>
+<li>  <code>rename_table</code>
+</li>
+</ul>
+<p>如果在块中不使用 <code>change</code>、<code>change_default</code> 和 <code>remove</code> 方法，那么 <code>change_table</code> 方法也是可撤销的。</p><p>如果提供了字段类型作为第三个参数，那么 <code>remove_column</code> 是可撤销的。别忘了提供原来字段的选项，否则 Rails 在回滚时就无法准确地重建字段了：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+remove_column :posts, :slug, :string, null: false, default: '', index: true
+
+</pre>
+</div>
+<p>如果需要使用其他方法，可以用 <code>reversible</code> 方法或者 <code>up</code> 和 <code>down</code> 方法来代替 <code>change</code> 方法。</p><p><a class="anchor" id="using-reversible"></a></p><h4 id="using-reversible">3.9 使用 <code>reversible</code> 方法</h4><p>撤销复杂迁移所需的操作有一些是 Rails 无法自动完成的，这时可以使用 <code>reversible</code> 方法指定运行和撤销迁移所需的操作。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ExampleMigration &lt; ActiveRecord::Migration[5.0]
+  def change
+    create_table :distributors do |t|
+      t.string :zipcode
+    end
+
+    reversible do |dir|
+      dir.up do
+        # 添加 CHECK 约束
+        execute &lt;&lt;-SQL
+          ALTER TABLE distributors
+            ADD CONSTRAINT zipchk
+              CHECK (char_length(zipcode) = 5) NO INHERIT;
+        SQL
+      end
+      dir.down do
+        execute &lt;&lt;-SQL
+          ALTER TABLE distributors
+            DROP CONSTRAINT zipchk
+        SQL
+      end
+    end
+
+    add_column :users, :home_page_url, :string
+    rename_column :users, :email, :email_address
+  end
+end
+
+</pre>
+</div>
+<p>使用 <code>reversible</code> 方法可以确保指令按正确的顺序执行。在上面的代码中，撤销迁移时，<code>down</code> 块会在删除 <code>home_page_url</code> 字段之后、删除 <code>distributors</code> 数据表之前运行。</p><p>有时，迁移执行的操作是无法撤销的，例如删除数据。在这种情况下，我们可以在 <code>down</code> 块中抛出 <code>ActiveRecord::IrreversibleMigration</code> 异常。这样一旦尝试撤销迁移，就会显示无法撤销迁移的出错信息。</p><p><a class="anchor" id="using-the-up-down-methods"></a></p><h4 id="using-the-up-down-methods">3.10 使用 <code>up</code> 和 <code>down</code> 方法</h4><p>可以使用 <code>up</code> 和 <code>down</code> 方法以传统风格编写迁移而不使用 <code>change</code> 方法。<code>up</code> 方法用于描述对数据库模式所做的改变，<code>down</code> 方法用于撤销 <code>up</code> 方法所做的改变。换句话说，如果调用 <code>up</code> 方法之后紧接着调用 <code>down</code> 方法，数据库模式不会发生任何改变。例如用 <code>up</code> 方法创建数据表，就应该用 <code>down</code> 方法删除这个数据表。在 <code>down</code> 方法中撤销迁移时，明智的做法是按照和 <code>up</code> 方法中操作相反的顺序执行操作。下面的例子和上一节中的例子的功能完全相同：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ExampleMigration &lt; ActiveRecord::Migration[5.0]
+  def up
+    create_table :distributors do |t|
+      t.string :zipcode
+    end
+
+    # 添加 CHECK 约束
+    execute &lt;&lt;-SQL
+      ALTER TABLE distributors
+        ADD CONSTRAINT zipchk
+        CHECK (char_length(zipcode) = 5);
+    SQL
+
+    add_column :users, :home_page_url, :string
+    rename_column :users, :email, :email_address
+  end
+
+  def down
+    rename_column :users, :email_address, :email
+    remove_column :users, :home_page_url
+
+    execute &lt;&lt;-SQL
+      ALTER TABLE distributors
+        DROP CONSTRAINT zipchk
+    SQL
+
+    drop_table :distributors
+  end
+end
+
+</pre>
+</div>
+<p>对于无法撤销的迁移，应该在 <code>down</code> 方法中抛出 <code>ActiveRecord::IrreversibleMigration</code> 异常。这样一旦尝试撤销迁移，就会显示无法撤销迁移的出错信息。</p><p><a class="anchor" id="reverting-previous-migrations"></a></p><h4 id="reverting-previous-migrations">3.11 撤销之前的迁移</h4><p>Active Record 提供了 <code>revert</code> 方法用于回滚迁移：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require_relative '20121212123456_example_migration'
+
+class FixupExampleMigration &lt; ActiveRecord::Migration[5.0]
+  def change
+    revert ExampleMigration
+
+    create_table(:apples) do |t|
+      t.string :variety
+    end
+  end
+end
+
+</pre>
+</div>
+<p><code>revert</code> 方法也接受块，在块中可以定义用于撤销迁移的指令。如果只是想要撤销之前迁移的部分操作，就可以使用块。例如，假设有一个 <code>ExampleMigration</code> 迁移已经执行，但后来发现应该用 ActiveRecord 验证代替 <code>CHECK</code> 约束来验证邮编，那么可以像下面这样编写迁移：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class DontUseConstraintForZipcodeValidationMigration &lt; ActiveRecord::Migration[5.0]
+  def change
+    revert do
+      # 从  ExampleMigration 中复制粘贴代码
+      reversible do |dir|
+        dir.up do
+          # 添加 CHECK 约束
+          execute &lt;&lt;-SQL
+            ALTER TABLE distributors
+              ADD CONSTRAINT zipchk
+                CHECK (char_length(zipcode) = 5);
+          SQL
+        end
+        dir.down do
+          execute &lt;&lt;-SQL
+            ALTER TABLE distributors
+              DROP CONSTRAINT zipchk
+          SQL
+        end
+      end
+
+      # ExampleMigration 中的其他操作无需撤销
+    end
+  end
+end
+
+</pre>
+</div>
+<p>不使用 <code>revert</code> 方法也可以编写出和上面的迁移功能相同的迁移，但需要更多步骤：调换 <code>create_table</code> 方法和 <code>reversible</code> 方法的顺序，用 <code>drop_table</code> 方法代替 <code>create_table</code> 方法，最后对调 <code>up</code> 和 <code>down</code> 方法。换句话说，这么多步骤用一个 <code>revert</code> 方法就可以代替。</p><div class="note"><p>要想像上面的例子一样添加 <code>CHECK</code> 约束，必须使用 <code>structure.sql</code> 作为转储方式。请参阅 <a href="#schema-dumping-and-you">数据库模式转储</a>。</p></div><p><a class="anchor" id="running-migrations"></a></p><h3 id="running-migrations">4 运行迁移</h3><p>Rails 提供了一套用于运行迁移的 <code>bin/rails</code> 任务。其中最常用的是 <code>rails db:migrate</code> 任务，用于调用所有未运行的迁移中的 <code>chagne</code> 或 <code>up</code> 方法。如果没有未运行的迁移，任务会直接退出。调用顺序是根据迁移文件名的时间戳确定的。</p><p>请注意，执行 <code>db:migrate</code> 任务时会自动执行 <code>db:schema:dump</code> 任务，这个任务用于更新 <code>db/schema.rb</code> 文件，以匹配数据库结构。</p><p>如果指定了目标版本，Active Record 会运行该版本之前的所有迁移（调用其中的 <code>change</code>、<code>up</code> 和 <code>down</code> 方法），其中版本指的是迁移文件名的数字前缀。例如，下面的命令会运行 <code>20080906120000</code> 版本之前的所有迁移：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails db:migrate VERSION=20080906120000
+
+</pre>
+</div>
+<p>如果版本 <code>20080906120000</code> 高于当前版本（换句话说，是向上迁移），上面的命令会按顺序运行迁移直到运行完 <code>20080906120000</code> 版本，之后的版本都不会运行。如果是向下迁移（即版本 <code>20080906120000</code> 低于当前版本），上面的命令会按顺序运行 <code>20080906120000</code> 版本之前的所有迁移，不包括 <code>20080906120000</code> 版本。</p><p><a class="anchor" id="rolling-back"></a></p><h4 id="rolling-back">4.1 回滚</h4><p>另一个常用任务是回滚最后一个迁移。例如，当发现最后一个迁移中有错误需要修正时，就可以执行回滚任务。回滚最后一个迁移不需要指定这个迁移的版本，直接执行下面的命令即可：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails db:rollback
+
+</pre>
+</div>
+<p>上面的命令通过撤销 <code>change</code> 方法或调用 <code>down</code> 方法来回滚最后一个迁移。要想取消多个迁移，可以使用 <code>STEP</code> 参数：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails db:rollback STEP=3
+
+</pre>
+</div>
+<p>上面的命令会撤销最后三个迁移。</p><p><code>db:migrate:redo</code> 任务用于回滚最后一个迁移并再次运行这个迁移。和 <code>db:rollback</code> 任务一样，如果需要重做多个迁移，可以使用 <code>STEP</code> 参数，例如：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails db:migrate:redo STEP=3
+
+</pre>
+</div>
+<p>这些 <code>bin/rails</code> 任务可以完成的操作，通过 <code>db:migrate</code> 也都能完成，区别在于这些任务使用起来更方便，无需显式指定迁移的版本。</p><p><a class="anchor" id="setup-the-database"></a></p><h4 id="setup-the-database">4.2 安装数据库</h4><p><code>rails db:setup</code> 任务用于创建数据库，加载数据库模式，并使用种子数据初始化数据库。</p><p><a class="anchor" id="resetting-the-database"></a></p><h4 id="resetting-the-database">4.3 重置数据库</h4><p><code>rails db:reset</code> 任务用于删除并重新创建数据库，其功能相当于 <code>rails db:drop db:setup</code>。</p><div class="note"><p>重置数据库和运行所有迁移是不一样的。重置数据库只使用当前的 <code>db/schema.rb</code> 或 <code>db/structure.sql</code> 文件的内容。如果迁移无法回滚，使用 <code>rails db:reset</code> 任务可能也没用。关于转储数据库模式的更多介绍，请参阅 <a href="#schema-dumping-and-you">数据库模式转储</a>。</p></div><p><a class="anchor" id="running-specific-migrations"></a></p><h4 id="running-specific-migrations">4.4 运行指定迁移</h4><p>要想运行或撤销指定迁移，可以使用 <code>db:migrate:up</code> 和 <code>db:migrate:down</code> 任务。只需指定版本，对应迁移就会调用它的 <code>change</code> 、<code>up</code> 或 <code>down</code> 方法，例如：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails db:migrate:up VERSION=20080906120000
+
+</pre>
+</div>
+<p>上面的命令会运行 <code>20080906120000</code> 这个迁移，调用它的 <code>change</code> 或 <code>up</code> 方法。<code>db:migrate:up</code> 任务会检查指定迁移是否已经运行过，如果已经运行过就不会执行任何操作。</p><p><a class="anchor" id="running-migrations-in-different-environments"></a></p><h4 id="running-migrations-in-different-environments">4.5 在不同环境中运行迁移</h4><p><code>bin/rails db:migrate</code> 任务默认在开发环境中运行迁移。要想在其他环境中运行迁移，可以在执行任务时使用 <code>RAILS_ENV</code> 环境变量说明所需环境。例如，要想在测试环境中运行迁移，可以执行下面的命令：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails db:migrate RAILS_ENV=test
+
+</pre>
+</div>
+<p><a class="anchor" id="changing-the-output-of-running-migrations"></a></p><h4 id="changing-the-output-of-running-migrations">4.6 修改迁移运行时的输出</h4><p>运行迁移时，默认会输出正在进行的操作，以及操作所花费的时间。例如，创建数据表并添加索引的迁移在运行时会生成下面的输出：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+==  CreateProducts: migrating =================================================
+-- create_table(:products)
+   -&gt; 0.0028s
+==  CreateProducts: migrated (0.0028s) ========================================
+
+</pre>
+</div>
+<p>在迁移中提供了几种方法，允许我们修改迁移运行时的输出：</p><p>例如，下面的迁移：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class CreateProducts &lt; ActiveRecord::Migration[5.0]
+  def change
+    suppress_messages do
+      create_table :products do |t|
+        t.string :name
+        t.text :description
+        t.timestamps
+      end
+    end
+
+    say "Created a table"
+
+    suppress_messages {add_index :products, :name}
+    say "and an index!", true
+
+    say_with_time 'Waiting for a while' do
+      sleep 10
+      250
+    end
+  end
+end
+
+</pre>
+</div>
+<p>会生成下面的输出：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+==  CreateProducts: migrating =================================================
+-- Created a table
+   -&gt; and an index!
+-- Waiting for a while
+   -&gt; 10.0013s
+   -&gt; 250 rows
+==  CreateProducts: migrated (10.0054s) =======================================
+
+</pre>
+</div>
+<p>要是不想让 Active Record 生成任何输出，可以使用 <code>rails db:migrate VERBOSE=false</code>。</p><p><a class="anchor" id="changing-existing-migrations"></a></p><h3 id="changing-existing-migrations">5 修改现有的迁移</h3><p>在编写迁移时我们偶尔也会犯错误。如果已经运行过存在错误的迁移，那么直接修正迁移中的错误并重新运行这个迁移并不能解决问题：Rails 知道这个迁移已经运行过，因此执行 <code>rails db:migrate</code> 任务时不会执行任何操作。必须先回滚这个迁移（例如通过执行 <code>bin/rails db:rollback</code> 任务），再修正迁移中的错误，然后执行 <code>rails db:migrate</code> 任务来运行这个迁移的正确版本。</p><p>通常，直接修改现有的迁移不是个好主意。这样做会给我们和同事带来额外的工作量，如果这个迁移已经在生产服务器上运行过，还可能带来大麻烦。作为替代，可以编写一个新的迁移来执行我们想要的操作。修改还未提交到源代版本码控制系统（或者更一般地，还未传播到开发设备之外）的新生成的迁移是相对无害的。</p><p>在编写新的迁移来完全或部分撤销之前的迁移时，可以使用 <code>revert</code> 方法（请参阅前面 <a href="#reverting-previous-migrations">撤销之前的迁移</a>）。</p><p><a class="anchor" id="schema-dumping-and-you"></a></p><h3 id="schema-dumping-and-you">6 数据库模式转储</h3><p><a class="anchor" id="what-are-schema-files-for"></a></p><h4 id="what-are-schema-files-for">6.1 数据库模式文件有什么用？</h4><p>迁移尽管很强大，但并非数据库模式的可信来源。Active Record 通过检查数据库生成的 <code>db/schema.rb</code> 文件或 SQL 文件才是数据库模式的可信来源。这两个可信来源不应该被修改，它们仅用于表示数据库的当前状态。</p><p>当需要部署 Rails 应用的新实例时，不必把所有迁移重新运行一遍，直接加载当前数据库的模式文件要简单和快速得多。</p><p>例如，我们可以这样创建测试数据库：把当前的开发数据库转储为 <code>db/schema.rb</code> 或 <code>db/structure.sql</code> 文件，然后加载到测试数据库。</p><p>数据库模式文件还可以用于快速查看 Active Record 对象具有的属性。这些属性信息不仅在模型代码中找不到，而且经常分散在几个迁移文件中，还好在数据库模式文件中可以很容易地查看这些信息。<a href="https://github.com/ctran/annotate_models">annotate_models</a> gem 会在每个模型文件的顶部自动添加和更新注释，这些注释是对当前数据库模式的概述，如果需要可以使用这个 gem。</p><p><a class="anchor" id="types-of-schema-dumps"></a></p><h4 id="types-of-schema-dumps">6.2 数据库模式转储的类型</h4><p>数据库模式转储有两种方式，可以通过 <code>config/application.rb</code> 文件的 <code>config.active_record.schema_format</code> 选项来设置想要采用的方式，即 <code>:sql</code> 或 <code>:ruby</code>。</p><p>如果选择 <code>:ruby</code>，那么数据库模式会储存在 <code>db/schema.rb</code> 文件中。打开这个文件，会看到内容很多，就像一个巨大的迁移：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+ActiveRecord::Schema.define(version: 20080906171750) do
+  create_table "authors", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "products", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "part_number"
+  end
+end
+
+</pre>
+</div>
+<p>在很多情况下，我们看到的数据库模式文件就是上面这个样子。这个文件是通过检查数据库生成的，使用 <code>create_table</code>、<code>add_index</code> 等方法来表达数据库结构。这个文件是数据库无关的，因此可以加载到 Active Record 支持的任何一种数据库。如果想要分发使用多数据库的 Rails 应用，数据库无关这一特性就非常有用了。</p><p>尽管如此，<code>db/schema.rb</code> 在设计上也有所取舍：它不能表达数据库的特定项目，如触发器、存储过程或检查约束。尽管我们可以在迁移中执行定制的 SQL 语句，但是数据库模式转储工具无法从数据库中复原这些语句。如果我们使用了这类特性，就应该把数据库模式的格式设置为 <code>:sql</code>。</p><p>在把数据库模式转储到 <code>db/structure.sql</code> 文件时，我们不使用数据库模式转储工具，而是使用数据库特有的工具（通过执行 <code>db:structure:dump</code> 任务）。例如，对于 PostgreSQL，使用的是 <code>pg_dump</code> 实用程序。对于 MySQL 和 MariaDB，<code>db/structure.sql</code> 文件将包含各种数据表的 <code>SHOW CREATE TABLE</code> 语句的输出。</p><p>加载数据库模式实际上就是执行其中包含的 SQL 语句。根据定义，加载数据库模式会创建数据库结构的完美拷贝。<code>:sql</code> 格式的数据库模式，只能加载到和原有数据库类型相同的数据库，而不能加载到其他类型的数据库。</p><p><a class="anchor" id="schema-dumps-and-source-control"></a></p><h4 id="schema-dumps-and-source-control">6.3 数据库模式转储和源码版本控制</h4><p>数据库模式转储是数据库模式的可信来源，因此强烈建议将其纳入源码版本控制。</p><p><code>db/schema.rb</code> 文件包含数据库的当前版本号，这样可以确保在合并两个包含数据库模式文件的分支时会发生冲突。一旦出现这种情况，就需要手动解决冲突，保留版本较高的那个数据库模式文件。</p><p><a class="anchor" id="active-record-and-referential-integrity"></a></p><h3 id="active-record-and-referential-integrity">7 Active Record 和引用完整性</h3><p>Active Record 在模型而不是数据库中声明关联。因此，像触发器、约束这些依赖数据库的特性没有被大量使用。</p><p>验证，如 <code>validates :foreign_key, uniqueness: true</code>，是模型强制数据完整性的一种方式。在关联中设置 <code>:dependent</code> 选项，可以保证父对象删除后，子对象也会被删除。和其他应用层的操作一样，这些操作无法保证引用完整性，因此有些人会在数据库中使用<a href="#foreign-keys">外键约束</a>以加强数据完整性。</p><p>尽管 Active Record 并未提供用于直接处理这些特性的工具，但 <code>execute</code> 方法可以用于执行任意 SQL。</p><p><a class="anchor" id="migrations-and-seed-data"></a></p><h3 id="migrations-and-seed-data">8 迁移和种子数据</h3><p>Rails 迁移特性的主要用途是使用一致的进程调用修改数据库模式的命令。迁移还可以用于添加或修改数据。对于不能删除和重建的数据库，如生产数据库，这些功能非常有用。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class AddInitialProducts &lt; ActiveRecord::Migration[5.0]
+  def up
+    5.times do |i|
+      Product.create(name: "Product ##{i}", description: "A product.")
+    end
+  end
+
+  def down
+    Product.delete_all
+  end
+end
+
+</pre>
+</div>
+<p>使用 Rails 内置的“种子”特性可以快速简便地完成创建数据库后添加初始数据的任务。在开发和测试环境中，经常需要重新加载数据库，这时“种子”特性就更有用了。使用“种子”特性很容易，只要用 Ruby 代码填充 <code>db/seeds.rb</code> 文件，然后执行 <code>rails db:seed</code> 命令即可：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+5.times do |i|
+  Product.create(name: "Product ##{i}", description: "A product.")
+end
+
+</pre>
+</div>
+<p>相比之下，这种设置新建应用数据库的方法更加干净利落。</p>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

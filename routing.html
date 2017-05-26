@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Rails 路由全解 — Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="返回首页">Rails 指南</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>新手入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询接口</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入探索</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">Rails 应用测试指南</a></dd>
+                <dd><a href="security.html">Ruby on Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器和模板</a></dd>
+                <dt>为 Ruby on Rails 做贡献</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档指导方针</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">Ruby on Rails 的维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布记</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="新手入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询接口</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入探索">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">Rails 应用测试指南</option>
+                  <option value="security.html">Ruby on Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器和模板</option>
+              </optgroup>
+              <optgroup label="为 Ruby on Rails 做贡献">
+                  <option value="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</option>
+                  <option value="api_documentation_guidelines.html">API 文档指导方针</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">Ruby on Rails 的维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布记</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Rails 路由全解</h2><p>本文介绍 Rails 路由面向用户的特性。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li>  如何理解 <code>config/routes.rb</code> 文件中的代码；</li>
+<li>  如何使用推荐的资源式风格或 <code>match</code> 方法构建路由；</li>
+<li>  如何声明传给控制器动作的路由参数；</li>
+<li>  如何使用路由辅助方法自动创建路径和 URL 地址；</li>
+<li>  创建约束和挂载 Rack 端点等高级技术。</li>
+</ul>
+
+
+              <div id="subCol">
+          <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />目录</h3>
+          <ol class="chapters">
+<li>
+<a href="#the-purpose-of-the-rails-router">Rails 路由的用途</a>
+
+<ul>
+<li><a href="#connecting-urls-to-code">把 URL 地址连接到代码</a></li>
+<li><a href="#generating-paths-and-urls-from-code">从代码生成路径和 URL 地址</a></li>
+</ul>
+</li>
+<li>
+<a href="#resource-routing-the-rails-default">资源路由：Rails 的默认风格</a>
+
+<ul>
+<li><a href="#resources-on-the-web">网络资源</a></li>
+<li><a href="#crud-verbs-and-actions">CRUD、HTTP 方法和控制器动作</a></li>
+<li><a href="#path-and-url-helpers">用于生成路径和 URL 地址的辅助方法</a></li>
+<li><a href="#defining-multiple-resources-at-the-same-time">同时定义多个资源</a></li>
+<li><a href="#singular-resources">单数资源</a></li>
+<li><a href="#controller-namespaces-and-routing">控制器命名空间和路由</a></li>
+<li><a href="#nested-resources">嵌套资源</a></li>
+<li><a href="#routing-concerns">路由 concern</a></li>
+<li><a href="#creating-paths-and-urls-from-objects">从对象创建路径和 URL 地址</a></li>
+<li><a href="#adding-more-restful-actions">添加更多 REST 式动作</a></li>
+</ul>
+</li>
+<li>
+<a href="#non-resourceful-routes">非资源式路由</a>
+
+<ul>
+<li><a href="#bound-parameters">绑定参数</a></li>
+<li><a href="#dynamic-segments">动态片段</a></li>
+<li><a href="#static-segments">静态片段</a></li>
+<li><a href="#the-query-string">查询字符串</a></li>
+<li><a href="#defining-defaults">定义默认值</a></li>
+<li><a href="#naming-routes">为路由命名</a></li>
+<li><a href="#http-verb-constraints">HTTP 方法约束</a></li>
+<li><a href="#segment-constraints">片段约束</a></li>
+<li><a href="#request-based-constraints">请求约束</a></li>
+<li><a href="#advanced-constraints">高级约束</a></li>
+<li><a href="#route-globbing-and-wildcard-segments">路由通配符和通配符片段</a></li>
+<li><a href="#redirection">重定向</a></li>
+<li><a href="#routing-to-rack-applications">映射到 Rack 应用的路由</a></li>
+<li><a href="#using-root">使用 <code>root</code> 方法</a></li>
+<li><a href="#unicode-character-routes">Unicode 字符路由</a></li>
+</ul>
+</li>
+<li>
+<a href="#customizing-resourceful-routes">自定义资源路由</a>
+
+<ul>
+<li><a href="#specifying-a-ontroller-to-use">指定控制器</a></li>
+<li><a href="#specifying-constraints">指定约束</a></li>
+<li><a href="#overriding-the-named-helpers">覆盖具名路由辅助方法</a></li>
+<li><a href="#overriding-the-new-and-edit-segments">覆盖 <code>new</code> 和 <code>edit</code> 片段</a></li>
+<li><a href="#prefixing-the-named-route-helpers">为具名路由辅助方法添加前缀</a></li>
+<li><a href="#restricting-the-routes-created">限制所创建的路由</a></li>
+<li><a href="#translated-paths">本地化路径</a></li>
+<li><a href="#overriding-the-singular-form">覆盖资源的单数形式</a></li>
+<li><a href="#using-as-in-nested-resources">在嵌套资源中使用 <code>:as</code> 选项</a></li>
+<li><a href="#overriding-named-route-parameters">覆盖具名路由的参数</a></li>
+</ul>
+</li>
+<li>
+<a href="#inspecting-and-testing-routes">审查和测试路由</a>
+
+<ul>
+<li><a href="#listing-existing-routes">列出现有路由</a></li>
+<li><a href="#testing-routes">测试路由</a></li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <p><a class="anchor" id="the-purpose-of-the-rails-router"></a></p><h3 id="the-purpose-of-the-rails-router">1 Rails 路由的用途</h3><p>Rails 路由能够识别 URL 地址，并把它们分派给控制器动作或 Rack 应用进行处理。它还能生成路径和 URL 地址，从而避免在视图中硬编码字符串。</p><p><a class="anchor" id="connecting-urls-to-code"></a></p><h4 id="connecting-urls-to-code">1.1 把 URL 地址连接到代码</h4><p>当 Rails 应用收到下面的请求时：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+GET /patients/17
+
+</pre>
+</div>
+<p>会查询路由，找到匹配的控制器动作。如果第一个匹配的路由是：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get '/patients/:id', to: 'patients#show'
+
+</pre>
+</div>
+<p>该请求会被分派给 <code>patients</code> 控制器的 <code>show</code> 动作，同时把 <code>{ id: '17' }</code> 传入 <code>params</code>。</p><p><a class="anchor" id="generating-paths-and-urls-from-code"></a></p><h4 id="generating-paths-and-urls-from-code">1.2 从代码生成路径和 URL 地址</h4><p>Rails 路由还可以生成路径和 URL 地址。如果把上面的路由修改为：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get '/patients/:id', to: 'patients#show', as: 'patient'
+
+</pre>
+</div>
+<p>并且在控制器中包含下面的代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+@patient = Patient.find(17)
+
+</pre>
+</div>
+<p>同时在对应的视图中包含下面的代码：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= link_to 'Patient Record', patient_path(@patient) %&gt;
+
+</pre>
+</div>
+<p>那么路由会生成路径 <code>/patients/17</code>。这种方式使视图代码更容易维护和理解。注意，在路由辅助方法中不需要指定 ID。</p><p><a class="anchor" id="resource-routing-the-rails-default"></a></p><h3 id="resource-routing-the-rails-default">2 资源路由：Rails 的默认风格</h3><p>资源路由（resource routing）允许我们为资源式控制器快速声明所有常见路由。只需一行代码即可完成资源路由的声明，无需为 <code>index</code>、<code>show</code>、<code>new</code>、<code>edit</code>、<code>create</code>、<code>update</code> 和 <code>destroy</code> 动作分别声明路由。</p><p><a class="anchor" id="resources-on-the-web"></a></p><h4 id="resources-on-the-web">2.1 网络资源</h4><p>浏览器使用特定的 HTTP 方法向 Rails 应用请求页面，例如 <code>GET</code>、<code>POST</code>、<code>PATCH</code>、<code>PUT</code> 和 <code>DELETE</code>。每个 HTTP 方法对应对资源的一种操作。资源路由会把多个相关请求映射到单个控制器的不同动作上。</p><p>当 Rails 应用收到下面的请求：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+DELETE /photos/17
+
+</pre>
+</div>
+<p>会查询路由，并把请求映射到控制器动作上。如果第一个匹配的路由是：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :photos
+
+</pre>
+</div>
+<p>Rails 会把请求分派给 <code>photos</code> 控制器的 <code>destroy</code> 动作，并把 <code>{ id: '17' }</code> 传入 <code>params</code>。</p><p><a class="anchor" id="crud-verbs-and-actions"></a></p><h4 id="crud-verbs-and-actions">2.2 CRUD、HTTP 方法和控制器动作</h4><p>在 Rails 中，资源路由把 HTTP 方法和 URL 地址映射到控制器动作上。按照约定，每个控制器动作也会映射到对应的数据库 CRUD 操作上。路由文件中的单行声明，例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :photos
+
+</pre>
+</div>
+<p>会在应用中创建 7 个不同的路由，这些路由都会映射到 <code>Photos</code> 控制器上。</p>
+<table>
+<thead>
+<tr>
+<th>HTTP 方法</th>
+<th>路径</th>
+<th>控制器#动作</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/photos</code></td>
+<td><code>photos#index</code></td>
+<td>显示所有照片的列表</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/photos/new</code></td>
+<td><code>photos#new</code></td>
+<td>返回用于新建照片的 HTML 表单</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/photos</code></td>
+<td><code>photos#create</code></td>
+<td>新建照片</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/photos/:id</code></td>
+<td><code>photos#show</code></td>
+<td>显示指定照片</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/photos/:id/edit</code></td>
+<td><code>photos#edit</code></td>
+<td>返回用于修改照片的 HTML 表单</td>
+</tr>
+<tr>
+<td>
+<code>PATCH</code>/<code>PUT</code>
+</td>
+<td><code>/photos/:id</code></td>
+<td><code>photos#update</code></td>
+<td>更新指定照片</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/photos/:id</code></td>
+<td><code>photos#destroy</code></td>
+<td>删除指定照片</td>
+</tr>
+</tbody>
+</table>
+<div class="note"><p>因为路由使用 HTTP 方法和 URL 地址来匹配请求，所以 4 个 URL 地址会映射到 7 个不同的控制器动作上。</p></div><div class="note"><p>Rails 路由按照声明顺序进行匹配。如果 <code>resources :photos</code> 声明在先，<code>get 'photos/poll'</code> 声明在后，那么由前者声明的 <code>show</code> 动作的路由会先于后者匹配。要想匹配 <code>get 'photos/poll'</code>，就必须将其移到 <code>resources :photos</code> 之前。</p></div><p><a class="anchor" id="path-and-url-helpers"></a></p><h4 id="path-and-url-helpers">2.3 用于生成路径和 URL 地址的辅助方法</h4><p>在创建资源路由时，会同时创建多个可以在控制器中使用的辅助方法。例如，在创建 <code>resources :photos</code> 路由时，会同时创建下面的辅助方法：</p>
+<ul>
+<li>  <code>photos_path</code> 辅助方法，返回值为 <code>/photos</code>
+</li>
+<li>  <code>new_photo_path</code> 辅助方法，返回值为 <code>/photos/new</code>
+</li>
+<li>  <code>edit_photo_path(:id)</code> 辅助方法，返回值为 <code>/photos/:id/edit</code>（例如，<code>edit_photo_path(10)</code> 的返回值为 <code>/photos/10/edit</code>）</li>
+<li>  <code>photo_path(:id)</code> 辅助方法，返回值为 <code>/photos/:id</code>（例如，<code>photo_path(10)</code> 的返回值为 <code>/photos/10</code>）</li>
+</ul>
+<p>这些辅助方法都有对应的 <code>_url</code> 形式（例如 <code>photos_url</code>）。前者的返回值是路径，后者的返回值是路径加上由当前的主机名、端口和路径前缀组成的前缀。</p><p><a class="anchor" id="defining-multiple-resources-at-the-same-time"></a></p><h4 id="defining-multiple-resources-at-the-same-time">2.4 同时定义多个资源</h4><p>如果需要为多个资源创建路由，可以只调用一次 <code>resources</code> 方法，节约一点敲键盘的时间。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :photos, :books, :videos
+
+</pre>
+</div>
+<p>上面的代码等价于：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :photos
+resources :books
+resources :videos
+
+</pre>
+</div>
+<p><a class="anchor" id="singular-resources"></a></p><h4 id="singular-resources">2.5 单数资源</h4><p>有时我们希望不使用 ID 就能查找资源。例如，让 <code>/profile</code> 总是显示当前登录用户的个人信息。这种情况下，我们可以使用单数资源来把 <code>/profile</code> 而不是 <code>/profile/:id</code> 映射到 <code>show</code> 动作：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'profile', to: 'users#show'
+
+</pre>
+</div>
+<p>如果 <code>get</code> 方法的 <code>to</code> 选项的值是字符串，那么这个字符串应该使用 <code>controller#action</code> 格式。如果 <code>to</code> 选项的值是表示动作的符号，那么还需要使用 <code>controller</code> 选项指定控制器：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'profile', to: :show, controller: 'users'
+
+</pre>
+</div>
+<p>下面的资源路由：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resource :geocoder
+
+</pre>
+</div>
+<p>会在应用中创建 6 个不同的路由，这些路由会映射到 <code>Geocoders</code> 控制器的动作上：</p>
+<table>
+<thead>
+<tr>
+<th>HTTP 方法</th>
+<th>路径</th>
+<th>控制器#动作</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/geocoder/new</code></td>
+<td><code>geocoders#new</code></td>
+<td>返回用于创建 geocoder 的 HTML 表单</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/geocoder</code></td>
+<td><code>geocoders#create</code></td>
+<td>新建 geocoder</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/geocoder</code></td>
+<td><code>geocoders#show</code></td>
+<td>显示唯一的 geocoder 资源</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/geocoder/edit</code></td>
+<td><code>geocoders#edit</code></td>
+<td>返回用于修改 geocoder 的 HTML 表单</td>
+</tr>
+<tr>
+<td>
+<code>PATCH</code>/<code>PUT</code>
+</td>
+<td><code>/geocoder</code></td>
+<td><code>geocoders#update</code></td>
+<td>更新唯一的 geocoder 资源</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/geocoder</code></td>
+<td><code>geocoders#destroy</code></td>
+<td>删除 geocoder 资源</td>
+</tr>
+</tbody>
+</table>
+<div class="note"><p>有时我们想要用同一个控制器处理单数路由（如 <code>/account</code>）和复数路由（如 <code>/accounts/45</code>），也就是把单数资源映射到复数资源对应的控制器上。例如，<code>resource :photo</code> 创建的单数路由和 <code>resources :photos</code> 创建的复数路由都会映射到相同的 <code>Photos</code> 控制器上。</p></div><p>在创建单数资源路由时，会同时创建下面的辅助方法：</p>
+<ul>
+<li>  <code>new_geocoder_path</code> 辅助方法，返回值是 <code>/geocoder/new</code>
+</li>
+<li>  <code>edit_geocoder_path</code> 辅助方法，返回值是 <code>/geocoder/edit</code>
+</li>
+<li>  <code>geocoder_path</code> 辅助方法，返回值是 <code>/geocoder</code>
+</li>
+</ul>
+<p>和创建复数资源路由时一样，上面这些辅助方法都有对应的 <code>_url</code> 形式，其返回值也包含了主机名、端口和路径前缀。</p><div class="warning"><p>有一个长期存在的缺陷使 <code>form_for</code> 辅助方法无法自动处理单数资源。有一个解决方案是直接指定表单 URL，例如：</p></div><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+form_for @geocoder, url: geocoder_path do |f|
+
+# 为了行文简洁，省略以下内容
+
+</pre>
+</div>
+<p><a class="anchor" id="controller-namespaces-and-routing"></a></p><h4 id="controller-namespaces-and-routing">2.6 控制器命名空间和路由</h4><p>有时我们会把一组控制器放入同一个命名空间中。最常见的例子，是把和管理相关的控制器放入 <code>Admin::</code> 命名空间中。为此，我们可以把控制器文件放在 <code>app/controllers/admin</code> 文件夹中，然后在路由文件中作如下声明：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+namespace :admin do
+  resources :articles, :comments
+end
+
+</pre>
+</div>
+<p>上面的代码会为 <code>articles</code> 和 <code>comments</code> 控制器分别创建多个路由。对于 <code>Admin::Articles</code> 控制器，Rails 会创建下列路由：</p>
+<table>
+<thead>
+<tr>
+<th>HTTP 方法</th>
+<th>路径</th>
+<th>控制器#动作</th>
+<th>具名辅助方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/admin/articles</code></td>
+<td><code>admin/articles#index</code></td>
+<td><code>admin_articles_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/admin/articles/new</code></td>
+<td><code>admin/articles#new</code></td>
+<td><code>new_admin_article_path</code></td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/admin/articles</code></td>
+<td><code>admin/articles#create</code></td>
+<td><code>admin_articles_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/admin/articles/:id</code></td>
+<td><code>admin/articles#show</code></td>
+<td><code>admin_article_path(:id)</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/admin/articles/:id/edit</code></td>
+<td><code>admin/articles#edit</code></td>
+<td><code>edit_admin_article_path(:id)</code></td>
+</tr>
+<tr>
+<td>
+<code>PATCH</code>/<code>PUT</code>
+</td>
+<td><code>/admin/articles/:id</code></td>
+<td><code>admin/articles#update</code></td>
+<td><code>admin_article_path(:id)</code></td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/admin/articles/:id</code></td>
+<td><code>admin/articles#destroy</code></td>
+<td><code>admin_article_path(:id)</code></td>
+</tr>
+</tbody>
+</table>
+<p>如果想把 <code>/articles</code> 路径（不带 <code>/admin</code> 前缀） 映射到 <code>Admin::Articles</code> 控制器上，可以这样声明：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+scope module: 'admin' do
+  resources :articles, :comments
+end
+
+</pre>
+</div>
+<p>对于单个资源的情况，还可以这样声明：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :articles, module: 'admin'
+
+</pre>
+</div>
+<p>如果想把 <code>/admin/articles</code> 路径映射到 <code>Articles</code> 控制器上（不带 <code>Admin::</code> 前缀），可以这样声明：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+scope '/admin' do
+  resources :articles, :comments
+end
+
+</pre>
+</div>
+<p>对于单个资源的情况，还可以这样声明：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :articles, path: '/admin/articles'
+
+</pre>
+</div>
+<p>在上述各个例子中，不管是否使用了 <code>scope</code> 方法，具名路由都保持不变。在最后一个例子中，下列路径都会映射到 <code>Articles</code> 控制器上：</p>
+<table>
+<thead>
+<tr>
+<th>HTTP 方法</th>
+<th>路径</th>
+<th>控制器#动作</th>
+<th>具名辅助方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/admin/articles</code></td>
+<td><code>articles#index</code></td>
+<td><code>articles_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/admin/articles/new</code></td>
+<td><code>articles#new</code></td>
+<td><code>new_article_path</code></td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/admin/articles</code></td>
+<td><code>articles#create</code></td>
+<td><code>articles_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/admin/articles/:id</code></td>
+<td><code>articles#show</code></td>
+<td><code>article_path(:id)</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/admin/articles/:id/edit</code></td>
+<td><code>articles#edit</code></td>
+<td><code>edit_article_path(:id)</code></td>
+</tr>
+<tr>
+<td>
+<code>PATCH</code>/<code>PUT</code>
+</td>
+<td><code>/admin/articles/:id</code></td>
+<td><code>articles#update</code></td>
+<td><code>article_path(:id)</code></td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/admin/articles/:id</code></td>
+<td><code>articles#destroy</code></td>
+<td><code>article_path(:id)</code></td>
+</tr>
+</tbody>
+</table>
+<div class="note"><p>如果想在命名空间代码块中使用另一个控制器命名空间，可以指定控制器的绝对路径，例如 <code>get '/foo' =&gt; '/foo#index'</code>。</p></div><p><a class="anchor" id="nested-resources"></a></p><h4 id="nested-resources">2.7 嵌套资源</h4><p>有的资源是其他资源的子资源，这种情况很常见。例如，假设我们的应用中包含下列模型：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Magazine &lt; ApplicationRecord
+  has_many :ads
+end
+
+class Ad &lt; ApplicationRecord
+  belongs_to :magazine
+end
+
+</pre>
+</div>
+<p>通过嵌套路由，我们可以在路由中反映模型关联。在本例中，我们可以这样声明路由：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :magazines do
+  resources :ads
+end
+
+</pre>
+</div>
+<p>上面的代码不仅为 <code>magazines</code> 创建了路由，还创建了映射到 <code>Ads</code> 控制器的路由。在 <code>ad</code> 的 URL 地址中，需要指定对应的 <code>magazine</code> 的 ID：</p>
+<table>
+<thead>
+<tr>
+<th>HTTP 方法</th>
+<th>路径</th>
+<th>控制器#动作</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/magazines/:magazine_id/ads</code></td>
+<td><code>ads#index</code></td>
+<td>显示指定杂志的所有广告的列表</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/magazines/:magazine_id/ads/new</code></td>
+<td><code>ads#new</code></td>
+<td>返回为指定杂志新建广告的 HTML 表单</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/magazines/:magazine_id/ads</code></td>
+<td><code>ads#create</code></td>
+<td>为指定杂志新建广告</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/magazines/:magazine_id/ads/:id</code></td>
+<td><code>ads#show</code></td>
+<td>显示指定杂志的指定广告</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/magazines/:magazine_id/ads/:id/edit</code></td>
+<td><code>ads#edit</code></td>
+<td>返回用于修改指定杂志的广告的 HTML 表单</td>
+</tr>
+<tr>
+<td>
+<code>PATCH</code>/<code>PUT</code>
+</td>
+<td><code>/magazines/:magazine_id/ads/:id</code></td>
+<td><code>ads#update</code></td>
+<td>更新指定杂志的指定广告</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/magazines/:magazine_id/ads/:id</code></td>
+<td><code>ads#destroy</code></td>
+<td>删除指定杂志的指定广告</td>
+</tr>
+</tbody>
+</table>
+<p>在创建路由的同时，还会创建 <code>magazine_ads_url</code> 和 <code>edit_magazine_ad_path</code> 等路由辅助方法。这些辅助方法以 <code>Magazine</code> 类的实例作为第一个参数，例如 <code>magazine_ads_url(@magazine)</code>。</p><p><a class="anchor" id="limits-to-nesting"></a></p><h5 id="limits-to-nesting">2.7.1 嵌套限制</h5><p>我们可以在嵌套资源中继续嵌套资源。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :publishers do
+  resources :magazines do
+    resources :photos
+  end
+end
+
+</pre>
+</div>
+<p>随着嵌套层级的增加，嵌套资源的处理会变得很困难。例如，下面这个路径：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+/publishers/1/magazines/2/photos/3
+
+</pre>
+</div>
+<p>对应的路由辅助方法是 <code>publisher_magazine_photo_url</code>，需要指定三层对象。这种用法很容易就把人搞糊涂了，为此，Jamis Buck 在<a href="http://weblog.jamisbuck.org/2007/2/5/nesting-resources">一篇广为流传的文章</a>中提出了使用嵌套路由的经验法则：</p><div class="info"><p>嵌套资源的层级不应超过 1 层。</p></div><p><a class="anchor" id="shallow-nesting"></a></p><h5 id="shallow-nesting">2.7.2 浅层嵌套</h5><p>如前文所述，避免深层嵌套（deep nesting）的方法之一，是把动作集合放在在父资源中，这样既可以表明层级关系，又不必嵌套成员动作。换句话说，只用最少的信息创建路由，同样可以唯一地标识资源，例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :articles do
+  resources :comments, only: [:index, :new, :create]
+end
+resources :comments, only: [:show, :edit, :update, :destroy]
+
+</pre>
+</div>
+<p>这种方式在描述性路由（descriptive route）和深层嵌套之间取得了平衡。上面的代码还有简易写法，即使用 <code>:shallow</code> 选项：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :articles do
+  resources :comments, shallow: true
+end
+
+</pre>
+</div>
+<p>这两种写法创建的路由完全相同。我们还可以在父资源中使用 <code>:shallow</code> 选项，这样会在所有嵌套的子资源中应用 <code>:shallow</code> 选项：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :articles, shallow: true do
+  resources :comments
+  resources :quotes
+  resources :drafts
+end
+
+</pre>
+</div>
+<p>可以用 <code>shallow</code> 方法创建作用域，使其中的所有嵌套都成为浅层嵌套。通过这种方式创建的路由，仍然和上面的例子相同：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+shallow do
+  resources :articles do
+    resources :comments
+    resources :quotes
+    resources :drafts
+  end
+end
+
+</pre>
+</div>
+<p><code>scope</code> 方法有两个选项用于自定义浅层路由。<code>:shallow_path</code> 选项会为成员路径添加指定前缀：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+scope shallow_path: "sekret" do
+  resources :articles do
+    resources :comments, shallow: true
+  end
+end
+
+</pre>
+</div>
+<p>上面的代码会为 <code>comments</code> 资源生成下列路由：</p>
+<table>
+<thead>
+<tr>
+<th>HTTP 方法</th>
+<th>路径</th>
+<th>控制器#动作</th>
+<th>具名辅助方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/articles/:article_id/comments(.:format)</code></td>
+<td><code>comments#index</code></td>
+<td><code>article_comments_path</code></td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/articles/:article_id/comments(.:format)</code></td>
+<td><code>comments#create</code></td>
+<td><code>article_comments_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/articles/:article_id/comments/new(.:format)</code></td>
+<td><code>comments#new</code></td>
+<td><code>new_article_comment_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/sekret/comments/:id/edit(.:format)</code></td>
+<td><code>comments#edit</code></td>
+<td><code>edit_comment_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/sekret/comments/:id(.:format)</code></td>
+<td><code>comments#show</code></td>
+<td><code>comment_path</code></td>
+</tr>
+<tr>
+<td>
+<code>PATCH</code>/<code>PUT</code>
+</td>
+<td><code>/sekret/comments/:id(.:format)</code></td>
+<td><code>comments#update</code></td>
+<td><code>comment_path</code></td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/sekret/comments/:id(.:format)</code></td>
+<td><code>comments#destroy</code></td>
+<td><code>comment_path</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>:shallow_prefix</code> 选项会为具名辅助方法添加指定前缀：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+scope shallow_prefix: "sekret" do
+  resources :articles do
+    resources :comments, shallow: true
+  end
+end
+
+</pre>
+</div>
+<p>上面的代码会为 <code>comments</code> 资源生成下列路由：</p>
+<table>
+<thead>
+<tr>
+<th>HTTP 方法</th>
+<th>路径</th>
+<th>控制器#动作</th>
+<th>具名辅助方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/articles/:article_id/comments(.:format)</code></td>
+<td><code>comments#index</code></td>
+<td><code>article_comments_path</code></td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/articles/:article_id/comments(.:format)</code></td>
+<td><code>comments#create</code></td>
+<td><code>article_comments_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/articles/:article_id/comments/new(.:format)</code></td>
+<td><code>comments#new</code></td>
+<td><code>new_article_comment_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/comments/:id/edit(.:format)</code></td>
+<td><code>comments#edit</code></td>
+<td><code>edit_sekret_comment_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/comments/:id(.:format)</code></td>
+<td><code>comments#show</code></td>
+<td><code>sekret_comment_path</code></td>
+</tr>
+<tr>
+<td>
+<code>PATCH</code>/<code>PUT</code>
+</td>
+<td><code>/comments/:id(.:format)</code></td>
+<td><code>comments#update</code></td>
+<td><code>sekret_comment_path</code></td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/comments/:id(.:format)</code></td>
+<td><code>comments#destroy</code></td>
+<td><code>sekret_comment_path</code></td>
+</tr>
+</tbody>
+</table>
+<p><a class="anchor" id="routing-concerns"></a></p><h4 id="routing-concerns">2.8 路由 concern</h4><p>路由 concern 用于声明公共路由，公共路由可以在其他资源和路由中重复使用。定义路由 concern 的方式如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+concern :commentable do
+  resources :comments
+end
+
+concern :image_attachable do
+  resources :images, only: :index
+end
+
+</pre>
+</div>
+<p>我们可以在资源中使用已定义的路由 concern，以避免代码重复，并在路由间共享行为：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :messages, concerns: :commentable
+
+resources :articles, concerns: [:commentable, :image_attachable]
+
+</pre>
+</div>
+<p>上面的代码等价于：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :messages do
+  resources :comments
+end
+
+resources :articles do
+  resources :comments
+  resources :images, only: :index
+end
+
+</pre>
+</div>
+<p>我们还可以在各种路由声明中使用已定义的路由 concern，例如在作用域或命名空间中：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+namespace :articles do
+  concerns :commentable
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="creating-paths-and-urls-from-objects"></a></p><h4 id="creating-paths-and-urls-from-objects">2.9 从对象创建路径和 URL 地址</h4><p>除了使用路由辅助方法，Rails 还可以从参数数组创建路径和 URL 地址。例如，假设有下面的路由：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :magazines do
+  resources :ads
+end
+
+</pre>
+</div>
+<p>在使用 <code>magazine_ad_path</code> 方法时，我们可以传入 <code>Magazine</code> 和 <code>Ad</code> 的实例，而不是数字 ID：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= link_to 'Ad details', magazine_ad_path(@magazine, @ad) %&gt;
+
+</pre>
+</div>
+<p>我们还可以在使用 <code>url_for</code> 方法时传入一组对象，Rails 会自动确定对应的路由：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= link_to 'Ad details', url_for([@magazine, @ad]) %&gt;
+
+</pre>
+</div>
+<p>在这种情况下，Rails 知道 <code>@magazine</code> 是 <code>Magazine</code> 的实例，而 <code>@ad</code> 是 <code>Ad</code> 的实例，因此会使用 <code>magazine_ad_path</code> 辅助方法。在使用 <code>link_to</code> 等辅助方法时，我们可以只指定对象，而不必完整调用 <code>url_for</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= link_to 'Ad details', [@magazine, @ad] %&gt;
+
+</pre>
+</div>
+<p>如果想链接到一本杂志，可以直接指定 <code>Magazine</code> 的实例：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= link_to 'Magazine details', @magazine %&gt;
+
+</pre>
+</div>
+<p>如果想链接到其他控制器动作，只需把动作名称作为第一个元素插入对象数组即可：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= link_to 'Edit Ad', [:edit, @magazine, @ad] %&gt;
+
+</pre>
+</div>
+<p>这样，我们就可以把模型实例看作 URL 地址，这是使用资源式风格最关键的优势之一。</p><p><a class="anchor" id="adding-more-restful-actions"></a></p><h4 id="adding-more-restful-actions">2.10 添加更多 REST 式动作</h4><p>我们可以使用的路由，并不仅限于 REST 式路由默认创建的那 7 个。我们可以根据需要添加其他路由，包括集合路由（collection route）和成员路由（member route）。</p><p><a class="anchor" id="adding-member-routes"></a></p><h5 id="adding-member-routes">2.10.1 添加成员路由</h5><p>要添加成员路由，只需在 <code>resource</code> 块中添加 <code>member</code> 块：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :photos do
+  member do
+    get 'preview'
+  end
+end
+
+</pre>
+</div>
+<p>通过上述声明，Rails 路由能够识别 <code>/photos/1/preview</code> 路径上的 <code>GET</code> 请求，并把请求映射到 <code>Photos</code> 控制器的 <code>preview</code> 动作上，同时把资源 ID 传入 <code>params[:id]</code>，并创建 <code>preview_photo_url</code> 和 <code>preview_photo_path</code> 辅助方法。</p><p>在 <code>member</code> 块中，每个成员路由都要指定对应的 HTTP 方法，即 <code>get</code>、<code>patch</code>、<code>put</code>、<code>post</code> 或 <code>delete</code>。如果只有一个成员路由，我们就可以忽略 <code>member</code> 块，直接使用成员路由的 <code>:on</code> 选项。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :photos do
+  get 'preview', on: :member
+end
+
+</pre>
+</div>
+<p>如果不使用 <code>:on</code> 选项，创建的成员路由也是相同的，但资源 ID 就必须通过 <code>params[:photo_id]</code> 而不是 <code>params[:id]</code> 来获取了。</p><p><a class="anchor" id="adding-collection-routes"></a></p><h5 id="adding-collection-routes">2.10.2 添加集合路由</h5><p>添加集合路由的方式如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :photos do
+  collection do
+    get 'search'
+  end
+end
+
+</pre>
+</div>
+<p>通过上述声明，Rails 路由能够识别 <code>/photos/search</code> 路径上的 <code>GET</code> 请求，并把请求映射到 <code>Photos</code> 控制器的 <code>search</code> 动作上，同时创建 <code>search_photos_url</code> 和 <code>search_photos_path</code> 辅助方法。</p><p>和成员路由一样，我们可以使用集合路由的 <code>:on</code> 选项：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :photos do
+  get 'search', on: :collection
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="adding-routes-for-additional-new-actions"></a></p><h5 id="adding-routes-for-additional-new-actions">2.10.3 为附加的 <code>new</code> 动作添加路由</h5><p>我们可以通过 <code>:on</code> 选项，为附加的 <code>new</code> 动作添加路由：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :comments do
+  get 'preview', on: :new
+end
+
+</pre>
+</div>
+<p>通过上述声明，Rails 路由能够识别 <code>/comments/new/preview</code> 路径上的 <code>GET</code> 请求，并把请求映射到 <code>Comments</code> 控制器的 <code>preview</code> 动作上，同时创建 <code>preview_new_comment_url</code> 和 <code>preview_new_comment_path</code> 辅助方法。</p><div class="note"><p>如果我们为资源路由添加了过多动作，就需要考虑一下，是不是应该声明新资源了。</p></div><p><a class="anchor" id="non-resourceful-routes"></a></p><h3 id="non-resourceful-routes">3 非资源式路由</h3><p>除了资源路由之外，对于把任意 URL 地址映射到控制器动作的路由，Rails 也提供了强大的支持。和资源路由自动生成一系列路由不同，这时我们需要分别声明各个路由。</p><p>尽管我们通常会使用资源路由，但在一些情况下，使用简单路由更为合适。对于不适合使用资源路由的情况，我们也不必强迫自己使用资源路由。</p><p>对于把旧系统的 URL 地址映射到新 Rails 应用上的情况，简单路由特别适用。</p><p><a class="anchor" id="bound-parameters"></a></p><h4 id="bound-parameters">3.1 绑定参数</h4><p>在声明普通路由时，我们可以使用符号，将其作为 HTTP 请求的一部分。例如，下面的路由：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'photos(/:id)', to: :display
+
+</pre>
+</div>
+<p>在处理 <code>/photos/1</code> 请求时（假设这个路由是第一个匹配的路由），会把请求映射到 <code>Photos</code> 控制器的 <code>display</code> 动作上，并把参数 1 传入 <code>params[:id]</code>。而 <code>/photos</code> 请求，也会被这个路由映射到 <code>PhotosController#display</code> 上，因为 <code>:id</code> 在括号中，是可选参数。</p><p><a class="anchor" id="dynamic-segments"></a></p><h4 id="dynamic-segments">3.2 动态片段</h4><p>在声明普通路由时，我们可以根据需要使用多个动态片段（dynamic segment）。动态片段会传入 <code>params</code>，以便在控制器动作中使用。例如，对于下面的路由：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'photos/:id/:user_id', to: 'photos#show'
+
+</pre>
+</div>
+<p><code>/photos/1/2</code> 路径会被映射到 <code>Photos</code> 控制器的 <code>show</code> 动作上。此时，<code>params[:id]</code> 的值是 <code>"1"</code>，<code>params[:user_id]</code> 的值是 <code>"2"</code>。</p><div class="info"><p>默认情况下，在动态片段中不能使用小圆点（<code>.</code>），因为小圆点是格式化路由（formatted route）的分隔符。如果想在动态片段中使用小圆点，可以通过添加约束来实现相同效果，例如，<code>id: /[^\/]+/</code> 可以匹配除斜线外的一个或多个字符。</p></div><p><a class="anchor" id="static-segments"></a></p><h4 id="static-segments">3.3 静态片段</h4><p>在创建路由时，我们可以用不带冒号的片段来指定静态片段（static segment）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'photos/:id/with_user/:user_id', to: 'photos#show'
+
+</pre>
+</div>
+<p>这个路由可以响应像 <code>/photos/1/with_user/2</code> 这样的路径，此时，<code>params</code> 的值为 <code>{ controller: 'photos', action: 'show', id: '1', user_id: '2' }</code>。</p><p><a class="anchor" id="the-query-string"></a></p><h4 id="the-query-string">3.4 查询字符串</h4><p><code>params</code> 也包含了查询字符串中的所有参数。例如，对于下面的路由：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'photos/:id', to: 'photos#show'
+
+</pre>
+</div>
+<p><code>/photos/1?user_id=2</code> 路径会被映射到 <code>Photos</code> 控制器的 <code>show</code> 动作上，此时，<code>params</code> 的值是 <code>{ controller: 'photos', action: 'show', id: '1', user_id: '2' }</code>。</p><p><a class="anchor" id="defining-defaults"></a></p><h4 id="defining-defaults">3.5 定义默认值</h4><p><code>:defaults</code> 选项设定的散列为路由定义默认值。未通过动态片段定义的参数也可以指定默认值。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'photos/:id', to: 'photos#show', defaults: { format: 'jpg' }
+
+</pre>
+</div>
+<p>Rails 会把 <code>/photos/12</code> 路径映射到 <code>Photos</code> 控制器的 <code>show</code> 动作上，并把 <code>params[:format]</code> 设为 <code>"jpg"</code>。</p><p><code>defaults</code> 还有块的形式，可为多个路由定义默认值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+defaults format: :json do
+  resources :photos
+end
+
+</pre>
+</div>
+<div class="note"><p>出于安全考虑，Rails 不允许用查询参数来覆盖默认值。只有一种情况下可以覆盖默认值，即通过 URL 路径替换来覆盖动态片段。</p></div><p><a class="anchor" id="naming-routes"></a></p><h4 id="naming-routes">3.6 为路由命名</h4><p>通过 <code>:as</code> 选项，我们可以为路由命名：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'exit', to: 'sessions#destroy', as: :logout
+
+</pre>
+</div>
+<p>这个路由声明会创建 <code>logout_path</code> 和 <code>logout_url</code> 具名辅助方法。其中，<code>logout_path</code> 辅助方法的返回值是 <code>/exit</code>。</p><p>通过为路由命名，我们还可以覆盖由资源路由定义的路由辅助方法，例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get ':username', to: 'users#show', as: :user
+
+</pre>
+</div>
+<p>这个路由声明会定义 <code>user_path</code> 辅助方法，此方法可以在控制器、辅助方法和视图中使用，其返回值类似 <code>/bob</code>。在 <code>Users</code> 控制器的 <code>show</code> 动作中，<code>params[:username]</code> 的值是用户名。如果不想使用 <code>:username</code> 作为参数名，可以在路由声明中把 <code>:username</code> 改为其他名字。</p><p><a class="anchor" id="http-verb-constraints"></a></p><h4 id="http-verb-constraints">3.7 HTTP 方法约束</h4><p>通常，我们应该使用 <code>get</code>、<code>post</code>、<code>put</code>、<code>patch</code> 和 <code>delete</code> 方法来约束路由可以匹配的 HTTP 方法。通过使用 <code>match</code> 方法和 <code>:via</code> 选项，我们可以一次匹配多个 HTTP 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+match 'photos', to: 'photos#show', via: [:get, :post]
+
+</pre>
+</div>
+<p>通过 <code>via: :all</code> 选项，路由可以匹配所有 HTTP 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+match 'photos', to: 'photos#show', via: :all
+
+</pre>
+</div>
+<div class="note"><p>把 <code>GET</code> 和 <code>POST</code> 请求映射到同一个控制器动作上会带来安全隐患。通常，除非有足够的理由，我们应该避免把使用不同 HTTP 方法的所有请求映射到同一个控制器动作上。</p></div><div class="note"><p>Rails 在处理 <code>GET</code> 请求时不会检查 CSRF 令牌。在处理 <code>GET</code> 请求时绝对不可以对数据库进行写操作，更多介绍请参阅 <a href="security.html#csrf-countermeasures">CSRF 对策</a>。</p></div><p><a class="anchor" id="segment-constraints"></a></p><h4 id="segment-constraints">3.8 片段约束</h4><p>我们可以使用 <code>:constraints</code> 选项来约束动态片段的格式：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'photos/:id', to: 'photos#show', constraints: { id: /[A-Z]\d{5}/ }
+
+</pre>
+</div>
+<p>这个路由会匹配 <code>/photos/A12345</code> 路径，但不会匹配 <code>/photos/893</code> 路径。此路由还可以简写为：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'photos/:id', to: 'photos#show', id: /[A-Z]\d{5}/
+
+</pre>
+</div>
+<p><code>:constraints</code> 选项的值可以是正则表达式，但不能使用 <code>^</code> 符号。例如，下面的路由写法是错误的：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get '/:id', to: 'articles#show', constraints: { id: /^\d/ }
+
+</pre>
+</div>
+<p>其实，使用 <code>^</code> 符号也完全没有必要，因为路由总是从头开始匹配。</p><p>例如，对于下面的路由，<code>/1-hello-world</code> 路径会被映射到 <code>articles#show</code> 上，而 <code>/david</code> 路径会被映射到 <code>users#show</code> 上：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get '/:id', to: 'articles#show', constraints: { id: /\d.+/ }
+get '/:username', to: 'users#show'
+
+</pre>
+</div>
+<p><a class="anchor" id="request-based-constraints"></a></p><h4 id="request-based-constraints">3.9 请求约束</h4><p>如果在<a href="action_controller_overview.html#the-request-object">请求对象</a>上调用某个方法的返回值是字符串，我们就可以用这个方法来约束路由。</p><p>请求约束和片段约束的用法相同：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'photos', to: 'photos#index', constraints: { subdomain: 'admin' }
+
+</pre>
+</div>
+<p>我们还可以用块来指定约束：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+namespace :admin do
+  constraints subdomain: 'admin' do
+    resources :photos
+  end
+end
+
+</pre>
+</div>
+<div class="note"><p>请求约束（request constraint）的工作原理，是在<a href="action_controller_overview.html#the-request-object">请求对象</a>上调用和约束条件中散列的键同名的方法，然后比较返回值和散列的值。因此，约束中散列的值和调用方法返回的值的类型应当相同。例如，<code>constraints: { subdomain: 'api' }</code> 会匹配 <code>api</code> 子域名，但是 <code>constraints: { subdomain: :api }</code> 不会匹配 <code>api</code> 子域名，因为后者散列的值是符号，而 <code>request.subdomain</code> 方法的返回值 <code>'api'</code> 是字符串。</p></div><div class="note"><p>格式约束（format constraint）是一个例外：尽管格式约束是在请求对象上调用的方法，但同时也是路径的隐式可选参数（implicit optional parameter）。片段约束的优先级高于格式约束，而格式约束在通过散列指定时仅作为隐式可选参数。例如，<code>get 'foo', constraints: { format: 'json' }</code> 路由会匹配 <code>GET  /foo</code> 请求，因为默认情况下格式约束是可选的。尽管如此，我们可以<a href="#advanced-constraints">使用 lambda</a>，例如，<code>get 'foo', constraints: lambda { |req| req.format == :json }</code> 路由只匹配显式 JSON 请求。</p></div><p><a class="anchor" id="advanced-constraints"></a></p><h4 id="advanced-constraints">3.10 高级约束</h4><p>如果需要更复杂的约束，我们可以使用能够响应 <code>matches?</code> 方法的对象作为约束。假设我们想把所有黑名单用户映射到 <code>Blacklist</code> 控制器，可以这么做：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class BlacklistConstraint
+  def initialize
+    @ips = Blacklist.retrieve_ips
+  end
+
+  def matches?(request)
+    @ips.include?(request.remote_ip)
+  end
+end
+
+Rails.application.routes.draw do
+  get '*path', to: 'blacklist#index',
+    constraints: BlacklistConstraint.new
+end
+
+</pre>
+</div>
+<p>我们还可以用 lambda 来指定约束：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Rails.application.routes.draw do
+  get '*path', to: 'blacklist#index',
+    constraints: lambda { |request| Blacklist.retrieve_ips.include?(request.remote_ip) }
+end
+
+</pre>
+</div>
+<p>在上面两段代码中，<code>matches?</code> 方法和 lambda 都是把请求对象作为参数。</p><p><a class="anchor" id="route-globbing-and-wildcard-segments"></a></p><h4 id="route-globbing-and-wildcard-segments">3.11 路由通配符和通配符片段</h4><p>路由通配符用于指定特殊参数，这一参数会匹配路由的所有剩余部分。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'photos/*other', to: 'photos#unknown'
+
+</pre>
+</div>
+<p>这个路由会匹配 <code>photos/12</code> 和 <code>/photos/long/path/to/12</code> 路径，并把 <code>params[:other]</code> 分别设置为 <code>"12"</code> 和 <code>"long/path/to/12"</code>。像 <code>*other</code> 这样以星号开头的片段，称作“通配符片段”。</p><p>通配符片段可以出现在路由中的任何位置。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'books/*section/:title', to: 'books#show'
+
+</pre>
+</div>
+<p>这个路由会匹配 <code>books/some/section/last-words-a-memoir</code> 路径，此时，<code>params[:section]</code> 的值是 <code>'some/section'</code>，<code>params[:title]</code> 的值是 <code>'last-words-a-memoir'</code>。</p><p>严格来说，路由中甚至可以有多个通配符片段，其匹配方式也非常直观。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get '*a/foo/*b', to: 'test#index'
+
+</pre>
+</div>
+<p>会匹配 <code>zoo/woo/foo/bar/baz</code> 路径，此时，<code>params[:a]</code> 的值是 <code>'zoo/woo'</code>，<code>params[:b]</code> 的值是 <code>'bar/baz'</code>。</p><div class="note"><p><code>get '*pages', to: 'pages#show'</code> 路由在处理 <code>'/foo/bar.json'</code> 请求时，<code>params[:pages]</code> 的值是 <code>'foo/bar'</code>，请求格式（request format）是 <code>JSON</code>。如果想让 Rails 按 <code>3.0.x</code> 版本的方式进行匹配，可以使用 <code>format: false</code> 选项，例如：</p></div><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get '*pages', to: 'pages#show', format: false
+
+</pre>
+</div>
+<p>如果想强制使用格式约束，或者说让格式约束不再是可选的，我们可以使用 <code>format: true</code> 选项，例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get '*pages', to: 'pages#show', format: true
+
+</pre>
+</div>
+<p><a class="anchor" id="redirection"></a></p><h4 id="redirection">3.12 重定向</h4><p>在路由中，通过 <code>redirect</code> 辅助方法可以把一个路径重定向到另一个路径：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get '/stories', to: redirect('/articles')
+
+</pre>
+</div>
+<p>在重定向的目标路径中，可以使用源路径中的动态片段：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get '/stories/:name', to: redirect('/articles/%{name}')
+
+</pre>
+</div>
+<p>我们还可以重定向到块，这个块可以接受符号化的路径参数和请求对象：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get '/stories/:name', to: redirect { |path_params, req| "/articles/#{path_params[:name].pluralize}" }
+get '/stories', to: redirect { |path_params, req| "/articles/#{req.subdomain}" }
+
+</pre>
+</div>
+<p>请注意，<code>redirect</code> 重定向默认是 301 永久重定向，有些浏览器或代理服务器会缓存这种类型的重定向，从而导致无法访问重定向前的网页。为了避免这种情况，我们可以使用 <code>:status</code> 选项修改响应状态：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get '/stories/:name', to: redirect('/articles/%{name}', status: 302)
+
+</pre>
+</div>
+<p>在重定向时，如果不指定主机（例如 <a href="http://www.example.com%EF%BC%89%EF%BC%8CRails">http://www.example.com），Rails</a> 会使用当前请求的主机。</p><p><a class="anchor" id="routing-to-rack-applications"></a></p><h4 id="routing-to-rack-applications">3.13 映射到 Rack 应用的路由</h4><p>在声明路由时，我们不仅可以使用字符串，例如映射到 <code>Articles</code> 控制器的 <code>index</code> 动作的 <code>'articles#index'</code>，还可以指定 <a href="rails_on_rack.html">Rack 应用</a>为端点：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+match '/application.js', to: MyRackApp, via: :all
+
+</pre>
+</div>
+<p>只要 <code>MyRackApp</code> 应用能够响应 <code>call</code> 方法并返回 <code>[status, headers, body]</code> 数组，对于路由来说，Rack 应用和控制器动作就没有区别。<code>via: :all</code> 选项使 Rack 应用可以处理所有 HTTP 方法。</p><div class="note"><p>实际上，<code>'articles#index'</code> 会被展开为 <code>ArticlesController.action(:index)</code>，其返回值正是一个 Rack 应用。</p></div><p>记住，路由所匹配的路径，就是 Rack 应用接收的路径。例如，对于下面的路由，Rack 应用接收的路径是 <code>/admin</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+match '/admin', to: AdminApp, via: :all
+
+</pre>
+</div>
+<p>如果想让 Rack 应用接收根路径上的请求，可以使用 <code>mount</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+mount AdminApp, at: '/admin'
+
+</pre>
+</div>
+<p><a class="anchor" id="using-root"></a></p><h4 id="using-root">3.14 使用 <code>root</code> 方法</h4><p><code>root</code> 方法指明如何处理根路径（<code>/</code>）上的请求：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+root to: 'pages#main'
+root 'pages#main' # 上一行代码的简易写法
+
+</pre>
+</div>
+<p><code>root</code> 路由应该放在路由文件的顶部，因为最常用的路由应该首先匹配。</p><div class="note"><p><code>root</code> 路由只处理 <code>GET</code> 请求。</p></div><p>我们还可以在命名空间和作用域中使用 <code>root</code> 方法，例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+namespace :admin do
+  root to: "admin#index"
+end
+
+root to: "home#index"
+
+</pre>
+</div>
+<p><a class="anchor" id="unicode-character-routes"></a></p><h4 id="unicode-character-routes">3.15 Unicode 字符路由</h4><p>在声明路由时，可以直接使用 Unicode 字符，例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get 'こんにちは', to: 'welcome#index'
+
+</pre>
+</div>
+<p><a class="anchor" id="customizing-resourceful-routes"></a></p><h3 id="customizing-resourceful-routes">4 自定义资源路由</h3><p>尽管 <code>resources :articles</code> 默认生成的路由和辅助方法通常都能很好地满足需求，但是也有一些情况下我们需要自定义资源路由。Rails 允许我们通过各种方式自定义资源式辅助方法（resourceful helper）。</p><p><a class="anchor" id="specifying-a-ontroller-to-use"></a></p><h4 id="specifying-a-ontroller-to-use">4.1 指定控制器</h4><p><code>:controller</code> 选项用于显式指定资源使用的控制器，例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :photos, controller: 'images'
+
+</pre>
+</div>
+<p>这个路由会把 <code>/photos</code> 路径映射到 <code>Images</code> 控制器上：</p>
+<table>
+<thead>
+<tr>
+<th>HTTP 方法</th>
+<th>路径</th>
+<th>控制器#动作</th>
+<th>具名辅助方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/photos</code></td>
+<td><code>images#index</code></td>
+<td><code>photos_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/photos/new</code></td>
+<td><code>images#new</code></td>
+<td><code>new_photo_path</code></td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/photos</code></td>
+<td><code>images#create</code></td>
+<td><code>photos_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/photos/:id</code></td>
+<td><code>images#show</code></td>
+<td><code>photo_path(:id)</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/photos/:id/edit</code></td>
+<td><code>images#edit</code></td>
+<td><code>edit_photo_path(:id)</code></td>
+</tr>
+<tr>
+<td>
+<code>PATCH</code>/<code>PUT</code>
+</td>
+<td><code>/photos/:id</code></td>
+<td><code>images#update</code></td>
+<td><code>photo_path(:id)</code></td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/photos/:id</code></td>
+<td><code>images#destroy</code></td>
+<td><code>photo_path(:id)</code></td>
+</tr>
+</tbody>
+</table>
+<div class="note"><p>请使用 <code>photos_path</code>、<code>new_photo_path</code> 等辅助方法为资源生成路径。</p></div><p>对于命名空间中的控制器，我们可以使用目录表示法（directory notation）。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :user_permissions, controller: 'admin/user_permissions'
+
+</pre>
+</div>
+<p>这个路由会映射到 <code>Admin::UserPermissions</code> 控制器。</p><div class="note"><p>在这种情况下，我们只能使用目录表示法。如果我们使用 Ruby 的常量表示法（constant notation），例如 <code>controller: 'Admin::UserPermissions'</code>，有可能导致路由错误，而使 Rails 显示警告信息。</p></div><p><a class="anchor" id="specifying-constraints"></a></p><h4 id="specifying-constraints">4.2 指定约束</h4><p><code>:constraints</code> 选项用于指定隐式 ID 必须满足的格式要求。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :photos, constraints: { id: /[A-Z][A-Z][0-9]+/ }
+
+</pre>
+</div>
+<p>这个路由声明使用正则表达式来约束 <code>:id</code> 参数。此时，路由将不会匹配 <code>/photos/1</code> 路径，但会匹配 <code>/photos/RR27</code> 路径。</p><p>我们可以通过块把一个约束应用于多个路由：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+constraints(id: /[A-Z][A-Z][0-9]+/) do
+  resources :photos
+  resources :accounts
+end
+
+</pre>
+</div>
+<div class="note"><p>当然，在这种情况下，我们也可以使用非资源路由的高级约束。</p></div><div class="info"><p>默认情况下，在 <code>:id</code> 参数中不能使用小圆点，因为小圆点是格式化路由的分隔符。如果想在 <code>:id</code> 参数中使用小圆点，可以通过添加约束来实现相同效果，例如，<code>id: /[^\/]+/</code> 可以匹配除斜线外的一个或多个字符。</p></div><p><a class="anchor" id="overriding-the-named-helpers"></a></p><h4 id="overriding-the-named-helpers">4.3 覆盖具名路由辅助方法</h4><p>通过 <code>:as</code> 选项，我们可以覆盖具名路由辅助方法的默认名称。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :photos, as: 'images'
+
+</pre>
+</div>
+<p>这个路由会把以 <code>/photos</code> 开头的路径映射到 <code>Photos</code> 控制器上，同时通过 <code>:as</code> 选项设置具名辅助方法的名称。</p>
+<table>
+<thead>
+<tr>
+<th>HTTP 方法</th>
+<th>路径</th>
+<th>控制器#动作</th>
+<th>具名辅助方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/photos</code></td>
+<td><code>photos#index</code></td>
+<td><code>images_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/photos/new</code></td>
+<td><code>photos#new</code></td>
+<td><code>new_image_path</code></td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/photos</code></td>
+<td><code>photos#create</code></td>
+<td><code>images_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/photos/:id</code></td>
+<td><code>photos#show</code></td>
+<td><code>image_path(:id)</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/photos/:id/edit</code></td>
+<td><code>photos#edit</code></td>
+<td><code>edit_image_path(:id)</code></td>
+</tr>
+<tr>
+<td>
+<code>PATCH</code>/<code>PUT</code>
+</td>
+<td><code>/photos/:id</code></td>
+<td><code>photos#update</code></td>
+<td><code>image_path(:id)</code></td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/photos/:id</code></td>
+<td><code>photos#destroy</code></td>
+<td><code>image_path(:id)</code></td>
+</tr>
+</tbody>
+</table>
+<p><a class="anchor" id="overriding-the-new-and-edit-segments"></a></p><h4 id="overriding-the-new-and-edit-segments">4.4 覆盖 <code>new</code> 和 <code>edit</code> 片段</h4><p><code>:path_names</code> 选项用于覆盖路径中自动生成的 <code>new</code> 和 <code>edit</code> 片段，例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :photos, path_names: { new: 'make', edit: 'change' }
+
+</pre>
+</div>
+<p>这个路由能够识别下面的路径：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+/photos/make
+/photos/1/change
+
+</pre>
+</div>
+<div class="note"><p><code>:path_names</code> 选项不会改变控制器动作的名称，上面这两个路径仍然被分别映射到 <code>new</code> 和 <code>edit</code> 动作上。</p></div><div class="info"><p>通过作用域，我们可以对所有路由应用 <code>:path_names</code> 选项。</p></div><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+scope path_names: { new: 'make' } do
+  # 其余路由
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="prefixing-the-named-route-helpers"></a></p><h4 id="prefixing-the-named-route-helpers">4.5 为具名路由辅助方法添加前缀</h4><p>通过 <code>:as</code> 选项，我们可以为具名路由辅助方法添加前缀。通过在作用域中使用 <code>:as</code> 选项，我们可以解决路由名称冲突的问题。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+scope 'admin' do
+  resources :photos, as: 'admin_photos'
+end
+
+resources :photos
+
+</pre>
+</div>
+<p>上述路由声明会生成 <code>admin_photos_path</code>、<code>new_admin_photo_path</code> 等辅助方法。</p><p>通过在作用域中使用 <code>:as</code> 选项，我们可以为一组路由辅助方法添加前缀：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+scope 'admin', as: 'admin' do
+  resources :photos, :accounts
+end
+
+resources :photos, :accounts
+
+</pre>
+</div>
+<p>上述路由会生成 <code>admin_photos_path</code>、<code>admin_accounts_path</code> 等辅助方法，其返回值分别为 <code>/admin/photos</code>、<code>/admin/accounts</code> 等。</p><div class="note"><p><code>namespace</code> 作用域除了添加 <code>:as</code> 选项指定的前缀，还会添加 <code>:module</code> 和 <code>:path</code> 前缀。</p></div><p>我们还可以使用具名参数指定路由前缀，例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+scope ':username' do
+  resources :articles
+end
+
+</pre>
+</div>
+<p>这个路由能够识别 <code>/bob/articles/1</code> 路径，此时，在控制器、辅助方法和视图中，我们可以使用 <code>params[:username]</code> 获取路径中的 <code>username</code> 部分，即 <code>bob</code>。</p><p><a class="anchor" id="restricting-the-routes-created"></a></p><h4 id="restricting-the-routes-created">4.6 限制所创建的路由</h4><p>默认情况下，Rails 会为每个 REST 式路由创建 7 个默认动作（<code>index</code>、<code>show</code>、<code>new</code>、<code>create</code>、<code>edit</code>、<code>update</code> 和 <code>destroy</code>）。我们可以使用 <code>:only</code> 和 <code>:except</code> 选项来微调此行为。<code>:only</code> 选项用于指定想要生成的路由：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :photos, only: [:index, :show]
+
+</pre>
+</div>
+<p>此时，<code>/photos</code> 路径上的 <code>GET</code> 请求会成功，而 <code>POST</code> 请求会失败，因为后者会被映射到 <code>create</code> 动作上。</p><p><code>:except</code> 选项用于指定不想生成的路由：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :photos, except: :destroy
+
+</pre>
+</div>
+<p>此时，Rails 会创建除 <code>destroy</code> 之外的所有路由，因此 <code>/photos/:id</code> 路径上的 <code>DELETE</code> 请求会失败。</p><div class="info"><p>如果应用中有很多资源式路由，通过 <code>:only</code> 和 <code>:except</code> 选项，我们可以只生成实际需要的路由，这样可以减少内存使用、加速路由处理过程。</p></div><p><a class="anchor" id="translated-paths"></a></p><h4 id="translated-paths">4.7 本地化路径</h4><p>在使用 <code>scope</code> 方法时，我们可以修改 <code>resources</code> 方法生成的路径名称。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+scope(path_names: { new: 'neu', edit: 'bearbeiten' }) do
+  resources :categories, path: 'kategorien'
+end
+
+</pre>
+</div>
+<p>Rails 会生成下列映射到 <code>Categories</code> 控制器的路由：</p>
+<table>
+<thead>
+<tr>
+<th>HTTP 方法</th>
+<th>路径</th>
+<th>控制器#动作</th>
+<th>具名辅助方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/kategorien</code></td>
+<td><code>categories#index</code></td>
+<td><code>categories_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/kategorien/neu</code></td>
+<td><code>categories#new</code></td>
+<td><code>new_category_path</code></td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/kategorien</code></td>
+<td><code>categories#create</code></td>
+<td><code>categories_path</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/kategorien/:id</code></td>
+<td><code>categories#show</code></td>
+<td><code>category_path(:id)</code></td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/kategorien/:id/bearbeiten</code></td>
+<td><code>categories#edit</code></td>
+<td><code>edit_category_path(:id)</code></td>
+</tr>
+<tr>
+<td>
+<code>PATCH</code>/<code>PUT</code>
+</td>
+<td><code>/kategorien/:id</code></td>
+<td><code>categories#update</code></td>
+<td><code>category_path(:id)</code></td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td><code>/kategorien/:id</code></td>
+<td><code>categories#destroy</code></td>
+<td><code>category_path(:id)</code></td>
+</tr>
+</tbody>
+</table>
+<p><a class="anchor" id="overriding-the-singular-form"></a></p><h4 id="overriding-the-singular-form">4.8 覆盖资源的单数形式</h4><p>通过为 <code>Inflector</code> 添加附加的规则，我们可以定义资源的单数形式。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+ActiveSupport::Inflector.inflections do |inflect|
+  inflect.irregular 'tooth', 'teeth'
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="using-as-in-nested-resources"></a></p><h4 id="using-as-in-nested-resources">4.9 在嵌套资源中使用 <code>:as</code> 选项</h4><p>在嵌套资源中，我们可以使用 <code>:as</code> 选项覆盖自动生成的辅助方法名称。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :magazines do
+  resources :ads, as: 'periodical_ads'
+end
+
+</pre>
+</div>
+<p>会生成 <code>magazine_periodical_ads_url</code> 和 <code>edit_magazine_periodical_ad_path</code> 等辅助方法。</p><p><a class="anchor" id="overriding-named-route-parameters"></a></p><h4 id="overriding-named-route-parameters">4.10 覆盖具名路由的参数</h4><p><code>:param</code> 选项用于覆盖默认的资源标识符 <code>:id</code>（用于生成路由的动态片段的名称）。在控制器中，我们可以通过 <code>params[&lt;:param&gt;]</code> 访问资源标识符。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :videos, param: :identifier
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+videos GET  /videos(.:format)                  videos#index
+       POST /videos(.:format)                  videos#create
+new_videos GET  /videos/new(.:format)              videos#new
+edit_videos GET  /videos/:identifier/edit(.:format) videos#edit
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Video.find_by(identifier: params[:identifier])
+
+</pre>
+</div>
+<p>通过覆盖相关模型的 <code>ActiveRecord::Base#to_param</code> 方法，我们可以构造 URL 地址：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Video &lt; ApplicationRecord
+  def to_param
+    identifier
+  end
+end
+
+video = Video.find_by(identifier: "Roman-Holiday")
+edit_videos_path(video) # =&gt; "/videos/Roman-Holiday"
+
+</pre>
+</div>
+<p><a class="anchor" id="inspecting-and-testing-routes"></a></p><h3 id="inspecting-and-testing-routes">5 审查和测试路由</h3><p>Rails 提供了路由检查和测试的相关功能。</p><p><a class="anchor" id="listing-existing-routes"></a></p><h4 id="listing-existing-routes">5.1 列出现有路由</h4><p>要想得到应用中现有路由的完整列表，可以在开发环境中运行服务器，然后在浏览器中访问 <a href="http://localhost:3000/rails/info/routes%E3%80%82%E5%9C%A8%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%89%A7%E8%A1%8C">http://localhost:3000/rails/info/routes。在终端中执行</a> <code>rails routes</code> 命令，也会得到相同的输出结果。</p><p>这两种方式都会按照路由在 <code>config/routes.rb</code> 文件中的声明顺序，列出所有路由。每个路由都包含以下信息：</p>
+<ul>
+<li>  路由名称（如果有的话）</li>
+<li>  所使用的 HTTP 方法（如果路由不响应所有的 HTTP 方法）</li>
+<li>  所匹配的 URL 模式</li>
+<li>  路由参数</li>
+</ul>
+<p>例如，下面是执行 <code>rails routes</code> 命令后，REST 式路由的一部分输出结果：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+    users GET    /users(.:format)          users#index
+          POST   /users(.:format)          users#create
+ new_user GET    /users/new(.:format)      users#new
+edit_user GET    /users/:id/edit(.:format) users#edit
+
+</pre>
+</div>
+<p>可以使用 <code>grep</code> 选项（即 <code>-g</code>）搜索路由。只要路由的 URL 辅助方法的名称、HTTP 方法或 URL 路径中有部分匹配，该路由就会显示在搜索结果中。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails routes -g new_comment
+$ bin/rails routes -g POST
+$ bin/rails routes -g admin
+
+</pre>
+</div>
+<p>要想查看映射到指定控制器的路由，可以使用 <code>-c</code> 选项。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails routes -c users
+$ bin/rails routes -c admin/users
+$ bin/rails routes -c Comments
+$ bin/rails routes -c Articles::CommentsController
+
+</pre>
+</div>
+<div class="info"><p>为了增加 <code>rails routes</code> 命令输出结果的可读性，可以增加终端窗口的宽度，避免输出结果折行。</p></div><p><a class="anchor" id="testing-routes"></a></p><h4 id="testing-routes">5.2 测试路由</h4><p>路由和应用的其他部分一样，也应该包含在测试策略中。为了简化路由测试，Rails 提供了三个<a href="http://api.rubyonrails.org/v5.1.1/classes/ActionDispatch/Assertions/RoutingAssertions.html">内置断言</a>：</p>
+<ul>
+<li>  <code>assert_generates</code> 断言</li>
+<li>  <code>assert_recognizes</code> 断言</li>
+<li>  <code>assert_routing</code> 断言</li>
+</ul>
+<p><a class="anchor" id="the-assert-generates-assertion"></a></p><h5 id="the-assert-generates-assertion">5.2.1 <code>assert_generates</code> 断言</h5><p><code>assert_generates</code> 断言的功能是断定所指定的一组选项会生成指定路径，它可以用于默认路由或自定义路由。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+assert_generates '/photos/1', { controller: 'photos', action: 'show', id: '1' }
+assert_generates '/about', controller: 'pages', action: 'about'
+
+</pre>
+</div>
+<p><a class="anchor" id="the-assert-recognizes-assertion"></a></p><h5 id="the-assert-recognizes-assertion">5.2.2 <code>assert_recognizes</code> 断言</h5><p><code>assert_recognizes</code> 断言和 <code>assert_generates</code> 断言的功能相反，它断定所提供的路径能够被路由识别并映射到指定控制器动作。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+assert_recognizes({ controller: 'photos', action: 'show', id: '1' }, '/photos/1')
+
+</pre>
+</div>
+<p>我们可以通过 <code>:method</code> 参数指定 HTTP 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+assert_recognizes（{controller：'photos'，action：'create'}，{path：'photos'，method：：post}）
+
+</pre>
+</div>
+<p><a class="anchor" id="the-assert-routing-assertion"></a></p><h5 id="the-assert-routing-assertion">5.2.3 <code>assert_routing</code> 断言</h5><p><code>assert_routing</code> 断言会对路由进行双向测试：既测试路径能否生成选项，也测试选项能否生成路径。也就是集 <code>assert_generates</code> 和 <code>assert_recognizes</code> 这两种断言的功能于一身。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+assert_routing({ path: 'photos', method: :post }, { controller: 'photos', action: 'create' })
+
+</pre>
+</div>
+
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

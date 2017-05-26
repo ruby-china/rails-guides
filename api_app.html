@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>使用 Rails 开发只提供 API 的应用 — Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="返回首页">Rails 指南</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>新手入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询接口</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入探索</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">Rails 应用测试指南</a></dd>
+                <dd><a href="security.html">Ruby on Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器和模板</a></dd>
+                <dt>为 Ruby on Rails 做贡献</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档指导方针</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">Ruby on Rails 的维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布记</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="新手入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询接口</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入探索">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">Rails 应用测试指南</option>
+                  <option value="security.html">Ruby on Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器和模板</option>
+              </optgroup>
+              <optgroup label="为 Ruby on Rails 做贡献">
+                  <option value="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</option>
+                  <option value="api_documentation_guidelines.html">API 文档指导方针</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">Ruby on Rails 的维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布记</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>使用 Rails 开发只提供 API 的应用</h2><p>在本文中您将学到：</p>
+<ul>
+<li>  Rails 对只提供 API 的应用的支持；</li>
+<li>  如何配置 Rails，不使用任何针对浏览器的功能；</li>
+<li>  如何决定使用哪些中间件；</li>
+<li>  如何决定在控制器中使用哪些模块。</li>
+</ul>
+
+
+              <div id="subCol">
+          <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />目录</h3>
+          <ol class="chapters">
+<li><a href="#what-is-an-api-application-questionmark">什么是 API 应用？</a></li>
+<li><a href="#why-use-rails-for-json-apis-questionmark">为什么使用 Rails 构建 JSON API？</a></li>
+<li>
+<a href="#the-basic-configuration">基本配置</a>
+
+<ul>
+<li><a href="#creating-a-new-application">新建应用</a></li>
+<li><a href="#changing-an-existing-application">修改现有应用</a></li>
+</ul>
+</li>
+<li>
+<a href="#choosing-middleware">选择中间件</a>
+
+<ul>
+<li><a href="#using-the-cache-middleware">使用缓存中间件</a></li>
+<li><a href="#using-rack-sendfile">使用 Rack::Sendfile</a></li>
+<li><a href="#using-actiondispatch-request">使用 ActionDispatch::Request</a></li>
+<li><a href="#other-middleware">其他中间件</a></li>
+<li><a href="#removing-middleware">删除中间件</a></li>
+</ul>
+</li>
+<li>
+<a href="#choosing-controller-modules">选择控制器模块</a>
+
+<ul>
+<li><a href="#adding-other-modules">添加其他模块</a></li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <p><a class="anchor" id="what-is-an-api-application-questionmark"></a></p><h3 id="what-is-an-api-application-questionmark">1 什么是 API 应用？</h3><p>人们说把 Rails 用作“API”，通常指的是在 Web 应用之外提供一份可通过编程方式访问的 API。例如，GitHub 提供了 <a href="http://developer.github.com/">API</a>，供你在自己的客户端中使用。</p><p>随着客户端框架的出现，越来越多的开发者使用 Rails 构建后端，在 Web 应用和其他原生应用之间共享。</p><p>例如，Twitter 使用自己的<a href="https://dev.twitter.com/">公开 API</a> 构建 Web 应用，而文档网站是一个静态网站，消费 JSON 资源。</p><p>很多人不再使用 Rails 生成 HTML，通过表单和链接与服务器通信，而是把 Web 应用当做 API 客户端，分发包含 JavaScript 的 HTML，消费 JSON API。</p><p>本文说明如何构建伺服 JSON 资源的 Rails 应用，供 API 客户端（包括客户端框架）使用。</p><p><a class="anchor" id="why-use-rails-for-json-apis-questionmark"></a></p><h3 id="why-use-rails-for-json-apis-questionmark">2 为什么使用 Rails 构建 JSON API？</h3><p>提到使用 Rails 构建 JSON API，多数人想到的第一个问题是：“使用 Rails 生成 JSON 是不是有点大材小用了？使用 Sinatra 这样的框架是不是更好？”</p><p>对特别简单的 API 来说，确实如此。然而，对大量使用 HTML 的应用来说，应用的逻辑大都在视图层之外。</p><p>多数人使用 Rails 的原因是，Rails 提供了一系列默认值，开发者能快速上手，而不用做些琐碎的决定。</p><p>下面是 Rails 提供的一些开箱即用的功能，这些功能在 API 应用中也适用。</p><p>在中间件层处理的功能：</p>
+<ul>
+<li>  重新加载：Rails 应用支持简单明了的重新加载机制。即使应用变大，每次请求都重启服务器变得不切实际，这一机制依然适用。</li>
+<li>  开发模式：Rails 应用自带智能的开发默认值，使得开发过程很愉快，而且不会破坏生产环境的效率。</li>
+<li>  测试模式：同开发模式。</li>
+<li>  日志：Rails 应用会在日志中记录每次请求，而且为不同环境设定了合适的详细等级。在开发环境中，Rails 记录的信息包括请求环境、数据库查询和基本的性能信息。</li>
+<li>  安全性：Rails 能检测并防范 <a href="https://en.wikipedia.org/wiki/IP_address_spoofing">IP 欺骗攻击</a>，还能处理<a href="http://en.wikipedia.org/wiki/Timing_attack">时序攻击</a>中的加密签名。不知道 IP 欺骗攻击和时序攻击是什么？这就对了。</li>
+<li>  参数解析：想以 JSON 的形式指定参数，而不是 URL 编码字符串形式？没问题。Rails 会代为解码 JSON，存入 <code>params</code> 中。想使用嵌套的 URL 编码参数？也没问题。</li>
+<li>  条件 GET 请求：Rails 能处理条件 <code>GET</code> 请求相关的首部（<code>ETag</code> 和 <code>Last-Modified</code>），然后返回正确的响应首部和状态码。你只需在控制器中使用 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActionController/ConditionalGet.html#method-i-stale-3F"><code>stale?</code></a> 做检查，剩下的 HTTP 细节都由 Rails 处理。</li>
+<li>  HEAD 请求：Rails 会把 <code>HEAD</code> 请求转换成 <code>GET</code> 请求，只返回首部。这样 <code>HEAD</code> 请求在所有 Rails API 中都可靠。</li>
+</ul>
+<p>虽然这些功能可以使用 Rack 中间件实现，但是上述列表的目的是说明 Rails 默认提供的中间件栈提供了大量有价值的功能，即便“只是生成 JSON”也用得到。</p><p>在 Action Pack 层处理的功能：</p>
+<ul>
+<li>  资源式路由：如果构建的是 REST 式 JSON API，你会想用 Rails 路由器的。按照约定以简明的方式把 HTTP 映射到控制器上能节省很多时间，不用再从 HTTP 方面思考如何建模 API。</li>
+<li>  URL 生成：路由的另一面是 URL 生成。基于 HTTP 的优秀 API 包含 URL（比如 <a href="http://developer.github.com/v3/gists/">GitHub Gist API</a>）。</li>
+<li>  首部和重定向响应：<code>head :no_content</code> 和 <code>redirect_to user_url(current_user)</code> 用着很方便。当然，你可以自己动手添加相应的响应首部，但是为什么要费这事呢？</li>
+<li>  缓存：Rails 提供了页面缓存、动作缓存和片段缓存。构建嵌套的 JSON 对象时，片段缓存特别有用。</li>
+<li>  基本身份验证、摘要身份验证和令牌身份验证：Rails 默认支持三种 HTTP 身份验证。</li>
+<li>  监测程序：Rails 提供了监测 API，在众多事件发生时触发注册的处理程序，例如处理动作、发送文件或数据、重定向和数据库查询。各个事件的载荷中包含相关的信息（对动作处理事件来说，载荷中包括控制器、动作、参数、请求格式、请求方法和完整的请求路径）。</li>
+<li>  生成器：通常生成一个资源就能把模型、控制器、测试桩件和路由在一个命令中通通创建出来，然后再做调整。迁移等也有生成器。</li>
+<li>  插件：有很多第三方库支持 Rails，这样不必或很少需要花时间设置及把库与 Web 框架连接起来。插件可以重写默认的生成器、添加 Rake 任务，而且继续使用 Rails 选择的处理方式（如日志记录器和缓存后端）。</li>
+</ul>
+<p>当然，Rails 启动过程还是要把各个注册的组件连接起来。例如，Rails 启动时会使用 <code>config/database.yml</code> 文件配置 Active Record。</p><p>简单来说，你可能没有想过去掉视图层之后要把 Rails 的哪些部分保留下来，不过答案是，多数都要保留。</p><p><a class="anchor" id="the-basic-configuration"></a></p><h3 id="the-basic-configuration">3 基本配置</h3><p>如果你构建的 Rails 应用主要用作 API，可以从较小的 Rails 子集开始，然后再根据需要添加功能。</p><p><a class="anchor" id="creating-a-new-application"></a></p><h4 id="creating-a-new-application">3.1 新建应用</h4><p>生成 Rails API 应用使用下述命令：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails new my_api --api
+
+</pre>
+</div>
+<p>这个命令主要做三件事：</p>
+<ul>
+<li>  配置应用，使用有限的中间件（比常规应用少）。具体而言，不含默认主要针对浏览器应用的中间件（如提供 cookie 支持的中间件）。</li>
+<li>  让 <code>ApplicationController</code> 继承 <code>ActionController::API</code>，而不继承 <code>ActionController::Base</code>。与中间件一样，这样做是为了去除主要针对浏览器应用的  Action Controller 模块。</li>
+<li>  配置生成器，生成资源时不生成视图、辅助方法和静态资源。</li>
+</ul>
+<p><a class="anchor" id="changing-an-existing-application"></a></p><h4 id="changing-an-existing-application">3.2 修改现有应用</h4><p>如果你想把现有的应用改成 API 应用，请阅读下述步骤。</p><p>在 <code>config/application.rb</code> 文件中，把下面这行代码添加到 <code>Application</code> 类定义的顶部：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.api_only = true
+
+</pre>
+</div>
+<p>在 <code>config/environments/development.rb</code> 文件中，设定 <code>config.debug_exception_response_format</code> 选项，配置在开发环境中出现错误时响应使用的格式。</p><p>如果想使用 HTML 页面渲染调试信息，把值设为 <code>:default</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.debug_exception_response_format = :default
+
+</pre>
+</div>
+<p>如果想使用响应所用的格式渲染调试信息，把值设为 <code>:api</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.debug_exception_response_format = :api
+
+</pre>
+</div>
+<p>默认情况下，<code>config.api_only</code> 的值为 <code>true</code> 时，<code>config.debug_exception_response_format</code> 的值是 <code>:api</code>。</p><p>最后，在 <code>app/controllers/application_controller.rb</code> 文件中，把下述代码</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ApplicationController &lt; ActionController::Base
+end
+
+</pre>
+</div>
+<p>改为</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ApplicationController &lt; ActionController::API
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="choosing-middleware"></a></p><h3 id="choosing-middleware">4 选择中间件</h3><p>API 应用默认包含下述中间件：</p>
+<ul>
+<li>  <code>Rack::Sendfile</code>
+</li>
+<li>  <code>ActionDispatch::Static</code>
+</li>
+<li>  <code>ActionDispatch::Executor</code>
+</li>
+<li>  <code>ActiveSupport::Cache::Strategy::LocalCache::Middleware</code>
+</li>
+<li>  <code>Rack::Runtime</code>
+</li>
+<li>  <code>ActionDispatch::RequestId</code>
+</li>
+<li>  <code>Rails::Rack::Logger</code>
+</li>
+<li>  <code>ActionDispatch::ShowExceptions</code>
+</li>
+<li>  <code>ActionDispatch::DebugExceptions</code>
+</li>
+<li>  <code>ActionDispatch::RemoteIp</code>
+</li>
+<li>  <code>ActionDispatch::Reloader</code>
+</li>
+<li>  <code>ActionDispatch::Callbacks</code>
+</li>
+<li>  <code>ActiveRecord::Migration::CheckPending</code>
+</li>
+<li>  <code>Rack::Head</code>
+</li>
+<li>  <code>Rack::ConditionalGet</code>
+</li>
+<li>  <code>Rack::ETag</code>
+</li>
+</ul>
+<p>各个中间件的作用参见 <a href="rails_on_rack.html#internal-middleware-stack">内部中间件栈</a>。</p><p>其他插件，包括 Active Record，可能会添加额外的中间件。一般来说，这些中间件对要构建的应用类型一无所知，可以在只提供 API 的 Rails 应用中使用。</p><p>可以通过下述命令列出应用中的所有中间件：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails middleware
+
+</pre>
+</div>
+<p><a class="anchor" id="using-the-cache-middleware"></a></p><h4 id="using-the-cache-middleware">4.1 使用缓存中间件</h4><p>默认情况下，Rails 会根据应用的配置提供一个缓存存储器（默认为 memcache）。因此，内置的 HTTP 缓存依靠这个中间件。</p><p>例如，使用 <code>stale?</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def show
+  @post = Post.find(params[:id])
+
+  if stale?(last_modified: @post.updated_at)
+    render json: @post
+  end
+end
+
+</pre>
+</div>
+<p>上述 <code>stale?</code> 调用比较请求中的 <code>If-Modified-Since</code> 首部和 <code>@post.updated_at</code>。如果首部的值比最后修改时间晚，这个动作返回“304 未修改”响应；否则，渲染响应，并且设定 <code>Last-Modified</code> 首部。</p><p>通常，这个机制会区分客户端。缓存中间件支持跨客户端共享这种缓存机制。跨客户端缓存可以在调用 <code>stale?</code> 时启用：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def show
+  @post = Post.find(params[:id])
+
+  if stale?(last_modified: @post.updated_at, public: true)
+    render json: @post
+  end
+end
+
+</pre>
+</div>
+<p>这表明，缓存中间件会在 Rails 缓存中存储 URL 的 <code>Last-Modified</code> 值，而且为后续对同一个 URL 的入站请求添加 <code>If-Modified-Since</code> 首部。</p><p>可以把这种机制理解为使用 HTTP 语义的页面缓存。</p><p><a class="anchor" id="using-rack-sendfile"></a></p><h4 id="using-rack-sendfile">4.2 使用 Rack::Sendfile</h4><p>在 Rails 控制器中使用 <code>send_file</code> 方法时，它会设定 <code>X-Sendfile</code> 首部。<code>Rack::Sendfile</code> 负责发送文件。</p><p>如果前端服务器支持加速发送文件，<code>Rack::Sendfile</code> 会把文件交给前端服务器发送。</p><p>此时，可以在环境的配置文件中设定 <code>config.action_dispatch.x_sendfile_header</code> 选项，为前端服务器指定首部的名称。</p><p>关于如何在流行的前端服务器中使用 <code>Rack::Sendfile</code>，参见 <a href="http://rubydoc.info/github/rack/rack/master/Rack/Sendfile"><code>Rack::Sendfile</code> 的文档</a>。</p><p>下面是两个流行的服务器的配置。这样配置之后，就能支持加速文件发送功能了。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Apache 和 lighttpd
+config.action_dispatch.x_sendfile_header = "X-Sendfile"
+
+# Nginx
+config.action_dispatch.x_sendfile_header = "X-Accel-Redirect"
+
+</pre>
+</div>
+<p>请按照 <code>Rack::Sendfile</code> 文档中的说明配置你的服务器。</p><p><a class="anchor" id="using-actiondispatch-request"></a></p><h4 id="using-actiondispatch-request">4.3 使用 ActionDispatch::Request</h4><p><code>ActionDispatch::Request#params</code> 获取客户端发来的 JSON 格式参数，将其存入 <code>params</code>，可在控制器中访问。</p><p>为此，客户端要发送 JSON 编码的参数，并把 <code>Content-Type</code> 设为 <code>application/json</code>。</p><p>下面以 jQuery 为例：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+jQuery.ajax({
+  type: 'POST',
+  url: '/people',
+  dataType: 'json',
+  contentType: 'application/json',
+  data: JSON.stringify({ person: { firstName: "Yehuda", lastName: "Katz" } }),
+  success: function(json) { }
+});
+
+</pre>
+</div>
+<p><code>ActionDispatch::Request</code> 检查 <code>Content-Type</code> 后，把参数转换成：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{ :person =&gt; { :firstName =&gt; "Yehuda", :lastName =&gt; "Katz" } }
+
+</pre>
+</div>
+<p><a class="anchor" id="other-middleware"></a></p><h4 id="other-middleware">4.4 其他中间件</h4><p>Rails 自带的其他中间件在 API 应用中可能也会用到，尤其是 API 客户端包含浏览器时：</p>
+<ul>
+<li>  <code>Rack::MethodOverride</code>
+</li>
+<li>  <code>ActionDispatch::Cookies</code>
+</li>
+<li>  <code>ActionDispatch::Flash</code>
+</li>
+<li>
+<p>  管理会话</p>
+<ul>
+<li>  <code>ActionDispatch::Session::CacheStore</code>
+</li>
+<li>  <code>ActionDispatch::Session::CookieStore</code>
+</li>
+<li>  <code>ActionDispatch::Session::MemCacheStore</code>
+</li>
+</ul>
+</li>
+</ul>
+<p>这些中间件可通过下述方式添加：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.middleware.use Rack::MethodOverride
+
+</pre>
+</div>
+<p><a class="anchor" id="removing-middleware"></a></p><h4 id="removing-middleware">4.5 删除中间件</h4><p>如果默认的 API 中间件中有不需要使用的，可以通过下述方式将其删除：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.middleware.delete ::Rack::Sendfile
+
+</pre>
+</div>
+<p>注意，删除中间件后 Action Controller 的特定功能就不可用了。</p><p><a class="anchor" id="choosing-controller-modules"></a></p><h3 id="choosing-controller-modules">5 选择控制器模块</h3><p>API 应用（使用 <code>ActionController::API</code>）默认有下述控制器模块：</p>
+<ul>
+<li>  <code>ActionController::UrlFor</code>：提供 <code>url_for</code> 等辅助方法。</li>
+<li>  <code>ActionController::Redirecting</code>：提供 <code>redirect_to</code>。</li>
+<li>  <code>AbstractController::Rendering</code> 和 <code>ActionController::ApiRendering</code>：提供基本的渲染支持。</li>
+<li>  <code>ActionController::Renderers::All</code>：提供 <code>render :json</code> 等。</li>
+<li>  <code>ActionController::ConditionalGet</code>：提供 <code>stale?</code>。</li>
+<li>  <code>ActionController::BasicImplicitRender</code>：如果没有显式响应，确保返回一个空响应。</li>
+<li>  <code>ActionController::StrongParameters</code>：结合 Active Model 批量赋值，提供参数白名单过滤功能。</li>
+<li>  <code>ActionController::ForceSSL</code>：提供 <code>force_ssl</code>。</li>
+<li>  <code>ActionController::DataStreaming</code>：提供 <code>send_file</code> 和 <code>send_data</code>。</li>
+<li>  <code>AbstractController::Callbacks</code>：提供 <code>before_action</code> 等方法。</li>
+<li>  <code>ActionController::Rescue</code>：提供 <code>rescue_from</code>。</li>
+<li>  <code>ActionController::Instrumentation</code>：提供 Action Controller 定义的监测钩子（详情参见 <a href="active_support_instrumentation.html#action-controller">Action Controller</a>）。</li>
+<li>  <code>ActionController::ParamsWrapper</code>：把参数散列放到一个嵌套散列中，这样在发送 POST 请求时无需指定根元素。</li>
+</ul>
+<p>其他插件可能会添加额外的模块。<code>ActionController::API</code> 引入的模块可以在 Rails 控制台中列出：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails c
+&gt;&gt; ActionController::API.ancestors - ActionController::Metal.ancestors
+=&gt; [ActionController::API,
+    ActiveRecord::Railties::ControllerRuntime,
+    ActionDispatch::Routing::RouteSet::MountedHelpers,
+    ActionController::ParamsWrapper,
+    ... ,
+    AbstractController::Rendering,
+    ActionView::ViewPaths]
+
+</pre>
+</div>
+<p><a class="anchor" id="adding-other-modules"></a></p><h4 id="adding-other-modules">5.1 添加其他模块</h4><p>所有 Action Controller 模块都知道它们所依赖的模块，因此在控制器中可以放心引入任何模块，所有依赖都会自动引入。</p><p>可能想添加的常见模块有：</p>
+<ul>
+<li>  <code>AbstractController::Translation</code>：提供本地化和翻译方法 <code>l</code> 和 <code>t</code>。</li>
+<li>  <code>ActionController::HttpAuthentication::Basic</code>（或 <code>Digest</code> 或 <code>Token</code>）：提供基本、摘要或令牌 HTTP 身份验证。</li>
+<li>  <code>ActionView::Layouts</code>：渲染时支持使用布局。</li>
+<li>  <code>ActionController::MimeResponds</code>：提供 <code>respond_to</code>。</li>
+<li>  <code>ActionController::Cookies</code>：提供 <code>cookies</code>，包括签名和加密 cookie。需要 cookies 中间件支持。</li>
+</ul>
+<p>模块最好添加到 <code>ApplicationController</code> 中，不过也可以在各个控制器中添加。</p>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

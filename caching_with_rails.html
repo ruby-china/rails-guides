@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Rails 缓存概览 — Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="返回首页">Rails 指南</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>新手入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询接口</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入探索</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">Rails 应用测试指南</a></dd>
+                <dd><a href="security.html">Ruby on Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器和模板</a></dd>
+                <dt>为 Ruby on Rails 做贡献</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档指导方针</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">Ruby on Rails 的维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布记</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="新手入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询接口</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入探索">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">Rails 应用测试指南</option>
+                  <option value="security.html">Ruby on Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器和模板</option>
+              </optgroup>
+              <optgroup label="为 Ruby on Rails 做贡献">
+                  <option value="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</option>
+                  <option value="api_documentation_guidelines.html">API 文档指导方针</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">Ruby on Rails 的维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布记</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Rails 缓存概览</h2><p>本文简述如何使用缓存提升 Rails 应用的速度。</p><p>缓存是指存储请求-响应循环中生成的内容，在类似请求的响应中复用。</p><p>通常，缓存是提升应用性能最有效的方式。通过缓存，在单个服务器中使用单个数据库的网站可以承受数千个用户并发访问。</p><p>Rails 自带了一些缓存功能。本文说明它们的适用范围和作用。掌握这些技术之后，你的 Rails 应用能承受大量访问，而不必花大量时间生成响应，或者支付高昂的服务器账单。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li>  片段缓存和俄罗斯套娃缓存；</li>
+<li>  如何管理缓存依赖；</li>
+<li>  不同的缓存存储器；</li>
+<li>  对条件 GET 请求的支持。</li>
+</ul>
+
+
+              <div id="subCol">
+          <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />目录</h3>
+          <ol class="chapters">
+<li>
+<a href="#basic-caching">基本缓存</a>
+
+<ul>
+<li><a href="#page-caching">页面缓存</a></li>
+<li><a href="#action-caching">动作缓存</a></li>
+<li><a href="#fragment-caching">片段缓存</a></li>
+<li><a href="#russian-doll-caching">俄罗斯套娃缓存</a></li>
+<li><a href="#managing-dependencies">管理依赖</a></li>
+<li><a href="#low-level-caching">低层缓存</a></li>
+<li><a href="#sql-caching">SQL 缓存</a></li>
+</ul>
+</li>
+<li>
+<a href="#cache-stores">缓存存储器</a>
+
+<ul>
+<li><a href="#configuration">配置</a></li>
+<li><a href="#activesupport-cache-store"><code>ActiveSupport::Cache::Store</code></a></li>
+<li><a href="#activesupport-cache-memorystore"><code>ActiveSupport::Cache::MemoryStore</code></a></li>
+<li><a href="#activesupport-cache-filestore"><code>ActiveSupport::Cache::FileStore</code></a></li>
+<li><a href="#activesupport-cache-memcachestore"><code>ActiveSupport::Cache::MemCacheStore</code></a></li>
+<li><a href="#activesupport-cache-nullstore"><code>ActiveSupport::Cache::NullStore</code></a></li>
+</ul>
+</li>
+<li><a href="#cache-keys">缓存键</a></li>
+<li>
+<a href="#conditional-get-support">对条件 GET 请求的支持</a>
+
+<ul>
+<li><a href="#strong-v-s-weak-etags">强 Etag 与弱 Etag</a></li>
+</ul>
+</li>
+<li><a href="#caching-in-development">在开发环境中测试缓存</a></li>
+<li><a href="#references">参考资源</a></li>
+</ol>
+
+        </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <p><a class="anchor" id="basic-caching"></a></p><h3 id="basic-caching">1 基本缓存</h3><p>本节简介三种缓存技术：页面缓存（page caching）、动作缓存（action caching）和片段缓存（fragment caching）。Rails 默认提供了片段缓存。如果想使用页面缓存或动作缓存，要把 <code>actionpack-page_caching</code> 或 <code>actionpack-action_caching</code> 添加到 <code>Gemfile</code> 中。</p><p>默认情况下，缓存只在生产环境启用。如果想在本地启用缓存，要在相应的 <code>config/environments/*.rb</code> 文件中把 <code>config.action_controller.perform_caching</code> 设为 <code>true</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_controller.perform_caching = true
+
+</pre>
+</div>
+<div class="note"><p>修改 <code>config.action_controller.perform_caching</code> 的值只对 Action Controller 组件提供的缓存有影响。例如，对低层缓存没影响，<a href="#low-level-caching">下文详述</a>。</p></div><p><a class="anchor" id="page-caching"></a></p><h4 id="page-caching">1.1 页面缓存</h4><p>页面缓存时 Rails 提供的一种缓存机制，让 Web 服务器（如 Apache 和 NGINX）直接伺服生成的页面，而不经由 Rails 栈处理。虽然这种缓存的速度超快，但是不适用于所有情况（例如需要验证身份的页面）。此外，因为 Web 服务器直接从文件系统中伺服文件，所以你要自行实现缓存失效机制。</p><div class="info"><p>Rails 4 删除了页面缓存。参见 <a href="https://github.com/rails/actionpack-page_caching">actionpack-page_caching gem</a>。</p></div><p><a class="anchor" id="action-caching"></a></p><h4 id="action-caching">1.2 动作缓存</h4><p>有前置过滤器的动作不能使用页面缓存，例如需要验证身份的页面。此时，应该使用动作缓存。动作缓存的工作原理与页面缓存类似，不过入站请求会经过 Rails 栈处理，以便运行前置过滤器，然后再伺服缓存。这样，可以做身份验证和其他限制，同时还能从缓存的副本中伺服结果。</p><div class="info"><p>Rails 4 删除了动作缓存。参见 <a href="https://github.com/rails/actionpack-action_caching">actionpack-action_caching gem</a>。最新推荐的做法参见 DHH 写的“<a href="https://signalvnoise.com/posts/3113-how-key-based-cache-expiration-works">How key-based cache expiration works</a>”一文。</p></div><p><a class="anchor" id="fragment-caching"></a></p><h4 id="fragment-caching">1.3 片段缓存</h4><p>动态 Web 应用一般使用不同的组件构建页面，不是所有组件都能使用同一种缓存机制。如果页面的不同部分需要使用不同的缓存机制，在不同的条件下失效，可以使用片段缓存。</p><p>片段缓存把视图逻辑的一部分放在 <code>cache</code> 块中，下次请求使用缓存存储器中的副本伺服。</p><p>例如，如果想缓存页面中的各个商品，可以使用下述代码：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% @products.each do |product| %&gt;
+  &lt;% cache product do %&gt;
+    &lt;%= render product %&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>首次访问这个页面时，Rails 会创建一个具有唯一键的缓存条目。缓存键类似下面这种：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+views/products/1-201505056193031061005000/bea67108094918eeba42cd4a6e786901
+
+</pre>
+</div>
+<p>中间的数字是 <code>product_id</code> 加上商品记录的 <code>updated_at</code> 属性中存储的时间戳。Rails 使用时间戳确保不伺服过期的数据。如果 <code>updated_at</code> 的值变了，Rails 会生成一个新键，然后在那个键上写入一个新缓存，旧键上的旧缓存不再使用。这叫基于键的失效方式。</p><p>视图片段有变化时（例如视图的 HTML 有变），缓存的片段也失效。缓存键末尾那个字符串是模板树摘要，是基于缓存的视图片段的内容计算的 MD5 哈希值。如果视图片段有变化，MD5 哈希值就变了，因此现有文件失效。</p><div class="info"><p>Memcached 等缓存存储器会自动删除旧的缓存文件。</p></div><p>如果想在特定条件下缓存一个片段，可以使用 <code>cache_if</code> 或 <code>cache_unless</code>：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% cache_if admin?, product do %&gt;
+  &lt;%= render product %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="collection-caching"></a></p><h5 id="collection-caching">1.3.1 集合缓存</h5><p><code>render</code> 辅助方法还能缓存渲染集合的单个模板。这甚至比使用 <code>each</code> 的前述示例更好，因为是一次性读取所有缓存模板的，而不是一次读取一个。若想缓存集合，渲染集合时传入 <code>cached: true</code> 选项：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: 'products/product', collection: @products, cached: true %&gt;
+
+</pre>
+</div>
+<p>上述代码中所有的缓存模板一次性获取，速度更快。此外，尚未缓存的模板也会写入缓存，在下次渲染时获取。</p><p><a class="anchor" id="russian-doll-caching"></a></p><h4 id="russian-doll-caching">1.4 俄罗斯套娃缓存</h4><p>有时，可能想把缓存的片段嵌套在其他缓存的片段里。这叫俄罗斯套娃缓存（Russian doll caching）。</p><p>俄罗斯套娃缓存的优点是，更新单个商品后，重新生成外层片段时，其他内存片段可以复用。</p><p>前一节说过，如果缓存的文件对应的记录的 <code>updated_at</code> 属性值变了，缓存的文件失效。但是，内层嵌套的片段不失效。</p><p>对下面的视图来说：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% cache product do %&gt;
+  &lt;%= render product.games %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>而它渲染这个视图：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% cache game do %&gt;
+  &lt;%= render game %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>如果游戏的任何一个属性变了，<code>updated_at</code> 的值会设为当前时间，因此缓存失效。然而，商品对象的 <code>updated_at</code> 属性不变，因此它的缓存不失效，从而导致应用伺服过期的数据。为了解决这个问题，可以使用 <code>touch</code> 方法把模型绑在一起：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Product &lt; ApplicationRecord
+  has_many :games
+end
+
+class Game &lt; ApplicationRecord
+  belongs_to :product, touch: true
+end
+
+</pre>
+</div>
+<p>把 <code>touch</code> 设为 <code>true</code> 后，导致游戏的 <code>updated_at</code> 变化的操作，也会修改关联的商品的 <code>updated_at</code> 属性，从而让缓存失效。</p><p><a class="anchor" id="managing-dependencies"></a></p><h4 id="managing-dependencies">1.5 管理依赖</h4><p>为了正确地让缓存失效，要正确地定义缓存依赖。Rails 足够智能，能处理常见的情况，无需自己指定。但是有时需要处理自定义的辅助方法（以此为例），因此要自行定义。</p><p><a class="anchor" id="implicit-dependencies"></a></p><h5 id="implicit-dependencies">1.5.1 隐式依赖</h5><p>多数模板依赖可以从模板中的 <code>render</code> 调用中推导出来。下面举例说明 <code>ActionView::Digestor</code> 知道如何解码的 <code>render</code> 调用：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render partial: "comments/comment", collection: commentable.comments
+render "comments/comments"
+render 'comments/comments'
+render('comments/comments')
+
+render "header" =&gt; render("comments/header")
+
+render(@topic)         =&gt; render("topics/topic")
+render(topics)         =&gt; render("topics/topic")
+render(message.topics) =&gt; render("topics/topic")
+
+</pre>
+</div>
+<p>而另一方面，有些调用要做修改方能让缓存正确工作。例如，如果传入自定义的集合，要把下述代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render @project.documents.where(published: true)
+
+</pre>
+</div>
+<p>改为：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+render partial: "documents/document", collection: @project.documents.where(published: true)
+
+</pre>
+</div>
+<p><a class="anchor" id="explicit-dependencies"></a></p><h5 id="explicit-dependencies">1.5.2 显式依赖</h5><p>有时，模板依赖推导不出来。在辅助方法中渲染时经常是这样。下面举个例子：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render_sortable_todolists @project.todolists %&gt;
+
+</pre>
+</div>
+<p>此时，要使用一种特殊的注释格式：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%# Template Dependency: todolists/todolist %&gt;
+&lt;%= render_sortable_todolists @project.todolists %&gt;
+
+</pre>
+</div>
+<p>某些情况下，例如设置单表继承，可能要显式定义一堆依赖。此时无需写出每个模板，可以使用通配符匹配一个目录中的全部模板：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%# Template Dependency: events/* %&gt;
+&lt;%= render_categorizable_events @person.events %&gt;
+
+</pre>
+</div>
+<p>对集合缓存来说，如果局部模板不是以干净的缓存调用开头，依然可以使用集合缓存，不过要在模板中的任意位置添加一种格式特殊的注释，如下所示：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%# Template Collection: notification %&gt;
+&lt;% my_helper_that_calls_cache(some_arg, notification) do %&gt;
+  &lt;%= notification.name %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="external-dependencies"></a></p><h5 id="external-dependencies">1.5.3 外部依赖</h5><p>如果在缓存的块中使用辅助方法，而后更新了辅助方法，还要更新缓存。具体方法不限，只要能改变模板文件的 MD5 值就行。推荐的方法之一是添加一个注释，如下所示：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%# Helper Dependency Updated: Jul 28, 2015 at 7pm %&gt;
+&lt;%= some_helper_method(person) %&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="low-level-caching"></a></p><h4 id="low-level-caching">1.6 低层缓存</h4><p>有时需要缓存特定的值或查询结果，而不是缓存视图片段。Rails 的缓存机制能存储任何类型的信息。</p><p>实现低层缓存最有效的方式是使用 <code>Rails.cache.fetch</code> 方法。这个方法既能读取也能写入缓存。传入单个参数时，获取指定的键，返回缓存中的值。如果传入块，块中的代码在缓存缺失时执行。块返回的值将写入缓存，存在指定键的名下，然后返回那个返回值。如果命中缓存，直接返回缓存的值，而不执行块中的代码。</p><p>下面举个例子。应用中有个 <code>Product</code> 模型，它有个实例方法，在竞争网站中查找商品的价格。这个方法返回的数据特别适合使用低层缓存：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Product &lt; ApplicationRecord
+  def competing_price
+    Rails.cache.fetch("#{cache_key}/competing_price", expires_in: 12.hours) do
+      Competitor::API.find_price(id)
+    end
+  end
+end
+
+</pre>
+</div>
+<div class="note"><p>注意，这个示例使用了 <code>cache_key</code> 方法，因此得到的缓存键类似这种：<code>products/233-20140225082222765838000/competing_price</code>。<code>cache_key</code> 方法根据模型的 <code>id</code> 和 <code>updated_at</code> 属性生成一个字符串。这是常见的约定，有个好处是，商品更新后缓存自动失效。一般来说，使用低层缓存缓存实例层信息时，需要生成缓存键。</p></div><p><a class="anchor" id="sql-caching"></a></p><h4 id="sql-caching">1.7 SQL 缓存</h4><p>查询缓存是 Rails 提供的一个功能，把各个查询的结果集缓存起来。如果在同一个请求中遇到了相同的查询，Rails 会使用缓存的结果集，而不再次到数据库中运行查询。</p><p>例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ProductsController &lt; ApplicationController
+
+  def index
+    # 运行查找查询
+    @products = Product.all
+
+    ...
+
+    # 再次运行相同的查询
+    @products = Product.all
+  end
+
+end
+
+</pre>
+</div>
+<p>再次运行相同的查询时，根本不会发给数据库。首次运行查询得到的结果存储在查询缓存中（内存里），第二次查询从内存中获取。</p><p>然而要知道，查询缓存在动作开头创建，到动作末尾销毁，只在动作的存续时间内存在。如果想持久化存储查询结果，使用低层缓存也能实现。</p><p><a class="anchor" id="cache-stores"></a></p><h3 id="cache-stores">2 缓存存储器</h3><p>Rails 为存储缓存数据（SQL 缓存和页面缓存除外）提供了不同的存储器。</p><p><a class="anchor" id="configuration"></a></p><h4 id="configuration">2.1 配置</h4><p><code>config.cache_store</code> 配置选项用于设定应用的默认缓存存储器。可以设定其他参数，传给缓存存储器的构造方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.cache_store = :memory_store, { size: 64.megabytes }
+
+</pre>
+</div>
+<div class="note"><p>此外，还可以在配置块外部调用 <code>ActionController::Base.cache_store</code>。</p></div><p>缓存存储器通过 <code>Rails.cache</code> 访问。</p><p><a class="anchor" id="activesupport-cache-store"></a></p><h4 id="activesupport-cache-store">2.2 <code>ActiveSupport::Cache::Store</code>
+</h4><p>这个类是在 Rails 中与缓存交互的基础。这是个抽象类，不能直接使用。你必须根据存储器引擎具体实现这个类。Rails 提供了几个实现，说明如下。</p><p>主要调用的方法有 <code>read</code>、<code>write</code>、<code>delete</code>、<code>exist?</code> 和 <code>fetch</code>。<code>fetch</code> 方法接受一个块，返回缓存中现有的值，或者把新值写入缓存。</p><p>所有缓存实现有些共用的选项，可以传给构造方法，或者传给与缓存条目交互的各个方法。</p>
+<ul>
+<li>  <code>:namespace</code>：在缓存存储器中创建命名空间。如果与其他应用共用同一个缓存存储器，这个选项特别有用。</li>
+<li>  <code>:compress</code>：指定压缩缓存。通过缓慢的网络传输大量缓存时用得着。</li>
+<li>  <code>:compress_threshold</code>：与 <code>:compress</code> 选项搭配使用，指定一个阈值，未达到时不压缩缓存。默认为 16 千字节。</li>
+<li>  <code>:expires_in</code>：为缓存条目设定失效时间（秒数），失效后自动从缓存中删除。</li>
+<li>  <code>:race_condition_ttl</code>：与 <code>:expires_in</code> 选项搭配使用。避免多个进程同时重新生成相同的缓存条目（也叫 dog pile effect），防止让缓存条目过期时出现条件竞争。这个选项设定在重新生成新值时失效的条目还可以继续使用多久（秒数）。如果使用 <code>:expires_in</code> 选项， 最好也设定这个选项。</li>
+</ul>
+<p><a class="anchor" id="custom-cache-stores"></a></p><h5 id="custom-cache-stores">2.2.1 自定义缓存存储器</h5><p>缓存存储器可以自己定义，只需扩展 <code>ActiveSupport::Cache::Store</code> 类，实现相应的方法。这样，你可以把任何缓存技术带到你的 Rails 应用中。</p><p>若想使用自定义的缓存存储器，只需把 <code>cache_store</code> 设为自定义类的实例：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.cache_store = MyCacheStore.new
+
+</pre>
+</div>
+<p><a class="anchor" id="activesupport-cache-memorystore"></a></p><h4 id="activesupport-cache-memorystore">2.3 <code>ActiveSupport::Cache::MemoryStore</code>
+</h4><p>这个缓存存储器把缓存条目放在内存中，与 Ruby 进程放在一起。可以把 <code>:size</code> 选项传给构造方法，指定缓存的大小限制（默认为 32Mb）。超过分配的大小后，会清理缓存，把最不常用的条目删除。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.cache_store = :memory_store, { size: 64.megabytes }
+
+</pre>
+</div>
+<p>如果运行多个 Ruby on Rails 服务器进程（例如使用 Phusion Passenger 或 Puma 集群模式），各个实例之间无法共享缓存数据。这个缓存存储器不适合大型应用使用。不过，适合只有几个服务器进程的低流量小型应用使用，也适合在开发环境和测试环境中使用。</p><p><a class="anchor" id="activesupport-cache-filestore"></a></p><h4 id="activesupport-cache-filestore">2.4 <code>ActiveSupport::Cache::FileStore</code>
+</h4><p>这个缓存存储器使用文件系统存储缓存条目。初始化这个存储器时，必须指定存储文件的目录：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.cache_store = :file_store, "/path/to/cache/directory"
+
+</pre>
+</div>
+<p>使用这个缓存存储器时，在同一台主机中运行的多个服务器进程可以共享缓存。这个缓存存储器适合一到两个主机的中低流量网站使用。运行在不同主机中的多个服务器进程若想共享缓存，可以使用共享的文件系统，但是不建议这么做。</p><p>缓存量一直增加，直到填满磁盘，所以建议你定期清理旧缓存条目。</p><p>这是默认的缓存存储器。</p><p><a class="anchor" id="activesupport-cache-memcachestore"></a></p><h4 id="activesupport-cache-memcachestore">2.5 <code>ActiveSupport::Cache::MemCacheStore</code>
+</h4><p>这个缓存存储器使用 Danga 的 <code>memcached</code> 服务器为应用提供中心化缓存。Rails 默认使用自带的 <code>dalli</code> gem。这是生产环境的网站目前最常使用的缓存存储器。通过它可以实现单个共享的缓存集群，效率很高，有较好的冗余。</p><p>初始化这个缓存存储器时，要指定集群中所有 memcached 服务器的地址。如果不指定，假定 memcached 运行在本地的默认端口上，但是对大型网站来说，这样做并不好。</p><p>这个缓存存储器的 <code>write</code> 和 <code>fetch</code> 方法接受两个额外的选项，以便利用 memcached 的独有特性。指定 <code>:raw</code> 时，直接把值发给服务器，不做序列化。值必须是字符串或数字。memcached 的直接操作，如 <code>increment</code> 和 <code>decrement</code>，只能用于原始值。还可以指定 <code>:unless_exist</code> 选项，不让 memcached 覆盖现有条目。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.cache_store = :mem_cache_store, "cache-1.example.com", "cache-2.example.com"
+
+</pre>
+</div>
+<p><a class="anchor" id="activesupport-cache-nullstore"></a></p><h4 id="activesupport-cache-nullstore">2.6 <code>ActiveSupport::Cache::NullStore</code>
+</h4><p>这个缓存存储器只应该在开发或测试环境中使用，它并不存储任何信息。在开发环境中，如果代码直接与 <code>Rails.cache</code> 交互，但是缓存可能对代码的结果有影响，可以使用这个缓存存储器。在这个缓存存储器上调用 <code>fetch</code> 和 <code>read</code> 方法不返回任何值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.cache_store = :null_store
+
+</pre>
+</div>
+<p><a class="anchor" id="cache-keys"></a></p><h3 id="cache-keys">3 缓存键</h3><p>缓存中使用的键可以是能响应 <code>cache_key</code> 或 <code>to_param</code> 方法的任何对象。如果想定制生成键的方式，可以覆盖 <code>cache_key</code> 方法。Active Record 根据类名和记录 ID 生成缓存键。</p><p>缓存键的值可以是散列或数组：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 这是一个有效的缓存键
+Rails.cache.read(site: "mysite", owners: [owner_1, owner_2])
+
+</pre>
+</div>
+<p><code>Rails.cache</code> 使用的键与存储引擎使用的并不相同，存储引擎使用的键可能含有命名空间，或者根据后端的限制做调整。这意味着，使用 <code>Rails.cache</code> 存储值时使用的键可能无法用于供 <code>dalli</code> gem 获取缓存条目。然而，你也无需担心会超出 memcached 的大小限制，或者违背句法规则。</p><p><a class="anchor" id="conditional-get-support"></a></p><h3 id="conditional-get-support">4 对条件 GET 请求的支持</h3><p>条件 GET 请求是 HTTP 规范的一个特性，以此告诉 Web 浏览器，GET 请求的响应自上次请求之后没有变化，可以放心从浏览器的缓存中读取。</p><p>为此，要传递 <code>HTTP_IF_NONE_MATCH</code> 和 <code>HTTP_IF_MODIFIED_SINCE</code> 首部，其值分别为唯一的内容标识符和上一次改动时的时间戳。浏览器发送的请求，如果内容标识符（etag）或上一次修改的时间戳与服务器中的版本匹配，那么服务器只需返回一个空响应，把状态设为未修改。</p><p>服务器（也就是我们自己）要负责查看最后修改时间戳和 <code>HTTP_IF_NONE_MATCH</code> 首部，判断要不要返回完整的响应。既然 Rails 支持条件 GET 请求，那么这个任务就非常简单：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ProductsController &lt; ApplicationController
+
+  def show
+    @product = Product.find(params[:id])
+
+    # 如果根据指定的时间戳和 etag 值判断请求的内容过期了
+    # （即需要重新处理）执行这个块
+    if stale?(last_modified: @product.updated_at.utc, etag: @product.cache_key)
+      respond_to do |wants|
+        # ... 正常处理响应
+      end
+    end
+
+    # 如果请求的内容还新鲜（即未修改），无需做任何事
+    # render 默认使用前面 stale? 中的参数做检查，会自动发送 :not_modified 响应
+    # 就这样，工作结束
+  end
+end
+
+</pre>
+</div>
+<p>除了散列，还可以传入模型。Rails 会使用 <code>updated_at</code> 和 <code>cache_key</code> 方法设定 <code>last_modified</code> 和 <code>etag</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ProductsController &lt; ApplicationController
+  def show
+    @product = Product.find(params[:id])
+
+    if stale?(@product)
+      respond_to do |wants|
+        # ... 正常处理响应
+      end
+    end
+  end
+end
+
+</pre>
+</div>
+<p>如果无需特殊处理响应，而且使用默认的渲染机制（即不使用 <code>respond_to</code>，或者不自己调用 <code>render</code>），可以使用 <code>fresh_when</code> 简化这个过程：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ProductsController &lt; ApplicationController
+
+  # 如果请求的内容是新鲜的，自动返回 :not_modified
+  # 否则渲染默认的模板（product.*）
+
+  def show
+    @product = Product.find(params[:id])
+    fresh_when last_modified: @product.published_at.utc, etag: @product
+  end
+end
+
+</pre>
+</div>
+<p>有时，我们需要缓存响应，例如永不过期的静态页面。为此，可以使用 <code>http_cache_forever</code> 辅助方法，让浏览器和代理无限期缓存。</p><p>默认情况下，缓存的响应是私有的，只在用户的 Web 浏览器中缓存。如果想让代理缓存响应，设定 <code>public: true</code>，让代理把缓存的响应提供给所有用户。</p><p>使用这个辅助方法时，<code>last_modified</code> 首部的值被设为 <code>Time.new(2011, 1, 1).utc</code>，<code>expires</code> 首部的值被设为 100 年。</p><div class="warning"><p>使用这个方法时要小心，因为浏览器和代理不会作废缓存的响应，除非强制清除浏览器缓存。</p></div><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class HomeController &lt; ApplicationController
+  def index
+    http_cache_forever(public: true) do
+      render
+    end
+  end
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="strong-v-s-weak-etags"></a></p><h4 id="strong-v-s-weak-etags">4.1 强 Etag 与弱 Etag</h4><p>Rails 默认生成弱 ETag。这种 Etag 允许语义等效但主体不完全匹配的响应具有相同的 Etag。如果响应主体有微小改动，而不想重新渲染页面，可以使用这种 Etag。</p><p>为了与强 Etag 区别，弱 Etag 前面有 <code>W/</code>。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+W/"618bbc92e2d35ea1945008b42799b0e7" =&gt; 弱 ETag
+"618bbc92e2d35ea1945008b42799b0e7"   =&gt; 强 ETag
+
+</pre>
+</div>
+<p>与弱 Etag 不同，强 Etag 要求响应完全一样，不能有一个字节的差异。在大型视频或 PDF 文件内部做 Range 查询时用得到。有些 CDN，如 Akamai，只支持强 Etag。如果确实想生成强 Etag，可以这么做：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ProductsController &lt; ApplicationController
+  def show
+    @product = Product.find(params[:id])
+    fresh_when last_modified: @product.published_at.utc, strong_etag: @product
+  end
+end
+
+</pre>
+</div>
+<p>也可以直接在响应上设定强 Etag：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+response.strong_etag = response.body
+# =&gt; "618bbc92e2d35ea1945008b42799b0e7"
+
+</pre>
+</div>
+<p><a class="anchor" id="caching-in-development"></a></p><h3 id="caching-in-development">5 在开发环境中测试缓存</h3><p>我们经常需要在开发模式中测试应用采用的缓存策略。Rails 提供的 Rake 任务 <code>dev:cache</code> 能轻易启停缓存。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails dev:cache
+Development mode is now being cached.
+$ bin/rails dev:cache
+Development mode is no longer being cached.
+
+</pre>
+</div>
+<p><a class="anchor" id="references"></a></p><h3 id="references">6 参考资源</h3>
+<ul>
+<li>  <a href="https://signalvnoise.com/posts/3113-how-key-based-cache-expiration-works">DHH 写的文章：How key-based cache expiration works</a>
+</li>
+<li>  <a href="http://railscasts.com/episodes/387-cache-digests">Railscast 中介绍缓存摘要的视频</a>
+</li>
+</ul>
+
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

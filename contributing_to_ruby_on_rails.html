@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>为 Ruby on Rails 做贡献 — Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="返回首页">Rails 指南</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>新手入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询接口</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入探索</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">Rails 应用测试指南</a></dd>
+                <dd><a href="security.html">Ruby on Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器和模板</a></dd>
+                <dt>为 Ruby on Rails 做贡献</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档指导方针</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">Ruby on Rails 的维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布记</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="新手入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询接口</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入探索">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">Rails 应用测试指南</option>
+                  <option value="security.html">Ruby on Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器和模板</option>
+              </optgroup>
+              <optgroup label="为 Ruby on Rails 做贡献">
+                  <option value="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</option>
+                  <option value="api_documentation_guidelines.html">API 文档指导方针</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">Ruby on Rails 的维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布记</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>为 Ruby on Rails 做贡献</h2><p>本文介绍几种参与 Ruby on Rails 开发的方式。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li>  如何使用 GitHub 报告问题；</li>
+<li>  如何克隆 master，运行测试组件；</li>
+<li>  如何帮助解决现有问题；</li>
+<li>  如何为 Ruby on Rails 文档做贡献；</li>
+<li>  如何为 Ruby on Rails 代码做贡献。</li>
+</ul>
+<p>Ruby on Rails 不是某一个人的框架。这些年，有成百上千个人为 Ruby on Rails 做贡献，小到修正一个字符，大到调整重要的架构或文档——目的都是把 Ruby on Rails 变得更好，适合所有人使用。即便你现在不想编写代码或文档，也能通过其他方式做贡献，例如报告问题和测试补丁。</p><p><a href="https://github.com/rails/rails/blob/master/README.md">Rails 的自述文件</a>说道，参与 Rails 及其子项目代码基开发的人，参与问题追踪系统、聊天室和邮件列表的人，都要遵守 Rails 的<a href="http://rubyonrails.org/conduct/">行为准则</a>。</p>
+
+              <div id="subCol">
+          <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />目录</h3>
+          <ol class="chapters">
+<li>
+<a href="#reporting-an-issue">报告错误</a>
+
+<ul>
+<li><a href="#creating-a-bug-report">创建一个缺陷报告</a></li>
+<li><a href="#create-an-executable-test-case">创建可执行的测试用例</a></li>
+<li><a href="#special-treatment-for-security-issues">特殊对待安全问题</a></li>
+<li><a href="#what-about-feature-requests-questionmark">功能请求怎么办？</a></li>
+</ul>
+</li>
+<li>
+<a href="#helping-to-resolve-existing-issues">帮助解决现有问题</a>
+
+<ul>
+<li><a href="#verifying-bug-reports">确认缺陷报告</a></li>
+<li><a href="#testing-patches">测试补丁</a></li>
+</ul>
+</li>
+<li><a href="#contributing-to-the-rails-documentation">为 Rails 文档做贡献</a></li>
+<li><a href="#translating-rails-guides">翻译 Rails 指南</a></li>
+<li>
+<a href="#contributing-to-the-rails-code">为 Rails 代码做贡献</a>
+
+<ul>
+<li><a href="#setting-up-a-development-environment">搭建开发环境</a></li>
+<li><a href="#clone-the-rails-repository">克隆 Rails 仓库</a></li>
+<li><a href="#bundle-install">bundle install</a></li>
+<li><a href="#running-an-application-against-your-local-branch">使用本地分支运行应用</a></li>
+<li><a href="#write-your-code">编写你的代码</a></li>
+<li><a href="#benchmark-your-code">对你的代码做基准测试</a></li>
+<li><a href="#running-tests">运行测试</a></li>
+<li><a href="#warnings">提醒</a></li>
+<li><a href="#updating-the-changelog">更新 CHANGELOG</a></li>
+<li><a href="#updating-the-gemfile-lock">更新 Gemfile.lock</a></li>
+<li><a href="#commit-your-changes">提交改动</a></li>
+<li><a href="#update-your-branch">更新你的分支</a></li>
+<li><a href="#fork">派生</a></li>
+<li><a href="#issue-a-pull-request">创建拉取请求</a></li>
+<li><a href="#get-some-feedback">获得反馈</a></li>
+<li><a href="#iterate-as-necessary">必要时做迭代</a></li>
+<li><a href="#older-versions-of-ruby-on-rails">旧版 Ruby on Rails</a></li>
+</ul>
+</li>
+<li><a href="#rails-contributors">Rails 贡献者</a></li>
+</ol>
+
+        </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <p><a class="anchor" id="reporting-an-issue"></a></p><h3 id="reporting-an-issue">1 报告错误</h3><p>Ruby on Rails 使用 <a href="https://github.com/rails/rails/issues">GitHub 的问题追踪系统</a>追踪问题（主要是解决缺陷和贡献新代码）。如果你发现 Ruby on Rails 有缺陷，首先应该发布到这个系统中。若想提交问题、评论问题或创建拉取请求， 你要注册一个 GitHub 账户（免费）。</p><div class="note"><p>Ruby on Rails 最新版的缺陷最受关注。此外，Rails 核心团队始终欢迎能对最新开发版做测试的人反馈。本文后面会说明如何测试最新开发版。</p></div><p><a class="anchor" id="creating-a-bug-report"></a></p><h4 id="creating-a-bug-report">1.1 创建一个缺陷报告</h4><p>如果你在 Ruby on Rails 中发现一个没有安全风险的问题，在 <a href="https://github.com/rails/rails/issues">GitHub 的问题追踪系统</a>中搜索一下，说不定已经有人报告了。如果之前没有人报告，接下来你要<a href="https://github.com/rails/rails/issues/new">创建一个</a>。（报告安全问题的方法参见下一节。）</p><p>问题报告应该包含标题，而且要使用简洁的语言描述问题。你应该尽量多提供相关的信息，而且至少要有一个代码示例，演示所述的问题。如果能提供一个单元测试，说明预期行为更好。你的目标是让你自己以及其他人能重现缺陷，找出修正方法。</p><p>然后，耐心等待。除非你报告的是紧急问题，会导致世界末日，否则你要等待可能有其他人也遇到同样的问题，与你一起去解决。不要期望你报告的问题能立即得到关注，有人立刻着手解决。像这样报告问题基本上是让自己迈出修正问题的第一步，并且让其他遇到同样问题的人复议。</p><p><a class="anchor" id="create-an-executable-test-case"></a></p><h4 id="create-an-executable-test-case">1.2 创建可执行的测试用例</h4><p>提供重现问题的方式有助于别人帮你确认、研究并最终解决问题。为此，你可以提供可执行的测试用例。为了简化这一过程，我们准备了几个缺陷报告模板供你参考：</p>
+<ul>
+<li>  报告 Active Record（模型、数据库）问题的模板：<a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_gem.rb">gem</a> / <a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_master.rb">master</a>
+</li>
+<li>  报告 Active Record（迁移）问题的模板：<a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_migrations_gem.rb">gem</a> / <a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_record_migrations_master.rb">master</a>
+</li>
+<li>  报告 Action Pack（控制器、路由）问题的模板：<a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_gem.rb">gem</a> / <a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/action_controller_master.rb">master</a>
+</li>
+<li>  报告 Active Job 问题的模板：<a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_job_gem.rb">gem</a> / <a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/active_job_master.rb">master</a>
+</li>
+<li>  其他问题的通用模板：<a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/generic_gem.rb">gem</a> / <a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/generic_master.rb">master</a>
+</li>
+</ul>
+<p>这些模板包含样板代码，供你着手编写测试用例，分别针对 Rails 的发布版（<code>*_gem.rb</code>）和最新开发版（<code>*_master.rb</code>）。</p><p>你只需把相应模板中的内容复制到一个 <code>.rb</code> 文件中，然后做必要的改动，说明问题。如果想运行测试，只需在终端里执行 <code>ruby the_file.rb</code>。如果一切顺利，测试用例应该失败。</p><p>随后，可以通过一个 <a href="https://gist.github.com/">gist</a> 分享你的可执行测试用例，或者直接粘贴到问题描述中。</p><p><a class="anchor" id="special-treatment-for-security-issues"></a></p><h4 id="special-treatment-for-security-issues">1.3 特殊对待安全问题</h4><div class="warning"><p>请不要在公开的 GitHub 问题报告中报告安全漏洞。安全问题的报告步骤在 <a href="http://rubyonrails.org/security">Rails 安全方针页面</a>中有详细说明。</p></div><p><a class="anchor" id="what-about-feature-requests-questionmark"></a></p><h4 id="what-about-feature-requests-questionmark">1.4 功能请求怎么办？</h4><p>请勿在 GitHub 问题追踪系统中请求新功能。如果你想把新功能添加到 Ruby on Rails 中，你要自己编写代码，或者说服他人与你一起编写代码。本文后面会详述如何为 Ruby on Rails 提请补丁。如果在 GitHub 问题追踪系统发布希望含有的功能，但是没有提供代码，在审核阶段会将其标记为“无效”。</p><p>有时，很难区分“缺陷”和“功能”。一般来说，功能是为了添加新行为，而缺陷是导致不正确行为的缘由。有时，核心团队会做判断。尽管如此，区别通常影响的是补丁放在哪个发布版中。我们十分欢迎你提交功能！只不过，新功能不会添加到维护分支中。</p><p>如果你想在着手打补丁之前征询反馈，请向 <a href="https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-core">rails-core 邮件列表</a>发送电子邮件。你可能得不到回应，这表明大家是中立的。你可能会发现有人对你提议的功能感兴趣；可能会有人说你的提议不可行。但是新想法就应该在那里讨论。GitHub 问题追踪系统不是集中讨论特性请求的正确场所。</p><p><a class="anchor" id="helping-to-resolve-existing-issues"></a></p><h3 id="helping-to-resolve-existing-issues">2 帮助解决现有问题</h3><p>除了报告问题之外，你还可以帮助核心团队解决现有问题。如果查看 GitHub 中的<a href="https://github.com/rails/rails/issues">问题列表</a>，你会发现很多问题都得到了关注。为此你能做些什么呢？其实，你能做的有很多。</p><p><a class="anchor" id="verifying-bug-reports"></a></p><h4 id="verifying-bug-reports">2.1 确认缺陷报告</h4><p>对新人来说，帮助确认缺陷报告就行了。你能在自己的电脑中重现报告的问题吗？如果能，可以在问题的评论中说你发现了同样的问题。</p><p>如果问题描述不清，你能帮忙说得更具体些吗？或许你可以提供额外的信息，帮助重现缺陷，或者去掉说明问题所不需要的步骤。</p><p>如果发现缺陷报告中没有测试，你可以贡献一个失败测试。这是学习源码的好机会：查看现有的测试文件能让你学到如何编写更好的测试。新测试最好以补丁的形式提供，详情参阅 <a href="#contributing-to-the-rails-code">为 Rails 代码做贡献</a>。</p><p>不管你自己写不写代码，只要你能把缺陷报告变得更简洁、更便于重现，就能为尝试修正缺陷的人提供帮助。</p><p><a class="anchor" id="testing-patches"></a></p><h4 id="testing-patches">2.2 测试补丁</h4><p>你还可以帮忙检查通过 GitHub 为 Ruby on Rails 提交的拉取请求。在使用别人的改动之前，你要创建一个专门的分支：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git checkout -b testing_branch
+
+</pre>
+</div>
+<p>然后可以使用他们的远程分支更新代码基。假如 GitHub 用户 JohnSmith 派生了 Rails 源码，地址是 <a href="https://github.com/JohnSmith/rails%EF%BC%8C%E7%84%B6%E5%90%8E%E6%8E%A8%E9%80%81%E5%88%B0%E4%B8%BB%E9%A2%98%E5%88%86%E6%94%AF%E2%80%9Corange%E2%80%9D%EF%BC%9A">https://github.com/JohnSmith/rails，然后推送到主题分支“orange”：</a></p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git remote add JohnSmith https://github.com/JohnSmith/rails.git
+$ git pull JohnSmith orange
+
+</pre>
+</div>
+<p>然后，使用主题分支中的代码做测试。下面是一些考虑的事情：</p>
+<ul>
+<li>  改动可用吗？</li>
+<li>  你对测试满意吗？你能理解测试吗？缺少测试吗？</li>
+<li>  有适度的文档覆盖度吗？其他地方的文档需要更新吗？</li>
+<li>  你喜欢他的实现方式吗？你能以更好或更快的方式实现部分改动吗？</li>
+</ul>
+<p>拉取请求中的改动让你满意之后，在 GitHub 问题追踪系统中发表评论，表明你赞成。你的评论应该说你喜欢这个改动，以及你的观点。比如说：</p>
+<blockquote>
+<p>我喜欢你对 generate_finder_sql 这部分代码的调整，现在更好了。测试也没问题。</p>
+</blockquote>
+<p>如果你的评论只是说“+1”，其他评审很难严肃对待。你要表明你花时间审查拉取请求了。</p><p><a class="anchor" id="contributing-to-the-rails-documentation"></a></p><h3 id="contributing-to-the-rails-documentation">3 为 Rails 文档做贡献</h3><p>Ruby on Rails 主要有两份文档：这份指南，帮你学习 Ruby on Rails；API，作为参考资料。</p><p>你可以帮助改进这份 Rails 指南，把它变得更简单、更为一致，也更易于理解。你可以添加缺少的信息、更正错误、修正错别字或者针对最新的 Rails 开发版做更新。</p><p>为此，可以向 <a href="http://github.com/rails/rails">Rails 项目</a>发送拉取请求。</p><p>如果你想为文档做贡献，请阅读<a href="api_documentation_guidelines.html">API 文档指导方针</a>和<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</a>。</p><div class="note"><p>为了减轻 CI 服务器的压力，关于文档的提交消息中应该包含 <code>[ci skip]</code>，跳过构建步骤。只修改文档的提交一定要这么做。</p></div><p><a class="anchor" id="translating-rails-guides"></a></p><h3 id="translating-rails-guides">4 翻译 Rails 指南</h3><p>我们欢迎人们自发把 Rails 指南翻译成其他语言。翻译时请遵照下述步骤：</p>
+<ul>
+<li>  派生项目 <a href="https://github.com/rails/rails">https://github.com/rails/rails</a>
+</li>
+<li>  为你的语言添加一个文件夹，例如针对意大利语的 guides/source/it-IT</li>
+<li>  把 guides/source 中的内容复制到你创建的文件夹中，然后翻译</li>
+<li>  不要翻译 HTML 文件，因为那是自动生成的</li>
+</ul>
+<p>注意，翻译不提交到 Rails 仓库中。如前所述，翻译在你派生的项目中操作。这么做的原因是，或许只有英语文档适合通过补丁维护。</p><p>如果想生成这份指南的 HTML 格式，进入 guides 目录，然后执行（以 it-IT 为例）：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bundle install
+$ bundle exec rake guides:generate:html GUIDES_LANGUAGE=it-IT
+
+</pre>
+</div>
+<p>上述命令在 output 目录中生成这份指南。</p><div class="note"><p>上述说明针对 Rails 4 及以上版本。Redcarpet gem 无法在 JRuby 中使用。</p></div><p>已知的翻译成果：</p>
+<ul>
+<li>  意大利语：<a href="https://github.com/rixlabs/docrails">https://github.com/rixlabs/docrails</a>
+</li>
+<li>  西班牙语：<a href="http://wiki.github.com/gramos/docrails">http://wiki.github.com/gramos/docrails</a>
+</li>
+<li>  波兰语：<a href="https://github.com/apohllo/docrails/tree/master">https://github.com/apohllo/docrails/tree/master</a>
+</li>
+<li>  法语：<a href="https://github.com/railsfrance/docrails">https://github.com/railsfrance/docrails</a>
+</li>
+<li>  捷克语：<a href="https://github.com/rubyonrails-cz/docrails/tree/czech">https://github.com/rubyonrails-cz/docrails/tree/czech</a>
+</li>
+<li>  土耳其语：<a href="https://github.com/ujk/docrails/tree/master">https://github.com/ujk/docrails/tree/master</a>
+</li>
+<li>  韩语：<a href="https://github.com/rorlakr/rails-guides">https://github.com/rorlakr/rails-guides</a>
+</li>
+<li>  简体中文：<a href="https://github.com/AndorChen/rails-guides">https://github.com/AndorChen/rails-guides</a>
+</li>
+<li>  繁体中文：<a href="https://github.com/docrails-tw/guides">https://github.com/docrails-tw/guides</a>
+</li>
+<li>  俄语：<a href="https://github.com/morsbox/rusrails">https://github.com/morsbox/rusrails</a>
+</li>
+<li>  日语：<a href="https://github.com/yasslab/railsguides.jp">https://github.com/yasslab/railsguides.jp</a>
+</li>
+</ul>
+<p><a class="anchor" id="contributing-to-the-rails-code"></a></p><h3 id="contributing-to-the-rails-code">5 为 Rails 代码做贡献</h3><p><a class="anchor" id="setting-up-a-development-environment"></a></p><h4 id="setting-up-a-development-environment">5.1 搭建开发环境</h4><p>过了提交缺陷这个初级阶段之后，若想帮助解决现有问题，或者为 Ruby on Rails 贡献自己的代码，必须要能运行测试组件。这一节教你在自己的电脑中搭建测试的环境。</p><p><a class="anchor" id="the-easy-way"></a></p><h5 id="the-easy-way">5.1.1 简单方式</h5><p>搭建开发环境最简单、也是推荐的方式是使用 <a href="https://github.com/rails/rails-dev-box">Rails 开发虚拟机</a>。</p><p><a class="anchor" id="the-hard-way"></a></p><h5 id="the-hard-way">5.1.2 笨拙方式</h5><p>如果你不便使用 Rails 开发虚拟机，请阅读<a href="development_dependencies_install.html">安装开发依赖</a>。</p><p><a class="anchor" id="clone-the-rails-repository"></a></p><h4 id="clone-the-rails-repository">5.2 克隆 Rails 仓库</h4><p>若想贡献代码，需要克隆 Rails 仓库：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git clone https://github.com/rails/rails.git
+
+</pre>
+</div>
+<p>然后创建一个专门的分支：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ cd rails
+$ git checkout -b my_new_branch
+
+</pre>
+</div>
+<p>分支的名称无关紧要，因为这个分支只存在于你的本地电脑和你在 GitHub 上的个人仓库中，不会出现在 Rails 的 Git 仓库里。</p><p><a class="anchor" id="bundle-install"></a></p><h4 id="bundle-install">5.3 bundle install</h4><p>安装所需的 gem：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bundle install
+
+</pre>
+</div>
+<p><a class="anchor" id="running-an-application-against-your-local-branch"></a></p><h4 id="running-an-application-against-your-local-branch">5.4 使用本地分支运行应用</h4><p>如果想使用虚拟的 Rails 应用测试改动，执行 <code>rails new</code> 命令时指定 <code>--dev</code> 旗标，使用本地分支生成一个应用：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ cd rails
+$ bundle exec rails new ~/my-test-app --dev
+
+</pre>
+</div>
+<p>上述命令使用本地分支在 <code>~/my-test-app</code> 目录中生成一个应用，重启服务器后便能看到改动的效果。</p><p><a class="anchor" id="write-your-code"></a></p><h4 id="write-your-code">5.5 编写你的代码</h4><p>现在可以着手添加和编辑代码了。你处在自己的分支中，可以编写任何你想编写的代码（使用 <code>git branch -a</code> 确定你处于正确的分支中）。不过，如果你打算把你的改动提交到 Rails 中，要注意几点：</p>
+<ul>
+<li>  代码要写得正确。</li>
+<li>  使用 Rails 习惯用法和辅助方法。</li>
+<li>  包含测试，在没有你的代码时失败，添加之后则通过。</li>
+<li>  更新（相应的）文档、别处的示例和指南。只要受你的代码影响，都更新。</li>
+</ul>
+<div class="info"><p>装饰性的改动，没有为 Rails 的稳定性、功能或可测试性做出实质改进的改动一般不会接受（关于这一决定的讨论参见<a href="https://github.com/rails/rails/pull/13771#issuecomment-32746700">这里</a>）。</p></div><p><a class="anchor" id="follow-the-coding-conventions"></a></p><h5 id="follow-the-coding-conventions">5.5.1 遵守编程约定</h5><p>Rails 遵守下述简单的编程风格约定：</p>
+<ul>
+<li>  （缩进）使用两个空格，不用制表符。</li>
+<li>  行尾没有空白。空行不能有任何空白。</li>
+<li>  私有和受保护的方法多一层缩进。</li>
+<li>  使用 Ruby 1.9 及以上版本采用的散列句法。使用 <code>{ a: :b }</code>，而非 <code>{ :a =&gt; :b }</code>。</li>
+<li>  较之 <code>and</code>/<code>or</code>，尽量使用 <code>&amp;&amp;</code>/<code>||</code>。</li>
+<li>  编写类方法时，较之 <code>self.method</code>，尽量使用 <code>class &lt;&lt; self</code>。</li>
+<li>  使用 <code>my_method(my_arg)</code>，而非 <code>my_method( my_arg )</code> 或 <code>my_method my_arg</code>。</li>
+<li>  使用 <code>a = b</code>，而非 <code>a=b</code>。</li>
+<li>  使用 <code>assert_not</code> 方法，而非 <code>refute</code>。</li>
+<li>  编写单行块时，较之 <code>method{do_stuff}</code>，尽量使用 <code>method { do_stuff }</code>。</li>
+<li>  遵照源码中在用的其他约定。</li>
+</ul>
+<p>以上是指导方针，使用时请灵活应变。</p><p><a class="anchor" id="benchmark-your-code"></a></p><h4 id="benchmark-your-code">5.6 对你的代码做基准测试</h4><p>如果你的改动对 Rails 的性能有影响，请对你的代码做基准测试，衡量影响。请把基准测试脚本与结果一起分享出来。应该考虑把这个信息写入提交消息，以便后续开发者验证你的发现，确定是否仍有必要修改。（例如，Ruby VM 最新的优化出来后，以前的优化可能就没必要了。）</p><p>针对你所关注的情况做优化十分简单，但是在其他情况下可能导致回归错误。英雌，应该在一些典型的情况下测试你的改动。理想情况下，你应该在从生产应用中抽离出来的真实场景中测试。</p><p>你可以从<a href="https://github.com/rails/rails/blob/master/guides/bug_report_templates/benchmark.rb">基准测试模板</a>入手，模板中有使用 <a href="https://github.com/evanphx/benchmark-ips">benchmark-ips</a> gem 的样板代码。这个模板针对相对独立的改动，可以直接放在脚本中。</p><p><a class="anchor" id="running-tests"></a></p><h4 id="running-tests">5.7 运行测试</h4><p>在推送改动之前，通常不运行整个测试组件。railties 的测试组件所需的时间特别长，如果按照推荐的工作流程，使用 <a href="https://github.com/rails/rails-dev-box">rails-dev-box</a> 把源码挂载到 <code>/vagrant</code>，时间更长。</p><p>作为一种折中方案，应该测试明显受到影响的代码；如果不是改动 railties，运行受影响的组件的整个测试组件。如果所有测试都能通过，表明你可以提请你的贡献了。为了捕获别处预料之外的问题，我们配备了 <a href="https://travis-ci.org/rails/rails">Travis CI</a>，作为一个安全保障。</p><p><a class="anchor" id="entire-rails"></a></p><h5 id="entire-rails">5.7.1 整个 Rails</h5><p>运行全部测试：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ cd rails
+$ bundle exec rake test
+
+</pre>
+</div>
+<p><a class="anchor" id="for-a-particular-component"></a></p><h5 id="for-a-particular-component">5.7.2 某个组件</h5><p>可以只运行某个组件（如 Action Pack）的测试。例如，运行 Action Mailer 的测试：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ cd actionmailer
+$ bundle exec rake test
+
+</pre>
+</div>
+<p><a class="anchor" id="running-a-single-test"></a></p><h5 id="running-a-single-test">5.7.3 运行单个测试</h5><p>可以通过 <code>ruby</code> 运行单个测试。例如：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ cd actionmailer
+$ bundle exec ruby -w -Itest test/mail_layout_test.rb -n test_explicit_class_layout
+
+</pre>
+</div>
+<p><code>-n</code> 选项指定运行单个方法，而非整个文件。</p><p><a class="anchor" id="testing-active-record"></a></p><h5 id="testing-active-record">5.7.4 测试 Active Record</h5><p>首先，创建所需的数据库。必要的表名、用户名和密码参见 <code>activerecord/test/config.example.yml</code>。</p><p>对 MySQL 和 PostgreSQL 来说，运行 SQL 语句 <code>create database activerecord_unittest</code> 和 <code>create database activerecord_unittest2</code> 就行。SQLite3 无需这一步。</p><p>只使用 SQLite3 运行 Active Record 的测试组件：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ cd activerecord
+$ bundle exec rake test:sqlite3
+
+</pre>
+</div>
+<p>然后分别运行：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+test:mysql2
+test:postgresql
+
+</pre>
+</div>
+<p>最后，一次运行前述三个测试：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bundle exec rake test
+
+</pre>
+</div>
+<p>也可以单独运行某个测试：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ ARCONN=sqlite3 bundle exec ruby -Itest test/cases/associations/has_many_associations_test.rb
+
+</pre>
+</div>
+<p>使用全部适配器运行某个测试：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bundle exec rake TEST=test/cases/associations/has_many_associations_test.rb
+
+</pre>
+</div>
+<p>此外，还可以调用 <code>test_jdbcmysql</code>、<code>test_jdbcsqlite3</code> 或 <code>test_jdbcpostgresql</code>。针对其他数据库的测试参见 <code>activerecord/RUNNING_UNIT_TESTS.rdoc</code> 文件，持续集成服务器运行的测试组件参见 <code>ci/travis.rb</code> 文件。</p><p><a class="anchor" id="warnings"></a></p><h4 id="warnings">5.8 提醒</h4><p>运行测试组件的命令启用了提醒。理想情况下，Ruby on Rails 不应该发出提醒，不过你可能会见到一些，其中部分可能来自第三方库。如果看到提醒，请忽略（或修正），然后提交不发出提醒的补丁。</p><p>如果确信自己在做什么，想得到干净的输出，可以覆盖这个旗标：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ RUBYOPT=-W0 bundle exec rake test
+
+</pre>
+</div>
+<p><a class="anchor" id="updating-the-changelog"></a></p><h4 id="updating-the-changelog">5.9 更新 CHANGELOG</h4><p>CHANGELOG 是每次发布的重要一环，保存着每个 Rails 版本的改动列表。</p><p>如果添加或删除了功能、提交了缺陷修正，或者添加了弃用提示，应该在框架的 CHANGELOG 顶部添加一条记录。重构和文档修改一般不应该在 CHANGELOG 中记录。</p><p>CHANGELOG 中的记录应该概述所做的改动，并且在末尾加上作者的名字。如果需要，可以写成多行，也可以缩进四个空格，添加代码示例。如果改动与某个工单有关，应该加上工单号。下面是一条 CHANGELOG 记录示例：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+*   Summary of a change that briefly describes what was changed. You can use multiple
+    lines and wrap them at around 80 characters. Code examples are ok, too, if needed:
+
+        class Foo
+          def bar
+            puts 'baz'
+          end
+        end
+
+    You can continue after the code example and you can attach issue number. GH#1234
+
+    *Your Name*
+
+</pre>
+</div>
+<p>如果没有代码示例，或者没有分成多行，可以直接在最后一个词后面加上作者的名字。否则，最好新起一段。</p><p><a class="anchor" id="updating-the-gemfile-lock"></a></p><h4 id="updating-the-gemfile-lock">5.10 更新 Gemfile.lock</h4><p>有些改动需要更新依赖。此时，要执行 <code>bundle update</code> 命令，获取依赖的正确版本，并且随改动一起提交 <code>Gemfile.lock</code> 文件。</p><p><a class="anchor" id="commit-your-changes"></a></p><h4 id="commit-your-changes">5.11 提交改动</h4><p>在自己的电脑中对你的代码满意之后，要把改动提交到 Git 仓库中：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git commit -a
+
+</pre>
+</div>
+<p>上述命令会启动编辑器，让你编写一个提交消息。写完之后，保存并关闭编辑器，然后继续往下做。</p><p>行文好，而且具有描述性的提交消息有助于别人理解你为什么做这项改动，因此请认真对待提交消息。</p><p>好的提交消息类似下面这样：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+Short summary (ideally 50 characters or less)
+
+More detailed description, if necessary. It should be wrapped to
+72 characters. Try to be as descriptive as you can. Even if you
+think that the commit content is obvious, it may not be obvious
+to others. Add any description that is already present in the
+relevant issues; it should not be necessary to visit a webpage
+to check the history.
+
+The description section can have multiple paragraphs.
+
+Code examples can be embedded by indenting them with 4 spaces:
+
+    class ArticlesController
+      def index
+        render json: Article.limit(10)
+      end
+    end
+
+You can also add bullet points:
+
+- make a bullet point by starting a line with either a dash (-)
+  or an asterisk (*)
+
+- wrap lines at 72 characters, and indent any additional lines
+  with 2 spaces for readability
+
+</pre>
+</div>
+<div class="info"><p>如果合适，请把多条提交压缩成一条提交。这样便于以后挑选，而且能保持 Git 日志整洁。</p></div><p><a class="anchor" id="update-your-branch"></a></p><h4 id="update-your-branch">5.12 更新你的分支</h4><p>你在改动的过程中，master 分支很有可能有变化。请获取这些变化：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git checkout master
+$ git pull --rebase
+
+</pre>
+</div>
+<p>然后在最新的改动上重新应用你的补丁：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git checkout my_new_branch
+$ git rebase master
+
+</pre>
+</div>
+<p>没有冲突？测试依旧能通过？你的改动依然合理？那就往下走。</p><p><a class="anchor" id="fork"></a></p><h4 id="fork">5.13 派生</h4><p>打开 <a href="https://github.com/rails/rails">GitHub 中的 Rails 仓库</a>，点击右上角的“Fork”按钮。</p><p>把派生的远程仓库添加到本地设备中的本地仓库里：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git remote add mine https://github.com:&lt;your user name&gt;/rails.git
+
+</pre>
+</div>
+<p>推送到你的远程仓库：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git push mine my_new_branch
+
+</pre>
+</div>
+<p>你可能已经把派生的仓库克隆到本地设备中了，因此想把 Rails 仓库添加为远程仓库。此时，要这么做。</p><p>在你克隆的派生仓库的目录中：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git remote add rails https://github.com/rails/rails.git
+
+</pre>
+</div>
+<p>从官方仓库中下载新提交和分支：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git fetch rails
+
+</pre>
+</div>
+<p>合并新内容：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git checkout master
+$ git rebase rails/master
+
+</pre>
+</div>
+<p>更新你派生的仓库：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git push origin master
+
+</pre>
+</div>
+<p>如果想更新另一个分支：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git checkout branch_name
+$ git rebase rails/branch_name
+$ git push origin branch_name
+
+</pre>
+</div>
+<p><a class="anchor" id="issue-a-pull-request"></a></p><h4 id="issue-a-pull-request">5.14 创建拉取请求</h4><p>打开你刚刚推送的目标仓库（例如 <a href="https://github.com/your-user-name/rails%EF%BC%89%EF%BC%8C%E7%82%B9%E5%87%BB%E2%80%9CNew">https://github.com/your-user-name/rails），点击“New</a> pull request”按钮。</p><p>如果需要修改比较的分支（默认比较 master 分支），点击“Edit”，然后点击“Click to create a pull request for this comparison”。</p><p>确保包含你所做的改动。填写补丁的详情，以及一个有意义的标题。然后点击“Send pull request”。Rails 核心团队会收到关于此次提交的通知。</p><p><a class="anchor" id="get-some-feedback"></a></p><h4 id="get-some-feedback">5.15 获得反馈</h4><p>多数拉取请求在合并之前会经过几轮迭代。不同的贡献者有时有不同的观点，而且有些补丁要重写之后才能合并。</p><p>有些 Rails 贡献者开启了 GitHub 的邮件通知，有些则没有。此外，Rails 团队中（几乎）所有人都是志愿者，因此你的拉取请求可能要等几天才能得到第一个反馈。别失望！有时快，有时慢。这就是开源世界的日常。</p><p>如果过了一周还是无人问津，你可以尝试主动推进。你可以在 <a href="http://groups.google.com/group/rubyonrails-core/">rubyonrails-core 邮件列表</a>中发消息，也可以在拉取请求中发一个评论。</p><p>在你等待反馈的过程中，可以再创建其他拉取请求，也可以给别人的拉取请求反馈。我想，他们会感激你的，正如你会感激给你反馈的人一样。</p><p><a class="anchor" id="iterate-as-necessary"></a></p><h4 id="iterate-as-necessary">5.16 必要时做迭代</h4><p>很有可能你得到的反馈是让你修改。别灰心，为活跃的开源项目做贡献就要跟上社区的步伐。如果有人建议你调整代码，你应该做调整，然后重新提交。如果你得到的反馈是，你的代码不应该添加到核心中，或许你可以考虑发布成一个 gem。</p><p><a class="anchor" id="squashing-commits"></a></p><h5 id="squashing-commits">5.16.1 压缩提交</h5><p>我们要求你做的一件事可能是让你“压缩提交”，把你的全部提交合并成一个提交。我们喜欢只有一个提交的拉取请求。这样便于把改动逆向移植（backport）到稳定分支中，压缩后易于还原不良提交，而且 Git 历史条理更清晰。Rails 是个大型项目，过多无关的提交容易扰乱视线。</p><p>为此，Git 仓库中要有一个指向官方 Rails 仓库的远程仓库。这样做是有必要的，如果你还没有这么做，确保先执行下述命令：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git remote add upstream https://github.com/rails/rails.git
+
+</pre>
+</div>
+<p>这个远程仓库的名称随意，如果你使用的不是 <code>upstream</code>，请相应修改下述说明。</p><p>假设你的远程分支是 <code>my_pull_request</code>，你要这么做：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git fetch upstream
+$ git checkout my_pull_request
+$ git rebase -i upstream/master
+
+&lt; Choose 'squash' for all of your commits except the first one. &gt;
+&lt; Edit the commit message to make sense, and describe all your changes. &gt;
+
+$ git push origin my_pull_request -f
+
+</pre>
+</div>
+<p>此时，GitHub 中的拉取请求会刷新，更新为最新的提交。</p><p><a class="anchor" id="updating-pull-request"></a></p><h5 id="updating-pull-request">5.16.2 更新拉取请求</h5><p>有时，你得到的反馈是让你修改已经提交的代码。此时可能需要修正现有的提交。在这种情况下，Git 不允许你推送改动，因为你推送的分支和本地分支不匹配。你无须重新发起拉取请求，而是可以强制推送到 GitHub 中的分支，如前一节的压缩提交命令所示：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git push origin my_pull_request -f
+
+</pre>
+</div>
+<p>这个命令会更新 GitHub 中的分支和拉取请求。不过注意，强制推送可能会导致远程分支中的提交丢失。使用时要小心。</p><p><a class="anchor" id="older-versions-of-ruby-on-rails"></a></p><h4 id="older-versions-of-ruby-on-rails">5.17 旧版 Ruby on Rails</h4><p>如果想修正旧版 Ruby on Rails，要创建并切换到本地跟踪分支（tracking branch）。下例切换到 4-0-stable 分支：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git branch --track 4-0-stable origin/4-0-stable
+$ git checkout 4-0-stable
+
+</pre>
+</div>
+<div class="info"><p>为了明确知道你处于代码的哪个版本，可以<a href="http://qugstart.com/blog/git-and-svn/add-colored-git-branch-name-to-your-shell-prompt/">把 Git 分支名放到 shell 提示符中</a>。</p></div><p><a class="anchor" id="backporting"></a></p><h5 id="backporting">5.17.1 逆向移植</h5><p>合并到 master 分支中的改动针对 Rails 的下一个主发布版。有时，你的改动可能需要逆向移植到旧的稳定分支中。一般来说，安全修正和缺陷修正会做逆向移植，而新特性和引入行为变化的补丁不会这么做。如果不确定，在逆向移植之前最好询问一位 Rails 团队成员，以免浪费精力。</p><p>对简单的修正来说，逆向移植最简单的方法是根据 master 分支的改动提取差异（diff），然后在目标分支应用改动。</p><p>首先，确保你的改动是当前分支与 master 分支之间的唯一差别：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git log master..HEAD
+
+</pre>
+</div>
+<p>然后，提取差异：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git format-patch master --stdout &gt; ~/my_changes.patch
+
+</pre>
+</div>
+<p>切换到目标分支，然后应用改动：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ git checkout -b my_backport_branch 4-2-stable
+$ git apply ~/my_changes.patch
+
+</pre>
+</div>
+<p>简单的改动可以这么做。然而，如果改动较为复杂，或者 master 分支的代码与目标分支之间差异巨大，你可能要做更多的工作。逆向移植的工作量有大有小，有时甚至不值得为此付出精力。</p><p>解决所有冲突，并且确保测试都能通过之后，推送你的改动，然后为逆向移植单独发起一个拉取请求。还应注意，旧分支的构建目标可能与 master 分支不同。如果可能，提交拉取请求之前最好在本地使用 <code>.travis.yml</code> 文件中给出的 Ruby 版本测试逆向移植。</p><p>然后……可以思考下一次贡献了！</p><p><a class="anchor" id="rails-contributors"></a></p><h3 id="rails-contributors">6 Rails 贡献者</h3><p>所有贡献者都在 <a href="http://contributors.rubyonrails.org/">Rails Contributors 页面</a>中列出。</p>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

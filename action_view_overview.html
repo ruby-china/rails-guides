@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Action View 概览 — Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="返回首页">Rails 指南</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>新手入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询接口</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入探索</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">Rails 应用测试指南</a></dd>
+                <dd><a href="security.html">Ruby on Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器和模板</a></dd>
+                <dt>为 Ruby on Rails 做贡献</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档指导方针</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">Ruby on Rails 的维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布记</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="新手入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询接口</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入探索">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">Rails 应用测试指南</option>
+                  <option value="security.html">Ruby on Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器和模板</option>
+              </optgroup>
+              <optgroup label="为 Ruby on Rails 做贡献">
+                  <option value="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</option>
+                  <option value="api_documentation_guidelines.html">API 文档指导方针</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">Ruby on Rails 的维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布记</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Action View 概览</h2><p>读完本文后，您将学到：</p>
+<ul>
+<li>  Action View 是什么，如何在 Rails 中使用 Action View；</li>
+<li>  模板、局部视图和布局的最佳使用方法；</li>
+<li>  Action View 提供了哪些辅助方法，如何自己编写辅助方法；</li>
+<li>  如何使用本地化视图。</li>
+</ul>
+
+
+              <div id="subCol">
+          <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />目录</h3>
+          <ol class="chapters">
+<li><a href="#what-is-action-view">Action View 是什么</a></li>
+<li><a href="#using-action-view-with-rails">在 Rails 中使用 Action View</a></li>
+<li>
+<a href="#templates-partials-and-layouts">模板、局部视图和布局</a>
+
+<ul>
+<li><a href="#templates">模板</a></li>
+<li><a href="#partials">局部视图</a></li>
+<li><a href="#layouts">布局</a></li>
+</ul>
+</li>
+<li><a href="#partial-layout">局部布局</a></li>
+<li>
+<a href="#view-paths">视图路径</a>
+
+<ul>
+<li><a href="#prepend-view-path">在开头添加视图路径</a></li>
+<li><a href="#append-view-path">在末尾添加视图路径</a></li>
+</ul>
+</li>
+<li>
+<a href="#overview-of-helpers-provided-by-action-view">Action View 提供的辅助方法概述</a>
+
+<ul>
+<li><a href="#assettaghelper"><code>AssetTagHelper</code> 模块</a></li>
+<li><a href="#atomfeedhelper"><code>AtomFeedHelper</code> 模块</a></li>
+<li><a href="#benchmarkhelper"><code>BenchmarkHelper</code> 模块</a></li>
+<li><a href="#cachehelper"><code>CacheHelper</code> 模块</a></li>
+<li><a href="#capturehelper"><code>CaptureHelper</code> 模块</a></li>
+<li><a href="#datehelper"><code>DateHelper</code> 模块</a></li>
+<li><a href="#debughelper"><code>DebugHelper</code> 模块</a></li>
+<li><a href="#formhelper"><code>FormHelper</code> 模块</a></li>
+<li><a href="#formoptionshelper"><code>FormOptionsHelper</code> 模块</a></li>
+<li><a href="#formtaghelper"><code>FormTagHelper</code> 模块</a></li>
+<li><a href="#javascripthelper"><code>JavaScriptHelper</code> 模块</a></li>
+<li><a href="#numberhelper"><code>NumberHelper</code> 模块</a></li>
+<li><a href="#sanitizehelper"><code>SanitizeHelper</code> 模块</a></li>
+<li><a href="#csrfhelper"><code>CsrfHelper</code> 模块</a></li>
+</ul>
+</li>
+<li><a href="#localized-views">本地化视图</a></li>
+</ol>
+
+        </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <div class="note"><p>本文原文尚未完工！</p></div><p><a class="anchor" id="what-is-action-view"></a></p><h3 id="what-is-action-view">1 Action View 是什么</h3><p>在 Rails 中，Web 请求由 Action Controller（请参阅<a href="action_controller_overview.html">Action Controller 概览</a>）和 Action View 处理。通常，Action Controller 参与和数据库的通信，并在需要时执行 CRUD 操作，然后由 Action View 负责编译响应。</p><p>Action View 模板使用混合了 HTML 标签的嵌入式 Ruby 语言编写。为了避免样板代码把模板弄乱，Action View 提供了许多辅助方法，用于创建表单、日期和字符串等常用组件。随着开发的深入，为应用添加新的辅助方法也很容易。</p><div class="note"><p>Action View 的某些特性与 Active Record 有关，但这并不意味着 Action View 依赖 Active Record。Action View 是独立的软件包，可以和任何类型的 Ruby 库一起使用。</p></div><p><a class="anchor" id="using-action-view-with-rails"></a></p><h3 id="using-action-view-with-rails">2 在 Rails 中使用 Action View</h3><p>在 <code>app/views</code> 文件夹中，每个控制器都有一个对应的文件夹，其中保存了控制器对应视图的模板文件。这些模板文件用于显示每个控制器动作产生的视图。</p><p>在 Rails 中使用脚手架生成器新建资源时，默认会执行下面的操作：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate scaffold article
+      [...]
+      invoke  scaffold_controller
+      create    app/controllers/articles_controller.rb
+      invoke    erb
+      create      app/views/articles
+      create      app/views/articles/index.html.erb
+      create      app/views/articles/edit.html.erb
+      create      app/views/articles/show.html.erb
+      create      app/views/articles/new.html.erb
+      create      app/views/articles/_form.html.erb
+      [...]
+
+</pre>
+</div>
+<p>在上面的输出结果中我们可以看到 Rails 中视图的命名约定。通常，视图和对应的控制器动作共享名称。例如，<code>articles_controller.rb</code> 控制器文件中的 <code>index</code> 动作对应 <code>app/views/articles</code> 文件夹中的 <code>index.html.erb</code> 视图文件。返回客户端的完整 HTML 由 ERB 视图文件和包装它的布局文件，以及视图可能引用的所有局部视图文件组成。后文会详细说明这三种文件。</p><p><a class="anchor" id="templates-partials-and-layouts"></a></p><h3 id="templates-partials-and-layouts">3 模板、局部视图和布局</h3><p>前面说过，最后输出的 HTML 由模板、局部视图和布局这三种 Rails 元素组成。下面分别进行简要介绍。</p><p><a class="anchor" id="templates"></a></p><h4 id="templates">3.1 模板</h4><p>Action View 模板可以用多种方式编写。扩展名是 <code>.erb</code> 的模板文件混合使用 ERB（嵌入式 Ruby）和 HTML 编写，扩展名是 <code>.builder</code> 的模板文件使用 <code>Builder::XmlMarkup</code> 库编写。</p><p>Rails 支持多种模板系统，并使用文件扩展名加以区分。例如，使用 ERB 模板系统的 HTML 文件的扩展名是 <code>.html.erb</code>。</p><p><a class="anchor" id="erb"></a></p><h5 id="erb">3.1.1 ERB 模板</h5><p>在 ERB 模板中，可以使用 <code>&lt;% %&gt;</code> 和 <code>&lt;%= %&gt;</code> 标签来包含 Ruby 代码。<code>&lt;% %&gt;</code> 标签用于执行不返回任何内容的 Ruby 代码，例如条件、循环或块，而 <code>&lt;%= %&gt;</code> 标签用于输出 Ruby 代码的执行结果。</p><p>下面是一个循环输出名称的例子：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;h1&gt;Names of all the people&lt;/h1&gt;
+&lt;% @people.each do |person| %&gt;
+  Name: &lt;%= person.name %&gt;&lt;br&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>在上面的代码中，使用普通嵌入标签（<code>&lt;% %&gt;</code>）建立循环，使用输出嵌入标签（<code>&lt;%= %&gt;</code>）插入名称。请注意，这种用法不仅仅是建议用法（而是必须这样使用），因为在 ERB 模板中，普通的输出方法，例如 <code>print</code> 和 <code>puts</code> 方法，无法正常渲染。因此，下面的代码是错误的：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%# WRONG %&gt;
+Hi, Mr. &lt;% puts "Frodo" %&gt;
+
+</pre>
+</div>
+<p>要想删除前导和结尾空格，可以把 <code>&lt;% %&gt;</code> 标签替换为 <code>&lt;%- -%&gt;</code> 标签。</p><p><a class="anchor" id="builder"></a></p><h5 id="builder">3.1.2 Builder 模板</h5><p>和 ERB 模板相比，Builder 模板更加按部就班，常用于生成 XML 内容。在扩展名为 <code>.builder</code> 的模板中，可以直接使用名为 <code>xml</code> 的 XmlMarkup 对象。</p><p>下面是一些简单的例子：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+xml.em("emphasized")
+xml.em { xml.b("emph &amp; bold") }
+xml.a("A Link", "href" =&gt; "http://rubyonrails.org")
+xml.target("name" =&gt; "compile", "option" =&gt; "fast")
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 XML：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+&lt;em&gt;emphasized&lt;/em&gt;
+&lt;em&gt;&lt;b&gt;emph &amp;amp; bold&lt;/b&gt;&lt;/em&gt;
+&lt;a href="http://rubyonrails.org"&gt;A link&lt;/a&gt;
+&lt;target option="fast" name="compile" /&gt;
+
+</pre>
+</div>
+<p>带有块的方法会作为 XML 标签处理，块中的内容会嵌入这个标签中。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+xml.div {
+  xml.h1(@person.name)
+  xml.p(@person.bio)
+}
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 XML：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+&lt;div&gt;
+  &lt;h1&gt;David Heinemeier Hansson&lt;/h1&gt;
+  &lt;p&gt;A product of Danish Design during the Winter of '79...&lt;/p&gt;
+&lt;/div&gt;
+
+</pre>
+</div>
+<p>下面是 Basecamp 网站用于生成 RSS 的完整的实际代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+xml.rss("version" =&gt; "2.0", "xmlns:dc" =&gt; "http://purl.org/dc/elements/1.1/") do
+  xml.channel do
+    xml.title(@feed_title)
+    xml.link(@url)
+    xml.description "Basecamp: Recent items"
+    xml.language "en-us"
+    xml.ttl "40"
+
+    for item in @recent_items
+      xml.item do
+        xml.title(item_title(item))
+        xml.description(item_description(item)) if item_description(item)
+        xml.pubDate(item_pubDate(item))
+        xml.guid(@person.firm.account.url + @recent_items.url(item))
+        xml.link(@person.firm.account.url + @recent_items.url(item))
+        xml.tag!("dc:creator", item.author_name) if item_has_creator?(item)
+      end
+    end
+  end
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="jbuilder"></a></p><h5 id="jbuilder">3.1.3 Jbuilder 模板系统</h5><p><a href="https://github.com/rails/jbuilder">Jbuilder</a> 是由 Rails 团队维护并默认包含在 Rails Gemfile 中的 gem。它类似 Builder，但用于生成 JSON，而不是 XML。</p><p>如果你的应用中没有 Jbuilder 这个 gem，可以把下面的代码添加到 Gemfile：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+gem 'jbuilder'
+
+</pre>
+</div>
+<p>在扩展名为 <code>.jbuilder</code> 的模板中，可以直接使用名为 <code>json</code> 的 Jbuilder 对象。</p><p>下面是一个简单的例子：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+json.name("Alex")
+json.email("alex@example.com")
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 JSON：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+{
+  "name": "Alex",
+  "email": "alex@example.com"
+}
+
+</pre>
+</div>
+<p>关于 Jbuilder 模板的更多例子和信息，请参阅 <a href="https://github.com/rails/jbuilder#jbuilder">Jbuilder 文档</a>。</p><p><a class="anchor" id="template-caching"></a></p><h5 id="template-caching">3.1.4 模板缓存</h5><p>默认情况下，Rails 会把所有模板分别编译为方法，以便进行渲染。在开发环境中，当我们修改了模板时，Rails 会检查文件的修改时间并自动重新编译。</p><p><a class="anchor" id="partials"></a></p><h4 id="partials">3.2 局部视图</h4><p>局部视图模板，通常直接称为“局部视图”，作用是把渲染过程分成多个更容易管理的部分。局部视图从模板中提取代码片断并保存在独立的文件中，然后在模板中重用。</p><p><a class="anchor" id="naming-partials"></a></p><h5 id="naming-partials">3.2.1 局部视图的名称</h5><p>在视图中我们使用 <code>render</code> 方法来渲染局部视图：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render "menu" %&gt;
+
+</pre>
+</div>
+<p>在渲染视图的过程中，上面的代码会渲染 <code>_menu.html.erb</code> 局部视图文件。请注意开头的下划线：局部视图的文件名总是以下划线开头，以便和普通视图文件区分开来，但在引用局部视图时不写下划线。从其他文件夹中加载局部视图文件时同样遵守这一规则：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render "shared/menu" %&gt;
+
+</pre>
+</div>
+<p>上面的代码会加载 <code>app/views/shared/_menu.html.erb</code> 局部视图文件。</p><p><a class="anchor" id="using-partials-to-simplify-views"></a></p><h5 id="using-partials-to-simplify-views">3.2.2 使用局部视图来简化视图</h5><p>使用局部视图的一种方式是把它们看作子程序（subroutine），也就是把细节内容从视图中移出来，这样会使视图更容易理解。例如：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render "shared/ad_banner" %&gt;
+
+&lt;h1&gt;Products&lt;/h1&gt;
+
+&lt;p&gt;Here are a few of our fine products:&lt;/p&gt;
+&lt;% @products.each do |product| %&gt;
+  &lt;%= render partial: "product", locals: { product: product } %&gt;
+&lt;% end %&gt;
+
+&lt;%= render "shared/footer" %&gt;
+
+</pre>
+</div>
+<p>在上面的代码中，<code>_ad_banner.html.erb</code> 和 <code>_footer.html.erb</code> 局部视图可以在多个页面中使用。当我们专注于实现某个页面时，不必关心这些局部视图的细节。</p><p><a class="anchor" id="render-without-partial-and-locals-options"></a></p><h5 id="render-without-partial-and-locals-options">3.2.3 不使用 <code>partial</code> 和 <code>locals</code> 选项进行渲染</h5><p>在前面的例子中，<code>render</code> 方法有两个选项：<code>partial</code> 和 <code>locals</code>。如果一共只有这两个选项，那么可以跳过不写。例如，下面的代码：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: "product", locals: { product: @product } %&gt;
+
+</pre>
+</div>
+<p>可以改写为：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render "product", product: @product %&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="the-as-and-object-options"></a></p><h5 id="the-as-and-object-options">3.2.4 <code>as</code> 和 <code>object</code> 选项</h5><p>默认情况下，<code>ActionView::Partials::PartialRenderer</code> 的对象储存在和模板同名的局部变量中。因此，我们可以扩展下面的代码：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: "product" %&gt;
+
+</pre>
+</div>
+<p>在 <code>_product</code> 局部视图中，我们可以通过局部变量 <code>product</code> 引用 <code>@product</code> 实例变量：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: "product", locals: { product: @product } %&gt;
+
+</pre>
+</div>
+<p><code>object</code> 选项用于直接指定想要在局部视图中使用的对象，常用于模板对象位于其他地方（例如位于其他实例变量或局部变量中）的情况。例如，下面的代码：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: "product", locals: { product: @item } %&gt;
+
+</pre>
+</div>
+<p>可以改写为：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: "product", object: @item %&gt;
+
+</pre>
+</div>
+<p>使用 <code>as</code> 选项可以为局部变量指定别的名称。例如，如果想把 <code>product</code> 换成 <code>item</code>，可以这么做：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: "product", object: @item, as: "item" %&gt;
+
+</pre>
+</div>
+<p>这等效于：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: "product", locals: { item: @item } %&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="rendering-collections"></a></p><h5 id="rendering-collections">3.2.5 渲染集合</h5><p>模板经常需要遍历集合并使用集合中的每个元素分别渲染子模板。在 Rails 中我们只需一行代码就可以完成这项工作。例如，下面这段渲染产品局部视图的代码：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% @products.each do |product| %&gt;
+  &lt;%= render partial: "product", locals: { product: product } %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>可以改写为：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: "product", collection: @products %&gt;
+
+</pre>
+</div>
+<p>当使用集合来渲染局部视图时，在每个局部视图实例中，都可以使用和局部视图同名的局部变量来访问集合中的元素。在本例中，局部视图是 <code>_product</code>，在这个局部视图中我们可以通过 <code>product</code> 局部变量来访问用于渲染局部视图的集合中的元素。</p><p>渲染集合还有一个简易写法。假设 <code>@products</code> 是 <code>Product</code> 实例的集合，上面的代码可以改写为：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render @products %&gt;
+
+</pre>
+</div>
+<p>Rails 会根据集合中的模型名来确定应该使用哪个局部视图，在本例中模型名是 <code>Product</code>。实际上，我们甚至可以使用这种简易写法来渲染由不同模型实例组成的集合，Rails 会为集合中的每个元素选择适当的局部视图。</p><p><a class="anchor" id="spacer-templates"></a></p><h5 id="spacer-templates">3.2.6 间隔模板</h5><p>我们还可以使用 <code>:spacer_template</code> 选项来指定第二个局部视图（也就是间隔模板），在渲染第一个局部视图（也就是主局部视图）的两个实例之间会渲染这个间隔模板:</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: @products, spacer_template: "product_ruler" %&gt;
+
+</pre>
+</div>
+<p>上面的代码会在两个 <code>_product</code> 局部视图（主局部视图）之间渲染 <code>_product_ruler</code> 局部视图（间隔模板）。</p><p><a class="anchor" id="layouts"></a></p><h4 id="layouts">3.3 布局</h4><p>布局是渲染 Rails 控制器返回结果时使用的公共视图模板。通常，Rails 应用中会包含多个视图用于渲染不同页面。例如，网站中用户登录后页面的布局，营销或销售页面的布局。用户登录后页面的布局可以包含在多个控制器动作中出现的顶级导航。SaaS 应用的销售页面布局可以包含指向“定价”和“联系我们”页面的顶级导航。不同布局可以有不同的外观和感官。关于布局的更多介绍，请参阅<a href="layouts_and_rendering.html">Rails 布局和视图渲染</a>。</p><p><a class="anchor" id="partial-layout"></a></p><h3 id="partial-layout">4 局部布局</h3><p>应用于局部视图的布局称为局部布局。局部布局和应用于控制器动作的全局布局不一样，但两者的工作方式类似。</p><p>比如说我们想在页面中显示文章，并把文章放在 <code>div</code> 标签里。首先，我们新建一个 <code>Article</code> 实例：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Article.create(body: 'Partial Layouts are cool!')
+
+</pre>
+</div>
+<p>在 <code>show</code> 模板中，我们要在 <code>box</code> 布局中渲染 <code>_article</code> 局部视图：</p><p><strong><code>articles/show.html.erb</code></strong></p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render partial: 'article', layout: 'box', locals: { article: @article } %&gt;
+
+</pre>
+</div>
+<p><code>box</code> 布局只是把 <code>_article</code> 局部视图放在 <code>div</code> 标签里：</p><p><strong><code>articles/_box.html.erb</code></strong></p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;div class='box'&gt;
+  &lt;%= yield %&gt;
+&lt;/div&gt;
+
+</pre>
+</div>
+<p>请注意，局部布局可以访问传递给 <code>render</code> 方法的局部变量 <code>article</code>。不过，和全局部局不同，局部布局的文件名以下划线开头。</p><p>我们还可以直接渲染代码块而不调用 <code>yield</code> 方法。例如，如果不使用 <code>_article</code> 局部视图，我们可以像下面这样编写代码：</p><p><strong><code>articles/show.html.erb</code></strong></p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% render(layout: 'box', locals: { article: @article }) do %&gt;
+  &lt;div&gt;
+    &lt;p&gt;&lt;%= article.body %&gt;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>假设我们使用的 <code>_box</code> 局部布局和前面一样，那么这里模板的渲染结果也会和前面一样。</p><p><a class="anchor" id="view-paths"></a></p><h3 id="view-paths">5 视图路径</h3><p>在渲染响应时，控制器需要解析不同视图所在的位置。默认情况下，控制器只查找 <code>app/views</code> 文件夹。</p><p>我们可以使用 <code>prepend_view_path</code> 和 <code>append_view_path</code> 方法分别在查找路径的开头和结尾添加其他位置。</p><p><a class="anchor" id="prepend-view-path"></a></p><h4 id="prepend-view-path">5.1 在开头添加视图路径</h4><p>例如，当需要把视图放在子域名的不同文件夹中时，我们可以使用下面的代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+prepend_view_path "app/views/#{request.subdomain}"
+
+</pre>
+</div>
+<p>这样在解析视图时，Action View 会首先查找这个文件夹。</p><p><a class="anchor" id="append-view-path"></a></p><h4 id="append-view-path">5.2 在末尾添加视图路径</h4><p>同样，我们可以在查找路径的末尾添加视图路径：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+append_view_path "app/views/direct"
+
+</pre>
+</div>
+<p>上面的代码会在查找路径的末尾添加 <code>app/views/direct</code> 文件夹。</p><p><a class="anchor" id="overview-of-helpers-provided-by-action-view"></a></p><h3 id="overview-of-helpers-provided-by-action-view">6 Action View 提供的辅助方法概述</h3><div class="note"><p>本节内容仍在完善中，目前并没有列出所有辅助方法。关于辅助方法的完整列表，请参阅 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActionView/Helpers.html">API 文档</a>。</p></div><p>本节内容只是对 Action View 中可用辅助方法的简要概述。在阅读本节内容之后，推荐查看 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActionView/Helpers.html">API 文档</a>，文档详细介绍了所有辅助方法。</p><p><a class="anchor" id="assettaghelper"></a></p><h4 id="assettaghelper">6.1 <code>AssetTagHelper</code> 模块</h4><p><code>AssetTagHelper</code> 模块提供的方法用于生成链接静态资源文件的 HTML 代码，例如链接图像、JavaScript 文件和订阅源的 HTML 代码。</p><p>默认情况下，Rails 会链接当前主机 <code>public</code> 文件夹中的静态资源文件。要想链接专用的静态资源文件服务器上的文件，可以设置 Rails 应用配置文件（通常是 <code>config/environments/production.rb</code> 文件）中的 <code>config.action_controller.asset_host</code> 选项。假如静态资源文件服务器的域名是 <code>assets.example.com</code>，我们可以像下面这样设置：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_controller.asset_host = "assets.example.com"
+image_tag("rails.png") # =&gt; &lt;img src="http://assets.example.com/images/rails.png" alt="Rails" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="auto-discovery-link-tag"></a></p><h5 id="auto-discovery-link-tag">6.1.1 <code>auto_discovery_link_tag</code> 方法</h5><p><code>auto_discovery_link_tag</code> 方法用于返回链接标签，使浏览器和订阅阅读器可以自动检测 RSS 或 Atom 订阅源。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+auto_discovery_link_tag(:rss, "http://www.example.com/feed.rss", { title: "RSS Feed" })
+# =&gt; &lt;link rel="alternate" type="application/rss+xml" title="RSS Feed" href="http://www.example.com/feed.rss" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="image-path"></a></p><h5 id="image-path">6.1.2 <code>image_path</code> 方法</h5><p><code>image_path</code> 方法用于计算 <code>app/assets/images</code> 文件夹中图像资源的路径，得到的路径是从根目录开始的完整路径（也就是绝对路径）。<code>image_tag</code> 方法在内部使用 <code>image_path</code> 方法生成图像路径。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+image_path("edit.png") # =&gt; /assets/edit.png
+
+</pre>
+</div>
+<p>当 <code>config.assets.digest</code> 选项设置为 <code>true</code> 时，Rails 会为图像资源的文件名添加指纹。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+image_path("edit.png") # =&gt; /assets/edit-2d1a2db63fc738690021fedb5a65b68e.png
+
+</pre>
+</div>
+<p><a class="anchor" id="image-url"></a></p><h5 id="image-url">6.1.3 <code>image_url</code> 方法</h5><p><code>image_url</code> 方法用于计算 <code>app/assets/images</code> 文件夹中图像资源的 URL 地址。<code>image_url</code> 方法在内部调用了 <code>image_path</code> 方法，并把得到的图像资源路径和当前主机或静态资源文件服务器的 URL 地址合并。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+image_url("edit.png") # =&gt; http://www.example.com/assets/edit.png
+
+</pre>
+</div>
+<p><a class="anchor" id="image-tag"></a></p><h5 id="image-tag">6.1.4 <code>image_tag</code> 方法</h5><p><code>image_tag</code> 方法用于返回 HTML 图像标签。此方法接受图像的完整路径或 <code>app/assets/images</code> 文件夹中图像的文件名作为参数。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+image_tag("icon.png") # =&gt; &lt;img src="/assets/icon.png" alt="Icon" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="javascript-include-tag"></a></p><h5 id="javascript-include-tag">6.1.5 <code>javascript_include_tag</code> 方法</h5><p><code>javascript_include_tag</code> 方法用于返回 HTML 脚本标签。此方法接受 <code>app/assets/javascripts</code> 文件夹中 JavaScript 文件的文件名（<code>.js</code> 后缀可以省略）或 JavaScript 文件的完整路径（绝对路径）作为参数。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+javascript_include_tag "common" # =&gt; &lt;script src="/assets/common.js"&gt;&lt;/script&gt;
+
+</pre>
+</div>
+<p>如果 Rails 应用不使用 Asset Pipeline，就需要向 <code>javascript_include_tag</code> 方法传递 <code>:defaults</code> 参数来包含 jQuery JavaScript 库。此时，如果 <code>app/assets/javascripts</code> 文件夹中存在 <code>application.js</code> 文件，那么这个文件也会包含到页面中。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+javascript_include_tag :defaults
+
+</pre>
+</div>
+<p>通过向 <code>javascript_include_tag</code> 方法传递 <code>:all</code> 参数，可以把 <code>app/assets/javascripts</code> 文件夹下的所有 JavaScript 文件包含到页面中。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+javascript_include_tag :all
+
+</pre>
+</div>
+<p>我们还可以把多个 JavaScript 文件缓存为一个文件，这样可以减少下载时的 HTTP 连接数，同时还可以启用 gzip 压缩来提高传输速度。当 <code>ActionController::Base.perform_caching</code> 选项设置为 <code>true</code> 时才会启用缓存，此选项在生产环境下默认为 <code>true</code>，在开发环境下默认为 <code>false</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+javascript_include_tag :all, cache: true
+# =&gt; &lt;script src="/javascripts/all.js"&gt;&lt;/script&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="javascript-path"></a></p><h5 id="javascript-path">6.1.6 <code>javascript_path</code> 方法</h5><p><code>javascript_path</code> 方法用于计算 <code>app/assets/javascripts</code> 文件夹中 JavaScript 资源的路径。如果没有指定文件的扩展名，Rails 会自动添加 <code>.js</code>。<code>javascript_path</code> 方法返回 JavaScript 资源的完整路径（绝对路径）。<code>javascript_include_tag</code> 方法在内部使用 <code>javascript_path</code> 方法生成脚本路径。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+javascript_path "common" # =&gt; /assets/common.js
+
+</pre>
+</div>
+<p><a class="anchor" id="javascript-url"></a></p><h5 id="javascript-url">6.1.7 <code>javascript_url</code> 方法</h5><p><code>javascript_url</code> 方法用于计算 <code>app/assets/javascripts</code> 文件夹中 JavaScript 资源的 URL 地址。<code>javascript_url</code> 方法在内部调用了 <code>javascript_path</code> 方法，并把得到的 JavaScript 资源的路径和当前主机或静态资源文件服务器的 URL 地址合并。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+javascript_url "common" # =&gt; http://www.example.com/assets/common.js
+
+</pre>
+</div>
+<p><a class="anchor" id="stylesheet-link-tag"></a></p><h5 id="stylesheet-link-tag">6.1.8 <code>stylesheet_link_tag</code> 方法</h5><p><code>stylesheet_link_tag</code> 方法用于返回样式表链接标签。如果没有指定文件的扩展名，Rails 会自动添加 <code>.css</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+stylesheet_link_tag "application"
+# =&gt; &lt;link href="/assets/application.css" media="screen" rel="stylesheet" /&gt;
+
+</pre>
+</div>
+<p>通过向 <code>stylesheet_link_tag</code> 方法传递 <code>:all</code> 参数，可以把样式表文件夹中的所有样式表包含到页面中。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+stylesheet_link_tag :all
+
+</pre>
+</div>
+<p>我们还可以把多个样式表缓存为一个文件，这样可以减少下载时的 HTTP 连接数，同时还可以启用 gzip 压缩来提高传输速度。当 <code>ActionController::Base.perform_caching</code> 选项设置为 <code>true</code> 时才会启用缓存，此选项在生产环境下默认为 <code>true</code>，在开发环境下默认为 <code>false</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+stylesheet_link_tag :all, cache: true
+# =&gt; &lt;link href="/assets/all.css" media="screen" rel="stylesheet" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="stylesheet-path"></a></p><h5 id="stylesheet-path">6.1.9 <code>stylesheet_path</code> 方法</h5><p><code>stylesheet_path</code> 方法用于计算 <code>app/assets/stylesheets</code> 文件夹中样式表资源的路径。如果没有指定文件的扩展名，Rails 会自动添加 <code>.css</code>。<code>stylesheet_path</code> 方法返回样式表资源的完整路径（绝对路径）。<code>stylesheet_link_tag</code> 方法在内部使用 <code>stylesheet_path</code> 方法生成样式表路径。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+stylesheet_path "application" # =&gt; /assets/application.css
+
+</pre>
+</div>
+<p><a class="anchor" id="stylesheet-url"></a></p><h5 id="stylesheet-url">6.1.10 <code>stylesheet_url</code> 方法</h5><p><code>stylesheet_url</code> 方法用于计算 <code>app/assets/stylesheets</code> 文件夹中样式表资源的 URL 地址。<code>stylesheet_url</code> 方法在内部调用了 <code>stylesheet_path</code> 方法，并把得到的样式表资源路径和当前主机或静态资源文件服务器的 URL 地址合并。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+stylesheet_url "application" # =&gt; http://www.example.com/assets/application.css
+
+</pre>
+</div>
+<p><a class="anchor" id="atomfeedhelper"></a></p><h4 id="atomfeedhelper">6.2 <code>AtomFeedHelper</code> 模块</h4><p><a class="anchor" id="atom-feed"></a></p><h5 id="atom-feed">6.2.1 <code>atom_feed</code> 方法</h5><p>通过 <code>atom_feed</code> 辅助方法我们可以轻松创建 Atom 订阅源。下面是一个完整的示例：</p><p><code>config/routes.rb</code></p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resources :articles
+
+</pre>
+</div>
+<p><code>app/controllers/articles_controller.rb</code></p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def index
+  @articles = Article.all
+
+  respond_to do |format|
+    format.html
+    format.atom
+  end
+end
+
+</pre>
+</div>
+<p><code>app/views/articles/index.atom.builder</code></p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+atom_feed do |feed|
+  feed.title("Articles Index")
+  feed.updated(@articles.first.created_at)
+
+  @articles.each do |article|
+    feed.entry(article) do |entry|
+      entry.title(article.title)
+      entry.content(article.body, type: 'html')
+
+      entry.author do |author|
+        author.name(article.author_name)
+      end
+    end
+  end
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="benchmarkhelper"></a></p><h4 id="benchmarkhelper">6.3 <code>BenchmarkHelper</code> 模块</h4><p><a class="anchor" id="benchmark"></a></p><h5 id="benchmark">6.3.1 <code>benchmark</code> 方法</h5><p><code>benchmark</code> 方法用于测量模板中某个块的执行时间，并把测量结果写入日志。<code>benchmark</code> 方法常用于测量耗时操作或可能的性能瓶颈的执行时间。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% benchmark "Process data files" do %&gt;
+  &lt;%= expensive_files_operation %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>上面的代码会在日志中写入类似 <code>Process data files (0.34523)</code> 的测量结果，我们可以通过比较执行时间来优化代码。</p><p><a class="anchor" id="cachehelper"></a></p><h4 id="cachehelper">6.4 <code>CacheHelper</code> 模块</h4><p><a class="anchor" id="cache"></a></p><h5 id="cache">6.4.1 <code>cache</code> 方法</h5><p><code>cache</code> 方法用于缓存视图片断而不是整个动作或页面。此方法常用于缓存页面中诸如菜单、新闻主题列表、静态 HTML 片断等内容。<code>cache</code> 方法接受块作为参数，块中包含要缓存的内容。关于 <code>cache</code> 方法的更多介绍，请参阅 <code>AbstractController::Caching::Fragments</code> 模块的文档。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% cache do %&gt;
+  &lt;%= render "shared/footer" %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="capturehelper"></a></p><h4 id="capturehelper">6.5 <code>CaptureHelper</code> 模块</h4><p><a class="anchor" id="capture"></a></p><h5 id="capture">6.5.1 <code>capture</code> 方法</h5><p><code>capture</code> 方法用于取出模板的一部分并储存在变量中，然后我们可以在模板或布局中的任何地方使用这个变量。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% @greeting = capture do %&gt;
+  &lt;p&gt;Welcome! The date and time is &lt;%= Time.now %&gt;&lt;/p&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>可以在模板或布局中的任何地方使用 <code>@greeting</code> 变量。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Welcome!&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;%= @greeting %&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="content-for"></a></p><h5 id="content-for">6.5.2 <code>content_for</code> 方法</h5><p><code>content_for</code> 方法以块的方式把模板内容保存在标识符中，然后我们可以在模板或布局中把这个标识符传递给 <code>yield</code> 方法作为参数来调用所保存的内容。</p><p>假如应用拥有标准布局，同时拥有一个特殊页面，这个特殊页面需要包含其他页面都不需要的 JavaScript 脚本。为此我们可以在这个特殊页面中使用 <code>content_for</code> 方法来包含所需的 JavaScript 脚本，而不必增加其他页面的体积。</p><p><code>app/views/layouts/application.html.erb</code></p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Welcome!&lt;/title&gt;
+    &lt;%= yield :special_script %&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;Welcome! The date and time is &lt;%= Time.now %&gt;&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+</div>
+<p><code>app/views/articles/special.html.erb</code></p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;p&gt;This is a special page.&lt;/p&gt;
+
+&lt;% content_for :special_script do %&gt;
+  &lt;script&gt;alert('Hello!')&lt;/script&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="datehelper"></a></p><h4 id="datehelper">6.6 <code>DateHelper</code> 模块</h4><p><a class="anchor" id="date-select"></a></p><h5 id="date-select">6.6.1 <code>date_select</code> 方法</h5><p><code>date_select</code> 方法返回年、月、日的选择列表标签，用于设置 <code>date</code> 类型的属性的值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+date_select("article", "published_on")
+
+</pre>
+</div>
+<p><a class="anchor" id="datetime-select"></a></p><h5 id="datetime-select">6.6.2 <code>datetime_select</code> 方法</h5><p><code>datetime_select</code> 方法返回年、月、日、时、分的选择列表标签，用于设置 <code>datetime</code> 类型的属性的值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+datetime_select("article", "published_on")
+
+</pre>
+</div>
+<p><a class="anchor" id="distance-of-time-in-words"></a></p><h5 id="distance-of-time-in-words">6.6.3 <code>distance_of_time_in_words</code> 方法</h5><p><code>distance_of_time_in_words</code> 方法用于计算两个 <code>Time</code> 对象、<code>Date</code> 对象或秒数的大致时间间隔。把 <code>include_seconds</code> 选项设置为 <code>true</code> 可以得到更精确的时间间隔。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+distance_of_time_in_words(Time.now, Time.now + 15.seconds)        # =&gt; less than a minute
+distance_of_time_in_words(Time.now, Time.now + 15.seconds, include_seconds: true)  # =&gt; less than 20 seconds
+
+</pre>
+</div>
+<p><a class="anchor" id="select-date"></a></p><h5 id="select-date">6.6.4 <code>select_date</code> 方法</h5><p><code>select_date</code> 方法返回年、月、日的选择列表标签，并通过 <code>Date</code> 对象来设置默认值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 生成一个日期选择列表，默认选中指定的日期（六天以后）
+select_date(Time.today + 6.days)
+
+# 生成一个日期选择列表，默认选中今天（未指定日期）
+select_date()
+
+</pre>
+</div>
+<p><a class="anchor" id="select-datetime"></a></p><h5 id="select-datetime">6.6.5 <code>select_datetime</code> 方法</h5><p><code>select_datetime</code> 方法返回年、月、日、时、分的选择列表标签，并通过 <code>Datetime</code> 对象来设置默认值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 生成一个日期时间选择列表，默认选中指定的日期时间（四天以后）
+select_datetime(Time.now + 4.days)
+
+# 生成一个日期时间选择列表，默认选中今天（未指定日期时间）
+select_datetime()
+
+</pre>
+</div>
+<p><a class="anchor" id="select-day"></a></p><h5 id="select-day">6.6.6 <code>select_day</code> 方法</h5><p><code>select_day</code> 方法返回当月全部日子的选择列表标签，如 1 到 31，并把当日设置为默认值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 生成一个日子选择列表，默认选中指定的日子
+select_day(Time.today + 2.days)
+
+# 生成一个日子选择列表，默认选中指定数字对应的日子
+select_day(5)
+
+</pre>
+</div>
+<p><a class="anchor" id="select-hour"></a></p><h5 id="select-hour">6.6.7 <code>select_hour</code> 方法</h5><p><code>select_hour</code> 方法返回一天中 24 小时的选择列表标签，即 0 到 23，并把当前小时设置为默认值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 生成一个小时选择列表，默认选中指定的小时
+select_hour(Time.now + 6.hours)
+
+</pre>
+</div>
+<p><a class="anchor" id="select-minute"></a></p><h5 id="select-minute">6.6.8 <code>select_minute</code> 方法</h5><p><code>select_minute</code> 方法返回一小时中 60 分钟的选择列表标签，即 0 到 59，并把当前分钟设置为默认值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 生成一个分钟选择列表，默认选中指定的分钟
+select_minute(Time.now + 10.minutes)
+
+</pre>
+</div>
+<p><a class="anchor" id="select-month"></a></p><h5 id="select-month">6.6.9 <code>select_month</code> 方法</h5><p><code>select_month</code> 方法返回一年中 12 个月的选择列表标签，并把当月设置为默认值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 生成一个月份选择列表，默认选中当前月份
+select_month(Date.today)
+
+</pre>
+</div>
+<p><a class="anchor" id="select-second"></a></p><h5 id="select-second">6.6.10 <code>select_second</code> 方法</h5><p><code>select_second</code> 方法返回一分钟中 60 秒的选择列表标签，即 0 到 59，并把当前秒设置为默认值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 生成一个秒数选择列表，默认选中指定的秒数
+select_second(Time.now + 16.seconds)
+
+</pre>
+</div>
+<p><a class="anchor" id="select-time"></a></p><h5 id="select-time">6.6.11 <code>select_time</code> 方法</h5><p><code>select_time</code> 方法返回时、分的选择列表标签，并通过 <code>Time</code> 对象来设置默认值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 生成一个时间选择列表，默认选中指定的时间
+select_time(Time.now)
+
+</pre>
+</div>
+<p><a class="anchor" id="select-year"></a></p><h5 id="select-year">6.6.12 <code>select_year</code> 方法</h5><p><code>select_year</code> 方法返回当年和前后各五年的选择列表标签，并把当年设置为默认值。可以通过 <code>:start_year</code> 和 <code>:end_year</code> 选项自定义年份范围。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 选择今天所在年份前后五年的年份选择列表，默认选中当年
+select_year(Date.today)
+
+# 选择一个从 1900 年到 20009 年的年份选择列表，默认选中当年
+select_year(Date.today, start_year: 1900, end_year: 2009)
+
+</pre>
+</div>
+<p><a class="anchor" id="time-ago-in-words"></a></p><h5 id="time-ago-in-words">6.6.13 <code>time_ago_in_words</code> 方法</h5><p><code>time_ago_in_words</code> 方法和 <code>distance_of_time_in_words</code> 方法类似，区别在于 <code>time_ago_in_words</code> 方法计算的是指定时间到 <code>Time.now</code> 对应的当前时间的时间间隔。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+time_ago_in_words(3.minutes.from_now)  # =&gt; 3 minutes
+
+</pre>
+</div>
+<p><a class="anchor" id="time-select"></a></p><h5 id="time-select">6.6.14 <code>time_select</code> 方法</h5><p><code>time_select</code> 方返回时、分、秒的选择列表标签（其中秒可选），用于设置 <code>time</code> 类型的属性的值。选择的结果作为多个参数赋值给 Active Record 对象。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 生成一个时间选择标签，通过 POST 发送后存储在提交的属性中的 order 变量中
+time_select("order", "submitted")
+
+</pre>
+</div>
+<p><a class="anchor" id="debughelper"></a></p><h4 id="debughelper">6.7 <code>DebugHelper</code> 模块</h4><p><code>debug</code> 方法返回放在 <code>pre</code> 标签里的 YAML 格式的对象内容。这种审查对象的方式可读性很好。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+my_hash = { 'first' =&gt; 1, 'second' =&gt; 'two', 'third' =&gt; [1,2,3] }
+debug(my_hash)
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;pre class='debug_dump'&gt;---
+first: 1
+second: two
+third:
+- 1
+- 2
+- 3
+&lt;/pre&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="formhelper"></a></p><h4 id="formhelper">6.8 <code>FormHelper</code> 模块</h4><p>和仅使用标准 HTML 元素相比，表单辅助方法提供了一组基于模型创建表单的方法，可以大大简化模型的处理过程。表单辅助方法生成表单的 HTML 代码，并提供了用于生成各种输入组件（如文本框、密码框、选择列表等）的 HTML 代码的辅助方法。在提交表单时（用户点击提交按钮或通过 JavaScript 调用 <code>form.submit</code>），表单输入会绑定到 <code>params</code> 对象上并回传给控制器。</p><p>表单辅助方法分为两类：一类专门用于处理模型属性，另一类不处理模型属性。本节中介绍的辅助方法都属于前者，后者的例子可参阅 <code>ActionView::Helpers::FormTagHelper</code> 模块的文档。</p><p><code>form_for</code> 辅助方法是 <code>FormHelper</code> 模块中最核心的方法，用于创建处理模型实例的表单。例如，假设我们想为 <code>Person</code> 模型创建实例：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+# 注意：要在控制器中创建 @person 变量（例如 @person = Person.new）
+&lt;%= form_for @person, url: { action: "create" } do |f| %&gt;
+  &lt;%= f.text_field :first_name %&gt;
+  &lt;%= f.text_field :last_name %&gt;
+  &lt;%= submit_tag 'Create' %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>上面的代码会生成下面的 HTML：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;form action="/people/create" method="post"&gt;
+  &lt;input id="person_first_name" name="person[first_name]" type="text" /&gt;
+  &lt;input id="person_last_name" name="person[last_name]" type="text" /&gt;
+  &lt;input name="commit" type="submit" value="Create" /&gt;
+&lt;/form&gt;
+
+</pre>
+</div>
+<p>提交表单时创建的 <code>params</code> 对象会像下面这样：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{ "action" =&gt; "create", "controller" =&gt; "people", "person" =&gt; { "first_name" =&gt; "William", "last_name" =&gt; "Smith" } }
+
+</pre>
+</div>
+<p><code>params</code> 散列包含了嵌套的 <code>person</code> 值，这个值可以在控制器中通过 <code>params[:person]</code> 访问。</p><p><a class="anchor" id="check-box"></a></p><h5 id="check-box">6.8.1 <code>check_box</code> 方法</h5><p><code>check_box</code> 方法返回用于处理指定模型属性的复选框标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 假设 @article.validated? 的值是 1
+check_box("article", "validated")
+# =&gt; &lt;input type="checkbox" id="article_validated" name="article[validated]" value="1" /&gt;
+#    &lt;input name="article[validated]" type="hidden" value="0" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="fields-for"></a></p><h5 id="fields-for">6.8.2 <code>fields_for</code> 方法</h5><p>和 <code>form_for</code> 方法类似，<code>fields_for</code> 方法创建用于处理指定模型对象的作用域，区别在于 <code>fields_for</code> 方法不会创建 <code>form</code> 标签。<code>fields_for</code> 方法适用于在同一个表单中指明附加的模型对象。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @person, url: { action: "update" } do |person_form| %&gt;
+  First name: &lt;%= person_form.text_field :first_name %&gt;
+  Last name : &lt;%= person_form.text_field :last_name %&gt;
+
+  &lt;%= fields_for @person.permission do |permission_fields| %&gt;
+    Admin?  : &lt;%= permission_fields.check_box :admin %&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="file-field"></a></p><h5 id="file-field">6.8.3 <code>file_field</code> 方法</h5><p><code>file_field</code> 方法返回用于处理指定模型属性的文件上传组件标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+file_field(:user, :avatar)
+# =&gt; &lt;input type="file" id="user_avatar" name="user[avatar]" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="form-for"></a></p><h5 id="form-for">6.8.4 <code>form_for</code> 方法</h5><p><code>form_for</code> 方法创建用于处理指定模型对象的表单和作用域，表单的各个组件用于处理模型对象的对应属性。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @article do |f| %&gt;
+  &lt;%= f.label :title, 'Title' %&gt;:
+  &lt;%= f.text_field :title %&gt;&lt;br&gt;
+  &lt;%= f.label :body, 'Body' %&gt;:
+  &lt;%= f.text_area :body %&gt;&lt;br&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="hidden-field"></a></p><h5 id="hidden-field">6.8.5 <code>hidden_​​field</code> 方法</h5><p><code>hidden_​​field</code> 方法返回用于处理指定模型属性的隐藏输入字段标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+hidden_field(:user, :token)
+# =&gt; &lt;input type="hidden" id="user_token" name="user[token]" value="#{@user.token}" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="label"></a></p><h5 id="label">6.8.6 <code>label</code> 方法</h5><p><code>label</code> 方法返回用于处理指定模型属性的文本框的 label 标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+label(:article, :title)
+# =&gt; &lt;label for="article_title"&gt;Title&lt;/label&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="password-field"></a></p><h5 id="password-field">6.8.7 <code>password_field</code> 方法</h5><p><code>password_field</code> 方法返回用于处理指定模型属性的密码框标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+password_field(:login, :pass)
+# =&gt; &lt;input type="text" id="login_pass" name="login[pass]" value="#{@login.pass}" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="radio-button"></a></p><h5 id="radio-button">6.8.8 <code>radio_button</code> 方法</h5><p><code>radio_button</code> 方法返回用于处理指定模型属性的单选按钮标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 假设 @article.category 的值是“rails”
+radio_button("article", "category", "rails")
+radio_button("article", "category", "java")
+# =&gt; &lt;input type="radio" id="article_category_rails" name="article[category]" value="rails" checked="checked" /&gt;
+#    &lt;input type="radio" id="article_category_java" name="article[category]" value="java" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="text-area"></a></p><h5 id="text-area">6.8.9 <code>text_area</code> 方法</h5><p><code>text_area</code> 方法返回用于处理指定模型属性的文本区域标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+text_area(:comment, :text, size: "20x30")
+# =&gt; &lt;textarea cols="20" rows="30" id="comment_text" name="comment[text]"&gt;
+#      #{@comment.text}
+#    &lt;/textarea&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="text-field"></a></p><h5 id="text-field">6.8.10 <code>text_field</code> 方法</h5><p><code>text_field</code> 方法返回用于处理指定模型属性的文本框标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+text_field(:article, :title)
+# =&gt; &lt;input type="text" id="article_title" name="article[title]" value="#{@article.title}" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="email-field"></a></p><h5 id="email-field">6.8.11 <code>email_field</code> 方法</h5><p><code>email_field</code> 方法返回用于处理指定模型属性的电子邮件地址输入框标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+email_field(:user, :email)
+# =&gt; &lt;input type="email" id="user_email" name="user[email]" value="#{@user.email}" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="url-field"></a></p><h5 id="url-field">6.8.12 <code>url_field</code> 方法</h5><p><code>url_field</code> 方法返回用于处理指定模型属性的 URL 地址输入框标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+url_field(:user, :url)
+# =&gt; &lt;input type="url" id="user_url" name="user[url]" value="#{@user.url}" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="formoptionshelper"></a></p><h4 id="formoptionshelper">6.9 <code>FormOptionsHelper</code> 模块</h4><p><code>FormOptionsHelper</code> 模块提供了许多方法，用于把不同类型的容器转换为一组选项标签。</p><p><a class="anchor" id="collection-select"></a></p><h5 id="collection-select">6.9.1 <code>collection_select</code> 方法</h5><p><code>collection_select</code> 方法返回一个集合的选择列表标签，其中每个集合元素的两个指定方法的返回值分别是每个选项的值和文本。</p><p>在下面的示例代码中，我们定义了两个模型：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Article &lt; ApplicationRecord
+  belongs_to :author
+end
+
+class Author &lt; ApplicationRecord
+  has_many :articles
+  def name_with_initial
+    "#{first_name.first}. #{last_name}"
+  end
+end
+
+</pre>
+</div>
+<p>在下面的示例代码中，<code>collection_select</code> 方法用于生成 <code>Article</code> 模型的实例 <code>@article</code> 的相关作者的选择列表：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+collection_select(:article, :author_id, Author.all, :id, :name_with_initial, { prompt: true })
+
+</pre>
+</div>
+<p>如果 <code>@article.author_id</code> 的值为 1，上面的代码会生成下面的 HTML：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;select name="article[author_id]"&gt;
+  &lt;option value=""&gt;Please select&lt;/option&gt;
+  &lt;option value="1" selected="selected"&gt;D. Heinemeier Hansson&lt;/option&gt;
+  &lt;option value="2"&gt;D. Thomas&lt;/option&gt;
+  &lt;option value="3"&gt;M. Clark&lt;/option&gt;
+&lt;/select&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="collection-radio-buttons"></a></p><h5 id="collection-radio-buttons">6.9.2 <code>collection_radio_buttons</code> 方法</h5><p><code>collection_radio_buttons</code> 方法返回一个集合的单选按钮标签，其中每个集合元素的两个指定方法的返回值分别是每个选项的值和文本。</p><p>在下面的示例代码中，我们定义了两个模型：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Article &lt; ApplicationRecord
+  belongs_to :author
+end
+
+class Author &lt; ApplicationRecord
+  has_many :articles
+  def name_with_initial
+    "#{first_name.first}. #{last_name}"
+  end
+end
+
+</pre>
+</div>
+<p>在下面的示例代码中，<code>collection_radio_buttons</code> 方法用于生成 <code>Article</code> 模型的实例 <code>@article</code> 的相关作者的单选按钮：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+collection_radio_buttons(:article, :author_id, Author.all, :id, :name_with_initial)
+
+</pre>
+</div>
+<p>如果 <code>@article.author_id</code> 的值为 1，上面的代码会生成下面的 HTML：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;input id="article_author_id_1" name="article[author_id]" type="radio" value="1" checked="checked" /&gt;
+&lt;label for="article_author_id_1"&gt;D. Heinemeier Hansson&lt;/label&gt;
+&lt;input id="article_author_id_2" name="article[author_id]" type="radio" value="2" /&gt;
+&lt;label for="article_author_id_2"&gt;D. Thomas&lt;/label&gt;
+&lt;input id="article_author_id_3" name="article[author_id]" type="radio" value="3" /&gt;
+&lt;label for="article_author_id_3"&gt;M. Clark&lt;/label&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="collection-check-boxes"></a></p><h5 id="collection-check-boxes">6.9.3 <code>collection_check_boxes</code> 方法</h5><p><code>collection_check_boxes</code> 方法返回一个集合的复选框标签，其中每个集合元素的两个指定方法的返回值分别是每个选项的值和文本。</p><p>在下面的示例代码中，我们定义了两个模型：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Article &lt; ApplicationRecord
+  has_and_belongs_to_many :authors
+end
+
+class Author &lt; ApplicationRecord
+  has_and_belongs_to_many :articles
+  def name_with_initial
+    "#{first_name.first}. #{last_name}"
+  end
+end
+
+</pre>
+</div>
+<p>在下面的示例代码中，<code>collection_check_boxes</code> 方法用于生成 <code>Article</code> 模型的实例 <code>@article</code> 的相关作者的复选框：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+collection_check_boxes(:article, :author_ids, Author.all, :id, :name_with_initial)
+
+</pre>
+</div>
+<p>如果 <code>@article.author_ids</code> 的值为 <code>[1]</code>，上面的代码会生成下面的 HTML：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;input id="article_author_ids_1" name="article[author_ids][]" type="checkbox" value="1" checked="checked" /&gt;
+&lt;label for="article_author_ids_1"&gt;D. Heinemeier Hansson&lt;/label&gt;
+&lt;input id="article_author_ids_2" name="article[author_ids][]" type="checkbox" value="2" /&gt;
+&lt;label for="article_author_ids_2"&gt;D. Thomas&lt;/label&gt;
+&lt;input id="article_author_ids_3" name="article[author_ids][]" type="checkbox" value="3" /&gt;
+&lt;label for="article_author_ids_3"&gt;M. Clark&lt;/label&gt;
+&lt;input name="article[author_ids][]" type="hidden" value="" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="option-groups-from-collection-for-select"></a></p><h5 id="option-groups-from-collection-for-select">6.9.4 <code>option_groups_from_collection_for_select</code> 方法</h5><p>和 <code>options_from_collection_for_select</code> 方法类似，<code>option_groups_from_collection_for_select</code> 方法返回一组选项标签，区别在于使用 <code>option_groups_from_collection_for_select</code> 方法时这些选项会根据模型的关联关系用 <code>optgroup</code> 标签分组。</p><p>在下面的示例代码中，我们定义了两个模型：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Continent &lt; ApplicationRecord
+  has_many :countries
+  # attribs: id, name
+end
+
+class Country &lt; ApplicationRecord
+  belongs_to :continent
+  # attribs: id, name, continent_id
+end
+
+</pre>
+</div>
+<p>示例用法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+option_groups_from_collection_for_select(@continents, :countries, :name, :id, :name, 3)
+
+</pre>
+</div>
+<p>可能的输出结果：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;optgroup label="Africa"&gt;
+  &lt;option value="1"&gt;Egypt&lt;/option&gt;
+  &lt;option value="4"&gt;Rwanda&lt;/option&gt;
+  ...
+&lt;/optgroup&gt;
+&lt;optgroup label="Asia"&gt;
+  &lt;option value="3" selected="selected"&gt;China&lt;/option&gt;
+  &lt;option value="12"&gt;India&lt;/option&gt;
+  &lt;option value="5"&gt;Japan&lt;/option&gt;
+  ...
+&lt;/optgroup&gt;
+
+</pre>
+</div>
+<p>注意：<code>option_groups_from_collection_for_select</code> 方法只返回 <code>optgroup</code> 和 <code>option</code> 标签，我们要把这些 <code>optgroup</code> 和 <code>option</code> 标签放在 <code>select</code> 标签里。</p><p><a class="anchor" id="options-for-select"></a></p><h5 id="options-for-select">6.9.5 <code>options_for_select</code> 方法</h5><p><code>options_for_select</code> 方法接受容器（如散列、数组、可枚举对象、自定义类型）作为参数，返回一组选项标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+options_for_select([ "VISA", "MasterCard" ])
+# =&gt; &lt;option&gt;VISA&lt;/option&gt; &lt;option&gt;MasterCard&lt;/option&gt;
+
+</pre>
+</div>
+<p>注意：<code>options_for_select</code> 方法只返回 <code>option</code> 标签，我们要把这些 <code>option</code> 标签放在 <code>select</code> 标签里。</p><p><a class="anchor" id="options-from-collection-for-select"></a></p><h5 id="options-from-collection-for-select">6.9.6 <code>options_from_collection_for_select</code> 方法</h5><p><code>options_from_collection_for_select</code> 方法通过遍历集合返回一组选项标签，其中每个集合元素的 <code>value_method</code> 和 <code>text_method</code> 方法的返回值分别是每个选项的值和文本。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# options_from_collection_for_select(collection, value_method, text_method, selected = nil)
+
+</pre>
+</div>
+<p>在下面的示例代码中，我们遍历 <code>@project.people</code> 集合得到 <code>person</code> 元素，<code>person.id</code> 和 <code>person.name</code> 方法分别是前面提到的 <code>value_method</code> 和 <code>text_method</code> 方法，这两个方法分别返回选项的值和文本：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+options_from_collection_for_select(@project.people, "id", "name")
+# =&gt; &lt;option value="#{person.id}"&gt;#{person.name}&lt;/option&gt;
+
+</pre>
+</div>
+<p>注意：<code>options_from_collection_for_select</code> 方法只返回 <code>option</code> 标签，我们要把这些 <code>option</code> 标签放在 <code>select</code> 标签里。</p><p><a class="anchor" id="select"></a></p><h5 id="select">6.9.7 <code>select</code> 方法</h5><p><code>select</code> 方法使用指定对象和方法创建选择列表标签。</p><p>示例用法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+select("article", "person_id", Person.all.collect { |p| [ p.name, p.id ] }, { include_blank: true })
+
+</pre>
+</div>
+<p>如果 <code>@article.persion_id</code> 的值为 1，上面的代码会生成下面的 HTML：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;select name="article[person_id]"&gt;
+  &lt;option value=""&gt;&lt;/option&gt;
+  &lt;option value="1" selected="selected"&gt;David&lt;/option&gt;
+  &lt;option value="2"&gt;Eileen&lt;/option&gt;
+  &lt;option value="3"&gt;Rafael&lt;/option&gt;
+&lt;/select&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="time-zone-options-for-select"></a></p><h5 id="time-zone-options-for-select">6.9.8 <code>time_zone_options_for_select</code> 方法</h5><p><code>time_zone_options_for_select</code> 方法返回一组选项标签，其中每个选项对应一个时区，这些时区几乎包含了世界上所有的时区。</p><p><a class="anchor" id="time-zone-select"></a></p><h5 id="time-zone-select">6.9.9 <code>time_zone_select</code> 方法</h5><p><code>time_zone_select</code> 方法返回时区的选择列表标签，其中选项标签是通过 <code>time_zone_options_for_select</code> 方法生成的。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+time_zone_select( "user", "time_zone")
+
+</pre>
+</div>
+<p><a class="anchor" id="date-field"></a></p><h5 id="date-field">6.9.10 <code>date_field</code> 方法</h5><p><code>date_field</code> 方法返回用于处理指定模型属性的日期输入框标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+date_field("user", "dob")
+
+</pre>
+</div>
+<p><a class="anchor" id="formtaghelper"></a></p><h4 id="formtaghelper">6.10 <code>FormTagHelper</code> 模块</h4><p><code>FormTagHelper</code> 模块提供了许多用于创建表单标签的方法。和 <code>FormHelper</code> 模块不同，<code>FormTagHelper</code> 模块提供的方法不依赖于传递给模板的 Active Record 对象。作为替代，我们可以手动为表单的各个组件的标签提供 <code>name</code> 和 <code>value</code> 属性。</p><p><a class="anchor" id="check-box-tag"></a></p><h5 id="check-box-tag">6.10.1 <code>check_box_tag</code> 方法</h5><p><code>check_box_tag</code> 方法用于创建复选框标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+check_box_tag 'accept'
+# =&gt; &lt;input id="accept" name="accept" type="checkbox" value="1" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="field-set-tag"></a></p><h5 id="field-set-tag">6.10.2 <code>field_set_tag</code> 方法</h5><p><code>field_set_tag</code> 方法用于创建 <code>fieldset</code> 标签。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= field_set_tag do %&gt;
+  &lt;p&gt;&lt;%= text_field_tag 'name' %&gt;&lt;/p&gt;
+&lt;% end %&gt;
+# =&gt; &lt;fieldset&gt;&lt;p&gt;&lt;input id="name" name="name" type="text" /&gt;&lt;/p&gt;&lt;/fieldset&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="file-field-tag"></a></p><h5 id="file-field-tag">6.10.3 <code>file_field_tag</code> 方法</h5><p><code>file_field_tag</code> 方法用于创建文件上传组件标签。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_tag({ action: "post" }, multipart: true) do %&gt;
+  &lt;label for="file"&gt;File to Upload&lt;/label&gt; &lt;%= file_field_tag "file" %&gt;
+  &lt;%= submit_tag %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>示例输出：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+file_field_tag 'attachment'
+# =&gt; &lt;input id="attachment" name="attachment" type="file" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="form-tag"></a></p><h5 id="form-tag">6.10.4 <code>form_tag</code> 方法</h5><p><code>form_tag</code> 方法用于创建表单标签。和 <code>ActionController::Base#url_for</code> 方法类似，<code>form_tag</code> 方法的第一个参数是 <code>url_for_options</code> 选项，用于说明提交表单的 URL。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_tag '/articles' do %&gt;
+  &lt;div&gt;&lt;%= submit_tag 'Save' %&gt;&lt;/div&gt;
+&lt;% end %&gt;
+# =&gt; &lt;form action="/articles" method="post"&gt;&lt;div&gt;&lt;input type="submit" name="submit" value="Save" /&gt;&lt;/div&gt;&lt;/form&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="hidden-field-tag"></a></p><h5 id="hidden-field-tag">6.10.5 <code>hidden_​​field_tag</code> 方法</h5><p><code>hidden_​​field_tag</code> 方法用于创建隐藏输入字段标签。隐藏输入字段用于传递因 HTTP 无状态特性而丢失的数据，或不想让用户看到的数据。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+hidden_field_tag 'token', 'VUBJKB23UIVI1UU1VOBVI@'
+# =&gt; &lt;input id="token" name="token" type="hidden" value="VUBJKB23UIVI1UU1VOBVI@" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="image-submit-tag"></a></p><h5 id="image-submit-tag">6.10.6 <code>image_submit_tag</code> 方法</h5><p><code>image_submit_tag</code> 方法会显示一张图像，点击这张图像会提交表单。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+image_submit_tag("login.png")
+# =&gt; &lt;input src="/images/login.png" type="image" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="label-tag"></a></p><h5 id="label-tag">6.10.7 <code>label_tag</code> 方法</h5><p><code>label_tag</code> 方法用于创建 <code>label</code> 标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+label_tag 'name'
+# =&gt; &lt;label for="name"&gt;Name&lt;/label&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="password-field-tag"></a></p><h5 id="password-field-tag">6.10.8 <code>password_field_tag</code> 方法</h5><p><code>password_field_tag</code> 方法用于创建密码框标签。用户在密码框中输入的密码会被隐藏起来。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+password_field_tag 'pass'
+# =&gt; &lt;input id="pass" name="pass" type="password" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="radio-button-tag"></a></p><h5 id="radio-button-tag">6.10.9 <code>radio_button_tag</code> 方法</h5><p><code>radio_button_tag</code> 方法用于创建单选按钮标签。为一组单选按钮设置相同的 <code>name</code> 属性即可实现对一组选项进行单选。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+radio_button_tag 'gender', 'male'
+# =&gt; &lt;input id="gender_male" name="gender" type="radio" value="male" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="select-tag"></a></p><h5 id="select-tag">6.10.10 <code>select_tag</code> 方法</h5><p><code>select_tag</code> 方法用于创建选择列表标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+select_tag "people", "&lt;option&gt;David&lt;/option&gt;"
+# =&gt; &lt;select id="people" name="people"&gt;&lt;option&gt;David&lt;/option&gt;&lt;/select&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="submit-tag"></a></p><h5 id="submit-tag">6.10.11 <code>submit_tag</code> 方法</h5><p><code>submit_tag</code> 方法用于创建提交按钮标签，并在按钮上显示指定的文本。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+submit_tag "Publish this article"
+# =&gt; &lt;input name="commit" type="submit" value="Publish this article" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="text-area-tag"></a></p><h5 id="text-area-tag">6.10.12 <code>text_area_tag</code> 方法</h5><p><code>text_area_tag</code> 方法用于创建文本区域标签。文本区域用于输入较长的文本，如博客帖子或页面描述。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+text_area_tag 'article'
+# =&gt; &lt;textarea id="article" name="article"&gt;&lt;/textarea&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="text-field-tag"></a></p><h5 id="text-field-tag">6.10.13 <code>text_field_tag</code> 方法</h5><p><code>text_field_tag</code> 方法用于创建文本框标签。文本框用于输入较短的文本，如用户名或搜索关键词。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+text_field_tag 'name'
+# =&gt; &lt;input id="name" name="name" type="text" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="email-field-tag"></a></p><h5 id="email-field-tag">6.10.14 <code>email_field_tag</code> 方法</h5><p><code>email_field_tag</code> 方法用于创建电子邮件地址输入框标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+email_field_tag 'email'
+# =&gt; &lt;input id="email" name="email" type="email" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="url-field-tag"></a></p><h5 id="url-field-tag">6.10.15 <code>url_field_tag</code> 方法</h5><p><code>url_field_tag</code> 方法用于创建 URL 地址输入框标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+url_field_tag 'url'
+# =&gt; &lt;input id="url" name="url" type="url" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="date-field-tag"></a></p><h5 id="date-field-tag">6.10.16 <code>date_field_tag</code> 方法</h5><p><code>date_field_tag</code> 方法用于创建日期输入框标签。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+date_field_tag "dob"
+# =&gt; &lt;input id="dob" name="dob" type="date" /&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="javascripthelper"></a></p><h4 id="javascripthelper">6.11 <code>JavaScriptHelper</code> 模块</h4><p><code>JavaScriptHelper</code> 模块提供在视图中使用 JavaScript 的相关方法。</p><p><a class="anchor" id="escape-javascript"></a></p><h5 id="escape-javascript">6.11.1 <code>escape_javascript</code> 方法</h5><p><code>escape_javascript</code> 方法转义 JavaScript 代码中的回车符、单引号和双引号。</p><p><a class="anchor" id="javascript-tag"></a></p><h5 id="javascript-tag">6.11.2 <code>javascript_tag</code> 方法</h5><p><code>javascript_tag</code> 方法返回放在 <code>script</code> 标签里的 JavaScript 代码。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+javascript_tag "alert('All is good')"
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
+&lt;script&gt;
+//&lt;![CDATA[
+alert('All is good')
+//]]&gt;
+&lt;/script&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="numberhelper"></a></p><h4 id="numberhelper">6.12 <code>NumberHelper</code> 模块</h4><p><code>NumberHelper</code> 模块提供把数字转换为格式化字符串的方法，包括把数字转换为电话号码、货币、百分数、具有指定精度的数字、带有千位分隔符的数字和文件大小的方法。</p><p><a class="anchor" id="number-to-currency"></a></p><h5 id="number-to-currency">6.12.1 <code>number_to_currency</code> 方法</h5><p><code>number_to_currency</code> 方法用于把数字转换为货币字符串（例如 $13.65）。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+number_to_currency(1234567890.50) # =&gt; $1,234,567,890.50
+
+</pre>
+</div>
+<p><a class="anchor" id="number-to-human-size"></a></p><h5 id="number-to-human-size">6.12.2 <code>number_to_human_size</code> 方法</h5><p><code>number_to_human_size</code> 方法用于把数字转换为容易阅读的形式，常用于显示文件大小。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+number_to_human_size(1234)          # =&gt; 1.2 KB
+number_to_human_size(1234567)       # =&gt; 1.2 MB
+
+</pre>
+</div>
+<p><a class="anchor" id="number-to-percentage"></a></p><h5 id="number-to-percentage">6.12.3 <code>number_to_percentage</code> 方法</h5><p><code>number_to_percentage</code> 方法用于把数字转换为百分数字符串。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+number_to_percentage(100, precision: 0)        # =&gt; 100%
+
+</pre>
+</div>
+<p><a class="anchor" id="number-to-phone"></a></p><h5 id="number-to-phone">6.12.4 <code>number_to_phone</code> 方法</h5><p><code>number_to_phone</code> 方法用于把数字转换为电话号码（默认为美国）。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+number_to_phone(1235551234) # =&gt; 123-555-1234
+
+</pre>
+</div>
+<p><a class="anchor" id="number-with-delimiter"></a></p><h5 id="number-with-delimiter">6.12.5 <code>number_with_delimiter</code> 方法</h5><p><code>number_with_delimiter</code> 方法用于把数字转换为带有千位分隔符的数字。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+number_with_delimiter(12345678) # =&gt; 12,345,678
+
+</pre>
+</div>
+<p><a class="anchor" id="number-with-precision"></a></p><h5 id="number-with-precision">6.12.6 <code>number_with_precision</code> 方法</h5><p><code>number_with_precision</code> 方法用于把数字转换为具有指定精度的数字，默认精度为 3。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+number_with_precision(111.2345)     # =&gt; 111.235
+number_with_precision(111.2345, precision: 2)  # =&gt; 111.23
+
+</pre>
+</div>
+<p><a class="anchor" id="sanitizehelper"></a></p><h4 id="sanitizehelper">6.13 <code>SanitizeHelper</code> 模块</h4><p><code>SanitizeHelper</code> 模块提供从文本中清除不需要的 HTML 元素的方法。</p><p><a class="anchor" id="sanitize"></a></p><h5 id="sanitize">6.13.1 <code>sanitize</code> 方法</h5><p><code>sanitize</code> 方法会对所有标签进行 HTML 编码，并清除所有未明确允许的属性。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+sanitize @article.body
+
+</pre>
+</div>
+<p>如果指定了 <code>:attributes</code> 或 <code>:tags</code> 选项，那么只有指定的属性或标签才不会被清除。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+sanitize @article.body, tags: %w(table tr td), attributes: %w(id class style)
+
+</pre>
+</div>
+<p>要想修改 <code>sanitize</code> 方法的默认选项，例如把表格标签设置为允许的属性，可以按下面的方式设置：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Application &lt; Rails::Application
+  config.action_view.sanitized_allowed_tags = 'table', 'tr', 'td'
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="sanitize-css-style"></a></p><h5 id="sanitize-css-style">6.13.2 <code>sanitize_css(style)</code> 方法</h5><p><code>sanitize_css(style)</code> 方法用于净化 CSS 代码。</p><p><a class="anchor" id="strip-links-html"></a></p><h5 id="strip-links-html">6.13.3 <code>strip_links(html)</code> 方法</h5><p><code>strip_links(html)</code> 方法用于清除文本中所有的链接标签，只保留链接文本。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+strip_links('&lt;a href="http://rubyonrails.org"&gt;Ruby on Rails&lt;/a&gt;')
+# =&gt; Ruby on Rails
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+strip_links('emails to &lt;a href="mailto:me@email.com"&gt;me@email.com&lt;/a&gt;.')
+# =&gt; emails to me@email.com.
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+strip_links('Blog: &lt;a href="http://myblog.com/"&gt;Visit&lt;/a&gt;.')
+# =&gt; Blog: Visit.
+
+</pre>
+</div>
+<p><a class="anchor" id="strip-tags-html"></a></p><h5 id="strip-tags-html">6.13.4 <code>strip_tags(html)</code> 方法</h5><p><code>strip_tags(html)</code> 方法用于清除包括注释在内的所有 HTML 标签。这个方法的功能由 rails-html-sanitizer gem 提供。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+strip_tags("Strip &lt;i&gt;these&lt;/i&gt; tags!")
+# =&gt; Strip these tags!
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+strip_tags("&lt;b&gt;Bold&lt;/b&gt; no more!  &lt;a href='more.html'&gt;See more&lt;/a&gt;")
+# =&gt; Bold no more!  See more
+
+</pre>
+</div>
+<p>注意：使用 <code>strip_tags(html)</code> 方法清除后的文本仍然可能包含 &lt;、&gt; 和 &amp; 字符，从而导致浏览器显示异常。</p><p><a class="anchor" id="csrfhelper"></a></p><h4 id="csrfhelper">6.14 <code>CsrfHelper</code> 模块</h4><p><code>csrf_meta_tags</code> 方法用于生成 <code>csrf-param</code> 和 <code>csrf-token</code> 这两个元标签，它们分别是跨站请求伪造保护的参数和令牌。</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= csrf_meta_tags %&gt;
+
+</pre>
+</div>
+<div class="note"><p>普通表单生成隐藏字段，因此不使用这些标签。关于这个问题的更多介绍，请参阅 <a href="security.html#cross-site-request-forgery-csrf">跨站请求伪造（CSRF）</a>。</p></div><p><a class="anchor" id="localized-views"></a></p><h3 id="localized-views">7 本地化视图</h3><p>Action View 可以根据当前的本地化设置渲染不同的模板。</p><p>假如 <code>ArticlesController</code> 控制器中有 <code>show</code> 动作。默认情况下，调用 <code>show</code> 动作会渲染 <code>app/views/articles/show.html.erb</code> 模板。如果我们设置了 <code>I18n.locale = :de</code>，那么调用 <code>show</code> 动作会渲染 <code>app/views/articles/show.de.html.erb</code> 模板。如果对应的本地化模板不存在，就会使用对应的默认模板。这意味着我们不需要为所有情况提供本地化视图，但如果本地化视图可用就会优先使用。</p><p>我们可以使用相同的技术来本地化公共目录中的错误文件。例如，通过设置 <code>I18n.locale = :de</code> 并创建 <code>public/500.de.html</code> 和 <code>public/404.de.html</code> 文件，我们就拥有了本地化的错误文件。</p><p>由于 Rails 不会限制用于设置 <code>I18n.locale</code> 的符号，我们可以利用本地化视图根据我们喜欢的任何东西来显示不同的内容。例如，假设专家用户应该看到和普通用户不同的页面，我们可以在 <code>app/controllers/application.rb</code> 配置文件中进行如下设置：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+before_action :set_expert_locale
+
+def set_expert_locale
+  I18n.locale = :expert if current_user.expert?
+end
+
+</pre>
+</div>
+<p>然后创建 <code>app/views/articles/show.expert.html.erb</code> 这样的显示给专家用户看的特殊视图。</p><p>关于 Rails 国际化的更多介绍，请参阅<a href="i18n.html">Rails 国际化 API</a>。</p>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

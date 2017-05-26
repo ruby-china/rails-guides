@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Rails 应用测试指南 — Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="返回首页">Rails 指南</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>新手入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询接口</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入探索</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">Rails 应用测试指南</a></dd>
+                <dd><a href="security.html">Ruby on Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器和模板</a></dd>
+                <dt>为 Ruby on Rails 做贡献</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档指导方针</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">Ruby on Rails 的维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布记</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="新手入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询接口</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入探索">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">Rails 应用测试指南</option>
+                  <option value="security.html">Ruby on Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器和模板</option>
+              </optgroup>
+              <optgroup label="为 Ruby on Rails 做贡献">
+                  <option value="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</option>
+                  <option value="api_documentation_guidelines.html">API 文档指导方针</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">Ruby on Rails 的维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布记</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Rails 应用测试指南</h2><p>本文介绍 Rails 内建对测试的支持。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li>  Rails 测试术语；</li>
+<li>  如何为应用编写单元测试、功能测试、集成测试和系统测试；</li>
+<li>  其他常用的测试方法和插件。</li>
+</ul>
+
+
+              <div id="subCol">
+          <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />目录</h3>
+          <ol class="chapters">
+<li><a href="#why-write-tests-for-your-rails-applications-questionmark">为什么要为 Rails 应用编写测试？</a></li>
+<li>
+<a href="#introduction-to-testing">测试简介</a>
+
+<ul>
+<li><a href="#rails-sets-up-for-testing-from-the-word-go">Rails 内建对测试的支持</a></li>
+<li><a href="#the-test-environment">测试环境</a></li>
+<li><a href="#rails-meets-minitest">使用 Minitest 测试 Rails 应用</a></li>
+<li><a href="#available-assertions">可用的断言</a></li>
+<li><a href="#rails-specific-assertions">Rails 专有的断言</a></li>
+<li><a href="#a-brief-note-about-test-cases">关于测试用例的简要说明</a></li>
+<li><a href="#the-rails-test-runner">Rails 测试运行程序</a></li>
+</ul>
+</li>
+<li>
+<a href="#the-test-database">测试数据库</a>
+
+<ul>
+<li><a href="#maintaining-the-test-database-schema">维护测试数据库的模式</a></li>
+<li><a href="#the-low-down-on-fixtures">固件详解</a></li>
+</ul>
+</li>
+<li><a href="#model-testing">模型测试</a></li>
+<li>
+<a href="#system-testing">系统测试</a>
+
+<ul>
+<li><a href="#changing-the-default-settings">修改默认设置</a></li>
+<li><a href="#screenshot-helper">截图辅助方法</a></li>
+<li><a href="#implementing-a-system-test">编写系统测试</a></li>
+</ul>
+</li>
+<li>
+<a href="#integration-testing">集成测试</a>
+
+<ul>
+<li><a href="#helpers-available-for-integration-tests">集成测试可用的辅助方法</a></li>
+<li><a href="#implementing-an-integration-test">编写一个集成测试</a></li>
+</ul>
+</li>
+<li>
+<a href="#functional-tests-for-your-controllers">为控制器编写功能测试</a>
+
+<ul>
+<li><a href="#what-to-include-in-your-functional-tests">功能测试要测试什么</a></li>
+<li><a href="#available-request-types-for-functional-tests">功能测试中可用的请求类型</a></li>
+<li><a href="#testing-xhr-ajax-requests">测试 XHR（Ajax）请求</a></li>
+<li><a href="#the-three-hashes-of-the-apocalypse">可用的三个散列</a></li>
+<li><a href="#instance-variables-available">可用的实例变量</a></li>
+<li><a href="#setting-headers-and-cgi-variables">设定首部和 CGI 变量</a></li>
+<li><a href="#testing-flash-notices">测试闪现消息</a></li>
+<li><a href="#putting-it-together">测试其他动作</a></li>
+<li><a href="#test-helpers">测试辅助方法</a></li>
+</ul>
+</li>
+<li><a href="#testing-routes">测试路由</a></li>
+<li>
+<a href="#testing-views">测试视图</a>
+
+<ul>
+<li><a href="#additional-view-based-assertions">其他视图相关的断言</a></li>
+</ul>
+</li>
+<li><a href="#testing-helpers">测试辅助方法</a></li>
+<li>
+<a href="#testing-your-mailers">测试邮件程序</a>
+
+<ul>
+<li><a href="#keeping-the-postman-in-check">确保邮件程序在管控内</a></li>
+<li><a href="#unit-testing">单元测试</a></li>
+<li><a href="#functional-testing">功能测试</a></li>
+</ul>
+</li>
+<li>
+<a href="#testing-jobs">测试作业</a>
+
+<ul>
+<li><a href="#a-basic-test-case">一个基本的测试用例</a></li>
+<li><a href="#custom-assertions-and-testing-jobs-inside-other-components">自定义断言和测试其他组件中的作业</a></li>
+</ul>
+</li>
+<li>
+<a href="#additional-testing-resources">其他测试资源</a>
+
+<ul>
+<li><a href="#testing-time-dependent-code">测试与时间有关的代码</a></li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <p><a class="anchor" id="why-write-tests-for-your-rails-applications-questionmark"></a></p><h3 id="why-write-tests-for-your-rails-applications-questionmark">1 为什么要为 Rails 应用编写测试？</h3><p>在 Rails 中编写测试非常简单，生成模型和控制器时，已经生成了测试代码骨架。</p><p>即便是大范围重构后，只需运行测试就能确保实现了所需的功能。</p><p>Rails 测试还可以模拟浏览器请求，无需打开浏览器就能测试应用的响应。</p><p><a class="anchor" id="introduction-to-testing"></a></p><h3 id="introduction-to-testing">2 测试简介</h3><p>测试是 Rails 应用的重要组成部分，不是为了尝鲜和好奇而编写的。</p><p><a class="anchor" id="rails-sets-up-for-testing-from-the-word-go"></a></p><h4 id="rails-sets-up-for-testing-from-the-word-go">2.1 Rails 内建对测试的支持</h4><p>使用 <code>rails new application_name</code> 命令创建一个 Rails 项目时，Rails 会生成 <code>test</code> 目录。如果列出这个目录里的内容，你会看到下述目录和文件：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ ls -F test
+controllers/           helpers/               mailers/               system/                test_helper.rb
+fixtures/              integration/           models/                application_system_test_case.rb
+
+</pre>
+</div>
+<p><code>helpers</code> 目录存放视图辅助方法的测试，<code>mailers</code> 目录存放邮件程序的测试，<code>models</code> 目录存放模型的测试，<code>controllers</code> 目录存放控制器的测试，<code>integration</code> 目录存放涉及多个控制器交互的测试。此外，还有一个目录用于存放邮件程序的测试，以及一个目录用于存放辅助方法的测试。</p><p><code>system</code> 目录存放系统测试，在浏览器中全面测试应用。系统测试模拟用户的交互，还能测试 JavaScript。系统测试源自 Capybara，在浏览器中测试应用。</p><p>测试数据使用固件（fixture）组织，存放在 <code>fixtures</code> 目录中。</p><p>如果先期生成了作业测试，还会创建 <code>jobs</code> 目录。</p><p><code>test_helper.rb</code> 文件存储测试的默认配置。</p><p><code>application_system_test_case.rb</code> 文件存储系统测试的默认配置。</p><p><a class="anchor" id="the-test-environment"></a></p><h4 id="the-test-environment">2.2 测试环境</h4><p>默认情况下，Rails 应用有三个环境：开发环境、测试环境和生产环境。</p><p>各个环境的配置通过类似的方式修改。这里，如果想配置测试环境，可以修改 <code>config/environments/test.rb</code> 文件中的选项。</p><div class="note"><p>运行测试时，<code>RAILS_ENV</code> 环境变量的值是 <code>test</code>。</p></div><p><a class="anchor" id="rails-meets-minitest"></a></p><h4 id="rails-meets-minitest">2.3 使用 Minitest 测试 Rails 应用</h4><p>还记得我们在<a href="getting_started.html">Rails 入门</a>用过的 <code>rails generate model</code> 命令吗？我们使用这个命令生成了第一个模型，这个命令会生成很多内容，其中就包括在 <code>test</code> 目录中创建的测试：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+$ bin/rails generate model article title:string body:text
+...
+create  app/models/article.rb
+create  test/models/article_test.rb
+create  test/fixtures/articles.yml
+...
+
+</pre>
+</div>
+<p>默认在 <code>test/models/article_test.rb</code> 文件中生成的测试如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'test_helper'
+
+class ArticleTest &lt; ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
+end
+
+</pre>
+</div>
+<p>下面逐行说明这段代码，让你初步了解 Rails 测试代码和相关的术语。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'test_helper'
+
+</pre>
+</div>
+<p>这行代码引入 <code>test_helper.rb</code> 文件，即加载默认的测试配置。我们编写的所有测试都会引入这个文件，因此这个文件中定义的代码在所有测试中都可用。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ArticleTest &lt; ActiveSupport::TestCase
+
+</pre>
+</div>
+<p><code>ArticleTest</code> 类定义一个测试用例（test case），它继承自 <code>ActiveSupport::TestCase</code>，因此继承了后者的全部方法。本文后面会介绍其中几个。</p><p>在继承自 <code>Minitest::Test</code>（<code>ActiveSupport::TestCase</code> 的超类）的类中定义的方法，只要名称以 <code>test_</code> 开头（区分大小写），就是一个“测试”。因此，名为 <code>test_password</code> 和 <code>test_valid_password</code> 的方法是有效的测试，运行测试用例时会自动运行。</p><p>此外，Rails 定义了 <code>test</code> 方法，它接受一个测试名称和一个块。<code>test</code> 方法在测试名称前面加上 <code>test_</code>，生成常规的 <code>Minitest::Unit</code> 测试。因此，我们无需费心为方法命名，可以像下面这样写：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+test "the truth" do
+  assert true
+end
+
+</pre>
+</div>
+<p>这段代码几乎与下述代码一样：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def test_the_truth
+  assert true
+end
+
+</pre>
+</div>
+<p>虽然可以像普通的方法那样定义测试，但是使用 <code>test</code> 宏能指定更易读的测试名称。</p><div class="note"><p>生成方法名时，空格会替换成下划线。不过，结果无需是有效的 Ruby 标识符，名称中可以包含标点符号等。这是因为，严格来说，在 Ruby 中任何字符串都可以作为方法的名称。这样，可能需要使用 <code>define_method</code> 和 <code>send</code> 才能让方法其作用，不过在名称形式上的限制较少。</p></div><p>接下来是我们遇到的第一个断言（assertion）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+assert true
+
+</pre>
+</div>
+<p>断言求值对象（或表达式），然后与预期结果比较。例如，断言可以检查：</p>
+<ul>
+<li>  两个值是否相等</li>
+<li>  对象是否为 <code>nil</code>
+</li>
+<li>  一行代码是否抛出异常</li>
+<li>  用户的密码长度是否超过 5 个字符</li>
+</ul>
+<p>一个测试中可以有一个或多个断言，对断言的数量没有限制。只有全部断言都成功，测试才能通过。</p><p><a class="anchor" id="your-first-failing-test"></a></p><h5 id="your-first-failing-test">2.3.1 第一个失败测试</h5><p>为了了解失败测试是如何报告的，下面在 <code>article_test.rb</code> 测试用例中添加一个失败测试：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+test "should not save article without title" do
+  article = Article.new
+  assert_not article.save
+end
+
+</pre>
+</div>
+<p>然后运行这个新增的测试（其中，6 是测试定义所在的行号）：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails test test/models/article_test.rb:6
+Run options: --seed 44656
+
+# Running:
+
+F
+
+Failure:
+ArticleTest#test_should_not_save_article_without_title [/path/to/blog/test/models/article_test.rb:6]:
+Expected true to be nil or false
+
+
+bin/rails test test/models/article_test.rb:6
+
+
+
+Finished in 0.023918s, 41.8090 runs/s, 41.8090 assertions/s.
+
+1 runs, 1 assertions, 1 failures, 0 errors, 0 skips
+
+</pre>
+</div>
+<p>输出中的 F 表示失败（failure）。可以看到，<code>Failure</code> 下面显示了相应的路径和失败测试的名称。下面几行是堆栈跟踪，以及传入断言的具体值和预期值。默认的断言消息足够用于定位错误了。如果想让断言失败消息提供更多的信息，可以使用每个断言都有的可选参数定制消息，如下所示：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+test "should not save article without title" do
+  article = Article.new
+  assert_not article.save, "Saved the article without a title"
+end
+
+</pre>
+</div>
+<p>现在运行测试会看到更加友好的断言消息：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Failure:
+ArticleTest#test_should_not_save_article_without_title [/path/to/blog/test/models/article_test.rb:6]:
+Saved the article without a title
+
+</pre>
+</div>
+<p>为了让测试通过，我们可以为 <code>title</code> 字段添加一个模型层验证：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Article &lt; ApplicationRecord
+  validates :title, presence: true
+end
+
+</pre>
+</div>
+<p>现在测试应该能通过了。再次运行测试，确认一下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+$ bin/rails test test/models/article_test.rb:6
+Run options: --seed 31252
+
+# Running:
+
+.
+
+Finished in 0.027476s, 36.3952 runs/s, 36.3952 assertions/s.
+
+1 runs, 1 assertions, 0 failures, 0 errors, 0 skips
+
+</pre>
+</div>
+<p>你可能注意到了，我们先编写一个测试检查所需的功能，它失败了，然后我们编写代码，添加功能，最后确认测试能通过。这种开发软件的方式叫做<a href="http://c2.com/cgi/wiki?TestDrivenDevelopment">测试驱动开发</a>（Test-Driven Development，TDD）。</p><p><a class="anchor" id="what-an-error-looks-like"></a></p><h5 id="what-an-error-looks-like">2.3.2 失败的样子</h5><p>为了查看错误是如何报告的，下面编写一个包含错误的测试：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+test "should report error" do
+  # 测试用例中没有定义 some_undefined_variable
+  some_undefined_variable
+  assert true
+end
+
+</pre>
+</div>
+<p>然后运行测试，你会看到更多输出：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails test test/models/article_test.rb
+Run options: --seed 1808
+
+# Running:
+
+.E
+
+Error:
+ArticleTest#test_should_report_error:
+NameError: undefined local variable or method `some_undefined_variable' for #&lt;ArticleTest:0x007fee3aa71798&gt;
+    test/models/article_test.rb:11:in `block in &lt;class:ArticleTest&gt;'
+
+
+bin/rails test test/models/article_test.rb:9
+
+
+
+Finished in 0.040609s, 49.2500 runs/s, 24.6250 assertions/s.
+
+2 runs, 1 assertions, 0 failures, 1 errors, 0 skips
+
+</pre>
+</div>
+<p>注意输出中的“E”，它表示测试有错误（error）。</p><div class="note"><p>执行各个测试方法时，只要遇到错误或断言失败，就立即停止，然后接着运行测试组件中的下一个测试方法。测试方法以随机顺序执行。测试顺序可以使用 <a href="configuring.html#configuring-active-support"><code>config.active_support.test_order</code> 选项</a>配置。</p></div><p>测试失败时会显示相应的回溯信息。默认情况下，Rails 会过滤回溯信息，只打印与应用有关的内容。这样不会被框架相关的内容搅乱，有助于集中精力排查代码中的错误。不过，有时需要查看完整的回溯信息。此时，只需设定 <code>-b</code>（或 <code>--backtrace</code>）参数就能启用这一行为：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails test -b test/models/article_test.rb
+
+</pre>
+</div>
+<p>若想让这个测试通过，可以使用 <code>assert_raises</code> 修改，如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+test "should report error" do
+  # 测试用例中没有定义 some_undefined_variable
+  assert_raises(NameError) do
+    some_undefined_variable
+  end
+end
+
+</pre>
+</div>
+<p>现在这个测试应该能通过了。</p><p><a class="anchor" id="available-assertions"></a></p><h4 id="available-assertions">2.4 可用的断言</h4><p>我们大致了解了几个可用的断言。断言是测试的核心所在，是真正执行检查、确保功能符合预期的执行者。</p><p>下面摘录部分可以在 <a href="https://github.com/seattlerb/minitest">Minitest</a>（Rails 默认使用的测试库）中使用的断言。<code>[msg]</code> 参数是可选的消息字符串，能让测试失败消息更明确。</p>
+<table>
+<thead>
+<tr>
+<th>断言</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>assert( test, [msg] )</code></td>
+<td>确保 <code>test</code> 是真值。</td>
+</tr>
+<tr>
+<td><code>assert_not( test, [msg] )</code></td>
+<td>确保 <code>test</code> 是假值。</td>
+</tr>
+<tr>
+<td><code>assert_equal( expected, actual, [msg] )</code></td>
+<td>确保 <code>expected == actual</code> 成立。</td>
+</tr>
+<tr>
+<td><code>assert_not_equal( expected, actual, [msg] )</code></td>
+<td>确保 <code>expected != actual</code> 成立。</td>
+</tr>
+<tr>
+<td><code>assert_same( expected, actual, [msg] )</code></td>
+<td>确保 <code>expected.equal?(actual)</code> 成立。</td>
+</tr>
+<tr>
+<td><code>assert_not_same( expected, actual, [msg] )</code></td>
+<td>确保 <code>expected.equal?(actual)</code> 不成立。</td>
+</tr>
+<tr>
+<td><code>assert_nil( obj, [msg] )</code></td>
+<td>确保 <code>obj.nil?</code> 成立。</td>
+</tr>
+<tr>
+<td><code>assert_not_nil( obj, [msg] )</code></td>
+<td>确保 <code>obj.nil?</code> 不成立。</td>
+</tr>
+<tr>
+<td><code>assert_empty( obj, [msg] )</code></td>
+<td>确保 <code>obj</code> 是空的。</td>
+</tr>
+<tr>
+<td><code>assert_not_empty( obj, [msg] )</code></td>
+<td>确保 <code>obj</code> 不是空的。</td>
+</tr>
+<tr>
+<td><code>assert_match( regexp, string, [msg] )</code></td>
+<td>确保字符串匹配正则表达式。</td>
+</tr>
+<tr>
+<td><code>assert_no_match( regexp, string, [msg] )</code></td>
+<td>确保字符串不匹配正则表达式。</td>
+</tr>
+<tr>
+<td><code>assert_includes( collection, obj, [msg] )</code></td>
+<td>确保 <code>obj</code> 在 <code>collection</code> 中。</td>
+</tr>
+<tr>
+<td><code>assert_not_includes( collection, obj, [msg] )</code></td>
+<td>确保 <code>obj</code> 不在 <code>collection</code> 中。</td>
+</tr>
+<tr>
+<td><code>assert_in_delta( expected, actual, [delta], [msg] )</code></td>
+<td>确保 <code>expected</code> 和 <code>actual</code> 的差值在 <code>delta</code> 的范围内。</td>
+</tr>
+<tr>
+<td><code>assert_not_in_delta( expected, actual, [delta], [msg] )</code></td>
+<td>确保 <code>expected</code> 和 <code>actual</code> 的差值不在 <code>delta</code> 的范围内。</td>
+</tr>
+<tr>
+<td><code>assert_throws( symbol, [msg] ) { block }</code></td>
+<td>确保指定的块会抛出指定符号表示的异常。</td>
+</tr>
+<tr>
+<td><code>assert_raises( exception1, exception2, &amp;#8230;&amp;#8203; ) { block }</code></td>
+<td>确保指定块会抛出指定异常中的一个。</td>
+</tr>
+<tr>
+<td><code>assert_instance_of( class, obj, [msg] )</code></td>
+<td>确保 <code>obj</code> 是 <code>class</code> 的实例。</td>
+</tr>
+<tr>
+<td><code>assert_not_instance_of( class, obj, [msg] )</code></td>
+<td>确保 <code>obj</code> 不是 <code>class</code> 的实例。</td>
+</tr>
+<tr>
+<td><code>assert_kind_of( class, obj, [msg] )</code></td>
+<td>确保 <code>obj</code> 是 <code>class</code> 或其后代的实例。</td>
+</tr>
+<tr>
+<td><code>assert_not_kind_of( class, obj, [msg] )</code></td>
+<td>确保 <code>obj</code> 不是 <code>class</code> 或其后代的实例。</td>
+</tr>
+<tr>
+<td><code>assert_respond_to( obj, symbol, [msg] )</code></td>
+<td>确保 <code>obj</code> 能响应 <code>symbol</code> 对应的方法。</td>
+</tr>
+<tr>
+<td><code>assert_not_respond_to( obj, symbol, [msg] )</code></td>
+<td>确保 <code>obj</code> 不能响应 <code>symbol</code> 对应的方法。</td>
+</tr>
+<tr>
+<td><code>assert_operator( obj1, operator, [obj2], [msg] )</code></td>
+<td>确保 <code>obj1.operator(obj2)</code> 成立。</td>
+</tr>
+<tr>
+<td><code>assert_not_operator( obj1, operator, [obj2], [msg] )</code></td>
+<td>确保 <code>obj1.operator(obj2)</code> 不成立。</td>
+</tr>
+<tr>
+<td><code>assert_predicate( obj, predicate, [msg] )</code></td>
+<td>确保 <code>obj.predicate</code> 为真，例如 <code>assert_predicate str, :empty?</code>。</td>
+</tr>
+<tr>
+<td><code>assert_not_predicate( obj, predicate, [msg] )</code></td>
+<td>确保 <code>obj.predicate</code> 为假，例如 <code>assert_not_predicate str, :empty?</code>。</td>
+</tr>
+<tr>
+<td><code>flunk( [msg] )</code></td>
+<td>确保失败。可以用这个断言明确标记未完成的测试。</td>
+</tr>
+</tbody>
+</table>
+<p>以上是 Minitest 支持的部分断言，完整且最新的列表参见 <a href="http://docs.seattlerb.org/minitest/">Minitest API 文档</a>，尤其是 <a href="http://docs.seattlerb.org/minitest/Minitest/Assertions.html"><code>Minitest::Assertions</code> 模块的文档</a>。</p><p>Minitest 这个测试框架是模块化的，因此还可以自己创建断言。事实上，Rails 就这么做了。Rails 提供了一些专门的断言，能简化测试。</p><div class="note"><p>自己创建断言是高级话题，本文不涉及。</p></div><p><a class="anchor" id="rails-specific-assertions"></a></p><h4 id="rails-specific-assertions">2.5 Rails 专有的断言</h4><p>在 Minitest 框架的基础上，Rails 添加了一些自定义的断言。</p>
+<table>
+<thead>
+<tr>
+<th>断言</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>assert_difference(expressions, difference = 1, message = nil) {&amp;#8230;&amp;#8203;}</code></td>
+<td>运行代码块前后数量变化了多少（通过 <code>expression</code> 表示）。</td>
+</tr>
+<tr>
+<td><code>assert_no_difference(expressions, message = nil, &amp;block)</code></td>
+<td>运行代码块前后数量没变多少（通过 <code>expression</code> 表示）。</td>
+</tr>
+<tr>
+<td><code>assert_nothing_raised { block }</code></td>
+<td>确保指定的块不会抛出任何异常。</td>
+</tr>
+<tr>
+<td><code>assert_recognizes(expected_options, path, extras={}, message=nil)</code></td>
+<td>断言正确处理了指定路径，而且解析的参数（通过 <code>expected_options</code> 散列指定）与路径匹配。基本上，它断言 Rails 能识别 <code>expected_options</code> 指定的路由。</td>
+</tr>
+<tr>
+<td><code>assert_generates(expected_path, options, defaults={}, extras = {}, message=nil)</code></td>
+<td>断言指定的选项能生成指定的路径。作用与 <code>assert_recognizes</code> 相反。<code>extras</code> 参数用于构建查询字符串。<code>message</code> 参数用于为断言失败定制错误消息。</td>
+</tr>
+<tr>
+<td><code>assert_response(type, message = nil)</code></td>
+<td>断言响应的状态码。可以指定表示 200-299 的 <code>:success</code>，表示 300-399 的 <code>:redirect</code>，表示 404 的 <code>:missing</code>，或者表示 500-599 的 <code>:error</code>。此外，还可以明确指定数字状态码或对应的符号。详情参见<a href="http://rubydoc.info/github/rack/rack/master/Rack/Utils#HTTP_STATUS_CODES-constant">完整的状态码列表</a>及其<a href="http://rubydoc.info/github/rack/rack/master/Rack/Utils#SYMBOL_TO_STATUS_CODE-constant">与符号的对应关系</a>。</td>
+</tr>
+<tr>
+<td><code>assert_redirected_to(options = {}, message=nil)</code></td>
+<td>断言传入的重定向选项匹配最近一个动作中的重定向。重定向参数可以只指定部分，例如 <code>assert_redirected_to(controller: "weblog")</code>，也可以完整指定，例如 <code>redirect_to(controller: "weblog", action: "show")</code>。此外，还可以传入具名路由，例如 <code>assert_redirected_to root_path</code>，以及 Active Record 对象，例如 <code>assert_redirected_to @article</code>。</td>
+</tr>
+</tbody>
+</table>
+<p>在接下来的内容中会用到其中一些断言。</p><p><a class="anchor" id="a-brief-note-about-test-cases"></a></p><h4 id="a-brief-note-about-test-cases">2.6 关于测试用例的简要说明</h4><p><code>Minitest::Assertions</code> 模块定义的所有基本断言，例如 <code>assert_equal</code>，都可以在我们编写的测试用例中使用。Rails 提供了下述几个类供你继承：</p>
+<ul>
+<li>  <a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveSupport/TestCase.html"><code>ActiveSupport::TestCase</code></a>
+</li>
+<li>  <a href="http://api.rubyonrails.org/v5.1.1/classes/ActionMailer/TestCase.html"><code>ActionMailer::TestCase</code></a>
+</li>
+<li>  <a href="http://api.rubyonrails.org/v5.1.1/classes/ActionView/TestCase.html"><code>ActionView::TestCase</code></a>
+</li>
+<li>  <a href="http://api.rubyonrails.org/v5.1.1/classes/ActionDispatch/IntegrationTest.html"><code>ActionDispatch::IntegrationTest</code></a>
+</li>
+<li>  <a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveJob/TestCase.html"><code>ActiveJob::TestCase</code></a>
+</li>
+<li>  <a href="http://api.rubyonrails.org/v5.1.1/classes/ActionDispatch/SystemTestCase.html"><code>ActionDispatch::SystemTestCase</code></a>
+</li>
+</ul>
+<p>这些类都引入了 <code>Minitest::Assertions</code>，因此可以在测试中使用所有基本断言。</p><div class="note"><p>Minitest 的详情参见<a href="http://docs.seattlerb.org/minitest">文档</a>。</p></div><p><a class="anchor" id="the-rails-test-runner"></a></p><h4 id="the-rails-test-runner">2.7 Rails 测试运行程序</h4><p>全部测试可以使用 <code>bin/rails test</code> 命令统一运行。</p><p>也可以单独运行一个测试，方法是把测试用例所在的文件名传给 <code>bin/rails test</code> 命令。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails test test/models/article_test.rb
+Run options: --seed 1559
+
+# Running:
+
+..
+
+Finished in 0.027034s, 73.9810 runs/s, 110.9715 assertions/s.
+
+2 runs, 3 assertions, 0 failures, 0 errors, 0 skips
+
+</pre>
+</div>
+<p>上述命令运行测试用例中的所有测试方法。</p><p>也可以运行测试用例中特定的测试方法：指定 <code>-n</code> 或 <code>--name</code> 旗标和测试方法的名称。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails test test/models/article_test.rb -n test_the_truth
+Run options: -n test_the_truth --seed 43583
+
+# Running:
+
+.
+
+Finished tests in 0.009064s, 110.3266 tests/s, 110.3266 assertions/s.
+
+1 tests, 1 assertions, 0 failures, 0 errors, 0 skips
+
+</pre>
+</div>
+<p>也可以运行某一行中的测试，方法是指定行号。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails test test/models/article_test.rb:6 # 运行某一行中的测试
+
+</pre>
+</div>
+<p>也可以运行整个目录中的测试，方法是指定目录的路径。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails test test/controllers # 运行指定目录中的所有测试
+
+</pre>
+</div>
+<p>此外，测试运行程序还有很多功能，例如快速失败、测试运行结束后统一输出，等等。详情参见测试运行程序的文档，如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails test -h
+minitest options:
+    -h, --help                       Display this help.
+    -s, --seed SEED                  Sets random seed. Also via env. Eg: SEED=n rake
+    -v, --verbose                    Verbose. Show progress processing files.
+    -n, --name PATTERN               Filter run on /regexp/ or string.
+        --exclude PATTERN            Exclude /regexp/ or string from run.
+
+Known extensions: rails, pride
+
+Usage: bin/rails test [options] [files or directories]
+You can run a single test by appending a line number to a filename:
+
+    bin/rails test test/models/user_test.rb:27
+
+You can run multiple files and directories at the same time:
+
+    bin/rails test test/controllers test/integration/login_test.rb
+
+By default test failures and errors are reported inline during a run.
+
+Rails options:
+    -e, --environment ENV            Run tests in the ENV environment
+    -b, --backtrace                  Show the complete backtrace
+    -d, --defer-output               Output test failures and errors after the test run
+    -f, --fail-fast                  Abort test run on first failure or error
+    -c, --[no-]color                 Enable color in the output
+
+</pre>
+</div>
+<p><a class="anchor" id="the-test-database"></a></p><h3 id="the-test-database">3 测试数据库</h3><p>几乎每个 Rails 应用都经常与数据库交互，因此测试也需要这么做。为了有效编写测试，你要知道如何搭建测试数据库，以及如何使用示例数据填充。</p><p>默认情况下，每个 Rails 应用都有三个环境：开发环境、测试环境和生产环境。各个环境中的数据库在 <code>config/database.yml</code> 文件中配置。</p><p>为测试专门提供一个数据库方便我们单独设置和与测试数据交互。这样，我们可以放心地处理测试数据，不必担心会破坏开发数据库或生产数据库中的数据。</p><p><a class="anchor" id="maintaining-the-test-database-schema"></a></p><h4 id="maintaining-the-test-database-schema">3.1 维护测试数据库的模式</h4><p>为了能运行测试，测试数据库要有应用当前的数据库结构。测试辅助方法会检查测试数据库中是否有尚未运行的迁移。如果有，会尝试把 <code>db/schema.rb</code> 或 <code>db/structure.sql</code> 载入数据库。之后，如果迁移仍处于待运行状态，会抛出异常。通常，这表明数据库模式没有完全迁移。在开发数据库中运行迁移（<code>bin/rails db:migrate</code>）能更新模式。</p><div class="note"><p>如果修改了现有的迁移，要重建测试数据库。方法是执行 <code>bin/rails db:test:prepare</code> 命令。</p></div><p><a class="anchor" id="the-low-down-on-fixtures"></a></p><h4 id="the-low-down-on-fixtures">3.2 固件详解</h4><p>好的测试应该具有提供测试数据的方式。在 Rails 中，测试数据由固件（fixture）提供。关于固件的全面说明，参见 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveRecord/FixtureSet.html">API 文档</a>。</p><p><a class="anchor" id="what-are-fixtures-questionmark"></a></p><h5 id="what-are-fixtures-questionmark">3.2.1 固件是什么？</h5><p>固件代指示例数据，在运行测试之前，使用预先定义好的数据填充测试数据库。固件与所用的数据库没有关系，使用 YAML 格式编写。一个模型有一个固件文件。</p><div class="note"><p>固件不是为了创建测试中用到的每一个对象，需要公用的默认数据时才应该使用。</p></div><p>固件保存在 <code>test/fixtures</code> 目录中。执行 <code>rails generate model</code> 命令生成新模型时，Rails 会在这个目录中自动创建固件文件。</p><p><a class="anchor" id="yaml"></a></p><h5 id="yaml">3.2.2 YAML</h5><p>使用 YAML 格式编写的固件可读性高，能更好地表述示例数据。这种固件文件的扩展名是 <code>.yml</code>（如 <code>users.yml</code>）。</p><p>下面举个例子：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+# lo &amp; behold! I am a YAML comment!
+david:
+  name: David Heinemeier Hansson
+  birthday: 1979-10-15
+  profession: Systems development
+
+steve:
+  name: Steve Ross Kellock
+  birthday: 1974-09-27
+  profession: guy with keyboard
+
+</pre>
+</div>
+<p>每个固件都有名称，后面跟着一个缩进的键值对（以冒号分隔）列表。记录之间往往使用空行分开。在固件中可以使用注释，在行首加上 <code>#</code> 符号即可。</p><p>如果涉及到<a href="association_basics.html">关联</a>，定义一个指向其他固件的引用即可。例如，下面的固件针对 <code>belongs_to/has_many</code> 关联：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+# In fixtures/categories.yml
+about:
+  name: About
+
+# In fixtures/articles.yml
+first:
+  title: Welcome to Rails!
+  body: Hello world!
+  category: about
+
+</pre>
+</div>
+<p>注意，在 <code>fixtures/articles.yml</code> 文件中，<code>first</code> 文章的 <code>category</code> 是 <code>about</code>，这告诉 Rails，要加载 <code>fixtures/categories.yml</code> 文件中的 <code>about</code> 分类。</p><div class="note"><p>在固件中创建关联时，引用的是另一个固件的名称，而不是 <code>id</code> 属性。Rails 会自动分配主键。关于这种关联行为的详情，参阅<a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveRecord/FixtureSet.html">固件的 API 文档</a>。</p></div><p><a class="anchor" id="erb-in-it-up"></a></p><h5 id="erb-in-it-up">3.2.3 使用 ERB 增强固件</h5><p>ERB 用于在模板中嵌入 Ruby 代码。Rails 加载 YAML 格式的固件时，会先使用 ERB 进行预处理，因此可使用 Ruby 代码协助生成示例数据。例如，下面的代码会生成一千个用户：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% 1000.times do |n| %&gt;
+user_&lt;%= n %&gt;:
+  username: &lt;%= "user#{n}" %&gt;
+  email: &lt;%= "user#{n}@example.com" %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="fixtures-in-action"></a></p><h5 id="fixtures-in-action">3.2.4 固件实战</h5><p>默认情况下，Rails 会自动加载 <code>test/fixtures</code> 目录中的所有固件。加载的过程分为三步：</p>
+<ol>
+<li> 从数据表中删除所有和固件对应的数据；</li>
+<li> 把固件载入数据表；</li>
+<li> 把固件中的数据转储成方法，以便直接访问。</li>
+</ol>
+<div class="info"><p>为了从数据库中删除现有数据，Rails 会尝试禁用引用完整性触发器（如外键和约束检查）。运行测试时，如果见到烦人的权限错误，确保数据库用户有权在测试环境中禁用这些触发器。（对 PostgreSQL 来说，只有超级用户能禁用全部触发器。关于 PostgreSQL 权限的详细说明参阅<a href="http://blog.endpoint.com/2012/10/postgres-system-triggers-error.html">这篇文章</a>。）</p></div><p><a class="anchor" id="fixtures-are-active-record-objects"></a></p><h5 id="fixtures-are-active-record-objects">3.2.5 固件是 Active Record 对象</h5><p>固件是 Active Record 实例。如前一节的第 3 点所述，在测试用例中可以直接访问这个对象，因为固件中的数据会转储成测试用例作用域中的方法。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 返回 david 固件对应的 User 对象
+users(:david)
+
+# 返回 david 的 id 属性
+users(:david).id
+
+# 还可以调用 User 类的方法
+david = users(:david)
+david.call(david.partner)
+
+</pre>
+</div>
+<p>如果想一次获取多个固件，可以传入一个固件名称列表。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 返回一个数组，包含 david 和 steve 两个固件
+users(:david, :steve)
+
+</pre>
+</div>
+<p><a class="anchor" id="model-testing"></a></p><h3 id="model-testing">4 模型测试</h3><p>模型测试用于测试应用中的各个模型。</p><p>Rails 模型测试存储在 <code>test/models</code> 目录中。Rails 提供了一个生成器，可用它生成模型测试骨架。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate test_unit:model article title:string body:text
+create  test/models/article_test.rb
+create  test/fixtures/articles.yml
+
+</pre>
+</div>
+<p>模型测试没有专门的超类（如 <code>ActionMailer::TestCase</code>），而是继承自 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveSupport/TestCase.html"><code>ActiveSupport::TestCase</code></a>。</p><p><a class="anchor" id="system-testing"></a></p><h3 id="system-testing">5 系统测试</h3><p>系统测试是完整的浏览器测试，可用于测试应用的 JavaScript 和用户体验。系统测试建立在 Capybara 之上。</p><p>系统测试可以在真实的浏览器中运行，也可以在无界面驱动中运行，用于测试用户与应用的交互。</p><p>系统测试存放在应用的 <code>test/system</code> 目录中。Rails 为创建系统测试骨架提供了一个生成器：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate system_test users_create
+      invoke test_unit
+      create test/system/users_creates_test.rb
+
+</pre>
+</div>
+<p>下面是一个新生成的系统测试：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require "application_system_test_case"
+
+class UsersCreatesTest &lt; ApplicationSystemTestCase
+  # test "visiting the index" do
+  #   visit users_creates_url
+  #
+  #   assert_selector "h1", text: "UsersCreate"
+  # end
+end
+
+</pre>
+</div>
+<p>默认情况下，系统测试使用 Selenium 驱动在 Chrome 浏览器中运行，界面尺寸为 1400x1400。下一节说明如何修改默认设置。</p><p><a class="anchor" id="changing-the-default-settings"></a></p><h4 id="changing-the-default-settings">5.1 修改默认设置</h4><p>修改系统测试的默认设置十分简单。所有配置都做了抽象，你只需关注测试本身。</p><p>创建新应用或生成脚手架时，会在 <code>test</code> 目录中创建 <code>application_system_test_case.rb</code> 文件。系统测试的配置都在这个文件中。</p><p>如果想修改默认设置，只需修改系统测试使用的驱动。假如你想把 Selenium 驱动换成 Poltergeist。首先，在 <code>Gemfile</code> 中添加 Poltergeist gem。然后，在 <code>application_system_test_case.rb</code> 文件中这么做：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require "test_helper"
+require "capybara/poltergeist"
+
+class ApplicationSystemTestCase &lt; ActionDispatch::SystemTestCase
+  driven_by :poltergeist
+end
+
+</pre>
+</div>
+<p>驱动名称是 <code>driven_by</code> 必须的参数。<code>driven_by</code> 接受的可选参数有：<code>:using</code>，指定使用的浏览器（仅供有界面的驱动使用，如 Selenium）；<code>:screen_size</code>，修改截图的尺寸。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require "test_helper"
+
+class ApplicationSystemTestCase &lt; ActionDispatch::SystemTestCase
+  driven_by :selenium, using: :firefox
+end
+
+</pre>
+</div>
+<p>如果所需的 Capybara 配置 Rails 提供的多，可以把所有配置都放在 <code>application_system_test_case.rb</code> 文件中。</p><p>其他设置参见 <a href="https://github.com/teamcapybara/capybara#setup">Capybara 的文档</a>。</p><p><a class="anchor" id="screenshot-helper"></a></p><h4 id="screenshot-helper">5.2 截图辅助方法</h4><p><code>ScreenshotHelper</code> 用于截取测试的截图。这有助于查看测试失败时的界面，或者以后通过截图调试。</p><p>这个模块提供了两个方法：<code>take_screenshot</code> 和 <code>take_failed_screenshot</code>。Rails 在 <code>after_teardown</code> 中调用了 <code>take_failed_screenshot</code>。</p><p><code>take_screenshot</code> 辅助方法可以放在测试的任何位置，用于捕获浏览器的截图。</p><p><a class="anchor" id="implementing-a-system-test"></a></p><h4 id="implementing-a-system-test">5.3 编写系统测试</h4><p>下面我们为前面开发的博客应用添加一个系统测试。这个系统测试访问首页，然后新建一篇博客文章。</p><p>如果使用的是脚手架生成器，已经自动创建了系统测试骨架。否则，先生成系统测试骨架：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate system_test articles
+
+</pre>
+</div>
+<p>这个命令会为你创建一个测试文件，在命令行中的输出如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+invoke  test_unit
+create    test/system/articles_test.rb
+
+</pre>
+</div>
+<p>打开那个文件，编写第一个断言：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require "application_system_test_case"
+
+class ArticlesTest &lt; ApplicationSystemTestCase
+  test "viewing the index" do
+    visit articles_path
+    assert_selector "h1", text: "Articles"
+  end
+end
+
+</pre>
+</div>
+<p>如果这个测试在文章索引页面发现有一级标题，便能通过。</p><p>运行系统测试：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails test:system
+
+</pre>
+</div>
+<div class="note"><p>如果只运行 <code>bin/rails test</code>，系统测试不会运行。若想运行系统测试，必须使用 <code>bin/rails test:system</code>。</p></div><p><a class="anchor" id="creating-articles-system-test"></a></p><h5 id="creating-articles-system-test">5.3.1 编写新建文章的系统测试</h5><p>下面测试在博客中新建文章的流程。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+test "creating an article" do
+  visit articles_path
+
+  click_on "New Article"
+
+  fill_in "Title", with: "Creating an Article"
+  fill_in "Body", with: "Created this article successfully!"
+
+  click_on "Create Article"
+
+  assert_text "Creating an Article"
+end
+
+</pre>
+</div>
+<p>首先，调用 <code>visit</code> 访问 <code>articles_path</code>，进入文章索引页面。</p><p>然后，<code>click_on "New Article"</code> 在索引页面上找到“New Article”按钮，转到 <code>/articles/new</code> 页面。</p><p>接着，测试在标题和正文框中填入指定的文本。填完之后，点击“Create Article”，发送 POST 请求，在数据库中新建一篇文章。</p><p>此时会重定向回到文章索引页面，我们再断言页面中有那篇文章的标题。</p><p><a class="anchor" id="implementing-a-system-test-taking-it-further"></a></p><h5 id="implementing-a-system-test-taking-it-further">5.3.2 继续测试</h5><p>系统测试与集成测试类似，可以测试用户与控制器、模型和视图的交互，但是系统测试更强健，能模拟用户使用应用的真实过程。你可以继续测试，测试用户在应用中可能执行的任何操作，例如发表评论、删除文章、发布草稿，等等。</p><p><a class="anchor" id="integration-testing"></a></p><h3 id="integration-testing">6 集成测试</h3><p>集成测试用于测试应用中不同部分之间的交互，一般用于测试应用中重要的工作流程。</p><p>集成测试存储在 <code>test/integration</code> 目录中。Rails 提供了一个生成器，使用它可以生成集成测试骨架。</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate integration_test user_flows
+      exists  test/integration/
+      create  test/integration/user_flows_test.rb
+
+</pre>
+</div>
+<p>上述命令生成的集成测试如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'test_helper'
+
+class UserFlowsTest &lt; ActionDispatch::IntegrationTest
+  # test "the truth" do
+  #   assert true
+  # end
+end
+
+</pre>
+</div>
+<p>这个测试继承自 <code>ActionDispatch::IntegrationTest</code> 类，因此可以在集成测试中使用一些额外的辅助方法。</p><p><a class="anchor" id="helpers-available-for-integration-tests"></a></p><h4 id="helpers-available-for-integration-tests">6.1 集成测试可用的辅助方法</h4><p>除了标准的测试辅助方法之外，由于集成测试继承自 <code>ActionDispatch::IntegrationTest</code>，因此在集成测试中还可使用一些额外的辅助方法。下面简要介绍三类辅助方法。</p><p>集成测试运行程序的说明参阅 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActionDispatch/Integration/Runner.html"><code>ActionDispatch::Integration::Runner</code> 模块的文档</a>。</p><p>执行请求的方法参见 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActionDispatch/Integration/RequestHelpers.html"><code>ActionDispatch::Integration::RequestHelpers</code> 模块的文档</a>。</p><p>如果需要修改会话或集成测试的状态，参阅 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActionDispatch/Integration/Session.html"><code>ActionDispatch::Integration::Session</code> 类的文档</a>。</p><p><a class="anchor" id="implementing-an-integration-test"></a></p><h4 id="implementing-an-integration-test">6.2 编写一个集成测试</h4><p>下面为博客应用添加一个集成测试。我们将执行基本的工作流程，新建一篇博客文章，确认一切都能正常运作。</p><p>首先，生成集成测试骨架：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate integration_test blog_flow
+
+</pre>
+</div>
+<p>这个命令会创建一个测试文件。在上述命令的输出中应该看到：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+invoke  test_unit
+create    test/integration/blog_flow_test.rb
+
+</pre>
+</div>
+<p>打开那个文件，编写第一个断言：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'test_helper'
+
+class BlogFlowTest &lt; ActionDispatch::IntegrationTest
+  test "can see the welcome page" do
+    get "/"
+    assert_select "h1", "Welcome#index"
+  end
+end
+
+</pre>
+</div>
+<p><code>assert_select</code> 用于查询请求得到的 HTML，<a href="#testing-views">测试视图</a>说明。我们使用它测试请求的响应：断言响应的内容中有关键的 HTML 元素。</p><p>访问根路径时，应该使用 <code>welcome/index.html.erb</code> 渲染视图。因此，这个断言应该通过。</p><p><a class="anchor" id="creating-articles-integration"></a></p><h5 id="creating-articles-integration">6.2.1 测试发布文章的流程</h5><p>下面测试在博客中新建文章以及查看结果的功能。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+test "can create an article" do
+  get "/articles/new"
+  assert_response :success
+
+  post "/articles",
+    params: { article: { title: "can create", body: "article successfully." } }
+  assert_response :redirect
+  follow_redirect!
+  assert_response :success
+  assert_select "p", "Title:\n  can create"
+end
+
+</pre>
+</div>
+<p>我们来分析一下这段测试。</p><p>首先，我们调用 <code>Articles</code> 控制器的 <code>new</code> 动作。应该得到成功的响应。</p><p>然后，我们向 <code>Articles</code> 控制器的 <code>create</code> 动作发送 <code>POST</code> 请求：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+post "/articles",
+  params: { article: { title: "can create", body: "article successfully." } }
+assert_response :redirect
+follow_redirect!
+
+</pre>
+</div>
+<p>请求后面两行的作用是处理创建文章后的重定向。</p><div class="note"><p>重定向后如果还想发送请求，别忘了调用 <code>follow_redirect!</code>。</p></div><p>最后，我们断言得到的是成功的响应，而且页面中显示了新建的文章。</p><p><a class="anchor" id="taking-it-further"></a></p><h5 id="taking-it-further">6.2.2 更进一步</h5><p>我们刚刚测试了访问博客和新建文章功能，这只是工作流程的一小部分。如果想更进一步，还可以测试评论、删除文章或编辑评论。集成测试就是用来检查应用的各种使用场景的。</p><p><a class="anchor" id="functional-tests-for-your-controllers"></a></p><h3 id="functional-tests-for-your-controllers">7 为控制器编写功能测试</h3><p>在 Rails 中，测试控制器各动作需要编写功能测试（functional test）。控制器负责处理应用收到的请求，然后使用视图渲染响应。功能测试用于检查动作对请求的处理，以及得到的结果或响应（某些情况下是 HTML 视图）。</p><p><a class="anchor" id="what-to-include-in-your-functional-tests"></a></p><h4 id="what-to-include-in-your-functional-tests">7.1 功能测试要测试什么</h4><p>应该测试以下内容：</p>
+<ul>
+<li>  请求是否成功；</li>
+<li>  是否重定向到正确的页面；</li>
+<li>  用户是否通过身份验证；</li>
+<li>  是否把正确的对象传给渲染响应的模板；</li>
+<li>  是否在视图中显示相应的消息；</li>
+</ul>
+<p>如果想看一下真实的功能测试，最简单的方法是使用脚手架生成器生成一个控制器：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate scaffold_controller article title:string body:text
+...
+create  app/controllers/articles_controller.rb
+...
+invoke  test_unit
+create    test/controllers/articles_controller_test.rb
+...
+
+</pre>
+</div>
+<p>上述命令会为 <code>Articles</code> 资源生成控制器和测试。你可以看一下 <code>test/controllers</code> 目录中的 <code>articles_controller_test.rb</code> 文件。</p><p>如果已经有了控制器，只想为默认的七个动作生成测试代码的话，可以使用下述命令：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails generate test_unit:scaffold article
+...
+invoke  test_unit
+create test/controllers/articles_controller_test.rb
+...
+
+</pre>
+</div>
+<p>下面分析一个功能测试：<code>articles_controller_test.rb</code> 文件中的 <code>test_should_get_index</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# articles_controller_test.rb
+class ArticlesControllerTest &lt; ActionDispatch::IntegrationTest
+  test "should get index" do
+    get articles_url
+    assert_response :success
+  end
+end
+
+</pre>
+</div>
+<p>在 <code>test_should_get_index</code> 测试中，Rails 模拟了一个发给 <code>index</code> 动作的请求，确保请求成功，而且生成了正确的响应主体。</p><p><code>get</code> 方法发起请求，并把结果传入响应中。这个方法可接受 6 个参数：</p>
+<ul>
+<li>  所请求控制器的动作，可使用字符串或符号。</li>
+<li>  <code>params</code>：一个选项散列，指定传入动作的请求参数（例如，查询字符串参数或文章变量）。</li>
+<li>  <code>headers</code>：设定随请求发送的首部。</li>
+<li>  <code>env</code>：按需定制请求环境。</li>
+<li>  <code>xhr</code>：指明是不是 Ajax 请求；设为 <code>true</code> 表示是 Ajax 请求。</li>
+<li>  <code>as</code>：使用其他内容类型编码请求；默认支持 <code>:json</code>。</li>
+</ul>
+<p>所有关键字参数都是可选的。</p><p>举个例子。调用 <code>:show</code> 动作，把 <code>params</code> 中的 <code>id</code> 设为 12，并且设定 <code>HTTP_REFERER</code> 首部：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+get :show, params: { id: 12 }, headers: { "HTTP_REFERER" =&gt; "http://example.com/home" }
+
+</pre>
+</div>
+<p>再举个例子。调用 <code>:update</code> 动作，把 <code>params</code> 中的 <code>id</code> 设为 12，并且指明是 Ajax 请求：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+patch update_url, params: { id: 12 }, xhr: true
+
+</pre>
+</div>
+<div class="note"><p>如果现在运行 <code>articles_controller_test.rb</code> 文件中的 <code>test_should_create_article</code> 测试，它会失败，因为前文添加了模型层验证。</p></div><p>我们来修改 <code>articles_controller_test.rb</code> 文件中的 <code>test_should_create_article</code> 测试，让所有测试都通过：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+test "should create article" do
+  assert_difference('Article.count') do
+    post articles_url, params: { article: { body: 'Rails is awesome!', title: 'Hello Rails' } }
+  end
+
+  assert_redirected_to article_path(Article.last)
+end
+
+</pre>
+</div>
+<p>现在你可以运行所有测试，应该都能通过。</p><div class="note"><p>如果你按照 <a href="getting_started.html#basic-authentication">基本身份验证</a>的操作做了，要在 <code>setup</code> 块中添加下述代码，这样测试才能全部通过：</p></div><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+request.headers['Authorization'] = ActionController::HttpAuthentication::Basic.
+  encode_credentials('dhh', 'secret')
+
+</pre>
+</div>
+<p><a class="anchor" id="available-request-types-for-functional-tests"></a></p><h4 id="available-request-types-for-functional-tests">7.2 功能测试中可用的请求类型</h4><p>如果熟悉 HTTP 协议就会知道，<code>get</code> 是请求的一种类型。在 Rails 功能测试中可以使用 6 种请求：</p>
+<ul>
+<li>  <code>get</code>
+</li>
+<li>  <code>post</code>
+</li>
+<li>  <code>patch</code>
+</li>
+<li>  <code>put</code>
+</li>
+<li>  <code>head</code>
+</li>
+<li>  <code>delete</code>
+</li>
+</ul>
+<p>这几种请求都有相应的方法可用。在常规的 CRUD 应用中，最常使用 <code>get</code>、<code>post</code>、<code>put</code> 和 <code>delete</code>。</p><div class="note"><p>功能测试不检测动作是否能接受指定类型的请求，而是关注请求的结果。如果想做这样的测试，应该使用请求测试（request test）。</p></div><p><a class="anchor" id="testing-xhr-ajax-requests"></a></p><h4 id="testing-xhr-ajax-requests">7.3 测试 XHR（Ajax）请求</h4><p>如果想测试 Ajax 请求，要在 <code>get</code>、<code>post</code>、<code>patch</code>、<code>put</code> 或 <code>delete</code> 方法中设定 <code>xhr: true</code> 选项。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+test "ajax request" do
+  article = articles(:one)
+  get article_url(article), xhr: true
+
+  assert_equal 'hello world', @response.body
+  assert_equal "text/javascript", @response.content_type
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="the-three-hashes-of-the-apocalypse"></a></p><h4 id="the-three-hashes-of-the-apocalypse">7.4 可用的三个散列</h4><p>请求发送并处理之后，有三个散列对象可供我们使用：</p>
+<ul>
+<li>  <code>cookies</code>：设定的 cookie</li>
+<li>  <code>flash</code>：闪现消息中的对象</li>
+<li>  <code>session</code>：会话中的对象</li>
+</ul>
+<p>和普通的散列对象一样，可以使用字符串形式的键获取相应的值。此外，也可以使用符号形式的键。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+flash["gordon"]               flash[:gordon]
+session["shmession"]          session[:shmession]
+cookies["are_good_for_u"]     cookies[:are_good_for_u]
+
+</pre>
+</div>
+<p><a class="anchor" id="instance-variables-available"></a></p><h4 id="instance-variables-available">7.5 可用的实例变量</h4><p>在功能测试中，发送请求之后还可以使用下面三个实例变量：</p>
+<ul>
+<li>  <code>@controller</code>：处理请求的控制器</li>
+<li>  <code>@request</code>：请求对象</li>
+<li>  <code>@response</code>：响应对象</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class ArticlesControllerTest &lt; ActionDispatch::IntegrationTest
+  test "should get index" do
+    get articles_url
+
+    assert_equal "index", @controller.action_name
+    assert_equal "application/x-www-form-urlencoded", @request.media_type
+    assert_match "Articles", @response.body
+  end
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="setting-headers-and-cgi-variables"></a></p><h4 id="setting-headers-and-cgi-variables">7.6 设定首部和 CGI 变量</h4><p><a href="http://tools.ietf.org/search/rfc2616#section-5.3">HTTP 首部</a> 和 <a href="http://tools.ietf.org/search/rfc3875#section-4.1">CGI 变量</a>可以通过 <code>headers</code> 参数传入：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 设定一个 HTTP 首部
+get articles_url, headers: { "Content-Type": "text/plain" } # 模拟有自定义首部的请求
+
+# 设定一个 CGI 变量
+get articles_url, headers: { "HTTP_REFERER": "http://example.com/home" } # 模拟有自定义环境变量的请求
+
+</pre>
+</div>
+<p><a class="anchor" id="testing-flash-notices"></a></p><h4 id="testing-flash-notices">7.7 测试闪现消息</h4><p>你可能还记得，在功能测试中可用的三个散列中有一个是 <code>flash</code>。</p><p>我们想在这个博客应用中添加一个闪现消息，在成功发布新文章之后显示。</p><p>首先，在 <code>test_should_create_article</code> 测试中添加一个断言：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+test "should create article" do
+  assert_difference('Article.count') do
+    post article_url, params: { article: { title: 'Some title' } }
+  end
+
+  assert_redirected_to article_path(Article.last)
+  assert_equal 'Article was successfully created.', flash[:notice]
+end
+
+</pre>
+</div>
+<p>现在运行测试，应该会看到有一个测试失败：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails test test/controllers/articles_controller_test.rb -n test_should_create_article
+Run options: -n test_should_create_article --seed 32266
+
+# Running:
+
+F
+
+Finished in 0.114870s, 8.7055 runs/s, 34.8220 assertions/s.
+
+  1) Failure:
+ArticlesControllerTest#test_should_create_article [/test/controllers/articles_controller_test.rb:16]:
+--- expected
++++ actual
+@@ -1 +1 @@
+-"Article was successfully created."
++nil
+
+1 runs, 4 assertions, 1 failures, 0 errors, 0 skips
+
+</pre>
+</div>
+<p>接下来，在控制器中添加闪现消息。现在，<code>create</code> 控制器应该是下面这样：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def create
+  @article = Article.new(article_params)
+
+  if @article.save
+    flash[:notice] = 'Article was successfully created.'
+    redirect_to @article
+  else
+    render 'new'
+  end
+end
+
+</pre>
+</div>
+<p>再运行测试，应该能通过：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bin/rails test test/controllers/articles_controller_test.rb -n test_should_create_article
+Run options: -n test_should_create_article --seed 18981
+
+# Running:
+
+.
+
+Finished in 0.081972s, 12.1993 runs/s, 48.7972 assertions/s.
+
+1 runs, 4 assertions, 0 failures, 0 errors, 0 skips
+
+</pre>
+</div>
+<p><a class="anchor" id="putting-it-together"></a></p><h4 id="putting-it-together">7.8 测试其他动作</h4><p>至此，我们测试了 <code>Articles</code> 控制器的 <code>index</code>、<code>new</code> 和 <code>create</code> 三个动作。那么，怎么处理现有数据呢？</p><p>下面为 <code>show</code> 动作编写一个测试：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+test "should show article" do
+  article = articles(:one)
+  get article_url(article)
+  assert_response :success
+end
+
+</pre>
+</div>
+<p>还记得前文对固件的讨论吗？我们可以使用 <code>articles()</code> 方法访问 <code>Articles</code> 固件。</p><p>怎么删除现有的文章呢？</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+test "should destroy article" do
+  article = articles(:one)
+  assert_difference('Article.count', -1) do
+    delete article_url(article)
+  end
+
+  assert_redirected_to articles_path
+end
+
+</pre>
+</div>
+<p>我们还可以为更新现有文章这一操作编写一个测试。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+test "should update article" do
+  article = articles(:one)
+
+  patch article_url(article), params: { article: { title: "updated" } }
+
+  assert_redirected_to article_path(article)
+  # 重新加载关联，获取最新的数据，然后断定标题更新了
+  article.reload
+  assert_equal "updated", article.title
+end
+
+</pre>
+</div>
+<p>可以看到，这三个测试中开始有重复了：都访问了同一个文章固件数据。为了避免自我重复，我们可以使用 <code>ActiveSupport::Callbacks</code> 提供的 <code>setup</code> 和 <code>teardown</code> 方法清理。</p><p>清理后的测试如下。为了行为简洁，我们暂且不管其他测试。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'test_helper'
+
+class ArticlesControllerTest &lt; ActionDispatch::IntegrationTest
+  # 在各个测试之前调用
+  setup do
+    @article = articles(:one)
+  end
+
+  # 在各个测试之后调用
+  teardown do
+    # 如果控制器使用缓存，最好在后面重设
+    Rails.cache.clear
+  end
+
+  test "should show article" do
+    # 复用 setup 中定义的 @article 实例变量
+    get article_url(@article)
+    assert_response :success
+  end
+
+  test "should destroy article" do
+    assert_difference('Article.count', -1) do
+      delete article_url(@article)
+    end
+
+    assert_redirected_to articles_path
+  end
+
+  test "should update article" do
+    patch article_url(@article), params: { article: { title: "updated" } }
+
+    assert_redirected_to article_path(@article)
+    # 重新加载关联，获取最新的数据，然后断定标题更新了
+    @article.reload
+    assert_equal "updated", @article.title
+  end
+end
+
+</pre>
+</div>
+<p>与 Rails 中的其他回调一样，<code>setup</code> 和 <code>teardown</code> 也接受块、lambda 或符号形式的方法名。</p><p><a class="anchor" id="test-helpers"></a></p><h4 id="test-helpers">7.9 测试辅助方法</h4><p>为了避免代码重复，可以自定义测试辅助方法。下面实现用于登录的辅助方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# test/test_helper.rb
+
+module SignInHelper
+  def sign_in_as(user)
+    post sign_in_url(email: user.email, password: user.password)
+  end
+end
+
+class ActionDispatch::IntegrationTest
+  include SignInHelper
+end
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'test_helper'
+
+class ProfileControllerTest &lt; ActionDispatch::IntegrationTest
+
+  test "should show profile" do
+    # 辅助方法在任何控制器测试用例中都可用
+    sign_in_as users(:david)
+
+    get profile_url
+    assert_response :success
+  end
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="testing-routes"></a></p><h3 id="testing-routes">8 测试路由</h3><p>与 Rails 应用中其他各方面内容一样，路由也可以测试。路由测试存放在 <code>test/controllers/</code> 目录中，或者与控制器测试写在一起。</p><div class="note"><p>应用的路由复杂也不怕，Rails 提供了很多有用的测试辅助方法。</p></div><p>关于 Rails 中可用的路由断言，参见 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActionDispatch/Assertions/RoutingAssertions.html"><code>ActionDispatch::Assertions::RoutingAssertions</code> 模块的 API 文档</a>。</p><p><a class="anchor" id="testing-views"></a></p><h3 id="testing-views">9 测试视图</h3><p>测试请求的响应中是否出现关键的 HTML 元素和相应的内容是测试应用视图的一种常见方式。与路由测试一样，视图测试放在 <code>test/controllers/</code> 目录中，或者直接写在控制器测试中。<code>assert_select</code> 方法用于查询响应中的 HTML 元素，其句法简单而强大。</p><p><code>assert_select</code> 有两种形式。</p><p><code>assert_select(selector, [equality], [message])</code> 测试 <code>selector</code> 选中的元素是否符合 <code>equality</code> 指定的条件。<code>selector</code> 可以是 CSS 选择符表达式（字符串），或者是有代入值的表达式。</p><p><code>assert_select(element, selector, [equality], [message])</code> 测试 <code>selector</code> 选中的元素和 <code>element</code>（<code>Nokogiri::XML::Node</code> 或 <code>Nokogiri::XML::NodeSet</code> 实例）及其子代是否符合 <code>equality</code> 指定的条件。</p><p>例如，可以使用下面的断言检测 <code>title</code> 元素的内容：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+assert_select 'title', "Welcome to Rails Testing Guide"
+
+</pre>
+</div>
+<p><code>assert_select</code> 的代码块还可嵌套使用。</p><p>在下述示例中，内层的 <code>assert_select</code> 会在外层块选中的元素集合中查询 <code>li.menu_item</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+assert_select 'ul.navigation' do
+  assert_select 'li.menu_item'
+end
+
+</pre>
+</div>
+<p>除此之外，还可以遍历外层 <code>assert_select</code> 选中的元素集合，这样就可以在集合的每个元素上运行内层 <code>assert_select</code> 了。</p><p>假如响应中有两个有序列表，每个列表中都有 4 个列表项，那么下面这两个测试都会通过：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+assert_select "ol" do |elements|
+  elements.each do |element|
+    assert_select element, "li", 4
+  end
+end
+
+assert_select "ol" do
+  assert_select "li", 8
+end
+
+</pre>
+</div>
+<p><code>assert_select</code> 断言很强大，高级用法请参阅<a href="https://github.com/rails/rails-dom-testing/blob/master/lib/rails/dom/testing/assertions/selector_assertions.rb">文档</a>。</p><p><a class="anchor" id="additional-view-based-assertions"></a></p><h4 id="additional-view-based-assertions">9.1 其他视图相关的断言</h4><p>还有一些断言经常在视图测试中使用：</p>
+<table>
+<thead>
+<tr>
+<th>断言</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>assert_select_email</code></td>
+<td>检查电子邮件的正文。</td>
+</tr>
+<tr>
+<td><code>assert_select_encoded</code></td>
+<td>检查编码后的 HTML。先解码各元素的内容，然后在代码块中处理解码后的各个元素。</td>
+</tr>
+<tr>
+<td>
+<code>css_select(selector)</code> 或 <code>css_select(element, selector)</code>
+</td>
+<td>返回由 <code>selector</code> 选中的所有元素组成的数组。在后一种用法中，首先会找到 <code>element</code>，然后在其中执行 <code>selector</code> 表达式查找元素，如果没有匹配的元素，两种用法都返回空数组。</td>
+</tr>
+</tbody>
+</table>
+<p>下面是 <code>assert_select_email</code> 断言的用法举例：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+assert_select_email do
+  assert_select 'small', 'Please click the "Unsubscribe" link if you want to opt-out.'
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="testing-helpers"></a></p><h3 id="testing-helpers">10 测试辅助方法</h3><p>辅助方法是简单的模块，其中定义的方法可在视图中使用。</p><p>针对辅助方法的测试，只需检测辅助方法的输出和预期值是否一致。相应的测试文件保存在 <code>test/helpers</code> 目录中。</p><p>假设我们定义了下述辅助方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module UserHelper
+  def link_to_user(user)
+    link_to "#{user.first_name} #{user.last_name}", user
+  end
+end
+
+</pre>
+</div>
+<p>我们可以像下面这样测试它的输出：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class UserHelperTest &lt; ActionView::TestCase
+  test "should return the user's full name" do
+    user = users(:david)
+
+    assert_dom_equal %{&lt;a href="/user/#{user.id}"&gt;David Heinemeier Hansson&lt;/a&gt;}, link_to_user(user)
+  end
+end
+
+</pre>
+</div>
+<p>而且，因为测试类继承自 <code>ActionView::TestCase</code>，所以在测试中可以使用 Rails 内置的辅助方法，例如 <code>link_to</code> 和 <code>pluralize</code>。</p><p><a class="anchor" id="testing-your-mailers"></a></p><h3 id="testing-your-mailers">11 测试邮件程序</h3><p>测试邮件程序需要一些特殊的工具才能完成。</p><p><a class="anchor" id="keeping-the-postman-in-check"></a></p><h4 id="keeping-the-postman-in-check">11.1 确保邮件程序在管控内</h4><p>和 Rails 应用的其他组件一样，邮件程序也应该测试，确保能正常工作。</p><p>测试邮件程序的目的是：</p>
+<ul>
+<li>  确保处理了电子邮件（创建及发送）</li>
+<li>  确保邮件内容正确（主题、发件人、正文等）</li>
+<li>  确保在正确的时间发送正确的邮件</li>
+</ul>
+<p><a class="anchor" id="from-all-sides"></a></p><h5 id="from-all-sides">11.1.1 要全面测试</h5><p>针对邮件程序的测试分为两部分：单元测试和功能测试。在单元测试中，单独运行邮件程序，严格控制输入，然后和已知值（固件）对比。在功能测试中，不用这么细致的测试，只要确保控制器和模型正确地使用邮件程序，在正确的时间发送正确的邮件。</p><p><a class="anchor" id="unit-testing"></a></p><h4 id="unit-testing">11.2 单元测试</h4><p>为了测试邮件程序是否能正常使用，可以把邮件程序真正得到的结果和预先写好的值进行比较。</p><p><a class="anchor" id="revenge-of-the-fixtures"></a></p><h5 id="revenge-of-the-fixtures">11.2.1 固件的另一个用途</h5><p>在单元测试中，固件用于设定期望得到的值。因为这些固件是示例邮件，不是 Active Record 数据，所以要和其他固件分开，放在单独的子目录中。这个子目录位于 <code>test/fixtures</code> 目录中，其名称与邮件程序对应。例如，邮件程序 <code>UserMailer</code> 使用的固件保存在 <code>test/fixtures/user_mailer</code> 目录中。</p><p>生成邮件程序时，生成器会为其中每个动作生成相应的固件。如果没使用生成器，要手动创建这些文件。</p><p><a class="anchor" id="the-basic-test-case"></a></p><h5 id="the-basic-test-case">11.2.2 基本的测试用例</h5><p>下面的单元测试针对 <code>UserMailer</code> 的 <code>invite</code> 动作，这个动作的作用是向朋友发送邀请。这段代码改进了生成器为 <code>invite</code> 动作生成的测试。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'test_helper'
+
+class UserMailerTest &lt; ActionMailer::TestCase
+  test "invite" do
+    # 创建邮件，将其存储起来，供后面的断言使用
+    email = UserMailer.create_invite('me@example.com',
+                                     'friend@example.com', Time.now)
+
+    # 发送邮件，测试有没有入队
+    assert_emails 1 do
+      email.deliver_now
+    end
+
+    # 测试发送的邮件中有没有预期的内容
+    assert_equal ['me@example.com'], email.from
+    assert_equal ['friend@example.com'], email.to
+    assert_equal 'You have been invited by me@example.com', email.subject
+    assert_equal read_fixture('invite').join, email.body.to_s
+  end
+end
+
+</pre>
+</div>
+<p>在这个测试中，我们发送了一封邮件，并把返回对象赋值给 <code>email</code> 变量。首先，我们确保邮件已经发送了；随后，确保邮件中包含预期的内容。<code>read_fixture</code> 这个辅助方法的作用是从指定的文件中读取内容。</p><div class="note"><p>仅当邮件内容只有一种格式时（HTML 或纯文本）才可使用 <code>email.body.to_s</code>。如果邮件程序提供了两种格式，可以使用 <code>email.text_part.body.to_s</code> 和 <code>email.html_part.body.to_s</code> 分别测试。</p></div><p><code>invite</code> 固件的内容如下：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+Hi friend@example.com,
+
+You have been invited.
+
+Cheers!
+
+</pre>
+</div>
+<p>现在我们稍微深入一点地介绍针对邮件程序的测试。在 <code>config/environments/test.rb</code> 文件中，有这么一行设置：<code>ActionMailer::Base.delivery_method = :test</code>。这行设置把发送邮件的方法设为 <code>:test</code>，所以邮件并不会真的发送出去（避免测试时骚扰用户），而是添加到一个数组中（<code>ActionMailer::Base.deliveries</code>）。</p><div class="note"><p><code>ActionMailer::Base.deliveries</code> 数组只会在 <code>ActionMailer::TestCase</code> 和 <code>ActionDispatch::IntegrationTest</code> 测试中自动重设，如果想在这些测试之外使用空数组，可以手动重设：<code>ActionMailer::Base.deliveries.clear</code>。</p></div><p><a class="anchor" id="functional-testing"></a></p><h4 id="functional-testing">11.3 功能测试</h4><p>邮件程序的功能测试不只是测试邮件正文和收件人等是否正确这么简单。在针对邮件程序的功能测试中，要调用发送邮件的方法，检查相应的邮件是否出现在发送列表中。你可以尽情放心地假定发送邮件的方法本身能顺利完成工作。你需要重点关注的是应用自身的业务逻辑，确保能在预期的时间发出邮件。例如，可以使用下面的代码测试邀请朋友的操作是否发出了正确的邮件：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'test_helper'
+
+class UserControllerTest &lt; ActionDispatch::IntegrationTest
+  test "invite friend" do
+    assert_difference 'ActionMailer::Base.deliveries.size', +1 do
+      post invite_friend_url, params: { email: 'friend@example.com' }
+    end
+    invite_email = ActionMailer::Base.deliveries.last
+
+    assert_equal "You have been invited by me@example.com", invite_email.subject
+    assert_equal 'friend@example.com', invite_email.to[0]
+    assert_match(/Hi friend@example.com/, invite_email.body.to_s)
+  end
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="testing-jobs"></a></p><h3 id="testing-jobs">12 测试作业</h3><p>因为自定义的作业在应用的不同层排队，所以我们既要测试作业本身（入队后的行为），也要测试是否正确入队了。</p><p><a class="anchor" id="a-basic-test-case"></a></p><h4 id="a-basic-test-case">12.1 一个基本的测试用例</h4><p>默认情况下，生成作业时也会生成相应的测试，存储在 <code>test/jobs</code> 目录中。下面是付款作业的测试示例：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'test_helper'
+
+class BillingJobTest &lt; ActiveJob::TestCase
+  test 'that account is charged' do
+    BillingJob.perform_now(account, product)
+    assert account.reload.charged_for?(product)
+  end
+end
+
+</pre>
+</div>
+<p>这个测试相当简单，只是断言作业能做预期的事情。</p><p>默认情况下，<code>ActiveJob::TestCase</code> 把队列适配器设为 <code>:test</code>，因此作业是内联执行的。此外，在运行任何测试之前，它会清理之前执行的和入队的作业，因此我们可以放心假定在当前测试的作用域中没有已经执行的作业。</p><p><a class="anchor" id="custom-assertions-and-testing-jobs-inside-other-components"></a></p><h4 id="custom-assertions-and-testing-jobs-inside-other-components">12.2 自定义断言和测试其他组件中的作业</h4><p>Active Job 自带了很多自定义的断言，可以简化测试。可用的断言列表参见 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveJob/TestHelper.html"><code>ActiveJob::TestHelper</code> 模块的 API 文档</a>。</p><p>不管作业是在哪里调用的（例如在控制器中），最好都要测试作业能正确入队或执行。这时就体现了 Active Job 提供的自定义断言的用处。例如，在模型中：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'test_helper'
+
+class ProductTest &lt; ActiveJob::TestCase
+  test 'billing job scheduling' do
+    assert_enqueued_with(job: BillingJob) do
+      product.charge(account)
+    end
+  end
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="additional-testing-resources"></a></p><h3 id="additional-testing-resources">13 其他测试资源</h3><p><a class="anchor" id="testing-time-dependent-code"></a></p><h4 id="testing-time-dependent-code">13.1 测试与时间有关的代码</h4><p>Rails 提供了一些内置的辅助方法，便于我们测试与时间有关的代码。</p><p>下述示例用到了 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveSupport/Testing/TimeHelpers.html#method-i-travel_to"><code>travel_to</code></a> 辅助方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 假设用户在注册一个月内可以获取礼品
+user = User.create(name: 'Gaurish', activation_date: Date.new(2004, 10, 24))
+assert_not user.applicable_for_gifting?
+travel_to Date.new(2004, 11, 24) do
+  assert_equal Date.new(2004, 10, 24), user.activation_date # 在 travel_to 块中， `Date.current` 是拟件
+  assert user.applicable_for_gifting?
+end
+assert_equal Date.new(2004, 10, 24), user.activation_date # 改动只在 travel_to 块中可见
+
+</pre>
+</div>
+<p>可用的时间辅助方法详情参见 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveSupport/Testing/TimeHelpers.html"><code>ActiveSupport::Testing::TimeHelpers</code> 模块的 API 文档</a>。</p>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

@@ -1,0 +1,3263 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Active Support 核心扩展 — Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="返回首页">Rails 指南</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>新手入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询接口</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入探索</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">Rails 应用测试指南</a></dd>
+                <dd><a href="security.html">Ruby on Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器和模板</a></dd>
+                <dt>为 Ruby on Rails 做贡献</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档指导方针</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">Ruby on Rails 的维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布记</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="新手入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询接口</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入探索">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">Rails 应用测试指南</option>
+                  <option value="security.html">Ruby on Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器和模板</option>
+              </optgroup>
+              <optgroup label="为 Ruby on Rails 做贡献">
+                  <option value="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</option>
+                  <option value="api_documentation_guidelines.html">API 文档指导方针</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">Ruby on Rails 的维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布记</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Active Support 核心扩展</h2><p>Active Support 是 Ruby on Rails 的一个组件，扩展了 Ruby 语言，提供了一些实用功能。</p><p>Active Support 丰富了 Rails 使用的编程语言，目的是便于开发 Rails 应用以及 Rails 本身。</p><p>读完本文后，您将学到：</p>
+<ul>
+<li>  核心扩展是什么；</li>
+<li>  如何加载所有扩展；</li>
+<li>  如何按需加载想用的扩展；</li>
+<li>  Active Support 提供了哪些扩展。</li>
+</ul>
+
+
+              <div id="subCol">
+          <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />目录</h3>
+          <ol class="chapters">
+<li>
+<a href="#how-to-load-core-extensions">如何加载核心扩展</a>
+
+<ul>
+<li><a href="#stand-alone-active-support">独立的 Active Support</a></li>
+<li><a href="#active-support-within-a-ruby-on-rails-application">在 Rails 应用中使用 Active Support</a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-all-objects">所有对象皆可使用的扩展</a>
+
+<ul>
+<li><a href="#blank-questionmark-and-present-questionmark"><code>blank?</code> 和 <code>present?</code></a></li>
+<li><a href="#presence"><code>presence</code></a></li>
+<li><a href="#duplicable-questionmark"><code>duplicable?</code></a></li>
+<li><a href="#deep-dup"><code>deep_dup</code></a></li>
+<li><a href="#try"><code>try</code></a></li>
+<li><a href="#class-eval-args-block"><code>class_eval(*args, &amp;block)</code></a></li>
+<li><a href="#acts-like-questionmark-duck"><code>acts_like?(duck)</code></a></li>
+<li><a href="#to-param"><code>to_param</code></a></li>
+<li><a href="#to-query"><code>to_query</code></a></li>
+<li><a href="#with-options"><code>with_options</code></a></li>
+<li><a href="#json-support">对 JSON 的支持</a></li>
+<li><a href="#instance-variables">实例变量</a></li>
+<li><a href="#silencing-warnings-and-exceptions">静默警告和异常</a></li>
+<li><a href="#in-questionmark"><code>in?</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-module"><code>Module</code> 的扩展</a>
+
+<ul>
+<li><a href="#attributes">属性</a></li>
+<li><a href="#extensions-to-module-parents">父级</a></li>
+<li><a href="#reachable">可达性</a></li>
+<li><a href="#anonymous">匿名</a></li>
+<li><a href="#method-delegation">方法委托</a></li>
+<li><a href="#redefining-methods">重新定义方法</a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-class"><code>Class</code> 的扩展</a>
+
+<ul>
+<li><a href="#class-attributes">类属性</a></li>
+<li><a href="#subclasses-descendants">子类和后代</a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-string"><code>String</code> 的扩展</a>
+
+<ul>
+<li><a href="#output-safety">输出的安全性</a></li>
+<li><a href="#remove"><code>remove</code></a></li>
+<li><a href="#squish"><code>squish</code></a></li>
+<li><a href="#truncate"><code>truncate</code></a></li>
+<li><a href="#truncate-words"><code>truncate_words</code></a></li>
+<li><a href="#inquiry"><code>inquiry</code></a></li>
+<li><a href="#starts-with-questionmark-and-ends-with-questionmark"><code>starts_with?</code> 和 <code>ends_with?</code></a></li>
+<li><a href="#strip-heredoc"><code>strip_heredoc</code></a></li>
+<li><a href="#indent"><code>indent</code></a></li>
+<li><a href="#access">访问</a></li>
+<li><a href="#inflections">词形变化</a></li>
+<li><a href="#extensions-to-string-conversions">转换</a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-numeric"><code>Numeric</code> 的扩展</a>
+
+<ul>
+<li><a href="#bytes">字节</a></li>
+<li><a href="#time">时间</a></li>
+<li><a href="#formatting">格式化</a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-integer"><code>Integer</code> 的扩展</a>
+
+<ul>
+<li><a href="#multiple-of-questionmark"><code>multiple_of?</code></a></li>
+<li><a href="#ordinal"><code>ordinal</code></a></li>
+<li><a href="#ordinalize"><code>ordinalize</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-bigdecimal"><code>BigDecimal</code> 的扩展</a>
+
+<ul>
+<li><a href="#extensions-to-bigdecimal-to-s"><code>to_s</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-enumerable"><code>Enumerable</code> 的扩展</a>
+
+<ul>
+<li><a href="#sum"><code>sum</code></a></li>
+<li><a href="#index-by"><code>index_by</code></a></li>
+<li><a href="#many-questionmark"><code>many?</code></a></li>
+<li><a href="#exclude-questionmark"><code>exclude?</code></a></li>
+<li><a href="#without"><code>without</code></a></li>
+<li><a href="#pluck"><code>pluck</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-array"><code>Array</code> 的扩展</a>
+
+<ul>
+<li><a href="#accessing">访问</a></li>
+<li><a href="#adding-elements">添加元素</a></li>
+<li><a href="#options-extraction">选项提取</a></li>
+<li><a href="#extensions-to-array-conversions">转换</a></li>
+<li><a href="#wrapping">包装</a></li>
+<li><a href="#duplicating">复制</a></li>
+<li><a href="#grouping">分组</a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-hash"><code>Hash</code> 的扩展</a>
+
+<ul>
+<li><a href="#extensions-to-hash-conversions">转换</a></li>
+<li><a href="#merging">合并</a></li>
+<li><a href="#deep-duplicating">深度复制</a></li>
+<li><a href="#working-with-keys">处理键</a></li>
+<li><a href="#working-with-values">处理值</a></li>
+<li><a href="#slicing">切片</a></li>
+<li><a href="#extracting">提取</a></li>
+<li><a href="#indifferent-access">无差别访问</a></li>
+<li><a href="#compacting">压缩</a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-regexp"><code>Regexp</code> 的扩展</a>
+
+<ul>
+<li><a href="#multiline-questionmark"><code>multiline?</code></a></li>
+<li><a href="#match-questionmark"><code>match?</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-range"><code>Range</code> 的扩展</a>
+
+<ul>
+<li><a href="#extensions-to-range-to-s"><code>to_s</code></a></li>
+<li><a href="#include-questionmark"><code>include?</code></a></li>
+<li><a href="#overlaps-questionmark"><code>overlaps?</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-date"><code>Date</code> 的扩展</a>
+
+<ul>
+<li><a href="#extensions-to-date-calculations">计算</a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-datetime"><code>DateTime</code> 的扩展</a>
+
+<ul>
+<li><a href="#extensions-to-datetime-calculations">计算</a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-time"><code>Time</code> 的扩展</a>
+
+<ul>
+<li><a href="#extensions-to-time-calculations">计算</a></li>
+<li><a href="#time-constructors">时间构造方法</a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-file"><code>File</code> 的扩展</a>
+
+<ul>
+<li><a href="#atomic-write"><code>atomic_write</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#extensions-to-marshal"><code>Marshal</code> 的扩展</a>
+
+<ul>
+<li><a href="#load"><code>load</code></a></li>
+</ul>
+</li>
+<li><a href="#extensions-to-nameerror"><code>NameError</code> 的扩展</a></li>
+<li><a href="#extensions-to-loaderror"><code>LoadError</code> 的扩展</a></li>
+</ol>
+
+        </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <p><a class="anchor" id="how-to-load-core-extensions"></a></p><h3 id="how-to-load-core-extensions">1 如何加载核心扩展</h3><p><a class="anchor" id="stand-alone-active-support"></a></p><h4 id="stand-alone-active-support">1.1 独立的 Active Support</h4><p>为了减轻应用的负担，默认情况下 Active Support 不会加载任何功能。Active Support 中的各部分功能是相对独立的，可以只加载需要的功能，也可以方便地加载相互联系的功能，或者加载全部功能。</p><p>因此，只编写下面这个 <code>require</code> 语句，对象甚至无法响应 <code>blank?</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'active_support'
+
+</pre>
+</div>
+<p>我们来看一下到底应该如何加载。</p><p><a class="anchor" id="cherry-picking-a-definition"></a></p><h5 id="cherry-picking-a-definition">1.1.1 按需加载</h5><p>获取 <code>blank?</code> 方法最轻便的做法是按需加载其定义所在的文件。</p><p>本文为核心扩展中的每个方法都做了说明，告知是在哪个文件中定义的。对 <code>blank?</code> 方法而言，说明如下：</p><div class="note"><p>在 <code>active_support/core_ext/object/blank.rb</code> 文件中定义。</p></div><p>因此 <code>blank?</code> 方法要这么加载：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'active_support'
+require 'active_support/core_ext/object/blank'
+
+</pre>
+</div>
+<p>Active Support 的设计方式精良，确保按需加载时真的只加载所需的扩展。</p><p><a class="anchor" id="loading-grouped-core-extensions"></a></p><h5 id="loading-grouped-core-extensions">1.1.2 成组加载核心扩展</h5><p>下一层级是加载 <code>Object</code> 对象的所有扩展。一般来说，对 <code>SomeClass</code> 的扩展都保存在 <code>active_support/core_ext/some_class</code> 文件夹中。</p><p>因此，加载 <code>Object</code> 对象的所有扩展（包括 <code>balnk?</code> 方法）可以这么做：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'active_support'
+require 'active_support/core_ext/object'
+
+</pre>
+</div>
+<p><a class="anchor" id="loading-all-core-extensions"></a></p><h5 id="loading-all-core-extensions">1.1.3 加载所有扩展</h5><p>如果想加载所有核心扩展，可以这么做：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'active_support'
+require 'active_support/core_ext'
+
+</pre>
+</div>
+<p><a class="anchor" id="loading-all-active-support"></a></p><h5 id="loading-all-active-support">1.1.4 加载 Active Support 提供的所有功能</h5><p>最后，如果想使用 Active Support 提供的所有功能，可以这么做：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+require 'active_support/all'
+
+</pre>
+</div>
+<p>其实，这么做并不会把整个 Active Support 载入内存，有些功能通过 <code>autoload</code> 加载，所以真正使用时才会加载。</p><p><a class="anchor" id="active-support-within-a-ruby-on-rails-application"></a></p><h4 id="active-support-within-a-ruby-on-rails-application">1.2 在 Rails 应用中使用 Active Support</h4><p>除非把 <code>config.active_support.bare</code> 设为 <code>true</code>，否则 Rails 应用不会加载 Active Support 提供的所有功能。即便全部加载，应用也会根据框架的设置按需加载所需功能，而且应用开发者还可以根据需要做更细化的选择，方法如前文所述。</p><p><a class="anchor" id="extensions-to-all-objects"></a></p><h3 id="extensions-to-all-objects">2 所有对象皆可使用的扩展</h3><p><a class="anchor" id="blank-questionmark-and-present-questionmark"></a></p><h4 id="blank-questionmark-and-present-questionmark">2.1 <code>blank?</code> 和 <code>present?</code>
+</h4><p>在 Rails 应用中，下面这些值表示空值：</p>
+<ul>
+<li>  <code>nil</code> 和 <code>false</code>；</li>
+<li>  只有空白的字符串（注意下面的说明）；</li>
+<li>  空数组和空散列；</li>
+<li>  其他能响应 <code>empty?</code> 方法，而且返回值为 <code>true</code> 的对象；</li>
+</ul>
+<div class="info"><p>判断字符串是否为空使用的是能理解 Unicode 字符的 <code>[:space:]</code>，所以 <code>U+2029</code>（分段符）会被视为空白。</p></div><div class="warning"><p>注意，这里并没有提到数字。特别说明，<code>0</code> 和 <code>0.0</code> 不是空值。</p></div><p>例如，<code>ActionController::HttpAuthentication::Token::ControllerMethods</code> 定义的这个方法使用 <code>blank?</code> 检查是否有令牌：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def authenticate(controller, &amp;login_procedure)
+  token, options = token_and_options(controller.request)
+  unless token.blank?
+    login_procedure.call(token, options)
+  end
+end
+
+</pre>
+</div>
+<p><code>present?</code> 方法等价于 <code>!blank?</code>。下面这个方法摘自 <code>ActionDispatch::Http::Cache::Response</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def set_conditional_cache_control!
+  return if self["Cache-Control"].present?
+  ...
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/object/blank.rb</code> 文件中定义。</p></div><p><a class="anchor" id="presence"></a></p><h4 id="presence">2.2 <code>presence</code>
+</h4><p>如果 <code>present?</code> 方法返回 <code>true</code>，<code>presence</code> 方法的返回值为调用对象，否则返回 <code>nil</code>。惯用法如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+host = config[:host].presence || 'localhost'
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/object/blank.rb</code> 文件中定义。</p></div><p><a class="anchor" id="duplicable-questionmark"></a></p><h4 id="duplicable-questionmark">2.3 <code>duplicable?</code>
+</h4><p>Ruby 中很多基本的对象是单例。例如，在应用的整个生命周期内，整数 1 始终表示同一个实例：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+1.object_id                 # =&gt; 3
+Math.cos(0).to_i.object_id  # =&gt; 3
+
+</pre>
+</div>
+<p>因此，这些对象无法通过 <code>dup</code> 或 <code>clone</code> 方法复制：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+true.dup  # =&gt; TypeError: can't dup TrueClass
+
+</pre>
+</div>
+<p>有些数字虽然不是单例，但也不能复制：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+0.0.clone        # =&gt; allocator undefined for Float
+(2**1024).clone  # =&gt; allocator undefined for Bignum
+
+</pre>
+</div>
+<p>Active Support 提供的 <code>duplicable?</code> 方法用于查询对象是否可以复制：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"foo".duplicable? # =&gt; true
+"".duplicable?    # =&gt; true
+0.0.duplicable?   # =&gt; false
+false.duplicable? # =&gt; false
+
+</pre>
+</div>
+<p>按照定义，除了 <code>nil</code>、<code>false</code>、<code>true</code>、符号、数字、类、模块和方法对象之外，其他对象都可以复制。</p><div class="warning"><p>任何类都可以禁止对象复制，只需删除 <code>dup</code> 和 <code>clone</code> 两个方法，或者在这两个方法中抛出异常。因此只能在 <code>rescue</code> 语句中判断对象是否可复制。<code>duplicable?</code> 方法直接检查对象是否在上述列表中，因此比 <code>rescue</code> 的速度快。仅当你知道上述列表能满足需求时才应该使用 <code>duplicable?</code> 方法。</p></div><div class="note"><p>在 <code>active_support/core_ext/object/duplicable.rb</code> 文件中定义。</p></div><p><a class="anchor" id="deep-dup"></a></p><h4 id="deep-dup">2.4 <code>deep_dup</code>
+</h4><p><code>deep_dup</code> 方法深拷贝指定的对象。一般情况下，复制包含其他对象的对象时，Ruby 不会复制内部对象，这叫做浅拷贝。假如有一个由字符串组成的数组，浅拷贝的行为如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+array     = ['string']
+duplicate = array.dup
+
+duplicate.push 'another-string'
+
+# 创建了对象副本，因此元素只添加到副本中
+array     # =&gt; ['string']
+duplicate # =&gt; ['string', 'another-string']
+
+duplicate.first.gsub!('string', 'foo')
+
+# 第一个元素没有副本，因此两个数组都会变
+array     # =&gt; ['foo']
+duplicate # =&gt; ['foo', 'another-string']
+
+</pre>
+</div>
+<p>如上所示，复制数组后得到了一个新对象，修改新对象后原对象没有变化。但对数组中的元素来说情况就不一样了。因为 <code>dup</code> 方法不是深拷贝，所以数组中的字符串是同一个对象。</p><p>如果想深拷贝一个对象，应该使用 <code>deep_dup</code> 方法。举个例子：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+array     = ['string']
+duplicate = array.deep_dup
+
+duplicate.first.gsub!('string', 'foo')
+
+array     # =&gt; ['string']
+duplicate # =&gt; ['foo']
+
+</pre>
+</div>
+<p>如果对象不可复制，<code>deep_dup</code> 方法直接返回对象本身：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+number = 1
+duplicate = number.deep_dup
+number.object_id == duplicate.object_id   # =&gt; true
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/object/deep_dup.rb</code> 文件中定义。</p></div><p><a class="anchor" id="try"></a></p><h4 id="try">2.5 <code>try</code>
+</h4><p>如果只想当对象不为 <code>nil</code> 时在其上调用方法，最简单的方式是使用条件语句，但这么做把代码变复杂了。你可以使用 <code>try</code> 方法。<code>try</code> 方法和 <code>Object#send</code> 方法类似，但如果在 <code>nil</code> 上调用，返回值为 <code>nil</code>。</p><p>举个例子：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 不使用 try
+unless @number.nil?
+  @number.next
+end
+
+# 使用 try
+@number.try(:next)
+
+</pre>
+</div>
+<p>下面这个例子摘自 <code>ActiveRecord::ConnectionAdapters::AbstractAdapter</code>，实例变量 <code>@logger</code> 有可能为 <code>nil</code>。可以看出，使用 <code>try</code> 方法可以避免不必要的检查。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def log_info(sql, name, ms)
+  if @logger.try(:debug?)
+    name = '%s (%.1fms)' % [name || 'SQL', ms]
+    @logger.debug(format_log_entry(name, sql.squeeze(' ')))
+  end
+end
+
+</pre>
+</div>
+<p><code>try</code> 方法也可接受代码块，仅当对象不为 <code>nil</code> 时才会执行其中的代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+@person.try { |p| "#{p.first_name} #{p.last_name}" }
+
+</pre>
+</div>
+<p>注意，<code>try</code> 会吞没没有方法错误，返回 <code>nil</code>。如果想避免此类问题，应该使用 <code>try!</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+@number.try(:nest)  # =&gt; nil
+@number.try!(:nest) # NoMethodError: undefined method `nest' for 1:Integer
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/object/try.rb</code> 文件中定义。</p></div><p><a class="anchor" id="class-eval-args-block"></a></p><h4 id="class-eval-args-block">2.6 <code>class_eval(*args, &amp;block)</code>
+</h4><p>使用 <code>class_eval</code> 方法可以在对象的单例类上下文中执行代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Proc
+  def bind(object)
+    block, time = self, Time.current
+    object.class_eval do
+      method_name = "__bind_#{time.to_i}_#{time.usec}"
+      define_method(method_name, &amp;block)
+      method = instance_method(method_name)
+      remove_method(method_name)
+      method
+    end.bind(object)
+  end
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/kernel/singleton_class.rb</code> 文件中定义。</p></div><p><a class="anchor" id="acts-like-questionmark-duck"></a></p><h4 id="acts-like-questionmark-duck">2.7 <code>acts_like?(duck)</code>
+</h4><p><code>acts_like?</code> 方法检查一个类的行为是否与另一个类相似。比较是基于一个简单的约定：如果在某个类中定义了下面这个方法，就说明其接口与字符串一样。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def acts_like_string?
+end
+
+</pre>
+</div>
+<p>这个方法只是一个标记，其定义体和返回值不影响效果。开发者可使用下面这种方式判断两个类的表现是否类似：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+some_klass.acts_like?(:string)
+
+</pre>
+</div>
+<p>Rails 使用这种约定定义了行为与 <code>Date</code> 和 <code>Time</code> 相似的类。</p><div class="note"><p>在 <code>active_support/core_ext/object/acts_like.rb</code> 文件中定义。</p></div><p><a class="anchor" id="to-param"></a></p><h4 id="to-param">2.8 <code>to_param</code>
+</h4><p>Rails 中的所有对象都能响应 <code>to_param</code> 方法。<code>to_param</code> 方法的返回值表示查询字符串的值，或者 URL 片段。</p><p>默认情况下，<code>to_param</code> 方法直接调用 <code>to_s</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+7.to_param # =&gt; "7"
+
+</pre>
+</div>
+<p><code>to_param</code> 方法的返回值<strong>不应该</strong>转义：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Tom &amp; Jerry".to_param # =&gt; "Tom &amp; Jerry"
+
+</pre>
+</div>
+<p>Rails 中的很多类都覆盖了这个方法。</p><p>例如，<code>nil</code>、<code>true</code> 和 <code>false</code> 返回自身。<code>Array#to_param</code> 在各个元素上调用 <code>to_param</code> 方法，然后使用 <code>"/"</code> 合并：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[0, true, String].to_param # =&gt; "0/true/String"
+
+</pre>
+</div>
+<p>注意，Rails 的路由系统在模型上调用 <code>to_param</code> 方法获取占位符 <code>:id</code> 的值。<code>ActiveRecord::Base#to_param</code> 返回模型的 <code>id</code>，不过可以在模型中重新定义。例如，按照下面的方式重新定义：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
+end
+
+</pre>
+</div>
+<p>效果如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+user_path(@user) # =&gt; "/users/357-john-smith"
+
+</pre>
+</div>
+<div class="warning"><p>应该让控制器知道重新定义了 <code>to_param</code> 方法，因为接收到上面这种请求后，<code>params[:id]</code> 的值为 <code>"357-john-smith"</code>。</p></div><div class="note"><p>在 <code>active_support/core_ext/object/to_param.rb</code> 文件中定义。</p></div><p><a class="anchor" id="to-query"></a></p><h4 id="to-query">2.9 <code>to_query</code>
+</h4><p>除散列之外，传入未转义的 <code>key</code>，<code>to_query</code> 方法把 <code>to_param</code> 方法的返回值赋值给 <code>key</code>，组成查询字符串。例如，重新定义了 <code>to_param</code> 方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
+end
+
+</pre>
+</div>
+<p>效果如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+current_user.to_query('user') # =&gt; user=357-john-smith
+
+</pre>
+</div>
+<p><code>to_query</code> 方法会根据需要转义键和值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+account.to_query('company[name]')
+# =&gt; "company%5Bname%5D=Johnson+%26+Johnson"
+
+</pre>
+</div>
+<p>因此得到的值可以作为查询字符串使用。</p><p><code>Array#to_query</code> 方法在各个元素上调用 <code>to_query</code> 方法，键为 <code>key[]</code>，然后使用 <code>"&amp;"</code> 合并：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[3.4, -45.6].to_query('sample')
+# =&gt; "sample%5B%5D=3.4&amp;sample%5B%5D=-45.6"
+
+</pre>
+</div>
+<p>散列也响应 <code>to_query</code> 方法，但处理方式不一样。如果不传入参数，先在各个元素上调用 <code>to_query(key)</code>，得到一系列键值对赋值字符串，然后按照键的顺序排列，再使用 <code>"&amp;"</code> 合并：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{c: 3, b: 2, a: 1}.to_query # =&gt; "a=1&amp;b=2&amp;c=3"
+
+</pre>
+</div>
+<p><code>Hash#to_query</code> 方法还有一个可选参数，用于指定键的命名空间：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+{id: 89, name: "John Smith"}.to_query('user')
+# =&gt; "user%5Bid%5D=89&amp;user%5Bname%5D=John+Smith"
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/object/to_query.rb</code> 文件中定义。</p></div><p><a class="anchor" id="with-options"></a></p><h4 id="with-options">2.10 <code>with_options</code>
+</h4><p><code>with_options</code> 方法把一系列方法调用中的通用选项提取出来。</p><p>使用散列指定通用选项后，<code>with_options</code> 方法会把一个代理对象拽入代码块。在代码块中，代理对象调用的方法会转发给调用者，并合并选项。例如，如下的代码</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Account &lt; ApplicationRecord
+  has_many :customers, dependent: :destroy
+  has_many :products,  dependent: :destroy
+  has_many :invoices,  dependent: :destroy
+  has_many :expenses,  dependent: :destroy
+end
+
+</pre>
+</div>
+<p>其中的重复可以使用 <code>with_options</code> 方法去除：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Account &lt; ApplicationRecord
+  with_options dependent: :destroy do |assoc|
+    assoc.has_many :customers
+    assoc.has_many :products
+    assoc.has_many :invoices
+    assoc.has_many :expenses
+  end
+end
+
+</pre>
+</div>
+<p>这种用法还可形成一种分组方式。假如想根据用户使用的语言发送不同的电子报，在邮件发送程序中可以根据用户的区域设置分组：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+I18n.with_options locale: user.locale, scope: "newsletter" do |i18n|
+  subject i18n.t :subject
+  body    i18n.t :body, user_name: user.name
+end
+
+</pre>
+</div>
+<div class="info"><p><code>with_options</code> 方法会把方法调用转发给调用者，因此可以嵌套使用。每层嵌套都会合并上一层的选项。</p></div><div class="note"><p>在 <code>active_support/core_ext/object/with_options.rb</code> 文件中定义。</p></div><p><a class="anchor" id="json-support"></a></p><h4 id="json-support">2.11 对 JSON 的支持</h4><p>Active Support 实现的 <code>to_json</code> 方法比 <code>json</code> gem 更好用，这是因为 <code>Hash</code>、<code>OrderedHash</code> 和 <code>Process::Status</code> 等类转换成 JSON 时要做特别处理。</p><div class="note"><p>在 <code>active_support/core_ext/object/json.rb</code> 文件中定义。</p></div><p><a class="anchor" id="instance-variables"></a></p><h4 id="instance-variables">2.12 实例变量</h4><p>Active Support 提供了很多便于访问实例变量的方法。</p><p><a class="anchor" id="instance-values"></a></p><h5 id="instance-values">2.12.1 <code>instance_values</code>
+</h5><p><code>instance_values</code> 方法返回一个散列，把实例变量的名称（不含前面的 <code>@</code> 符号）映射到其值上，键是字符串：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class C
+  def initialize(x, y)
+    @x, @y = x, y
+  end
+end
+
+C.new(0, 1).instance_values # =&gt; {"x" =&gt; 0, "y" =&gt; 1}
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/object/instance_variables.rb</code> 文件中定义。</p></div><p><a class="anchor" id="instance-variable-names"></a></p><h5 id="instance-variable-names">2.12.2 <code>instance_variable_names</code>
+</h5><p><code>instance_variable_names</code> 方法返回一个数组，实例变量的名称前面包含 <code>@</code> 符号。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class C
+  def initialize(x, y)
+    @x, @y = x, y
+  end
+end
+
+C.new(0, 1).instance_variable_names # =&gt; ["@x", "@y"]
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/object/instance_variables.rb</code> 文件中定义。</p></div><p><a class="anchor" id="silencing-warnings-and-exceptions"></a></p><h4 id="silencing-warnings-and-exceptions">2.13 静默警告和异常</h4><p><code>silence_warnings</code> 和 <code>enable_warnings</code> 方法修改各自代码块的 <code>$VERBOSE</code> 全局变量，代码块结束后恢复原值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+silence_warnings { Object.const_set "RAILS_DEFAULT_LOGGER", logger }
+
+</pre>
+</div>
+<p>异常消息也可静默，使用 <code>suppress</code> 方法即可。<code>suppress</code> 方法可接受任意个异常类。如果执行代码块的过程中抛出异常，而且异常属于（<code>kind_of?</code>）参数指定的类，<code>suppress</code> 方法会静默该异常类的消息，否则抛出异常：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 如果用户锁定了，访问次数不增加也没关系
+suppress(ActiveRecord::StaleObjectError) do
+  current_user.increment! :visits
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/kernel/reporting.rb</code> 文件中定义。</p></div><p><a class="anchor" id="in-questionmark"></a></p><h4 id="in-questionmark">2.14 <code>in?</code>
+</h4><p><code>in?</code> 方法测试某个对象是否在另一个对象中。如果传入的对象不能响应 <code>include?</code> 方法，抛出 <code>ArgumentError</code> 异常。</p><p><code>in?</code> 方法使用举例：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+1.in?([1,2])        # =&gt; true
+"lo".in?("hello")   # =&gt; true
+25.in?(30..50)      # =&gt; false
+1.in?(1)            # =&gt; ArgumentError
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/object/inclusion.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-module"></a></p><h3 id="extensions-to-module">3 <code>Module</code> 的扩展</h3><p><a class="anchor" id="attributes"></a></p><h4 id="attributes">3.1 属性</h4><p><a class="anchor" id="alias-attribute"></a></p><h5 id="alias-attribute">3.1.1 <code>alias_attribute</code>
+</h5><p>模型的属性有读值方法、设值方法和判断方法。<code>alias_attribute</code> 方法可以一次性为这三种方法创建别名。和其他创建别名的方法一样，<code>alias_attribute</code> 方法的第一个参数是新属性名，第二个参数是旧属性名（我是这样记的，参数的顺序和赋值语句一样）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ApplicationRecord
+  # 可以使用 login 指代 email 列
+  # 在身份验证代码中可以这样做
+  alias_attribute :login, :email
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/module/aliasing.rb</code> 文件中定义。</p></div><p><a class="anchor" id="internal-attributes"></a></p><h5 id="internal-attributes">3.1.2 内部属性</h5><p>如果在父类中定义属性，有可能会出现命名冲突。代码库一定要注意这个问题。</p><p>Active Support 提供了 <code>attr_internal_reader</code>、<code>attr_internal_writer</code> 和 <code>attr_internal_accessor</code> 三个方法，其行为与 Ruby 内置的 <code>attr_*</code> 方法类似，但使用其他方式命名实例变量，从而减少重名的几率。</p><p><code>attr_internal</code> 方法是 <code>attr_internal_accessor</code> 方法的别名：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 库
+class ThirdPartyLibrary::Crawler
+  attr_internal :log_level
+end
+
+# 客户代码
+class MyCrawler &lt; ThirdPartyLibrary::Crawler
+  attr_accessor :log_level
+end
+
+</pre>
+</div>
+<p>在上面的例子中，<code>:log_level</code> 可能不属于代码库的公开接口，只在开发过程中使用。开发者并不知道潜在的重名风险，创建了子类，并在子类中定义了 <code>:log_level</code>。幸好用了 <code>attr_internal</code> 方法才不会出现命名冲突。</p><p>默认情况下，内部变量的名字前面有个下划线，上例中的内部变量名为 <code>@_log_level</code>。不过可使用 <code>Module.attr_internal_naming_format</code> 重新设置，可以传入任何 <code>sprintf</code> 方法能理解的格式，开头加上 <code>@</code> 符号，并在某处放入 <code>%s</code>（代表原变量名）。默认的设置为 <code>"@_%s"</code>。</p><p>Rails 的代码很多地方都用到了内部属性，例如，在视图相关的代码中有如下代码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module ActionView
+  class Base
+    attr_internal :captures
+    attr_internal :request, :layout
+    attr_internal :controller, :template
+  end
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/module/attr_internal.rb</code> 文件中定义。</p></div><p><a class="anchor" id="module-attributes"></a></p><h5 id="module-attributes">3.1.3 模块属性</h5><p>方法 <code>mattr_reader</code>、<code>mattr_writer</code> 和 <code>mattr_accessor</code> 类似于为类定义的 <code>cattr_*</code> 方法。其实 <code>cattr_*</code> 方法就是 <code>mattr_*</code> 方法的别名。参见 <a href="#class-attributes">类属性</a>。</p><p>例如，依赖机制就用到了这些方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module ActiveSupport
+  module Dependencies
+    mattr_accessor :warnings_on_first_load
+    mattr_accessor :history
+    mattr_accessor :loaded
+    mattr_accessor :mechanism
+    mattr_accessor :load_paths
+    mattr_accessor :load_once_paths
+    mattr_accessor :autoloaded_constants
+    mattr_accessor :explicitly_unloadable_constants
+    mattr_accessor :constant_watch_stack
+    mattr_accessor :constant_watch_stack_mutex
+  end
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/module/attribute_accessors.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-module-parents"></a></p><h4 id="extensions-to-module-parents">3.2 父级</h4><p><a class="anchor" id="parent"></a></p><h5 id="parent">3.2.1 <code>parent</code>
+</h5><p>在嵌套的具名模块上调用 <code>parent</code> 方法，返回包含对应常量的模块：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module X
+  module Y
+    module Z
+    end
+  end
+end
+M = X::Y::Z
+
+X::Y::Z.parent # =&gt; X::Y
+M.parent       # =&gt; X::Y
+
+</pre>
+</div>
+<p>如果是匿名模块或者位于顶层，<code>parent</code> 方法返回 <code>Object</code>。</p><div class="warning"><p>此时，<code>parent_name</code> 方法返回 <code>nil</code>。</p></div><div class="note"><p>在 <code>active_support/core_ext/module/introspection.rb</code> 文件中定义。</p></div><p><a class="anchor" id="parent-name"></a></p><h5 id="parent-name">3.2.2 <code>parent_name</code>
+</h5><p>在嵌套的具名模块上调用 <code>parent_name</code> 方法，返回包含对应常量的完全限定模块名：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module X
+  module Y
+    module Z
+    end
+  end
+end
+M = X::Y::Z
+
+X::Y::Z.parent_name # =&gt; "X::Y"
+M.parent_name       # =&gt; "X::Y"
+
+</pre>
+</div>
+<p>如果是匿名模块或者位于顶层，<code>parent_name</code> 方法返回 <code>nil</code>。</p><div class="warning"><p>注意，此时 <code>parent</code> 方法返回 <code>Object</code>。</p></div><div class="note"><p>在 <code>active_support/core_ext/module/introspection.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-module-parents-parents"></a></p><h5 id="extensions-to-module-parents-parents">3.2.3 <code>parents</code>
+</h5><p><code>parents</code> 方法在调用者上调用 <code>parent</code> 方法，直至 <code>Object</code> 为止。返回的结果是一个数组，由底而上：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module X
+  module Y
+    module Z
+    end
+  end
+end
+M = X::Y::Z
+
+X::Y::Z.parents # =&gt; [X::Y, X, Object]
+M.parents       # =&gt; [X::Y, X, Object]
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/module/introspection.rb</code> 文件中定义。</p></div><p><a class="anchor" id="reachable"></a></p><h4 id="reachable">3.3 可达性</h4><p>如果把具名模块存储在相应的常量中，模块是可达的，意即可以通过常量访问模块对象。</p><p>通常，模块都是如此。如果有名为“M”的模块，<code>M</code> 常量就存在，指代那个模块：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module M
+end
+
+M.reachable? # =&gt; true
+
+</pre>
+</div>
+<p>但是，常量和模块其实是解耦的，因此模块对象也许不可达：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module M
+end
+
+orphan = Object.send(:remove_const, :M)
+
+# 现在模块对象是孤儿，但它仍有名称
+orphan.name # =&gt; "M"
+
+# 不能通过常量 M 访问，因为这个常量不存在
+orphan.reachable? # =&gt; false
+
+# 再定义一个名为“M”的模块
+module M
+end
+
+# 现在常量 M 存在了，而且存储名为“M”的常量对象
+# 但这是一个新实例
+orphan.reachable? # =&gt; false
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/module/reachable.rb</code> 文件中定义。</p></div><p><a class="anchor" id="anonymous"></a></p><h4 id="anonymous">3.4 匿名</h4><p>模块可能有也可能没有名称：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module M
+end
+M.name # =&gt; "M"
+
+N = Module.new
+N.name # =&gt; "N"
+
+Module.new.name # =&gt; nil
+
+</pre>
+</div>
+<p>可以使用 <code>anonymous?</code> 方法判断模块有没有名称：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module M
+end
+M.anonymous? # =&gt; false
+
+Module.new.anonymous? # =&gt; true
+
+</pre>
+</div>
+<p>注意，不可达不意味着就是匿名的：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module M
+end
+
+m = Object.send(:remove_const, :M)
+
+m.reachable? # =&gt; false
+m.anonymous? # =&gt; false
+
+</pre>
+</div>
+<p>但是按照定义，匿名模块是不可达的。</p><div class="note"><p>在 <code>active_support/core_ext/module/anonymous.rb</code> 文件中定义。</p></div><p><a class="anchor" id="method-delegation"></a></p><h4 id="method-delegation">3.5 方法委托</h4><p><code>delegate</code> 方法提供一种便利的方法转发方式。</p><p>假设在一个应用中，用户的登录信息存储在 <code>User</code> 模型中，而名字和其他数据存储在 <code>Profile</code> 模型中：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ApplicationRecord
+  has_one :profile
+end
+
+</pre>
+</div>
+<p>此时，要通过个人资料获取用户的名字，即 <code>user.profile.name</code>。不过，若能直接访问这些信息更为便利：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ApplicationRecord
+  has_one :profile
+
+  def name
+    profile.name
+  end
+end
+
+</pre>
+</div>
+<p><code>delegate</code> 方法正是为这种需求而生的：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class User &lt; ApplicationRecord
+  has_one :profile
+
+  delegate :name, to: :profile
+end
+
+</pre>
+</div>
+<p>这样写出的代码更简洁，而且意图更明显。</p><p>委托的方法在目标中必须是公开的。</p><p><code>delegate</code> 方法可接受多个参数，委托多个方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+delegate :name, :age, :address, :twitter, to: :profile
+
+</pre>
+</div>
+<p>内插到字符串中时，<code>:to</code> 选项的值应该能求值为方法委托的对象。通常，使用字符串或符号。这个选项的值在接收者的上下文中求值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 委托给 Rails 常量
+delegate :logger, to: :Rails
+
+# 委托给接收者所属的类
+delegate :table_name, to: :class
+
+</pre>
+</div>
+<div class="warning"><p>如果 <code>:prefix</code> 选项的值为 <code>true</code>，不能这么做。参见下文。</p></div><p>默认情况下，如果委托导致 <code>NoMethodError</code> 抛出，而且目标是 <code>nil</code>，这个异常会向上冒泡。可以指定 <code>:allow_nil</code> 选项，遇到这种情况时返回 <code>nil</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+delegate :name, to: :profile, allow_nil: true
+
+</pre>
+</div>
+<p>设定 <code>:allow_nil</code> 选项后，如果用户没有个人资料，<code>user.name</code> 返回 <code>nil</code>。</p><p><code>:prefix</code> 选项在生成的方法前面添加一个前缀。如果想起个更好的名称，就可以使用这个选项：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+delegate :street, to: :address, prefix: true
+
+</pre>
+</div>
+<p>上述示例生成的方法是 <code>address_street</code>，而不是 <code>street</code>。</p><div class="warning"><p>此时，生成的方法名由目标对象和目标方法的名称构成，因此 <code>:to</code> 选项必须是一个方法名。</p></div><p>此外，还可以自定义前缀：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+delegate :size, to: :attachment, prefix: :avatar
+
+</pre>
+</div>
+<p>在这个示例中，生成的方法是 <code>avatar_size</code>，而不是 <code>size</code>。</p><div class="note"><p>在 <code>active_support/core_ext/module/delegation.rb</code> 文件中定义。</p></div><p><a class="anchor" id="redefining-methods"></a></p><h4 id="redefining-methods">3.6 重新定义方法</h4><p>有时需要使用 <code>define_method</code> 定义方法，但却不知道那个方法名是否已经存在。如果存在，而且启用了警告消息，会发出警告。这没什么，但却不够利落。</p><p><code>redefine_method</code> 方法能避免这种警告，如果需要，会把现有的方法删除。</p><div class="note"><p>在 <code>active_support/core_ext/module/remove_method.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-class"></a></p><h3 id="extensions-to-class">4 <code>Class</code> 的扩展</h3><p><a class="anchor" id="class-attributes"></a></p><h4 id="class-attributes">4.1 类属性</h4><p><a class="anchor" id="class-attribute"></a></p><h5 id="class-attribute">4.1.1 <code>class_attribute</code>
+</h5><p><code>class_attribute</code> 方法声明一个或多个可继承的类属性，它们可以在继承树的任一层级覆盖。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class A
+  class_attribute :x
+end
+
+class B &lt; A; end
+
+class C &lt; B; end
+
+A.x = :a
+B.x # =&gt; :a
+C.x # =&gt; :a
+
+B.x = :b
+A.x # =&gt; :a
+C.x # =&gt; :b
+
+C.x = :c
+A.x # =&gt; :a
+B.x # =&gt; :b
+
+</pre>
+</div>
+<p>例如，<code>ActionMailer::Base</code> 定义了：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class_attribute :default_params
+self.default_params = {
+  mime_version: "1.0",
+  charset: "UTF-8",
+  content_type: "text/plain",
+  parts_order: [ "text/plain", "text/enriched", "text/html" ]
+}.freeze
+
+</pre>
+</div>
+<p>类属性还可以通过实例访问和覆盖：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+A.x = 1
+
+a1 = A.new
+a2 = A.new
+a2.x = 2
+
+a1.x # =&gt; 1, comes from A
+a2.x # =&gt; 2, overridden in a2
+
+</pre>
+</div>
+<p>把 <code>:instance_writer</code> 选项设为 <code>false</code>，不生成设值实例方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module ActiveRecord
+  class Base
+    class_attribute :table_name_prefix, instance_writer: false
+    self.table_name_prefix = ""
+  end
+end
+
+</pre>
+</div>
+<p>模型可以使用这个选项，禁止批量赋值属性。</p><p>把 <code>:instance_reader</code> 选项设为 <code>false</code>，不生成读值实例方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class A
+  class_attribute :x, instance_reader: false
+end
+
+A.new.x = 1
+A.new.x # NoMethodError
+
+</pre>
+</div>
+<p>为了方便，<code>class_attribute</code> 还会定义实例判断方法，对实例读值方法的返回值做双重否定。在上例中，判断方法是 <code>x?</code>。</p><p>如果 <code>:instance_reader</code> 的值是 <code>false</code>，实例判断方法与读值方法一样，返回 <code>NoMethodError</code>。</p><p>如果不想要实例判断方法，传入 <code>instance_predicate: false</code>，这样就不会定义了。</p><div class="note"><p>在 <code>active_support/core_ext/class/attribute.rb</code> 文件中定义。</p></div><p><a class="anchor" id="cattr-reader-cattr-writer-and-cattr-accessor"></a></p><h5 id="cattr-reader-cattr-writer-and-cattr-accessor">4.1.2 <code>cattr_reader</code>、<code>cattr_writer</code> 和 <code>cattr_accessor</code>
+</h5><p><code>cattr_reader</code>、<code>cattr_writer</code> 和 <code>cattr_accessor</code> 的作用与相应的 <code>attr_*</code> 方法类似，不过是针对类的。它们声明的类属性，初始值为 <code>nil</code>，除非在此之前类属性已经存在，而且会生成相应的访问方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class MysqlAdapter &lt; AbstractAdapter
+  # 生成访问 @@emulate_booleans 的类方法
+  cattr_accessor :emulate_booleans
+  self.emulate_booleans = true
+end
+
+</pre>
+</div>
+<p>为了方便，也会生成实例方法，这些实例方法只是类属性的代理。因此，实例可以修改类属性，但是不能覆盖——这与 <code>class_attribute</code> 不同（参见上文）。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module ActionView
+  class Base
+    cattr_accessor :field_error_proc
+    @@field_error_proc = Proc.new{ ... }
+  end
+end
+
+</pre>
+</div>
+<p>这样，我们便可以在视图中访问 <code>field_error_proc</code>。</p><p>此外，可以把一个块传给 <code>cattr_*</code> 方法，设定属性的默认值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class MysqlAdapter &lt; AbstractAdapter
+  # 生成访问 @@emulate_booleans 的类方法，其默认值为 true
+  cattr_accessor(:emulate_booleans) { true }
+end
+
+</pre>
+</div>
+<p>把 <code>:instance_reader</code> 设为 <code>false</code>，不生成实例读值方法，把 <code>:instance_writer</code> 设为 <code>false</code>，不生成实例设值方法，把 <code>:instance_accessor</code> 设为 <code>false</code>，实例读值和设置方法都不生成。此时，这三个选项的值都必须是 <code>false</code>，而不能是假值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+module A
+  class B
+    # 不生成实例读值方法 first_name
+    cattr_accessor :first_name, instance_reader: false
+    # 不生成实例设值方法 last_name=
+    cattr_accessor :last_name, instance_writer: false
+    # 不生成实例读值方法 surname 和实例设值方法 surname=
+    cattr_accessor :surname, instance_accessor: false
+  end
+end
+
+</pre>
+</div>
+<p>在模型中可以把 <code>:instance_accessor</code> 设为 <code>false</code>，防止批量赋值属性。</p><div class="note"><p>在 <code>active_support/core_ext/module/attribute_accessors.rb</code> 文件中定义。</p></div><p><a class="anchor" id="subclasses-descendants"></a></p><h4 id="subclasses-descendants">4.2 子类和后代</h4><p><a class="anchor" id="subclasses"></a></p><h5 id="subclasses">4.2.1 <code>subclasses</code>
+</h5><p><code>subclasses</code> 方法返回接收者的子类：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class C; end
+C.subclasses # =&gt; []
+
+class B &lt; C; end
+C.subclasses # =&gt; [B]
+
+class A &lt; B; end
+C.subclasses # =&gt; [B]
+
+class D &lt; C; end
+C.subclasses # =&gt; [B, D]
+
+</pre>
+</div>
+<p>返回的子类没有特定顺序。</p><div class="note"><p>在 <code>active_support/core_ext/class/subclasses.rb</code> 文件中定义。</p></div><p><a class="anchor" id="descendants"></a></p><h5 id="descendants">4.2.2 <code>descendants</code>
+</h5><p><code>descendants</code> 方法返回接收者的后代：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class C; end
+C.descendants # =&gt; []
+
+class B &lt; C; end
+C.descendants # =&gt; [B]
+
+class A &lt; B; end
+C.descendants # =&gt; [B, A]
+
+class D &lt; C; end
+C.descendants # =&gt; [B, A, D]
+
+</pre>
+</div>
+<p>返回的后代没有特定顺序。</p><div class="note"><p>在 <code>active_support/core_ext/class/subclasses.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-string"></a></p><h3 id="extensions-to-string">5 <code>String</code> 的扩展</h3><p><a class="anchor" id="output-safety"></a></p><h4 id="output-safety">5.1 输出的安全性</h4><p><a class="anchor" id="motivation"></a></p><h5 id="motivation">5.1.1 引子</h5><p>把数据插入 HTML 模板要格外小心。例如，不能原封不动地把 <code>@review.title</code> 内插到 HTML 页面中。假如标题是“Flanagan &amp; Matz rules!”，得到的输出格式就不对，因为 &amp; 会转义成“&amp;amp;”。更糟的是，如果应用编写不当，这可能留下严重的安全漏洞，因为用户可以注入恶意的 HTML，设定精心编造的标题。关于这个问题的详情，请阅读 <a href="security.html#cross-site-scripting-xss">跨站脚本（XSS）</a>对跨站脚本的说明。</p><p><a class="anchor" id="safe-strings"></a></p><h5 id="safe-strings">5.1.2 安全字符串</h5><p>Active Support 提出了安全字符串（对 HTML 而言）这一概念。安全字符串是对字符串做的一种标记，表示可以原封不动地插入 HTML。这种字符串是可信赖的，不管会不会转义。</p><p>默认，字符串被认为是不安全的：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"".html_safe? # =&gt; false
+
+</pre>
+</div>
+<p>可以使用 <code>html_safe</code> 方法把指定的字符串标记为安全的：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+s = "".html_safe
+s.html_safe? # =&gt; true
+
+</pre>
+</div>
+<p>注意，无论如何，<code>html_safe</code> 不会执行转义操作，它的作用只是一种断定：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+s = "&lt;script&gt;...&lt;/script&gt;".html_safe
+s.html_safe? # =&gt; true
+s            # =&gt; "&lt;script&gt;...&lt;/script&gt;"
+
+</pre>
+</div>
+<p>你要自己确定该不该在某个字符串上调用 <code>html_safe</code>。</p><p>如果把字符串追加到安全字符串上，不管是就地修改，还是使用 <code>concat</code>/<code>&lt;&lt;</code> 或 <code>+</code>，结果都是一个安全字符串。不安全的字符会转义：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"".html_safe + "&lt;" # =&gt; "&amp;lt;"
+
+</pre>
+</div>
+<p>安全的字符直接追加：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"".html_safe + "&lt;".html_safe # =&gt; "&lt;"
+
+</pre>
+</div>
+<p>在常规的视图中不应该使用这些方法。不安全的值会自动转义：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= @review.title %&gt; &lt;%# 可以这么做，如果需要会转义 %&gt;
+
+</pre>
+</div>
+<p>如果想原封不动地插入值，不能调用 <code>html_safe</code>，而要使用 <code>raw</code> 辅助方法：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= raw @cms.current_template %&gt; &lt;%# 原封不动地插入 @cms.current_template %&gt;
+
+</pre>
+</div>
+<p>或者，可以使用等效的 <code>&lt;%==</code>：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%== @cms.current_template %&gt; &lt;%# 原封不动地插入 @cms.current_template %&gt;
+
+</pre>
+</div>
+<p><code>raw</code> 辅助方法已经调用 <code>html_safe</code> 了：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def raw(stringish)
+  stringish.to_s.html_safe
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/string/output_safety.rb</code> 文件中定义。</p></div><p><a class="anchor" id="transformation"></a></p><h5 id="transformation">5.1.3 转换</h5><p>通常，修改字符串的方法都返回不安全的字符串，前文所述的拼接除外。例如，<code>downcase</code>、<code>gsub</code>、<code>strip</code>、<code>chomp</code>、<code>underscore</code>，等等。</p><p>就地转换接收者，如 <code>gsub!</code>，其本身也变成不安全的了。</p><div class="info"><p>不管是否修改了自身，安全性都丧失了。</p></div><p><a class="anchor" id="conversion-and-coercion"></a></p><h5 id="conversion-and-coercion">5.1.4 类型转换和强制转换</h5><p>在安全字符串上调用 <code>to_s</code>，得到的还是安全字符串，但是使用 <code>to_str</code> 强制转换，得到的是不安全的字符串。</p><p><a class="anchor" id="copying"></a></p><h5 id="copying">5.1.5 复制</h5><p>在安全字符串上调用 <code>dup</code> 或 <code>clone</code>，得到的还是安全字符串。</p><p><a class="anchor" id="remove"></a></p><h4 id="remove">5.2 <code>remove</code>
+</h4><p><code>remove</code> 方法删除匹配模式的所有内容：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Hello World".remove(/Hello /) # =&gt; "World"
+
+</pre>
+</div>
+<p>也有破坏性版本，<code>String#remove!</code>。</p><div class="note"><p>在 <code>active_support/core_ext/string/filters.rb</code> 文件中定义。</p></div><p><a class="anchor" id="squish"></a></p><h4 id="squish">5.3 <code>squish</code>
+</h4><p><code>squish</code> 方法把首尾的空白去掉，还会把多个空白压缩成一个：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+" \n  foo\n\r \t bar \n".squish # =&gt; "foo bar"
+
+</pre>
+</div>
+<p>也有破坏性版本，<code>String#squish!</code>。</p><p>注意，既能处理 ASCII 空白，也能处理 Unicode 空白。</p><div class="note"><p>在 <code>active_support/core_ext/string/filters.rb</code> 文件中定义。</p></div><p><a class="anchor" id="truncate"></a></p><h4 id="truncate">5.4 <code>truncate</code>
+</h4><p><code>truncate</code> 方法在指定长度处截断接收者，返回一个副本：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Oh dear! Oh dear! I shall be late!".truncate(20)
+# =&gt; "Oh dear! Oh dear!..."
+
+</pre>
+</div>
+<p>省略号可以使用 <code>:omission</code> 选项自定义：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Oh dear! Oh dear! I shall be late!".truncate(20, omission: '&amp;hellip;')
+# =&gt; "Oh dear! Oh &amp;hellip;"
+
+</pre>
+</div>
+<p>尤其要注意，截断长度包含省略字符串。</p><p>设置 <code>:separator</code> 选项，以自然的方式截断：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Oh dear! Oh dear! I shall be late!".truncate(18)
+# =&gt; "Oh dear! Oh dea..."
+"Oh dear! Oh dear! I shall be late!".truncate(18, separator: ' ')
+# =&gt; "Oh dear! Oh..."
+
+</pre>
+</div>
+<p><code>:separator</code> 选项的值可以是一个正则表达式：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Oh dear! Oh dear! I shall be late!".truncate(18, separator: /\s/)
+# =&gt; "Oh dear! Oh..."
+
+</pre>
+</div>
+<p>在上述示例中，本该在“dear”中间截断，但是 <code>:separator</code> 选项进行了阻止。</p><div class="note"><p>在 <code>active_support/core_ext/string/filters.rb</code> 文件中定义。</p></div><p><a class="anchor" id="truncate-words"></a></p><h4 id="truncate-words">5.5 <code>truncate_words</code>
+</h4><p><code>truncate_words</code> 方法在指定个单词处截断接收者，返回一个副本：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Oh dear! Oh dear! I shall be late!".truncate_words(4)
+# =&gt; "Oh dear! Oh dear!..."
+
+</pre>
+</div>
+<p>省略号可以使用 <code>:omission</code> 选项自定义：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Oh dear! Oh dear! I shall be late!".truncate_words(4, omission: '&amp;hellip;')
+# =&gt; "Oh dear! Oh dear!&amp;hellip;"
+
+</pre>
+</div>
+<p>设置 <code>:separator</code> 选项，以自然的方式截断：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Oh dear! Oh dear! I shall be late!".truncate_words(3, separator: '!')
+# =&gt; "Oh dear! Oh dear! I shall be late..."
+
+</pre>
+</div>
+<p><code>:separator</code> 选项的值可以是一个正则表达式：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Oh dear! Oh dear! I shall be late!".truncate_words(4, separator: /\s/)
+# =&gt; "Oh dear! Oh dear!..."
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/string/filters.rb</code> 文件中定义。</p></div><p><a class="anchor" id="inquiry"></a></p><h4 id="inquiry">5.6 <code>inquiry</code>
+</h4><p><code>inquiry</code> 方法把字符串转换成 <code>StringInquirer</code> 对象，这样可以使用漂亮的方式检查相等性：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"production".inquiry.production? # =&gt; true
+"active".inquiry.inactive?       # =&gt; false
+
+</pre>
+</div>
+<p><a class="anchor" id="starts-with-questionmark-and-ends-with-questionmark"></a></p><h4 id="starts-with-questionmark-and-ends-with-questionmark">5.7 <code>starts_with?</code> 和 <code>ends_with?</code>
+</h4><p>Active Support 为 <code>String#start_with?</code> 和 <code>String#end_with?</code> 定义了第三人称版本：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"foo".starts_with?("f") # =&gt; true
+"foo".ends_with?("o")   # =&gt; true
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/string/starts_ends_with.rb</code> 文件中定义。</p></div><p><a class="anchor" id="strip-heredoc"></a></p><h4 id="strip-heredoc">5.8 <code>strip_heredoc</code>
+</h4><p><code>strip_heredoc</code> 方法去掉 here 文档中的缩进。</p><p>例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+if options[:usage]
+  puts &lt;&lt;-USAGE.strip_heredoc
+    This command does such and such.
+
+    Supported options are:
+      -h         This message
+      ...
+  USAGE
+end
+
+</pre>
+</div>
+<p>用户看到的消息会靠左边对齐。</p><p>从技术层面来说，这个方法寻找整个字符串中的最小缩进量，然后删除那么多的前导空白。</p><div class="note"><p>在 <code>active_support/core_ext/string/strip.rb</code> 文件中定义。</p></div><p><a class="anchor" id="indent"></a></p><h4 id="indent">5.9 <code>indent</code>
+</h4><p>按指定量缩进接收者：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+&lt;&lt;EOS.indent(2)
+def some_method
+  some_code
+end
+EOS
+# =&gt;
+  def some_method
+    some_code
+  end
+
+</pre>
+</div>
+<p>第二个参数，<code>indent_string</code>，指定使用什么字符串缩进。默认值是 <code>nil</code>，让这个方法根据第一个缩进行做猜测，如果第一行没有缩进，则使用空白。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"  foo".indent(2)        # =&gt; "    foo"
+"foo\n\t\tbar".indent(2) # =&gt; "\t\tfoo\n\t\t\t\tbar"
+"foo".indent(2, "\t")    # =&gt; "\t\tfoo"
+
+</pre>
+</div>
+<p><code>indent_string</code> 的值虽然经常设为一个空格或一个制表符，但是可以使用任何字符串。</p><p>第三个参数，<code>indent_empty_lines</code>，是个旗标，指明是否缩进空行。默认值是 <code>false</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"foo\n\nbar".indent(2)            # =&gt; "  foo\n\n  bar"
+"foo\n\nbar".indent(2, nil, true) # =&gt; "  foo\n  \n  bar"
+
+</pre>
+</div>
+<p><code>indent!</code> 方法就地执行缩进。</p><div class="note"><p>在 <code>active_support/core_ext/string/indent.rb</code> 文件中定义。</p></div><p><a class="anchor" id="access"></a></p><h4 id="access">5.10 访问</h4><p><a class="anchor" id="at-position"></a></p><h5 id="at-position">5.10.1 <code>at(position)</code>
+</h5><p>返回字符串中 <code>position</code> 位置上的字符：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"hello".at(0)  # =&gt; "h"
+"hello".at(4)  # =&gt; "o"
+"hello".at(-1) # =&gt; "o"
+"hello".at(10) # =&gt; nil
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/string/access.rb</code> 文件中定义。</p></div><p><a class="anchor" id="from-position"></a></p><h5 id="from-position">5.10.2 <code>from(position)</code>
+</h5><p>返回子串，从 <code>position</code> 位置开始：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"hello".from(0)  # =&gt; "hello"
+"hello".from(2)  # =&gt; "llo"
+"hello".from(-2) # =&gt; "lo"
+"hello".from(10) # =&gt; nil
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/string/access.rb</code> 文件中定义。</p></div><p><a class="anchor" id="to-position"></a></p><h5 id="to-position">5.10.3 <code>to(position)</code>
+</h5><p>返回子串，到 <code>position</code> 位置为止：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"hello".to(0)  # =&gt; "h"
+"hello".to(2)  # =&gt; "hel"
+"hello".to(-2) # =&gt; "hell"
+"hello".to(10) # =&gt; "hello"
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/string/access.rb</code> 文件中定义。</p></div><p><a class="anchor" id="first-limit-1"></a></p><h5 id="first-limit-1">5.10.4 <code>first(limit = 1)</code>
+</h5><p>如果 <code>n</code> &gt; 0，<code>str.first(n)</code> 的作用与 <code>str.to(n-1)</code> 一样；如果 <code>n</code> == 0，返回一个空字符串。</p><div class="note"><p>在 <code>active_support/core_ext/string/access.rb</code> 文件中定义。</p></div><p><a class="anchor" id="last-limit-1"></a></p><h5 id="last-limit-1">5.10.5 <code>last(limit = 1)</code>
+</h5><p>如果 <code>n</code> &gt; 0，<code>str.last(n)</code> 的作用与 <code>str.from(-n)</code> 一样；如果 <code>n</code> == 0，返回一个空字符串。</p><div class="note"><p>在 <code>active_support/core_ext/string/access.rb</code> 文件中定义。</p></div><p><a class="anchor" id="inflections"></a></p><h4 id="inflections">5.11 词形变化</h4><p><a class="anchor" id="pluralize"></a></p><h5 id="pluralize">5.11.1 <code>pluralize</code>
+</h5><p><code>pluralize</code> 方法返回接收者的复数形式：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"table".pluralize     # =&gt; "tables"
+"ruby".pluralize      # =&gt; "rubies"
+"equipment".pluralize # =&gt; "equipment"
+
+</pre>
+</div>
+<p>如上例所示，Active Support 知道如何处理不规则的复数形式和不可数名词。内置的规则可以在 <code>config/initializers/inflections.rb</code> 文件中扩展。那个文件是由 <code>rails</code> 命令生成的，里面的注释说明了该怎么做。</p><p><code>pluralize</code> 还可以接受可选的 <code>count</code> 参数。如果 <code>count == 1</code>，返回单数形式。把 <code>count</code> 设为其他值，都会返回复数形式：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"dude".pluralize(0) # =&gt; "dudes"
+"dude".pluralize(1) # =&gt; "dude"
+"dude".pluralize(2) # =&gt; "dudes"
+
+</pre>
+</div>
+<p>Active Record 使用这个方法计算模型对应的默认表名：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# active_record/model_schema.rb
+def undecorated_table_name(class_name = base_class.name)
+  table_name = class_name.to_s.demodulize.underscore
+  pluralize_table_names ? table_name.pluralize : table_name
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/string/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="singularize"></a></p><h5 id="singularize">5.11.2 <code>singularize</code>
+</h5><p>作用与 <code>pluralize</code> 相反：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"tables".singularize    # =&gt; "table"
+"rubies".singularize    # =&gt; "ruby"
+"equipment".singularize # =&gt; "equipment"
+
+</pre>
+</div>
+<p>关联使用这个方法计算默认的关联类：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# active_record/reflection.rb
+def derive_class_name
+  class_name = name.to_s.camelize
+  class_name = class_name.singularize if collection?
+  class_name
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/string/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="camelize"></a></p><h5 id="camelize">5.11.3 <code>camelize</code>
+</h5><p><code>camelize</code> 方法把接收者变成驼峰式：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"product".camelize    # =&gt; "Product"
+"admin_user".camelize # =&gt; "AdminUser"
+
+</pre>
+</div>
+<p>一般来说，你可以把这个方法的作用想象为把路径转换成 Ruby 类或模块名的方式（使用斜线分隔命名空间）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"backoffice/session".camelize # =&gt; "Backoffice::Session"
+
+</pre>
+</div>
+<p>例如，Action Pack 使用这个方法加载提供特定会话存储功能的类：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# action_controller/metal/session_management.rb
+def session_store=(store)
+  @@session_store = store.is_a?(Symbol) ?
+    ActionDispatch::Session.const_get(store.to_s.camelize) :
+    store
+end
+
+</pre>
+</div>
+<p><code>camelize</code> 接受一个可选的参数，其值可以是 <code>:upper</code>（默认值）或 <code>:lower</code>。设为后者时，第一个字母是小写的：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"visual_effect".camelize(:lower) # =&gt; "visualEffect"
+
+</pre>
+</div>
+<p>为使用这种风格的语言计算方法名时可以这么设定，例如 JavaScript。</p><div class="info"><p>一般来说，可以把 <code>camelize</code> 视作 <code>underscore</code> 的逆操作，不过也有例外：<code>"SSLError".underscore.camelize</code> 的结果是 <code>"SslError"</code>。为了支持这种情况，Active Support 允许你在 <code>config/initializers/inflections.rb</code> 文件中指定缩略词。</p></div><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+ActiveSupport::Inflector.inflections do |inflect|
+  inflect.acronym 'SSL'
+end
+
+"SSLError".underscore.camelize # =&gt; "SSLError"
+
+</pre>
+</div>
+<p><code>camelcase</code> 是 <code>camelize</code> 的别名。</p><div class="note"><p>在 <code>active_support/core_ext/string/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="underscore"></a></p><h5 id="underscore">5.11.4 <code>underscore</code>
+</h5><p><code>underscore</code> 方法的作用相反，把驼峰式变成蛇底式：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Product".underscore   # =&gt; "product"
+"AdminUser".underscore # =&gt; "admin_user"
+
+</pre>
+</div>
+<p>还会把 <code>"::"</code> 转换成 <code>"/"</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Backoffice::Session".underscore # =&gt; "backoffice/session"
+
+</pre>
+</div>
+<p>也能理解以小写字母开头的字符串：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"visualEffect".underscore # =&gt; "visual_effect"
+
+</pre>
+</div>
+<p>不过，<code>underscore</code> 不接受任何参数。</p><p>Rails 自动加载类和模块的机制使用 <code>underscore</code> 推断可能定义缺失的常量的文件的相对路径（不带扩展名）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# active_support/dependencies.rb
+def load_missing_constant(from_mod, const_name)
+  ...
+  qualified_name = qualified_name_for from_mod, const_name
+  path_suffix = qualified_name.underscore
+  ...
+end
+
+</pre>
+</div>
+<div class="info"><p>一般来说，可以把 <code>underscore</code> 视作 <code>camelize</code> 的逆操作，不过也有例外。例如，<code>"SSLError".underscore.camelize</code> 的结果是 <code>"SslError"</code>。</p></div><div class="note"><p>在 <code>active_support/core_ext/string/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="titleize"></a></p><h5 id="titleize">5.11.5 <code>titleize</code>
+</h5><p><code>titleize</code> 方法把接收者中的单词首字母变成大写：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"alice in wonderland".titleize # =&gt; "Alice In Wonderland"
+"fermat's enigma".titleize     # =&gt; "Fermat's Enigma"
+
+</pre>
+</div>
+<p><code>titlecase</code> 是 <code>titleize</code> 的别名。</p><div class="note"><p>在 <code>active_support/core_ext/string/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="dasherize"></a></p><h5 id="dasherize">5.11.6 <code>dasherize</code>
+</h5><p><code>dasherize</code> 方法把接收者中的下划线替换成连字符：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"name".dasherize         # =&gt; "name"
+"contact_data".dasherize # =&gt; "contact-data"
+
+</pre>
+</div>
+<p>模型的 XML 序列化程序使用这个方法处理节点名：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# active_model/serializers/xml.rb
+def reformat_name(name)
+  name = name.camelize if camelize?
+  dasherize? ? name.dasherize : name
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/string/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="demodulize"></a></p><h5 id="demodulize">5.11.7 <code>demodulize</code>
+</h5><p><code>demodulize</code> 方法返回限定常量名的常量名本身，即最右边那一部分：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Product".demodulize                        # =&gt; "Product"
+"Backoffice::UsersController".demodulize    # =&gt; "UsersController"
+"Admin::Hotel::ReservationUtils".demodulize # =&gt; "ReservationUtils"
+"::Inflections".demodulize                  # =&gt; "Inflections"
+"".demodulize                               # =&gt; ""
+
+</pre>
+</div>
+<p>例如，Active Record 使用这个方法计算计数器缓存列的名称：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# active_record/reflection.rb
+def counter_cache_column
+  if options[:counter_cache] == true
+    "#{active_record.name.demodulize.underscore.pluralize}_count"
+  elsif options[:counter_cache]
+    options[:counter_cache]
+  end
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/string/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="deconstantize"></a></p><h5 id="deconstantize">5.11.8 <code>deconstantize</code>
+</h5><p><code>deconstantize</code> 方法去掉限定常量引用表达式的最右侧部分，留下常量的容器：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Product".deconstantize                        # =&gt; ""
+"Backoffice::UsersController".deconstantize    # =&gt; "Backoffice"
+"Admin::Hotel::ReservationUtils".deconstantize # =&gt; "Admin::Hotel"
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/string/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="parameterize"></a></p><h5 id="parameterize">5.11.9 <code>parameterize</code>
+</h5><p><code>parameterize</code> 方法对接收者做整形，以便在精美的 URL 中使用。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"John Smith".parameterize # =&gt; "john-smith"
+"Kurt Gödel".parameterize # =&gt; "kurt-godel"
+
+</pre>
+</div>
+<p>如果想保留大小写，把 <code>preserve_case</code> 参数设为 <code>true</code>。这个参数的默认值是 <code>false</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"John Smith".parameterize(preserve_case: true) # =&gt; "John-Smith"
+"Kurt Gödel".parameterize(preserve_case: true) # =&gt; "Kurt-Godel"
+
+</pre>
+</div>
+<p>如果想使用自定义的分隔符，覆盖 <code>separator</code> 参数。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"John Smith".parameterize(separator: "_") # =&gt; "john\_smith"
+"Kurt Gödel".parameterize(separator: "_") # =&gt; "kurt\_godel"
+
+</pre>
+</div>
+<p>其实，得到的字符串包装在 <code>ActiveSupport::Multibyte::Chars</code> 实例中。</p><div class="note"><p>在 <code>active_support/core_ext/string/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="tableize"></a></p><h5 id="tableize">5.11.10 <code>tableize</code>
+</h5><p><code>tableize</code> 方法相当于先调用 <code>underscore</code>，再调用 <code>pluralize</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Person".tableize      # =&gt; "people"
+"Invoice".tableize     # =&gt; "invoices"
+"InvoiceLine".tableize # =&gt; "invoice_lines"
+
+</pre>
+</div>
+<p>一般来说，<code>tableize</code> 返回简单模型对应的表名。Active Record 真正的实现方式不是只使用 <code>tableize</code>，还会使用 <code>demodulize</code>，再检查一些可能影响返回结果的选项。</p><div class="note"><p>在 <code>active_support/core_ext/string/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="classify"></a></p><h5 id="classify">5.11.11 <code>classify</code>
+</h5><p><code>classify</code> 方法的作用与 <code>tableize</code> 相反，返回表名对应的类名：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"people".classify        # =&gt; "Person"
+"invoices".classify      # =&gt; "Invoice"
+"invoice_lines".classify # =&gt; "InvoiceLine"
+
+</pre>
+</div>
+<p>这个方法能处理限定的表名：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"highrise_production.companies".classify # =&gt; "Company"
+
+</pre>
+</div>
+<p>注意，<code>classify</code> 方法返回的类名是字符串。你可以调用 <code>constantize</code> 方法，得到真正的类对象，如下一节所述。</p><div class="note"><p>在 <code>active_support/core_ext/string/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="constantize"></a></p><h5 id="constantize">5.11.12 <code>constantize</code>
+</h5><p><code>constantize</code> 方法解析接收者中的常量引用表达式：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"Integer".constantize # =&gt; Integer
+
+module M
+  X = 1
+end
+"M::X".constantize # =&gt; 1
+
+</pre>
+</div>
+<p>如果结果是未知的常量，或者根本不是有效的常量名，<code>constantize</code> 抛出 <code>NameError</code> 异常。</p><p>即便开头没有 <code>::</code>，<code>constantize</code> 也始终从顶层的 <code>Object</code> 解析常量名。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+X = :in_Object
+module M
+  X = :in_M
+
+  X                 # =&gt; :in_M
+  "::X".constantize # =&gt; :in_Object
+  "X".constantize   # =&gt; :in_Object (!)
+end
+
+</pre>
+</div>
+<p>因此，通常这与 Ruby 的处理方式不同，Ruby 会求值真正的常量。</p><p>邮件程序测试用例使用 <code>constantize</code> 方法从测试用例的名称中获取要测试的邮件程序：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# action_mailer/test_case.rb
+def determine_default_mailer(name)
+  name.sub(/Test$/, '').constantize
+rescue NameError =&gt; e
+  raise NonInferrableMailerError.new(name)
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/string/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="humanize"></a></p><h5 id="humanize">5.11.13 <code>humanize</code>
+</h5><p><code>humanize</code> 方法对属性名做调整，以便显示给终端用户查看。</p><p>这个方法所做的转换如下：</p>
+<ul>
+<li>  根据参数做对人类友好的词形变化</li>
+<li>  删除前导下划线（如果有）</li>
+<li>  删除“_id”后缀（如果有）</li>
+<li>  把下划线替换成空格（如果有）</li>
+<li>  把所有单词变成小写，缩略词除外</li>
+<li>  把第一个单词的首字母变成大写</li>
+</ul>
+<p>把 <code>:capitalize</code> 选项设为 <code>false</code>（默认值为 <code>true</code>）可以禁止把第一个单词的首字母变成大写。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"name".humanize                         # =&gt; "Name"
+"author_id".humanize                    # =&gt; "Author"
+"author_id".humanize(capitalize: false) # =&gt; "author"
+"comments_count".humanize               # =&gt; "Comments count"
+"_id".humanize                          # =&gt; "Id"
+
+</pre>
+</div>
+<p>如果把“SSL”定义为缩略词：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+'ssl_error'.humanize # =&gt; "SSL error"
+
+</pre>
+</div>
+<p><code>full_messages</code> 辅助方法使用 <code>humanize</code> 作为一种后备机制，以便包含属性名：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def full_messages
+  map { |attribute, message| full_message(attribute, message) }
+end
+
+def full_message
+  ...
+  attr_name = attribute.to_s.tr('.', '_').humanize
+  attr_name = @base.class.human_attribute_name(attribute, default: attr_name)
+  ...
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/string/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="foreign-key"></a></p><h5 id="foreign-key">5.11.14 <code>foreign_key</code>
+</h5><p><code>foreign_key</code> 方法根据类名计算外键列的名称。为此，它先调用 <code>demodulize</code>，再调用 <code>underscore</code>，最后加上“_id”：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"User".foreign_key           # =&gt; "user_id"
+"InvoiceLine".foreign_key    # =&gt; "invoice_line_id"
+"Admin::Session".foreign_key # =&gt; "session_id"
+
+</pre>
+</div>
+<p>如果不想添加“_id”中的下划线，传入 <code>false</code> 参数：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"User".foreign_key(false) # =&gt; "userid"
+
+</pre>
+</div>
+<p>关联使用这个方法推断外键，例如 <code>has_one</code> 和 <code>has_many</code> 是这么做的：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# active_record/associations.rb
+foreign_key = options[:foreign_key] || reflection.active_record.name.foreign_key
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/string/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-string-conversions"></a></p><h4 id="extensions-to-string-conversions">5.12 转换</h4><p><a class="anchor" id="to-date-to-time-to-datetime"></a></p><h5 id="to-date-to-time-to-datetime">5.12.1 <code>to_date</code>、<code>to_time</code>、<code>to_datetime</code>
+</h5><p><code>to_date</code>、<code>to_time</code> 和 <code>to_datetime</code> 是对 <code>Date._parse</code> 的便利包装：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"2010-07-27".to_date              # =&gt; Tue, 27 Jul 2010
+"2010-07-27 23:37:00".to_time     # =&gt; 2010-07-27 23:37:00 +0200
+"2010-07-27 23:37:00".to_datetime # =&gt; Tue, 27 Jul 2010 23:37:00 +0000
+
+</pre>
+</div>
+<p><code>to_time</code> 有个可选的参数，值为 <code>:utc</code> 或 <code>:local</code>，指明想使用的时区：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+"2010-07-27 23:42:00".to_time(:utc)   # =&gt; 2010-07-27 23:42:00 UTC
+"2010-07-27 23:42:00".to_time(:local) # =&gt; 2010-07-27 23:42:00 +0200
+
+</pre>
+</div>
+<p>默认值是 <code>:utc</code>。</p><p>详情参见 <code>Date._parse</code> 的文档。</p><div class="info"><p>参数为空时，这三个方法返回 <code>nil</code>。</p></div><div class="note"><p>在 <code>active_support/core_ext/string/conversions.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-numeric"></a></p><h3 id="extensions-to-numeric">6 <code>Numeric</code> 的扩展</h3><p><a class="anchor" id="bytes"></a></p><h4 id="bytes">6.1 字节</h4><p>所有数字都能响应下述方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+bytes
+kilobytes
+megabytes
+gigabytes
+terabytes
+petabytes
+exabytes
+
+</pre>
+</div>
+<p>这些方法返回相应的字节数，因子是 1024：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+2.kilobytes   # =&gt; 2048
+3.megabytes   # =&gt; 3145728
+3.5.gigabytes # =&gt; 3758096384
+-4.exabytes   # =&gt; -4611686018427387904
+
+</pre>
+</div>
+<p>这些方法都有单数别名，因此可以这样用：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+1.megabyte # =&gt; 1048576
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/numeric/bytes.rb</code> 文件中定义。</p></div><p><a class="anchor" id="time"></a></p><h4 id="time">6.2 时间</h4><p>用于计算和声明时间，例如 <code>45.minutes + 2.hours + 4.years</code>。</p><p>使用 <code>from_now</code>、<code>ago</code> 等精确计算日期，以及增减 <code>Time</code> 对象时使用 <code>Time#advance</code>。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# 等价于 Time.current.advance(months: 1)
+1.month.from_now
+
+# 等价于 Time.current.advance(years: 2)
+2.years.from_now
+
+# 等价于 Time.current.advance(months: 4, years: 5)
+(4.months + 5.years).from_now
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/numeric/time.rb</code> 文件中定义。</p></div><p><a class="anchor" id="formatting"></a></p><h4 id="formatting">6.3 格式化</h4><p>以各种形式格式化数字。</p><p>把数字转换成字符串表示形式，表示电话号码：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+5551234.to_s(:phone)
+# =&gt; 555-1234
+1235551234.to_s(:phone)
+# =&gt; 123-555-1234
+1235551234.to_s(:phone, area_code: true)
+# =&gt; (123) 555-1234
+1235551234.to_s(:phone, delimiter: " ")
+# =&gt; 123 555 1234
+1235551234.to_s(:phone, area_code: true, extension: 555)
+# =&gt; (123) 555-1234 x 555
+1235551234.to_s(:phone, country_code: 1)
+# =&gt; +1-123-555-1234
+
+</pre>
+</div>
+<p>把数字转换成字符串表示形式，表示货币：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+1234567890.50.to_s(:currency)                 # =&gt; $1,234,567,890.50
+1234567890.506.to_s(:currency)                # =&gt; $1,234,567,890.51
+1234567890.506.to_s(:currency, precision: 3)  # =&gt; $1,234,567,890.506
+
+</pre>
+</div>
+<p>把数字转换成字符串表示形式，表示百分比：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+100.to_s(:percentage)
+# =&gt; 100.000%
+100.to_s(:percentage, precision: 0)
+# =&gt; 100%
+1000.to_s(:percentage, delimiter: '.', separator: ',')
+# =&gt; 1.000,000%
+302.24398923423.to_s(:percentage, precision: 5)
+# =&gt; 302.24399%
+
+</pre>
+</div>
+<p>把数字转换成字符串表示形式，以分隔符分隔：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+12345678.to_s(:delimited)                     # =&gt; 12,345,678
+12345678.05.to_s(:delimited)                  # =&gt; 12,345,678.05
+12345678.to_s(:delimited, delimiter: ".")     # =&gt; 12.345.678
+12345678.to_s(:delimited, delimiter: ",")     # =&gt; 12,345,678
+12345678.05.to_s(:delimited, separator: " ")  # =&gt; 12,345,678 05
+
+</pre>
+</div>
+<p>把数字转换成字符串表示形式，以指定精度四舍五入：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+111.2345.to_s(:rounded)                     # =&gt; 111.235
+111.2345.to_s(:rounded, precision: 2)       # =&gt; 111.23
+13.to_s(:rounded, precision: 5)             # =&gt; 13.00000
+389.32314.to_s(:rounded, precision: 0)      # =&gt; 389
+111.2345.to_s(:rounded, significant: true)  # =&gt; 111
+
+</pre>
+</div>
+<p>把数字转换成字符串表示形式，得到人类可读的字节数：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+123.to_s(:human_size)                  # =&gt; 123 Bytes
+1234.to_s(:human_size)                 # =&gt; 1.21 KB
+12345.to_s(:human_size)                # =&gt; 12.1 KB
+1234567.to_s(:human_size)              # =&gt; 1.18 MB
+1234567890.to_s(:human_size)           # =&gt; 1.15 GB
+1234567890123.to_s(:human_size)        # =&gt; 1.12 TB
+1234567890123456.to_s(:human_size)     # =&gt; 1.1 PB
+1234567890123456789.to_s(:human_size)  # =&gt; 1.07 EB
+
+</pre>
+</div>
+<p>把数字转换成字符串表示形式，得到人类可读的词：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+123.to_s(:human)               # =&gt; "123"
+1234.to_s(:human)              # =&gt; "1.23 Thousand"
+12345.to_s(:human)             # =&gt; "12.3 Thousand"
+1234567.to_s(:human)           # =&gt; "1.23 Million"
+1234567890.to_s(:human)        # =&gt; "1.23 Billion"
+1234567890123.to_s(:human)     # =&gt; "1.23 Trillion"
+1234567890123456.to_s(:human)  # =&gt; "1.23 Quadrillion"
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/numeric/conversions.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-integer"></a></p><h3 id="extensions-to-integer">7 <code>Integer</code> 的扩展</h3><p><a class="anchor" id="multiple-of-questionmark"></a></p><h4 id="multiple-of-questionmark">7.1 <code>multiple_of?</code>
+</h4><p><code>multiple_of?</code> 方法测试一个整数是不是参数的倍数：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+2.multiple_of?(1) # =&gt; true
+1.multiple_of?(2) # =&gt; false
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/integer/multiple.rb</code> 文件中定义。</p></div><p><a class="anchor" id="ordinal"></a></p><h4 id="ordinal">7.2 <code>ordinal</code>
+</h4><p><code>ordinal</code> 方法返回整数接收者的序数词后缀（字符串）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+1.ordinal    # =&gt; "st"
+2.ordinal    # =&gt; "nd"
+53.ordinal   # =&gt; "rd"
+2009.ordinal # =&gt; "th"
+-21.ordinal  # =&gt; "st"
+-134.ordinal # =&gt; "th"
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/integer/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="ordinalize"></a></p><h4 id="ordinalize">7.3 <code>ordinalize</code>
+</h4><p><code>ordinalize</code> 方法返回整数接收者的序数词（字符串）。注意，<code>ordinal</code> 方法只返回后缀。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+1.ordinalize    # =&gt; "1st"
+2.ordinalize    # =&gt; "2nd"
+53.ordinalize   # =&gt; "53rd"
+2009.ordinalize # =&gt; "2009th"
+-21.ordinalize  # =&gt; "-21st"
+-134.ordinalize # =&gt; "-134th"
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/integer/inflections.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-bigdecimal"></a></p><h3 id="extensions-to-bigdecimal">8 <code>BigDecimal</code> 的扩展</h3><p><a class="anchor" id="extensions-to-bigdecimal-to-s"></a></p><h4 id="extensions-to-bigdecimal-to-s">8.1 <code>to_s</code>
+</h4><p><code>to_s</code> 方法把默认的说明符设为“F”。这意味着，不传入参数时，<code>to_s</code> 返回浮点数表示形式，而不是工程计数法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+BigDecimal.new(5.00, 6).to_s  # =&gt; "5.0"
+
+</pre>
+</div>
+<p>说明符也可以使用符号：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+BigDecimal.new(5.00, 6).to_s(:db)  # =&gt; "5.0"
+
+</pre>
+</div>
+<p>也支持工程计数法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+BigDecimal.new(5.00, 6).to_s("e")  # =&gt; "0.5E1"
+
+</pre>
+</div>
+<p><a class="anchor" id="extensions-to-enumerable"></a></p><h3 id="extensions-to-enumerable">9 <code>Enumerable</code> 的扩展</h3><p><a class="anchor" id="sum"></a></p><h4 id="sum">9.1 <code>sum</code>
+</h4><p><code>sum</code> 方法计算可枚举对象的元素之和：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[1, 2, 3].sum # =&gt; 6
+(1..100).sum  # =&gt; 5050
+
+</pre>
+</div>
+<p>只假定元素能响应 <code>+</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[[1, 2], [2, 3], [3, 4]].sum    # =&gt; [1, 2, 2, 3, 3, 4]
+%w(foo bar baz).sum             # =&gt; "foobarbaz"
+{a: 1, b: 2, c: 3}.sum          # =&gt; [:b, 2, :c, 3, :a, 1]
+
+</pre>
+</div>
+<p>空集合的元素之和默认为零，不过可以自定义：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[].sum    # =&gt; 0
+[].sum(1) # =&gt; 1
+
+</pre>
+</div>
+<p>如果提供块，<code>sum</code> 变成迭代器，把集合中的元素拽入块中，然后求返回值之和：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+(1..5).sum {|n| n * 2 } # =&gt; 30
+[2, 4, 6, 8, 10].sum    # =&gt; 30
+
+</pre>
+</div>
+<p>空接收者之和也可以使用这种方式自定义：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[].sum(1) {|n| n**3} # =&gt; 1
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/enumerable.rb</code> 文件中定义。</p></div><p><a class="anchor" id="index-by"></a></p><h4 id="index-by">9.2 <code>index_by</code>
+</h4><p><code>index_by</code> 方法生成一个散列，使用某个键索引可枚举对象中的元素。</p><p>它迭代集合，把各个元素传入块中。元素使用块的返回值为键：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+invoices.index_by(&amp;:number)
+# =&gt; {'2009-032' =&gt; &lt;Invoice ...&gt;, '2009-008' =&gt; &lt;Invoice ...&gt;, ...}
+
+</pre>
+</div>
+<div class="warning"><p>键一般是唯一的。如果块为不同的元素返回相同的键，不会使用那个键构建集合。最后一个元素胜出。</p></div><div class="note"><p>在 <code>active_support/core_ext/enumerable.rb</code> 文件中定义。</p></div><p><a class="anchor" id="many-questionmark"></a></p><h4 id="many-questionmark">9.3 <code>many?</code>
+</h4><p><code>many?</code> 方法是 <code>collection.size &gt; 1</code> 的简化：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% if pages.many? %&gt;
+  &lt;%= pagination_links %&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>如果提供可选的块，<code>many?</code> 只考虑返回 <code>true</code> 的元素：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+@see_more = videos.many? {|video| video.category == params[:category]}
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/enumerable.rb</code> 文件中定义。</p></div><p><a class="anchor" id="exclude-questionmark"></a></p><h4 id="exclude-questionmark">9.4 <code>exclude?</code>
+</h4><p><code>exclude?</code> 方法测试指定对象是否不在集合中。这是内置方法 <code>include?</code> 的逆向判断。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+to_visit &lt;&lt; node if visited.exclude?(node)
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/enumerable.rb</code> 文件中定义。</p></div><p><a class="anchor" id="without"></a></p><h4 id="without">9.5 <code>without</code>
+</h4><p><code>without</code> 从可枚举对象中删除指定的元素，然后返回副本：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+["David", "Rafael", "Aaron", "Todd"].without("Aaron", "Todd") # =&gt; ["David", "Rafael"]
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/enumerable.rb</code> 文件中定义。</p></div><p><a class="anchor" id="pluck"></a></p><h4 id="pluck">9.6 <code>pluck</code>
+</h4><p><code>pluck</code> 方法基于指定的键返回一个数组：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[{ name: "David" }, { name: "Rafael" }, { name: "Aaron" }].pluck(:name) # =&gt; ["David", "Rafael", "Aaron"]
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/enumerable.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-array"></a></p><h3 id="extensions-to-array">10 <code>Array</code> 的扩展</h3><p><a class="anchor" id="accessing"></a></p><h4 id="accessing">10.1 访问</h4><p>为了便于以多种方式访问数组，Active Support 增强了数组的 API。例如，若想获取到指定索引的子数组，可以这么做：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+%w(a b c d).to(2) # =&gt; %w(a b c)
+[].to(7)          # =&gt; []
+
+</pre>
+</div>
+<p>类似地，<code>from</code> 从指定索引一直获取到末尾。如果索引大于数组的长度，返回一个空数组。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+%w(a b c d).from(2)  # =&gt; %w(c d)
+%w(a b c d).from(10) # =&gt; []
+[].from(0)           # =&gt; []
+
+</pre>
+</div>
+<p><code>second</code>、<code>third</code>、<code>fourth</code> 和 <code>fifth</code> 分别返回对应的元素，<code>second_to_last</code> 和 <code>third_to_last</code> 也是（<code>first</code> 和 <code>last</code> 是内置的）。得益于公众智慧和积极的建设性建议，还有 <code>forty_two</code> 可用。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+%w(a b c d).third # =&gt; c
+%w(a b c d).fifth # =&gt; nil
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/array/access.rb</code> 文件中定义。</p></div><p><a class="anchor" id="adding-elements"></a></p><h4 id="adding-elements">10.2 添加元素</h4><p><a class="anchor" id="prepend"></a></p><h5 id="prepend">10.2.1 <code>prepend</code>
+</h5><p>这个方法是 <code>Array#unshift</code> 的别名。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+%w(a b c d).prepend('e')  # =&gt; ["e", "a", "b", "c", "d"]
+[].prepend(10)            # =&gt; [10]
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/array/prepend_and_append.rb</code> 文件中定义。</p></div><p><a class="anchor" id="append"></a></p><h5 id="append">10.2.2 <code>append</code>
+</h5><p>这个方法是 <code>Array#&lt;&lt;</code> 的别名。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+%w(a b c d).append('e')  # =&gt; ["a", "b", "c", "d", "e"]
+[].append([1,2])         # =&gt; [[1, 2]]
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/array/prepend_and_append.rb</code> 文件中定义。</p></div><p><a class="anchor" id="options-extraction"></a></p><h4 id="options-extraction">10.3 选项提取</h4><p>如果方法调用的最后一个参数（不含 <code>&amp;block</code> 参数）是散列，Ruby 允许省略花括号：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+User.exists?(email: params[:email])
+
+</pre>
+</div>
+<p>Rails 大量使用这种语法糖，以此避免编写大量位置参数，用于模仿具名参数。Rails 经常在最后一个散列选项上使用这种惯用法。</p><p>然而，如果方法期待任意个参数，在声明中使用 <code>*</code>，那么选项散列就会变成数组中一个元素，失去了应有的作用。</p><p>此时，可以使用 <code>extract_options!</code> 特殊处理选项散列。这个方法检查数组最后一个元素的类型，如果是散列，把它提取出来，并返回；否则，返回一个空散列。</p><p>下面以控制器的 <code>caches_action</code> 方法的定义为例：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def caches_action(*actions)
+  return unless cache_configured?
+  options = actions.extract_options!
+  ...
+end
+
+</pre>
+</div>
+<p>这个方法接收任意个动作名，最后一个参数是选项散列。<code>extract_options!</code> 方法获取选项散列，把它从 <code>actions</code> 参数中删除，这样简单便利。</p><div class="note"><p>在 <code>active_support/core_ext/array/extract_options.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-array-conversions"></a></p><h4 id="extensions-to-array-conversions">10.4 转换</h4><p><a class="anchor" id="to-sentence"></a></p><h5 id="to-sentence">10.4.1 <code>to_sentence</code>
+</h5><p><code>to_sentence</code> 方法枚举元素，把数组变成一个句子（字符串）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+%w().to_sentence                # =&gt; ""
+%w(Earth).to_sentence           # =&gt; "Earth"
+%w(Earth Wind).to_sentence      # =&gt; "Earth and Wind"
+%w(Earth Wind Fire).to_sentence # =&gt; "Earth, Wind, and Fire"
+
+</pre>
+</div>
+<p>这个方法接受三个选项：</p>
+<ul>
+<li>  <code>:two_words_connector</code>：数组长度为 2 时使用什么词。默认为“ and”。</li>
+<li>  <code>:words_connector</code>：数组元素数量为 3 个以上（含）时，使用什么连接除最后两个元素之外的元素。默认为“, ”。</li>
+<li>  <code>:last_word_connector</code>：数组元素数量为 3 个以上（含）时，使用什么连接最后两个元素。默认为“, and”。</li>
+</ul>
+<p>这些选项的默认值可以本地化，相应的键为：</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>i18n 键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:two_words_connector</code></td>
+<td><code>support.array.two_words_connector</code></td>
+</tr>
+<tr>
+<td><code>:words_connector</code></td>
+<td><code>support.array.words_connector</code></td>
+</tr>
+<tr>
+<td><code>:last_word_connector</code></td>
+<td><code>support.array.last_word_connector</code></td>
+</tr>
+</tbody>
+</table>
+<div class="note"><p>在 <code>active_support/core_ext/array/conversions.rb</code> 文件中定义。</p></div><p><a class="anchor" id="to-formatted-s"></a></p><h5 id="to-formatted-s">10.4.2 <code>to_formatted_s</code>
+</h5><p>默认情况下，<code>to_formatted_s</code> 的行为与 <code>to_s</code> 一样。</p><p>然而，如果数组中的元素能响应 <code>id</code> 方法，可以传入参数 <code>:db</code>。处理 Active Record 对象集合时经常如此。返回的字符串如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[].to_formatted_s(:db)            # =&gt; "null"
+[user].to_formatted_s(:db)        # =&gt; "8456"
+invoice.lines.to_formatted_s(:db) # =&gt; "23,567,556,12"
+
+</pre>
+</div>
+<p>在上述示例中，整数是在元素上调用 <code>id</code> 得到的。</p><div class="note"><p>在 <code>active_support/core_ext/array/conversions.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-array-conversions-to-xml"></a></p><h5 id="extensions-to-array-conversions-to-xml">10.4.3 <code>to_xml</code>
+</h5><p><code>to_xml</code> 方法返回接收者的 XML 表述：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Contributor.limit(2).order(:rank).to_xml
+# =&gt;
+# &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+# &lt;contributors type="array"&gt;
+#   &lt;contributor&gt;
+#     &lt;id type="integer"&gt;4356&lt;/id&gt;
+#     &lt;name&gt;Jeremy Kemper&lt;/name&gt;
+#     &lt;rank type="integer"&gt;1&lt;/rank&gt;
+#     &lt;url-id&gt;jeremy-kemper&lt;/url-id&gt;
+#   &lt;/contributor&gt;
+#   &lt;contributor&gt;
+#     &lt;id type="integer"&gt;4404&lt;/id&gt;
+#     &lt;name&gt;David Heinemeier Hansson&lt;/name&gt;
+#     &lt;rank type="integer"&gt;2&lt;/rank&gt;
+#     &lt;url-id&gt;david-heinemeier-hansson&lt;/url-id&gt;
+#   &lt;/contributor&gt;
+# &lt;/contributors&gt;
+
+</pre>
+</div>
+<p>为此，它把 <code>to_xml</code> 分别发送给每个元素，然后收集结果，放在一个根节点中。所有元素都必须能响应 <code>to_xml</code>，否则抛出异常。</p><p>默认情况下，根元素的名称是第一个元素的类名的复数形式经过 <code>underscore</code> 和 <code>dasherize</code> 处理后得到的值——前提是余下的元素属于那个类型（使用 <code>is_a?</code> 检查），而且不是散列。在上例中，根元素是“contributors”。</p><p>只要有不属于那个类型的元素，根元素就使用“objects”：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[Contributor.first, Commit.first].to_xml
+# =&gt;
+# &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+# &lt;objects type="array"&gt;
+#   &lt;object&gt;
+#     &lt;id type="integer"&gt;4583&lt;/id&gt;
+#     &lt;name&gt;Aaron Batalion&lt;/name&gt;
+#     &lt;rank type="integer"&gt;53&lt;/rank&gt;
+#     &lt;url-id&gt;aaron-batalion&lt;/url-id&gt;
+#   &lt;/object&gt;
+#   &lt;object&gt;
+#     &lt;author&gt;Joshua Peek&lt;/author&gt;
+#     &lt;authored-timestamp type="datetime"&gt;2009-09-02T16:44:36Z&lt;/authored-timestamp&gt;
+#     &lt;branch&gt;origin/master&lt;/branch&gt;
+#     &lt;committed-timestamp type="datetime"&gt;2009-09-02T16:44:36Z&lt;/committed-timestamp&gt;
+#     &lt;committer&gt;Joshua Peek&lt;/committer&gt;
+#     &lt;git-show nil="true"&gt;&lt;/git-show&gt;
+#     &lt;id type="integer"&gt;190316&lt;/id&gt;
+#     &lt;imported-from-svn type="boolean"&gt;false&lt;/imported-from-svn&gt;
+#     &lt;message&gt;Kill AMo observing wrap_with_notifications since ARes was only using it&lt;/message&gt;
+#     &lt;sha1&gt;723a47bfb3708f968821bc969a9a3fc873a3ed58&lt;/sha1&gt;
+#   &lt;/object&gt;
+# &lt;/objects&gt;
+
+</pre>
+</div>
+<p>如果接收者是由散列组成的数组，根元素默认也是“objects”：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[{a: 1, b: 2}, {c: 3}].to_xml
+# =&gt;
+# &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+# &lt;objects type="array"&gt;
+#   &lt;object&gt;
+#     &lt;b type="integer"&gt;2&lt;/b&gt;
+#     &lt;a type="integer"&gt;1&lt;/a&gt;
+#   &lt;/object&gt;
+#   &lt;object&gt;
+#     &lt;c type="integer"&gt;3&lt;/c&gt;
+#   &lt;/object&gt;
+# &lt;/objects&gt;
+
+</pre>
+</div>
+<div class="warning"><p>如果集合为空，根元素默认为“nil-classes”。例如上述示例中的贡献者列表，如果集合为空，根元素不是“contributors”，而是“nil-classes”。可以使用 <code>:root</code> 选项确保根元素始终一致。</p></div><p>子节点的名称默认为根节点的单数形式。在前面几个例子中，我们见到的是“contributor”和“object”。可以使用 <code>:children</code> 选项设定子节点的名称。</p><p>默认的 XML 构建程序是一个新的 <code>Builder::XmlMarkup</code> 实例。可以使用 <code>:builder</code> 选项指定构建程序。这个方法还接受 <code>:dasherize</code> 等方法，它们会被转发给构建程序。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Contributor.limit(2).order(:rank).to_xml(skip_types: true)
+# =&gt;
+# &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+# &lt;contributors&gt;
+#   &lt;contributor&gt;
+#     &lt;id&gt;4356&lt;/id&gt;
+#     &lt;name&gt;Jeremy Kemper&lt;/name&gt;
+#     &lt;rank&gt;1&lt;/rank&gt;
+#     &lt;url-id&gt;jeremy-kemper&lt;/url-id&gt;
+#   &lt;/contributor&gt;
+#   &lt;contributor&gt;
+#     &lt;id&gt;4404&lt;/id&gt;
+#     &lt;name&gt;David Heinemeier Hansson&lt;/name&gt;
+#     &lt;rank&gt;2&lt;/rank&gt;
+#     &lt;url-id&gt;david-heinemeier-hansson&lt;/url-id&gt;
+#   &lt;/contributor&gt;
+# &lt;/contributors&gt;
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/array/conversions.rb</code> 文件中定义。</p></div><p><a class="anchor" id="wrapping"></a></p><h4 id="wrapping">10.5 包装</h4><p><code>Array.wrap</code> 方法把参数包装成一个数组，除非参数已经是数组（或与数组类似的结构）。</p><p>具体而言：</p>
+<ul>
+<li>  如果参数是 <code>nil</code>，返回一个空数组。</li>
+<li>  否则，如果参数响应 <code>to_ary</code> 方法，调用之；如果 <code>to_ary</code> 返回值不是 <code>nil</code>，返回之。</li>
+<li>  否则，把参数作为数组的唯一元素，返回之。</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Array.wrap(nil)       # =&gt; []
+Array.wrap([1, 2, 3]) # =&gt; [1, 2, 3]
+Array.wrap(0)         # =&gt; [0]
+
+</pre>
+</div>
+<p>这个方法的作用与 <code>Kernel#Array</code> 类似，不过二者之间有些区别：</p>
+<ul>
+<li>  如果参数响应 <code>to_ary</code>，调用之。如果 <code>to_ary</code> 的返回值是 <code>nil</code>，<code>Kernel#Array</code> 接着调用 <code>to_a</code>，而 <code>Array.wrap</code> 把参数作为数组的唯一元素，返回之。</li>
+<li>  如果 <code>to_ary</code> 的返回值既不是 <code>nil</code>，也不是 <code>Array</code> 对象，<code>Kernel#Array</code> 抛出异常，而 <code>Array.wrap</code> 不会，它返回那个值。</li>
+<li>  如果参数不响应 <code>to_ary</code>，<code>Array.wrap</code> 不在参数上调用 <code>to_a</code>，而是把参数作为数组的唯一元素，返回之。</li>
+</ul>
+<p>对某些可枚举对象来说，最后一点尤为重要：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Array.wrap(foo: :bar) # =&gt; [{:foo=&gt;:bar}]
+Array(foo: :bar)      # =&gt; [[:foo, :bar]]
+
+</pre>
+</div>
+<p>还有一种惯用法是使用星号运算符：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[*object]
+
+</pre>
+</div>
+<p>在 Ruby 1.8 中，如果参数是 <code>nil</code>，返回 <code>[nil]</code>，否则调用 <code>Array(object)</code>。（如果你知道在 Ruby 1.9 中的行为，请联系 fxn。）</p><p>因此，参数为 <code>nil</code> 时二者的行为不同，前文对 <code>Kernel#Array</code> 的说明适用于其他对象。</p><div class="note"><p>在 <code>active_support/core_ext/array/wrap.rb</code> 文件中定义。</p></div><p><a class="anchor" id="duplicating"></a></p><h4 id="duplicating">10.6 复制</h4><p><code>Array#deep_dup</code> 方法使用 Active Support 提供的 <code>Object#deep_dup</code> 方法复制数组自身和里面的对象。其工作方式相当于通过 <code>Array#map</code> 把 <code>deep_dup</code> 方法发给里面的各个对象。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+array = [1, [2, 3]]
+dup = array.deep_dup
+dup[1][2] = 4
+array[1][2] == nil   # =&gt; true
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/object/deep_dup.rb</code> 文件中定义。</p></div><p><a class="anchor" id="grouping"></a></p><h4 id="grouping">10.7 分组</h4><p><a class="anchor" id="in-groups-of-number-fill-with-nil"></a></p><h5 id="in-groups-of-number-fill-with-nil">10.7.1 <code>in_groups_of(number, fill_with = nil)</code>
+</h5><p><code>in_groups_of</code> 方法把数组拆分成特定长度的连续分组，返回由各分组构成的数组：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[1, 2, 3].in_groups_of(2) # =&gt; [[1, 2], [3, nil]]
+
+</pre>
+</div>
+<p>如果有块，把各分组拽入块中：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;% sample.in_groups_of(3) do |a, b, c| %&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;%= a %&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;%= b %&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;%= c %&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>第一个示例说明 <code>in_groups_of</code> 会使用 <code>nil</code> 元素填充最后一组，得到指定大小的分组。可以使用第二个参数（可选的）修改填充值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[1, 2, 3].in_groups_of(2, 0) # =&gt; [[1, 2], [3, 0]]
+
+</pre>
+</div>
+<p>如果传入 <code>false</code>，不填充最后一组：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[1, 2, 3].in_groups_of(2, false) # =&gt; [[1, 2], [3]]
+
+</pre>
+</div>
+<p>因此，<code>false</code> 不能作为填充值使用。</p><div class="note"><p>在 <code>active_support/core_ext/array/grouping.rb</code> 文件中定义。</p></div><p><a class="anchor" id="in-groups-number-fill-with-nil"></a></p><h5 id="in-groups-number-fill-with-nil">10.7.2 <code>in_groups(number, fill_with = nil)</code>
+</h5><p><code>in_groups</code> 方法把数组分成特定个分组。这个方法返回由分组构成的数组：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+%w(1 2 3 4 5 6 7).in_groups(3)
+# =&gt; [["1", "2", "3"], ["4", "5", nil], ["6", "7", nil]]
+
+</pre>
+</div>
+<p>如果有块，把分组拽入块中：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+%w(1 2 3 4 5 6 7).in_groups(3) {|group| p group}
+["1", "2", "3"]
+["4", "5", nil]
+["6", "7", nil]
+
+</pre>
+</div>
+<p>在上述示例中，<code>in_groups</code> 使用 <code>nil</code> 填充尾部的分组。一个分组至多有一个填充值，而且是最后一个元素。有填充值的始终是最后几个分组。</p><p>可以使用第二个参数（可选的）修改填充值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+%w(1 2 3 4 5 6 7).in_groups(3, "0")
+# =&gt; [["1", "2", "3"], ["4", "5", "0"], ["6", "7", "0"]]
+
+</pre>
+</div>
+<p>如果传入 <code>false</code>，不填充较短的分组：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+%w(1 2 3 4 5 6 7).in_groups(3, false)
+# =&gt; [["1", "2", "3"], ["4", "5"], ["6", "7"]]
+
+</pre>
+</div>
+<p>因此，<code>false</code> 不能作为填充值使用。</p><div class="note"><p>在 <code>active_support/core_ext/array/grouping.rb</code> 文件中定义。</p></div><p><a class="anchor" id="split-value-nil"></a></p><h5 id="split-value-nil">10.7.3 <code>split(value = nil)</code>
+</h5><p><code>split</code> 方法在指定的分隔符处拆分数组，返回得到的片段。</p><p>如果有块，使用块中表达式返回 <code>true</code> 的元素作为分隔符：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+(-5..5).to_a.split { |i| i.multiple_of?(4) }
+# =&gt; [[-5], [-3, -2, -1], [1, 2, 3], [5]]
+
+</pre>
+</div>
+<p>否则，使用指定的参数（默认为 <code>nil</code>）作为分隔符：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+[0, 1, -5, 1, 1, "foo", "bar"].split(1)
+# =&gt; [[0], [-5], [], ["foo", "bar"]]
+
+</pre>
+</div>
+<div class="info"><p>仔细观察上例，出现连续的分隔符时，得到的是空数组。</p></div><div class="note"><p>在 <code>active_support/core_ext/array/grouping.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-hash"></a></p><h3 id="extensions-to-hash">11 <code>Hash</code> 的扩展</h3><p><a class="anchor" id="extensions-to-hash-conversions"></a></p><h4 id="extensions-to-hash-conversions">11.1 转换</h4><p><a class="anchor" id="conversions-to-xml"></a></p><h5 id="conversions-to-xml">11.1.1 <code>to_xml</code>
+</h5><p><code>to_xml</code> 方法返回接收者的 XML 表述（字符串）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{"foo" =&gt; 1, "bar" =&gt; 2}.to_xml
+# =&gt;
+# &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+# &lt;hash&gt;
+#   &lt;foo type="integer"&gt;1&lt;/foo&gt;
+#   &lt;bar type="integer"&gt;2&lt;/bar&gt;
+# &lt;/hash&gt;
+
+</pre>
+</div>
+<p>为此，这个方法迭代各个键值对，根据值构建节点。假如键值对是 <code>key, value</code>：</p>
+<ul>
+<li>  如果 <code>value</code> 是一个散列，递归调用，此时 <code>key</code> 作为 <code>:root</code>。</li>
+<li>  如果 <code>value</code> 是一个数组，递归调用，此时 <code>key</code> 作为 <code>:root</code>，<code>key</code> 的单数形式作为 <code>:children</code>。</li>
+<li>  如果 <code>value</code> 是可调用对象，必须能接受一个或两个参数。根据参数的数量，传给可调用对象的第一个参数是 <code>options</code> 散列，<code>key</code> 作为 <code>:root</code>，<code>key</code> 的单数形式作为第二个参数。它的返回值作为新节点。</li>
+<li>  如果 <code>value</code> 响应 <code>to_xml</code>，调用这个方法时把 <code>key</code> 作为 <code>:root</code>。</li>
+<li>
+<p>  否则，使用 <code>key</code> 为标签创建一个节点，<code>value</code> 的字符串表示形式为文本作为节点的文本。如果 <code>value</code> 是 <code>nil</code>，添加“nil”属性，值为“true”。除非有 <code>:skip_type</code> 选项，而且值为 <code>true</code>，否则还会根据下述对应关系添加“type”属性：</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+XML_TYPE_NAMES = {
+  "Symbol"     =&gt; "symbol",
+  "Integer"    =&gt; "integer",
+  "BigDecimal" =&gt; "decimal",
+  "Float"      =&gt; "float",
+  "TrueClass"  =&gt; "boolean",
+  "FalseClass" =&gt; "boolean",
+  "Date"       =&gt; "date",
+  "DateTime"   =&gt; "datetime",
+  "Time"       =&gt; "datetime"
+}
+
+</pre>
+</div>
+</li>
+</ul>
+<p>默认情况下，根节点是“hash”，不过可以通过 <code>:root</code> 选项配置。</p><p>默认的 XML 构建程序是一个新的 <code>Builder::XmlMarkup</code> 实例。可以使用 <code>:builder</code> 选项配置构建程序。这个方法还接受 <code>:dasherize</code> 等选项，它们会被转发给构建程序。</p><div class="note"><p>在 <code>active_support/core_ext/hash/conversions.rb</code> 文件中定义。</p></div><p><a class="anchor" id="merging"></a></p><h4 id="merging">11.2 合并</h4><p>Ruby 有个内置的方法，<code>Hash#merge</code>，用于合并两个散列：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{a: 1, b: 1}.merge(a: 0, c: 2)
+# =&gt; {:a=&gt;0, :b=&gt;1, :c=&gt;2}
+
+</pre>
+</div>
+<p>为了方便，Active Support 定义了几个用于合并散列的方法。</p><p><a class="anchor" id="reverse-merge-and-reverse-merge-bang"></a></p><h5 id="reverse-merge-and-reverse-merge-bang">11.2.1 <code>reverse_merge</code> 和 <code>reverse_merge!</code>
+</h5><p>如果键有冲突，<code>merge</code> 方法的参数中的键胜出。通常利用这一点为选项散列提供默认值：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+options = {length: 30, omission: "..."}.merge(options)
+
+</pre>
+</div>
+<p>Active Support 定义了 <code>reverse_merge</code> 方法，以防你想使用相反的合并方式：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+options = options.reverse_merge(length: 30, omission: "...")
+
+</pre>
+</div>
+<p>还有一个爆炸版本，<code>reverse_merge!</code>，就地执行合并：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+options.reverse_merge!(length: 30, omission: "...")
+
+</pre>
+</div>
+<div class="warning"><p><code>reverse_merge!</code> 方法会就地修改调用方，这可能不是个好主意。</p></div><div class="note"><p>在 <code>active_support/core_ext/hash/reverse_merge.rb</code> 文件中定义。</p></div><p><a class="anchor" id="reverse-update"></a></p><h5 id="reverse-update">11.2.2 <code>reverse_update</code>
+</h5><p><code>reverse_update</code> 方法是 <code>reverse_merge!</code> 的别名，作用参见前文。</p><div class="warning"><p>注意，<code>reverse_update</code> 方法的名称中没有感叹号。</p></div><div class="note"><p>在 <code>active_support/core_ext/hash/reverse_merge.rb</code> 文件中定义。</p></div><p><a class="anchor" id="deep-merge-and-deep-merge-bang"></a></p><h5 id="deep-merge-and-deep-merge-bang">11.2.3 <code>deep_merge</code> 和 <code>deep_merge!</code>
+</h5><p>如前面的示例所示，如果两个散列中有相同的键，参数中的散列胜出。</p><p>Active Support 定义了 <code>Hash#deep_merge</code> 方法。在深度合并中，如果两个散列中有相同的键，而且它们的值都是散列，那么在得到的散列中，那个键的值是合并后的结果：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{a: {b: 1}}.deep_merge(a: {c: 2})
+# =&gt; {:a=&gt;{:b=&gt;1, :c=&gt;2}}
+
+</pre>
+</div>
+<p><code>deep_merge!</code> 方法就地执行深度合并。</p><div class="note"><p>在 <code>active_support/core_ext/hash/deep_merge.rb</code> 文件中定义。</p></div><p><a class="anchor" id="deep-duplicating"></a></p><h4 id="deep-duplicating">11.3 深度复制</h4><p><code>Hash#deep_dup</code> 方法使用 Active Support 提供的 <code>Object#deep_dup</code> 方法复制散列自身及里面的键值对。其工作方式相当于通过 <code>Enumerator#each_with_object</code> 把 <code>deep_dup</code> 方法发给各个键值对。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+hash = { a: 1, b: { c: 2, d: [3, 4] } }
+
+dup = hash.deep_dup
+dup[:b][:e] = 5
+dup[:b][:d] &lt;&lt; 5
+
+hash[:b][:e] == nil      # =&gt; true
+hash[:b][:d] == [3, 4]   # =&gt; true
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/object/deep_dup.rb</code> 文件中定义。</p></div><p><a class="anchor" id="working-with-keys"></a></p><h4 id="working-with-keys">11.4 处理键</h4><p><a class="anchor" id="except-and-except-bang"></a></p><h5 id="except-and-except-bang">11.4.1 <code>except</code> 和 <code>except!</code>
+</h5><p><code>except</code> 方法返回一个散列，从接收者中把参数中列出的键删除（如果有的话）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{a: 1, b: 2}.except(:a) # =&gt; {:b=&gt;2}
+
+</pre>
+</div>
+<p>如果接收者响应 <code>convert_key</code> 方法，会在各个参数上调用它。这样 <code>except</code> 能更好地处理不区分键类型的散列，例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{a: 1}.with_indifferent_access.except(:a)  # =&gt; {}
+{a: 1}.with_indifferent_access.except("a") # =&gt; {}
+
+</pre>
+</div>
+<p>还有爆炸版本，<code>except!</code>，就地从接收者中删除键。</p><div class="note"><p>在 <code>active_support/core_ext/hash/except.rb</code> 文件中定义。</p></div><p><a class="anchor" id="transform-keys-and-transform-keys-bang"></a></p><h5 id="transform-keys-and-transform-keys-bang">11.4.2 <code>transform_keys</code> 和 <code>transform_keys!</code>
+</h5><p><code>transform_keys</code> 方法接受一个块，使用块中的代码处理接收者的键：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{nil =&gt; nil, 1 =&gt; 1, a: :a}.transform_keys { |key| key.to_s.upcase }
+# =&gt; {"" =&gt; nil, "A" =&gt; :a, "1" =&gt; 1}
+
+</pre>
+</div>
+<p>遇到冲突的键时，只会从中选择一个。选择哪个值并不确定。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{"a" =&gt; 1, a: 2}.transform_keys { |key| key.to_s.upcase }
+# 结果可能是
+# =&gt; {"A"=&gt;2}
+# 也可能是
+# =&gt; {"A"=&gt;1}
+
+</pre>
+</div>
+<p>这个方法可以用于构建特殊的转换方式。例如，<code>stringify_keys</code> 和 <code>symbolize_keys</code> 使用 <code>transform_keys</code> 转换键：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def stringify_keys
+  transform_keys { |key| key.to_s }
+end
+...
+def symbolize_keys
+  transform_keys { |key| key.to_sym rescue key }
+end
+
+</pre>
+</div>
+<p>还有爆炸版本，<code>transform_keys!</code>，就地使用块中的代码处理接收者的键。</p><p>此外，可以使用 <code>deep_transform_keys</code> 和 <code>deep_transform_keys!</code> 把块应用到指定散列及其嵌套的散列的所有键上。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{nil =&gt; nil, 1 =&gt; 1, nested: {a: 3, 5 =&gt; 5}}.deep_transform_keys { |key| key.to_s.upcase }
+# =&gt; {""=&gt;nil, "1"=&gt;1, "NESTED"=&gt;{"A"=&gt;3, "5"=&gt;5}}
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/hash/keys.rb</code> 文件中定义。</p></div><p><a class="anchor" id="stringify-keys-and-stringify-keys-bang"></a></p><h5 id="stringify-keys-and-stringify-keys-bang">11.4.3 <code>stringify_keys</code> 和 <code>stringify_keys!</code>
+</h5><p><code>stringify_keys</code> 把接收者中的键都变成字符串，然后返回一个散列。为此，它在键上调用 <code>to_s</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{nil =&gt; nil, 1 =&gt; 1, a: :a}.stringify_keys
+# =&gt; {"" =&gt; nil, "1" =&gt; 1, "a" =&gt; :a}
+
+</pre>
+</div>
+<p>遇到冲突的键时，只会从中选择一个。选择哪个值并不确定。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{"a" =&gt; 1, a: 2}.stringify_keys
+# 结果可能是
+# =&gt; {"a"=&gt;2}
+# 也可能是
+# =&gt; {"a"=&gt;1}
+
+</pre>
+</div>
+<p>使用这个方法，选项既可以是符号，也可以是字符串。例如 <code>ActionView::Helpers::FormHelper</code> 定义的这个方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def to_check_box_tag(options = {}, checked_value = "1", unchecked_value = "0")
+  options = options.stringify_keys
+  options["type"] = "checkbox"
+  ...
+end
+
+</pre>
+</div>
+<p>因为有第二行，所以用户可以传入 <code>:type</code> 或 <code>"type"</code>。</p><p>也有爆炸版本，<code>stringify_keys!</code>，直接把接收者的键变成字符串。</p><p>此外，可以使用 <code>deep_stringify_keys</code> 和 <code>deep_stringify_keys!</code> 把指定散列及其中嵌套的散列的键全都转换成字符串。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{nil =&gt; nil, 1 =&gt; 1, nested: {a: 3, 5 =&gt; 5}}.deep_stringify_keys
+# =&gt; {""=&gt;nil, "1"=&gt;1, "nested"=&gt;{"a"=&gt;3, "5"=&gt;5}}
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/hash/keys.rb</code> 文件中定义。</p></div><p><a class="anchor" id="symbolize-keys-and-symbolize-keys-bang"></a></p><h5 id="symbolize-keys-and-symbolize-keys-bang">11.4.4 <code>symbolize_keys</code> 和 <code>symbolize_keys!</code>
+</h5><p><code>symbolize_keys</code> 方法把接收者中的键尽量变成符号。为此，它在键上调用 <code>to_sym</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{nil =&gt; nil, 1 =&gt; 1, "a" =&gt; "a"}.symbolize_keys
+# =&gt; {nil=&gt;nil, 1=&gt;1, :a=&gt;"a"}
+
+</pre>
+</div>
+<div class="warning"><p>注意，在上例中，只有键变成了符号。</p></div><p>遇到冲突的键时，只会从中选择一个。选择哪个值并不确定。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{"a" =&gt; 1, a: 2}.symbolize_keys
+# 结果可能是
+# =&gt; {:a=&gt;2}
+# 也可能是
+# =&gt; {:a=&gt;1}
+
+</pre>
+</div>
+<p>使用这个方法，选项既可以是符号，也可以是字符串。例如 <code>ActionController::UrlRewriter</code> 定义的这个方法：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def rewrite_path(options)
+  options = options.symbolize_keys
+  options.update(options[:params].symbolize_keys) if options[:params]
+  ...
+end
+
+</pre>
+</div>
+<p>因为有第二行，所以用户可以传入 <code>:params</code> 或 <code>"params"</code>。</p><p>也有爆炸版本，<code>symbolize_keys!</code>，直接把接收者的键变成符号。</p><p>此外，可以使用 <code>deep_symbolize_keys</code> 和 <code>deep_symbolize_keys!</code> 把指定散列及其中嵌套的散列的键全都转换成符号。例如：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{nil =&gt; nil, 1 =&gt; 1, "nested" =&gt; {"a" =&gt; 3, 5 =&gt; 5}}.deep_symbolize_keys
+# =&gt; {nil=&gt;nil, 1=&gt;1, nested:{a:3, 5=&gt;5}}
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/hash/keys.rb</code> 文件中定义。</p></div><p><a class="anchor" id="to-options-and-to-options-bang"></a></p><h5 id="to-options-and-to-options-bang">11.4.5 <code>to_options</code> 和 <code>to_options!</code>
+</h5><p><code>to_options</code> 和 <code>to_options!</code> 分别是 <code>symbolize_keys</code> and <code>symbolize_keys!</code> 的别名。</p><div class="note"><p>在 <code>active_support/core_ext/hash/keys.rb</code> 文件中定义。</p></div><p><a class="anchor" id="assert-valid-keys"></a></p><h5 id="assert-valid-keys">11.4.6 <code>assert_valid_keys</code>
+</h5><p><code>assert_valid_keys</code> 方法的参数数量不定，检查接收者的键是否在白名单之外。如果是，抛出 <code>ArgumentError</code> 异常。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{a: 1}.assert_valid_keys(:a)  # passes
+{a: 1}.assert_valid_keys("a") # ArgumentError
+
+</pre>
+</div>
+<p>例如，Active Record 构建关联时不接受未知的选项。这个功能就是通过 <code>assert_valid_keys</code> 实现的。</p><div class="note"><p>在 <code>active_support/core_ext/hash/keys.rb</code> 文件中定义。</p></div><p><a class="anchor" id="working-with-values"></a></p><h4 id="working-with-values">11.5 处理值</h4><p><a class="anchor" id="transform-values-transform-values-bang"></a></p><h5 id="transform-values-transform-values-bang">11.5.1 <code>transform_values</code> 和 <code>transform_values!</code>
+</h5><p><code>transform_values</code> 的参数是一个块，使用块中的代码处理接收者中的各个值。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{ nil =&gt; nil, 1 =&gt; 1, :x =&gt; :a }.transform_values { |value| value.to_s.upcase }
+# =&gt; {nil=&gt;"", 1=&gt;"1", :x=&gt;"A"}
+
+</pre>
+</div>
+<p>也有爆炸版本，<code>transform_values!</code>，就地处理接收者的值。</p><div class="note"><p>在 <code>active_support/core_ext/hash/transform_values.rb</code> 文件中定义。</p></div><p><a class="anchor" id="slicing"></a></p><h4 id="slicing">11.6 切片</h4><p>Ruby 原生支持从字符串和数组中提取切片。Active Support 为散列增加了这个功能：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{a: 1, b: 2, c: 3}.slice(:a, :c)
+# =&gt; {:a=&gt;1, :c=&gt;3}
+
+{a: 1, b: 2, c: 3}.slice(:b, :X)
+# =&gt; {:b=&gt;2} # 不存在的键会被忽略
+
+</pre>
+</div>
+<p>如果接收者响应 <code>convert_key</code>，会使用它对键做整形：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{a: 1, b: 2}.with_indifferent_access.slice("a")
+# =&gt; {:a=&gt;1}
+
+</pre>
+</div>
+<div class="note"><p>可以通过切片使用键白名单净化选项散列。</p></div><p>也有 <code>slice!</code>，它就地执行切片，返回被删除的键值对：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+hash = {a: 1, b: 2}
+rest = hash.slice!(:a) # =&gt; {:b=&gt;2}
+hash                   # =&gt; {:a=&gt;1}
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/hash/slice.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extracting"></a></p><h4 id="extracting">11.7 提取</h4><p><code>extract!</code> 方法删除并返回匹配指定键的键值对。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+hash = {a: 1, b: 2}
+rest = hash.extract!(:a) # =&gt; {:a=&gt;1}
+hash                     # =&gt; {:b=&gt;2}
+
+</pre>
+</div>
+<p><code>extract!</code> 方法的返回值类型与接收者一样，是 <code>Hash</code> 或其子类。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+hash = {a: 1, b: 2}.with_indifferent_access
+rest = hash.extract!(:a).class
+# =&gt; ActiveSupport::HashWithIndifferentAccess
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/hash/slice.rb</code> 文件中定义。</p></div><p><a class="anchor" id="indifferent-access"></a></p><h4 id="indifferent-access">11.8 无差别访问</h4><p><code>with_indifferent_access</code> 方法把接收者转换成 <code>ActiveSupport::HashWithIndifferentAccess</code> 实例：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{a: 1}.with_indifferent_access["a"] # =&gt; 1
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/hash/indifferent_access.rb</code> 文件中定义。</p></div><p><a class="anchor" id="compacting"></a></p><h4 id="compacting">11.9 压缩</h4><p><code>compact</code> 和 <code>compact!</code> 方法返回没有 <code>nil</code> 值的散列：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{a: 1, b: 2, c: nil}.compact # =&gt; {a: 1, b: 2}
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/hash/compact.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-regexp"></a></p><h3 id="extensions-to-regexp">12 <code>Regexp</code> 的扩展</h3><p><a class="anchor" id="multiline-questionmark"></a></p><h4 id="multiline-questionmark">12.1 <code>multiline?</code>
+</h4><p><code>multiline?</code> 方法判断正则表达式有没有设定 <code>/m</code> 旗标，即点号是否匹配换行符。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+%r{.}.multiline?  # =&gt; false
+%r{.}m.multiline? # =&gt; true
+
+Regexp.new('.').multiline?                    # =&gt; false
+Regexp.new('.', Regexp::MULTILINE).multiline? # =&gt; true
+
+</pre>
+</div>
+<p>Rails 只在一处用到了这个方法，也在路由代码中。路由的条件不允许使用多行正则表达式，这个方法简化了这一约束的实施。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def assign_route_options(segments, defaults, requirements)
+  ...
+  if requirement.multiline?
+    raise ArgumentError, "Regexp multiline option not allowed in routing requirements: #{requirement.inspect}"
+  end
+  ...
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/regexp.rb</code> 文件中定义。</p></div><p><a class="anchor" id="match-questionmark"></a></p><h4 id="match-questionmark">12.2 <code>match?</code>
+</h4><p>Rails 实现了 <code>Regexp#match?</code> 方法，供 Ruby 2.4 之前的版本使用：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+/oo/.match?('foo')    # =&gt; true
+/oo/.match?('bar')    # =&gt; false
+/oo/.match?('foo', 1) # =&gt; true
+
+</pre>
+</div>
+<p>这个向后移植的版本与原生的 <code>match?</code> 方法具有相同的接口，但是调用方没有未设定 <code>$1</code> 等副作用，不过速度没什么优势。定义这个方法的目的是编写与 2.4 兼容的代码。Rails 内部有用到这个判断方法。</p><p>只有 Ruby 未定义 <code>Regexp#match?</code> 方法时，Rails 才会定义，因此在 Ruby 2.4 或以上版本中运行的代码使用的是原生版本，性能有保障。</p><p><a class="anchor" id="extensions-to-range"></a></p><h3 id="extensions-to-range">13 <code>Range</code> 的扩展</h3><p><a class="anchor" id="extensions-to-range-to-s"></a></p><h4 id="extensions-to-range-to-s">13.1 <code>to_s</code>
+</h4><p>Active Support 扩展了 <code>Range#to_s</code> 方法，让它接受一个可选的格式参数。目前，唯一支持的非默认格式是 <code>:db</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+(Date.today..Date.tomorrow).to_s
+# =&gt; "2009-10-25..2009-10-26"
+
+(Date.today..Date.tomorrow).to_s(:db)
+# =&gt; "BETWEEN '2009-10-25' AND '2009-10-26'"
+
+</pre>
+</div>
+<p>如上例所示，<code>:db</code> 格式生成一个 <code>BETWEEN</code> SQL 子句。Active Record 使用它支持范围值条件。</p><div class="note"><p>在 <code>active_support/core_ext/range/conversions.rb</code> 文件中定义。</p></div><p><a class="anchor" id="include-questionmark"></a></p><h4 id="include-questionmark">13.2 <code>include?</code>
+</h4><p><code>Range#include?</code> 和 <code>Range#===</code> 方法判断值是否在值域的范围内：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+(2..3).include?(Math::E) # =&gt; true
+
+</pre>
+</div>
+<p>Active Support 扩展了这两个方法，允许参数为另一个值域。此时，测试参数指定的值域是否在接收者的范围内：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+(1..10).include?(3..7)  # =&gt; true
+(1..10).include?(0..7)  # =&gt; false
+(1..10).include?(3..11) # =&gt; false
+(1...9).include?(3..9)  # =&gt; false
+
+(1..10) === (3..7)  # =&gt; true
+(1..10) === (0..7)  # =&gt; false
+(1..10) === (3..11) # =&gt; false
+(1...9) === (3..9)  # =&gt; false
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/range/include_range.rb</code> 文件中定义。</p></div><p><a class="anchor" id="overlaps-questionmark"></a></p><h4 id="overlaps-questionmark">13.3 <code>overlaps?</code>
+</h4><p><code>Range#overlaps?</code> 方法测试两个值域是否有交集：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+(1..10).overlaps?(7..11)  # =&gt; true
+(1..10).overlaps?(0..7)   # =&gt; true
+(1..10).overlaps?(11..27) # =&gt; false
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/range/overlaps.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-date"></a></p><h3 id="extensions-to-date">14 <code>Date</code> 的扩展</h3><p><a class="anchor" id="extensions-to-date-calculations"></a></p><h4 id="extensions-to-date-calculations">14.1 计算</h4><div class="note"><p>这一节的方法都在 <code>active_support/core_ext/date/calculations.rb</code> 文件中定义。</p></div><div class="info"><p>下述计算方法在 1582 年 10 月有边缘情况，因为 5..14 日不存在。简单起见，本文没有说明这些日子的行为，不过可以说，其行为与预期是相符的。即，<code>Date.new(1582, 10, 4).tomorrow</code> 返回 <code>Date.new(1582, 10, 15)</code>，等等。预期的行为参见 <code>test/core_ext/date_ext_test.rb</code> 中的 Active Support 测试组件。</p></div><p><a class="anchor" id="date-current"></a></p><h5 id="date-current">14.1.1 <code>Date.current</code>
+</h5><p>Active Support 定义的 <code>Date.current</code> 方法表示当前时区中的今天。其作用类似于 <code>Date.today</code>，不过会考虑用户设定的时区（如果定义了时区的话）。Active Support 还定义了 <code>Date.yesterday</code> 和 <code>Date.tomorrow</code>，以及实例判断方法 <code>past?</code>、<code>today?</code>、<code>future?</code>、<code>on_weekday?</code> 和 <code>on_weekend?</code>，这些方法都与 <code>Date.current</code> 相关。</p><p>比较日期时，如果要考虑用户设定的时区，应该使用 <code>Date.current</code>，而不是 <code>Date.today</code>。与系统的时区（<code>Date.today</code> 默认采用）相比，用户设定的时区可能超前，这意味着，<code>Date.today</code> 可能等于 <code>Date.yesterday</code>。</p><p><a class="anchor" id="named-dates"></a></p><h5 id="named-dates">14.1.2 具名日期</h5><p><a class="anchor" id="prev-year-next-year"></a></p><h6 id="prev-year-next-year">14.1.2.1 <code>prev_year</code>、<code>next_year</code>
+</h6><p>在 Ruby 1.9 中，<code>prev_year</code> 和 <code>next_year</code> 方法返回前一年和下一年中的相同月和日：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+d = Date.new(2010, 5, 8) # =&gt; Sat, 08 May 2010
+d.prev_year              # =&gt; Fri, 08 May 2009
+d.next_year              # =&gt; Sun, 08 May 2011
+
+</pre>
+</div>
+<p>如果是润年的 2 月 29 日，得到的是 28 日：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+d = Date.new(2000, 2, 29) # =&gt; Tue, 29 Feb 2000
+d.prev_year               # =&gt; Sun, 28 Feb 1999
+d.next_year               # =&gt; Wed, 28 Feb 2001
+
+</pre>
+</div>
+<p><code>last_year</code> 是 <code>prev_year</code> 的别名。</p><p><a class="anchor" id="prev-month-next-month"></a></p><h6 id="prev-month-next-month">14.1.2.2 <code>prev_month</code>、<code>next_month</code>
+</h6><p>在 Ruby 1.9 中，<code>prev_month</code> 和 <code>next_month</code> 方法分别返回前一个月和后一个月中的相同日：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+d = Date.new(2010, 5, 8) # =&gt; Sat, 08 May 2010
+d.prev_month             # =&gt; Thu, 08 Apr 2010
+d.next_month             # =&gt; Tue, 08 Jun 2010
+
+</pre>
+</div>
+<p>如果日不存在，返回前一月中的最后一天：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Date.new(2000, 5, 31).prev_month # =&gt; Sun, 30 Apr 2000
+Date.new(2000, 3, 31).prev_month # =&gt; Tue, 29 Feb 2000
+Date.new(2000, 5, 31).next_month # =&gt; Fri, 30 Jun 2000
+Date.new(2000, 1, 31).next_month # =&gt; Tue, 29 Feb 2000
+
+</pre>
+</div>
+<p><code>last_month</code> 是 <code>prev_month</code> 的别名。</p><p><a class="anchor" id="prev-quarter-next-quarter"></a></p><h6 id="prev-quarter-next-quarter">14.1.2.3 <code>prev_quarter</code>、<code>next_quarter</code>
+</h6><p>类似于 <code>prev_month</code> 和 <code>next_month</code>，返回前一季度和下一季度中的相同日：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+t = Time.local(2010, 5, 8) # =&gt; Sat, 08 May 2010
+t.prev_quarter             # =&gt; Mon, 08 Feb 2010
+t.next_quarter             # =&gt; Sun, 08 Aug 2010
+
+</pre>
+</div>
+<p>如果日不存在，返回前一月中的最后一天：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Time.local(2000, 7, 31).prev_quarter  # =&gt; Sun, 30 Apr 2000
+Time.local(2000, 5, 31).prev_quarter  # =&gt; Tue, 29 Feb 2000
+Time.local(2000, 10, 31).prev_quarter # =&gt; Mon, 30 Oct 2000
+Time.local(2000, 11, 31).next_quarter # =&gt; Wed, 28 Feb 2001
+
+</pre>
+</div>
+<p><code>last_quarter</code> 是 <code>prev_quarter</code> 的别名。</p><p><a class="anchor" id="beginning-of-week-end-of-week"></a></p><h6 id="beginning-of-week-end-of-week">14.1.2.4 <code>beginning_of_week</code>、<code>end_of_week</code>
+</h6><p><code>beginning_of_week</code> 和 <code>end_of_week</code> 方法分别返回某一周的第一天和最后一天的日期。一周假定从周一开始，不过这是可以修改的，方法是在线程中设定 <code>Date.beginning_of_week</code> 或 <code>config.beginning_of_week</code>。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+d = Date.new(2010, 5, 8)     # =&gt; Sat, 08 May 2010
+d.beginning_of_week          # =&gt; Mon, 03 May 2010
+d.beginning_of_week(:sunday) # =&gt; Sun, 02 May 2010
+d.end_of_week                # =&gt; Sun, 09 May 2010
+d.end_of_week(:sunday)       # =&gt; Sat, 08 May 2010
+
+</pre>
+</div>
+<p><code>at_beginning_of_week</code> 是 <code>beginning_of_week</code> 的别名，<code>at_end_of_week</code> 是 <code>end_of_week</code> 的别名。</p><p><a class="anchor" id="monday-sunday"></a></p><h6 id="monday-sunday">14.1.2.5 <code>monday</code>、<code>sunday</code>
+</h6><p><code>monday</code> 和 <code>sunday</code> 方法分别返回前一个周一和下一个周日的日期：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+d = Date.new(2010, 5, 8)     # =&gt; Sat, 08 May 2010
+d.monday                     # =&gt; Mon, 03 May 2010
+d.sunday                     # =&gt; Sun, 09 May 2010
+
+d = Date.new(2012, 9, 10)    # =&gt; Mon, 10 Sep 2012
+d.monday                     # =&gt; Mon, 10 Sep 2012
+
+d = Date.new(2012, 9, 16)    # =&gt; Sun, 16 Sep 2012
+d.sunday                     # =&gt; Sun, 16 Sep 2012
+
+</pre>
+</div>
+<p><a class="anchor" id="prev-week-next-week"></a></p><h6 id="prev-week-next-week">14.1.2.6 <code>prev_week</code>、<code>next_week</code>
+</h6><p><code>next_week</code> 的参数是一个符号，指定周几的英文名称（默认为线程中的 <code>Date.beginning_of_week</code> 或 <code>config.beginning_of_week</code>，或者 <code>:monday</code>），返回那一天的日期。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+d = Date.new(2010, 5, 9) # =&gt; Sun, 09 May 2010
+d.next_week              # =&gt; Mon, 10 May 2010
+d.next_week(:saturday)   # =&gt; Sat, 15 May 2010
+
+</pre>
+</div>
+<p><code>prev_week</code> 的作用类似：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+d.prev_week              # =&gt; Mon, 26 Apr 2010
+d.prev_week(:saturday)   # =&gt; Sat, 01 May 2010
+d.prev_week(:friday)     # =&gt; Fri, 30 Apr 2010
+
+</pre>
+</div>
+<p><code>last_week</code> 是 <code>prev_week</code> 的别名。</p><p>设定 <code>Date.beginning_of_week</code> 或 <code>config.beginning_of_week</code> 之后，<code>next_week</code> 和 <code>prev_week</code> 能按预期工作。</p><p><a class="anchor" id="beginning-of-month-end-of-month"></a></p><h6 id="beginning-of-month-end-of-month">14.1.2.7 <code>beginning_of_month</code>、<code>end_of_month</code>
+</h6><p><code>beginning_of_month</code> 和 <code>end_of_month</code> 方法分别返回某个月的第一天和最后一天的日期：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+d = Date.new(2010, 5, 9) # =&gt; Sun, 09 May 2010
+d.beginning_of_month     # =&gt; Sat, 01 May 2010
+d.end_of_month           # =&gt; Mon, 31 May 2010
+
+</pre>
+</div>
+<p><code>at_beginning_of_month</code> 是 <code>beginning_of_month</code> 的别名，<code>at_end_of_month</code> 是 <code>end_of_month</code> 的别名。</p><p><a class="anchor" id="beginning-of-quarter-end-of-quarter"></a></p><h6 id="beginning-of-quarter-end-of-quarter">14.1.2.8 <code>beginning_of_quarter</code>、<code>end_of_quarter</code>
+</h6><p><code>beginning_of_quarter</code> 和 <code>end_of_quarter</code> 分别返回接收者日历年的季度第一天和最后一天的日期：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+d = Date.new(2010, 5, 9) # =&gt; Sun, 09 May 2010
+d.beginning_of_quarter   # =&gt; Thu, 01 Apr 2010
+d.end_of_quarter         # =&gt; Wed, 30 Jun 2010
+
+</pre>
+</div>
+<p><code>at_beginning_of_quarter</code> 是 <code>beginning_of_quarter</code> 的别名，<code>at_end_of_quarter</code> 是 <code>end_of_quarter</code> 的别名。</p><p><a class="anchor" id="beginning-of-year-end-of-year"></a></p><h6 id="beginning-of-year-end-of-year">14.1.2.9 <code>beginning_of_year</code>、<code>end_of_year</code>
+</h6><p><code>beginning_of_year</code> 和 <code>end_of_year</code> 方法分别返回一年的第一天和最后一天的日期：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+d = Date.new(2010, 5, 9) # =&gt; Sun, 09 May 2010
+d.beginning_of_year      # =&gt; Fri, 01 Jan 2010
+d.end_of_year            # =&gt; Fri, 31 Dec 2010
+
+</pre>
+</div>
+<p><code>at_beginning_of_year</code> 是 <code>beginning_of_year</code> 的别名，<code>at_end_of_year</code> 是 <code>end_of_year</code> 的别名。</p><p><a class="anchor" id="other-date-computations"></a></p><h5 id="other-date-computations">14.1.3 其他日期计算方法</h5><p><a class="anchor" id="years-ago-years-since"></a></p><h6 id="years-ago-years-since">14.1.3.1 <code>years_ago</code>、<code>years_since</code>
+</h6><p><code>years_ago</code> 方法的参数是一个数字，返回那么多年以前同一天的日期：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+date = Date.new(2010, 6, 7)
+date.years_ago(10) # =&gt; Wed, 07 Jun 2000
+
+</pre>
+</div>
+<p><code>years_since</code> 方法向前移动时间：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+date = Date.new(2010, 6, 7)
+date.years_since(10) # =&gt; Sun, 07 Jun 2020
+
+</pre>
+</div>
+<p>如果那一天不存在，返回前一个月的最后一天：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Date.new(2012, 2, 29).years_ago(3)     # =&gt; Sat, 28 Feb 2009
+Date.new(2012, 2, 29).years_since(3)   # =&gt; Sat, 28 Feb 2015
+
+</pre>
+</div>
+<p><a class="anchor" id="months-ago-months-since"></a></p><h6 id="months-ago-months-since">14.1.3.2 <code>months_ago</code>、<code>months_since</code>
+</h6><p><code>months_ago</code> 和 <code>months_since</code> 方法的作用类似，不过是针对月的：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Date.new(2010, 4, 30).months_ago(2)   # =&gt; Sun, 28 Feb 2010
+Date.new(2010, 4, 30).months_since(2) # =&gt; Wed, 30 Jun 2010
+
+</pre>
+</div>
+<p>如果那一天不存在，返回前一个月的最后一天：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Date.new(2010, 4, 30).months_ago(2)    # =&gt; Sun, 28 Feb 2010
+Date.new(2009, 12, 31).months_since(2) # =&gt; Sun, 28 Feb 2010
+
+</pre>
+</div>
+<p><a class="anchor" id="weeks-ago"></a></p><h6 id="weeks-ago">14.1.3.3 <code>weeks_ago</code>
+</h6><p><code>weeks_ago</code> 方法的作用类似，不过是针对周的：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Date.new(2010, 5, 24).weeks_ago(1)    # =&gt; Mon, 17 May 2010
+Date.new(2010, 5, 24).weeks_ago(2)    # =&gt; Mon, 10 May 2010
+
+</pre>
+</div>
+<p><a class="anchor" id="other-date-computations-advance"></a></p><h6 id="other-date-computations-advance">14.1.3.4 <code>advance</code>
+</h6><p>跳到另一天最普适的方法是 <code>advance</code>。这个方法的参数是一个散列，包含 <code>:years</code>、<code>:months</code>、<code>:weeks</code>、<code>:days</code> 键，返回移动相应量之后的日期。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+date = Date.new(2010, 6, 6)
+date.advance(years: 1, weeks: 2)  # =&gt; Mon, 20 Jun 2011
+date.advance(months: 2, days: -2) # =&gt; Wed, 04 Aug 2010
+
+</pre>
+</div>
+<p>如上例所示，增量可以是负数。</p><p>这个方法做计算时，先增加年，然后是月和周，最后是日。这个顺序是重要的，向一个月的末尾流动。假如我们在 2010 年 2 月的最后一天，我们想向前移动一个月和一天。</p><p>此时，<code>advance</code> 先向前移动一个月，然后移动一天，结果是：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Date.new(2010, 2, 28).advance(months: 1, days: 1)
+# =&gt; Sun, 29 Mar 2010
+
+</pre>
+</div>
+<p>如果以其他方式移动，得到的结果就不同了：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Date.new(2010, 2, 28).advance(days: 1).advance(months: 1)
+# =&gt; Thu, 01 Apr 2010
+
+</pre>
+</div>
+<p><a class="anchor" id="extensions-to-date-calculations-changing-components"></a></p><h5 id="extensions-to-date-calculations-changing-components">14.1.4 修改日期组成部分</h5><p><code>change</code> 方法在接收者的基础上修改日期，修改的值由参数指定：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Date.new(2010, 12, 23).change(year: 2011, month: 11)
+# =&gt; Wed, 23 Nov 2011
+
+</pre>
+</div>
+<p>这个方法无法容错不存在的日期，如果修改无效，抛出 <code>ArgumentError</code> 异常：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Date.new(2010, 1, 31).change(month: 2)
+# =&gt; ArgumentError: invalid date
+
+</pre>
+</div>
+<p><a class="anchor" id="extensions-to-date-calculations-durations"></a></p><h5 id="extensions-to-date-calculations-durations">14.1.5 时间跨度</h5><p>可以为日期增加或减去时间跨度：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+d = Date.current
+# =&gt; Mon, 09 Aug 2010
+d + 1.year
+# =&gt; Tue, 09 Aug 2011
+d - 3.hours
+# =&gt; Sun, 08 Aug 2010 21:00:00 UTC +00:00
+
+</pre>
+</div>
+<p>增加跨度会调用 <code>since</code> 或 <code>advance</code>。例如，跳跃时能正确考虑历法改革：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Date.new(1582, 10, 4) + 1.day
+# =&gt; Fri, 15 Oct 1582
+
+</pre>
+</div>
+<p><a class="anchor" id="timestamps"></a></p><h5 id="timestamps">14.1.6 时间戳</h5><div class="info"><p>如果可能，下述方法返回 <code>Time</code> 对象，否则返回 <code>DateTime</code> 对象。如果用户设定了时区，会将其考虑在内。</p></div><p><a class="anchor" id="beginning-of-day-end-of-day"></a></p><h6 id="beginning-of-day-end-of-day">14.1.6.1 <code>beginning_of_day</code>、<code>end_of_day</code>
+</h6><p><code>beginning_of_day</code> 方法返回一天的起始时间戳（00:00:00）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+date = Date.new(2010, 6, 7)
+date.beginning_of_day # =&gt; Mon Jun 07 00:00:00 +0200 2010
+
+</pre>
+</div>
+<p><code>end_of_day</code> 方法返回一天的结束时间戳（23:59:59）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+date = Date.new(2010, 6, 7)
+date.end_of_day # =&gt; Mon Jun 07 23:59:59 +0200 2010
+
+</pre>
+</div>
+<p><code>at_beginning_of_day</code>、<code>midnight</code> 和 <code>at_midnight</code> 是 <code>beginning_of_day</code> 的别名，</p><p><a class="anchor" id="beginning-of-hour-end-of-hour"></a></p><h6 id="beginning-of-hour-end-of-hour">14.1.6.2 <code>beginning_of_hour</code>、<code>end_of_hour</code>
+</h6><p><code>beginning_of_hour</code> 返回一小时的起始时间戳（hh:00:00）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+date = DateTime.new(2010, 6, 7, 19, 55, 25)
+date.beginning_of_hour # =&gt; Mon Jun 07 19:00:00 +0200 2010
+
+</pre>
+</div>
+<p><code>end_of_hour</code> 方法返回一小时的结束时间戳（hh:59:59）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+date = DateTime.new(2010, 6, 7, 19, 55, 25)
+date.end_of_hour # =&gt; Mon Jun 07 19:59:59 +0200 2010
+
+</pre>
+</div>
+<p><code>at_beginning_of_hour</code> 是 <code>beginning_of_hour</code> 的别名。</p><p><a class="anchor" id="beginning-of-minute-end-of-minute"></a></p><h6 id="beginning-of-minute-end-of-minute">14.1.6.3 <code>beginning_of_minute</code>、<code>end_of_minute</code>
+</h6><p><code>beginning_of_minute</code> 方法返回一分钟的起始时间戳（hh:mm:00）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+date = DateTime.new(2010, 6, 7, 19, 55, 25)
+date.beginning_of_minute # =&gt; Mon Jun 07 19:55:00 +0200 2010
+
+</pre>
+</div>
+<p><code>end_of_minute</code> 方法返回一分钟的结束时间戳（hh:mm:59）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+date = DateTime.new(2010, 6, 7, 19, 55, 25)
+date.end_of_minute # =&gt; Mon Jun 07 19:55:59 +0200 2010
+
+</pre>
+</div>
+<p><code>at_beginning_of_minute</code> 是 <code>beginning_of_minute</code> 的别名。</p><div class="info"><p><code>Time</code> 和 <code>DateTime</code> 实现了 <code>beginning_of_hour</code>、<code>end_of_hour</code>、<code>beginning_of_minute</code> 和 <code>end_of_minute</code> 方法，但是 <code>Date</code> 没有实现，因为在 <code>Date</code> 实例上请求小时和分钟的起始和结束时间戳没有意义。</p></div><p><a class="anchor" id="ago-since"></a></p><h6 id="ago-since">14.1.6.4 <code>ago</code>、<code>since</code>
+</h6><p><code>ago</code> 的参数是秒数，返回自午夜起那么多秒之后的时间戳：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+date = Date.current # =&gt; Fri, 11 Jun 2010
+date.ago(1)         # =&gt; Thu, 10 Jun 2010 23:59:59 EDT -04:00
+
+</pre>
+</div>
+<p>类似的，<code>since</code> 向前移动：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+date = Date.current # =&gt; Fri, 11 Jun 2010
+date.since(1)       # =&gt; Fri, 11 Jun 2010 00:00:01 EDT -04:00
+
+</pre>
+</div>
+<p><a class="anchor" id="extensions-to-datetime"></a></p><h3 id="extensions-to-datetime">15 <code>DateTime</code> 的扩展</h3><div class="warning"><p><code>DateTime</code> 不理解夏令时规则，因此如果正处于夏令时，这些方法可能有边缘情况。例如，在夏令时中，<code>seconds_since_midnight</code> 可能无法返回真实的量。</p></div><p><a class="anchor" id="extensions-to-datetime-calculations"></a></p><h4 id="extensions-to-datetime-calculations">15.1 计算</h4><div class="note"><p>本节的方法都在 <code>active_support/core_ext/date_time/calculations.rb</code> 文件中定义。</p></div><p><code>DateTime</code> 类是 <code>Date</code> 的子类，因此加载 <code>active_support/core_ext/date/calculations.rb</code> 时也就继承了下述方法及其别名，只不过，此时都返回 <code>DateTime</code> 对象：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+yesterday
+tomorrow
+beginning_of_week (at_beginning_of_week)
+end_of_week (at_end_of_week)
+monday
+sunday
+weeks_ago
+prev_week (last_week)
+next_week
+months_ago
+months_since
+beginning_of_month (at_beginning_of_month)
+end_of_month (at_end_of_month)
+prev_month (last_month)
+next_month
+beginning_of_quarter (at_beginning_of_quarter)
+end_of_quarter (at_end_of_quarter)
+beginning_of_year (at_beginning_of_year)
+end_of_year (at_end_of_year)
+years_ago
+years_since
+prev_year (last_year)
+next_year
+on_weekday?
+on_weekend?
+
+</pre>
+</div>
+<p>下述方法重新实现了，因此使用它们时无需加载 <code>active_support/core_ext/date/calculations.rb</code>：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+beginning_of_day (midnight, at_midnight, at_beginning_of_day)
+end_of_day
+ago
+since (in)
+
+</pre>
+</div>
+<p>此外，还定义了 <code>advance</code> 和 <code>change</code> 方法，而且支持更多选项。参见下文。</p><p>下述方法只在 <code>active_support/core_ext/date_time/calculations.rb</code> 中实现，因为它们只对 <code>DateTime</code> 实例有意义：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+beginning_of_hour (at_beginning_of_hour)
+end_of_hour
+
+</pre>
+</div>
+<p><a class="anchor" id="named-datetimes"></a></p><h5 id="named-datetimes">15.1.1 具名日期时间</h5><p><a class="anchor" id="datetime-current"></a></p><h6 id="datetime-current">15.1.1.1 <code>DateTime.current</code>
+</h6><p>Active Support 定义的 <code>DateTime.current</code> 方法类似于 <code>Time.now.to_datetime</code>，不过会考虑用户设定的时区（如果定义了时区的话）。Active Support 还定义了 <code>DateTime.yesterday</code> 和 <code>DateTime.tomorrow</code>，以及与 <code>DateTime.current</code> 相关的判断方法 <code>past?</code> 和 <code>future?</code>。</p><p><a class="anchor" id="other-extensions"></a></p><h5 id="other-extensions">15.1.2 其他扩展</h5><p><a class="anchor" id="seconds-since-midnight"></a></p><h6 id="seconds-since-midnight">15.1.2.1 <code>seconds_since_midnight</code>
+</h6><p><code>seconds_since_midnight</code> 方法返回自午夜起的秒数：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+now = DateTime.current     # =&gt; Mon, 07 Jun 2010 20:26:36 +0000
+now.seconds_since_midnight # =&gt; 73596
+
+</pre>
+</div>
+<p><a class="anchor" id="utc"></a></p><h6 id="utc">15.1.2.2 <code>utc</code>
+</h6><p><code>utc</code> 返回的日期时间与接收者一样，不过使用 UTC 表示。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+now = DateTime.current # =&gt; Mon, 07 Jun 2010 19:27:52 -0400
+now.utc                # =&gt; Mon, 07 Jun 2010 23:27:52 +0000
+
+</pre>
+</div>
+<p>这个方法有个别名，<code>getutc</code>。</p><p><a class="anchor" id="utc-questionmark"></a></p><h6 id="utc-questionmark">15.1.2.3 <code>utc?</code>
+</h6><p><code>utc?</code> 判断接收者的时区是不是 UTC：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+now = DateTime.now # =&gt; Mon, 07 Jun 2010 19:30:47 -0400
+now.utc?           # =&gt; false
+now.utc.utc?       # =&gt; true
+
+</pre>
+</div>
+<p><a class="anchor" id="other-extensions-advance"></a></p><h6 id="other-extensions-advance">15.1.2.4 <code>advance</code>
+</h6><p>跳到其他日期时间最普适的方法是 <code>advance</code>。这个方法的参数是一个散列，包含 <code>:years</code>、<code>:months</code>、<code>:weeks</code>、<code>:days</code>、<code>:hours</code>、<code>:minutes</code> 和 <code>:seconds</code> 等键，返回移动相应量之后的日期时间。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+d = DateTime.current
+# =&gt; Thu, 05 Aug 2010 11:33:31 +0000
+d.advance(years: 1, months: 1, days: 1, hours: 1, minutes: 1, seconds: 1)
+# =&gt; Tue, 06 Sep 2011 12:34:32 +0000
+
+</pre>
+</div>
+<p>这个方法计算目标日期时，把 <code>:years</code>、<code>:months</code>、<code>:weeks</code> 和 <code>:days</code> 传给 <code>Date#advance</code>，然后调用 <code>since</code> 处理时间，前进相应的秒数。这个顺序是重要的，如若不然，在某些边缘情况下可能得到不同的日期时间。讲解 <code>Date#advance</code> 时所举的例子在这里也适用，我们可以扩展一下，显示处理时间的顺序。</p><p>如果先移动日期部分（如前文所述，处理日期的顺序也很重要），然后再计算时间，得到的结果如下：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+d = DateTime.new(2010, 2, 28, 23, 59, 59)
+# =&gt; Sun, 28 Feb 2010 23:59:59 +0000
+d.advance(months: 1, seconds: 1)
+# =&gt; Mon, 29 Mar 2010 00:00:00 +0000
+
+</pre>
+</div>
+<p>但是如果以其他方式计算，结果就不同了：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+d.advance(seconds: 1).advance(months: 1)
+# =&gt; Thu, 01 Apr 2010 00:00:00 +0000
+
+</pre>
+</div>
+<div class="warning"><p>因为 <code>DateTime</code> 不支持夏令时，所以可能得到不存在的时间点，而且没有提醒或报错。</p></div><p><a class="anchor" id="extensions-to-datetime-calculations-changing-components"></a></p><h5 id="extensions-to-datetime-calculations-changing-components">15.1.3 修改日期时间组成部分</h5><p><code>change</code> 方法在接收者的基础上修改日期时间，修改的值由选项指定，可以包括 <code>:year</code>、<code>:month</code>、<code>:day</code>、<code>:hour</code>、<code>:min</code>、<code>:sec</code>、<code>:offset</code> 和 <code>:start</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+now = DateTime.current
+# =&gt; Tue, 08 Jun 2010 01:56:22 +0000
+now.change(year: 2011, offset: Rational(-6, 24))
+# =&gt; Wed, 08 Jun 2011 01:56:22 -0600
+
+</pre>
+</div>
+<p>如果小时归零了，分钟和秒也归零（除非指定了值）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+now.change(hour: 0)
+# =&gt; Tue, 08 Jun 2010 00:00:00 +0000
+
+</pre>
+</div>
+<p>类似地，如果分钟归零了，秒也归零（除非指定了值）：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+now.change(min: 0)
+# =&gt; Tue, 08 Jun 2010 01:00:00 +0000
+
+</pre>
+</div>
+<p>这个方法无法容错不存在的日期，如果修改无效，抛出 <code>ArgumentError</code> 异常：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+DateTime.current.change(month: 2, day: 30)
+# =&gt; ArgumentError: invalid date
+
+</pre>
+</div>
+<p><a class="anchor" id="extensions-to-datetime-calculations-durations"></a></p><h5 id="extensions-to-datetime-calculations-durations">15.1.4 时间跨度</h5><p>可以为日期时间增加或减去时间跨度：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+now = DateTime.current
+# =&gt; Mon, 09 Aug 2010 23:15:17 +0000
+now + 1.year
+# =&gt; Tue, 09 Aug 2011 23:15:17 +0000
+now - 1.week
+# =&gt; Mon, 02 Aug 2010 23:15:17 +0000
+
+</pre>
+</div>
+<p>增加跨度会调用 <code>since</code> 或 <code>advance</code>。例如，跳跃时能正确考虑历法改革：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+DateTime.new(1582, 10, 4, 23) + 1.hour
+# =&gt; Fri, 15 Oct 1582 00:00:00 +0000
+
+</pre>
+</div>
+<p><a class="anchor" id="extensions-to-time"></a></p><h3 id="extensions-to-time">16 <code>Time</code> 的扩展</h3><p><a class="anchor" id="extensions-to-time-calculations"></a></p><h4 id="extensions-to-time-calculations">16.1 计算</h4><div class="note"><p>本节的方法都在 <code>active_support/core_ext/time/calculations.rb</code> 文件中定义。</p></div><p>Active Support 为 <code>Time</code> 添加了 <code>DateTime</code> 的很多方法：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+past?
+today?
+future?
+yesterday
+tomorrow
+seconds_since_midnight
+change
+advance
+ago
+since (in)
+beginning_of_day (midnight, at_midnight, at_beginning_of_day)
+end_of_day
+beginning_of_hour (at_beginning_of_hour)
+end_of_hour
+beginning_of_week (at_beginning_of_week)
+end_of_week (at_end_of_week)
+monday
+sunday
+weeks_ago
+prev_week (last_week)
+next_week
+months_ago
+months_since
+beginning_of_month (at_beginning_of_month)
+end_of_month (at_end_of_month)
+prev_month (last_month)
+next_month
+beginning_of_quarter (at_beginning_of_quarter)
+end_of_quarter (at_end_of_quarter)
+beginning_of_year (at_beginning_of_year)
+end_of_year (at_end_of_year)
+years_ago
+years_since
+prev_year (last_year)
+next_year
+on_weekday?
+on_weekend?
+
+</pre>
+</div>
+<p>它们的作用与之前类似。详情参见前文，不过要知道下述区别：</p>
+<ul>
+<li>  <code>change</code> 额外接受 <code>:usec</code> 选项。</li>
+<li>
+<p>  <code>Time</code> 支持夏令时，因此能正确计算夏令时。</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Time.zone_default
+# =&gt; #&lt;ActiveSupport::TimeZone:0x7f73654d4f38 @utc_offset=nil, @name="Madrid", ...&gt;
+
+# 因为采用夏令时，在巴塞罗那，2010/03/28 02:00 +0100 变成 2010/03/28 03:00 +0200
+t = Time.local(2010, 3, 28, 1, 59, 59)
+# =&gt; Sun Mar 28 01:59:59 +0100 2010
+t.advance(seconds: 1)
+# =&gt; Sun Mar 28 03:00:00 +0200 2010
+
+</pre>
+</div>
+</li>
+<li><p>  如果 <code>since</code> 或 <code>ago</code> 的目标时间无法使用 <code>Time</code> 对象表示，返回一个 <code>DateTime</code> 对象。</p></li>
+</ul>
+<p><a class="anchor" id="time-current"></a></p><h5 id="time-current">16.1.1 <code>Time.current</code>
+</h5><p>Active Support 定义的 <code>Time.current</code> 方法表示当前时区中的今天。其作用类似于 <code>Time.now</code>，不过会考虑用户设定的时区（如果定义了时区的话）。Active Support 还定义了与 <code>Time.current</code> 有关的实例判断方法 <code>past?</code>、<code>today?</code> 和 <code>future?</code>。</p><p>比较时间时，如果要考虑用户设定的时区，应该使用 <code>Time.current</code>，而不是 <code>Time.now</code>。与系统的时区（<code>Time.now</code> 默认采用）相比，用户设定的时区可能超前，这意味着，<code>Time.now.to_date</code> 可能等于 <code>Date.yesterday</code>。</p><p><a class="anchor" id="all-day-all-week-all-month-all-quarter-and-all-year"></a></p><h5 id="all-day-all-week-all-month-all-quarter-and-all-year">16.1.2 <code>all_day</code>、<code>all_week</code>、<code>all_month</code>、<code>all_quarter</code> 和 <code>all_year</code>
+</h5><p><code>all_day</code> 方法返回一个值域，表示当前时间的一整天。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+now = Time.current
+# =&gt; Mon, 09 Aug 2010 23:20:05 UTC +00:00
+now.all_day
+# =&gt; Mon, 09 Aug 2010 00:00:00 UTC +00:00..Mon, 09 Aug 2010 23:59:59 UTC +00:00
+
+</pre>
+</div>
+<p>类似地，<code>all_week</code>、<code>all_month</code>、<code>all_quarter</code> 和 <code>all_year</code> 分别生成相应的时间值域。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+now = Time.current
+# =&gt; Mon, 09 Aug 2010 23:20:05 UTC +00:00
+now.all_week
+# =&gt; Mon, 09 Aug 2010 00:00:00 UTC +00:00..Sun, 15 Aug 2010 23:59:59 UTC +00:00
+now.all_week(:sunday)
+# =&gt; Sun, 16 Sep 2012 00:00:00 UTC +00:00..Sat, 22 Sep 2012 23:59:59 UTC +00:00
+now.all_month
+# =&gt; Sat, 01 Aug 2010 00:00:00 UTC +00:00..Tue, 31 Aug 2010 23:59:59 UTC +00:00
+now.all_quarter
+# =&gt; Thu, 01 Jul 2010 00:00:00 UTC +00:00..Thu, 30 Sep 2010 23:59:59 UTC +00:00
+now.all_year
+# =&gt; Fri, 01 Jan 2010 00:00:00 UTC +00:00..Fri, 31 Dec 2010 23:59:59 UTC +00:00
+
+</pre>
+</div>
+<p><a class="anchor" id="time-constructors"></a></p><h4 id="time-constructors">16.2 时间构造方法</h4><p>Active Support 定义的 <code>Time.current</code> 方法，在用户设定了时区时，等价于 <code>Time.zone.now</code>，否则回落到 <code>Time.now</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Time.zone_default
+# =&gt; #&lt;ActiveSupport::TimeZone:0x7f73654d4f38 @utc_offset=nil, @name="Madrid", ...&gt;
+Time.current
+# =&gt; Fri, 06 Aug 2010 17:11:58 CEST +02:00
+
+</pre>
+</div>
+<p>与 <code>DateTime</code> 一样，判断方法 <code>past?</code> 和 <code>future?</code> 与 <code>Time.current</code> 相关。</p><p>如果要构造的时间超出了运行时平台对 <code>Time</code> 的支持范围，微秒会被丢掉，然后返回 <code>DateTime</code> 对象。</p><p><a class="anchor" id="durations"></a></p><h5 id="durations">16.2.1 时间跨度</h5><p>可以为时间增加或减去时间跨度：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+now = Time.current
+# =&gt; Mon, 09 Aug 2010 23:20:05 UTC +00:00
+now + 1.year
+#  =&gt; Tue, 09 Aug 2011 23:21:11 UTC +00:00
+now - 1.week
+# =&gt; Mon, 02 Aug 2010 23:21:11 UTC +00:00
+
+</pre>
+</div>
+<p>增加跨度会调用 <code>since</code> 或 <code>advance</code>。例如，跳跃时能正确考虑历法改革：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Time.utc(1582, 10, 3) + 5.days
+# =&gt; Mon Oct 18 00:00:00 UTC 1582
+
+</pre>
+</div>
+<p><a class="anchor" id="extensions-to-file"></a></p><h3 id="extensions-to-file">17 <code>File</code> 的扩展</h3><p><a class="anchor" id="atomic-write"></a></p><h4 id="atomic-write">17.1 <code>atomic_write</code>
+</h4><p>使用类方法 <code>File.atomic_write</code> 写文件时，可以避免在写到一半时读取内容。</p><p>这个方法的参数是文件名，它会产出一个文件句柄，把文件打开供写入。块执行完毕后，<code>atomic_write</code> 会关闭文件句柄，完成工作。</p><p>例如，Action Pack 使用这个方法写静态资源缓存文件，如 <code>all.css</code>：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+File.atomic_write(joined_asset_path) do |cache|
+  cache.write(join_asset_file_contents(asset_paths))
+end
+
+</pre>
+</div>
+<p>为此，<code>atomic_write</code> 会创建一个临时文件。块中的代码其实是向这个临时文件写入。写完之后，重命名临时文件，这在 POSIX 系统中是原子操作。如果目标文件存在，<code>atomic_write</code> 将其覆盖，并且保留属主和权限。不过，有时 <code>atomic_write</code> 无法修改文件的归属或权限。这个错误会被捕获并跳过，从而确保需要它的进程能访问它。</p><div class="note"><p><code>atomic_write</code> 会执行 chmod 操作，因此如果目标文件设定了 ACL，<code>atomic_write</code> 会重新计算或修改 ACL。</p></div><div class="warning"><p>注意，不能使用 <code>atomic_write</code> 追加内容。</p></div><p>临时文件在存储临时文件的标准目录中，但是可以传入第二个参数指定一个目录。</p><div class="note"><p>在 <code>active_support/core_ext/file/atomic.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-marshal"></a></p><h3 id="extensions-to-marshal">18 <code>Marshal</code> 的扩展</h3><p><a class="anchor" id="load"></a></p><h4 id="load">18.1 <code>load</code>
+</h4><p>Active Support 为 <code>load</code> 增加了常量自动加载功能。</p><p>例如，文件缓存存储像这样反序列化：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+File.open(file_name) { |f| Marshal.load(f) }
+
+</pre>
+</div>
+<p>如果缓存的数据指代那一刻未知的常量，自动加载机制会被触发，如果成功加载，会再次尝试反序列化。</p><div class="warning"><p>如果参数是 <code>IO</code> 对象，要能响应 <code>rewind</code> 方法才会重试。常规的文件响应 <code>rewind</code> 方法。</p></div><div class="note"><p>在 <code>active_support/core_ext/marshal.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-nameerror"></a></p><h3 id="extensions-to-nameerror">19 <code>NameError</code> 的扩展</h3><p>Active Support 为 <code>NameError</code> 增加了 <code>missing_name?</code> 方法，测试异常是不是由于参数的名称引起的。</p><p>参数的名称可以使用符号或字符串指定。指定符号时，使用裸常量名测试；指定字符串时，使用完全限定常量名测试。</p><div class="info"><p>符号可以表示完全限定常量名，例如 <code>:"ActiveRecord::Base"</code>，因此这里符号的行为是为了便利而特别定义的，不是说在技术上只能如此。</p></div><p>例如，调用 <code>ArticlesController</code> 的动作时，Rails 会乐观地使用 <code>ArticlesHelper</code>。如果那个模块不存在也没关系，因此，由那个常量名引起的异常要静默。不过，可能是由于确实是未知的常量名而由 <code>articles_helper.rb</code> 抛出的 <code>NameError</code> 异常。此时，异常应该抛出。<code>missing_name?</code> 方法能区分这两种情况：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def default_helper_module!
+  module_name = name.sub(/Controller$/, '')
+  module_path = module_name.underscore
+  helper module_path
+rescue LoadError =&gt; e
+  raise e unless e.is_missing? "helpers/#{module_path}_helper"
+rescue NameError =&gt; e
+  raise e unless e.missing_name? "#{module_name}Helper"
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/name_error.rb</code> 文件中定义。</p></div><p><a class="anchor" id="extensions-to-loaderror"></a></p><h3 id="extensions-to-loaderror">20 <code>LoadError</code> 的扩展</h3><p>Active Support 为 <code>LoadError</code> 增加了 <code>is_missing?</code> 方法。</p><p><code>is_missing?</code> 方法判断异常是不是由指定路径名（不含“.rb”扩展名）引起的。</p><p>例如，调用 <code>ArticlesController</code> 的动作时，Rails 会尝试加载 <code>articles_helper.rb</code>，但是那个文件可能不存在。这没关系，辅助模块不是必须的，因此 Rails 会静默加载错误。但是，有可能是辅助模块存在，而它引用的其他库不存在。此时，Rails 必须抛出异常。<code>is_missing?</code> 方法能区分这两种情况：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def default_helper_module!
+  module_name = name.sub(/Controller$/, '')
+  module_path = module_name.underscore
+  helper module_path
+rescue LoadError =&gt; e
+  raise e unless e.is_missing? "helpers/#{module_path}_helper"
+rescue NameError =&gt; e
+  raise e unless e.missing_name? "#{module_name}Helper"
+end
+
+</pre>
+</div>
+<div class="note"><p>在 <code>active_support/core_ext/load_error.rb</code> 文件中定义。</p></div>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>

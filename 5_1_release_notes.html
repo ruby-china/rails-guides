@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Ruby on Rails 5.1 发布记 — Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">更多内容 <a href="http://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <span class="red-button more-info-button">
+        更多内容
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="http://weblog.rubyonrails.org/">博客</a></li>
+        <li class="more-info"><a href="http://guides.rubyonrails.org/">指南</a></li>
+        <li class="more-info"><a href="http://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="http://stackoverflow.com/questions/tagged/ruby-on-rails">提问</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">到 GitHub 贡献</a></li>
+        <li class="more-info"><a href="https://ruby-china.org/">Ruby China 社区</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <h1><a href="index.html" title="返回首页">Rails 指南</a></h1>
+      <ul class="nav">
+        <li><a class="nav-item" href="index.html">首页</a></li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" id="guidesMenu" class="guides-index-item nav-item">指南索引</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+              <dl class="L">
+                <dt>新手入门</dt>
+                <dd><a href="getting_started.html">Rails 入门</a></dd>
+                <dt>模型</dt>
+                <dd><a href="active_record_basics.html">Active Record 基础</a></dd>
+                <dd><a href="active_record_migrations.html">Active Record 迁移</a></dd>
+                <dd><a href="active_record_validations.html">Active Record 数据验证</a></dd>
+                <dd><a href="active_record_callbacks.html">Active Record 回调</a></dd>
+                <dd><a href="association_basics.html">Active Record 关联</a></dd>
+                <dd><a href="active_record_querying.html">Active Record 查询接口</a></dd>
+                <dt>视图</dt>
+                <dd><a href="layouts_and_rendering.html">Rails 布局和视图渲染</a></dd>
+                <dd><a href="form_helpers.html">Action View 表单辅助方法</a></dd>
+                <dt>控制器</dt>
+                <dd><a href="action_controller_overview.html">Action Controller 概览</a></dd>
+                <dd><a href="routing.html">Rails 路由全解</a></dd>
+              </dl>
+              <dl class="R">
+                <dt>深入探索</dt>
+                <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
+                <dd><a href="i18n.html">Rails 国际化 API</a></dd>
+                <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
+                <dd><a href="testing.html">Rails 应用测试指南</a></dd>
+                <dd><a href="security.html">Ruby on Rails 安全指南</a></dd>
+                <dd><a href="debugging_rails_applications.html">调试 Rails 应用</a></dd>
+                <dd><a href="configuring.html">配置 Rails 应用</a></dd>
+                <dd><a href="command_line.html">Rails 命令行</a></dd>
+                <dd><a href="asset_pipeline.html">Asset Pipeline</a></dd>
+                <dd><a href="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</a></dd>
+                <dd><a href="autoloading_and_reloading_constants.html">自动加载和重新加载常量</a></dd>
+                <dd><a href="caching_with_rails.html">Rails 缓存概览</a></dd>
+                <dd><a href="api_app.html">使用 Rails 开发只提供 API 的应用</a></dd>
+                <dd><a href="action_cable_overview.html">Action Cable 概览</a></dd>
+                <dt>扩展 Rails</dt>
+                <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                <dd><a href="generators.html">创建及定制 Rails 生成器和模板</a></dd>
+                <dt>为 Ruby on Rails 做贡献</dt>
+                <dd><a href="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</a></dd>
+                <dd><a href="api_documentation_guidelines.html">API 文档指导方针</a></dd>
+                <dd><a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</a></dd>
+                <dt>维护方针</dt>
+                <dd><a href="maintenance_policy.html">Ruby on Rails 的维护方针</a></dd>
+                <dt>发布记</dt>
+                <dd><a href="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</a></dd>
+                <dd><a href="5_0_release_notes.html">Ruby on Rails 5.0 发布记</a></dd>
+                <dd><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dd>
+                <dd><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dd>
+                <dd><a href="4_0_release_notes.html">Ruby on Rails 4.0 发布记</a></dd>
+                <dd><a href="3_2_release_notes.html">Ruby on Rails 3.2 发布记</a></dd>
+                <dd><a href="3_1_release_notes.html">Ruby on Rails 3.1 发布记</a></dd>
+                <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
+                <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
+                <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
+              </dl>
+          </div>
+        </li>
+        <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">贡献</a></li>
+        <li><a class="nav-item" href="credits.html">感谢</a></li>
+        <li class="guides-index guides-index-small">
+          <select class="guides-index-item nav-item">
+            <option value="index.html">指南索引</option>
+              <optgroup label="新手入门">
+                  <option value="getting_started.html">Rails 入门</option>
+              </optgroup>
+              <optgroup label="模型">
+                  <option value="active_record_basics.html">Active Record 基础</option>
+                  <option value="active_record_migrations.html">Active Record 迁移</option>
+                  <option value="active_record_validations.html">Active Record 数据验证</option>
+                  <option value="active_record_callbacks.html">Active Record 回调</option>
+                  <option value="association_basics.html">Active Record 关联</option>
+                  <option value="active_record_querying.html">Active Record 查询接口</option>
+              </optgroup>
+              <optgroup label="视图">
+                  <option value="layouts_and_rendering.html">Rails 布局和视图渲染</option>
+                  <option value="form_helpers.html">Action View 表单辅助方法</option>
+              </optgroup>
+              <optgroup label="控制器">
+                  <option value="action_controller_overview.html">Action Controller 概览</option>
+                  <option value="routing.html">Rails 路由全解</option>
+              </optgroup>
+              <optgroup label="深入探索">
+                  <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
+                  <option value="i18n.html">Rails 国际化 API</option>
+                  <option value="action_mailer_basics.html">Action Mailer 基础</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
+                  <option value="testing.html">Rails 应用测试指南</option>
+                  <option value="security.html">Ruby on Rails 安全指南</option>
+                  <option value="debugging_rails_applications.html">调试 Rails 应用</option>
+                  <option value="configuring.html">配置 Rails 应用</option>
+                  <option value="command_line.html">Rails 命令行</option>
+                  <option value="asset_pipeline.html">Asset Pipeline</option>
+                  <option value="working_with_javascript_in_rails.html">在 Rails 中使用 JavaScript</option>
+                  <option value="autoloading_and_reloading_constants.html">自动加载和重新加载常量</option>
+                  <option value="caching_with_rails.html">Rails 缓存概览</option>
+                  <option value="api_app.html">使用 Rails 开发只提供 API 的应用</option>
+                  <option value="action_cable_overview.html">Action Cable 概览</option>
+              </optgroup>
+              <optgroup label="扩展 Rails">
+                  <option value="rails_on_rack.html">Rails on Rack</option>
+                  <option value="generators.html">创建及定制 Rails 生成器和模板</option>
+              </optgroup>
+              <optgroup label="为 Ruby on Rails 做贡献">
+                  <option value="contributing_to_ruby_on_rails.html">为 Ruby on Rails 做贡献</option>
+                  <option value="api_documentation_guidelines.html">API 文档指导方针</option>
+                  <option value="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导方针</option>
+              </optgroup>
+              <optgroup label="维护方针">
+                  <option value="maintenance_policy.html">Ruby on Rails 的维护方针</option>
+              </optgroup>
+              <optgroup label="发布记">
+                  <option value="upgrading_ruby_on_rails.html">Ruby on Rails 升级指南</option>
+                  <option value="5_0_release_notes.html">Ruby on Rails 5.0 发布记</option>
+                  <option value="4_2_release_notes.html">Ruby on Rails 4.2 发布记</option>
+                  <option value="4_1_release_notes.html">Ruby on Rails 4.1 发布记</option>
+                  <option value="4_0_release_notes.html">Ruby on Rails 4.0 发布记</option>
+                  <option value="3_2_release_notes.html">Ruby on Rails 3.2 发布记</option>
+                  <option value="3_1_release_notes.html">Ruby on Rails 3.1 发布记</option>
+                  <option value="3_0_release_notes.html">Ruby on Rails 3.0 发布记</option>
+                  <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
+                  <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
+              </optgroup>
+          </select>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>Ruby on Rails 5.1 发布记</h2><p>Rails 5.1 的重要变化：</p>
+<ul>
+<li>  支持 Yarn</li>
+<li>  支持 Webpack（可选）</li>
+<li>  jQuery 不再是默认的依赖</li>
+<li>  系统测试</li>
+<li>  机密信息加密</li>
+<li>  参数化邮件程序</li>
+<li>  direct 路由和 resolve 路由</li>
+<li>  <code>form_for</code> 和 <code>form_tag</code> 统一为 <code>form_with</code></li>
+</ul>
+<p>本文只涵盖重要变化。若想了解缺陷修正和具体变化，请查看更新日志或 GitHub 中 Rails 主仓库的<a href="https://github.com/rails/rails/commits/5-1-stable">提交历史</a>。</p>
+
+              <div id="subCol">
+          <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />目录</h3>
+          <ol class="chapters">
+<li><a href="#upgrading-to-rails-5-1">升级到 Rails 5.1</a></li>
+<li>
+<a href="#major-features">主要功能</a>
+
+<ul>
+<li><a href="#yarn-support">支持 Yarn</a></li>
+<li><a href="#optional-webpack-support">Webpack 支持（可选）</a></li>
+<li><a href="#jquery-no-longer-a-default-dependency">jQuery 不再是默认的依赖</a></li>
+<li><a href="#system-tests">系统测试</a></li>
+<li><a href="#encrypted-secrets">机密信息加密</a></li>
+<li><a href="#parameterized-mailers">参数化邮件程序</a></li>
+<li><a href="#direct-resolved-routes">direct 路由和 resolve 路由</a></li>
+<li><a href="#unification-of-form-for-and-form-tag-into-form-with"><code>form_for</code> 和 <code>form_tag</code> 统一为 <code>form_with</code></a></li>
+</ul>
+</li>
+<li>
+<a href="#incompatibilities">不兼容的功能</a>
+
+<ul>
+<li><a href="#transactional-tests-with-multiple-connections">使用多个连接的事务型测试</a></li>
+</ul>
+</li>
+<li>
+<a href="#railties-5-1">Railties</a>
+
+<ul>
+<li><a href="#railties-removals-5-1">删除</a></li>
+<li><a href="#railties-notable-changes-5-1">重要变化</a></li>
+</ul>
+</li>
+<li>
+<a href="#action-cable-5-1">Action Cable</a>
+
+<ul>
+<li><a href="#action-cable-notable-changes-5-1">重要变化</a></li>
+</ul>
+</li>
+<li>
+<a href="#action-pack-5-1">Action Pack</a>
+
+<ul>
+<li><a href="#action-pack-removals-5-1">删除</a></li>
+<li><a href="#action-pack-deprecations-5-1">弃用</a></li>
+<li><a href="#action-pack-notable-changes-5-1">重要变化</a></li>
+</ul>
+</li>
+<li>
+<a href="#action-view-5-1">Action View</a>
+
+<ul>
+<li><a href="#action-view-removals-5-1">删除</a></li>
+<li><a href="#action-view-deprecations-5-1">弃用</a></li>
+<li><a href="#action-view-notable-changes-5-1">重要变化</a></li>
+</ul>
+</li>
+<li>
+<a href="#action-mailer-5-1">Action Mailer</a>
+
+<ul>
+<li><a href="#action-mailer-notable-changes-5-1">重要变化</a></li>
+</ul>
+</li>
+<li>
+<a href="#active-record-5-1">Active Record</a>
+
+<ul>
+<li><a href="#active-record-removals-5-1">删除</a></li>
+<li><a href="#active-record-deprecations-5-1">弃用</a></li>
+<li><a href="#active-record-notable-changes-5-1">重要变化</a></li>
+</ul>
+</li>
+<li>
+<a href="#active-model-5-1">Active Model</a>
+
+<ul>
+<li><a href="#active-model-removals-5-1">删除</a></li>
+<li><a href="#active-model-notable-changes-5-1">重要变化</a></li>
+</ul>
+</li>
+<li>
+<a href="#active-job-5-1">Active Job</a>
+
+<ul>
+<li><a href="#active-job-removals-5-1">删除</a></li>
+<li><a href="#active-job-notable-changes">重要变化</a></li>
+</ul>
+</li>
+<li>
+<a href="#active-support-5-1">Active Support</a>
+
+<ul>
+<li><a href="#active-support-removals-5-1">删除</a></li>
+<li><a href="#active-support-deprecations-5-1">弃用</a></li>
+<li><a href="#notable-changes-5-1">重要变化</a></li>
+</ul>
+</li>
+<li><a href="#credits-5-1">荣誉榜</a></li>
+</ol>
+
+        </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <p><a class="anchor" id="upgrading-to-rails-5-1"></a></p><h3 id="upgrading-to-rails-5-1">1 升级到 Rails 5.1</h3><p>如果升级现有应用，在继续之前，最好确保有足够的测试覆盖度。如果尚未升级到 Rails 5.0，应该先升级到 5.0 版，确保应用能正常运行之后，再尝试升级到 Rails 5.1。升级时的注意事项参见 <a href="upgrading_ruby_on_rails.html#upgrading-from-rails-5-0-to-rails-5-1">从 Rails 5.0 升级到 5.1</a>。</p><p><a class="anchor" id="major-features"></a></p><h3 id="major-features">2 主要功能</h3><p><a class="anchor" id="yarn-support"></a></p><h4 id="yarn-support">2.1 支持 Yarn</h4><p><a href="https://github.com/rails/rails/pull/26836">拉取请求</a></p><p>Rails 5.1 支持使用 Yarn 管理通过 NPM 安装的 JavaScript 依赖。这样便于使用 NPM 中的 React、VueJS 等库。对 Yarn 的支持集成在 Asset Pipeline 中，因此所有依赖都能顺利在 Rails 5.1 应用中使用。</p><p><a class="anchor" id="optional-webpack-support"></a></p><h4 id="optional-webpack-support">2.2 Webpack 支持（可选）</h4><p><a href="https://github.com/rails/rails/pull/27288">拉取请求</a></p><p>Rails 应用使用新开发的 <a href="https://github.com/rails/webpacker">Webpacker</a> gem 可以轻易集成 JavaScript 静态资源打包工具 <a href="https://webpack.js.org/">Webpack</a>。新建应用时指定 <code>--webpack</code> 参数可启用对 Webpack 的集成。</p><p>这与 Asset Pipeline 完全兼容，你可以继续使用 Asset Pipeline 管理图像、字体、音频等静态资源。甚至还可以使用 Asset Pipeline 管理部分 JavaScript 代码，使用 Webpack 管理其他代码。这些都由默认启用的 Yarn 管理。</p><p><a class="anchor" id="jquery-no-longer-a-default-dependency"></a></p><h4 id="jquery-no-longer-a-default-dependency">2.3 jQuery 不再是默认的依赖</h4><p><a href="https://github.com/rails/rails/pull/27113">拉取请求</a></p><p>Rails 之前的版本默认需要 jQuery，因为要支持 <code>data-remote</code> 和 <code>data-confirm</code> 等功能，以及 Rails 提供的非侵入式 JavaScript。现在 jQuery 不再需要了，因为 UJS 使用纯 JavaScript 重写了。这个脚本现在通过 Action View  提供，名为 <code>rails-ujs</code>。</p><p>如果需要，可以继续使用 jQuery，但它不再是默认的依赖了。</p><p><a class="anchor" id="system-tests"></a></p><h4 id="system-tests">2.4 系统测试</h4><p><a href="https://github.com/rails/rails/pull/26703">拉取请求</a></p><p>Rails 5.1 内建对 Capybara 测试的支持，不过对外称为系统测试。你无需再担心配置 Capybara 和数据库清理策略。Rails 5.1 对这类测试做了包装，可以在 Chrome 运行相关测试，而且失败时还能截图。</p><p><a class="anchor" id="encrypted-secrets"></a></p><h4 id="encrypted-secrets">2.5 机密信息加密</h4><p><a href="https://github.com/rails/rails/pull/28038">拉取请求</a></p><p>受 <a href="https://github.com/ahoward/sekrets">sekrets</a> gem 启发，Rails 现在以一种安全的方式管理应用中的机密信息。</p><p>运行 <code>bin/rails secrets:setup</code>，创建一个加密的机密信息文件。这个命令还会生成一个主密钥，必须把它放在仓库外部。机密信息已经加密，可以放心检入版本控制系统。</p><p>在生产环境中，Rails 会使用 <code>RAILS_MASTER_KEY</code> 环境变量或密钥文件中的密钥解密机密信息。</p><p><a class="anchor" id="parameterized-mailers"></a></p><h4 id="parameterized-mailers">2.6 参数化邮件程序</h4><p><a href="https://github.com/rails/rails/pull/27825">拉取请求</a></p><p>允许为一个邮件程序类中的所有方法指定通用的参数，方便共享实例变量、首部和其他数据。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class InvitationsMailer &lt; ApplicationMailer
+  before_action { @inviter, @invitee = params[:inviter], params[:invitee] }
+  before_action { @account = params[:inviter].account }
+
+  def account_invitation
+    mail subject: "#{@inviter.name} invited you to their Basecamp (#{@account.name})"
+  end
+end
+
+InvitationsMailer.with(inviter: person_a, invitee: person_b)
+                 .account_invitation.deliver_later
+
+</pre>
+</div>
+<p><a class="anchor" id="direct-resolved-routes"></a></p><h4 id="direct-resolved-routes">2.7 direct 路由和 resolve 路由</h4><p><a href="https://github.com/rails/rails/pull/23138">拉取请求</a></p><p>Rails 5.1 为路由 DSL 增加了两个新方法：<code>resolve</code> 和 <code>direct</code>。前者用于定制模型的多态映射。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+resource :basket
+
+resolve("Basket") { [:basket] }
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_for @basket do |form| %&gt;
+  &lt;!-- basket form --&gt;
+&lt;% end %&gt;
+
+</pre>
+</div>
+<p>此时生成的 URL 是单数形式的 <code>/basket</code>，而不是往常的 <code>/baskets/:id</code>。</p><p><code>direct</code> 用于创建自定义的 URL 辅助方法。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+direct(:homepage) { "http://www.rubyonrails.org" }
+
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+&gt;&gt; homepage_url
+=&gt; "http://www.rubyonrails.org"
+
+</pre>
+</div>
+<p>块的返回值必须能用作 <code>url_for</code> 方法的参数。因此，可以传入有效的 URL 字符串、散列、数组、Active Model 实例或 Active Model 类。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+direct :commentable do |model|
+  [ model, anchor: model.dom_id ]
+end
+
+direct :main do
+  { controller: 'pages', action: 'index', subdomain: 'www' }
+end
+
+</pre>
+</div>
+<p><a class="anchor" id="unification-of-form-for-and-form-tag-into-form-with"></a></p><h4 id="unification-of-form-for-and-form-tag-into-form-with">2.8 <code>form_for</code> 和 <code>form_tag</code> 统一为 <code>form_with</code>
+</h4><p><a href="https://github.com/rails/rails/pull/26976">拉取请求</a></p><p>在 Rails 5.1 之前，处理 HTML 表单有两个接口：针对模型实例的 <code>form_for</code> 和针对自定义 URL 的 <code>form_tag</code>。</p><p>Rails 5.1 把这两个接口统一成 <code>form_with</code> 了，可以根据 URL、作用域或模型生成表单标签。</p><p>只使用 URL：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_with url: posts_path do |form| %&gt;
+  &lt;%= form.text_field :title %&gt;
+&lt;% end %&gt;
+
+&lt;%# 生成的表单为 %&gt;
+
+&lt;form action="/posts" method="post" data-remote="true"&gt;
+  &lt;input type="text" name="title"&gt;
+&lt;/form&gt;
+
+</pre>
+</div>
+<p>指定作用域，添加到输入字段的名称前：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_with scope: :post, url: posts_path do |form| %&gt;
+  &lt;%= form.text_field :title %&gt;
+&lt;% end %&gt;
+
+&lt;%# 生成的表单为 %&gt;
+
+&lt;form action="/posts" method="post" data-remote="true"&gt;
+  &lt;input type="text" name="post[title]"&gt;
+&lt;/form&gt;
+
+</pre>
+</div>
+<p>使用模型，从中推知 URL 和作用域：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_with model: Post.new do |form| %&gt;
+  &lt;%= form.text_field :title %&gt;
+&lt;% end %&gt;
+
+&lt;%# 生成的表单为 %&gt;
+
+&lt;form action="/posts" method="post" data-remote="true"&gt;
+  &lt;input type="text" name="post[title]"&gt;
+&lt;/form&gt;
+
+</pre>
+</div>
+<p>现有模型的更新表单填有字段的值：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= form_with model: Post.first do |form| %&gt;
+  &lt;%= form.text_field :title %&gt;
+&lt;% end %&gt;
+
+&lt;%# 生成的表单为 %&gt;
+
+&lt;form action="/posts/1" method="post" data-remote="true"&gt;
+  &lt;input type="hidden" name="_method" value="patch"&gt;
+  &lt;input type="text" name="post[title]" value="&lt;the title of the post&gt;"&gt;
+&lt;/form&gt;
+
+</pre>
+</div>
+<p><a class="anchor" id="incompatibilities"></a></p><h3 id="incompatibilities">3 不兼容的功能</h3><p>下述变动需要立即采取行动。</p><p><a class="anchor" id="transactional-tests-with-multiple-connections"></a></p><h4 id="transactional-tests-with-multiple-connections">3.1 使用多个连接的事务型测试</h4><p>事务型测试现在把所有 Active Record 连接包装在数据库事务中。</p><p>如果测试派生额外的线程，而且线程获得了数据库连接，这些连接现在使用特殊的方式处理。</p><p>这些线程将共享一个连接，放在事务中。这样能确保所有线程看到的数据库状态是一样的，忽略最外层的事务。以前，额外的连接无法查看固件记录。</p><p>线程进入嵌套的事务时，为了维护隔离性，它会临时获得连接的专用权。</p><p>如果你的测试目前要在派生的线程中获得不在事务中的单独连接，需要直接管理连接。</p><p>如果测试派生线程，而线程与显式数据库事务交互，这一变化可能导致死锁。</p><p>若想避免这个新行为的影响，简单的方法是在受影响的测试用例上禁用事务型测试。</p><p><a class="anchor" id="railties-5-1"></a></p><h3 id="railties-5-1">4 Railties</h3><p>变化详情参见 <a href="https://github.com/rails/rails/blob/5-1-stable/railties/CHANGELOG.md">Changelog</a>。</p><p><a class="anchor" id="railties-removals-5-1"></a></p><h4 id="railties-removals-5-1">4.1 删除</h4>
+<ul>
+<li>  删除弃用的 <code>config.static_cache_control</code>。（<a href="https://github.com/rails/rails/commit/c861decd44198f8d7d774ee6a74194d1ac1a5a13">提交</a>）</li>
+<li>  删除弃用的 <code>config.serve_static_files</code>。（<a href="https://github.com/rails/rails/commit/0129ca2eeb6d5b2ea8c6e6be38eeb770fe45f1fa">提交</a>）</li>
+<li>  删除弃用的 <code>rails/rack/debugger</code>。（<a href="https://github.com/rails/rails/commit/7563bf7b46e6f04e160d664e284a33052f9804b8">提交</a>）</li>
+<li>  删除弃用的任务：<code>rails:update</code>，<code>rails:template</code>，<code>rails:template:copy</code>，<code>rails:update:configs</code> 和 <code>rails:update:bin</code>。（<a href="https://github.com/rails/rails/commit/f7782812f7e727178e4a743aa2874c078b722eef">提交</a>）</li>
+<li>  删除 <code>routes</code> 任务弃用的 <code>CONTROLLER</code> 环境变量。（<a href="https://github.com/rails/rails/commit/f9ed83321ac1d1902578a0aacdfe55d3db754219">提交</a>）</li>
+<li>  删除 <code>rails new</code> 命令的 <code>-j</code>（<code>--javascript</code>）选项。（<a href="https://github.com/rails/rails/pull/28546">拉取请求</a>）</li>
+</ul>
+<p><a class="anchor" id="railties-notable-changes-5-1"></a></p><h4 id="railties-notable-changes-5-1">4.2 重要变化</h4>
+<ul>
+<li>  在 <code>config/secrets.yml</code> 中添加一部分，供所有环境使用。（<a href="https://github.com/rails/rails/commit/e530534265d2c32b5c5f772e81cb9002dcf5e9cf">提交</a>）</li>
+<li>  <code>config/secrets.yml</code> 文件中的所有键现在都通过符号加载。（<a href="https://github.com/rails/rails/pull/26929">拉取请求</a>）</li>
+<li>  从默认栈中删除 jquery-rails。Action View 提供的 rails-ujs 现在是默认的 UJS 适配器。（<a href="https://github.com/rails/rails/pull/27113">拉取请求</a>）</li>
+<li>  为新应用添加 Yarn 支持，创建 yarn binstub 和 package.json。（<a href="https://github.com/rails/rails/pull/26836">拉取请求</a>）</li>
+<li>  通过 <code>--webpack</code> 选项为新应用添加 Webpack 支持，相关功能由 rails/webpacker gem 提供。（<a href="https://github.com/rails/rails/pull/27288">拉取请求</a>）</li>
+<li>  生成新应用时，如果没提供 <code>--skip-git</code> 选项，初始化 Git 仓库。（<a href="https://github.com/rails/rails/pull/27632">拉取请求</a>）</li>
+<li>  在 <code>config/secrets.yml.enc</code> 文件中保存加密的机密信息。（<a href="https://github.com/rails/rails/pull/28038">拉取请求</a>）</li>
+<li>  在 <code>rails initializers</code> 中显示 railtie 类名。（<a href="https://github.com/rails/rails/pull/25257">拉取请求</a>）</li>
+</ul>
+<p><a class="anchor" id="action-cable-5-1"></a></p><h3 id="action-cable-5-1">5 Action Cable</h3><p>变化详情参见 <a href="https://github.com/rails/rails/blob/5-1-stable/actioncable/CHANGELOG.md">Changelog</a>。</p><p><a class="anchor" id="action-cable-notable-changes-5-1"></a></p><h4 id="action-cable-notable-changes-5-1">5.1 重要变化</h4>
+<ul>
+<li>  允许在 <code>cable.yml</code> 中为 Redis 和事件型 Redis 适配器提供 <code>channel_prefix</code>，以防多个应用使用同一个 Redis 服务器时名称有冲突。（<a href="https://github.com/rails/rails/pull/27425">拉取请求</a>）</li>
+<li>  添加 <code>ActiveSupport::Notifications</code> 钩子，用于广播数据。（<a href="https://github.com/rails/rails/pull/24988">拉取请求</a>）</li>
+</ul>
+<p><a class="anchor" id="action-pack-5-1"></a></p><h3 id="action-pack-5-1">6 Action Pack</h3><p>变化详情参见 <a href="https://github.com/rails/rails/blob/5-1-stable/actionpack/CHANGELOG.md">Changelog</a>。</p><p><a class="anchor" id="action-pack-removals-5-1"></a></p><h4 id="action-pack-removals-5-1">6.1 删除</h4>
+<ul>
+<li>  <code>ActionDispatch::IntegrationTest</code> 和 <code>ActionController::TestCase</code> 类的 <code>#process</code>、<code>#get</code>、<code>#post</code>、<code>#patch</code>、<code>#put</code>、<code>#delete</code> 和 <code>#head</code> 等方法不再允许使用非关键字参数。（<a href="https://github.com/rails/rails/commit/98b8309569a326910a723f521911e54994b112fb">提交</a>，<a href="https://github.com/rails/rails/commit/de9542acd56f60d281465a59eac11e15ca8b3323">提交</a>）</li>
+<li>  删除弃用的 <code>ActionDispatch::Callbacks.to_prepare</code> 和 <code>ActionDispatch::Callbacks.to_cleanup</code>。（<a href="https://github.com/rails/rails/commit/3f2b7d60a52ffb2ad2d4fcf889c06b631db1946b">提交</a>）</li>
+<li>  删除弃用的与控制器过滤器有关的方法。（<a href="https://github.com/rails/rails/commit/d7be30e8babf5e37a891522869e7b0191b79b757">提交</a>）</li>
+</ul>
+<p><a class="anchor" id="action-pack-deprecations-5-1"></a></p><h4 id="action-pack-deprecations-5-1">6.2 弃用</h4>
+<ul>
+<li>  弃用 <code>config.action_controller.raise_on_unfiltered_parameters</code>。在 Rails 5.1 中没有任何效果。（<a href="https://github.com/rails/rails/commit/c6640fb62b10db26004a998d2ece98baede509e5">提交</a>）</li>
+</ul>
+<p><a class="anchor" id="action-pack-notable-changes-5-1"></a></p><h4 id="action-pack-notable-changes-5-1">6.3 重要变化</h4>
+<ul>
+<li>  为路由 DSL 增加 <code>direct</code> 和 <code>resolve</code> 方法。（<a href="https://github.com/rails/rails/pull/23138">拉取请求</a>）</li>
+<li>  新增 <code>ActionDispatch::SystemTestCase</code> 类，用于编写应用的系统测试。（<a href="https://github.com/rails/rails/pull/26703">拉取请求</a>）</li>
+</ul>
+<p><a class="anchor" id="action-view-5-1"></a></p><h3 id="action-view-5-1">7 Action View</h3><p>变化详情参见 <a href="https://github.com/rails/rails/blob/5-1-stable/actionview/CHANGELOG.md">Changelog</a>。</p><p><a class="anchor" id="action-view-removals-5-1"></a></p><h4 id="action-view-removals-5-1">7.1 删除</h4>
+<ul>
+<li>  删除 <code>ActionView::Template::Error</code> 中弃用的 <code>#original_exception</code> 方法。（<a href="https://github.com/rails/rails/commit/b9ba263e5aaa151808df058f5babfed016a1879f">提交</a>）</li>
+<li>  删除 <code>strip_tags</code> 方法不恰当的 <code>encode_special_chars</code> 选项。（<a href="https://github.com/rails/rails/pull/28061">拉取请求</a>）</li>
+</ul>
+<p><a class="anchor" id="action-view-deprecations-5-1"></a></p><h4 id="action-view-deprecations-5-1">7.2 弃用</h4>
+<ul>
+<li>  弃用 ERB 处理程序 Erubis，换成 Erubi。（<a href="https://github.com/rails/rails/pull/27757">拉取请求</a>）</li>
+</ul>
+<p><a class="anchor" id="action-view-notable-changes-5-1"></a></p><h4 id="action-view-notable-changes-5-1">7.3 重要变化</h4>
+<ul>
+<li>  原始模板处理程序（Rails 5 默认的模板处理程序）现在输出对 HTML 安全的字符串。（<a href="https://github.com/rails/rails/commit/1de0df86695f8fa2eeae6b8b46f9b53decfa6ec8">提交</a>）</li>
+<li>  修改 <code>datetime_field</code> 和 <code>datetime_field_tag</code>，让它们生成 <code>datetime-local</code> 字段。（<a href="https://github.com/rails/rails/pull/28061">拉取请求</a>）</li>
+<li>  新增 Builder 风格的 HTML 标签句法（<code>tag.div</code>、<code>tag.br</code>，等等）。（<a href="https://github.com/rails/rails/pull/25543">拉取请求</a>）</li>
+<li>  添加 <code>form_with</code>，统一 <code>form_tag</code> 和 <code>form_for</code>。（<a href="https://github.com/rails/rails/pull/26976">拉取请求</a>）</li>
+<li>  为 <code>current_page?</code> 方法添加 <code>check_parameters</code> 选项。（<a href="https://github.com/rails/rails/pull/27549">拉取请求</a>）</li>
+</ul>
+<p><a class="anchor" id="action-mailer-5-1"></a></p><h3 id="action-mailer-5-1">8 Action Mailer</h3><p>变化详情参见 <a href="https://github.com/rails/rails/blob/5-1-stable/actionmailer/CHANGELOG.md">Changelog</a>。</p><p><a class="anchor" id="action-mailer-notable-changes-5-1"></a></p><h4 id="action-mailer-notable-changes-5-1">8.1 重要变化</h4>
+<ul>
+<li>  有附件而且在行间设定正文时，允许自定义内容类型。（<a href="https://github.com/rails/rails/pull/27227">拉取请求</a>）</li>
+<li>  允许把 lambda 传给 <code>default</code> 方法。（<a href="https://github.com/rails/rails/commit/1cec84ad2ddd843484ed40b1eb7492063ce71baf">提交</a>）</li>
+<li>  支持参数化邮件程序，在动作之间共享前置过滤器和默认值。（<a href="https://github.com/rails/rails/commit/1cec84ad2ddd843484ed40b1eb7492063ce71baf">提交</a>）</li>
+<li>  把传给邮件程序动作的参数传给 <code>process.action_mailer</code> 时间，放在 <code>args</code> 键名下。（<a href="https://github.com/rails/rails/pull/27900">拉取请求</a>）</li>
+</ul>
+<p><a class="anchor" id="active-record-5-1"></a></p><h3 id="active-record-5-1">9 Active Record</h3><p>变化详情参见 <a href="https://github.com/rails/rails/blob/5-1-stable/activerecord/CHANGELOG.md">Changelog</a>。</p><p><a class="anchor" id="active-record-removals-5-1"></a></p><h4 id="active-record-removals-5-1">9.1 删除</h4>
+<ul>
+<li>  不再允许同时为 <code>ActiveRecord::QueryMethods#select</code> 传入参数和块。（<a href="https://github.com/rails/rails/commit/4fc3366d9d99a0eb19e45ad2bf38534efbf8c8ce">提交</a>）</li>
+<li>  删除弃用的 i18n 作用域 <code>activerecord.errors.messages.restrict_dependent_destroy.one</code> 和 <code>activerecord.errors.messages.restrict_dependent_destroy.many</code>。（<a href="https://github.com/rails/rails/commit/00e3973a311">提交</a>）</li>
+<li>  删除单个和集合关系读值方法中弃用的 <code>force_reload</code> 参数。（<a href="https://github.com/rails/rails/commit/09cac8c67af">提交</a>）</li>
+<li>  不再支持把一列传给 <code>#quote</code>。（<a href="https://github.com/rails/rails/commit/e646bad5b7c">提交</a>）</li>
+<li>  删除 <code>#tables</code> 方法弃用的 <code>name</code> 参数。（<a href="https://github.com/rails/rails/commit/d5be101dd02214468a27b6839ffe338cfe8ef5f3">提交</a>）</li>
+<li>  <code>#tables</code> 和 <code>#table_exists?</code> 不再返回表和视图，而只返回表。（<a href="https://github.com/rails/rails/commit/5973a984c369a63720c2ac18b71012b8347479a8">提交</a>）</li>
+<li>  删除 <code>ActiveRecord::StatementInvalid#initialize</code> 和 <code>ActiveRecord::StatementInvalid#original_exception</code> 弃用的 <code>original_exception</code> 参数。（<a href="https://github.com/rails/rails/commit/bc6c5df4699d3f6b4a61dd12328f9e0f1bd6cf46">提交</a>）</li>
+<li>  不再支持在查询中使用类。（<a href="https://github.com/rails/rails/commit/b4664864c972463c7437ad983832d2582186e886">提交</a>）</li>
+<li>  不再支持在 LIMIT 子句中使用逗号。（<a href="https://github.com/rails/rails/commit/fc3e67964753fb5166ccbd2030d7382e1976f393">提交</a>）</li>
+<li>  删除 <code>#destroy_all</code> 弃用的 <code>conditions</code> 参数。（<a href="https://github.com/rails/rails/commit/d31a6d1384cd740c8518d0bf695b550d2a3a4e9b">提交</a>）</li>
+<li>  删除 <code>#delete_all</code> 弃用的 <code>conditions</code> 参数。（<a href="https://github.com/rails/rails/pull/27503/commits/e7381d289e4f8751dcec9553dcb4d32153bd922b">提交</a>）</li>
+<li>  删除弃用的 <code>#load_schema_for</code> 方法，换成 <code>#load_schema</code>。（<a href="https://github.com/rails/rails/commit/419e06b56c3b0229f0c72d3e4cdf59d34d8e5545">提交</a>）</li>
+<li>  删除弃用的 <code>#raise_in_transactional_callbacks</code> 配置。（<a href="https://github.com/rails/rails/commit/8029f779b8a1dd9848fee0b7967c2e0849bf6e07">提交</a>）</li>
+<li>  删除弃用的 <code>#use_transactional_fixtures</code> 配置。（<a href="https://github.com/rails/rails/commit/3955218dc163f61c932ee80af525e7cd440514b3">提交</a>）</li>
+</ul>
+<p><a class="anchor" id="active-record-deprecations-5-1"></a></p><h4 id="active-record-deprecations-5-1">9.2 弃用</h4>
+<ul>
+<li>  弃用 <code>error_on_ignored_order_or_limit</code> 旗标，改用 <code>error_on_ignored_order</code>。（<a href="https://github.com/rails/rails/commit/451437c6f57e66cc7586ec966e530493927098c7">提交</a>）</li>
+<li>  弃用 <code>sanitize_conditions</code>，改用 <code>sanitize_sql</code>。（<a href="https://github.com/rails/rails/pull/25999">拉取请求</a>）</li>
+<li>  弃用连接适配器的 <code>supports_migrations?</code> 方法。（<a href="https://github.com/rails/rails/pull/28172">拉取请求</a>）</li>
+<li>  弃用 <code>Migrator.schema_migrations_table_name</code>，改用 <code>SchemaMigration.table_name</code>。（<a href="https://github.com/rails/rails/pull/28351">拉取请求</a>）</li>
+<li>  加引号和做类型转换时不再调用 <code>#quoted_id</code>。（<a href="https://github.com/rails/rails/pull/27962">拉取请求</a>）</li>
+<li>  <code>#index_name_exists?</code> 方法不再接受 <code>default</code> 参数。（<a href="https://github.com/rails/rails/pull/26930">拉取请求</a>）</li>
+</ul>
+<p><a class="anchor" id="active-record-notable-changes-5-1"></a></p><h4 id="active-record-notable-changes-5-1">9.3 重要变化</h4>
+<ul>
+<li>  主键的默认类型改为 BIGINT。（<a href="https://github.com/rails/rails/pull/26266">拉取请求</a>）</li>
+<li>  支持 MySQL 5.7.5+ 和 MariaDB 5.2.0+ 的虚拟（生成的）列。（<a href="https://github.com/rails/rails/commit/65bf1c60053e727835e06392d27a2fb49665484c">提交</a>）</li>
+<li>  支持在批量处理时限制记录数量。（<a href="https://github.com/rails/rails/commit/451437c6f57e66cc7586ec966e530493927098c7">提交</a>）</li>
+<li>  事务型测试现在把所有 Active Record 连接包装在数据库事务中。（<a href="https://github.com/rails/rails/pull/28726">拉取请求</a>）</li>
+<li>  默认跳过 <code>mysqldump</code> 命令输出的注释。（<a href="https://github.com/rails/rails/pull/23301">拉取请求</a>）</li>
+<li>  把块传给 <code>ActiveRecord::Relation#count</code> 时，使用 Ruby 的 <code>Enumerable#count</code> 计算记录数量，而不是悄无声息地忽略块。（<a href="https://github.com/rails/rails/pull/24203">拉取请求</a>）</li>
+<li>  把 <code>"-v ON_ERROR_STOP=1"</code> 旗标传给 <code>psql</code> 命令，不静默 SQL 错误。（<a href="https://github.com/rails/rails/pull/24773">拉取请求</a>）</li>
+<li>  添加 <code>ActiveRecord::Base.connection_pool.stat</code>。（<a href="https://github.com/rails/rails/pull/26988">拉取请求</a>）</li>
+<li>  如果直接继承 <code>ActiveRecord::Migration</code>，抛出错误。应该指定迁移针对的 Rails 版本。（<a href="https://github.com/rails/rails/commit/249f71a22ab21c03915da5606a063d321f04d4d3">提交</a>）</li>
+<li>  通过 <code>through</code> 建立的关联，如果反射名称有歧义，抛出错误。（<a href="https://github.com/rails/rails/commit/0944182ad7ed70d99b078b22426cbf844edd3f61">提交</a>）</li>
+</ul>
+<p><a class="anchor" id="active-model-5-1"></a></p><h3 id="active-model-5-1">10 Active Model</h3><p>变化详情参见 <a href="https://github.com/rails/rails/blob/5-1-stable/activemodel/CHANGELOG.md">Changelog</a>。</p><p><a class="anchor" id="active-model-removals-5-1"></a></p><h4 id="active-model-removals-5-1">10.1 删除</h4>
+<ul>
+<li>  删除 <code>ActiveModel::Errors</code> 中弃用的方法。（<a href="https://github.com/rails/rails/commit/9de6457ab0767ebab7f2c8bc583420fda072e2bd">提交</a>）</li>
+<li>  删除长度验证的 <code>:tokenizer</code> 选项。（<a href="https://github.com/rails/rails/commit/6a78e0ecd6122a6b1be9a95e6c4e21e10e429513">提交</a>）</li>
+<li>  回调返回 <code>false</code> 时不再终止回调链。（<a href="https://github.com/rails/rails/commit/3a25cdca3e0d29ee2040931d0cb6c275d612dffe">提交</a>）</li>
+</ul>
+<p><a class="anchor" id="active-model-notable-changes-5-1"></a></p><h4 id="active-model-notable-changes-5-1">10.2 重要变化</h4>
+<ul>
+<li>  赋值给模型属性的字符串现在能正确冻结了。（<a href="https://github.com/rails/rails/pull/28729">拉取请求</a>）</li>
+</ul>
+<p><a class="anchor" id="active-job-5-1"></a></p><h3 id="active-job-5-1">11 Active Job</h3><p>变化详情参见 <a href="https://github.com/rails/rails/blob/5-1-stable/activejob/CHANGELOG.md">Changelog</a>。</p><p><a class="anchor" id="active-job-removals-5-1"></a></p><h4 id="active-job-removals-5-1">11.1 删除</h4>
+<ul>
+<li>  不再支持把适配器类传给 <code>.queue_adapter</code>。（<a href="https://github.com/rails/rails/commit/d1fc0a5eb286600abf8505516897b96c2f1ef3f6">提交</a>）</li>
+<li>  删除 <code>ActiveJob::DeserializationError</code> 中弃用的 <code>#original_exception</code>。（<a href="https://github.com/rails/rails/commit/d861a1fcf8401a173876489d8cee1ede1cecde3b">提交</a>）</li>
+</ul>
+<p><a class="anchor" id="active-job-notable-changes"></a></p><h4 id="active-job-notable-changes">11.2 重要变化</h4>
+<ul>
+<li>  增加通过 <code>ActiveJob::Base.retry_on</code> 和 <code>ActiveJob::Base.discard_on</code> 实现的声明式异常处理。（<a href="https://github.com/rails/rails/pull/25991">拉取请求</a>）</li>
+<li>  把作业实例传入块，这样在尝试失败后可以访问 <code>job.arguments</code> 等信息。（<a href="https://github.com/rails/rails/commit/a1e4c197cb12fef66530a2edfaeda75566088d1f">提交</a>）</li>
+</ul>
+<p><a class="anchor" id="active-support-5-1"></a></p><h3 id="active-support-5-1">12 Active Support</h3><p>变化详情参见 <a href="https://github.com/rails/rails/blob/5-1-stable/activesupport/CHANGELOG.md">Changelog</a>。</p><p><a class="anchor" id="active-support-removals-5-1"></a></p><h4 id="active-support-removals-5-1">12.1 删除</h4>
+<ul>
+<li>  删除 <code>ActiveSupport::Concurrency::Latch</code> 类。（<a href="https://github.com/rails/rails/commit/0d7bd2031b4054fbdeab0a00dd58b1b08fb7fea6">提交</a>）</li>
+<li>  删除 <code>halt_callback_chains_on_return_false</code>。（<a href="https://github.com/rails/rails/commit/4e63ce53fc25c3bc15c5ebf54bab54fa847ee02a">提交</a>）</li>
+<li>  回调返回 <code>false</code> 时不再终止回调链。（<a href="https://github.com/rails/rails/commit/3a25cdca3e0d29ee2040931d0cb6c275d612dffe">提交</a>）</li>
+</ul>
+<p><a class="anchor" id="active-support-deprecations-5-1"></a></p><h4 id="active-support-deprecations-5-1">12.2 弃用</h4>
+<ul>
+<li>  温和弃用顶层 <code>HashWithIndifferentAccess</code> 类，换成 <code>ActiveSupport::HashWithIndifferentAccess</code>。（<a href="https://github.com/rails/rails/pull/28157">拉取请求</a>）</li>
+<li>  <code>set_callback</code> 和 <code>skip_callback</code> 的 <code>:if</code> 和 <code>:unless</code> 条件选项不再接受字符串。（<a href="https://github.com/rails/rails/commit/0952552">提交</a>）</li>
+</ul>
+<p><a class="anchor" id="notable-changes-5-1"></a></p><h4 id="notable-changes-5-1">12.3 重要变化</h4>
+<ul>
+<li>  修正 DST 发生变化时的时段解析和变迁。（<a href="https://github.com/rails/rails/commit/8931916f4a1c1d8e70c06063ba63928c5c7eab1e">提交</a>，<a href="https://github.com/rails/rails/pull/26597">拉取请求</a>）</li>
+<li>  Unicode 更新到 9.0.0 版。（<a href="https://github.com/rails/rails/pull/27822">拉取请求</a>）</li>
+<li>  为 <code>#ago</code> 添加别名 <code>Duration#before</code>，为 <code>#since</code> 添加别名 <code>#after</code>。（<a href="https://github.com/rails/rails/pull/27721">拉取请求</a>）</li>
+<li>  添加 <code>Module#delegate_missing_to</code>，把当前对象未定义的方法委托给一个代理对象。（<a href="https://github.com/rails/rails/pull/23930">拉取请求</a>）</li>
+<li>  添加 <code>Date#all_day</code>，返回一个范围，表示当前日期和时间上的一整天。（<a href="https://github.com/rails/rails/pull/24930">拉取请求</a>）</li>
+<li>  为测试引入 <code>assert_changes</code> 和 <code>assert_no_changes</code>。（<a href="https://github.com/rails/rails/pull/25393">拉取请求</a>）</li>
+<li>  现在嵌套调用 <code>travel</code> 和 <code>travel_to</code> 抛出异常。（<a href="https://github.com/rails/rails/pull/24890">拉取请求</a>）</li>
+<li>  更新 <code>DateTime#change</code>，支持微秒和纳秒。（<a href="https://github.com/rails/rails/pull/28242">拉取请求</a>）</li>
+</ul>
+<p><a class="anchor" id="credits-5-1"></a></p><h3 id="credits-5-1">13 荣誉榜</h3><p>得益于<a href="http://contributors.rubyonrails.org/">众多贡献者</a>，Rails 才能变得这么稳定和强健。向他们致敬！</p>
+
+        <h3>反馈</h3>
+        <p>
+          我们鼓励您帮助提高本指南的质量。
+        </p>
+        <p>
+          如果看到如何错字或错误，请反馈给我们。
+          您可以阅读我们的<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">文档贡献</a>指南。
+        </p>
+        <p>
+          您还可能会发现内容不完整或不是最新版本。
+          请添加缺失文档到 master 分支。请先确认 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 是否已经修复。
+          关于用语约定，请查看<a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南指导</a>。
+        </p>
+        <p>
+          无论什么原因，如果你发现了问题但无法修补它，请<a href="https://github.com/rails/rails/issues">创建 issue</a>。
+        </p>
+        <p>
+          最后，欢迎到 <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs 邮件列表</a>参与任何有关 Ruby on Rails 文档的讨论。
+        </p>
+        <h4>中文翻译反馈</h4>
+        <p>贡献：<a href="https://github.com/ruby-china/guides">https://github.com/ruby-china/guides</a>。</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+      <p>本著作采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">创作共用 署名-相同方式共享 4.0 国际</a> 授权</p>
+<p>“Rails”，“Ruby on Rails”，以及 Rails Logo 为 David Heinemeier Hansson 的商标。版权所有</p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter.js"></script>
+  <script type="text/javascript">
+    syntaxhighlighterConfig = {
+      autoLinks: false,
+    };
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>
