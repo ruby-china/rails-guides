@@ -491,7 +491,13 @@ An Employee was touched
 <li>  <code>update_counters</code>
 </li>
 </ul>
-<p>请慎重地使用这些方法，因为有些回调包含了重要的业务规则和应用逻辑，在不了解潜在影响的情况下就跳过回调，可能导致无效数据。</p><p><a class="anchor" id="halting-execution"></a></p><h3 id="halting-execution">6 停止执行</h3><p>回调在模型中注册后，将被加入队列等待执行。这个队列包含了所有模型的验证、已注册的回调和将要执行的数据库操作。</p><p>整个回调链包装在一个事务中。如果任何一个 <code>before</code> 回调方法返回 <code>false</code> 或引发异常，整个回调链就会停止执行，同时发出 <code>ROLLBACK</code> 消息来回滚事务；而 <code>after</code> 回调方法只能通过引发异常来达到相同的效果。</p><div class="warning"><p>当回调链停止后，Rails 会重新抛出除了 <code>ActiveRecord::Rollback</code> 和 <code>ActiveRecord::RecordInvalid</code> 之外的其他异常。这可能导致那些预期 <code>save</code> 和 <code>update_attributes</code> 等方法（通常返回 <code>true</code> 或 <code>false</code> ）不会引发异常的代码出错。</p></div><p><a class="anchor" id="relational-callbacks"></a></p><h3 id="relational-callbacks">7 关联回调</h3><p>回调不仅可以在模型关联中使用，还可以通过模型关联定义。假设有一个用户在博客中发表了多篇文章，现在我们要删除这个用户，那么这个用户的所有文章也应该删除，为此我们通过 <code>Article</code> 模型和 <code>User</code> 模型的关联来给 <code>User</code> 模型添加一个 <code>after_destroy</code> 回调：</p><div class="code_container">
+<p>请慎重地使用这些方法，因为有些回调包含了重要的业务规则和应用逻辑，在不了解潜在影响的情况下就跳过回调，可能导致无效数据。</p><p><a class="anchor" id="halting-execution"></a></p><h3 id="halting-execution">6 停止执行</h3><p>回调在模型中注册后，将被加入队列等待执行。这个队列包含了所有模型的验证、已注册的回调和将要执行的数据库操作。</p><p>整个回调链包装在一个事务中。只要有回调抛出异常，回调链随即停止，并且发出 <code>ROLLBACK</code> 消息。如果想故意停止回调链，可以这么做：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+throw :abort
+
+</pre>
+</div>
+<div class="warning"><p>当回调链停止后，Rails 会重新抛出除了 <code>ActiveRecord::Rollback</code> 和 <code>ActiveRecord::RecordInvalid</code> 之外的其他异常。这可能导致那些预期 <code>save</code> 和 <code>update_attributes</code> 等方法（通常返回 <code>true</code> 或 <code>false</code> ）不会引发异常的代码出错。</p></div><p><a class="anchor" id="relational-callbacks"></a></p><h3 id="relational-callbacks">7 关联回调</h3><p>回调不仅可以在模型关联中使用，还可以通过模型关联定义。假设有一个用户在博客中发表了多篇文章，现在我们要删除这个用户，那么这个用户的所有文章也应该删除，为此我们通过 <code>Article</code> 模型和 <code>User</code> 模型的关联来给 <code>User</code> 模型添加一个 <code>after_destroy</code> 回调：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class User &lt; ApplicationRecord
   has_many :articles, dependent: :destroy

@@ -809,11 +809,11 @@ create  test/fixtures/articles.yml
 
 </pre>
 </div>
-<p>模型测试没有专门的超类（如 <code>ActionMailer::TestCase</code>），而是继承自 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveSupport/TestCase.html"><code>ActiveSupport::TestCase</code></a>。</p><p><a class="anchor" id="system-testing"></a></p><h3 id="system-testing">5 系统测试</h3><p>系统测试是完整的浏览器测试，可用于测试应用的 JavaScript 和用户体验。系统测试建立在 Capybara 之上。</p><p>系统测试可以在真实的浏览器中运行，也可以在无界面驱动中运行，用于测试用户与应用的交互。</p><p>系统测试存放在应用的 <code>test/system</code> 目录中。Rails 为创建系统测试骨架提供了一个生成器：</p><div class="code_container">
+<p>模型测试没有专门的超类（如 <code>ActionMailer::TestCase</code>），而是继承自 <a href="http://api.rubyonrails.org/v5.1.1/classes/ActiveSupport/TestCase.html"><code>ActiveSupport::TestCase</code></a>。</p><p><a class="anchor" id="system-testing"></a></p><h3 id="system-testing">5 系统测试</h3><p>系统测试用于测试用户与应用的交互，可以在真正的浏览器中运行，也可以在无界面浏览器中运行。系统测试建立在 Capybara 之上。</p><p>系统测试存放在应用的 <code>test/system</code> 目录中。Rails 为创建系统测试骨架提供了一个生成器：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rails generate system_test users_create
+$ bin/rails generate system_test users
       invoke test_unit
-      create test/system/users_creates_test.rb
+      create test/system/users_test.rb
 
 </pre>
 </div>
@@ -821,11 +821,11 @@ $ bin/rails generate system_test users_create
 <pre class="brush: ruby; gutter: false; toolbar: false">
 require "application_system_test_case"
 
-class UsersCreatesTest &lt; ApplicationSystemTestCase
+class UsersTest &lt; ApplicationSystemTestCase
   # test "visiting the index" do
-  #   visit users_creates_url
+  #   visit users_url
   #
-  #   assert_selector "h1", text: "UsersCreate"
+  #   assert_selector "h1", text: "Users"
   # end
 end
 
@@ -842,7 +842,7 @@ end
 
 </pre>
 </div>
-<p>驱动名称是 <code>driven_by</code> 必须的参数。<code>driven_by</code> 接受的可选参数有：<code>:using</code>，指定使用的浏览器（仅供有界面的驱动使用，如 Selenium）；<code>:screen_size</code>，修改截图的尺寸。</p><div class="code_container">
+<p>驱动名称是 <code>driven_by</code> 必须的参数。<code>driven_by</code> 接受的可选参数有：<code>:using</code>，指定使用的浏览器（仅供 Selenium 使用）；<code>:screen_size</code>，修改截图的尺寸；<code>:options</code>，设定驱动支持的选项。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 require "test_helper"
 
@@ -852,7 +852,7 @@ end
 
 </pre>
 </div>
-<p>如果所需的 Capybara 配置 Rails 提供的多，可以把所有配置都放在 <code>application_system_test_case.rb</code> 文件中。</p><p>其他设置参见 <a href="https://github.com/teamcapybara/capybara#setup">Capybara 的文档</a>。</p><p><a class="anchor" id="screenshot-helper"></a></p><h4 id="screenshot-helper">5.2 截图辅助方法</h4><p><code>ScreenshotHelper</code> 用于截取测试的截图。这有助于查看测试失败时的界面，或者以后通过截图调试。</p><p>这个模块提供了两个方法：<code>take_screenshot</code> 和 <code>take_failed_screenshot</code>。Rails 在 <code>after_teardown</code> 中调用了 <code>take_failed_screenshot</code>。</p><p><code>take_screenshot</code> 辅助方法可以放在测试的任何位置，用于捕获浏览器的截图。</p><p><a class="anchor" id="implementing-a-system-test"></a></p><h4 id="implementing-a-system-test">5.3 编写系统测试</h4><p>下面我们为前面开发的博客应用添加一个系统测试。这个系统测试访问首页，然后新建一篇博客文章。</p><p>如果使用的是脚手架生成器，已经自动创建了系统测试骨架。否则，先生成系统测试骨架：</p><div class="code_container">
+<p>如果所需的 Capybara 配置比 Rails 提供的多，可以把额外配置放在 <code>application_system_test_case.rb</code> 文件中。</p><p>其他设置参见 <a href="https://github.com/teamcapybara/capybara#setup">Capybara 的文档</a>。</p><p><a class="anchor" id="screenshot-helper"></a></p><h4 id="screenshot-helper">5.2 截图辅助方法</h4><p><code>ScreenshotHelper</code> 用于截取测试的截图。这有助于查看测试失败时的界面，或者以后通过截图调试。</p><p>这个模块提供了两个方法：<code>take_screenshot</code> 和 <code>take_failed_screenshot</code>。Rails 在 <code>after_teardown</code> 中调用了 <code>take_failed_screenshot</code>。</p><p><code>take_screenshot</code> 辅助方法可以放在测试的任何位置，用于捕获浏览器的截图。</p><p><a class="anchor" id="implementing-a-system-test"></a></p><h4 id="implementing-a-system-test">5.3 编写系统测试</h4><p>下面我们为前面开发的博客应用添加一个系统测试。这个系统测试访问首页，然后新建一篇博客文章。</p><p>如果使用的是脚手架生成器，已经自动创建了系统测试骨架。否则，先生成系统测试骨架：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ bin/rails generate system_test articles
 

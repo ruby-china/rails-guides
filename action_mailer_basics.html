@@ -730,7 +730,7 @@ config.action_mailer.smtp_settings = {
 
 </pre>
 </div>
-<div class="note"><p>从 2014 年 7 月 15 日起，Google <a href="https://support.google.com/accounts/answer/6010255">增强了安全措施</a>，会阻止它认为不安全的应用访问。你可以在<a href="https://www.google.com/settings/security/lesssecureapps">这里</a>修改 Gmail 的设置，允许访问，或者使用其他 ESP 发送电子邮件：把上面的 <code>'smtp.gmail.com'</code> 换成提供商的地址。</p></div><p><a class="anchor" id="mailer-testing"></a></p><h3 id="mailer-testing">7 测试邮件程序</h3><p>邮件程序的测试参阅 <a href="testing.html#testing-your-mailers">测试邮件程序</a>。</p><p><a class="anchor" id="intercepting-emails"></a></p><h3 id="intercepting-emails">8 拦截电子邮件</h3><p>有时，在邮件发送之前需要做些修改。Action Mailer 提供了相应的钩子，可以拦截每封邮件。你可以注册一个拦截器，在交给发送程序之前修改邮件。</p><div class="code_container">
+<div class="note"><p>从 2014 年 7 月 15 日起，Google <a href="https://support.google.com/accounts/answer/6010255">增强了安全措施</a>，会阻止它认为不安全的应用访问。你可以在<a href="https://www.google.com/settings/security/lesssecureapps">这里</a>修改 Gmail 的设置，允许访问。如果你的 Gmail 账户启用了双因素身份验证，则要设定一个<a href="https://myaccount.google.com/apppasswords">应用密码</a>，用它代替常规的密码。或者，你也可以使用其他 ESP 发送电子邮件：把上面的 <code>'smtp.gmail.com'</code> 换成提供商的地址。</p></div><p><a class="anchor" id="mailer-testing"></a></p><h3 id="mailer-testing">7 测试邮件程序</h3><p>邮件程序的测试参阅 <a href="testing.html#testing-your-mailers">测试邮件程序</a>。</p><p><a class="anchor" id="intercepting-emails"></a></p><h3 id="intercepting-emails">8 拦截电子邮件</h3><p>有时，在邮件发送之前需要做些修改。Action Mailer 提供了相应的钩子，可以拦截每封邮件。你可以注册一个拦截器，在交给发送程序之前修改邮件。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class SandboxEmailInterceptor
   def self.delivering_email(message)

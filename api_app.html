@@ -303,13 +303,13 @@ end
 </li>
 <li>  <code>ActionDispatch::RequestId</code>
 </li>
+<li>  <code>ActionDispatch::RemoteIp</code>
+</li>
 <li>  <code>Rails::Rack::Logger</code>
 </li>
 <li>  <code>ActionDispatch::ShowExceptions</code>
 </li>
 <li>  <code>ActionDispatch::DebugExceptions</code>
-</li>
-<li>  <code>ActionDispatch::RemoteIp</code>
 </li>
 <li>  <code>ActionDispatch::Reloader</code>
 </li>
@@ -322,6 +322,8 @@ end
 <li>  <code>Rack::ConditionalGet</code>
 </li>
 <li>  <code>Rack::ETag</code>
+</li>
+<li>  <code>MyApi::Application::Routes</code>
 </li>
 </ul>
 <p>各个中间件的作用参见 <a href="rails_on_rack.html#internal-middleware-stack">内部中间件栈</a>。</p><p>其他插件，包括 Active Record，可能会添加额外的中间件。一般来说，这些中间件对要构建的应用类型一无所知，可以在只提供 API 的 Rails 应用中使用。</p><p>可以通过下述命令列出应用中的所有中间件：</p><div class="code_container">
@@ -430,6 +432,7 @@ config.middleware.delete ::Rack::Sendfile
 <li>  <code>ActionController::Rescue</code>：提供 <code>rescue_from</code>。</li>
 <li>  <code>ActionController::Instrumentation</code>：提供 Action Controller 定义的监测钩子（详情参见 <a href="active_support_instrumentation.html#action-controller">Action Controller</a>）。</li>
 <li>  <code>ActionController::ParamsWrapper</code>：把参数散列放到一个嵌套散列中，这样在发送 POST 请求时无需指定根元素。</li>
+<li>  <code>ActionController::Head</code>：返回只有首部没有内容的响应。</li>
 </ul>
 <p>其他插件可能会添加额外的模块。<code>ActionController::API</code> 引入的模块可以在 Rails 控制台中列出：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
