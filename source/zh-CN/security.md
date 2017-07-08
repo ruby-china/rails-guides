@@ -876,7 +876,7 @@ TIP: 为了了解当前针对 Web 应用的攻击方式，最好看几个真实�
 
 TIP: CSS 注入实际上是 JavaScript 注入，因为有的浏览器（如 IE、某些版本的 Safari 和其他浏览器）允许在 CSS 中使用 JavaScript。因此，在允许 Web 应用使用自定义 CSS 时，请三思而后行。
 
-著名的 [MySpace Samy 蠕虫](http://namb.la/popular/tech.html)是解释 CSS 注入攻击原理的最好例子。这个蠕虫只需访问用户的个人信息页面就能向 Samy（攻击者）发送好友请求。在短短几个小时内，Samy 就收到了超过一百万个好友请求，巨大的流量致使 MySpace 宕机。下面我们从技术角度来分析这个蠕虫。
+著名的 [MySpace Samy 蠕虫](https://samy.pl/popular/tech.html)是解释 CSS 注入攻击原理的最好例子。这个蠕虫只需访问用户的个人信息页面就能向 Samy（攻击者）发送好友请求。在短短几个小时内，Samy 就收到了超过一百万个好友请求，巨大的流量致使 MySpace 宕机。下面我们从技术角度来分析这个蠕虫。
 
 MySpace 禁用了很多标签，但允许使用 CSS。因此，蠕虫的作者通过下面这种方式把 JavaScript 植入 CSS 中：
 

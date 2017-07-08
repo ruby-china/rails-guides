@@ -139,16 +139,17 @@ API 应用默认包含下述中间件：
 *   `ActiveSupport::Cache::Strategy::LocalCache::Middleware`
 *   `Rack::Runtime`
 *   `ActionDispatch::RequestId`
+*   `ActionDispatch::RemoteIp`
 *   `Rails::Rack::Logger`
 *   `ActionDispatch::ShowExceptions`
 *   `ActionDispatch::DebugExceptions`
-*   `ActionDispatch::RemoteIp`
 *   `ActionDispatch::Reloader`
 *   `ActionDispatch::Callbacks`
 *   `ActiveRecord::Migration::CheckPending`
 *   `Rack::Head`
 *   `Rack::ConditionalGet`
 *   `Rack::ETag`
+*   `MyApi::Application::Routes`
 
 各个中间件的作用参见 [内部中间件栈](rails_on_rack.html#internal-middleware-stack)。
 
@@ -301,6 +302,7 @@ API 应用（使用 `ActionController::API`）默认有下述控制器模块：
 *   `ActionController::Rescue`：提供 `rescue_from`。
 *   `ActionController::Instrumentation`：提供 Action Controller 定义的监测钩子（详情参见 [Action Controller](active_support_instrumentation.html#action-controller)）。
 *   `ActionController::ParamsWrapper`：把参数散列放到一个嵌套散列中，这样在发送 POST 请求时无需指定根元素。
+*   `ActionController::Head`：返回只有首部没有内容的响应。
 
 其他插件可能会添加额外的模块。`ActionController::API` 引入的模块可以在 Rails 控制台中列出：
 

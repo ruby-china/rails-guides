@@ -117,6 +117,8 @@ use ActiveSupport::Cache::Strategy::LocalCache::Middleware
 use Rack::Runtime
 use Rack::MethodOverride
 use ActionDispatch::RequestId
+use ActionDispatch::RemoteIp
+use Sprockets::Rails::QuietAssets
 use Rails::Rack::Logger
 use ActionDispatch::ShowExceptions
 use WebConsole::Middleware
@@ -131,7 +133,7 @@ use ActionDispatch::Flash
 use Rack::Head
 use Rack::ConditionalGet
 use Rack::ETag
-run Rails.application.routes
+run MyApp.application.routes
 ```
 
 这里列出的默认中间件（以及其他一些）在 [内部中间件栈](#internal-middleware-stack)概述。
@@ -252,6 +254,12 @@ Action Controller 的大部分功能都实现成中间件。下面概述它们�
 
 在响应中设定唯一的 `X-Request-Id` 首部，并启用 `ActionDispatch::Request#request_id` 方法。
 
+**`ActionDispatch::RemoteIp`**
+
+检查 IP 欺骗攻击。
+
+`Sprockets::Rails::QuietAssets`：在日志中输出对静态资源的请求。
+
 **`Rails::Rack::Logger`**
 
 通知日志，请求开始了。请求完毕后，清空所有相关日志。
@@ -263,10 +271,6 @@ Action Controller 的大部分功能都实现成中间件。下面概述它们�
 **`ActionDispatch::DebugExceptions`**
 
 如果是本地请求，负责在日志中记录异常，并显示调试页面。
-
-**`ActionDispatch::RemoteIp`**
-
-检查 IP 欺骗攻击。
 
 **`ActionDispatch::Reloader`**
 

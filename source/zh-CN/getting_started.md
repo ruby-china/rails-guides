@@ -1133,11 +1133,11 @@ end
 </table>
 ```
 
-在上面的代码中，`link_to` 辅助方法生成“Destroy”链接的用法有点不同，其中第二个参数是具名路由（named route），还有一些选项作为其他参数。`method: :delete` 和 `data: { confirm: 'Are you sure?' }` 选项用于设置链接的 HTML5 属性，这样点击链接后 Rails 会先向用户显示一个确认对话框，然后用 `delete` 方法发起请求。这些操作是通过 JavaScript 脚本 `jquery_ujs` 实现的，这个脚本在生成应用骨架时已经被自动包含在了应用的布局中（`app/views/layouts/application.html.erb`）。如果没有这个脚本，确认对话框就无法显示。
+在上面的代码中，`link_to` 辅助方法生成“Destroy”链接的用法有点不同，其中第二个参数是具名路由（named route），还有一些选项作为其他参数。`method: :delete` 和 `data: { confirm: 'Are you sure?' }` 选项用于设置链接的 HTML5 属性，这样点击链接后 Rails 会先向用户显示一个确认对话框，然后用 `delete` 方法发起请求。这些操作是通过 JavaScript 脚本 `rails-ujs` 实现的，这个脚本在生成应用骨架时已经被自动包含在了应用的布局中（`app/views/layouts/application.html.erb`）。如果没有这个脚本，确认对话框就无法显示。
 
 ![确认对话框](images/getting_started/confirm_dialog.png)
 
-TIP: 关于 jQuery 非侵入式适配器（jQuery UJS）的更多介绍，请参阅[在 Rails 中使用 JavaScript](working_with_javascript_in_rails.html)。
+TIP: 关于非侵入式 JavaScript 的更多介绍，请参阅[在 Rails 中使用 JavaScript](working_with_javascript_in_rails.html)。
 
 恭喜你！现在你已经可以创建、显示、列出、更新和删除文章了！
 

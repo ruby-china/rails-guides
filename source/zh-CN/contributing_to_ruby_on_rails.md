@@ -139,7 +139,7 @@ NOTE: 为了减轻 CI 服务器的压力，关于文档的提交消息中应该�
 
 我们欢迎人们自发把 Rails 指南翻译成其他语言。翻译时请遵照下述步骤：
 
-*   派生项目 https://github.com/rails/rails
+*   派生 https://github.com/rails/rails 项目
 *   为你的语言添加一个文件夹，例如针对意大利语的 guides/source/it-IT
 *   把 guides/source 中的内容复制到你创建的文件夹中，然后翻译
 *   不要翻译 HTML 文件，因为那是自动生成的

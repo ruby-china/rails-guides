@@ -276,7 +276,11 @@ NOTE: `find_by_*` 和 `find_by_*!` 方法是为每个属性自动生成的动态
 
 回调在模型中注册后，将被加入队列等待执行。这个队列包含了所有模型的验证、已注册的回调和将要执行的数据库操作。
 
-整个回调链包装在一个事务中。如果任何一个 `before` 回调方法返回 `false` 或引发异常，整个回调链就会停止执行，同时发出 `ROLLBACK` 消息来回滚事务；而 `after` 回调方法只能通过引发异常来达到相同的效果。
+整个回调链包装在一个事务中。只要有回调抛出异常，回调链随即停止，并且发出 `ROLLBACK` 消息。如果想故意停止回调链，可以这么做：
+
+```ruby
+throw :abort
+```
 
 WARNING: 当回调链停止后，Rails 会重新抛出除了 `ActiveRecord::Rollback` 和 `ActiveRecord::RecordInvalid` 之外的其他异常。这可能导致那些预期 `save` 和 `update_attributes` 等方法（通常返回 `true` 或 `false` ）不会引发异常的代码出错。
 

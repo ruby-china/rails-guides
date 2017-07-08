@@ -597,16 +597,14 @@ create  test/fixtures/articles.yml
 
 ## 系统测试
 
-系统测试是完整的浏览器测试，可用于测试应用的 JavaScript 和用户体验。系统测试建立在 Capybara 之上。
-
-系统测试可以在真实的浏览器中运行，也可以在无界面驱动中运行，用于测试用户与应用的交互。
+系统测试用于测试用户与应用的交互，可以在真正的浏览器中运行，也可以在无界面浏览器中运行。系统测试建立在 Capybara 之上。
 
 系统测试存放在应用的 `test/system` 目录中。Rails 为创建系统测试骨架提供了一个生成器：
 
 ```sh
-$ bin/rails generate system_test users_create
+$ bin/rails generate system_test users
       invoke test_unit
-      create test/system/users_creates_test.rb
+      create test/system/users_test.rb
 ```
 
 下面是一个新生成的系统测试：
@@ -614,11 +612,11 @@ $ bin/rails generate system_test users_create
 ```ruby
 require "application_system_test_case"
 
-class UsersCreatesTest < ApplicationSystemTestCase
+class UsersTest < ApplicationSystemTestCase
   # test "visiting the index" do
-  #   visit users_creates_url
+  #   visit users_url
   #
-  #   assert_selector "h1", text: "UsersCreate"
+  #   assert_selector "h1", text: "Users"
   # end
 end
 ```
@@ -644,7 +642,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 end
 ```
 
-驱动名称是 `driven_by` 必须的参数。`driven_by` 接受的可选参数有：`:using`，指定使用的浏览器（仅供有界面的驱动使用，如 Selenium）；`:screen_size`，修改截图的尺寸。
+驱动名称是 `driven_by` 必须的参数。`driven_by` 接受的可选参数有：`:using`，指定使用的浏览器（仅供 Selenium 使用）；`:screen_size`，修改截图的尺寸；`:options`，设定驱动支持的选项。
 
 ```ruby
 require "test_helper"
@@ -654,7 +652,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 end
 ```
 
-如果所需的 Capybara 配置 Rails 提供的多，可以把所有配置都放在 `application_system_test_case.rb` 文件中。
+如果所需的 Capybara 配置比 Rails 提供的多，可以把额外配置放在 `application_system_test_case.rb` 文件中。
 
 其他设置参见 [Capybara 的文档](https://github.com/teamcapybara/capybara#setup)。
 
