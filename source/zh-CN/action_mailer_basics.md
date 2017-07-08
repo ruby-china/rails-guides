@@ -689,7 +689,7 @@ config.action_mailer.smtp_settings = {
   enable_starttls_auto: true  }
 ```
 
-NOTE: 从 2014 年 7 月 15 日起，Google [增强了安全措施](https://support.google.com/accounts/answer/6010255)，会阻止它认为不安全的应用访问。你可以在[这里](https://www.google.com/settings/security/lesssecureapps)修改 Gmail 的设置，允许访问，或者使用其他 ESP 发送电子邮件：把上面的 `'smtp.gmail.com'` 换成提供商的地址。
+NOTE: 从 2014 年 7 月 15 日起，Google [增强了安全措施](https://support.google.com/accounts/answer/6010255)，会阻止它认为不安全的应用访问。你可以在[这里](https://www.google.com/settings/security/lesssecureapps)修改 Gmail 的设置，允许访问。如果你的 Gmail 账户启用了双因素身份验证，则要设定一个[应用密码](https://myaccount.google.com/apppasswords)，用它代替常规的密码。或者，你也可以使用其他 ESP 发送电子邮件：把上面的 `'smtp.gmail.com'` 换成提供商的地址。
 
 <a class="anchor" id="mailer-testing"></a>
 
