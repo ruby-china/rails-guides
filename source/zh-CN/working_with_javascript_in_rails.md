@@ -169,7 +169,7 @@ $(document).ready ->
 <a href="/articles/1" data-remote="true">an article</a>
 ```
 
-绑定的 Ajax 事件和 `form_with` 方法一样。下面举个例子。假如有一个文章列表，我们想只点击一个链接就删除所有文章。视图代码如下：
+绑定的 Ajax 事件和 `form_with` 方法一样。下面举个例子。假如有一个文章列表，我们想只点击一个链接就删除所选文章。视图代码如下：
 
 ```erb
 <%= link_to "Delete article", @article, remote: true, method: :delete %>
