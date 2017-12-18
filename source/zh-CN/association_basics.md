@@ -1552,19 +1552,19 @@ end
 声明 `has_many` 关联后，声明所在的类自动获得了 16 个关联相关的方法：
 
 *   `collection`
-*   `collection<<(object, &#8230;&#8203;)`
-*   `collection.delete(object, &#8230;&#8203;)`
-*   `collection.destroy(object, &#8230;&#8203;)`
+*   `collection<<(object, ...)`
+*   `collection.delete(object, ...)`
+*   `collection.destroy(object, ...)`
 *   `collection=(objects)`
 *   `collection_singular_ids`
 *   `collection_singular_ids=(ids)`
 *   `collection.clear`
 *   `collection.empty?`
 *   `collection.size`
-*   `collection.find(&#8230;&#8203;)`
-*   `collection.where(&#8230;&#8203;)`
-*   `collection.exists?(&#8230;&#8203;)`
-*   `collection.build(attributes = {}, &#8230;&#8203;)`
+*   `collection.find(...)`
+*   `collection.where(...)`
+*   `collection.exists?(...)`
+*   `collection.build(attributes = {}, ...)`
 *   `collection.create(attributes = {})`
 *   `collection.create!(attributes = {})`
 
@@ -1609,7 +1609,7 @@ books.create!(attributes = {})
 
 <a class="anchor" id="methods-added-by-has-many-collection-object"></a>
 
-##### `collection<<(object, &#8230;&#8203;)`
+##### `collection<<(object, ...)`
 
 `collection<<` 方法向关联对象数组中添加一个或多个对象，并把各个所加对象的外键设为调用此方法的模型的主键。
 
@@ -1619,7 +1619,7 @@ books.create!(attributes = {})
 
 <a class="anchor" id="methods-added-by-has-many-collection-delete-object"></a>
 
-##### `collection.delete(object, &#8230;&#8203;)`
+##### `collection.delete(object, ...)`
 
 `collection.delete` 方法从关联对象数组中删除一个或多个对象，并把删除的对象外键设为 `NULL`。
 
@@ -1631,7 +1631,7 @@ WARNING: 如果关联设置了 `dependent: :destroy`，还会销毁关联的对�
 
 <a class="anchor" id="methods-added-by-has-many-collection-destroy-object"></a>
 
-##### `collection.destroy(object, &#8230;&#8203;)`
+##### `collection.destroy(object, ...)`
 
 `collection.destroy` 方法在关联对象上调用 `destroy` 方法，从关联对象数组中删除一个或多个对象。
 
@@ -1699,7 +1699,7 @@ WARNING: 如果设为 `dependent: :destroy`，对象会被删除，这与 `depen
 
 <a class="anchor" id="methods-added-by-has-many-collection-find"></a>
 
-##### `collection.find(&#8230;&#8203;)`
+##### `collection.find(...)`
 
 `collection.find` 方法在集合中查找对象，使用的句法和选项跟 `ActiveRecord::Base.find` 方法一样。
 
@@ -1709,7 +1709,7 @@ WARNING: 如果设为 `dependent: :destroy`，对象会被删除，这与 `depen
 
 <a class="anchor" id="methods-added-by-has-many-collection-where"></a>
 
-#### `collection.where(&#8230;&#8203;)`
+#### `collection.where(...)`
 
 `collection.where` 方法根据指定的条件在集合中查找对象，但对象是惰性加载的，即访问对象时才会查询数据库。
 
@@ -1720,13 +1720,13 @@ WARNING: 如果设为 `dependent: :destroy`，对象会被删除，这与 `depen
 
 <a class="anchor" id="methods-added-by-has-many-collection-exists-questionmark"></a>
 
-##### `collection.exists?(&#8230;&#8203;)`
+##### `collection.exists?(...)`
 
 `collection.exists?` 方法根据指定的条件检查集合中是否有符合条件的对象，使用的句法和选项跟 [`ActiveRecord::Base.exists?` 方法](http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-exists-3F)一样。
 
 <a class="anchor" id="methods-added-by-has-many-collection-build-attributes"></a>
 
-##### `collection.build(attributes = {}, &#8230;&#8203;)`
+##### `collection.build(attributes = {}, ...)`
 
 `collection.build` 方法返回一个或多个此种关联类型的新对象。这些对象会使用传入的属性初始化，还会创建对应的外键，但不会保存关联的对象。
 
@@ -2139,18 +2139,18 @@ person.articles << article unless person.articles.include?(article)
 声明 `has_and_belongs_to_many` 关联后，声明所在的类自动获得了 16 个关联相关的方法：
 
 *   `collection`
-*   `collection<<(object, &#8230;&#8203;)`
-*   `collection.delete(object, &#8230;&#8203;)`
-*   `collection.destroy(object, &#8230;&#8203;)`
+*   `collection<<(object, ...)`
+*   `collection.delete(object, ...)`
+*   `collection.destroy(object, ...)`
 *   `collection=(objects)`
 *   `collection_singular_ids`
 *   `collection_singular_ids=(ids)`
 *   `collection.clear`
 *   `collection.empty?`
 *   `collection.size`
-*   `collection.find(&#8230;&#8203;)`
-*   `collection.where(&#8230;&#8203;)`
-*   `collection.exists?(&#8230;&#8203;)`
+*   `collection.find(...)`
+*   `collection.where(...)`
+*   `collection.exists?(...)`
 *   `collection.build(attributes = {})`
 *   `collection.create(attributes = {})`
 *   `collection.create!(attributes = {})`
@@ -2204,7 +2204,7 @@ WARNING: 在 `has_and_belongs_to_many` 关联的联结表中使用其他字段�
 
 <a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-object"></a>
 
-##### `collection<<(object, &#8230;&#8203;)`
+##### `collection<<(object, ...)`
 
 `collection<<` 方法向集合中添加一个或多个对象，并在联结表中创建相应的记录。
 
@@ -2216,7 +2216,7 @@ NOTE: 这个方法是 `collection.concat` 和 `collection.push` 的别名。
 
 <a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-delete-object"></a>
 
-##### `collection.delete(object, &#8230;&#8203;)`
+##### `collection.delete(object, ...)`
 
 `collection.delete` 方法从集合中删除一个或多个对象，并删除联结表中相应的记录，但是不会销毁对象。
 
@@ -2226,7 +2226,7 @@ NOTE: 这个方法是 `collection.concat` 和 `collection.push` 的别名。
 
 <a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-destroy-object"></a>
 
-##### `collection.destroy(object, &#8230;&#8203;)`
+##### `collection.destroy(object, ...)`
 
 `collection.destroy` 方法把集合中指定对象在联结表中的记录删除。这个方法不会销毁对象本身。
 
@@ -2286,7 +2286,7 @@ NOTE: 这个方法是 `collection.concat` 和 `collection.push` 的别名。
 
 <a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-find"></a>
 
-##### `collection.find(&#8230;&#8203;)`
+##### `collection.find(...)`
 
 `collection.find` 方法在集合中查找对象，使用的句法和选项跟 `ActiveRecord::Base.find` 方法一样。此外还限制对象必须在集合中。
 
@@ -2296,7 +2296,7 @@ NOTE: 这个方法是 `collection.concat` 和 `collection.push` 的别名。
 
 <a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-where"></a>
 
-##### `collection.where(&#8230;&#8203;)`
+##### `collection.where(...)`
 
 `collection.where` 方法根据指定的条件在集合中查找对象，但对象是惰性加载的，访问对象时才执行查询。此外还限制对象必须在集合中。
 
@@ -2306,7 +2306,7 @@ NOTE: 这个方法是 `collection.concat` 和 `collection.push` 的别名。
 
 <a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-exists-questionmark"></a>
 
-##### `collection.exists?(&#8230;&#8203;)`
+##### `collection.exists?(...)`
 
 `collection.exists?` 方法根据指定的条件检查集合中是否有符合条件的对象，使用的句法和选项跟 `ActiveRecord::Base.exists?` 方法一样。
 

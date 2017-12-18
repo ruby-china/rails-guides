@@ -29,7 +29,7 @@ RDoc 的[标记](http://docs.seattlerb.org/rdoc/RDoc/Markup.html)和[额外的�
 
 使用简单的陈述句。简短更好，要说到点子上。
 
-使用现在时：“Returns a hash that&#8230;&#8203;”，而非“Returned a hash that&#8230;&#8203;”或“Will return a hash that&#8230;&#8203;”。
+使用现在时：“Returns a hash that...”，而非“Returned a hash that...”或“Will return a hash that...”。
 
 注释的第一个字母大写，后续内容遵守常规的标点符号规则：
 
@@ -222,7 +222,7 @@ class Array
 end
 ```
 
-WARNING: 只有简单的内容才能使用 `+...+` 标记使用等宽字体，如常规的方法名、符号、路径（含有正斜线），等等。其他内容应该使用 `<tt>&#8230;&#8203;</tt>`，尤其是带有命名空间的类名或模块名，如 `<tt>ActiveRecord::Base</tt>`。
+WARNING: 只有简单的内容才能使用 `+...+` 标记使用等宽字体，如常规的方法名、符号、路径（含有正斜线），等等。其他内容应该使用 `<tt>...</tt>`，尤其是带有命名空间的类名或模块名，如 `<tt>ActiveRecord::Base</tt>`。
 
 
 可以使用下述命令测试 RDoc 的输出：

@@ -630,7 +630,7 @@ NOTE: 对于净化、保护和验证操作，白名单优于黑名单。
 
 黑名单可以包含垃圾电子邮件地址、非公开的控制器动作、造成安全威胁的 HTML 标签等等。与此相反，白名单可以包含可靠的电子邮件地址、公开的控制器动作、安全的 HTML 标签等等。尽管有些情况下我们无法创建白名单（例如在垃圾信息过滤器中），但只要有可能就应该优先使用白名单：
 
-*   对于安全相关的控制器动作，在 `before_action` 选项中用 `except: [&#8230;&#8203;]` 代替 `only: [&#8230;&#8203;]`，这样就不会忘记为新建动作启用安全检查；
+*   对于安全相关的控制器动作，在 `before_action` 选项中用 `except: [...]` 代替 `only: [...]`，这样就不会忘记为新建动作启用安全检查；
 *   为防止跨站脚本（XSS）攻击，应允许使用 `<strong>` 标签，而不是去掉 `<script>` 标签，详情请参阅后文；
 *   不要尝试通过黑名单来修正用户输入：
 
@@ -714,7 +714,7 @@ SELECT * FROM projects WHERE (name = '') UNION
 
 #### 对策
 
-Ruby on Rails 内置了针对特殊 SQL 字符的过滤器，用于转义 `'`、`"`、`NULL` 和换行符。当我们使用 `Model.find(id)` 和 `Model.find_by_something(something)` 方法时，Rails 会自动应用这个过滤器。但在 SQL 片段中，尤其是在条件片段（`where("&#8230;&#8203;")`）中，需要为 `connection.execute()` 和 `Model.find_by_sql()` 方法手动应用这个过滤器。
+Ruby on Rails 内置了针对特殊 SQL 字符的过滤器，用于转义 `'`、`"`、`NULL` 和换行符。当我们使用 `Model.find(id)` 和 `Model.find_by_something(something)` 方法时，Rails 会自动应用这个过滤器。但在 SQL 片段中，尤其是在条件片段（`where("...")`）中，需要为 `connection.execute()` 和 `Model.find_by_sql()` 方法手动应用这个过滤器。
 
 为了净化受污染的字符串，在提供查询条件的选项时，我们应该传入数组而不是直接传入字符串：
 
@@ -1048,7 +1048,7 @@ unless params[:token].nil?
 end
 ```
 
-只要 `params[:token]` 的值是 `[nil]`、`[nil, nil, &#8230;&#8203;]` 和 `['foo', nil]` 其中之一，上述测试就会被被绕过，而带有 `IS NULL` 或 `IN ('foo', NULL)` 的 WHERE 子句仍将被添加到 SQL 查询中。
+只要 `params[:token]` 的值是 `[nil]`、`[nil, nil, ...]` 和 `['foo', nil]` 其中之一，上述测试就会被被绕过，而带有 `IS NULL` 或 `IN ('foo', NULL)` 的 WHERE 子句仍将被添加到 SQL 查询中。
 
 默认情况下，为了保证数据库安全，`deep_munge` 方法会把某些值替换为 `nil`。下述表格列出了经过替换处理后 JSON 请求和查询参数的对应关系：
 
@@ -1057,7 +1057,7 @@ end
 | `{ "person": null }` | `{ :person => nil }`  |
 | `{ "person": [] }` | `{ :person => [ }]`  |
 | `{ "person": [null] }` | `{ :person => [ }]`  |
-| `{ "person": [null, null, &#8230;&#8203;] }` | `{ :person => [ }]`  |
+| `{ "person": [null, null, ...] }` | `{ :person => [ }]`  |
 | `{ "person": ["foo", null] }` | `{ :person => ["foo" }]`  |
 
 当然，如果我们非常了解这类安全风险并知道如何处理，也可以通过设置禁用 `deep_munge` 方法：

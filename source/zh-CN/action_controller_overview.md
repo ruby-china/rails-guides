@@ -114,7 +114,7 @@ NOTE: “[”和“]”这两个符号不允许出现在 URL 中，所以上面�
 
 此时，`params[:ids]` 的值是 `["1", "2", "3"]`。注意，参数的值始终是字符串，Rails 不会尝试转换类型。
 
-NOTE: 默认情况下，基于安全考虑，参数中的 `[nil]` 和 `[nil, nil, &#8230;&#8203;]` 会替换成 `[]`。详情参见 [生成不安全的查询](security.html#unsafe-query-generation)。
+NOTE: 默认情况下，基于安全考虑，参数中的 `[nil]` 和 `[nil, nil, ...]` 会替换成 `[]`。详情参见 [生成不安全的查询](security.html#unsafe-query-generation)。
 
 若想发送一个散列，要在方括号内指定键名：
 

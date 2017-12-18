@@ -698,8 +698,8 @@ No breakpoints.
 
 断点也可以启用或禁用：
 
-*   `enable breakpoints [n [m [&#8230;&#8203;]]]`：在指定的断点列表或者所有断点处停止应用。这是创建断点后的默认状态。
-*   `disable breakpoints [n [m [&#8230;&#8203;]]]`：让指定的断点（或全部断点）在应用中不起作用。
+*   `enable breakpoints [n [m [...]]]`：在指定的断点列表或者所有断点处停止应用。这是创建断点后的默认状态。
+*   `disable breakpoints [n [m [...]]]`：让指定的断点（或全部断点）在应用中不起作用。
 
 <a class="anchor" id="catching-exceptions"></a>
 
