@@ -309,7 +309,7 @@ end
 | `assert_in_delta( expected, actual, [delta], [msg] )` | 确保 `expected` 和 `actual` 的差值在 `delta` 的范围内。  |
 | `assert_not_in_delta( expected, actual, [delta], [msg] )` | 确保 `expected` 和 `actual` 的差值不在 `delta` 的范围内。  |
 | `assert_throws( symbol, [msg] ) { block }` | 确保指定的块会抛出指定符号表示的异常。  |
-| `assert_raises( exception1, exception2, &#8230;&#8203; ) { block }` | 确保指定块会抛出指定异常中的一个。  |
+| `assert_raises( exception1, exception2, ... ) { block }` | 确保指定块会抛出指定异常中的一个。  |
 | `assert_instance_of( class, obj, [msg] )` | 确保 `obj` 是 `class` 的实例。  |
 | `assert_not_instance_of( class, obj, [msg] )` | 确保 `obj` 不是 `class` 的实例。  |
 | `assert_kind_of( class, obj, [msg] )` | 确保 `obj` 是 `class` 或其后代的实例。  |
@@ -337,7 +337,7 @@ NOTE: 自己创建断言是高级话题，本文不涉及。
 
 | 断言 | 作用  |
 |---|---|
-| `assert_difference(expressions, difference = 1, message = nil) {&#8230;&#8203;}` | 运行代码块前后数量变化了多少（通过 `expression` 表示）。  |
+| `assert_difference(expressions, difference = 1, message = nil) {...}` | 运行代码块前后数量变化了多少（通过 `expression` 表示）。  |
 | `assert_no_difference(expressions, message = nil, &block)` | 运行代码块前后数量没变多少（通过 `expression` 表示）。  |
 | `assert_nothing_raised { block }` | 确保指定的块不会抛出任何异常。  |
 | `assert_recognizes(expected_options, path, extras={}, message=nil)` | 断言正确处理了指定路径，而且解析的参数（通过 `expected_options` 散列指定）与路径匹配。基本上，它断言 Rails 能识别 `expected_options` 指定的路由。  |

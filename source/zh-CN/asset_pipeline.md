@@ -814,7 +814,7 @@ config.assets.css_compressor = :sass
 
 压缩 JavaScript 的可选方式有 `:closure`、`:uglifier` 和 `:yui`，分别要求在 Gemfile 中添加 `closure-compiler`、`uglifier` 和 `yui-compressor` gem。
 
-默认情况下，Gemfile 中包含了 [uglifier](https://github.com/lautis/uglifier) gem，这个 gem 使用 Ruby 包装 [UglifyJS](https://github.com/mishoo/UglifyJS)（使用 NodeJS 开发），作用是通过删除空白和注释、缩短局部变量名及其他微小优化（例如在可能的情况下把 `if&#8230;&#8203;else` 语句修改为三元运算符）压缩 JavaScript 代码。
+默认情况下，Gemfile 中包含了 [uglifier](https://github.com/lautis/uglifier) gem，这个 gem 使用 Ruby 包装 [UglifyJS](https://github.com/mishoo/UglifyJS)（使用 NodeJS 开发），作用是通过删除空白和注释、缩短局部变量名及其他微小优化（例如在可能的情况下把 `if...else` 语句修改为三元运算符）压缩 JavaScript 代码。
 
 使用 `uglifier` 压缩 JavaScript 需进行如下设置：
 

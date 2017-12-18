@@ -1170,4 +1170,4 @@ end
 
 在 Linux 和 macOS 中无需额外的 gem，[*BSD](https://github.com/guard/listen#on-bsd) 和 [Windows](https://github.com/guard/listen#on-windows) 可能需要。
 
-注意，[某些设置不支持](https://github.com/guard/listen#issues&#8212;&#8203;limitations)。
+注意，[某些设置不支持](https://github.com/guard/listen#issues--limitations)。
