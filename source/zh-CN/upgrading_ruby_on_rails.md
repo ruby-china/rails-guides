@@ -81,7 +81,7 @@ Rails 5.1 的变动参见[发布记](5_1_release_notes.html)。
 
 如果你的应用使用顶层 `HashWithIndifferentAccess` 类，应该逐渐转用 `ActiveSupport::HashWithIndifferentAccess` 类。
 
-这只是一项温和的弃用，目前代码不受影响，也不看看到提醒，但是以后会删除这个常量。
+这只是一项温和的弃用，目前代码不受影响，也不会看到提醒，但是以后会删除这个常量。
 
 此外，如果 YAML 文档转储中包含这个类的对象，要重新加载并转储，以便引用正确的常量，防止以后无法加载。
 
