@@ -115,7 +115,7 @@ Rails 提供了很多视图辅助方法协助你生成 HTML，如果想在元素
 
 因为使用的是非侵入式 JavaScript，所以 Ajax 相关的辅助方法其实分成两部分，一部分是 JavaScript 代码，一部分是 Ruby 代码。
 
-如果没有禁用 Asset Pipeline，[rails-ujs](https://github.com/rails/rails-ujs/blob/master/src/rails-ujs.coffee) 负责提供 JavaScript 代码，常规的 Ruby 视图辅助方法负责生成 DOM 标签。
+如果没有禁用 Asset Pipeline，[rails-ujs](https://github.com/rails/rails/tree/master/actionview/app/assets/javascripts) 负责提供 JavaScript 代码，常规的 Ruby 视图辅助方法负责生成 DOM 标签。
 
 应用在处理远程元素的过程中触发的不同事件参见下文。
 

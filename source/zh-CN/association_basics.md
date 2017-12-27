@@ -849,6 +849,7 @@ a.first_name == b.writer.first_name # => true
 *   `build_association(attributes = {})`
 *   `create_association(attributes = {})`
 *   `create_association!(attributes = {})`
+*   `reload_association`
 
 这五个方法中的 `association` 要替换成传给 `belongs_to` 方法的第一个参数。对下述声明来说：
 
@@ -866,6 +867,7 @@ author=
 build_author
 create_author
 create_author!
+reload_author
 ```
 
 NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法构建关联对象。`association.build` 方法是在 `has_many` 和 `has_and_belongs_to_many` 关联中使用的。创建关联对象要使用 `create_*` 方法。
@@ -881,10 +883,10 @@ NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法�
 @author = @book.author
 ```
 
-如果关联的对象之前已经取回，会返回缓存版本。如果不想使用缓存版本（强制读取数据库）在父对象上调用 `#reload` 方法。
+如果关联的对象之前已经取回，会返回缓存版本。如果不想使用缓存版本（强制读取数据库）在父对象上调用 `#reload_association` 方法。
 
 ```ruby
-@author = @book.reload.author
+@author = @book.reload_author
 ```
 
 <a class="anchor" id="methods-added-by-belongs-to-association-associate"></a>
@@ -1020,13 +1022,10 @@ NOTE: 只需在关联的 `belongs_to` 一侧指定 `:counter_cache` 选项。
 
 ##### `:dependent`
 
-`:dependent` 选项控制属主销毁后怎么处理关联的对象：
+`:dependent` 选项可以设为以下几个值：
 
-*   `:destroy`：也销毁关联的对象
-*   `:delete_all`：直接从数据库中删除关联的对象（不执行回调）
-*   `:nullify`：把外键设为 `NULL`（不执行回调）
-*   `:restrict_with_exception`：如果有关联的记录，抛出异常
-*   `:restrict_with_error`：如果有关联的对象，为属主添加一个错误
+*   `:destroy`：销毁对象时，在关联的对象上调用 `destroy` 方法
+*   `:delete`：销毁对象时，关联的所有对象直接从数据库中删除，不在关联的对象上调用 `destroy` 方法
 
 WARNING: 在 `belongs_to` 关联和 `has_many` 关联配对时，不应该设置这个选项，否则会导致数据库中出现无主记录。
 
@@ -1236,6 +1235,7 @@ TIP: 如果在 `belongs_to` 关联中使用 `select` 方法，应该同时设置
 *   `build_association(attributes = {})`
 *   `create_association(attributes = {})`
 *   `create_association!(attributes = {})`
+*   `reload_association`
 
 这五个方法中的 `association` 要替换成传给 `has_one` 方法的第一个参数。对如下的声明来说：
 
@@ -1253,6 +1253,7 @@ account=
 build_account
 create_account
 create_account!
+reload_account
 ```
 
 NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法构建关联对象。`association.build` 方法是在 `has_many` 和 `has_and_belongs_to_many` 关联中使用的。创建关联对象要使用 `create_*` 方法。
@@ -1268,10 +1269,10 @@ NOTE: 在 `has_one` 和 `belongs_to` 关联中，必须使用 `build_*` 方法�
 @account = @supplier.account
 ```
 
-如果关联的对象之前已经取回，会返回缓存版本。如果不想使用缓存版本，而是强制重新从数据库中读取，在父对象上调用 `#reload` 方法。
+如果关联的对象之前已经取回，会返回缓存版本。如果不想使用缓存版本，而是强制重新从数据库中读取，在父对象上调用 `#reload_association` 方法。
 
 ```ruby
-@account = @supplier.reload.account
+@account = @supplier.reload_account
 ```
 
 <a class="anchor" id="methods-added-by-has-one-association-associate"></a>
@@ -1567,6 +1568,7 @@ end
 *   `collection.build(attributes = {}, &#8230;&#8203;)`
 *   `collection.create(attributes = {})`
 *   `collection.create!(attributes = {})`
+*   `collection.reload`
 
 这些个方法中的 `collection` 要替换成传给 `has_many` 方法的第一个参数。`collection_singular` 要替换成第一个参数的单数形式。对如下的声明来说：
 
@@ -1595,13 +1597,14 @@ books.exists?(...)
 books.build(attributes = {}, ...)
 books.create(attributes = {})
 books.create!(attributes = {})
+books.reload
 ```
 
 <a class="anchor" id="methods-added-by-has-many-collection"></a>
 
 ##### `collection`
 
-`collection` 方法返回一个数组，包含所有关联的对象。如果没有关联的对象，则返回空数组。
+`collection` 方法返回一个 `Relation` 对象，包含所有关联的对象。如果没有关联的对象，则返回一个空 `Relation` 对象。
 
 ```ruby
 @books = @author.books
@@ -1758,9 +1761,19 @@ WARNING: 如果设为 `dependent: :destroy`，对象会被删除，这与 `depen
 
 <a class="anchor" id="methods-added-by-has-many-collection-create-bang-attributes"></a>
 
-#### `collection.create!(attributes = {})`
+##### `collection.create!(attributes = {})`
 
 作用与 `collection.create` 相同，但如果记录无效，会抛出 `ActiveRecord::RecordInvalid` 异常。
+
+<a class="anchor" id="methods-added-by-has-many-collection-reload"></a>
+
+##### `collection.reload`
+
+`collection.reload` 强制从数据库中读取，返回一个 `Relation` 对象，包含所有关联的对象。如果没有关联的对象，返回一个空 `Relation` 对象。
+
+```ruby
+@books = @author.books.reload
+```
 
 <a class="anchor" id="options-for-has-many"></a>
 
@@ -2154,6 +2167,7 @@ person.articles << article unless person.articles.include?(article)
 *   `collection.build(attributes = {})`
 *   `collection.create(attributes = {})`
 *   `collection.create!(attributes = {})`
+*   `collection.reload`
 
 这些个方法中的 `collection` 要替换成传给 `has_and_belongs_to_many` 方法的第一个参数。`collection_singular` 要替换成第一个参数的单数形式。对如下的声明来说：
 
@@ -2182,6 +2196,7 @@ assemblies.exists?(...)
 assemblies.build(attributes = {}, ...)
 assemblies.create(attributes = {})
 assemblies.create!(attributes = {})
+assemblies.reload
 ```
 
 <a class="anchor" id="additional-column-methods"></a>
@@ -2196,7 +2211,7 @@ WARNING: 在 `has_and_belongs_to_many` 关联的联结表中使用其他字段�
 
 ##### `collection`
 
-`collection` 方法返回一个数组，包含所有关联的对象。如果没有关联的对象，则返回空数组。
+`collection` 方法返回一个 `Relation` 对象，包含所有关联的对象。如果没有关联的对象，则返回一个空 `Relation` 对象。
 
 ```ruby
 @assemblies = @part.assemblies
@@ -2335,6 +2350,16 @@ NOTE: 这个方法是 `collection.concat` 和 `collection.push` 的别名。
 ##### `collection.create!(attributes = {})`
 
 作用和 `collection.create` 相同，但如果记录无效，会抛出 `ActiveRecord::RecordInvalid` 异常。
+
+<a class="anchor" id="methods-added-by-has-and-belongs-to-many-collection-reload"></a>
+
+##### `collection.reload`
+
+`collection.reload` 方法强制从数据库中读取，返回一个 `Relation` 对象，包含所有关联的对象。如果没有关联的对象，返回一个空 `Relation` 对象。
+
+```ruby
+@assemblies = @part.assemblies.reload
+```
 
 <a class="anchor" id="options-for-has-and-belongs-to-many"></a>
 

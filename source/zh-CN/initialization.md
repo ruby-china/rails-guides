@@ -97,7 +97,7 @@ require 'bundler/setup' # 设置 Gemfile 中列出的所有 gem
 *   arel
 *   builder
 *   bundler
-*   erubis
+*   erubi
 *   i18n
 *   mail
 *   mime-types
