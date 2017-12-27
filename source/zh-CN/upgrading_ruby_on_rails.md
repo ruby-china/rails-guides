@@ -274,6 +274,18 @@ params.permit([:proceed_to, :return_to]).to_h
 <% # Template Dependency: recordings/threads/events/* %>
 ```
 
+<a class="anchor" id="actionview-helpers-recordtaghelper-moved-to-external-gem-record-tag-helper"></a>
+
+### `ActionView::Helpers::RecordTagHelper` 移到外部 gem 中（record_tag_helper）
+
+`content_tag_for` 和 `div_for` 现已移除，统一使用 `content_tag`。如果想继续使用，在 Gemfile 中添加 `record_tag_helper` gem：
+
+```ruby
+gem 'record_tag_helper', '~> 1.0'
+```
+
+详情参见 [#18411](https://github.com/rails/rails/pull/18411)。
+
 <a class="anchor" id="removed-support-for-protected-attributes-gem"></a>
 
 ### 不再支持 `protected_attributes` gem
@@ -414,6 +426,12 @@ config.ssl_options = { hsts: { subdomains: true } }
 ```ruby
 ActiveSupport.to_time_preserves_timezone = false
 ```
+
+<a class="anchor" id="changes-with-json-jsonb-serialization"></a>
+
+#### JSON/JSONB 序列化的变化
+
+Rails 5 改变了 JSON/JSONB 属性的序列化和反序列化方式。现在，如果列与字符串相等，Active Record 不再将字符串转换成散列，而是直接返回字符串。这不仅影响与模型交互的代码，还涉及 `db/schema.rb` 中的 `:default` 列设置。建议不要把列设为与一个字符串相等，而是传递散列，以便自动转换成 JSON 字符串。
 
 <a class="anchor" id="upgrading-from-rails-4-1-to-rails-4-2"></a>
 

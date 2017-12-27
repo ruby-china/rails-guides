@@ -349,38 +349,38 @@ end
 
 ### 第一个表单
 
-在模板中创建表单，可以使用表单构建器。Rails 中最常用的表单构建器是 `form_for` 辅助方法。让我们使用这个方法，在 `app/views/articles/new.html.erb` 文件中添加下面的代码：
+在模板中创建表单，可以使用表单构建器。Rails 中最常用的表单构建器是 `form_with` 辅助方法。让我们使用这个方法，在 `app/views/articles/new.html.erb` 文件中添加下面的代码：
 
 ```erb
-<%= form_for :article do |f| %>
+<%= form_with scope: :article, local: true do |form| %>
   <p>
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
   </p>
 
   <p>
-    <%= f.label :text %><br>
-    <%= f.text_area :text %>
+    <%= form.label :text %><br>
+    <%= form.text_area :text %>
   </p>
 
   <p>
-    <%= f.submit %>
+    <%= form.submit %>
   </p>
 <% end %>
 ```
 
 现在刷新页面，会看到和前文截图一样的表单。在 Rails 中创建表单就是这么简单！
 
-调用 `form_for` 辅助方法时，需要为表单传递一个标识对象作为参数，这里是 `:article` 符号。这个符号告诉 `form_for` 辅助方法表单用于处理哪个对象。在 `form_for` 辅助方法的块中，`f` 表示 `FormBuilder` 对象，用于创建两个标签和两个文本字段，分别用于添加文章的标题和正文。最后在 `f` 对象上调用 `submit` 方法来为表单创建提交按钮。
+调用 `form_with` 辅助方法时，需要为表单传递一个标识作用域作为参数，这里是 `:article` 符号。这个符号告诉 `form_with` 辅助方法表单用于处理哪个对象。在 `form_with` 辅助方法的块中，`form` 表示 `FormBuilder` 对象，用于创建两个标签和两个文本字段，分别用于添加文章的标题和正文。最后在 `form` 对象上调用 `submit` 方法来为表单创建提交按钮。
 
 不过这个表单还有一个问题，查看 HTML 源代码会看到表单 `action` 属性的值是 `/articles/new`，指向的是当前页面，而当前页面只是用于显示新建文章的表单。
 
-应该把表单指向其他 URL，为此可以使用 `form_for` 辅助方法的 `:url` 选项。在 Rails 中习惯用 `create` 动作来处理提交的表单，因此应该把表单指向这个动作。
+应该把表单指向其他 URL，为此可以使用 `form_with` 辅助方法的 `:url` 选项。在 Rails 中习惯用 `create` 动作来处理提交的表单，因此应该把表单指向这个动作。
 
-修改 `app/views/articles/new.html.erb` 文件的 `form_for` 这一行，改为：
+修改 `app/views/articles/new.html.erb` 文件的 `form_with` 这一行，改为：
 
 ```erb
-<%= form_for :article, url: articles_path do |f| %>
+<%= form_with scope: :article, url: articles_path, local: true do |form| %>
 ```
 
 这里我们把 `articles_path` 辅助方法传递给 `:url` 选项。要想知道这个方法有什么用，我们可以回过头看一下 `bin/rails routes` 的输出结果：
@@ -406,6 +406,9 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 ![未知动作，在 `ArticlesController` 中找不到 `create` 动作](images/getting_started/unknown_action_create_for_articles.png)
 
 解决问题的方法是在 `ArticlesController` 中创建 `create` 动作。
+
+NOTE: 默认情况下，`form_with` 通过 Ajax 提交表单，因此不会做完整的重定向。这是一篇入门指南，为了便于理解，我们使用 `local: true` 禁用了这个行为。
+
 
 <a class="anchor" id="creating-articles"></a>
 
@@ -685,7 +688,7 @@ class ArticlesController < ApplicationController
 接下来在 `app/views/articles/new.html.erb` 文件中添加返回 `index` 动作的链接，把这个链接放在表单之后：
 
 ```erb
-<%= form_for :article, url: articles_path do |f| %>
+<%= form_with scope: :article, url: articles_path, local: true do |form| %>
   ...
 <% end %>
 
@@ -766,7 +769,7 @@ private
 刷新 <http://localhost:3000/articles/new>，试着提交一篇没有标题的文章，Rails 会返回这个表单，但这种处理方式没有多大用处，更好的做法是告诉用户哪里出错了。为此需要修改 `app/views/articles/new.html.erb` 文件，添加显示错误信息的代码：
 
 ```erb
-<%= form_for :article, url: articles_path do |f| %>
+<%= form_with scope: :article, url: articles_path, local: true do |form| %>
 
   <% if @article.errors.any? %>
     <div id="error_explanation">
@@ -783,17 +786,17 @@ private
   <% end %>
 
   <p>
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
   </p>
 
   <p>
-    <%= f.label :text %><br>
-    <%= f.text_area :text %>
+    <%= form.label :text %><br>
+    <%= form.text_area :text %>
   </p>
 
   <p>
-    <%= f.submit %>
+    <%= form.submit %>
   </p>
 
 <% end %>
@@ -846,7 +849,7 @@ end
 ```erb
 <h1>Edit article</h1>
 
-<%= form_for(@article) do |f| %>
+<%= form_with(model: @article) do |form| %>
 
   <% if @article.errors.any? %>
     <div id="error_explanation">
@@ -863,17 +866,17 @@ end
   <% end %>
 
   <p>
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
   </p>
 
   <p>
-    <%= f.label :text %><br>
-    <%= f.text_area :text %>
+    <%= form.label :text %><br>
+    <%= form.text_area :text %>
   </p>
 
   <p>
-    <%= f.submit %>
+    <%= form.submit %>
   </p>
 
 <% end %>
@@ -887,7 +890,7 @@ end
 
 `method: :patch` 选项告诉 Rails 使用 `PATCH` 方法提交表单。根据 REST 协议，`PATCH` 方法是**更新**资源时使用的 HTTP 方法。
 
-`form_for` 辅助方法的第一个参数可以是对象，例如 `@article`，`form_for` 辅助方法会用这个对象的字段来填充表单。如果传入和实例变量（`@article`）同名的符号（`:article`），也会自动产生相同效果，上面的代码使用的就是符号。关于 `form_for` 辅助方法参数的更多介绍，请参阅 [`form_for` 的文档](http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_for)。
+`form_with` 辅助方法的参数可以是模型对象，例如 `model: @article`；此时，`form_with` 辅助方法会用这个对象的字段来填充表单。如果传入符号形式的作用域（`scope: :article`），只创建字段，而不填入任何值。关于 `form_with` 辅助方法参数的更多介绍，请参阅[文档](http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with)。
 
 接下来在 `app/controllers/articles_controller.rb` 文件中创建 `update` 动作，把这个动作放在 `create` 动作和 `private` 方法之间：
 
@@ -969,7 +972,7 @@ TIP: 关于局部视图的更多介绍，请参阅[Rails 布局和视图渲染](
 新建 `app/views/articles/_form.html.erb` 文件，添加下面的代码：
 
 ```erb
-<%= form_for @article do |f| %>
+<%= form_with model: @article, local: true do |form| %>
 
   <% if @article.errors.any? %>
     <div id="error_explanation">
@@ -986,23 +989,23 @@ TIP: 关于局部视图的更多介绍，请参阅[Rails 布局和视图渲染](
   <% end %>
 
   <p>
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
   </p>
 
   <p>
-    <%= f.label :text %><br>
-    <%= f.text_area :text %>
+    <%= form.label :text %><br>
+    <%= form.text_area :text %>
   </p>
 
   <p>
-    <%= f.submit %>
+    <%= form.submit %>
   </p>
 
 <% end %>
 ```
 
-除了第一行 `form_for` 的用法变了之外，其他代码都和之前一样。之所以能用这个更短、更简单的 `form_for` 声明来代替新建文章页面和编辑文章页面的两个表单，是因为 `@article` 是一个资源，对应于一套 REST 式路由，Rails 能够推断出应该使用哪个地址和方法。关于 `form_for` 用法的更多介绍，请参阅“[面向资源的风格](http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_for-label-Resource-oriented+style)”。
+除了第一行 `form_with` 的用法变了之外，其他代码都和之前一样。之所以能用这个更短、更简单的 `form_with` 声明来代替新建文章页面和编辑文章页面的两个表单，是因为 `@article` 是一个资源，对应于一套 REST 式路由，Rails 能够推断出应该使用哪个地址和方法。关于 `form_with` 用法的更多介绍，请参阅“[面向资源的风格](http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with-label-Resource-oriented+style)”。
 
 现在更新 `app/views/articles/new.html.erb` 视图，以使用新建的局部视图。把文件内容替换为下面的代码：
 
@@ -1295,17 +1298,17 @@ $ bin/rails generate controller Comments
 </p>
 
 <h2>Add a comment:</h2>
-<%= form_for([@article, @article.comments.build]) do |f| %>
+<%= form_with(model: [ @article, @article.comments.build ], local: true) do |form| %>
   <p>
-    <%= f.label :commenter %><br>
-    <%= f.text_field :commenter %>
+    <%= form.label :commenter %><br>
+    <%= form.text_field :commenter %>
   </p>
   <p>
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
   </p>
   <p>
-    <%= f.submit %>
+    <%= form.submit %>
   </p>
 <% end %>
 
@@ -1313,7 +1316,7 @@ $ bin/rails generate controller Comments
 <%= link_to 'Back', articles_path %>
 ```
 
-上面的代码在显示文章的页面中添加了用于新建评论的表单，通过调用 `CommentsController` 的 `create` 动作来发表评论。这里 `form_for` 辅助方法以数组为参数，会创建嵌套路由，例如 `/articles/1/comments`。
+上面的代码在显示文章的页面中添加了用于新建评论的表单，通过调用 `CommentsController` 的 `create` 动作来发表评论。这里 `form_with` 辅助方法以数组为参数，会创建嵌套路由，例如 `/articles/1/comments`。
 
 接下来在 `app/controllers/comments_controller.rb` 文件中添加 `create` 动作：
 
@@ -1363,17 +1366,17 @@ end
 <% end %>
 
 <h2>Add a comment:</h2>
-<%= form_for([@article, @article.comments.build]) do |f| %>
+<%= form_with(model: [ @article, @article.comments.build ]) do |form| %>
   <p>
-    <%= f.label :commenter %><br>
-    <%= f.text_field :commenter %>
+    <%= form.label :commenter %><br>
+    <%= form.text_field :commenter %>
   </p>
   <p>
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
   </p>
   <p>
-    <%= f.submit %>
+    <%= form.submit %>
   </p>
 <% end %>
 
@@ -1426,17 +1429,17 @@ end
 <%= render @article.comments %>
 
 <h2>Add a comment:</h2>
-<%= form_for([@article, @article.comments.build]) do |f| %>
+<%= form_with(model: [ @article, @article.comments.build ]) do |form| %>
   <p>
-    <%= f.label :commenter %><br>
-    <%= f.text_field :commenter %>
+    <%= form.label :commenter %><br>
+    <%= form.text_field :commenter %>
   </p>
   <p>
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
   </p>
   <p>
-    <%= f.submit %>
+    <%= form.submit %>
   </p>
 <% end %>
 
@@ -1453,17 +1456,17 @@ end
 我们把添加评论的代码也移到局部视图中。创建 `app/views/comments/_form.html.erb` 文件，添加下面的代码：
 
 ```erb
-<%= form_for([@article, @article.comments.build]) do |f| %>
+<%= form_with(model: [ @article, @article.comments.build ]) do |form| %>
   <p>
-    <%= f.label :commenter %><br>
-    <%= f.text_field :commenter %>
+    <%= form.label :commenter %><br>
+    <%= form.text_field :commenter %>
   </p>
   <p>
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
   </p>
   <p>
-    <%= f.submit %>
+    <%= form.submit %>
   </p>
 <% end %>
 ```
