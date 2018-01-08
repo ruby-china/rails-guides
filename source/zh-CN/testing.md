@@ -38,7 +38,7 @@ controllers/           helpers/               mailers/               system/    
 fixtures/              integration/           models/                application_system_test_case.rb
 ```
 
-`helpers` 目录存放视图辅助方法的测试，`mailers` 目录存放邮件程序的测试，`models` 目录存放模型的测试，`controllers` 目录存放控制器的测试，`integration` 目录存放涉及多个控制器交互的测试。此外，还有一个目录用于存放邮件程序的测试，以及一个目录用于存放辅助方法的测试。
+`helpers` 目录存放视图辅助方法的测试，`mailers` 目录存放邮件程序的测试，`models` 目录存放模型的测试，`controllers` 目录存放控制器的测试，`integration` 目录存放涉及多个控制器交互的测试。此外，还有一个目录用于存放辅助方法的测试。
 
 `system` 目录存放系统测试，在浏览器中全面测试应用。系统测试模拟用户的交互，还能测试 JavaScript。系统测试源自 Capybara，在浏览器中测试应用。
 
