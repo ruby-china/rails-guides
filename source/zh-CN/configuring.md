@@ -192,7 +192,7 @@ end
 
 *   `ActionDispatch::SSL` 强制使用 HTTPS 伺服每个请求。`config.force_ssl` 设为 `true` 时启用。传给这个中间件的选项通过 `config.ssl_options` 配置。
 *   `ActionDispatch::Static` 用于伺服静态资源。`config.public_file_server.enabled` 设为 `false` 时禁用。如果静态资源目录的索引文件不是 `index`，使用 `config.public_file_server.index_name` 指定。例如，请求目录时如果想伺服 `main.html`，而不是 `index.html`，把 `config.public_file_server.index_name` 设为 `"main"`。
-*   `ActionDispatch::Executor` 以线程安全的方式重新加载代码。`onfig.allow_concurrency` 设为 `false` 时禁用，此时加载 `Rack::Lock`。`Rack::Lock` 把应用包装在 mutex 中，因此一次只能被一个线程调用。
+*   `ActionDispatch::Executor` 以线程安全的方式重新加载代码。`config.allow_concurrency` 设为 `false` 时禁用，此时加载 `Rack::Lock`。`Rack::Lock` 把应用包装在 mutex 中，因此一次只能被一个线程调用。
 *   `ActiveSupport::Cache::Strategy::LocalCache` 是基本的内存后端缓存。这个缓存对线程不安全，只应该用作单线程的临时内存缓存。
 *   `Rack::Runtime` 设定 `X-Runtime` 首部，包含执行请求的时间（单位为秒）。
 *   `Rails::Rack::Logger` 通知日志请求开始了。请求完成后，清空相关日志。
